@@ -4,7 +4,7 @@ Replacement icons for popular apps in the style of macOS Big Sur.
 Click on each icon to download it.
 
 Icon | [<img src="https://github.com/elrumo/macOS-Big-Sur-icons-replacements/blob/master/icons/png/Spark.png?raw=true" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Spark.icns) | [<img src="https://github.com/elrumo/macOS-Big-Sur-icons-replacements/blob/master/icons/png/Opera.png?raw=true)" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Opera.icns) | [<img src="https://github.com/elrumo/macOS-Big-Sur-icons-replacements/blob/master/icons/png/iA%20Writer.png?raw=true)" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/iA%20Writer.icns)
---- | --- | --- | 
+--- | --- | --- | --- |
 App | [Spark](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Spark.icns) | [Opera](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Opera.icns) | [iA Writer](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/iA%20Writer.icns)
 
 ## Icons
@@ -13,7 +13,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Alfred
 - [ ] App Cleaner
 - [x] iA Writer
-- [ ] Dashlane
+- [x] Dashlane
 - [ ] Figma
 - [ ] ImageOptim
 - [ ] NordVPN
