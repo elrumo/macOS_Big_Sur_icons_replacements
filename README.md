@@ -12,6 +12,7 @@ The following icons are either being worked on or have been suggested. If you ha
 
 - [ ] Alfred
 - [ ] App Cleaner
+- [ ] Dashlane
 - [ ] Figma
 - [ ] iA Writer
 - [ ] ImageOptim
@@ -25,3 +26,4 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Twitter
 - [ ] VS Code
 - [ ] Zotero
+
