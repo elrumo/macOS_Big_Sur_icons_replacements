@@ -15,9 +15,10 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] iA Writer
 - [x] Dashlane
 - [ ] Figma
-- [ ] ImageOptim
+- [x] ImageOptim
 - [ ] NordVPN
 - [ ] Notion
+- [ ] Microsoft Edge
 - [ ] Office Suit
 - [x] Opera
 - [x] Spark
