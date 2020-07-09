@@ -9,7 +9,7 @@ App | [Spark](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/mas
 
 
 ## Icons
-The following icons are either being worked on or have been suggested. If you have any suggestions create a new issue with the nam of the app as the title [here](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/issues/new).
+The following icons are either being worked on or have been suggested. If you have any suggestions create a new issue with the name of the app as the title [here](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/issues/new).
 
 - [ ] Alfred
 - [ ] App Cleaner
@@ -21,6 +21,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Notion
 - [ ] Microsoft Edge
 - [ ] Office Suit
+- [ ] GitHub Desktop
 - [x] Opera
 - [x] Spark
 - [ ] Speechify
