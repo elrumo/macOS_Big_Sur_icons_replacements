@@ -16,7 +16,8 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] iA Writer
 - [x] Dashlane
 - [ ] Figma
-- [x] ImageOptim
+- [ ] ImageOptim
+- [x] Iina
 - [ ] NordVPN
 - [ ] Notion
 - [ ] Microsoft Edge
