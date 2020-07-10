@@ -12,6 +12,7 @@ App | [Spark](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/mas
 The following icons are either being worked on or have been suggested. If you have any suggestions create a new issue with the name of the app as the title [here](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/issues/new).
 
 - [ ] Alfred
+- [ ] Alfred Preferences
 - [ ] App Cleaner
 - [x] iA Writer
 - [x] Dashlane
@@ -21,9 +22,11 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] NordVPN
 - [ ] Notion
 - [ ] Microsoft Edge
+- [ ] Malwarebytes
 - [ ] Office Suit
 - [ ] GitHub Desktop
 - [x] Opera
+- [ ] OneDrive
 - [x] Spark
 - [ ] Speechify
 - [ ] Steam
