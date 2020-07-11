@@ -1,7 +1,7 @@
 # macOS Big Sur - Replacements Icons
 Replacement icons for popular apps in the style of macOS Big Sur.
 
-Click on each icon to download it. Or click [here](https://raw.githubusercontent.com/elrumo/macOS-Big-Sur-icons-replacements/master/icons.zip) to download all of them in a .zip file.
+Click on each icon to download it. Or click [here](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons.zip) to download all of them in a .zip file.
 
 ## Icons
 
