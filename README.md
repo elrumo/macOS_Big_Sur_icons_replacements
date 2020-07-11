@@ -39,7 +39,8 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Steam
 - [x] Sublime Text
 - [ ] Things
-- [x] Transmission
+- [x] Transmit
+- [ ] Transmission
 - [ ] Twitter
 - [x] VS Code
 - [ ] Zotero
