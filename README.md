@@ -4,6 +4,8 @@ Replacement icons for popular apps in the style of macOS Big Sur.
 
 Click on each icon to download it. Or click [here](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons.zip) to download all of them in a .zip file.
 
+If you'd like to contribute, you'd need to export the icon to .png and then use [this free app](https://apps.apple.com/gb/app/image2icon-make-your-icons/id992115977?mt=12) to export it to a usable .icns file.
+
 ## Icons
 
 |                           [<img src="https://github.com/elrumo/macOS-Big-Sur-icons-replacements/blob/master/icons/png/1Password.png?raw=true)" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/1Password.icns)<br>[1Password](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/1Password.icns)                           |                                             [<img src="https://github.com/elrumo/macOS-Big-Sur-icons-replacements/blob/master/icons/png/5217.png?raw=true)" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/5217.icns)<br>[5217](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/5217.icns)                                             |
