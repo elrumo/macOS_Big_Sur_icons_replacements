@@ -120,10 +120,14 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Battle.net
 - [ ] BBEdit
 - [x] BetterTouchTool
+- [ ] Bitwarden
 - [ ] Blender
 - [x] Brave Browser
+- [ ] Brave Browser Nightly
+- [ ] Browserosaurus
 - [x] Calibre
 - [ ] Canary Mail
+- [ ] Chromium
 - [ ] Chronicle Pro
 - [ ] Cinema 4D
 - [x] coconutBattery
@@ -134,6 +138,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Daisy Disk
 - [x] Dark Reader
 - [ ] Diagrams
+- [ ] Disconnect Premium
 - [x] Discord
 - [x] Downie 4
 - [ ] Drafts
@@ -141,6 +146,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Edison Mail
 - [x] Electron
 - [ ] Elmedia Player
+- [ ] EverWeb
 - [ ] Facebook Messenger
 - [ ] Fantastical
 - [x] Figma
@@ -157,19 +163,24 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] GoodNotes
 - [x] Handbrake
 - [ ] Hearthstone
+- [ ] Hidden Bar
 - [x] iA Writer
 - [x] Icons8
 - [x] Iina
 - [x] ImageOptim
 - [x] iMovie
 - [ ] Install macOS Beta
+- [ ] KeepingYouAwake
 - [ ] Keka
 - [ ] Keyboard Maestro
 - [ ] LastPass
+- [ ] LibreOffice
 - [x] Logic Pro X
 - [ ] LookUp
 - [ ] LyricsX
 - [ ] Macs Fan Control
+- [ ] Mactracker
+- [ ] MacUpdater
 - [ ] Magnet
 - [x] MainStage
 - [x] Malwarebytes
@@ -193,12 +204,16 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Pixelmator
 - [x] Pixelmator Pro
 - [ ] Presentify
+- [ ] Private Internet Access
+- [ ] ProWritingAid
 - [ ] Plex
 - [ ] qBittorrent
 - [ ] QQ
 - [x] Raindrop.io
 - [x] Reeder
 - [x] Signal
+- [ ] smcFanControl
+- [ ] SoundflowerBed
 - [x] Spark
 - [ ] Speechify
 - [ ] Splice
@@ -220,6 +235,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] VLC
 - [x] VS Code
 - [ ] Western Digital Discovery
+- [ ] Wipr
 - [x] Xcode
 - [ ] XTRAX STEMS
 - [ ] Zotero
