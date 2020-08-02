@@ -1,12 +1,30 @@
-let list = ["1Password","5217","AdBlocker","Adobe_Acrobat","Adobe_After_Effects","Adobe_Animate","Adobe_Audition","Adobe_Bridge","Adobe_CC","Adobe_Character_Animation","Adobe_Dimension","Adobe_Dreamweaver","Adobe_Illustrator","Adobe_InCopy","Adobe_Indesign","Adobe_Lightroom","Adobe_Media_Encoder","Adobe_Photoshop","Adobe_Portfolio","Adobe_Prelude","Adobe_Premiere_Pro","Adobe_Rush","Adobe_Spark","Adobe_Stock","Adobe_XD","Affinity_Designer","Affinity_Photo","Affinity_Publisher","Alfred","AltServer","Amphetamine","Amplitube","Amplitube_Auth_Manager","Android_Studio","Android_Studio_Beta","Astropad","Astropad_Studio","Atom","Autodesk_Sketch","Backup_And_Sync","Bartender","Bear_Notes","BetterTouchTool","Brave","Calibre","Capo","cDock","Chrome_Canary","CleanMyMac","coconutBattery","Compressor","CraftDocs","Custom_Shop","Dashlane","Dark_Reader","DayOne","Deliveries","Discord","Downie","Dropbox","Dropbox_alt","Dropbox_alt2","DuckDuckGo","Electron","Emcee","Epic_games","Figma","Filezilla","Final_Cut_Pro","Final_Cut_Pro_Alt","Firefox","Firefox_dev","Flux","Folx","FontLab","Garageband","Github","Glance","Google_Chrome","Google_Chrome_Alt","Handbrake","HapticKey","Harvest","Hyper","iA_writer","Icons_8","Iina","Iina_alt","Image2Icon","ImageOptim","iMovie","iMovie_Alt","Instagram","iStat","iTerm","Launchpad","Launchpad_alt","Logic_Pro_X","Logic_Pro_X_Alt","Loopback","MacMediaKeyForwarder","MagicPrefs","MainStage","Malwarebytes","Material_Colors","Material_Palette_Generator","Microsoft_Edge","Microsoft_Excel","Microsoft_OneNote","Microsoft_Outlook","Microsoft_Powerpoint","Microsoft_Teams","Microsoft_To_Do","Microsoft_Word","Minecraft","Mosaic","Musescore","Motion","NordVPN","Notability","Notion","OBS","OmniFocus","OneDrive","Open_Emu","Opera","Parallels_Desktop","Permute","Permute_Dark","PiPifier","Pixelmator_Pro","P-Touch","Quip","Raindrop","Redacted","Reeder","Reflector","Rhinoceros","Screenshots","Sensei","Setapp","Signal","Sip","Sketch","Sketchup","Slack","Spark","Speedtest","Spotify","Spotify_Alternate","Sublime_Text","Swift_Playgrounds","Swift_Playgrounds_Alt","Swift_Playgrounds_Alt2","Teamspeak","Telegram","Things_3","Tower","Transmission","Transmit","Trello","Twitter","UAD_Console","UAD_Control_Panel","Übersicht","Unicorn_Unblocker","Unity_Editor","Unity_Hub","Visual_Studio","Visual_Studio_Code","VLC","VMware_Fusion","WebBites","Whatsapp","Xcode","XScope","Yoink","Zoom"]
+var list = []
 
-var csv = []
+fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icns.txt')
+  .then(response => response.text())
+  .then((data) => {
+    list = data.split(", ")
 
-for(let icon in list){
-    let iconName = list[icon]
-    let markDown = '[<img src="https://github.com/elrumo/macOS-Big-Sur-icons-replacements/blob/master/icons/png/'+iconName+'.png?raw=true)" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+iconName+'.icns)<br>['+iconName+'](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+iconName+'.icns)'
-    csv.push(markDown)
-}
+    var csv = []
+    var i = 0;
 
-// console.log(csv)
-csv.forEach(item=>{console.log(item)})
+    for(let icon in list){
+        if(i == 0){
+            let iconName = list[icon]
+            let markDown = '[<img src="https://github.com/elrumo/macOS-Big-Sur-icons-replacements/blob/master/icons/png/'+iconName+'.png?raw=true)" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+iconName+'.icns)<br>['+iconName+'](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+iconName+'.icns),'
+            i++
+            csv.push(markDown)
+        } else{
+            let iconName = list[icon]
+            let markDown = '[<img src="https://github.com/elrumo/macOS-Big-Sur-icons-replacements/blob/master/icons/png/'+iconName+'.png?raw=true)" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+iconName+'.icns)<br>['+iconName+'](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+iconName+'.icns)'
+            csv.push(markDown)
+            i--
+        }
+    }
+
+    // console.log(list)
+    csv.forEach(item=>{console.log(item)})
+
+  })
+
+//   [<img src="https://github.com/elrumo/macOS-Big-Sur-icons-replacements/blob/master/icons/png/1Password.png?raw=true)" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/1Password.icns)<br>[ 1Password ](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/1Password.icns),
