@@ -1,0 +1,153 @@
+body{
+    background: #F6F8FA !important;
+}
+
+.header{
+    height: fit-content;
+    padding: 20px 30px 20px 30px;
+}
+
+.header-item-left{
+    float: left;
+}
+
+.header-item-right{
+    float: right;
+}
+
+.content-wrapper{
+    width: 90%;
+    margin: auto;
+}
+
+.main-search{
+    width: 60%;
+    min-width: none !important;
+    max-width: none !important;
+}
+
+.shadow{
+    box-shadow: 0px 5px 20px -10px #00000021,
+                0px 2px 5px -2px   #00000029;
+    transition: 0.2s;
+}
+
+.shadow:hover{
+    box-shadow: 0px 15px 20px -10px rgba(0, 0, 0, 0.2),
+                0px 10px 10px -2px   rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.card-wrapper{
+    width: 100%;
+    max-width: 250px;
+    background: white;
+    border-radius: 8px;
+}
+
+.card-wrapper h3{
+    margin: 2px 0px 24px 0px;
+    text-decoration: none;
+    color: black;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.icon-list-area{
+    max-width: 1300px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+.icon-list-area a{
+    text-decoration: none;
+    color: black;
+    margin: auto;
+}
+
+.card-img-wrapper{
+    padding: 20px 65px 5px 65px;
+}
+
+.card-img-wrapper img{
+    min-width: 74px;
+}
+
+/* .main-heading{
+    max-width: 300px;
+    margin: auto;
+} */
+
+@media only screen and (max-width: 1200px){
+    .icon-list-area{
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+@media only screen and (max-width: 966px){
+    .card-wrapper{
+        max-width: 350px;   
+    }
+}
+
+@media only screen and (max-width: 966px){
+    .icon-list-area{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media only screen and (max-width: 720px){
+    .icon-list-area{
+        grid-template-columns: 1fr 1fr;
+        column-gap: 0px;
+        row-gap: 15px;
+    }
+
+    .card-wrapper{
+        max-width: 170px;
+    }
+
+    .card-img-wrapper {
+        padding: 20px 45px 5px 45px;
+    }
+
+    .main-search{
+        width: 95%;
+    }
+}
+
+
+
+/* Classes changed from Adobe Coral */
+._coral-Button{
+    min-width: 10px !important;
+    padding: 8px 20px 8px 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    /* width: 180px; */
+    border-radius: 8px !important;
+}
+
+._coral-Button p{
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600 !important;
+}
+
+.coral-Heading--regular{
+    font-weight: 500 !important;
+}
+
+._coral-Textfield{
+    width: 100%;
+    height: 50px;
+    border-radius: 7px;
+    font-size: 1rem;
+}
+
+._coral-Search{
+    border-radius: 7px;
+}
