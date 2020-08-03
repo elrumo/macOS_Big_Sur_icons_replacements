@@ -55,6 +55,11 @@
 
     </section>
 
+    <section>
+      <footer class="p-b-20">
+        Made with ❤️ by <a href="https://eliasruiz.com" target="_blank" class="coral-Link">Elias</a> 
+      </footer>
+    </section>
   </div>
 </template>
 
