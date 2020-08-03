@@ -143,7 +143,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Edison Mail
 - [x] Electron
 - [ ] Elmedia Player
-- [ ] Facebook Messenger
+- [x] Facebook Messenger
 - [ ] Fantastical
 - [x] Figma
 - [x] Filezilla
