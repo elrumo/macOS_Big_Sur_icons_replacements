@@ -23,12 +23,12 @@
         Replacements Icons
       </h3>
 
-      <div class="p-t-35">
+      <div class="p-t-35 m-auto">
         <button is="coral-button" variant="quite" style="min-width:168px">
           <p> GitHub </p>
         </button>
 
-        <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/releases/download/v1.0/icons.zip">
+        <a class="p-l-10" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/releases/download/v1.0/icons.zip">
           <button is="coral-button" variant="primary" style="min-width:168px">
             <p> Download all </p>
           </button>

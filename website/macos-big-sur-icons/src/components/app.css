@@ -153,11 +153,9 @@ a{
 
 @media only screen and (max-width: 720px){
     .icon-list-area{
-        grid-template-columns: 1fr 1fr;
-        column-gap: 0px;
-        row-gap: 15px;
+        grid-template-columns: 1fr 1fr 1fr;
     }
-
+    
     .card-wrapper{
         max-width: 170px;
     }
@@ -169,8 +167,14 @@ a{
     .main-search{
         width: 95%;
     }
-}
 
+}
+@media only screen and (max-width: 660px){
+    .icon-list-area{
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
 
 
 
