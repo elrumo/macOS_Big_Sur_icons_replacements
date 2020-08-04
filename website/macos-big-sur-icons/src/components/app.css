@@ -1,5 +1,5 @@
 :root{
-    --padding-top-search: 35px;
+    --padding-top-search: 25px;
     --main-border-radius: 8px;
 }
 
@@ -72,6 +72,8 @@ a{
 
 .card-wrapper{
     width: 100%;
+    height: 100%;
+    overflow: hidden;
     max-width: 250px;
     background: white;
     border-radius: var(--main-border-radius);
@@ -122,11 +124,8 @@ a{
     position: absolute;
     left: 20px;
     top: 50%;
-    transform: translateY(-50%);
-    padding-top: var(--padding-top-search);
+    transform: translateY(40%);
 }
-
-
 
 
 
@@ -143,12 +142,11 @@ a{
     .card-wrapper{
         max-width: 350px;   
     }
-}
 
-@media only screen and (max-width: 966px){
-    .icon-list-area{
-        grid-template-columns: 1fr 1fr 1fr;
+    .card-img-wrapper {
+        padding: 10px 15px 0px 17px
     }
+
 }
 
 @media only screen and (max-width: 720px){
@@ -157,21 +155,17 @@ a{
     }
 
     .card-img-wrapper {
-        padding: 20px 45px 5px 45px;
+        padding: 10px 15px 0px 17px
     }
 
     .main-search{
-        width: 95%;
+        width: 100%;
     }
 
 }
-@media only screen and (max-width: 660px){
+@media only screen and (max-width: 512px){
     .icon-list-area{
         grid-template-columns: 1fr 1fr;
-    }
-
-    .card-wrapper{
-        max-width: 180px;
     }
 
 }
