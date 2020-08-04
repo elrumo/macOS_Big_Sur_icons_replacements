@@ -50,7 +50,6 @@
             </h3>
           </div>
         </a>
-        
       </div>
 
     </section>
