@@ -23,7 +23,7 @@
         Replacement Icons
       </h3>
       
-      <p class="coral-Body--L p-t-20 w-100 body-text">Click on each icon to download it or on the button bellow to downlaod all {{iconList.length}} icons. To contribute, click on the GitHub button. </p>
+      <p class="coral-Body--L p-t-20 w-100 body-text">Click on each icon to download it or on the button bellow to downlaod all {{iconList.length}} icons. To contribute or suggest a new icon, click on the GitHub button. </p>
 
       <div class="p-t-35 m-auto">
         <button is="coral-button" variant="quite" style="min-width:168px">
@@ -113,6 +113,12 @@ export default {
           for(let icon in list){
             let id = list[icon]
             let iconName = id.replace("_", " ")
+            // Remove all "_" from the names
+            for(let i in iconName){
+              i
+              iconName = iconName.replace("_", " ")
+            }
+            // iconName = iconName.replace("_", " ")
             let itemObj = {
               name: iconName,
               id: id,
