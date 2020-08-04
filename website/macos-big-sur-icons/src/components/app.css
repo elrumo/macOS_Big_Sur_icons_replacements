@@ -127,6 +127,13 @@ a{
     transform: translateY(40%);
 }
 
+.body-text{
+    padding-left: 40px;
+    padding-right: 40px;
+    max-width: 600px;
+    margin: auto;
+}
+
 
 
 

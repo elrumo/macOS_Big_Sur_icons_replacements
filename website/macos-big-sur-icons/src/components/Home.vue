@@ -18,10 +18,12 @@
     <!-- Hero -->
     <div id="hero" class="hero-wrapper">
       <h3 class="main-heading coral-Heading--XL coral-Heading--regular">
-        <span class="f-w-100 f-s-24">macOS Big Sur</span>
+        <span class="f-w-100 f-s-26">macOS Big Sur</span>
         <br>
-        Replacements Icons
+        Replacement Icons
       </h3>
+      
+      <p class="coral-Body--L p-t-20 w-100 body-text">Click on each icon to download it or on the button bellow to downlaod all {{iconList.length}} icons. To contribute, click on the GitHub button. </p>
 
       <div class="p-t-35 m-auto">
         <button is="coral-button" variant="quite" style="min-width:168px">
@@ -44,7 +46,7 @@
         <div class="search-bg"></div>
         <div class="m-auto main-search" style="max-width:300px;">
           <div class="shadow main-border-radius">
-            <input v-model="searchString" type="text"  class="_coral-Search-input _coral-Textfield" name="name" aria-label="text input">
+            <input v-model="searchString" :placeholder="'Search ' + iconList.length + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield" name="name" aria-label="text input">
             <svg class="icon" id="spectrum-css-icon-Magnifier" viewBox="0 0 16 16"><path d="M15.77 14.71l-4.534-4.535a6.014 6.014 0 1 0-1.06 1.06l4.533 4.535a.75.75 0 1 0 1.061-1.06zM6.5 11A4.5 4.5 0 1 1 11 6.5 4.505 4.505 0 0 1 6.5 11z"></path></svg>
           </div>
         </div>
@@ -136,7 +138,7 @@ export default {
       if(!searchString){
         return iconList;
       }
-      
+
       searchString = searchString.trim().toLowerCase();
 
       iconList = iconList.filter(function(item){
