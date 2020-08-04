@@ -155,10 +155,6 @@ a{
     .icon-list-area{
         grid-template-columns: 1fr 1fr 1fr;
     }
-    
-    .card-wrapper{
-        max-width: 170px;
-    }
 
     .card-img-wrapper {
         padding: 20px 45px 5px 45px;
@@ -172,6 +168,10 @@ a{
 @media only screen and (max-width: 660px){
     .icon-list-area{
         grid-template-columns: 1fr 1fr;
+    }
+
+    .card-wrapper{
+        max-width: 230px;
     }
 
 }
