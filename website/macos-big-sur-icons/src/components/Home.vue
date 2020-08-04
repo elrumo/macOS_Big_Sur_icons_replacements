@@ -99,7 +99,7 @@ export default {
               url:
                     "https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/"+iconName+".icns",
               img: 
-                    "https://github.com/elrumo/macOS-Big-Sur-icons-replacements/blob/master/icons/png/"+iconName+".png?raw=true)"
+                    "https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/"+iconName+".png"
             }
             parent.iconList.push(itemObj)
             // console.log(itemObj)
