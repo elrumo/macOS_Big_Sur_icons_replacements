@@ -7,9 +7,10 @@
     "build": "vue-cli-service build",
     "deploy": "npm run build; push-dir --dir=dist --branch=gh-pages --cleanup",
     "lint": "vue-cli-service lint"
-    
   },
-  "dependencies": {},
+  "dependencies": {
+    "@adobe/coral-spectrum": "^4.8.10"
+  },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",
     "@vue/cli-plugin-eslint": "~4.4.0",
