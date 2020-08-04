@@ -11,12 +11,12 @@ fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements
     for(let icon in list){
         if(i == 0){
             let iconName = list[icon]
-            let markDown = '[<img src="https://github.com/elrumo/macOS-Big-Sur-icons-replacements/blob/master/icons/png/'+iconName+'.png?raw=true)" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+iconName+'.icns)<br>['+iconName+'](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+iconName+'.icns),'
+            let markDown = '[<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/'+iconName+'.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+iconName+'.icns)<br>['+iconName+'](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+iconName+'.icns),'
             i++
             csv.push(markDown)
         } else{
             let iconName = list[icon]
-            let markDown = '[<img src="https://github.com/elrumo/macOS-Big-Sur-icons-replacements/blob/master/icons/png/'+iconName+'.png?raw=true)" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+iconName+'.icns)<br>['+iconName+'](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+iconName+'.icns)'
+            let markDown = '[<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/'+iconName+'.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+iconName+'.icns)<br>['+iconName+'](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+iconName+'.icns)'
             csv.push(markDown)
             i--
         }
