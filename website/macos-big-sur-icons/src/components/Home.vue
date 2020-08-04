@@ -54,7 +54,7 @@
       <div class="icon-list-area p-t-50 p-b-50">
         <a v-for="icon in iconList" :key="icon.name" :href="icon.url" class="card-wrapper shadow">
           <div class="card-img-wrapper">
-            <img class="w-full" :src="icon.img" alt="">
+            <img loading="lazy" class="w-full" :src="icon.img" alt="">
           </div>
           <div>
             <h3>

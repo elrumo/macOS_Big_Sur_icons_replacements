@@ -7,6 +7,10 @@ body{
     background: #F6F8FA !important;
 }
 
+a{
+    text-decoration: none;
+}
+
 .main-border-radius{
     border-radius: var(--main-border-radius)
 }
@@ -105,7 +109,7 @@ body{
 }
 
 .hero-wrapper{
-    padding-bottom: 90px;
+    padding-bottom: 60px;
 }
 
 .main-heading{
