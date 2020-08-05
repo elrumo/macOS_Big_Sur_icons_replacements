@@ -68,6 +68,12 @@ a{
 .card-light{
     background: var(--coral-light-card);
 }
+.fill-dark{
+    fill: var(--coral-dark-card);
+}
+.fill-light{
+    fill: var(--coral-light-card);
+}
 .bg-dark{
     background: var(--coral-dark-bg);
 }
