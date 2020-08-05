@@ -53,7 +53,7 @@
         <div class="m-auto main-search" style="max-width:300px;">
           <div class="shadow main-border-radius">
             <input v-model="searchString" :placeholder="'Search ' + iconList.length + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield" name="name" aria-label="text input">
-            <svg class="icon" id="spectrum-css-icon-Magnifier" viewBox="0 0 16 16"><path d="M15.77 14.71l-4.534-4.535a6.014 6.014 0 1 0-1.06 1.06l4.533 4.535a.75.75 0 1 0 1.061-1.06zM6.5 11A4.5 4.5 0 1 1 11 6.5 4.505 4.505 0 0 1 6.5 11z"></path></svg>
+            <svg class="icon fill-dark" id="spectrum-css-icon-Magnifier" viewBox="0 0 16 16"><path d="M15.77 14.71l-4.534-4.535a6.014 6.014 0 1 0-1.06 1.06l4.533 4.535a.75.75 0 1 0 1.061-1.06zM6.5 11A4.5 4.5 0 1 1 11 6.5 4.505 4.505 0 0 1 6.5 11z"></path></svg>
           </div>
         </div>
 
@@ -90,7 +90,7 @@
 
     <!-- Footer -->
     <section>
-      <footer class="p-b-20">
+      <footer class="p-b-20 coral-Body--S">
         Made with ❤️ by <a href="https://eliasruiz.com" target="_blank" class="coral-Link">Elias</a> 
       </footer>
     </section>
@@ -133,11 +133,14 @@ export default {
       let parent = this
       let body = document.getElementById("body")
       let searchBar = document.getElementById("search-bar")
+      let searchIcon = document.getElementById("spectrum-css-icon-Magnifier")
       
       body.classList.toggle('coral--light')
       body.classList.toggle('coral--dark')
       searchBar.classList.toggle('bg-light')
       searchBar.classList.toggle('bg-dark')
+      searchIcon.classList.toggle('fill-light')
+      searchIcon.classList.toggle('fill-dark')
       parent.darkMode = !parent.darkMode
     },
 
