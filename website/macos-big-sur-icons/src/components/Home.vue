@@ -26,9 +26,11 @@
       <p class="coral-Body--L p-t-20 w-100 body-text">Click on each icon to download it or on the button bellow to downlaod all {{iconList.length}} icons. To contribute or suggest a new icon, click on the GitHub button. </p>
 
       <div class="p-t-35 m-auto">
-        <button is="coral-button" variant="quite" style="min-width:168px">
-          <p> GitHub </p>
-        </button>
+        <a class="p-l-10" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" blank="_blank">
+          <button is="coral-button" variant="quite" style="min-width:168px">
+            <p> GitHub </p>
+          </button>
+        </a>
 
         <a class="p-l-10" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/releases/download/v1.0/icons.zip">
           <button is="coral-button" variant="primary" style="min-width:168px">
