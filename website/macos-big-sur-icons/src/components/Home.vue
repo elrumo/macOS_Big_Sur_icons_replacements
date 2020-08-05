@@ -7,6 +7,9 @@
         Made by <a href="https://eliasruiz.com" target="_blank" class="coral-Link">Elias</a>
       </p>
       
+      <img v-if="darkMode" @click="toggleDarkMode" class="header-item-right dark-mode-btn" src="moon-light.svg" alt="dark-mode-btn">
+      <img v-if="!darkMode" @click="toggleDarkMode" class="header-item-right dark-mode-btn" src="sun-dark.svg" alt="dark-mode-btn">
+
       <p class="header-item-right coral-Body--XL"> 
         <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank" class="coral-Link"> 
           GitHub 
@@ -43,9 +46,10 @@
 
     <!-- Icon Secion -->
     <section class="content-wrapper">
+
       <!-- Search bar -->
       <div class="main-search-wrapper">
-        <div class="search-bg"></div>
+          <div id="search-bar" class="search-bg bg-light"></div>
         <div class="m-auto main-search" style="max-width:300px;">
           <div class="shadow main-border-radius">
             <input v-model="searchString" :placeholder="'Search ' + iconList.length + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield" name="name" aria-label="text input">
@@ -55,18 +59,31 @@
 
       </div>
   
-      <div class="icon-list-area p-t-50 p-b-50">
-        <a v-for="icon in filteredList" :key="icon.name" :href="icon.url" class="card-wrapper shadow">
-        <!-- <a v-for="icon in iconList" :key="icon.name" :href="icon.url" class="card-wrapper shadow"> -->
-          <div class="card-img-wrapper">
-            <img loading="lazy" class="w-full" :src="icon.img" alt="">
-          </div>
-          <div>
-            <h3>
-             {{ icon.name }}
-            </h3>
-          </div>
-        </a>
+      <div v-if="!darkMode" class="icon-list-area p-t-50 p-b-50">
+          <a v-for="icon in filteredList" :key="icon.name" class="card-wrapper shadow card-light" :href="icon.url">
+            <div class="card-img-wrapper">
+              <img loading="lazy" class="w-full" :src="icon.img" alt="">
+            </div>
+            <div>
+              <h3 style="color: rgb(75, 75, 75)">
+
+              {{ icon.name }}
+              </h3>
+            </div>
+          </a>
+      </div>
+
+      <div v-if="darkMode" class="icon-list-area p-t-50 p-b-50">
+          <a v-for="icon in filteredList" :key="icon.name+'-dark'" class="card-wrapper shadow card-dark" :href="icon.url">
+            <div class="card-img-wrapper">
+              <img loading="lazy" class="w-full" :src="icon.img" alt="">
+            </div>
+            <div>
+              <h3 style="color: white">
+              {{ icon.name }}
+              </h3>
+            </div>
+          </a>
       </div>
 
     </section>
@@ -95,15 +112,35 @@ export default {
     return{
       iconList:[],
       searchString: "",
-      iconsToShow: []
+      iconsToShow: [],
+      darkMode: false
     }
   },
 
-  created: function(){
+  mounted: function(){
+    let parent = this
     this.getIconsArray()
+
+    if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+      parent.toggleDarkMode()
+    }
+
   },
 
   methods:{
+
+    toggleDarkMode(){
+      let parent = this
+      let body = document.getElementById("body")
+      let searchBar = document.getElementById("search-bar")
+      
+      body.classList.toggle('coral--light')
+      body.classList.toggle('coral--dark')
+      searchBar.classList.toggle('bg-light')
+      searchBar.classList.toggle('bg-dark')
+      parent.darkMode = !parent.darkMode
+    },
+
     getIconsArray(){
       var list = []
       let parent = this
@@ -130,10 +167,12 @@ export default {
                     "https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/"+id+".png"
             }
             parent.iconList.push(itemObj)
-            // console.log(itemObj)
           }
-          // csv.forEach(item=>{console.log(item)})
-          })
+          if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+            parent.darkMode = true
+          }
+      })
+
     }
   },
 
