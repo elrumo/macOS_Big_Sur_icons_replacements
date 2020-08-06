@@ -14,6 +14,7 @@ To view a full list of icons, go to [this website](https://macosicons.com) I cre
 
 ## How do I change the app icon on my mac?
 It's super easy! We've made sure that all icons here work with no problem. You just need to download the icon you want, find the app to update on Finder, select it and "File/Get Info" or "cmd + i and drag and drop the downloaded .icns file to the new window.
+<br>
 <img style="text-align: left" src="https://i.imgur.com/0Vj6sFS.png" width="300">
 
 
