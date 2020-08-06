@@ -4,9 +4,17 @@ Replacement icons for popular apps in the style of macOS Big Sur.
 
 To view a full list of icons, go to [this website](https://macosicons.com) I created, there you can download just one or all of them at once.
 
+# Table of contents
+1. [How do I change the app icon on my mac?](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/blob/master/README.md#how-do-i-change-the-app-icon-on-my-mac)
+2. [I'd like to contribute](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/blob/master/README.md#id-like-to-contribute)
+	1. [I don't know how to make a pull request or I'm not familiar with GitHub](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/blob/master/README.md#i-dont-know-how-to-make-a-pull-request-or-im-not-familiar-with-github)
+3. [List of icons](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/blob/master/README.md#list)
+4. [Credits](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/blob/master/README.md#credits)
+
+
 ## How do I change the app icon on my mac?
-It's super easy! We've made sure that all icons here work with no problem. You just need to download the icon you want, find the app to update on Finder, select it and "File/Get Info" or "cmd + i and drag and drop the downloaded .icns file to the new window.
-<img src="https://i.imgur.com/0Vj6sFS.png" width="400">
+It's super easy! We've made sure that all icons here work with no problem. You just need to download the icon you want, find the app to update on Finder, select it and "File/Get Info" or "cmd + i and drag and drop the downloaded .icns file to the new window.\
+<img style="text-align: left" src="https://i.imgur.com/0Vj6sFS.png" width="300">
 
 
 ## I'd like to contribute
@@ -21,13 +29,14 @@ Here are some rules you show know:
 ### I don't know how to make a pull request or I'm not familiar with GitHub
 Not a problem! This repo can also be a great introduction to the open source community and GitHub for designers, so welcome if you're new to this!
 
-First of all, you'll need to download the template for the icons [here](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.sketch).\
+First of all, you'll need to download the template for the icons [here](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.sketch).
 \
 
 If you're new to GitHub, or you've never made a pull request, try following [this article](https://www.freecodecamp.org/news/how-to-make-your-first-pull-request-on-github-3/).  Did you manage? Congrats! If you're still not quite sure about how to make pull requests, crate a new issue [here](https://bit.ly/macOSicons-help) and try to explain where you're stuck, and if that still doesn't work for you, simply upload the icons on a shared drive and share them with us on the newly created issue.
 
 If you are creating an icon for an open-source project, please consider submitting the icon to their respective repository for their use as well.
-
+<br>
+<br>
 ## List
 The following icons are either being worked on or have been suggested. If you have any suggestions create a new issue with the name of the app as the title [here](https://bit.ly/macOSicons-help).
 
