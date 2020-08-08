@@ -1,14 +1,16 @@
 ---
 name: Icon Submission
-about: Make an icon submission if you haven’t been able to make a pull request
-title: Name of app
-labels: ''
+about: If you can't make a pull request, submit your icons here
+title: ''
+labels: pull-request
 assignees: ''
 
 ---
 
-### Name of icon
+### Name of app
 
-
-### Links to icons (low res and high res .png and the .icns file). 
-This could be a shared drive such as Google Drive, OneDrive, iCloud...
+### Link to download the icons
+To remember to submit:
+- A low res .png
+- A high res .png
+- A .icns file made with [Image2Icon](www.img2icnsapp.com) or similar
