@@ -87,6 +87,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Brave_Nightly
 - [x] Calibre
 - [x] Capo
+- [x] CCleaner
 - [x] Chrome_Canary
 - [x] CleanMyMac
 - [x] Compressor
@@ -158,6 +159,9 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Musescore
 - [x] Netflix
 - [x] NordVPN
+- [x] NordVPN 2
+- [x] NordPass
+- [x] NordLocker
 - [x] Notability
 - [x] Notion
 - [x] OBS
@@ -197,6 +201,8 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Swift_Playgrounds_Alt2
 - [x] Teamspeak
 - [x] Telegram
+- [x] Tidal
+- [x] Tidal 2
 - [x] Things_3
 - [x] Tower
 - [x] Transmission
@@ -212,6 +218,8 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] VMware_Fusion
 - [x] Visual_Studio
 - [x] Visual_Studio_Code
+- [x] Visual_Studio_Code_alt2
+- [x] Visual_Studio_Code_alt3
 - [x] WebBites
 - [x] Whatsapp
 - [x] XScope
@@ -316,16 +324,16 @@ The following icons are either being worked on or have been suggested. If you ha
 
 ## Credits
 
-| Icons by [Elias](https://eliasruiz.com) | Icons by [Anmol](https://dribbble.com/agraaaaao) | Icons by [Mattophobia](https://reddit.com/u/Mattophobia) | Icons by [Gracjan](https://github.com/gracjankn) |
-|-|-|-|-|
-| iA Writer | iTerm | Musescore | BBEdit |
-| Dashlane | Affinity Suite | Garageband | Brave Nightly |
-| Figma | Permute 3 (Light & Dark variants) | iMovie_Alt | Keyboard Maestro |
-| Iina | Yoink | Swift Playgrounds (Alt) | Minimal Consent |
-| Opera | Microsoft Word, Excel, Powerpoint and OneNote | Swift Playgrounds (Alt 2) | StopTheMadness |
-| OneDrive | Google Chrome Canary | Alfred |  |
-| Spark | 1Password | Amplitube |  |
-| Sublime Text | 5217 (Web App) | Amplitube Auth Manager |  |
+| Icons by [Elias](https://eliasruiz.com) | Icons by [Anmol](https://dribbble.com/agraaaaao) | Icons by [Mattophobia](https://reddit.com/u/Mattophobia) | Icons by [Gracjan](https://github.com/gracjankn) | Icons by [Ovennell](https://github.com/ovennell) |
+|-|-|-|-|-|
+| iA Writer | iTerm | Musescore | BBEdit | NordVPN (Alt 2)
+| Dashlane | Affinity Suite | Garageband | Brave Nightly | NordPass
+| Figma | Permute 3 (Light & Dark variants) | iMovie_Alt | Keyboard Maestro | NordLocker
+| Iina | Yoink | Swift Playgrounds (Alt) | Minimal Consent | Visual Studio Code (Alt 2)
+| Opera | Microsoft Word, Excel, Powerpoint and OneNote | Swift Playgrounds (Alt 2) | StopTheMadness | Visual Studio Code (Alt 3)
+| OneDrive | Google Chrome Canary | Alfred | | CCleaner
+| Spark | 1Password | Amplitube | | Tidal
+| Sublime Text | 5217 (Web App) | Amplitube Auth Manager | | Tidal (Alt 2)
 | Transmit | FontLab | Custom Shop |  |
 | VS Code | Sip 2 | AltServer |  |
 | WebBites | Slack | Backup & Sync |  |
