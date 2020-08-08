@@ -150,7 +150,7 @@ export default {
       fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icns.txt')
         .then(response => response.text())
         .then((data) => {
-          list = data.split(", ")
+          list = data.split(",\n")
 
           for(let icon in list){
             let id = list[icon]
