@@ -334,7 +334,7 @@ The following icons are either being worked on or have been suggested. If you ha
 | OneDrive | Google Chrome Canary | Alfred | | CCleaner
 | Spark | 1Password | Amplitube | | Tidal
 | Sublime Text | 5217 (Web App) | Amplitube Auth Manager | | Tidal (Alt 2)
-| Transmit | FontLab | Custom Shop |  |
+| Transmit | FontLab | Custom Shop |  | Instagram (alt 2)
 | VS Code | Sip 2 | AltServer |  |
 | WebBites | Slack | Backup & Sync |  |
 | Hyper | Redacted | Bartender |  |
