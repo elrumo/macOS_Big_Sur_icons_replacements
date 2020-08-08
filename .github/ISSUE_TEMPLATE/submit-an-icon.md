@@ -1,5 +1,5 @@
 ---
-name: Icon submission
+name: Submit an icon
 about: If you can't make a pull request, submit your icons here
 title: 'To Submit: [name of app]'
 labels: icon-submission
