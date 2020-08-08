@@ -2,297 +2,367 @@
 
 Replacement icons for popular apps in the style of macOS Big Sur.
 
-Click on each icon to download it. Or click [here](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons.zip) to download all of them in a .zip file.
+To view a full list of icons, go to [this website](https://macosicons.com) I created, there you can download just one or all of them at once.
 
-If you'd like to contribute, you'd need to export the icon to .png and then use [this free app](https://apps.apple.com/gb/app/image2icon-make-your-icons/id992115977?mt=12) to export it to a usable .icns file.
+# Table of contents
+1. [How do I change the app icon on my mac?](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/blob/master/README.md#how-do-i-change-the-app-icon-on-my-mac)
+2. [I'd like to contribute](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/blob/master/README.md#id-like-to-contribute)
+	1. [I don't know how to make a pull request or I'm not familiar with GitHub](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/blob/master/README.md#i-dont-know-how-to-make-a-pull-request-or-im-not-familiar-with-github)
+3. [List of icons](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/blob/master/README.md#list)
+4. [Credits](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/blob/master/README.md#credits)
 
-If you are creating an icon for an open-source project, please consider submitting the icon to their respective repository for their use as well.
 
-## Icons
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/1Password.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/1Password.icns)<br>[1Password](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/1Password.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/5217.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/5217.icns)<br>[5217](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/5217.icns) |
-|:-:|:-:|
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/AdBlocker.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/AdBlocker.icns)<br>[AdBlocker](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/AdBlocker.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_Acrobat.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Acrobat.icns)<br>[Adobe_Acrobat](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Acrobat.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_After_Effects.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_After_Effects.icns)<br>[Adobe_After_Effects](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_After_Effects.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_Animate.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Animate.icns)<br>[Adobe_Animate](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Animate.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_Audition.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Audition.icns)<br>[Adobe_Audition](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Audition.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_Bridge.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Bridge.icns)<br>[Adobe_Bridge](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Bridge.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_CC.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_CC.icns)<br>[Adobe_CC](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_CC.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_Character_Animation.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Character_Animation.icns)<br>[Adobe_Character_Animation](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Character_Animation.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_Dimension.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Dimension.icns)<br>[Adobe_Dimension](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Dimension.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_Dreamweaver.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Dreamweaver.icns)<br>[Adobe_Dreamweaver](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Dreamweaver.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_Illustrator.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Illustrator.icns)<br>[Adobe_Illustrator](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Illustrator.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_InCopy.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_InCopy.icns)<br>[Adobe_InCopy](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_InCopy.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_Indesign.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Indesign.icns)<br>[Adobe_Indesign](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Indesign.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_Lightroom.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Lightroom.icns)<br>[Adobe_Lightroom](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Lightroom.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_Media_Encoder.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Media_Encoder.icns)<br>[Adobe_Media_Encoder](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Media_Encoder.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_Photoshop.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Photoshop.icns)<br>[Adobe_Photoshop](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Photoshop.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_Portfolio.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Portfolio.icns)<br>[Adobe_Portfolio](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Portfolio.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_Prelude.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Prelude.icns)<br>[Adobe_Prelude](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Prelude.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_Premiere_Pro.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Premiere_Pro.icns)<br>[Adobe_Premiere_Pro](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Premiere_Pro.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_Rush.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Rush.icns)<br>[Adobe_Rush](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Rush.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_Spark.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Spark.icns)<br>[Adobe_Spark](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Spark.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_Stock.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Stock.icns)<br>[Adobe_Stock](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_Stock.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Adobe_XD.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_XD.icns)<br>[Adobe_XD](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Adobe_XD.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Affinity_Designer.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Affinity_Designer.icns)<br>[Affinity_Designer](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Affinity_Designer.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Affinity_Photo.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Affinity_Photo.icns)<br>[Affinity_Photo](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Affinity_Photo.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Affinity_Publisher.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Affinity_Publisher.icns)<br>[Affinity_Publisher](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Affinity_Publisher.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Alfred.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Alfred.icns)<br>[Alfred](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Alfred.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/AltServer.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/AltServer.icns)<br>[AltServer](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/AltServer.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Amphetamine.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Amphetamine.icns)<br>[Amphetamine](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Amphetamine.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Amplitube.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Amplitube.icns)<br>[Amplitube](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Amplitube.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Amplitube_Auth_Manager.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Amplitube_Auth_Manager.icns)<br>[Amplitube_Auth_Manager](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Amplitube_Auth_Manager.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Android_Studio.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Android_Studio.icns)<br>[Android_Studio](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Android_Studio.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Android_Studio_Beta.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Android_Studio_Beta.icns)<br>[Android_Studio_Beta](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Android_Studio_Beta.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Astropad.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Astropad.icns)<br>[Astropad](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Astropad.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Astropad_Studio.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Astropad_Studio.icns)<br>[Astropad_Studio](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Astropad_Studio.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Atom.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Atom.icns)<br>[Atom](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Atom.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Autodesk_Sketch.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Autodesk_Sketch.icns)<br>[Autodesk_Sketch](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Autodesk_Sketch.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Backup_And_Sync.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Backup_And_Sync.icns)<br>[Backup_And_Sync](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Backup_And_Sync.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Bartender.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Bartender.icns)<br>[Bartender](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Bartender.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Bear_Notes.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Bear_Notes.icns)<br>[Bear_Notes](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Bear_Notes.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/BetterTouchTool.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/BetterTouchTool.icns)<br>[BetterTouchTool](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/BetterTouchTool.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/blender_dark.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/blender_dark.icns)<br>[blender_dark](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/blender_dark.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/blender_light.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/blender_light.icns)<br>[blender_light](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/blender_light.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Brave.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Brave.icns)<br>[Brave](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Brave.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Calibre.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Calibre.icns)<br>[Calibre](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Calibre.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Capo.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Capo.icns)<br>[Capo](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Capo.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Chrome_Canary.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Chrome_Canary.icns)<br>[Chrome_Canary](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Chrome_Canary.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/CleanMyMac.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/CleanMyMac.icns)<br>[CleanMyMac](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/CleanMyMac.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Compressor.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Compressor.icns)<br>[Compressor](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Compressor.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/CraftDocs.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/CraftDocs.icns)<br>[CraftDocs](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/CraftDocs.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Custom_Shop.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Custom_Shop.icns)<br>[Custom_Shop](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Custom_Shop.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Dark_Reader.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Dark_Reader.icns)<br>[Dark_Reader](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Dark_Reader.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Dashlane.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Dashlane.icns)<br>[Dashlane](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Dashlane.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/DayOne.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/DayOne.icns)<br>[DayOne](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/DayOne.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Deliveries.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Deliveries.icns)<br>[Deliveries](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Deliveries.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Discord.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Discord.icns)<br>[Discord](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Discord.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Downie.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Downie.icns)<br>[Downie](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Downie.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Drafts.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Drafts.icns)<br>[Drafts](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Drafts.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Dropbox.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Dropbox.icns)<br>[Dropbox](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Dropbox.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Dropbox_alt.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Dropbox_alt.icns)<br>[Dropbox_alt](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Dropbox_alt.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Dropbox_alt2.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Dropbox_alt2.icns)<br>[Dropbox_alt2](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Dropbox_alt2.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/DuckDuckGo.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/DuckDuckGo.icns)<br>[DuckDuckGo](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/DuckDuckGo.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Electron.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Electron.icns)<br>[Electron](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Electron.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Emcee.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Emcee.icns)<br>[Emcee](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Emcee.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Epic_games.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Epic_games.icns)<br>[Epic_games](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Epic_games.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/FB_messenger.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/FB_messenger.icns)<br>[FB_messenger](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/FB_messenger.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Figma.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Figma.icns)<br>[Figma](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Figma.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Filezilla.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Filezilla.icns)<br>[Filezilla](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Filezilla.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Final_Cut_Pro.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Final_Cut_Pro.icns)<br>[Final_Cut_Pro](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Final_Cut_Pro.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Final_Cut_Pro_Alt.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Final_Cut_Pro_Alt.icns)<br>[Final_Cut_Pro_Alt](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Final_Cut_Pro_Alt.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Firefox.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Firefox.icns)<br>[Firefox](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Firefox.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Firefox_dev.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Firefox_dev.icns)<br>[Firefox_dev](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Firefox_dev.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Flux.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Flux.icns)<br>[Flux](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Flux.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Folx.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Folx.icns)<br>[Folx](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Folx.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/FontLab.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/FontLab.icns)<br>[FontLab](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/FontLab.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Garageband.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Garageband.icns)<br>[Garageband](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Garageband.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Github.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Github.icns)<br>[Github](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Github.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Glance.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Glance.icns)<br>[Glance](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Glance.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Google_Chrome.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Google_Chrome.icns)<br>[Google_Chrome](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Google_Chrome.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Google_Chrome_Alt.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Google_Chrome_Alt.icns)<br>[Google_Chrome_Alt](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Google_Chrome_Alt.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Handbrake.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Handbrake.icns)<br>[Handbrake](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Handbrake.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/HapticKey.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/HapticKey.icns)<br>[HapticKey](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/HapticKey.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Harvest.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Harvest.icns)<br>[Harvest](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Harvest.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Hyper.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Hyper.icns)<br>[Hyper](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Hyper.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Icons_8.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Icons_8.icns)<br>[Icons_8](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Icons_8.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Iina.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Iina.icns)<br>[Iina](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Iina.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Iina_alt.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Iina_alt.icns)<br>[Iina_alt](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Iina_alt.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Image2Icon.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Image2Icon.icns)<br>[Image2Icon](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Image2Icon.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/ImageOptim.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/ImageOptim.icns)<br>[ImageOptim](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/ImageOptim.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Instagram.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Instagram.icns)<br>[Instagram](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Instagram.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Launchpad.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Launchpad.icns)<br>[Launchpad](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Launchpad.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Launchpad_alt.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Launchpad_alt.icns)<br>[Launchpad_alt](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Launchpad_alt.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Logic_Pro_X.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Logic_Pro_X.icns)<br>[Logic_Pro_X](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Logic_Pro_X.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Logic_Pro_X_Alt.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Logic_Pro_X_Alt.icns)<br>[Logic_Pro_X_Alt](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Logic_Pro_X_Alt.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Loopback.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Loopback.icns)<br>[Loopback](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Loopback.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/MacMediaKeyForwarder.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/MacMediaKeyForwarder.icns)<br>[MacMediaKeyForwarder](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/MacMediaKeyForwarder.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/MagicPrefs.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/MagicPrefs.icns)<br>[MagicPrefs](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/MagicPrefs.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/MainStage.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/MainStage.icns)<br>[MainStage](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/MainStage.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Malwarebytes.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Malwarebytes.icns)<br>[Malwarebytes](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Malwarebytes.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Material_Colors.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Material_Colors.icns)<br>[Material_Colors](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Material_Colors.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Material_Palette_Generator.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Material_Palette_Generator.icns)<br>[Material_Palette_Generator](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Material_Palette_Generator.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Microsoft_Edge.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Microsoft_Edge.icns)<br>[Microsoft_Edge](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Microsoft_Edge.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Microsoft_Excel.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Microsoft_Excel.icns)<br>[Microsoft_Excel](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Microsoft_Excel.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Microsoft_OneNote.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Microsoft_OneNote.icns)<br>[Microsoft_OneNote](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Microsoft_OneNote.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Microsoft_Outlook.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Microsoft_Outlook.icns)<br>[Microsoft_Outlook](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Microsoft_Outlook.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Microsoft_Powerpoint.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Microsoft_Powerpoint.icns)<br>[Microsoft_Powerpoint](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Microsoft_Powerpoint.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Microsoft_Teams.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Microsoft_Teams.icns)<br>[Microsoft_Teams](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Microsoft_Teams.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Microsoft_To_Do.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Microsoft_To_Do.icns)<br>[Microsoft_To_Do](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Microsoft_To_Do.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Microsoft_Word.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Microsoft_Word.icns)<br>[Microsoft_Word](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Microsoft_Word.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Minecraft.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Minecraft.icns)<br>[Minecraft](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Minecraft.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Mosaic.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Mosaic.icns)<br>[Mosaic](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Mosaic.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Motion.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Motion.icns)<br>[Motion](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Motion.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Musescore.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Musescore.icns)<br>[Musescore](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Musescore.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Netflix.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Netflix.icns)<br>[Netflix](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Netflix.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/NordVPN.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/NordVPN.icns)<br>[NordVPN](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/NordVPN.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Notability.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Notability.icns)<br>[Notability](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Notability.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Notion.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Notion.icns)<br>[Notion](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Notion.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/OBS.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/OBS.icns)<br>[OBS](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/OBS.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Origin.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Origin.icns)<br>[Origin](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Origin.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/OmniFocus.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/OmniFocus.icns)<br>[OmniFocus](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/OmniFocus.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/OneDrive.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/OneDrive.icns)<br>[OneDrive](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/OneDrive.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Open_Emu.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Open_Emu.icns)<br>[Open_Emu](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Open_Emu.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Opera.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Opera.icns)<br>[Opera](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Opera.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/P-Touch.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/P-Touch.icns)<br>[P-Touch](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/P-Touch.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Parallels_Desktop.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Parallels_Desktop.icns)<br>[Parallels_Desktop](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Parallels_Desktop.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Permute.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Permute.icns)<br>[Permute](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Permute.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Permute_Dark.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Permute_Dark.icns)<br>[Permute_Dark](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Permute_Dark.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Pipifier.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Pipifier.icns)<br>[Pipifier](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Pipifier.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Pixelmator_Pro.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Pixelmator_Pro.icns)<br>[Pixelmator_Pro](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Pixelmator_Pro.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Quip.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Quip.icns)<br>[Quip](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Quip.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Raindrop.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Raindrop.icns)<br>[Raindrop](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Raindrop.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Redacted.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Redacted.icns)<br>[Redacted](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Redacted.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Reeder.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Reeder.icns)<br>[Reeder](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Reeder.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Reflector.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Reflector.icns)<br>[Reflector](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Reflector.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Rhinoceros.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Rhinoceros.icns)<br>[Rhinoceros](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Rhinoceros.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Screenshots.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Screenshots.icns)<br>[Screenshots](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Screenshots.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Sensei.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Sensei.icns)<br>[Sensei](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Sensei.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Setapp.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Setapp.icns)<br>[Setapp](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Setapp.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Signal.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Signal.icns)<br>[Signal](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Signal.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Sip.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Sip.icns)<br>[Sip](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Sip.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Sketch.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Sketch.icns)<br>[Sketch](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Sketch.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Sketchup.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Sketchup.icns)<br>[Sketchup](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Sketchup.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Slack.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Slack.icns)<br>[Slack](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Slack.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Spark.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Spark.icns)<br>[Spark](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Spark.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Speedtest.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Speedtest.icns)<br>[Speedtest](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Speedtest.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Spotify.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Spotify.icns)<br>[Spotify](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Spotify.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Spotify_Alternate.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Spotify_Alternate.icns)<br>[Spotify_Alternate](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Spotify_Alternate.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Sublime_Text.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Sublime_Text.icns)<br>[Sublime_Text](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Sublime_Text.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Swift_Playgrounds.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Swift_Playgrounds.icns)<br>[Swift_Playgrounds](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Swift_Playgrounds.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Swift_Playgrounds_Alt.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Swift_Playgrounds_Alt.icns)<br>[Swift_Playgrounds_Alt](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Swift_Playgrounds_Alt.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Swift_Playgrounds_Alt2.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Swift_Playgrounds_Alt2.icns)<br>[Swift_Playgrounds_Alt2](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Swift_Playgrounds_Alt2.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Teamspeak.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Teamspeak.icns)<br>[Teamspeak](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Teamspeak.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Telegram.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Telegram.icns)<br>[Telegram](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Telegram.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Things_3.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Things_3.icns)<br>[Things_3](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Things_3.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Tower.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Tower.icns)<br>[Tower](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Tower.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Transmission.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Transmission.icns)<br>[Transmission](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Transmission.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Transmit.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Transmit.icns)<br>[Transmit](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Transmit.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Trello.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Trello.icns)<br>[Trello](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Trello.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Twitter.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Twitter.icns)<br>[Twitter](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Twitter.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/UAD_Console.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/UAD_Console.icns)<br>[UAD_Console](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/UAD_Console.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/UAD_Control_Panel.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/UAD_Control_Panel.icns)<br>[UAD_Control_Panel](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/UAD_Control_Panel.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Unicorn_Unblocker.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Unicorn_Unblocker.icns)<br>[Unicorn_Unblocker](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Unicorn_Unblocker.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Unity_Editor.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Unity_Editor.icns)<br>[Unity_Editor](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Unity_Editor.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Unity_Hub.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Unity_Hub.icns)<br>[Unity_Hub](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Unity_Hub.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/VLC.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/VLC.icns)<br>[VLC](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/VLC.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/VMware_Fusion.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/VMware_Fusion.icns)<br>[VMware_Fusion](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/VMware_Fusion.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Visual_Studio.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Visual_Studio.icns)<br>[Visual_Studio](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Visual_Studio.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Visual_Studio_Code.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Visual_Studio_Code.icns)<br>[Visual_Studio_Code](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Visual_Studio_Code.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/WebBites.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/WebBites.icns)<br>[WebBites](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/WebBites.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Whatsapp.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Whatsapp.icns)<br>[Whatsapp](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Whatsapp.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/XScope.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/XScope.icns)<br>[XScope](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/XScope.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Xcode.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Xcode.icns)<br>[Xcode](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Xcode.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Yoink.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Yoink.icns)<br>[Yoink](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Yoink.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Zoom.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Zoom.icns)<br>[Zoom](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Zoom.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/cDock.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/cDock.icns)<br>[cDock](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/cDock.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/coconutBattery.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/coconutBattery.icns)<br>[coconutBattery](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/coconutBattery.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/iA_writer.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/iA_writer.icns)<br>[iA_writer](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/iA_writer.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/iMovie.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/iMovie.icns)<br>[iMovie](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/iMovie.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/iMovie_Alt.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/iMovie_Alt.icns)<br>[iMovie_Alt](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/iMovie_Alt.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/iStat.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/iStat.icns)<br>[iStat](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/iStat.icns) |
-| [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/iTerm.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/iTerm.icns)<br>[iTerm](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/iTerm.icns) | [<img src="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/Übersicht.png" width="100">](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Übersicht.icns)<br>[Übersicht](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/Übersicht.icns) |
+## How do I change the app icon on my mac?
+It's super easy! We've made sure that all icons here work with no problem. You just need to download the icon you want, find the app to update on Finder, select it and "File/Get Info" or "cmd + i and drag and drop the downloaded .icns file to the new window.
+<br>
+<img style="text-align: left" src="https://i.imgur.com/0Vj6sFS.png" width="300">
 
+
+## I'd like to contribute
+
+Here are some rules you show know:
+- Don't use spaces for the icon names, instead use "_"
+- When using the template, export in 1x (high res) and 0.25x (low res)
+- Before uploading the the icons, add their names exactly as they have been exported to the [icons.txt](https://bit.ly/macOSicons-txt) file
+- Use [this free app](http://www.img2icnsapp.com) to convert the .png to a usable .icns
+- Make a Pull Request with the new icons
+- If you are creating an icon for an open-source project, please consider submitting the icon to their respective repository for their use as well.
+
+### I don't know how to make a pull request or I'm not familiar with GitHub
+Not a problem! This repo can also be a great introduction to the open source community and GitHub for designers, so welcome if you're new to this!
+
+First of all, you'll need to download the template for the icons [here](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.sketch).
+
+If you're new to GitHub, or you've never made a pull request, try following [this article](https://www.freecodecamp.org/news/how-to-make-your-first-pull-request-on-github-3/).  Did you manage? Congrats! If you're still not quite sure about how to make pull requests, crate a new issue [here](https://bit.ly/macOSicons-help) and try to explain where you're stuck, and if that still doesn't work for you, simply upload the icons on a shared drive and share them with us on the newly created issue.
+<br>
+<br>
 ## List
+The following icons are either being worked on or have been suggested. If you have any suggestions create a new issue with the name of the app as the title [here](https://bit.ly/macOSicons-help).
 
-The following icons are either being worked on or have been suggested. If you have any suggestions create a new issue with the name of the app as the title [here](https://github.com/elrumo/macOS-Big-Sur-icons-replacements/issues/new).
-
+- [x] 1Password
+- [x] 5217
+- [x] AdBlocker
+- [x] Adobe_Acrobat
+- [x] Adobe_After_Effects
+- [x] Adobe_Animate
+- [x] Adobe_Audition
+- [x] Adobe_Bridge
+- [x] Adobe_CC
+- [x] Adobe_Character_Animation
+- [x] Adobe_Dimension
+- [x] Adobe_Dreamweaver
+- [x] Adobe_Illustrator
+- [x] Adobe_InCopy
+- [x] Adobe_Indesign
+- [x] Adobe_Lightroom
+- [x] Adobe_Media_Encoder
+- [x] Adobe_Photoshop
+- [x] Adobe_Portfolio
+- [x] Adobe_Prelude
+- [x] Adobe_Premiere_Pro
+- [x] Adobe_Rush
+- [x] Adobe_Spark
+- [x] Adobe_Stock
+- [x] Adobe_XD
+- [x] Affinity_Designer
+- [x] Affinity_Photo
+- [x] Affinity_Publisher
+- [x] Alfred
+- [x] AltServer
+- [x] Amphetamine
+- [x] Amplitube
+- [x] Amplitube_Auth_Manager
+- [x] Android_Studio
+- [x] Android_Studio_Beta
+- [x] Astropad
+- [x] Astropad_Studio
+- [x] Atom
+- [x] Autodesk_Sketch
+- [x] BBEdit
+- [x] Backup_And_Sync
+- [x] Bartender
+- [x] Bear_Notes
+- [x] BetterTouchTool
+- [x] Brave
+- [x] Brave_Nightly
+- [x] Calibre
+- [x] Capo
+- [x] Chrome_Canary
+- [x] CleanMyMac
+- [x] Compressor
+- [x] CraftDocs
+- [x] Custom_Shop
+- [x] Dark_Reader
+- [x] Dashlane
+- [x] DayOne
+- [x] Deliveries
+- [x] Discord
+- [x] Downie
+- [x] Drafts
+- [x] Dropbox
+- [x] Dropbox_alt
+- [x] Dropbox_alt2
+- [x] DuckDuckGo
+- [x] Electron
+- [x] Emcee
+- [x] Epic_games
+- [x] FB_messenger
+- [x] Figma
+- [x] Filezilla
+- [x] Final_Cut_Pro
+- [x] Final_Cut_Pro_Alt
+- [x] Firefox
+- [x] Firefox_dev
+- [x] Flux
+- [x] Folx
+- [x] FontLab
+- [x] Garageband
+- [x] Github
+- [x] Glance
+- [x] Google_Chrome
+- [x] Google_Chrome_Alt
+- [x] Handbrake
+- [x] HapticKey
+- [x] Harvest
+- [x] Hyper
+- [x] Icons_8
+- [x] Iina
+- [x] Iina_alt
+- [x] Image2Icon
+- [x] ImageOptim
+- [x] Instagram
+- [x] Keyboard_Maestro
+- [x] Launchpad
+- [x] Launchpad_alt
+- [x] Logic_Pro_X
+- [x] Logic_Pro_X_Alt
+- [x] Loopback
+- [x] MacMediaKeyForwarder
+- [x] MagicPrefs
+- [x] MainStage
+- [x] Malwarebytes
+- [x] Material_Colors
+- [x] Material_Palette_Generator
+- [x] Microsoft_Edge
+- [x] Microsoft_Excel
+- [x] Microsoft_OneNote
+- [x] Microsoft_Outlook
+- [x] Microsoft_Powerpoint
+- [x] Microsoft_Teams
+- [x] Microsoft_To_Do
+- [x] Microsoft_Word
+- [x] Minecraft
+- [x] Minimal_Consent
+- [x] Mosaic
+- [x] Motion
+- [x] Musescore
+- [x] Netflix
+- [x] NordVPN
+- [x] Notability
+- [x] Notion
+- [x] OBS
+- [x] OmniFocus
+- [x] OneDrive
+- [x] Open_Emu
+- [x] Opera
+- [x] Origin
+- [x] P-Touch
+- [x] Parallels_Desktop
+- [x] Permute
+- [x] Permute_Dark
+- [x] Pipifier
+- [x] Pixelmator_Pro
+- [x] Quip
+- [x] Raindrop
+- [x] Redacted
+- [x] Reeder
+- [x] Reflector
+- [x] Rhinoceros
+- [x] Screenshots
+- [x] Sensei
+- [x] Setapp
+- [x] Signal
+- [x] Sip
+- [x] Sketch
+- [x] Sketchup
+- [x] Slack
+- [x] Spark
+- [x] Speedtest
+- [x] Spotify
+- [x] Spotify_Alternate
+- [x] StopTheMadness
+- [x] Sublime_Text
+- [x] Swift_Playgrounds
+- [x] Swift_Playgrounds_Alt
+- [x] Swift_Playgrounds_Alt2
+- [x] Teamspeak
+- [x] Telegram
+- [x] Things_3
+- [x] Tower
+- [x] Transmission
+- [x] Transmit
+- [x] Trello
+- [x] Twitter
+- [x] UAD_Console
+- [x] UAD_Control_Panel
+- [x] Unicorn_Unblocker
+- [x] Unity_Editor
+- [x] Unity_Hub
+- [x] VLC
+- [x] VMware_Fusion
+- [x] Visual_Studio
+- [x] Visual_Studio_Code
+- [x] WebBites
+- [x] Whatsapp
+- [x] XScope
+- [x] Xcode
+- [x] Yoink
+- [x] Zoom
+- [x] blender_dark
+- [x] blender_light
+- [x] cDock
+- [x] coconutBattery
+- [x] iA_writer
+- [x] iA_writer_dark
+- [x] iMovie
+- [x] iMovie_Alt
+- [x] iStat
+- [x] iTerm
+- [x] Übersicht
 - [ ] Ableton Live Standard & Suite
 - [ ] AdGuard
-- [x] Alfred
-- [x] Alfred Preferences
 - [ ] AnyDesk
-- [ ] Audio MIDI Setup
 - [ ] App Cleaner
 - [ ] Araxis Merge
-- [x] Astropad Studio
-- [x] Atom
+- [ ] Audio MIDI Setup
 - [ ] Authy Desktop
 - [ ] Avid Sibelius
+- [ ] BBEdit
+- [ ] BBEdit
 - [ ] Balena Etcher
 - [ ] Battery Health 2
 - [ ] Battle.net
-- [ ] BBEdit
-- [x] BetterTouchTool
 - [ ] Bitwarden
-- [x] Blender
-- [x] Brave Browser
 - [ ] Brave Browser Nightly
+- [ ] Brave Nightly
 - [ ] Browserosaurus
-- [x] Calibre
 - [ ] Canary Mail
+- [ ] Chromium
 - [ ] Chronicle Pro
 - [ ] Cinema 4D
-- [ ] Chromium
-- [x] coconutBattery
-- [x] Compressor
 - [ ] CotEditor
 - [ ] Cuphead
-- [x] Dashlane
 - [ ] Daisy Disk
-- [x] Dark Reader
 - [ ] Diagrams
 - [ ] Disconnect Premium
-- [x] Discord
-- [x] Downie 4
 - [ ] Drafts
-- [x] Dropbox
 - [ ] Edison Mail
-- [x] Electron
 - [ ] Elmedia Player
 - [ ] EverWeb
-- [x] Facebook Messenger
 - [ ] Fantastical
-- [x] Figma
-- [x] Filezilla
-- [x] Final Cut Pro X
-- [x] Firefox
-- [x] Firefox Dev
 - [ ] Firefox Nightly
-- [x] Folx
 - [ ] Garmin Express
 - [ ] GeoGebra
-- [x] GitHub Desktop
 - [ ] Gmail
 - [ ] GoodNotes
-- [x] Handbrake
 - [ ] Hearthstone
 - [ ] Hidden Bar
-- [x] iA Writer
-- [x] Icons8
-- [x] Iina
-- [x] ImageOptim
-- [x] iMovie
 - [ ] Install macOS Beta
 - [ ] KeepingYouAwake
 - [ ] Keka
 - [ ] Keyboard Maestro
+- [ ] Keyboard Maestro
 - [ ] LastPass
 - [ ] LibreOffice
-- [x] Logic Pro X
 - [ ] LookUp
 - [ ] LyricsX
+- [ ] MAMP
+- [ ] MacUpdater
 - [ ] Macs Fan Control
 - [ ] Mactracker
-- [ ] MacUpdater
 - [ ] Magnet
-- [x] MainStage
-- [x] Malwarebytes
-- [ ] MAMP
-- [x] Microsoft Edge
-- [x] Minecraft
-- [x] Motion
+- [ ] Minimal Consent
 - [ ] Movist Pro
-- [ ] mpv
 - [ ] NextDNS
-- [x] NordVPN
-- [x] Notion
-- [x] OBS (Open Broadcaster Software)
-- [x] Office Suit
-- [x] OmniFocus
-- [x] OneDrive
-- [x] Opera
-- [x] Origin
 - [ ] Parcel
 - [ ] Pioneer Rekordbox
 - [ ] Pixelmator
-- [x] Pixelmator Pro
+- [ ] Plex
 - [ ] Presentify
 - [ ] Private Internet Access
 - [ ] ProWritingAid
-- [ ] Plex
-- [ ] qBittorrent
 - [ ] QQ
-- [x] Raindrop.io
-- [x] Reeder
-- [x] Signal
-- [ ] smcFanControl
 - [ ] SoundflowerBed
-- [x] Spark
 - [ ] Speechify
 - [ ] Splice
 - [ ] Steam
+- [ ] StopTheMadness
 - [ ] Streamlabs OBS
-- [x] Sublime Text
 - [ ] Supernova Studio
-- [x] Swift Playgrounds
 - [ ] Tampermonkey
 - [ ] TeamViewer
 - [ ] The Unarchiver
-- [x] Things 3
 - [ ] ToothFairy
-- [x] Transmit
 - [ ] Transmission
 - [ ] Tweetbot
-- [x] Twitter
 - [ ] VideoDuke
-- [x] VLC
-- [x] VS Code
 - [ ] Western Digital Discovery
 - [ ] Wipr
-- [x] Xcode
 - [ ] XTRAX STEMS
 - [ ] Zotero
+- [ ] mpv
+- [ ] qBittorrent
+- [ ] smcFanControl
 
 ## Credits
 
-| Icons by [Elias](https://eliasruiz.com) | Icons by [Anmol](https://dribbble.com/agraaaaao) | Icons by [Mattophobia](https://reddit.com/u/Mattophobia) |
-|-|-|-|
-| iA Writer | iTerm | Musescore |
-| Dashlane | Affinity Suite | Garageband |
-| Figma | Permute 3 (Light & Dark variants) | iMovie_Alt |
-| Iina | Yoink | Swift Playgrounds (Alt) |
-| Opera | Microsoft Word, Excel, Powerpoint and OneNote | Swift Playgrounds (Alt 2) |
-| OneDrive | Google Chrome Canary | Alfred |
-| Spark | 1Password | Amplitube |
-| Sublime Text | 5217 (Web App) | Amplitube Auth Manager |
-| Transmit | FontLab | Custom Shop |
-| VS Code | Sip 2 | AltServer |
-| WebBites | Slack | Backup & Sync |
-| Hyper | Redacted | Bartender |
-| iTerm 2 | Amphetamine | BetterTouchTool |
-| Xcode | Rhino for macOS | Capo |
-| Swift_Playgrounds | Material Palette Generator (Web App) | Dark Reader |
-| Brave | Android Studio | DuckDuckGo |
-| Raindrop | Sensei | Emcee |
-| Astropad_Studio | Reflector 3 | Flux |
-| Harvest | cDock | Folx |
-| Epic_games | Telegram | Handbrake |
-| Transmission | Spotify | iStat |
-| Icons_8 | Whatsapp | Launchpad (Alt) |
-| OmniFocus | Google Chrome | Loopback |
-| Dropbox | Sketch | Mosaic |
-| Dropbox_alt | Haptic Key | OBS |
-| VLC |  | P-Touch |
-| Astropad |  | Signal |
-| Electron |  | Speedtest |
-| Malwarebytes |  | Teamspeak |
-| iMovie |  | UAD Console |
-| Reeder |  | UAD Control Panel |
-| Filezila |  | Unicorn Unblocker |
-| Discord |  | Compressor |
-| coconutBattery |  | Final Cut Pro (Alt) |
-| Atom |  | Logic Pro X (Alt) |
-| Pixelmator_Pro |  | MainStage |
-| Open Emu |  | Motion |
-| Firefox_dev |  | Google Chrome (Alt) |
-| Firefox |  | Downie |
-| Minecraft |  | Pipifier |
-| Calibre_alt |  | MacMediaKeyForwarder |
-| Github |  | Blender |
-| Iina_alt |  |  |
-| NordVPN |  |  |
-| Netflix |  |  |
-| Drafts |  |  |
-| Facebook Messenger |  |  |
-|  |  |  |
+| Icons by [Elias](https://eliasruiz.com) | Icons by [Anmol](https://dribbble.com/agraaaaao) | Icons by [Mattophobia](https://reddit.com/u/Mattophobia) | Icons by [Gracjan](https://github.com/gracjankn) |
+|-|-|-|-|
+| iA Writer | iTerm | Musescore | BBEdit |
+| Dashlane | Affinity Suite | Garageband | Brave Nightly |
+| Figma | Permute 3 (Light & Dark variants) | iMovie_Alt | Keyboard Maestro |
+| Iina | Yoink | Swift Playgrounds (Alt) | Minimal Consent |
+| Opera | Microsoft Word, Excel, Powerpoint and OneNote | Swift Playgrounds (Alt 2) | StopTheMadness |
+| OneDrive | Google Chrome Canary | Alfred |  |
+| Spark | 1Password | Amplitube |  |
+| Sublime Text | 5217 (Web App) | Amplitube Auth Manager |  |
+| Transmit | FontLab | Custom Shop |  |
+| VS Code | Sip 2 | AltServer |  |
+| WebBites | Slack | Backup & Sync |  |
+| Hyper | Redacted | Bartender |  |
+| iTerm 2 | Amphetamine | BetterTouchTool |  |
+| Xcode | Rhino for macOS | Capo |  |
+| Swift_Playgrounds | Material Palette Generator (Web App) | Dark Reader |  |
+| Brave | Android Studio | DuckDuckGo |  |
+| Raindrop | Sensei | Emcee |  |
+| Astropad_Studio | Reflector 3 | Flux |  |
+| Harvest | cDock | Folx |  |
+| Epic_games | Telegram | Handbrake |  |
+| Transmission | Spotify | iStat |  |
+| Icons_8 | Whatsapp | Launchpad (Alt) |  |
+| OmniFocus | Google Chrome | Loopback |  |
+| Dropbox | Sketch | Mosaic |  |
+| Dropbox_alt | Haptic Key | OBS |  |
+| VLC |  | P-Touch |  |
+| Astropad |  | Signal |  |
+| Electron |  | Speedtest |  |
+| Malwarebytes |  | Teamspeak |  |
+| iMovie |  | UAD Console |  |
+| Reeder |  | UAD Control Panel |  |
+| Filezila |  | Unicorn Unblocker |  |
+| Discord |  | Compressor |  |
+| coconutBattery |  | Final Cut Pro (Alt) |  |
+| Atom |  | Logic Pro X (Alt) |  |
+| Pixelmator_Pro |  | MainStage |  |
+| Open Emu |  | Motion |  |
+| Firefox_dev |  | Google Chrome (Alt) |  |
+| Firefox |  | Downie |  |
+| Minecraft |  | Pipifier |  |
+| Calibre_alt |  | MacMediaKeyForwarder |  |
+| Github |  | Blender |  |
+| Iina_alt |  |  |  |
+| NordVPN |  |  |  |
+| Netflix |  |  |  |
+| Drafts |  |  |  |
+| Facebook Messenger |  |  |  |
+| Origin |  |  |  |
