@@ -205,4 +205,5 @@ Xcode,
 XScope,
 Yoink,
 Zoom,
-Übersicht
+Übersicht,
+Money_Pro
