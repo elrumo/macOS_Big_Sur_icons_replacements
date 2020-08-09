@@ -321,6 +321,14 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] mpv
 - [ ] qBittorrent
 - [ ] smcFanControl
+- [ ] Quicken
+- [ ] Honey
+- [ ] Highland 2
+- [ ] Sketchup Layout
+- [ ] Sketchup Style Builder
+- [ ] AdBlock Plus
+- [ ] Grammarly
+
 
 ## Credits
 
