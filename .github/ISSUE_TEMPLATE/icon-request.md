@@ -2,7 +2,7 @@
 name: Icon request
 about: Use this template when making a request for a new icon
 title: ''
-labels: new-icon-request
+labels: good first issue, new-icon-request
 assignees: ''
 
 ---
