@@ -238,8 +238,10 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] iTerm
 - [x] Übersicht
 - [ ] Ableton Live Standard & Suite
+- [ ] AdBlock Plus
 - [ ] AdGuard
 - [ ] AnyDesk
+- [ ] Apowermirror
 - [ ] App Cleaner
 - [ ] Araxis Merge
 - [ ] Audio MIDI Setup
@@ -260,6 +262,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Cinema 4D
 - [ ] CotEditor
 - [ ] Cuphead
+- [ ] DaVinci Resolve and DaVinci Resolve Studio
 - [ ] Daisy Disk
 - [ ] Diagrams
 - [ ] Disconnect Premium
@@ -273,8 +276,11 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] GeoGebra
 - [ ] Gmail
 - [ ] GoodNotes
+- [ ] Grammarly
 - [ ] Hearthstone
 - [ ] Hidden Bar
+- [ ] Highland 2
+- [ ] Honey
 - [ ] Install macOS Beta
 - [ ] KeepingYouAwake
 - [ ] Keka
@@ -300,6 +306,11 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Private Internet Access
 - [ ] ProWritingAid
 - [ ] QQ
+- [ ] Quicken
+- [ ] Roblox
+- [ ] Roblox Studio
+- [ ] Sketchup Layout
+- [ ] Sketchup Style Builder
 - [ ] SoundflowerBed
 - [ ] Speechify
 - [ ] Splice
@@ -321,13 +332,6 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] mpv
 - [ ] qBittorrent
 - [ ] smcFanControl
-- [ ] Quicken
-- [ ] Honey
-- [ ] Highland 2
-- [ ] Sketchup Layout
-- [ ] Sketchup Style Builder
-- [ ] AdBlock Plus
-- [ ] Grammarly
 
 
 ## Credits
