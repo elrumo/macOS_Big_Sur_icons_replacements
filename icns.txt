@@ -228,4 +228,4 @@ Whatsapp,
 Xcode,
 XScope,
 Yoink,
-Zoom,
+Zoom
