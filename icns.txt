@@ -217,4 +217,6 @@ paste,
 postman,
 table-plus,
 uTorrent,
-Übersicht
+Übersicht,
+Quixel_Mixer,
+Quixel_Bridge
