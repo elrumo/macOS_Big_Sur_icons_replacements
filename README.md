@@ -256,17 +256,17 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] iStat
 - [x] iTerm
 - [x] Übersicht
-- [ ] Ableton Live Standard & Suite
+- [x] Ableton Live Standard & Suite
 - [ ] AdBlock Plus
 - [ ] AdGuard
 - [ ] AnyDesk
 - [ ] Apowermirror
-- [ ] App Cleaner
+- [x] App Cleaner
 - [ ] Araxis Merge
 - [ ] Audio MIDI Setup
 - [ ] Authy Desktop
 - [ ] Avid Sibelius
-- [ ] BBEdit
+- [x] BBEdit
 - [ ] Balena Etcher
 - [ ] Battery Health 2
 - [ ] Battle.net
@@ -275,13 +275,13 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Canary Mail
 - [ ] Chromium
 - [ ] Chronicle Pro
-- [ ] Cinema 4D
+- [x] Cinema 4D
 - [ ] CotEditor
 - [ ] Cuphead
-- [ ] DaVinci Resolve and DaVinci Resolve Studio
+- [x] DaVinci Resolve and DaVinci Resolve Studio
 - [ ] Diagrams
 - [ ] Disconnect Premium
-- [ ] Drafts
+- [x] Drafts
 - [ ] Edison Mail
 - [ ] Elmedia Player
 - [ ] EverWeb
@@ -298,7 +298,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Honey
 - [ ] Install macOS Beta
 - [ ] KeepingYouAwake
-- [ ] Keka
+- [x] Keka
 - [ ] Keyboard Maestro
 - [ ] LastPass
 - [ ] LibreOffice
@@ -308,7 +308,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] MacUpdater
 - [ ] Macs Fan Control
 - [ ] Mactracker
-- [ ] Magnet
+- [x] Magnet
 - [ ] Minimal Consent
 - [ ] Movist Pro
 - [ ] NextDNS
@@ -327,15 +327,15 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] SoundflowerBed
 - [ ] Speechify
 - [ ] Splice
-- [ ] Steam
+- [x] Steam
 - [ ] StopTheMadness
 - [ ] Streamlabs OBS
 - [ ] Supernova Studio
 - [ ] Tampermonkey
 - [ ] TeamViewer
-- [ ] The Unarchiver
+- [x] The Unarchiver
 - [ ] ToothFairy
-- [ ] Transmission
+- [x] Transmission
 - [ ] Tweetbot
 - [ ] VideoDuke
 - [ ] Western Digital Discovery
@@ -495,3 +495,28 @@ The following icons are either being worked on or have been suggested. If you ha
 |                                                 | Plex                                          |
 |                                                 | Postman                                       |
 |                                                 | Table Plus                                    |
+| [Nathan](https://github.com/nweii/)             | Anki                                          |  
+|                                                 | Audio Hijack                                  |
+|                                                 | BBEdit Alt                                    |
+|                                                 | Cardhop                                       |
+|                                                 | Cinema 4D                                     |
+|                                                 | DaVinci Resolve                               |
+|                                                 | Dozer                                         |
+|                                                 | Final Draft                                   |
+|                                                 | Kaleidoscope                                  |
+|                                                 | Keka                                          |
+|                                                 | Magnet                                        |
+|                                                 | PDF Expert                                    |
+|                                                 | Reeder Alt                                    |
+|                                                 | Sidenotes                                     |
+|                                                 | Soulver                                       |
+|                                                 | Spark Alt                                     |
+|                                                 | Spotify Alt 2                                 |
+|                                                 | Steam Alt 2                                   |
+|                                                 | Things 3 Alt                                  |
+|                                                 | Tot                                           |
+|                                                 | Turbo Boost Switcher Pro                      |
+|                                                 | Ulysses                                       |
+|                                                 | The Unarchiver                                |
+|                                                 | WeTransfer                                    |
+|                                                 | Zoom Alt                                      |
