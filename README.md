@@ -112,6 +112,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Electron
 - [x] Emcee
 - [x] Epic_games
+- [x] Evernote
 - [x] FB_messenger
 - [x] Figma
 - [x] Filezilla
