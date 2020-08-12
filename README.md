@@ -103,6 +103,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] DayOne
 - [x] Deliveries
 - [x] Discord
+- [x] DJay_Pro
 - [x] Downie
 - [x] Drafts
 - [x] Dropbox
@@ -112,6 +113,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Electron
 - [x] Emcee
 - [x] Epic_games
+- [x] Evernote
 - [x] FB_messenger
 - [x] Figma
 - [x] Filezilla
@@ -127,9 +129,11 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Glance
 - [x] Google_Chrome
 - [x] Google_Chrome_Alt
+- [x] GraphQL_Playground
 - [x] Handbrake
 - [x] HapticKey
 - [x] Harvest
+- [x] Hue_Sync
 - [x] Hyper
 - [x] Icons_8
 - [x] Iina
@@ -191,6 +195,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Pixelmator_Pro
 - [x] Plex
 - [x] Quip
+- [x] Radiant
 - [x] Raindrop
 - [x] Redacted
 - [x] Reeder
