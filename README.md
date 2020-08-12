@@ -131,6 +131,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Handbrake
 - [x] HapticKey
 - [x] Harvest
+- [x] Hue_Sync
 - [x] Hyper
 - [x] Icons_8
 - [x] Iina
