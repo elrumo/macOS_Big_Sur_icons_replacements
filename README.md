@@ -103,6 +103,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] DayOne
 - [x] Deliveries
 - [x] Discord
+- [x] DJay_Pro
 - [x] Downie
 - [x] Drafts
 - [x] Dropbox
