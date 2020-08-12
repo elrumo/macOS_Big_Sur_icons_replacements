@@ -129,6 +129,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Glance
 - [x] Google_Chrome
 - [x] Google_Chrome_Alt
+- [x] GraphQL_Playground
 - [x] Handbrake
 - [x] HapticKey
 - [x] Harvest
