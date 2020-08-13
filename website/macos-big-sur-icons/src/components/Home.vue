@@ -26,7 +26,7 @@
         Replacement Icons
       </h3>
       
-      <p class="coral-Body--L p-t-20 w-100 body-text">Click on each icon to download it or on the button bellow to downlaod all {{iconList.length}} icons. To contribute or suggest a new icon, click on the GitHub button. </p>
+      <p class="coral-Body--L p-t-20 w-100 body-text">Click on each icon to download it or on the button bellow to download all {{iconList.length}} icons. To contribute or suggest a new icon, click on the GitHub button. </p>
 
       <div class="p-t-35 m-auto">
         <a class="p-l-10" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank">
@@ -150,7 +150,7 @@ export default {
       fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icns.txt')
         .then(response => response.text())
         .then((data) => {
-          list = data.split(", ")
+          list = data.split(",\n")
 
           for(let icon in list){
             let id = list[icon]
