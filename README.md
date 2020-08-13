@@ -517,3 +517,5 @@ The following icons are either being worked on or have been suggested. If you ha
 |                                                 | The Unarchiver                                |
 |                                                 | WeTransfer                                    |
 |                                                 | Zoom Alt                                      |
+| [Shreyas Gupta](https://shreyasgupta.me)        | Apple Music                                   |
+|                                                 | Cisco Webex                                   |
