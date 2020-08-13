@@ -495,5 +495,3 @@ The following icons are either being worked on or have been suggested. If you ha
 |                                                 | Plex                                          |
 |                                                 | Postman                                       |
 |                                                 | Table Plus                                    |
-| [Shreyas Gupta](https://shreyasgupta.me)        | Apple Music                                   |
-|                                                 | Cisco Webex                                   |
