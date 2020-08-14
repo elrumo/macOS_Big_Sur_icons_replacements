@@ -272,12 +272,9 @@ Unicorn_Unblocker,
 Unity_Editor,
 Unity_Hub,
 uTorrent,
-<<<<<<< HEAD
 Videoder,
-=======
 Visual_Studio,
 Visual_Studio_Code,
->>>>>>> 2d666c35cd8fcbf1bf542790f43a4e71f687e15b
 Visual_Studio_Code_alt2,
 Visual_Studio_Code_alt3,
 VLC,
