@@ -45,6 +45,7 @@ The following icons are either being worked on or have been suggested. If you ha
 
 - [x] 1Password
 - [x] 5217
+- [x] Ableton Live Standard & Suite
 - [x] AdBlocker
 - [x] Adobe_Acrobat
 - [x] Adobe_After_Effects
@@ -78,6 +79,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Amplitube_Auth_Manager
 - [x] Android_Studio
 - [x] Android_Studio_Beta
+- [x] App Cleaner
 - [x] Astropad
 - [x] Astropad_Studio
 - [x] Atom
@@ -93,6 +95,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Capo
 - [x] CCleaner
 - [x] Chrome_Canary
+- [x] Cinema 4D
 - [x] CleanMyMac
 - [x] Compressor
 - [x] CraftDocs
@@ -100,6 +103,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Daisy Disk
 - [x] Dark_Reader
 - [x] Dashlane
+- [x] DaVinci Resolve and DaVinci Resolve Studio
 - [x] DayOne
 - [x] Deliveries
 - [x] Discord
@@ -141,6 +145,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Image2Icon
 - [x] ImageOptim
 - [x] Instagram
+- [x] Keka
 - [x] Keyboard_Maestro
 - [x] Launchpad
 - [x] Launchpad_alt
@@ -149,6 +154,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Loopback
 - [x] MacMediaKeyForwarder
 - [x] MagicPrefs
+- [x] Magnet
 - [x] MainStage
 - [x] Malwarebytes
 - [x] Material_Colors
@@ -213,6 +219,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Speedtest
 - [x] Spotify
 - [x] Spotify_Alternate
+- [x] Steam
 - [x] StopTheMadness
 - [x] Sublime_Text
 - [x] Swift_Playgrounds
@@ -230,6 +237,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Twitter
 - [x] UAD_Console
 - [x] UAD_Control_Panel
+- [x] The Unarchiver
 - [x] Unicorn_Unblocker
 - [x] Unity_Editor
 - [x] Unity_Hub
@@ -256,17 +264,14 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] iStat
 - [x] iTerm
 - [x] Übersicht
-- [ ] Ableton Live Standard & Suite
 - [ ] AdBlock Plus
 - [ ] AdGuard
 - [ ] AnyDesk
 - [ ] Apowermirror
-- [ ] App Cleaner
 - [ ] Araxis Merge
 - [ ] Audio MIDI Setup
 - [ ] Authy Desktop
 - [ ] Avid Sibelius
-- [ ] BBEdit
 - [ ] Balena Etcher
 - [ ] Battery Health 2
 - [ ] Battle.net
@@ -275,13 +280,10 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Canary Mail
 - [ ] Chromium
 - [ ] Chronicle Pro
-- [ ] Cinema 4D
 - [ ] CotEditor
 - [ ] Cuphead
-- [ ] DaVinci Resolve and DaVinci Resolve Studio
 - [ ] Diagrams
 - [ ] Disconnect Premium
-- [ ] Drafts
 - [ ] Edison Mail
 - [ ] Elmedia Player
 - [ ] EverWeb
@@ -298,7 +300,6 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Honey
 - [ ] Install macOS Beta
 - [ ] KeepingYouAwake
-- [ ] Keka
 - [ ] Keyboard Maestro
 - [ ] LastPass
 - [ ] LibreOffice
@@ -308,7 +309,6 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] MacUpdater
 - [ ] Macs Fan Control
 - [ ] Mactracker
-- [ ] Magnet
 - [ ] Minimal Consent
 - [ ] Movist Pro
 - [ ] NextDNS
@@ -327,15 +327,12 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] SoundflowerBed
 - [ ] Speechify
 - [ ] Splice
-- [ ] Steam
 - [ ] StopTheMadness
 - [ ] Streamlabs OBS
 - [ ] Supernova Studio
 - [ ] Tampermonkey
 - [ ] TeamViewer
-- [ ] The Unarchiver
 - [ ] ToothFairy
-- [ ] Transmission
 - [ ] Tweetbot
 - [ ] VideoDuke
 - [ ] Western Digital Discovery
@@ -495,3 +492,30 @@ The following icons are either being worked on or have been suggested. If you ha
 |                                                 | Plex                                          |
 |                                                 | Postman                                       |
 |                                                 | Table Plus                                    |
+| [Nathan](https://github.com/nweii/)             | Anki                                          |  
+|                                                 | Audio Hijack                                  |
+|                                                 | BBEdit Alt                                    |
+|                                                 | Cardhop                                       |
+|                                                 | Cinema 4D                                     |
+|                                                 | DaVinci Resolve                               |
+|                                                 | Dozer                                         |
+|                                                 | Final Draft                                   |
+|                                                 | Kaleidoscope                                  |
+|                                                 | Keka                                          |
+|                                                 | Magnet                                        |
+|                                                 | PDF Expert                                    |
+|                                                 | Reeder Alt                                    |
+|                                                 | Sidenotes                                     |
+|                                                 | Soulver                                       |
+|                                                 | Spark Alt                                     |
+|                                                 | Spotify Alt 2                                 |
+|                                                 | Steam Alt 2                                   |
+|                                                 | Things 3 Alt                                  |
+|                                                 | Tot                                           |
+|                                                 | Turbo Boost Switcher Pro                      |
+|                                                 | Ulysses                                       |
+|                                                 | The Unarchiver                                |
+|                                                 | WeTransfer                                    |
+|                                                 | Zoom Alt                                      |
+| [Shreyas Gupta](https://shreyasgupta.me)        | Apple Music                                   |
+|                                                 | Cisco Webex                                   |
