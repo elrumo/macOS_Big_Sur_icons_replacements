@@ -137,6 +137,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Handbrake
 - [x] HapticKey
 - [x] Harvest
+- [x] Highland 2
 - [x] Hue_Sync
 - [x] Hyper
 - [x] Icons_8
@@ -296,7 +297,6 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Grammarly
 - [ ] Hearthstone
 - [ ] Hidden Bar
-- [ ] Highland 2
 - [ ] Honey
 - [ ] Install macOS Beta
 - [ ] KeepingYouAwake
@@ -492,14 +492,16 @@ The following icons are either being worked on or have been suggested. If you ha
 |                                                 | Plex                                          |
 |                                                 | Postman                                       |
 |                                                 | Table Plus                                    |
-| [Nathan](https://github.com/nweii/)             | Anki                                          |  
+| [Nathan Cheng](https://github.com/nweii/)       | Anki                                          |  
 |                                                 | Audio Hijack                                  |
 |                                                 | BBEdit Alt                                    |
+|                                                 | Blender                                       |
 |                                                 | Cardhop                                       |
 |                                                 | Cinema 4D                                     |
 |                                                 | DaVinci Resolve                               |
 |                                                 | Dozer                                         |
 |                                                 | Final Draft                                   |
+|                                                 | Highland 2                                    |
 |                                                 | Kaleidoscope                                  |
 |                                                 | Keka                                          |
 |                                                 | Magnet                                        |
@@ -517,3 +519,5 @@ The following icons are either being worked on or have been suggested. If you ha
 |                                                 | The Unarchiver                                |
 |                                                 | WeTransfer                                    |
 |                                                 | Zoom Alt                                      |
+| [Shreyas Gupta](https://shreyasgupta.me/)       | Apple Music                                   |  
+|                                                 | Cisco Webex                                   |
