@@ -1,5 +1,7 @@
 0_AD,
 1Password,
+1Password_Light,
+1Password_Dark,
 5217,
 Ableton,
 AdBlock,
