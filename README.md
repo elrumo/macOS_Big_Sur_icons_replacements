@@ -521,3 +521,13 @@ The following icons are either being worked on or have been suggested. If you ha
 |                                                 | Zoom Alt                                      |
 | [Shreyas Gupta](https://shreyasgupta.me/)       | Apple Music                                   |  
 |                                                 | Cisco Webex                                   |
+| [ProgrammerGeek123 (©Apple)] (https://www.apple.com) | Apple Classroom                               |  
+|                                                 | Xcode Beta                                    |
+|                                                 | Xcode Helper Beta                             |
+|                                                 | Accessibility Inspector                       |
+|                                                 | File Merge Beta                               |
+|                                                 | Instruments Beta                              |
+|                                                 | CreateML                                      |
+|                                                 | Simulator Beta                                |
+|                                                 | Reality Converter                             |
+|                                                 | Install macOS Big Sur (all devices)           |
