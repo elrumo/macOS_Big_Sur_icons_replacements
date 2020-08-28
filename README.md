@@ -83,6 +83,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Astropad
 - [x] Astropad_Studio
 - [x] Atom
+- [x] Authy Desktop
 - [x] Autodesk_Sketch
 - [x] BBEdit
 - [x] Backup_And_Sync
@@ -133,11 +134,13 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Glance
 - [x] Google_Chrome
 - [x] Google_Chrome_Alt
+- [x] Grammarly
 - [x] GraphQL_Playground
 - [x] Handbrake
 - [x] HapticKey
 - [x] Harvest
 - [x] Highland 2
+- [x] Honey
 - [x] Hue_Sync
 - [x] Hyper
 - [x] Icons_8
@@ -146,6 +149,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Image2Icon
 - [x] ImageOptim
 - [x] Instagram
+- [x] Install macOS Beta
 - [x] Keka
 - [x] Keyboard_Maestro
 - [x] Launchpad
@@ -271,7 +275,6 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Apowermirror
 - [ ] Araxis Merge
 - [ ] Audio MIDI Setup
-- [ ] Authy Desktop
 - [ ] Avid Sibelius
 - [ ] Balena Etcher
 - [ ] Battery Health 2
@@ -294,11 +297,8 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] GeoGebra
 - [ ] Gmail
 - [ ] GoodNotes
-- [ ] Grammarly
 - [ ] Hearthstone
 - [ ] Hidden Bar
-- [ ] Honey
-- [ ] Install macOS Beta
 - [ ] KeepingYouAwake
 - [ ] Keyboard Maestro
 - [ ] LastPass
@@ -506,6 +506,7 @@ The following icons are either being worked on or have been suggested. If you ha
 |                                                 | Keka                                          |
 |                                                 | Magnet                                        |
 |                                                 | PDF Expert                                    |
+|                                                 | Poolside FM Alt                               |
 |                                                 | Reeder Alt                                    |
 |                                                 | Sidenotes                                     |
 |                                                 | Soulver                                       |
