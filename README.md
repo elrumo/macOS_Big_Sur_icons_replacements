@@ -47,6 +47,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] 5217
 - [x] Ableton Live Standard & Suite
 - [x] AdBlocker
+- [x] AdGuard
 - [x] Adobe_Acrobat
 - [x] Adobe_After_Effects
 - [x] Adobe_Animate
@@ -119,6 +120,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Emcee
 - [x] Epic_games
 - [x] Evernote
+- [x] Fantastical
 - [x] FB_messenger
 - [x] Figma
 - [x] Filezilla
@@ -152,10 +154,12 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Install macOS Beta
 - [x] Keka
 - [x] Keyboard_Maestro
+- [x] LastPass
 - [x] Launchpad
 - [x] Launchpad_alt
 - [x] Logic_Pro_X
 - [x] Logic_Pro_X_Alt
+- [x] LookUp
 - [x] Loopback
 - [x] MacMediaKeyForwarder
 - [x] MagicPrefs
@@ -200,6 +204,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Origin
 - [x] P-Touch
 - [x] Parallels_Desktop
+- [x] Parcel
 - [x] Permute
 - [x] Permute_Dark
 - [x] Pipifier
@@ -239,7 +244,9 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Transmission
 - [x] Transmit
 - [x] Trello
+- [x] ToothFairy
 - [x] Twitter
+- [x] Tweetbot
 - [x] UAD_Console
 - [x] UAD_Control_Panel
 - [x] The Unarchiver
@@ -254,6 +261,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Visual_Studio_Code_alt3
 - [x] WebBites
 - [x] Whatsapp
+- [x] Wipr
 - [x] XScope
 - [x] Xcode
 - [x] Yoink
@@ -270,7 +278,6 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] iTerm
 - [x] Übersicht
 - [ ] AdBlock Plus
-- [ ] AdGuard
 - [ ] AnyDesk
 - [ ] Apowermirror
 - [ ] Araxis Merge
@@ -291,7 +298,6 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Edison Mail
 - [ ] Elmedia Player
 - [ ] EverWeb
-- [ ] Fantastical
 - [ ] Firefox Nightly
 - [ ] Garmin Express
 - [ ] GeoGebra
@@ -301,9 +307,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Hidden Bar
 - [ ] KeepingYouAwake
 - [ ] Keyboard Maestro
-- [ ] LastPass
 - [ ] LibreOffice
-- [ ] LookUp
 - [ ] LyricsX
 - [ ] MAMP
 - [ ] MacUpdater
@@ -312,7 +316,6 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Minimal Consent
 - [ ] Movist Pro
 - [ ] NextDNS
-- [ ] Parcel
 - [ ] Pioneer Rekordbox
 - [ ] Pixelmator
 - [ ] Presentify
@@ -332,11 +335,8 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Supernova Studio
 - [ ] Tampermonkey
 - [ ] TeamViewer
-- [ ] ToothFairy
-- [ ] Tweetbot
 - [ ] VideoDuke
 - [ ] Western Digital Discovery
-- [ ] Wipr
 - [ ] XTRAX STEMS
 - [ ] Zotero
 - [ ] mpv
