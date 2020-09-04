@@ -211,6 +211,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Pixelmator_Pro
 - [x] Plex
 - [x] Quip
+- [x] Radarscope
 - [x] Radiant
 - [x] Raindrop
 - [x] Redacted
