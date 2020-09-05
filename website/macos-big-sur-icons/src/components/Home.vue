@@ -11,7 +11,7 @@
       <img v-if="!darkMode" @click="toggleDarkMode" class="header-item-right dark-mode-btn" src="sun-dark.svg" alt="dark-mode-btn">
 
       <p class="header-item-right coral-Body--XL"> 
-        <a href="https://github.com/GoldenChaos/macOS_Big_Sur_icons_replacements" target="_blank" class="coral-Link"> 
+        <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank" class="coral-Link"> 
           GitHub 
         </a>
       </p>
@@ -29,13 +29,13 @@
       <p class="coral-Body--L p-t-20 w-100 body-text">Click on each icon to download it or on the button bellow to download all {{iconList.length}} icons. To contribute or suggest a new icon, click on the GitHub button. </p>
 
       <div class="p-t-35 m-auto">
-        <a class="p-l-10" href="https://github.com/GoldenChaos/macOS_Big_Sur_icons_replacements" target="_blank">
+        <a class="p-l-10" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank">
           <button is="coral-button" variant="quite" style="min-width:168px">
             <p> GitHub </p>
           </button>
         </a>
 
-        <a class="p-l-10" href="https://github.com/GoldenChaos/macOS_Big_Sur_icons_replacements/releases/download/v1.0/icons.zip">
+        <a class="p-l-10" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/releases/download/v1.0/icons.zip">
           <button is="coral-button" variant="primary" style="min-width:168px">
             <p> Download all </p>
           </button>
@@ -147,7 +147,7 @@ export default {
     getIconsArray(){
       var list = []
       let parent = this
-      fetch('https://raw.githubusercontent.com/GoldenChaos/macOS_Big_Sur_icons_replacements/master/icns.txt')
+      fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icns.txt')
         .then(response => response.text())
         .then((data) => {
           list = data.split(",\n")
@@ -165,9 +165,9 @@ export default {
               name: iconName,
               id: id,
               url:
-                    "https://github.com/GoldenChaos/macOS-Big-Sur-icons-replacements/raw/master/icons/"+id+".icns",
+                    "https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/"+id+".icns",
               img: 
-                    "https://raw.githubusercontent.com/GoldenChaos/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/"+id+".png"
+                    "https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/"+id+".png"
             }
             parent.iconList.push(itemObj)
           }
