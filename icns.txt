@@ -386,4 +386,4 @@ Zeplin,
 Zoom_alt,
 Zoom,
 Zotero_alt,
-Zotero,
+Zotero
