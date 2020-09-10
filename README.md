@@ -311,7 +311,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] LyricsX
 - [ ] MAMP
 - [ ] MacUpdater
-- [ ] Macs Fan Control
+- [x] Macs Fan Control
 - [ ] Mactracker
 - [ ] Minimal Consent
 - [ ] Movist Pro
@@ -321,12 +321,12 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Presentify
 - [ ] Private Internet Access
 - [ ] ProWritingAid
-- [ ] QQ
+- [x] QQ
 - [ ] Quicken
-- [ ] Roblox
-- [ ] Roblox Studio
-- [ ] Sketchup Layout
-- [ ] Sketchup Style Builder
+- [x] Roblox
+- [x] Roblox Studio
+- [x] Sketchup Layout
+- [x] Sketchup Style Builder
 - [ ] SoundflowerBed
 - [ ] Speechify
 - [ ] Splice
@@ -340,195 +340,597 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] XTRAX STEMS
 - [ ] Zotero
 - [ ] mpv
-- [ ] qBittorrent
+- [x] qBittorrent
 - [ ] smcFanControl
 
 ## Credits
 
-| Designed By                                     | Icon Name                                     |
-| ----------------------------------------------- | --------------------------------------------- |
-| [Elias](https://eliasruiz.com)                  | iA Writer                                     |
-|                                                 | Dashlane                                      |
-|                                                 | Figma                                         |
-|                                                 | Iina                                          |
-|                                                 | Opera                                         |
-|                                                 | OneDrive                                      |
-|                                                 | Spark                                         |
-|                                                 | Sublime Text                                  |
-|                                                 | Transmit                                      |
-|                                                 | VS Code                                       |
-|                                                 | WebBites                                      |
-|                                                 | Hyper                                         |
-|                                                 | iTerm 2                                       |
-|                                                 | Xcode                                         |
-|                                                 | Swift_Playgrounds                             |
-|                                                 | Brave                                         |
-|                                                 | Raindrop                                      |
-|                                                 | Astropad_Studio                               |
-|                                                 | Harvest                                       |
-|                                                 | Epic_games                                    |
-|                                                 | Transmission                                  |
-|                                                 | Icons_8                                       |
-|                                                 | OmniFocus                                     |
-|                                                 | Dropbox                                       |
-|                                                 | Dropbox_alt                                   |
-|                                                 | VLC                                           |
-|                                                 | Astropad                                      |
-|                                                 | Electron                                      |
-|                                                 | Malwarebytes                                  |
-|                                                 | iMovie                                        |
-|                                                 | Reeder                                        |
-|                                                 | Filezila                                      |
-|                                                 | Discord                                       |
-|                                                 | coconutBattery                                |
-|                                                 | Atom                                          |
-|                                                 | Pixelmator_Pro                                |
-|                                                 | Open Emu                                      |
-|                                                 | Firefox_dev                                   |
-|                                                 | Firefox                                       |
-|                                                 | Minecraft                                     |
-|                                                 | Calibre_alt                                   |
-|                                                 | Github                                        |
-|                                                 | Iina_alt                                      |
-|                                                 | NordVPN                                       |
-|                                                 | Netflix                                       |
-|                                                 | Drafts                                        |
-|                                                 | Facebook Messenger                            |
-|                                                 | Origin                                        |
-| [Anmol](https://dribbble.com/agraaaaao)         | iTerm                                         |
-|                                                 | Affinity Suite                                |
-|                                                 | Permute 3 (Light & Dark variants)             |
-|                                                 | Yoink                                         |
-|                                                 | Microsoft Word, Excel, Powerpoint and OneNote |
-|                                                 | Google Chrome Canary                          |
-|                                                 | 1Password                                     |
-|                                                 | 5217 (Web App)                                |
-|                                                 | FontLab                                       |
-|                                                 | Sip 2                                         |
-|                                                 | Slack                                         |
-|                                                 | Redacted                                      |
-|                                                 | Amphetamine                                   |
-|                                                 | Rhino for macOS                               |
-|                                                 | Material Palette Generator (Web App)          |
-|                                                 | Android Studio                                |
-|                                                 | Sensei                                        |
-|                                                 | Reflector 3                                   |
-|                                                 | cDock                                         |
-|                                                 | Telegram                                      |
-|                                                 | Spotify                                       |
-|                                                 | Whatsapp                                      |
-|                                                 | Google Chrome                                 |
-|                                                 | Sketch                                        |
-|                                                 | Haptic Key                                    |
-| [Mattophobia](https://reddit.com/u/Mattophobia) | Musescore                                     |
-|                                                 | Garageband                                    |
-|                                                 | iMovie_Alt                                    |
-|                                                 | Swift Playgrounds (Alt)                       |
-|                                                 | Swift Playgrounds (Alt 2)                     |
-|                                                 | Alfred                                        |
-|                                                 | Amplitube                                     |
-|                                                 | Amplitube Auth Manager                        |
-|                                                 | Custom Shop                                   |
-|                                                 | AltServer                                     |
-|                                                 | Backup & Sync                                 |
-|                                                 | Bartender                                     |
-|                                                 | BetterTouchTool                               |
-|                                                 | Capo                                          |
-|                                                 | Dark Reader                                   |
-|                                                 | DuckDuckGo                                    |
-|                                                 | Emcee                                         |
-|                                                 | Flux                                          |
-|                                                 | Folx                                          |
-|                                                 | Handbrake                                     |
-|                                                 | iStat                                         |
-|                                                 | Launchpad (Alt)                               |
-|                                                 | Loopback                                      |
-|                                                 | Mosaic                                        |
-|                                                 | OBS                                           |
-|                                                 | P-Touch                                       |
-|                                                 | Signal                                        |
-|                                                 | Speedtest                                     |
-|                                                 | Teamspeak                                     |
-|                                                 | UAD Console                                   |
-|                                                 | UAD Control Panel                             |
-|                                                 | Unicorn Unblocker                             |
-|                                                 | Compressor                                    |
-|                                                 | Final Cut Pro (Alt)                           |
-|                                                 | Logic Pro X (Alt)                             |
-|                                                 | MainStage                                     |
-|                                                 | Motion                                        |
-|                                                 | Google Chrome (Alt)                           |
-|                                                 | Downie                                        |
-|                                                 | Pipifier                                      |
-|                                                 | MacMediaKeyForwarder                          |
-|                                                 | Blender                                       |
-| [Gracjan](https://github.com/gracjankn)         | BBEdit                                        |
-|                                                 | Brave Nightly                                 |
-|                                                 | Keyboard Maestro                              |
-|                                                 | Minimal Consent                               |
-|                                                 | StopTheMadness                                |
-| [Ovennell](https://github.com/ovennell)         | NordVPN (Alt 2)                               |
-|                                                 | NordPass                                      |
-|                                                 | NordLocker                                    |
-|                                                 | Visual Studio Code (Alt 2)                    |
-|                                                 | Visual Studio Code (Alt 3)                    |
-|                                                 | CCleaner                                      |
-|                                                 | Tidal                                         |
-|                                                 | Tidal (Alt 2)                                 |
-|                                                 | Instagram (alt 2)                             |
-| [Austin Condiff](https://austincondiff.com)     | Daisy Disk                                    |
-|                                                 | Intellij                                      |
-|                                                 | Microsoft Excel Alternate                     |
-|                                                 | Microsoft OneDrive Alternate                  |
-|                                                 | Microsoft OneNote Alternate                   |
-|                                                 | Microsoft Outlook Alternate                   |
-|                                                 | Microsoft PowerPoint Alternate                |
-|                                                 | Microsoft Teams Alternate                     |
-|                                                 | Microsoft To Do Alternate                     |
-|                                                 | Microsoft Visual Studio Code Alternate        |
-|                                                 | Microsoft Word Alternate                      |
-|                                                 | Nova                                          |
-|                                                 | Paste                                         |
-|                                                 | Plex                                          |
-|                                                 | Postman                                       |
-|                                                 | Table Plus                                    |
-| [Nathan Cheng](https://github.com/nweii/)       | Anki                                          |  
-|                                                 | Audio Hijack                                  |
-|                                                 | BBEdit Alt                                    |
-|                                                 | Blender                                       |
-|                                                 | Cardhop                                       |
-|                                                 | Cinema 4D                                     |
-|                                                 | DaVinci Resolve                               |
-|                                                 | Dozer                                         |
-|                                                 | Final Draft                                   |
-|                                                 | Highland 2                                    |
-|                                                 | Kaleidoscope                                  |
-|                                                 | Keka                                          |
-|                                                 | Magnet                                        |
-|                                                 | PDF Expert                                    |
-|                                                 | Poolside FM Alt                               |
-|                                                 | Reeder Alt                                    |
-|                                                 | Sidenotes                                     |
-|                                                 | Soulver                                       |
-|                                                 | Spark Alt                                     |
-|                                                 | Spotify Alt 2                                 |
-|                                                 | Steam Alt 2                                   |
-|                                                 | Things 3 Alt                                  |
-|                                                 | Tot                                           |
-|                                                 | Turbo Boost Switcher Pro                      |
-|                                                 | Ulysses                                       |
-|                                                 | The Unarchiver                                |
-|                                                 | WeTransfer                                    |
-|                                                 | Zoom Alt                                      |
-| [Shreyas Gupta](https://shreyasgupta.me/)       | Apple Music                                   |  
-|                                                 | Cisco Webex                                   |
-| [ProgrammerGeek123 (©Apple)](https://www.apple.com) | Apple Classroom                               |  
-|                                                 | Xcode Beta                                    |
-|                                                 | Xcode Helper Beta                             |
-|                                                 | Accessibility Inspector                       |
-|                                                 | File Merge Beta                               |
-|                                                 | Instruments Beta                              |
-|                                                 | CreateML                                      |
-|                                                 | Simulator Beta                                |
-|                                                 | Reality Converter                             |
-|                                                 | Install macOS Big Sur (all devices)           |
+We do not intend to steal any one's icons, if your icon has been included and you have not given us explicit persmission is only because it was freely avaliable. If you would like your icons removed, please send an email to Elias at <elias.ruiz.monserrat@gmail.com> with the name of the icons to remove and some proof you made them, like a screenshot or a link to your page.
+
+| Designed By                                     | Icon Name                                      |
+| ----------------------------------------------- | ---------------------------------------------  |
+| [Elias](https://eliasruiz.com)                  | iA Writer                                      |
+|                                                 | Dashlane                                       |
+|                                                 | Figma                                          |
+|                                                 | Iina                                           |
+|                                                 | Opera                                          |
+|                                                 | OneDrive                                       |
+|                                                 | Spark                                          |
+|                                                 | Sublime Text                                   |
+|                                                 | Transmit                                       |
+|                                                 | VS Code                                        |
+|                                                 | WebBites                                       |
+|                                                 | Hyper                                          |
+|                                                 | iTerm 2                                        |
+|                                                 | Xcode                                          |
+|                                                 | Swift_Playgrounds                              |
+|                                                 | Brave                                          |
+|                                                 | Raindrop                                       |
+|                                                 | Astropad_Studio                                |
+|                                                 | Harvest                                        |
+|                                                 | Epic_games                                     |
+|                                                 | Transmission                                   |
+|                                                 | Icons_8                                        |
+|                                                 | OmniFocus                                      |
+|                                                 | Dropbox                                        |
+|                                                 | Dropbox_alt                                    |
+|                                                 | VLC                                            |
+|                                                 | Astropad                                       |
+|                                                 | Electron                                       |
+|                                                 | Malwarebytes                                   |
+|                                                 | iMovie                                         |
+|                                                 | Reeder                                         |
+|                                                 | Filezila                                       |
+|                                                 | Discord                                        |
+|                                                 | coconutBattery                                 |
+|                                                 | Atom                                           |
+|                                                 | Pixelmator_Pro                                 |
+|                                                 | Open Emu                                       |
+|                                                 | Firefox_dev                                    |
+|                                                 | Firefox                                        |
+|                                                 | Minecraft                                      |
+|                                                 | Calibre_alt                                    |
+|                                                 | Github                                         |
+|                                                 | Iina_alt                                       |
+|                                                 | NordVPN                                        |
+|                                                 | Netflix                                         |
+|                                                 | Drafts                                         |
+|                                                 | Facebook Messenger                             |
+|                                                 | Origin                                         |
+| [Anmol](https://dribbble.com/agraaaaao)         | iTerm                                          |
+|                                                 | Affinity Suite                                  |
+|                                                 | Permute 3 (Light & Dark variants)              |
+|                                                 | Yoink                                          |
+|                                                 | Microsoft Word, Excel, Powerpoint and OneNote  |
+|                                                 | Google Chrome Canary                           |
+|                                                 | 1Password                                      |
+|                                                 | 5217 (Web App)                                 |
+|                                                 | FontLab                                        |
+|                                                 | Sip 2                                          |
+|                                                 | Slack                                          |
+|                                                 | Redacted                                       |
+|                                                 | Amphetamine                                    |
+|                                                 | Rhino for macOS                                |
+|                                                 | Material Palette Generator (Web App)           |
+|                                                 | Android Studio                                 |
+|                                                 | Sensei                                         |
+|                                                 | Reflector 3                                     |
+|                                                 | cDock                                          |
+|                                                 | Telegram                                       |
+|                                                 | Spotify                                        |
+|                                                 | Whatsapp                                       |
+|                                                 | Google Chrome                                  |
+|                                                 | Sketch                                         |
+|                                                 | Haptic Key                                     |
+| [Mattophobia](https://reddit.com/u/Mattophobia) | Musescore                                      |
+|                                                 | Garageband                                     |
+|                                                 | iMovie_Alt                                     |
+|                                                 | Swift Playgrounds (Alt)                        |
+|                                                 | Swift Playgrounds (Alt 2)                      |
+|                                                 | Alfred                                         |
+|                                                 | Amplitube                                      |
+|                                                 | Amplitube Auth Manager                         |
+|                                                 | Custom Shop                                    |
+|                                                 | AltServer                                      |
+|                                                 | Backup & Sync                                  |
+|                                                 | Bartender                                      |
+|                                                 | BetterTouchTool                                |
+|                                                 | Capo                                           |
+|                                                 | Dark Reader                                    |
+|                                                 | DuckDuckGo                                     |
+|                                                 | Emcee                                          |
+|                                                 | Flux                                           |
+|                                                 | Folx                                           |
+|                                                 | Handbrake                                      |
+|                                                 | iStat                                          |
+|                                                 | Launchpad (Alt)                                |
+|                                                 | Loopback                                       |
+|                                                 | Mosaic                                         |
+|                                                 | OBS                                            |
+|                                                 | P-Touch                                        |
+|                                                 | Signal                                         |
+|                                                 | Speedtest                                      |
+|                                                 | Teamspeak                                      |
+|                                                 | UAD Console                                    |
+|                                                 | UAD Control Panel                              |
+|                                                 | Unicorn Unblocker                              |
+|                                                 | Compressor                                     |
+|                                                 | Final Cut Pro (Alt)                            |
+|                                                 | Logic Pro X (Alt)                              |
+|                                                 | MainStage                                      |
+|                                                 | Motion                                         |
+|                                                 | Google Chrome (Alt)                            |
+|                                                 | Downie                                         |
+|                                                 | Pipifier                                        |
+|                                                 | MacMediaKeyForwarder                           |
+|                                                 | Blender                                        |
+| [Gracjan](https://github.com/gracjankn)         | BBEdit                                         |
+|                                                 | Brave Nightly                                  |
+|                                                 | Keyboard Maestro                               |
+|                                                 | Minimal Consent                                |
+|                                                 | StopTheMadness                                 |
+| [Ovennell](https://github.com/ovennell)         | NordVPN (Alt 2)                                |
+|                                                 | NordPass                                       |
+|                                                 | NordLocker                                     |
+|                                                 | Visual Studio Code (Alt 2)                     |
+|                                                 | Visual Studio Code (Alt 3)                     |
+|                                                 | CCleaner                                       |
+|                                                 | Tidal                                          |
+|                                                 | Tidal (Alt 2)                                  |
+|                                                 | Instagram (alt 2)                              |
+| [Austin Condiff](https://austincondiff.com)     | Daisy Disk                                     |
+|                                                 | Intellij                                       |
+|                                                 | Microsoft Excel Alternate                      |
+|                                                 | Microsoft OneDrive Alternate                   |
+|                                                 | Microsoft OneNote Alternate                    |
+|                                                 | Microsoft Outlook Alternate                    |
+|                                                 | Microsoft PowerPoint Alternate                 |
+|                                                 | Microsoft Teams Alternate                      |
+|                                                 | Microsoft To Do Alternate                      |
+|                                                 | Microsoft Visual Studio Code Alternate         |
+|                                                 | Microsoft Word Alternate                       |
+|                                                 | Nova                                           |
+|                                                 | Paste                                          |
+|                                                 | Plex                                           |
+|                                                 | Postman                                        |
+|                                                 | Table Plus                                     |
+| [Nathan Cheng](https://github.com/nweii/)       | Anki                                           |  
+|                                                 | Audio Hijack                                   |
+|                                                 | BBEdit Alt                                     |
+|                                                 | Blender                                        |
+|                                                 | Cardhop                                        |
+|                                                 | Cinema 4D                                      |
+|                                                 | DaVinci Resolve                                |
+|                                                 | Dozer                                          |
+|                                                 | Final Draft                                    |
+|                                                 | Highland 2                                     |
+|                                                 | Kaleidoscope                                   |
+|                                                 | Keka                                           |
+|                                                 | Magnet                                         |
+|                                                 | PDF Expert                                     |
+|                                                 | Poolside FM Alt                                |
+|                                                 | Reeder Alt                                     |
+|                                                 | Sidenotes                                      |
+|                                                 | Soulver                                        |
+|                                                 | Spark Alt                                      |
+|                                                 | Spotify Alt 2                                  |
+|                                                 | Steam Alt 2                                    |
+|                                                 | Things 3 Alt                                   |
+|                                                 | Tot                                            |
+|                                                 | Turbo Boost Switcher Pro                       |
+|                                                 | Ulysses                                        |
+|                                                 | The Unarchiver                                 |
+|                                                 | WeTransfer                                     |
+|                                                 | Zoom Alt                                       |
+|[Shreyas Gupta](https://shreyasgupta.me/)        | Apple Music                                    |  
+|                                                 | Cisco Webex                                    |
+|[ProgrammerGeek123 (©Apple)](https://www.apple.com) | Apple Classroom                             |  
+|                                                 | Xcode Beta                                     |
+|                                                 | Xcode Helper Beta                              |
+|                                                 | Accessibility Inspector                        |
+|                                                 | File Merge Beta                                |
+|                                                 | Instruments Beta                               |
+|                                                 | CreateML                                       |
+|                                                 | Simulator Beta                                 |
+|                                                 | Reality Converter                              |
+|                                                 | Install macOS Big Sur (all devices)            |
+|[Stijn de Vries](https://stijndv.com/goodies/)   | Microsoft Visual Studio Code Alt4              |  
+|                                                 | Microsoft Visual Studio Code Alt5              |
+|                                                 | Optimage                                       |
+|                                                 | Optimage Alt                                   |
+|                                                 | Twitter                                        |
+|                                                 | Step Two Alt                                   |
+|                                                 | Discord Alt 2                                  |
+|                                                 | Nova                                           |
+|                                                 | Github                                         |
+|                                                 | Pixelmator Pro                                 |
+|                                                 | Pages                                          |
+|                                                 | Numbers                                        |
+|                                                 | WhatsApp                                       |
+|[octaviotti](https://www.deviantart.com/octaviotti)   | Microsoft Visual Studio Code Alt4              |  
+|                                                 | 1Blocker Alt                                   |                  
+|                                                 | 1Password Alt                                  |                  
+|                                                 | Ableton LIVE                                   |                  
+|                                                 | Acorn                                          |            
+|                                                 | Activity Monitor Alt                           |                           
+|                                                 | Adblock Plus                                   |                  
+|                                                 | AdGuard Alt                                    |                  
+|                                                 | Adobe Acrobat Pro                              |                        
+|                                                 | Adobe Animate Alt                              |                        
+|                                                 | Adobe Audition Alt                             |                        
+|                                                 | Adobe Bridge Alt                               |                     
+|                                                 | Adobe Character Animator Al                    |
+|                                                 | Adobe Creative Cloud Alt                       |                              
+|                                                 | Adobe Dimension Alt                            |                        
+|                                                 | Adobe Dreamweaver Alt                          |                           
+|                                                 | Adobe Fuse Alt                                 |                     
+|                                                 | Adobe InCopy Alt                               |                     
+|                                                 | Adobe InDesign Alt                             |                        
+|                                                 | Adobe Lightroom Alt 2                          |                           
+|                                                 | Adobe Media Encoder Alt                        |                              
+|                                                 | Adobe Prelude Alt                              |                        
+|                                                 | Adobe Premiere Rush Alt                        |                              
+|                                                 | Adobe Spark Alt                                |                     
+|                                                 | Affinity Designer Alt                           |                           
+|                                                 | Affinity Photo Alt                              |                        
+|                                                 | Affinity Publisher Alt                          |                           
+|                                                 | Agenda                                         |            
+|                                                 | AirBuddy                                       |               
+|                                                 | Airfoil                                        |            
+|                                                 | AirParrot                                      |               
+|                                                 | AirPort Utility                                |                     
+|                                                 | Alfred Alt                                     |               
+|                                                 | Alternote                                      |               
+|                                                 | Amazon Music                                   |                  
+|                                                 | Amphetamine Alt                                |                     
+|                                                 | Android File Transfer Alt                      |                              
+|                                                 | Android Studio Alt                             |                        
+|                                                 | Androp                                         |            
+|                                                 | AppCleaner Alt                                 |                     
+|                                                 | App Store Alt                                  |                  
+|                                                 | Artpip                                         |            
+|                                                 | Astropad Alt                                   |                  
+|                                                 | Atom Alt                                       |               
+|                                                 | Audiotool                                      |               
+|                                                 | Audio MIDI Setup                               |                     
+|                                                 | AutoCAD                                        |            
+|                                                 | Automator                                      |               
+|                                                 | Avast                                          |            
+|                                                 | Backblaze                                      |               
+|                                                 | Balsamiq Mockups                               |                     
+|                                                 | Bartender Alt                                  |                  
+|                                                 | Battery Guardian                               |                     
+|                                                 | Battery Monitor                                |                     
+|                                                 | BBedit Alt 2                                   |                  
+|                                                 | Beamer                                         |            
+|                                                 | Betternet                                      |               
+|                                                 | BetterTouchTool Alt                            |                        
+|                                                 | Be Focused                                     |               
+|                                                 | Bitwarden Alt 2                                |                     
+|                                                 | Bluetooth File Exchange                        |                              
+|                                                 | Books                                          |            
+|                                                 | Bootcamp Assistant                             |                        
+|                                                 | BuildMaster                                    |                  
+|                                                 | Calculator                                     |               
+|                                                 | Calendar                                       |               
+|                                                 | CameraBag Cinema                               |                     
+|                                                 | Capslocker                                     |               
+|                                                 | Caption                                        |            
+|                                                 | Capto                                          |            
+|                                                 | Carbon Copy Cloner Alt                         |                           
+|                                                 | Carrot Weather                                 |                     
+|                                                 | CCleaner Alt                                   |                  
+|                                                 | Charles Proxy                                  |                  
+|                                                 | CheatSheet                                     |               
+|                                                 | Chess                                          |            
+|                                                 | CiderTV                                        |            
+|                                                 | Citra                                          |            
+|                                                 | CleanMyMac X                                   |                  
+|                                                 | CoconutBattery Alt                             |                        
+|                                                 | Coda Alt                                       |               
+|                                                 | CodeRunner Alt                                 |                     
+|                                                 | Coffee Buzz                                    |                  
+|                                                 | ColorSync Utility                              |                        
+|                                                 | Color Slurp                                    |                  
+|                                                 | Console                                        |            
+|                                                 | Contacts                                       |               
+|                                                 | CorelDRAW                                      |               
+|                                                 | CrossOver                                      |               
+|                                                 | Daisy Disk Alt                                 |                     
+|                                                 | Dashboard                                      |               
+|                                                 | DaVinci Resolve Alt                            |                        
+|                                                 | Day One Alt                                    |                  
+|                                                 | Deckset                                        |            
+|                                                 | DeepL                                          |            
+|                                                 | Deezer                                         |            
+|                                                 | Deezloader                                     |               
+|                                                 | Deluge                                         |            
+|                                                 | Developer                                      |               
+|                                                 | Dictionary                                     |               
+|                                                 | Digital Color Meter                            |                        
+|                                                 | Disk Utility Alt                               |                     
+|                                                 | Downie Alt                                     |               
+|                                                 | Dozer Alt                                      |               
+|                                                 | DRC                                            |         
+|                                                 | Dropbox Paper                                  |                  
+|                                                 | Duet Display                                   |                  
+|                                                 | Duplicate Finder                               |                     
+|                                                 | Dynamo                                         |            
+|                                                 | Eclipse                                        |            
+|                                                 | Elmedia Player                                 |                     
+|                                                 | Emby                                           |         
+|                                                 | EtreCheck                                      |               
+|                                                 | Evernote Alt 2                                 |                     
+|                                                 | Exodus                                         |            
+|                                                 | Facebook Messenger Alt 2                       |                              
+|                                                 | Facetime                                       |               
+|                                                 | Fantastical Alt                                |                     
+|                                                 | Feedback Assistant                             |                        
+|                                                 | FFmpeg                                         |            
+|                                                 | Finder                                         |            
+|                                                 | Find My                                        |            
+|                                                 | Firefox Alt                                    |                  
+|                                                 | Firefox Nightly                                |                     
+|                                                 | Flixtools                                      |               
+|                                                 | Flume                                          |            
+|                                                 | Flux Alt                                       |               
+|                                                 | Folx Alt                                       |               
+|                                                 | Font Book                                      |               
+|                                                 | Forklift                                       |               
+|                                                 | Franz                                          |            
+|                                                 | Free Download Manager                          |                           
+|                                                 | Garageband Alt                                 |                     
+|                                                 | GeForce Now                                    |                  
+|                                                 | Gemini 2                                       |               
+|                                                 | GeoGebra                                       |               
+|                                                 | Get Backup Pro                                 |                     
+|                                                 | GIPHY Capture                                  |                  
+|                                                 | Git                                            |         
+|                                                 | GitHub Desktop Alt 2                           |                           
+|                                                 | Google Backup and Sync                         |                           
+|                                                 | Google Calendar                                |                     
+|                                                 | Google Chrome                                  |                  
+|                                                 | Google Chrome Remote Desktop Alt               |
+|                                                 | Google Docs Alt                                |                     
+|                                                 | Google Drive                                   |                  
+|                                                 | Google Earth                                   |                  
+|                                                 | Google Gmail                                   |                  
+|                                                 | Google Hangouts                                |                     
+|                                                 | Google Keep                                    |                  
+|                                                 | Google Meet                                    |                  
+|                                                 | Google Messages                                |                     
+|                                                 | Google News                                    |                  
+|                                                 | Google Photos Alt                              |                        
+|                                                 | Google Podcasts                                |                     
+|                                                 | Google Sheets Alt                              |                        
+|                                                 | Google Slides Alt                              |                        
+|                                                 | Grandperspective                               |                     
+|                                                 | Grapher                                        |            
+|                                                 | Guitar Pro                                     |               
+|                                                 | HazeOver                                       |               
+|                                                 | HiddenMe                                       |               
+|                                                 | Holdr                                          |            
+|                                                 | Home                                           |         
+|                                                 | Hyper Alt                                      |               
+|                                                 | iCloud Control                                 |                     
+|                                                 | IconFly                                        |            
+|                                                 | iConvert                                       |               
+|                                                 | iDisplay                                       |               
+|                                                 | iHash                                          |            
+|                                                 | iLOK License Manager                           |                           
+|                                                 | Image2Icon Alt                                 |                     
+|                                                 | ImageOptim Alt                                 |                     
+|                                                 | Image Capture                                  |                  
+|                                                 | iMazing                                        |            
+|                                                 | iMovie Alt                                     |               
+|                                                 | Instagram Alt 2                                |                     
+|                                                 | Instapaper                                     |               
+|                                                 | IntelliJ Php Storm Alt                         |                           
+|                                                 | IntelliJ PyCharm Alt                           |                           
+|                                                 | iStats Menu Alt 2                              |                        
+|                                                 | Itsycal                                        |            
+|                                                 | jDownloader                                    |                  
+|                                                 | Just Stream                                    |                  
+|                                                 | Ka-Block                                       |               
+|                                                 | Keychain Access                                |                     
+|                                                 | Keynote Alt                                    |                  
+|                                                 | Kindle                                         |            
+|                                                 | Kodi                                           |         
+|                                                 | LastPass Alt                                   |                  
+|                                                 | Latest                                         |            
+|                                                 | Launchpad Alt                                  |                  
+|                                                 | League of Legends Alt                          |                           
+|                                                 | LiteIcon                                       |               
+|                                                 | Logic Pro X Alt 2                              |                        
+|                                                 | Logi Options                                   |                  
+|                                                 | Luminar                                        |            
+|                                                 | MacDroid                                       |               
+|                                                 | MacMedia Forwarder Alt                         |                           
+|                                                 | Mactracker                                     |               
+|                                                 | Magnet Alt                                     |               
+|                                                 | Mail                                           |         
+|                                                 | Maps                                           |         
+|                                                 | Mate Translate Alt                             |                        
+|                                                 | MathKey                                        |            
+|                                                 | Mattermost                                     |               
+|                                                 | MegaSync                                       |               
+|                                                 | Messages                                       |               
+|                                                 | MetaMovie                                      |               
+|                                                 | Microsoft Access                               |                     
+|                                                 | Microsoft Edge Alt                             |                        
+|                                                 | Microsoft Edge Canary                          |                           
+|                                                 | Microsoft Edge Dev                             |                        
+|                                                 | Microsoft Excel Alt 2                          |                           
+|                                                 | Microsoft OneDrive Alt 2                       |                              
+|                                                 | Microsoft OneNote Alt 2                        |                              
+|                                                 | Microsoft Outlook Alt 2                        |                              
+|                                                 | Microsoft PowerPoint Alt 2                     |
+|                                                 | Microsoft Publisher Alt                        |                              
+|                                                 | Microsoft SharePoint Alt                       |                              
+|                                                 | Microsoft Teams Alt 2                          |                           
+|                                                 | Microsoft Visual Studio Code Insider           |
+|                                                 | Microsoft Word Alt 2                           |                           
+|                                                 | Microsoft Yammer Alt                           |                           
+|                                                 | Migration Assistant                            |                        
+|                                                 | MiHome                                         |            
+|                                                 | Mission Control                                |                     
+|                                                 | Momentum                                       |               
+|                                                 | Monity                                         |            
+|                                                 | Mounty                                         |            
+|                                                 | Movie Explorer Pro                             |                        
+|                                                 | MPV                                            |         
+|                                                 | Multitouch                                     |               
+|                                                 | Music                                          |            
+|                                                 | Musixmatch                                     |               
+|                                                 | News                                           |         
+|                                                 | NightOwl                                       |               
+|                                                 | NotePlan                                       |               
+|                                                 | Notes                                          |            
+|                                                 | Notion Alt                                     |               
+|                                                 | NTFS for Mac                                   |                  
+|                                                 | Numbers Alt                                    |                  
+|                                                 | Numi                                           |         
+|                                                 | OBS Alt 2                                      |               
+|                                                 | OfficeMax eBooks                                |                     
+|                                                 | OmniFocus Alt                                  |                  
+|                                                 | OmniGraffle                                     |                  
+|                                                 | OmniOutliner                                   |                  
+|                                                 | OmniPlan                                       |               
+|                                                 | Omni Disk Sweeper                              |                        
+|                                                 | OneCast                                        |            
+|                                                 | Onlyoffice                                      |               
+|                                                 | Onyx                                           |         
+|                                                 | OpenEmu Alt                                    |                  
+|                                                 | OpenMTP                                        |            
+|                                                 | Opera Alt                                      |               
+|                                                 | Opera GX                                       |               
+|                                                 | Pages Alt                                      |               
+|                                                 | Paragon NTFS Mac                               |                     
+|                                                 | Parallels Desktop Alt                          |                           
+|                                                 | Parcel Alt                                     |               
+|                                                 | Paste Alt                                      |               
+|                                                 | Path Finder Alt                                |                     
+|                                                 | pCloud Drive                                   |                  
+|                                                 | PDF Expert Alt                                 |                     
+|                                                 | PDF Squeezer                                   |                  
+|                                                 | Photos                                         |            
+|                                                 | Photoscape X                                   |                  
+|                                                 | Pikka                                          |            
+|                                                 | PiPer                                          |            
+|                                                 | Pixave                                         |            
+|                                                 | Plex Alt                                       |               
+|                                                 | Pocket                                         |            
+|                                                 | Pocket Casts                                   |                  
+|                                                 | Podcasts                                       |               
+|                                                 | Pomodorome                                     |               
+|                                                 | PopClip                                        |            
+|                                                 | Postman Alt                                    |                  
+|                                                 | Preview                                        |            
+|                                                 | Prizmo                                         |            
+|                                                 | ProtonMail Bridge                              |                        
+|                                                 | ProtonVPN                                      |               
+|                                                 | qBittorrent Alt                                |                     
+|                                                 | QQ Music                                       |               
+|                                                 | QR Encoder                                     |               
+|                                                 | Quicktime Alt                                  |                  
+|                                                 | Radio Silence                                  |                  
+|                                                 | Reddit Alt                                     |               
+|                                                 | Reeder Alt 2                                   |                  
+|                                                 | Reflector 3                                     |                  
+|                                                 | Reflector 3 Teacher                             |                        
+|                                                 | Reminders                                      |               
+|                                                 | Remote Mouse                                   |                  
+|                                                 | Remux                                          |            
+|                                                 | Rocket                                         |            
+|                                                 | Safari                                         |            
+|                                                 | ScreenBrush                                    |                  
+|                                                 | Screenshot Alt                                 |                     
+|                                                 | Script Editor                                  |                  
+|                                                 | SD Card Formatter                              |                        
+|                                                 | SelfControl                                    |                  
+|                                                 | Setapp Alt 2                                   |                  
+|                                                 | Settings                                       |               
+|                                                 | SF Symbols                                     |               
+|                                                 | Shazam Alt                                     |               
+|                                                 | Shotcut                                        |            
+|                                                 | SideNotes Alt                                  |                  
+|                                                 | Signal Alt                                     |               
+|                                                 | Siri                                           |         
+|                                                 | Sketchup Alt                                   |                  
+|                                                 | Sketch Alt 2                                   |                  
+|                                                 | Skitch                                         |            
+|                                                 | Skype for Business                             |                        
+|                                                 | Slack Alt 2                                    |                  
+|                                                 | Smart Switch                                   |                  
+|                                                 | Smash                                          |            
+|                                                 | smcFanControl                                  |                  
+|                                                 | Softorino Youtube Converter                    |
+|                                                 | Sonos Alt                                      |               
+|                                                 | Sourcetree                                     |               
+|                                                 | Spark Alt 2                                    |                  
+|                                                 | Speedtest                                      |               
+|                                                 | Steam                                          |            
+|                                                 | Stickies                                       |               
+|                                                 | Stocks                                         |            
+|                                                 | Streamlabs OBS                                 |                     
+|                                                 | Stremio                                        |            
+|                                                 | Strike                                         |            
+|                                                 | Sublime Text Alt                               |                     
+|                                                 | Supremo                                        |            
+|                                                 | Svgsus                                         |            
+|                                                 | Syntorial                                      |               
+|                                                 | System Information                             |                        
+|                                                 | TablePlus Alt                                  |                  
+|                                                 | Tabs Saver for Safari                          |                           
+|                                                 | Tayasui Sketches                               |                     
+|                                                 | TeamPaper Snap                                 |                     
+|                                                 | TeamViewer Alt                                 |                     
+|                                                 | Terminal                                       |               
+|                                                 | TextMate                                       |               
+|                                                 | Text Edit                                      |               
+|                                                 | The Unarchiver Alt                             |                        
+|                                                 | Time Machine                                   |                  
+|                                                 | TopoCal                                        |            
+|                                                 | Traktor PRO                                    |                  
+|                                                 | Transmission Alt 2                             |                        
+|                                                 | TripMode                                       |               
+|                                                 | Tunnelblick                                    |                  
+|                                                 | TV                                             |         
+|                                                 | Tweetbot Alt 2                                 |                     
+|                                                 | Twitch                                         |            
+|                                                 | Typeeto                                        |            
+|                                                 | Typeface                                       |               
+|                                                 | Typora                                         |            
+|                                                 | uBar                                           |         
+|                                                 | Ultimate Guitar                                |                     
+|                                                 | Ulysses Alt                                    |                  
+|                                                 | Unclutter                                      |               
+|                                                 | Unlox                                          |            
+|                                                 | Unsplash                                       |               
+|                                                 | uTorrent Alt                                   |                  
+|                                                 | Vanilla                                        |            
+|                                                 | Vectornator                                    |                  
+|                                                 | Vegas Pro                                      |               
+|                                                 | VirtualBox                                     |               
+|                                                 | Vivaldi                                        |            
+|                                                 | VLC                                            |         
+|                                                 | VMware Fusion Alt                              |                        
+|                                                 | VMWare Horizon                                 |                     
+|                                                 | VoiceOver Utility                              |                        
+|                                                 | Voice Memos                                    |                  
+|                                                 | Wacom Inkspace                                 |                     
+|                                                 | Wallpaper Engine                               |                     
+|                                                 | Waltr                                          |            
+|                                                 | Webtorrent Alt                                 |                     
+|                                                 | WeTransfer                                     |               
+|                                                 | Whatsapp Alt2                                  |                  
+|                                                 | WiFi Explorer                                  |                  
+|                                                 | Wipr                                           |         
+|                                                 | WordPress                                      |               
+|                                                 | XCode Alt                                      |               
+|                                                 | Yahoo Mail                                     |               
+|                                                 | Yandex Browser                                 |                     
+|                                                 | Yeelight                                       |               
+|                                                 | Yoink Alt                                      |               
+|                                                 | YouTube Music                                  |                  
+|                                                 | YouTube TV                                     |               
