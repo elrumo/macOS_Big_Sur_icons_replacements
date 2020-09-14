@@ -1,6 +1,6 @@
 # macOS Big Sur - Replacements Icons
 
-***If it's of anyone's interest, I've just build (and open sourced) a broswer plugin that removes unnecesary clutter from StackOverflow. It's over at [ProductHunt](https://www.producthunt.com/posts/stackoverflow-focus).***
+***If it's of anyone's interest, I've just build (and open sourced) a broswer plugin that removes unnecesary clutter from StackOverflow. It's over on [ProductHunt](https://bit.ly/producthunt-focus).***
 
 Replacement icons for popular apps in the style of macOS Big Sur.
 
