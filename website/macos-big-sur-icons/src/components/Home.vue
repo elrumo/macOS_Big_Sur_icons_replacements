@@ -8,7 +8,8 @@
       </p>
       
       <p class="coral-Body--S p-t-5 d-inline-block absolute transform-centre">
-        Made by <a href="https://bit.ly/elias-webbites" target="_blank" class="coral-Link">Elias</a>
+        Made by <a href="https://bit.ly/producthunt-focus" target="_blank" class="coral-Link">Elias</a>
+        <!-- Made by <a href="https://bit.ly/elias-webbites" target="_blank" class="coral-Link">Elias</a> -->
       </p>
 
       <img v-if="darkMode" @click="toggleDarkMode" class="header-item-right dark-mode-btn" src="moon-light.svg" alt="dark-mode-btn">
@@ -73,7 +74,6 @@
             </div>
             <div>
               <h3 style="color: rgb(75, 75, 75)">
-
               {{ icon.name }}
               </h3>
             </div>
@@ -98,7 +98,8 @@
     <!-- Footer -->
     <section>
       <footer class="p-b-20 coral-Body--S">
-        Made with ❤️ by <a href="https://eliasruiz.com" target="_blank" class="coral-Link">Elias</a> 
+        Made with ❤️ by <a href="https://bit.ly/elias-webbites" target="_blank" class="coral-Link">Elias</a> 
+        <!-- Made with ❤️ by <a href="https://bit.ly/elias-webbites" target="_blank" class="coral-Link">Elias</a>  -->
         <dir class="d-inline-block m-0 p-l-15 p-r-10">
           <hr class="coral-Divider--M coral-Divider--vertical m-0" style="height:14px;">
         </dir>
@@ -204,9 +205,15 @@ export default {
 
       iconList = iconList.filter(function(item){
         if(item.name.toLowerCase().indexOf(searchString) !== -1){
+          // console.log(item);
           return item;
         }
       })
+
+      // for(let icon in iconList){
+      //   console.log(iconList[icon]);
+      // }
+      // console.log(iconList);
 
       return iconList;
     }
