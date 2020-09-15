@@ -53,7 +53,7 @@ a{
     width: 100%;
     padding-top: var(--padding-top-search);
     min-width: none !important;
-    max-width: none !important;
+    max-width: 1300px !important;
     border-radius: var(--main-border-radius);
     z-index: 10;
 }
