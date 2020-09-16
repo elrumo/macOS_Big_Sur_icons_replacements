@@ -4,13 +4,17 @@
     <!-- Header -->
     <div id="header" class="header">
       <p class="header-item-left coral-Body--S p-t-5">
-        Made by <a href="https://eliasruiz.com" target="_blank" class="coral-Link">Elias</a>
+        <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements#credits" target="_blank" class="coral-Link">Credits</a>
       </p>
       
-      <img v-if="darkMode" @click="toggleDarkMode" class="header-item-right dark-mode-btn" src="moon-light.svg" alt="dark-mode-btn">
-      <img v-if="!darkMode" @click="toggleDarkMode" class="header-item-right dark-mode-btn" src="sun-dark.svg" alt="dark-mode-btn">
+      <p class="coral-Body--S p-t-5 d-inline-block absolute transform-centre">
+        Made by <a href="https://bit.ly/elias-webbites" target="_blank" class="coral-Link">Elias</a>
+      </p>
 
-      <p class="header-item-right coral-Body--XL"> 
+      <img v-if="darkMode" @click="toggleDarkMode" class="header-item-right dark-mode-btn" src="moon-light.svg" alt="dark-mode-btn">
+      <img v-if="!darkMode" @click="toggleDarkMode" class="header-item-right dark-mode-btn" src="sun-dark.svg" alt="light-mode-btn">
+
+      <p class="header-item-right coral-Body--XL github-header" id="github-header" > 
         <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank" class="coral-Link"> 
           GitHub 
         </a>
@@ -25,8 +29,11 @@
         <br>
         Replacement Icons
       </h3>
-      
-      <p class="coral-Body--L p-t-20 w-100 body-text">Click on each icon to download it or on the button bellow to download all {{iconList.length}} icons. To contribute or suggest a new icon, click on the GitHub button. </p>
+
+
+      <p class="coral-Body--L p-t-20 w-100 body-text">
+        Click on each icon to download it or on the button bellow to download all {{iconList.length}} icons. To contribute or suggest a new icon, click on the GitHub button.
+      </p>
 
       <div class="p-t-35 m-auto">
         <a class="p-l-10" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank">
@@ -66,7 +73,6 @@
             </div>
             <div>
               <h3 style="color: rgb(75, 75, 75)">
-
               {{ icon.name }}
               </h3>
             </div>
@@ -91,7 +97,11 @@
     <!-- Footer -->
     <section>
       <footer class="p-b-20 coral-Body--S">
-        Made with ❤️ by <a href="https://eliasruiz.com" target="_blank" class="coral-Link">Elias</a> 
+        Made with ❤️ by <a href="https://bit.ly/elias-webbites" target="_blank" class="coral-Link">Elias</a>  -->
+        <dir class="d-inline-block m-0 p-l-15 p-r-10">
+          <hr class="coral-Divider--M coral-Divider--vertical m-0" style="height:14px;">
+        </dir>
+        Full icon <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements#credits" target="_blank" class="coral-Link">credits</a>
       </footer>
     </section>
   </div>
@@ -193,9 +203,15 @@ export default {
 
       iconList = iconList.filter(function(item){
         if(item.name.toLowerCase().indexOf(searchString) !== -1){
+          // console.log(item);
           return item;
         }
       })
+
+      // for(let icon in iconList){
+      //   console.log(iconList[icon]);
+      // }
+      // console.log(iconList);
 
       return iconList;
     }
