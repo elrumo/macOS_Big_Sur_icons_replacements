@@ -1,6 +1,4 @@
 # macOS Big Sur - Replacements Icons
-
-# Hide all the clutter
 ***Check out the open beta for a bookmarking service I'm working on, [WebBites.io](https://bit.ly/elias-webbites).
 <br>
 All feedback is appreciated, you can do that [@elrumo](https://bit.ly/elias-twitter) on Twitter***
