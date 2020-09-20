@@ -26,7 +26,7 @@ Here are some rules you show know:
 
 - Don't use spaces for the icon names, instead use "\_"
 - When using the template, export in 1x (high res) and 0.25x (low res)
-- Before uploading the the icons, add their names exactly as they have been exported to the [icons.txt](https://bit.ly/macOSicons-txt) file
+- Before uploading the icons, add their names exactly as they have been exported to the [icons.txt](https://bit.ly/macOSicons-txt) file
 - Use [this free app](http://www.img2icnsapp.com) to convert the .png to a usable .icns
 - Make a Pull Request with the new icons
 - If you are creating an icon for an open-source project, please consider submitting the icon to their respective repository for their use as well.
