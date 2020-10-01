@@ -52,17 +52,38 @@
     <section class="content-wrapper">
 
       <!-- Search bar -->
-      <div class="main-search-wrapper">
+      <div class="main-search-wrapper coral-bg p-b-15">
         <div class="m-auto main-search" style="max-width:300px;">
           <div class="shadow main-border-radius">
             <input v-model="searchString" :placeholder="'Search ' + iconList.length + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield" name="name" aria-label="text input">
             <svg class="icon fill-dark" id="coral-css-icon-Magnifier" viewBox="0 0 16 16"><path d="M15.77 14.71l-4.534-4.535a6.014 6.014 0 1 0-1.06 1.06l4.533 4.535a.75.75 0 1 0 1.061-1.06zM6.5 11A4.5 4.5 0 1 1 11 6.5 4.505 4.505 0 0 1 6.5 11z"></path></svg>
           </div>
         </div>
+
+        <div class="filter-by-grid">
+          <div class="filter-by-wrapper">
+            <!-- <label id="label" class="coral-FieldLabel text-left">Filter By</label> -->
+            <!-- <coral-select>
+              <coral-select-item value="actions">
+                <coral-icon alt="" icon="actions"></coral-icon>
+                Name
+              </coral-select-item>
+              <coral-select-item value="add">
+                <coral-icon alt="" icon="add"></coral-icon>
+                Date Added
+              </coral-select-item>
+            </coral-select> -->
+            
+        <coral-cyclebutton displaymode="icontext" aria-labelledby="label-3" id="cyclebutton-3">
+          <coral-cyclebutton-item icon="deviceRotatePortrait"> Portrait</coral-cyclebutton-item>
+          <coral-cyclebutton-item icon="deviceRotateLandscape">Landscape</coral-cyclebutton-item>
+        </coral-cyclebutton>
+          </div>
+        </div>
       </div>
   
       <div class="icon-list-area p-t-50 p-b-50">
-          <a v-for="icon in filteredList" :key="icon.name" class="card-wrapper shadow coral-bg" :href="icon.url">
+          <a v-for="icon in filteredList" :key="icon.name" class="card-wrapper shadow coral-card" :href="icon.url">
             <div class="card-img-wrapper">
               <img loading="lazy" v-lazy="icon.img" class="w-full" alt="">
             </div>
@@ -80,7 +101,7 @@
     <!-- Footer -->
     <section>
       <footer class="p-b-20 coral-Body--S">
-        Made with ❤️ by <a href="https://bit.ly/elias-webbites" target="_blank" class="coral-Link">Elias</a>  -->
+        Made with ❤️ by <a href="https://bit.ly/elias-webbites" target="_blank" class="coral-Link">Elias</a>
         <dir class="d-inline-block m-0 p-l-15 p-r-10">
           <hr class="coral-Divider--M coral-Divider--vertical m-0" style="height:14px;">
         </dir>
