@@ -1,14 +1,14 @@
 :root{
     --padding-top-search: 25px;
     --main-border-radius: 8px;
-    --coral-dark-bg: rgb(50, 50, 50);
-    --coral-light-bg: rgb(245, 245, 245);
-    --coral-dark-card: rgb(37, 37, 37);
-    --coral-light-card: rgb(255, 255, 255);
-}
 
-body{
-    /* background: #F6F8FA !important; */
+    --coral-dark-bg: rgb(50, 50, 50);
+    --coral-dark-border: rgb(75, 75, 75);;
+    --coral-dark-card: rgb(37, 37, 37);
+    
+    --coral-light-bg: rgb(245, 245, 245);
+    --coral-light-border: rgb(255, 255, 255);
+    --coral-light-card: rgb(255, 255, 255);
 }
 
 a{
@@ -103,6 +103,9 @@ a{
     height: 100%;
     overflow: hidden;
     max-width: 250px;
+    box-sizing: border-box;
+    border: 1px solid;
+    border-color: rgb(225, 225, 225);
     border-radius: var(--main-border-radius);
 }
 
@@ -176,6 +179,24 @@ a{
 
 
 
+
+.coral--light .coral-bg{
+    background: var(--coral-light-card);
+    border-color: var( --coral-light-border);
+    color: var( --coral-dark-border);
+}
+
+.coral--dark .coral-bg{
+    background: var(--coral-dark-card);
+    border-color: var(--coral-dark-border);
+    color: var( --coral-light-border);
+}
+
+
+
+
+
+
 @media only screen and (max-width: 1200px){
     .icon-list-area{
         grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -228,14 +249,13 @@ a{
 
 
 /* Classes changed from Adobe Coral */
-._coral-Button{
+/* ._coral-Button{
     min-width: 10px !important;
     padding: 8px 20px 8px 20px;
     margin-left: 5px;
     margin-right: 5px;
-    /* width: 180px; */
     border-radius: var(--main-border-radius) !important;
-}
+} */
 
 ._coral-Button p{
     margin: 0;
@@ -248,9 +268,10 @@ a{
 }
 
 ._coral-Textfield{
-    width: 100%;
-    height: 50px;
-    border-radius: var(--main-border-radius);
+    width: 100% !important;
+    padding: 20px 45px !important;
+    height: 50px !important;
+    border-radius: var(--main-border-radius) !important;
     font-size: 1rem;
 }
 
