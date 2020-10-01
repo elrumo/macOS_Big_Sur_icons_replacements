@@ -3,7 +3,8 @@
     --main-border-radius: 8px;
 
     --coral-dark-bg: rgb(50, 50, 50);
-    --coral-dark-border: rgb(75, 75, 75);;
+    --coral-dark-border: rgb(75, 75, 75);
+    --coral-dark-border-hover: rgb(95, 95, 95);
     --coral-dark-card: rgb(37, 37, 37);
     
     --coral-light-bg: rgb(245, 245, 245);
@@ -46,19 +47,22 @@ a{
     position: sticky;
     padding-top: 0px;
     top: 0;
-    display: grid;
-    grid-template-columns: 1fr 110px;
-    column-gap: 15px;
+    /* display: grid;
+    grid-template-columns: 1fr 50px;
+    column-gap: 10px; */
 }
 
 .filter-by-wrapper{
     position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-2px);
+    height: 100%;
+    border: 1px solid;
+    border-radius: var(--main-border-radius);
+    cursor: pointer;
 }
 
 .filter-by-grid{
-    padding-top: 8px;
+    padding-top: 17px;
 }
 
 
@@ -189,7 +193,9 @@ a{
 }
 
 
-
+.coral-card{
+    transition: 0.2s;
+}
 
 
 .coral--light .coral-card{
@@ -202,6 +208,10 @@ a{
     background: var(--coral-dark-card);
     border-color: var(--coral-dark-border);
     color: var( --coral-light-border);
+}
+
+.coral--dark .coral-card:hover{
+    border-color: var(--coral-dark-border-hover);
 }
 
 .coral--dark .coral-bg{

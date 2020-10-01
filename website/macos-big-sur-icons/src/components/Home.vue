@@ -60,26 +60,12 @@
           </div>
         </div>
 
-        <div class="filter-by-grid">
-          <div class="filter-by-wrapper">
-            <!-- <label id="label" class="coral-FieldLabel text-left">Filter By</label> -->
-            <!-- <coral-select>
-              <coral-select-item value="actions">
-                <coral-icon alt="" icon="actions"></coral-icon>
-                Name
-              </coral-select-item>
-              <coral-select-item value="add">
-                <coral-icon alt="" icon="add"></coral-icon>
-                Date Added
-              </coral-select-item>
-            </coral-select> -->
-            
-        <coral-cyclebutton displaymode="icontext" aria-labelledby="label-3" id="cyclebutton-3">
-          <coral-cyclebutton-item icon="deviceRotatePortrait"> Portrait</coral-cyclebutton-item>
-          <coral-cyclebutton-item icon="deviceRotateLandscape">Landscape</coral-cyclebutton-item>
-        </coral-cyclebutton>
+        <!-- <div class="filter-by-grid">
+          <div class="filter-by-wrapper coral-card shadow">
+              <coral-icon v-if="filterIsDate" class="h-full" icon="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/website/macos-big-sur-icons/src/assets/clock.svg" title="Add"></coral-icon>
+              <coral-icon v-if="filterIsName" class="h-full" icon="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/website/macos-big-sur-icons/src/assets/namingOrder.svg" title="Add"></coral-icon>
           </div>
-        </div>
+        </div> -->
       </div>
   
       <div class="icon-list-area p-t-50 p-b-50">
@@ -125,7 +111,9 @@ export default {
       iconList:[],
       searchString: "",
       iconsToShow: [],
-      darkMode: false
+      darkMode: false,
+      filterIsDate: false,
+      filterIsName: true,
     }
   },
 
