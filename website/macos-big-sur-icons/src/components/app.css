@@ -1,5 +1,5 @@
 :root{
-    --padding-top-search: 25px;
+    --padding-top-search: 15px;
     --main-border-radius: 8px;
 
     --coral-dark-bg: rgb(50, 50, 50);
@@ -46,7 +46,21 @@ a{
     position: sticky;
     padding-top: 0px;
     top: 0;
+    display: grid;
+    grid-template-columns: 1fr 110px;
+    column-gap: 15px;
 }
+
+.filter-by-wrapper{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.filter-by-grid{
+    padding-top: 8px;
+}
+
 
 .main-search{
     position: relative;
@@ -178,18 +192,20 @@ a{
 
 
 
-
-
-.coral--light .coral-bg{
+.coral--light .coral-card{
     background: var(--coral-light-card);
     border-color: var( --coral-light-border);
     color: var( --coral-dark-border);
 }
 
-.coral--dark .coral-bg{
+.coral--dark .coral-card{
     background: var(--coral-dark-card);
     border-color: var(--coral-dark-border);
     color: var( --coral-light-border);
+}
+
+.coral--dark .coral-bg{
+    background: var(--coral-dark-bg);
 }
 
 
@@ -272,7 +288,7 @@ a{
     padding: 20px 45px !important;
     height: 50px !important;
     border-radius: var(--main-border-radius) !important;
-    font-size: 1rem;
+    font-size: 1rem !important;
 }
 
 ._coral-Search{
