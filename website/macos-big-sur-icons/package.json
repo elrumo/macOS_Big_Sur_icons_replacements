@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@adobe/coral-spectrum": "^4.10.3",
+    "firebase": "^7.22.1",
     "vue-lazyload": "^1.3.3"
   },
   "devDependencies": {
