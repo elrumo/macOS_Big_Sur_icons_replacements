@@ -1,71 +1,34 @@
 <template>
   <div>
     
+    <Dialog/>
     <!-- Header -->
-    <div id="header" class="header">
-      <p class="header-item-left coral-Body--S p-t-5">
-        <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements#credits" target="_blank" class="coral-Link">Credits</a>
-      </p>
-      
-      <p class="coral-Body--S p-t-5 d-inline-block absolute transform-centre">
-        Made by <a href="https://bit.ly/elias-webbites" target="_blank" class="coral-Link">Elias</a>
-      </p>
-
-      <img v-if="darkMode" @click="toggleDarkMode" class="header-item-right dark-mode-btn" src="moon-light.svg" alt="dark-mode-btn">
-      <img v-if="!darkMode" @click="toggleDarkMode" class="header-item-right dark-mode-btn" src="sun-dark.svg" alt="light-mode-btn">
-
-      <p class="header-item-right coral-Body--XL github-header" id="github-header" > 
-        <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank" class="coral-Link"> 
-          GitHub 
-        </a>
-      </p>
-
-    </div>
+    <Header/>
     
     <!-- Hero -->
-    <div id="hero" class="hero-wrapper">
-      <h3 class="main-heading coral-Heading--XL coral-Heading--regular">
-        <span class="f-w-100 f-s-26">macOS Big Sur</span>
-        <br>
-        Replacement Icons
-      </h3>
+    <Hero
+      v-bind:iconList="iconList"
+      :submitIconDialog="'submitIcon'"
+    />
 
-      <p class="coral-Body--L w-100 body-text p-t-20">
-        Click on each icon to download it or on the button bellow to download all {{iconList.length}} icons. To contribute or suggest a new icon, click on the GitHub button.
-      </p>
-      
-      <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank">
-        GitHub
-      </a>
-
-      <div class="m-auto m-t-30">
-        <a class="" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/releases/download/v1.0/icons.zip">
-          <button  is="coral-button" variant="cta">
-            <span>Download all</span>
-          </button>
-        </a>
-      </div>
-
-    </div>
-
-    <!-- Icon Secion -->
+    <!-- Icon Section -->
     <section class="content-wrapper">
 
       <!-- Search bar -->
       <div class="main-search-wrapper coral-bg p-b-15">
         <div class="m-auto main-search" style="max-width:300px;">
           <div class="shadow main-border-radius">
-            <input v-model="searchString" :placeholder="'Search ' + iconList.length + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield" name="name" aria-label="text input">
+            <input v-model="searchString" :placeholder="'Search ' + iconList.length + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
             <svg class="icon fill-dark" id="coral-css-icon-Magnifier" viewBox="0 0 16 16"><path d="M15.77 14.71l-4.534-4.535a6.014 6.014 0 1 0-1.06 1.06l4.533 4.535a.75.75 0 1 0 1.061-1.06zM6.5 11A4.5 4.5 0 1 1 11 6.5 4.505 4.505 0 0 1 6.5 11z"></path></svg>
           </div>
         </div>
 
-        <!-- <div class="filter-by-grid">
+        <div class="filter-by-grid">
           <div class="filter-by-wrapper coral-card shadow">
               <coral-icon v-if="filterIsDate" class="h-full" icon="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/website/macos-big-sur-icons/src/assets/clock.svg" title="Add"></coral-icon>
               <coral-icon v-if="filterIsName" class="h-full" icon="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/website/macos-big-sur-icons/src/assets/namingOrder.svg" title="Add"></coral-icon>
           </div>
-        </div> -->
+        </div>
       </div>
   
       <div class="icon-list-area p-t-50 p-b-50">
@@ -98,12 +61,17 @@
 </template>
 
 <script>
+import Header from './Header.vue';
+import Hero from './Hero.vue';
+import Dialog from './Dialog.vue';
 
 export default {
   name: 'Home',
 
   components: {
-    // Coral
+    Header,
+    Hero,
+    Dialog
   },
 
   data(){
@@ -111,36 +79,18 @@ export default {
       iconList:[],
       searchString: "",
       iconsToShow: [],
-      darkMode: false,
       filterIsDate: false,
       filterIsName: true,
     }
   },
 
   mounted: function(){
-    let parent = this
+    // let parent = this
     this.getIconsArray()
-
-    if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-      parent.toggleDarkMode()
-    }
-
   },
 
   methods:{
-
-    toggleDarkMode(){
-      let parent = this
-      let body = document.getElementById("body")
-      let searchIcon = document.getElementById("coral-css-icon-Magnifier")
-      
-      body.classList.toggle('coral--light')
-      body.classList.toggle('coral--dark')
-      searchIcon.classList.toggle('fill-light')
-      searchIcon.classList.toggle('fill-dark')
-      parent.darkMode = !parent.darkMode
-    },
-
+    
     getIconsArray(){
       var list = []
       let parent = this
