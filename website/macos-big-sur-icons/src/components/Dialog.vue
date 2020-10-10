@@ -17,7 +17,21 @@
             </div>
           </div>
         </coral-fileupload>
-        <input type="text" id="email-contributor" is="coral-textfield" aria-label="text input" @change="setIconName">
+        
+        <form class="coral-Form coral-Form--vertical" style="max-width:300px;">
+          <label id="appName-label" class="coral-FieldLabel">App Name</label>
+          <input id="appName-contributor" is="coral-textfield" labelledby="email-label" class="coral-Form-field" @change="setAppName">
+        </form>
+
+        <form class="coral-Form coral-Form--vertical" style="max-width:300px;">
+          <label id="email-label" class="coral-FieldLabel">Email</label>
+          <input id="email-contributor" is="coral-textfield" labelledby="email-label" class="coral-Form-field" @change="setEmail">
+        </form>
+
+        <form class="coral-Form coral-Form--vertical" style="max-width:300px;">
+          <label id="yourName-label" class="coral-FieldLabel">Your Name</label>
+          <input id="yourName-contributor" is="coral-textfield" labelledby="email-label" class="coral-Form-field" @change="setYourName">
+        </form>
 
       </div>
   
@@ -64,10 +78,10 @@ export default {
         imageData: null,
         picture: null,
         uploadValue: 0,
-        appName: String,
         addIcon: require("../assets/add.svg"),
-        name: String,
-        email: String
+        yourName: String,
+        email: String,
+        appName: String
       }
     },
 
@@ -96,9 +110,15 @@ export default {
         });
       },
 
-      setIconName(e){
+      setEmail(e){
         this.email = e.target.value
-      }
+      },
+      setAppName(e){
+        this.appName = e.target.value
+      },
+      setYourName(e){
+        this.yourName = e.target.value
+      },
 
     },
 }
