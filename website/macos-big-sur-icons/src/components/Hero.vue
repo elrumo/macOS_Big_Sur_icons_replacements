@@ -7,10 +7,11 @@
       </h3>
 
       <p class="coral-Body--L w-100 body-text p-t-20">
-        Click on each icon to download it or on the button bellow to download all {{iconList.length}} icons. To contribute or suggest a new icon, click 
+        Click on each icon to download it or on the button bellow to download all {{iconList.length}} icons. To contribute, click 
         <span @click="showDialog(submitIconDialog)" class="coral-Link cursor-pointer"> 
-          here. 
+          here.
         </span>
+         We'll let you know once the icon has been approved.
       </p>
 <!--       
       <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank">

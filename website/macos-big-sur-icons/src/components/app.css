@@ -10,6 +10,8 @@
     --coral-light-bg: rgb(245, 245, 245);
     --coral-light-border: rgb(255, 255, 255);
     --coral-light-card: rgb(255, 255, 255);
+
+    --icon-preview-dimensions: 100px;
 }
 
 a{
@@ -19,11 +21,11 @@ a{
 .icon-upload-grid{
     display: grid !important;
     grid-template-columns: 1fr;
-    row-gap: 20px;
+    row-gap: 13px;
 }
 
 .icon-preview{
-    max-width: 130px;
+    max-width: var(--icon-preview-dimensions);
     margin: auto;
 }
 
@@ -193,6 +195,34 @@ a{
     padding-top: 50px;
 }
 
+.loading-overlay{
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(1px);
+    left: 50%;
+    z-index: 10;
+    top: 50%;
+    transform: translate(-50%, -49%);
+}
+
+.loading-popup{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    height: fit-content;
+    border-radius: 4px;
+    background: rgb(50, 50, 50);
+}
+
+.loading-animation{
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 .icon{
     width: 15px;
     height: 15px;
@@ -217,12 +247,15 @@ a{
     display: grid;
     grid-template-columns: 1fr;
     row-gap: 10px;
-    height: 100%;
+    height: fit-content;
+    top: 50%;
+    position: relative;
+    transform: translateY(-50%);
 }
 
 .drop-zone{
-    height: 130px;
-    width: 130px;
+    height: var(--icon-preview-dimensions);
+    width: var(--icon-preview-dimensions);
     border: dashed 2px rgba(256, 256, 256, 0.35);
     border-radius: 7px;
 }
@@ -232,6 +265,15 @@ a{
     border-color: var( --coral-light-border);
     color: var( --coral-dark-border);
 }
+
+.coral--light ._coral-Icon{
+    filter: brightness(1.05);
+}
+
+.coral--light ._coral-Icon:hover{
+    filter: brightness(0.7);
+}
+
 
 .coral--dark .coral-card{
     background: var(--coral-dark-card);
@@ -247,9 +289,21 @@ a{
     background: var(--coral-dark-bg);
 }
 
+.coral--dark ._coral-Icon{
+    filter: brightness(1.2);
+}
+
+.coral--dark ._coral-Icon:hover{
+    filter: brightness(1.5);
+}
 
 
 
+@media only screen and (max-width: 12000px){
+    ._coral-Dialog{
+        min-width: 368px !important;
+    }
+}
 
 
 @media only screen and (max-width: 1200px){
@@ -287,11 +341,17 @@ a{
     .icon-list-area{
         grid-template-columns: 1fr 1fr;
     }
-
+    
     #github-header{
         display: none;
     }
+    
+}
 
+@media only screen and (max-width: 320px){
+    ._coral-Dialog{
+    min-width: 300px !important;
+}
 }
 
 

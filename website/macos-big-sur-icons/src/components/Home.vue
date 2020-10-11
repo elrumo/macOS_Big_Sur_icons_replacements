@@ -11,6 +11,12 @@
       :submitIconDialog="'submitIcon'"
     />
 
+    <coral-toast id="successToast" variant="success">
+      <!-- <coral-icon :icon="icons.success" size="M" alt="Medium" title="M"></coral-icon> -->
+      😄 Icon Uploaded
+    </coral-toast>
+
+
     <!-- Icon Section -->
     <section class="content-wrapper">
 
@@ -81,6 +87,9 @@ export default {
       iconsToShow: [],
       filterIsDate: false,
       filterIsName: true,
+      icons:{
+        success: require("../assets/icons/delete.svg"),
+      }
     }
   },
 

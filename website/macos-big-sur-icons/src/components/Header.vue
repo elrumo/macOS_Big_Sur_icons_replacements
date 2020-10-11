@@ -45,7 +45,7 @@ export default {
 
     mounted: function(){
         let parent = this
-
+        
         if(window.matchMedia('(prefers-color-scheme: dark)').matches){
             parent.toggleDarkMode()
         }
