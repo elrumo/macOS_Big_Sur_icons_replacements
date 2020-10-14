@@ -21,6 +21,7 @@ It's super easy! We've made sure that all icons here work with no problem. You j
 <img style="text-align: left" src="https://i.imgur.com/0Vj6sFS.png" width="300">
 
 ## I'd like to contribute
+Download the template for [Sketch](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.sketch), [Figma](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.fig), [Photoshop](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.psd) or [Illustrator](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.ai).
 
 Here are some rules you show know:
 
@@ -34,8 +35,6 @@ Here are some rules you show know:
 ### I don't know how to make a pull request or I'm not familiar with GitHub
 
 Not a problem! This repo can also be a great introduction to the open source community and GitHub for designers, so welcome if you're new to this!
-
-First of all, you'll need to download the template for the icons [here](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.sketch).
 
 If you're new to GitHub, or you've never made a pull request, try following [this article](https://www.freecodecamp.org/news/how-to-make-your-first-pull-request-on-github-3/). Did you manage? Congrats! If you're still not quite sure about how to make pull requests, crate a new issue [here](https://bit.ly/macOSicons-help) and try to explain where you're stuck, and if that still doesn't work for you, simply upload the icons on a shared drive and share them with us on the newly created issue.
 <br>
