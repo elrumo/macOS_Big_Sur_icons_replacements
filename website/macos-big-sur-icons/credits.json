@@ -27,11 +27,30 @@
       "credit": "https://austincondiff.com/",
       "name": "Austin Condiff"
     },
-    "Austin Condiff":{
-      "icons":["Daisy_Disk", "Intellij", "Microsoft_Excel_Alternate", "Microsoft_OneDrive_Alternate", "Microsoft_OneNote_Alternate", "Microsoft_Outlook_Alternate", "Microsoft_PowerPoint_Alternate", "Microsoft_Teams_Alternate", "Microsoft_To_Do_Alternate", "Microsoft_Visual_Studio_Code_Alternate", "Microsoft_Word_Alternate", "Nova", "Paste", "Plex", "Postman", "Table_Plus"],
-      "credit": "https://austincondiff.com/",
-      "name": "Austin Condiff"
-    }
+    
+    "Nathan Cheng":{
+      "icons":["Anki", "Audio_Hijack", "BBEdit_Alt", "Blender", "Cardhop", "Cinema_4D", "DaVinci_Resolve", "Dozer", "Final_Draft", "Highland_2", "Kaleidoscope", "Keka", "Magnet", "PDF_Expert", "Poolside_FM_Alt", "Reeder_Alt", "Sidenotes", "Soulver", "Spark_Alt", "Spotify_Alt_2", "Steam_Alt_2", "Things_3_Alt", "Tot", "Turbo_Boost_Switcher_Pro", "Ulysses", "The_Unarchiver", "WeTransfer", "Zoom_Alt"],
+      "credit": "https://github.com/nweii/",
+      "name": "Nathan Cheng"
+    },
+
+    "Shreyas Gupta":{
+      "icons":["Apple Music", "Cisco Webex"],
+      "credit": "https://shreyasgupta.me/",
+      "name": "Shreyas Gupta"
+    },
+    
+    "ProgrammerGeek123 (©Apple)":{
+      "icons":["Apple_Classroom", "Xcode_Beta", "Xcode_Helper_Beta", "Accessibility_Inspector", "File_Merge_Beta", "Instruments_Beta", "CreateML", "Simulator_Beta", "Reality_Converter", "Install_macOS_Big_Sur_(all_devices)"],
+      "credit": "https://www.apple.com/",
+      "name": "Shreyas Gupta"
+    },
+
+    "Stijn de Vries":{
+      "icons":["Microsoft_Visual_Studio_Code_Alt_4", "Microsoft_Visual_Studio_Code_Alt_5", "Optimage", "Optimage_Alt", "Twitter", "Step_Two_Alt", "Discord_Alt_2", "Nova", "Github", "Pixelmator_Pro", "Pages", "Numbers", "WhatsApp"],
+      "credit": "https://stijndv.com/goodies/",
+      "name": "Stijn de Vries"
+    },
 
   }
 }
