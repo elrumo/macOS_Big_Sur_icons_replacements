@@ -118,47 +118,54 @@ export default {
       let parent = this
 
       let parentObj = []
+      
 
-       fetch('https://gist.githubusercontent.com/elrumo/3476a152049ab29c7ae87011774b1046/raw/8a41a997fded284508c34810aa1c0eaebf6cfc66/credits.json')
-        .then(response => response.text())
-        .then((data) => {
-          
-          let creditList = JSON.parse(data).users;
-          // console.log(creditList);
-
-          for(let user in creditList){
-            for(let icon in creditList[user].icons){
-              // arrList.push(creditList[user].icons[icon])
-              // console.log(arrList);
-              let iconName = creditList[user].icons[icon]
-              
-              let matches = db.collection("icons").where("name", "==", iconName)
-              matches.get().then(function (querySnapshot) {
-                  querySnapshot.forEach(function (doc) {
-                    console.log(doc.data());
-                    db.collection("icons").doc(doc.id).set({
-                        creditUrl: creditList[user].credit,
-                        credit: creditList[user].name,
-                        name: doc.data().name,
-                        timeStamp: doc.data().timeStamp
-                    }).then(function() {
-                        console.log("Document successfully written!");
-                        console.log(doc.id);
-                    })
-                    .catch(function(error) {
-                        console.error("Error writing document: ", error);
-                    });
-
-                  });
-              }).then((data) => {
-              })
-
-              // console.log(iconName);
-              // console.log(creditList[user].name);
-              // console.log(creditList[user].credit);
-            }
-          }
+       db.collection("icons").get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          parent.list[doc.data().name] = doc.data()
         })
+      })
+
+      //  fetch('https://gist.githubusercontent.com/elrumo/3476a152049ab29c7ae87011774b1046/raw/4f4679d3ff5a9621b58598dbe001e409a430f064/credits.json')
+      //   .then(response => response.text())
+      //   .then((data) => {
+          
+      //     let creditList = JSON.parse(data).users;
+      //     // console.log(creditList);
+
+      //     for(let user in creditList){
+      //       for(let icon in creditList[user].icons){
+      //         // arrList.push(creditList[user].icons[icon])
+      //         // console.log(arrList);
+      //         let iconName = creditList[user].icons[icon]
+              
+      //         let matches = db.collection("icons").where("name", "==", iconName)
+      //         matches.get().then(function (querySnapshot) {
+      //             querySnapshot.forEach(function (doc) {
+      //               console.log(doc.data());
+      //               db.collection("icons").doc(doc.id).set({
+      //                   creditUrl: creditList[user].credit,
+      //                   credit: creditList[user].name,
+      //                   name: doc.data().name,
+      //                   timeStamp: doc.data().timeStamp
+      //               }).then(function() {
+      //                   console.log("Document successfully written!");
+      //                   console.log(doc.id);
+      //               })
+      //               .catch(function(error) {
+      //                   console.error("Error writing document: ", error);
+      //               });
+
+      //             });
+      //         }).then((data) => {
+      //         })
+
+      //         // console.log(iconName);
+      //         // console.log(creditList[user].name);
+      //         // console.log(creditList[user].credit);
+      //       }
+      //     }
+      //   })
 
 
       
