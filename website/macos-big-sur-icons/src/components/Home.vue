@@ -12,8 +12,7 @@
     />
 
     <coral-toast id="successToast" variant="success">
-      <!-- <coral-icon :icon="icons.success" size="M" alt="Medium" title="M"></coral-icon> -->
-      😄 Icon Uploaded
+      😄 All icons have been uploaded.
     </coral-toast>
 
 
@@ -24,11 +23,12 @@
       <div class="main-search-wrapper coral-bg p-b-15">
         <div class="m-auto main-search" style="max-width:300px;">
           <div class="shadow main-border-radius">
-            <input v-model="searchString" :placeholder="'Search ' + iconList.length + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
+            <input v-model="searchString" :placeholder="'Search ' + Object.keys(iconList).length + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
             <svg class="icon fill-dark" id="coral-css-icon-Magnifier" viewBox="0 0 16 16"><path d="M15.77 14.71l-4.534-4.535a6.014 6.014 0 1 0-1.06 1.06l4.533 4.535a.75.75 0 1 0 1.061-1.06zM6.5 11A4.5 4.5 0 1 1 11 6.5 4.505 4.505 0 0 1 6.5 11z"></path></svg>
           </div>
         </div>
 
+        <!-- "Filter by" button -->
         <div class="filter-by-grid">
           <div class="filter-by-wrapper coral-card shadow">
               <coral-icon v-if="filterIsDate" class="h-full" icon="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/website/macos-big-sur-icons/src/assets/clock.svg" title="Add"></coral-icon>
@@ -38,18 +38,18 @@
       </div>
   
       <div class="icon-list-area p-t-50 p-b-50">
-          <a v-for="icon in filteredList" :key="icon.name" class="card-wrapper shadow coral-card" :href="icon.url">
+          <a v-for="icon in filteredList" :key="icon.name" class="card-wrapper shadow coral-card" :href="'https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+icon.name+'.icns'">
             <div class="card-img-wrapper">
-              <img loading="lazy" v-lazy="icon.img" class="w-full" alt="">
+              <img loading="lazy" v-lazy="'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/'+icon.name+'.png'" class="w-full" alt="">
             </div>
             <div>
               <h3 class="coral-font-color">
-              {{ icon.name }}
+                {{ prettifyName(icon.name) }}
               </h3>
+              <p class="coral-Body--XS p-b-10 opacity-60">By <a class="coral-Link" :href="icon.credit" target="_blank">{{icon.credit}}</a></p>
             </div>
           </a>
       </div>
-
 
     </section>
 
@@ -69,6 +69,7 @@
 <script>
 import Header from './Header.vue';
 import Hero from './Hero.vue';
+
 import Dialog from './Dialog.vue';
 
 export default {
@@ -82,7 +83,7 @@ export default {
 
   data(){
     return{
-      iconList:[],
+      iconList:{},
       searchString: "",
       iconsToShow: [],
       filterIsDate: false,
@@ -100,33 +101,53 @@ export default {
 
   methods:{
     
+    prettifyName(name){
+      // let newName = name
+      for(let i in name){
+        name = name.replace("_", " ")
+      }
+      // console.log(newName);
+      return name
+    },
+
     getIconsArray(){
       var list = []
       let parent = this
-      fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icns.txt')
+      // fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icns.txt')
+      fetch('https://gist.githubusercontent.com/elrumo/022ff43a969832c8023ddad885bacf63/raw/55b88104c8f283678b036938396b5718bbb7f416/icons.json')
         .then(response => response.text())
         .then((data) => {
+          parent.iconList = JSON.parse(data).icons;
+          
           list = data.split(",\n")
+          let iconsObj = {icons:{}}
 
-          for(let icon in list){
-            let id = list[icon]
-            let iconName = id.replace("_", " ")
+          // for(let icon in list){
+            
+            // let id = list[icon]
+            
+            // iconsObj.icons[id] = {
+            //   name: id,
+            //   timeStamp: 123456,
+            //   credit: "elias"
+            // }
+            // iconsObj.icons[id].name = id
+            // iconsObj.icons[id].timeStamp = 123456
+
+
+            // let iconName = id.replace("_", " ")
             // Remove all "_" from the names
-            for(let i in iconName){
-              i
-              iconName = iconName.replace("_", " ")
-            }
+            // for(let i in iconName){
+            //   i
+            //   iconName = iconName.replace("_", " ")
+            // }
             // iconName = iconName.replace("_", " ")
-            let itemObj = {
-              name: iconName,
-              id: id,
-              url:
-                    "https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/"+id+".icns",
-              img: 
-                    "https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/"+id+".png"
-            }
-            parent.iconList.push(itemObj)
-          }
+
+            // parent.iconList.push(itemObj)
+          // }
+
+          // console.log(JSON.stringify(iconsObj));
+
           if(window.matchMedia('(prefers-color-scheme: dark)').matches){
             parent.darkMode = true
           }

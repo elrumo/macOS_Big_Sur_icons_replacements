@@ -4,7 +4,10 @@ import VueLazyload from 'vue-lazyload'
 import store from './store/store'
 
 Vue.config.productionTip = false
-Vue.use(VueLazyload)
+Vue.use(VueLazyload, {
+  preLoad: 1.1,
+  loading: '',
+});
 
 
 new Vue({

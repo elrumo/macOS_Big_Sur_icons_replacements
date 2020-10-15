@@ -18,15 +18,30 @@ a{
     text-decoration: none;
 }
 
+
+ul {
+    padding-inline-start: 25px;
+    padding-inline-end: 25px;
+}
+
 .icon-upload-grid{
     display: grid !important;
     grid-template-columns: 1fr;
     row-gap: 13px;
 }
 
+.icons-preview-wrapper{
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+}
+
 .icon-preview{
     max-width: var(--icon-preview-dimensions);
     margin: auto;
+}
+
+.icon-preview img{
+    width: 100%;
 }
 
 .main-border-radius{
@@ -147,10 +162,14 @@ a{
 }
 
 .card-wrapper h3{
-    margin: 2px 0px 24px 0px;
+    margin: 2px 0px 2px 0px;
     text-decoration: none;
     font-size: 0.9rem;
     text-align: center;
+}
+
+.opacity-60{
+    opacity: 60%;
 }
 
 .dark-mode-btn{
@@ -259,6 +278,13 @@ a{
     border: dashed 2px rgba(256, 256, 256, 0.35);
     border-radius: 7px;
 }
+
+
+.dialog-text{
+    max-width: 380px;
+    padding-bottom: 15px;
+}
+
 
 .coral--light .coral-card{
     background: var(--coral-light-card);
