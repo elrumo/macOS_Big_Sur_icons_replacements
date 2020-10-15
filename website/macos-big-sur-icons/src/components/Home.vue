@@ -69,8 +69,11 @@
 <script>
 import Header from './Header.vue';
 import Hero from './Hero.vue';
-
 import Dialog from './Dialog.vue';
+
+import * as firebase from "firebase";
+
+let db = firebase.firestore();
 
 export default {
   name: 'Home',
@@ -88,6 +91,7 @@ export default {
       iconsToShow: [],
       filterIsDate: false,
       filterIsName: true,
+      list: {},
       icons:{
         success: require("../assets/icons/delete.svg"),
       }
@@ -111,42 +115,75 @@ export default {
     },
 
     getIconsArray(){
-      var list = []
       let parent = this
+
+      let parentObj = []
+
+       fetch('https://gist.githubusercontent.com/elrumo/3476a152049ab29c7ae87011774b1046/raw/8a41a997fded284508c34810aa1c0eaebf6cfc66/credits.json')
+        .then(response => response.text())
+        .then((data) => {
+          
+          let creditList = JSON.parse(data).users;
+          // console.log(creditList);
+
+          for(let user in creditList){
+            for(let icon in creditList[user].icons){
+              // arrList.push(creditList[user].icons[icon])
+              // console.log(arrList);
+              let iconName = creditList[user].icons[icon]
+              
+              let matches = db.collection("icons").where("name", "==", iconName)
+              matches.get().then(function (querySnapshot) {
+                  querySnapshot.forEach(function (doc) {
+                    console.log(doc.data());
+                    db.collection("icons").doc(doc.id).set({
+                        creditUrl: creditList[user].credit,
+                        credit: creditList[user].name,
+                        name: doc.data().name,
+                        timeStamp: doc.data().timeStamp
+                    }).then(function() {
+                        console.log("Document successfully written!");
+                        console.log(doc.id);
+                    })
+                    .catch(function(error) {
+                        console.error("Error writing document: ", error);
+                    });
+
+                  });
+              }).then((data) => {
+              })
+
+              // console.log(iconName);
+              // console.log(creditList[user].name);
+              // console.log(creditList[user].credit);
+            }
+          }
+        })
+
+
+      
+      var list = []
       // fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icns.txt')
       fetch('https://gist.githubusercontent.com/elrumo/022ff43a969832c8023ddad885bacf63/raw/55b88104c8f283678b036938396b5718bbb7f416/icons.json')
         .then(response => response.text())
         .then((data) => {
           parent.iconList = JSON.parse(data).icons;
-          
-          list = data.split(",\n")
+          let iconList = parent.iconList
+
           let iconsObj = {icons:{}}
 
-          // for(let icon in list){
-            
-            // let id = list[icon]
-            
-            // iconsObj.icons[id] = {
-            //   name: id,
-            //   timeStamp: 123456,
-            //   credit: "elias"
-            // }
-            // iconsObj.icons[id].name = id
-            // iconsObj.icons[id].timeStamp = 123456
-
-
-            // let iconName = id.replace("_", " ")
-            // Remove all "_" from the names
-            // for(let i in iconName){
-            //   i
-            //   iconName = iconName.replace("_", " ")
-            // }
-            // iconName = iconName.replace("_", " ")
-
-            // parent.iconList.push(itemObj)
+          // for(let icon in iconList){
+          //   // console.log(iconList[icon].credit);
+          //   db.collection("icons").doc().set({
+          //       credit: iconList[icon].credit,
+          //       name: iconList[icon].name,
+          //       timeStamp: iconList[icon].timeStamp,
+          //   })
+          //   .then(function() {
+          //     console.log("Doc Done!");
+          //   })
           // }
 
-          // console.log(JSON.stringify(iconsObj));
 
           if(window.matchMedia('(prefers-color-scheme: dark)').matches){
             parent.darkMode = true

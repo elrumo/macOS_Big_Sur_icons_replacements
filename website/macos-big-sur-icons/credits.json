@@ -1,0 +1,37 @@
+{
+  "users":{
+
+    "elias":{
+      "icons":["iA_Writer", "Dashlane", "Figma", "Iina", "Opera", "OneDrive", "Spark", "Sublime_Text", "Transmit", "VS_Code", "WebBites", "Hyper", "iTerm_2", "Xcode", "Swift_Playgrounds", "Brave", "Raindrop", "Astropad_Studio", "Harvest", "Epic_games", "Transmission", "Icons_8", "OmniFocus", "Dropbox", "Dropbox_alt", "VLC", "Astropad", "Electron", "Malwarebytes", "iMovie", "Reeder", "Filezila", "Discord", "coconutBattery", "Atom", "Pixelmator_Pro", "Open_Emu", "Firefox_dev", "Firefox", "Minecraft", "Calibre_alt", "Github", "Iina_alt", "NordVPN", "Netflix", "Drafts", "Facebook_Messenger", "Origin"],
+      "credit": "https://webbites.io/#/",
+      "name": "Elias"
+    },
+
+    "Mattophobia":{
+      "icons":["Musescore", "Garageband", "iMovie_Alt", "Swift_Playgrounds_(Alt)", "Swift_Playgrounds_(Alt_2)", "Alfred", "Amplitube", "Amplitube_Auth_Manager", "Custom_Shop", "AltServer", "Backup_&_Sync", "Bartender", "BetterTouchTool", "Capo", "Dark_Reader", "DuckDuckGo", "Emcee", "Flux", "Folx", "Handbrake", "iStat", "Launchpad_(Alt)", "Loopback", "Mosaic", "OBS", "P-Touch", "Signal", "Speedtest", "Teamspeak", "UAD_Console", "UAD_Control_Panel", "Unicorn_Unblocker", "Compressor", "Final_Cut_Pro_(Alt)", "Logic_Pro_X_(Alt)", "MainStage", "Motion", "Google_Chrome_(Alt)", "Downie", "Pipifier", "MacMediaKeyForwarder", "Blender"],
+      "credit": "https://reddit.com/u/Mattophobia",
+      "name": "Mattophobia"
+    },
+    "Gracjan":{
+      "icons":["BBEdit", "Brave_Nightly", "Keyboard_Maestro", "Minimal_Consent", "StopTheMadness"],
+      "credit": "https://github.com/gracjankn",
+      "name": "Gracjan"
+    },
+    "Ovennell":{
+      "icons":["NordVPN_Alt_2", " NordPass", " NordLocker", " Visual_Studio_Code_Alt2", " Visual_Studio_Code_Alt3", " CCleaner", " Tidal", " Tidal_Alt", " Instagram_Alt"],
+      "credit": "https://github.com/ovennell",
+      "name": "Ovennell"
+    },
+    "Austin Condiff":{
+      "icons":["Daisy_Disk", "Intellij", "Microsoft_Excel_Alternate", "Microsoft_OneDrive_Alternate", "Microsoft_OneNote_Alternate", "Microsoft_Outlook_Alternate", "Microsoft_PowerPoint_Alternate", "Microsoft_Teams_Alternate", "Microsoft_To_Do_Alternate", "Microsoft_Visual_Studio_Code_Alternate", "Microsoft_Word_Alternate", "Nova", "Paste", "Plex", "Postman", "Table_Plus"],
+      "credit": "https://austincondiff.com/",
+      "name": "Austin Condiff"
+    },
+    "Austin Condiff":{
+      "icons":["Daisy_Disk", "Intellij", "Microsoft_Excel_Alternate", "Microsoft_OneDrive_Alternate", "Microsoft_OneNote_Alternate", "Microsoft_Outlook_Alternate", "Microsoft_PowerPoint_Alternate", "Microsoft_Teams_Alternate", "Microsoft_To_Do_Alternate", "Microsoft_Visual_Studio_Code_Alternate", "Microsoft_Word_Alternate", "Nova", "Paste", "Plex", "Postman", "Table_Plus"],
+      "credit": "https://austincondiff.com/",
+      "name": "Austin Condiff"
+    }
+
+  }
+}
