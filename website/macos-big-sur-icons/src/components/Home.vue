@@ -126,52 +126,52 @@ export default {
         })
       })
 
-      //  fetch('https://gist.githubusercontent.com/elrumo/3476a152049ab29c7ae87011774b1046/raw/4f4679d3ff5a9621b58598dbe001e409a430f064/credits.json')
-      //   .then(response => response.text())
-      //   .then((data) => {
+       fetch('https://gist.githubusercontent.com/elrumo/3476a152049ab29c7ae87011774b1046/raw/4f4679d3ff5a9621b58598dbe001e409a430f064/credits.json')
+        .then(response => response.text())
+        .then((data) => {
           
-      //     let creditList = JSON.parse(data).users;
-      //     // console.log(creditList);
+          let creditList = JSON.parse(data).users;
+          // console.log(creditList);
 
-      //     for(let user in creditList){
-      //       for(let icon in creditList[user].icons){
-      //         // arrList.push(creditList[user].icons[icon])
-      //         // console.log(arrList);
-      //         let iconName = creditList[user].icons[icon]
+          for(let user in creditList){
+            for(let icon in creditList[user].icons){
+              // arrList.push(creditList[user].icons[icon])
+              // console.log(arrList);
+              let iconName = creditList[user].icons[icon]
               
-      //         let matches = db.collection("icons").where("name", "==", iconName)
-      //         matches.get().then(function (querySnapshot) {
-      //             querySnapshot.forEach(function (doc) {
-      //               console.log(doc.data());
-      //               db.collection("icons").doc(doc.id).set({
-      //                   creditUrl: creditList[user].credit,
-      //                   credit: creditList[user].name,
-      //                   name: doc.data().name,
-      //                   timeStamp: doc.data().timeStamp
-      //               }).then(function() {
-      //                   console.log("Document successfully written!");
-      //                   console.log(doc.id);
-      //               })
-      //               .catch(function(error) {
-      //                   console.error("Error writing document: ", error);
-      //               });
+              let matches = db.collection("icons").where("name", "!=", iconName)
+              matches.get().then(function (querySnapshot) {
+                  querySnapshot.forEach(function (doc) {
+                    console.log(doc.data());
+                    db.collection("icons").doc(doc.id).set({
+                        // creditUrl: creditList[user].credit,
+                        // credit: creditList[user].name,
+                        name: doc.data().name,
+                        timeStamp: doc.data().timeStamp
+                    }).then(function() {
+                        console.log("Document successfully written!");
+                        console.log(doc.id);
+                    })
+                    .catch(function(error) {
+                        console.error("Error writing document: ", error);
+                    });
 
-      //             });
-      //         }).then((data) => {
-      //         })
+                  });
+              }).then((data) => {
+              })
 
-      //         // console.log(iconName);
-      //         // console.log(creditList[user].name);
-      //         // console.log(creditList[user].credit);
-      //       }
-      //     }
-      //   })
+              // console.log(iconName);
+              // console.log(creditList[user].name);
+              // console.log(creditList[user].credit);
+            }
+          }
+        })
 
 
       
       var list = []
       // fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icns.txt')
-      fetch('https://gist.githubusercontent.com/elrumo/022ff43a969832c8023ddad885bacf63/raw/55b88104c8f283678b036938396b5718bbb7f416/icons.json')
+      fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/website_2/website/macos-big-sur-icons/icons.json')
         .then(response => response.text())
         .then((data) => {
           parent.iconList = JSON.parse(data).icons;

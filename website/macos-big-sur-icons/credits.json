@@ -2,13 +2,13 @@
   "users":{
 
     "elias":{
-      "icons":["iA_Writer", "Dashlane", "Figma", "Iina", "Opera", "OneDrive", "Spark", "Sublime_Text", "Transmit", "VS_Code", "WebBites", "Hyper", "iTerm_2", "Xcode", "Swift_Playgrounds", "Brave", "Raindrop", "Astropad_Studio", "Harvest", "Epic_games", "Transmission", "Icons_8", "OmniFocus", "Dropbox", "Dropbox_alt", "VLC", "Astropad", "Electron", "Malwarebytes", "iMovie", "Reeder", "Filezila", "Discord", "coconutBattery", "Atom", "Pixelmator_Pro", "Open_Emu", "Firefox_dev", "Firefox", "Minecraft", "Calibre_alt", "Github", "Iina_alt", "NordVPN", "Netflix", "Drafts", "Facebook_Messenger", "Origin"],
+      "icons":["iA_Writer", "Dashlane", "Figma", "Iina", "Opera", "OneDrive", "Spark", "Sublime_Text", "Transmit", "VS_Code", "WebBites", "Hyper", "iTerm_2", "Xcode", "Swift_Playgrounds", "Brave", "Raindrop", "Astropad_Studio", "Harvest", "Epic_games", "Transmission", "Icons_8", "OmniFocus", "Dropbox", "Dropbox_alt", "VLC", "Astropad", "Electron", "Malwarebytes", "iMovie", "Reeder", "Filezila", "Discord", "coconutBattery", "Atom", "Pixelmator_Pro", "Open_Emu", "Firefox_dev", "Firefox", "Minecraft", "Calibre_alt", "Github", "Iina_alt", "NordVPN", "Netflix", "Drafts", "Facebook_Messenger", "Origin", "Nvivo", "Plug", "SoundCloud", "Google_Maps", "qBittorrent", "Drama", "Winds"],
       "credit": "https://webbites.io/#/",
       "name": "Elias"
     },
 
     "Mattophobia":{
-      "icons":["Musescore", "Garageband", "iMovie_Alt", "Swift_Playgrounds_(Alt)", "Swift_Playgrounds_(Alt_2)", "Alfred", "Amplitube", "Amplitube_Auth_Manager", "Custom_Shop", "AltServer", "Backup_&_Sync", "Bartender", "BetterTouchTool", "Capo", "Dark_Reader", "DuckDuckGo", "Emcee", "Flux", "Folx", "Handbrake", "iStat", "Launchpad_(Alt)", "Loopback", "Mosaic", "OBS", "P-Touch", "Signal", "Speedtest", "Teamspeak", "UAD_Console", "UAD_Control_Panel", "Unicorn_Unblocker", "Compressor", "Final_Cut_Pro_(Alt)", "Logic_Pro_X_(Alt)", "MainStage", "Motion", "Google_Chrome_(Alt)", "Downie", "Pipifier", "MacMediaKeyForwarder", "Blender"],
+      "icons":["Musescore", "Garageband", "iMovie_Alt", "Swift_Playgrounds_(Alt)", "Swift_Playgrounds_(Alt_2)", "Alfred", "Amplitube", "Amplitube_Auth_Manager", "Custom_Shop", "AltServer", "Backup_&_Sync", "Bartender", "BetterTouchTool", "Capo", "Dark_Reader", "DuckDuckGo", "Emcee", "Flux", "Folx", "Handbrake", "iStat_Alt", "Launchpad", "Loopback", "Mosaic", "OBS", "P-Touch", "Signal", "Speedtest", "Teamspeak", "UAD_Console", "UAD_Control_Panel", "Unicorn_Unblocker", "Compressor", "Final_Cut_Pro_Alt", "Logic_Pro_X_Alt", "MainStage", "Motion", "Google_Chrome_(Alt)", "Downie", "Pipifier", "MacMediaKeyForwarder", "Blender", "Highland"],
       "credit": "https://reddit.com/u/Mattophobia",
       "name": "Mattophobia"
     },
@@ -18,24 +18,24 @@
       "name": "Gracjan"
     },
     "Ovennell":{
-      "icons":["NordVPN_Alt_2", " NordPass", " NordLocker", " Visual_Studio_Code_Alt2", " Visual_Studio_Code_Alt3", " CCleaner", " Tidal", " Tidal_Alt", " Instagram_Alt"],
+      "icons":["NordVPN_Alt_2", "NordPass", "NordLocker", "Visual_Studio_Code_Alt_2", "Visual_Studio_Code_Alt_3", "CCleaner", "Tidal", "Tidal_Alt", "Instagram_Alt"],
       "credit": "https://github.com/ovennell",
       "name": "Ovennell"
     },
     "Austin Condiff":{
-      "icons":["Daisy_Disk", "Intellij", "Microsoft_Excel_Alternate", "Microsoft_OneDrive_Alternate", "Microsoft_OneNote_Alternate", "Microsoft_Outlook_Alternate", "Microsoft_PowerPoint_Alternate", "Microsoft_Teams_Alternate", "Microsoft_To_Do_Alternate", "Microsoft_Visual_Studio_Code_Alternate", "Microsoft_Word_Alternate", "Nova", "Paste", "Plex", "Postman", "Table_Plus"],
+      "icons":["Daisy_Disk", "Intellij", "Microsoft_Excel_Alt", "Microsoft_OneDrive_Alt", "Microsoft_OneNote_Alt", "Microsoft_Outlook_Alt", "Microsoft_PowerPoint_Alt", "Microsoft_Teams_Alt", "Microsoft_To_Do_Alt", "Microsoft_Visual_Studio_Code_Alt", "Microsoft_Word_Alt", "Nova", "Paste", "Plex", "Postman", "Table_Plus", "Evernote", "Hue_Sync"],
       "credit": "https://austincondiff.com/",
       "name": "Austin Condiff"
     },
     
     "Nathan Cheng":{
-      "icons":["Anki", "Audio_Hijack", "BBEdit_Alt", "Blender", "Cardhop", "Cinema_4D", "DaVinci_Resolve", "Dozer", "Final_Draft", "Highland_2", "Kaleidoscope", "Keka", "Magnet", "PDF_Expert", "Poolside_FM_Alt", "Reeder_Alt", "Sidenotes", "Soulver", "Spark_Alt", "Spotify_Alt_2", "Steam_Alt_2", "Things_3_Alt", "Tot", "Turbo_Boost_Switcher_Pro", "Ulysses", "The_Unarchiver", "WeTransfer", "Zoom_Alt"],
+      "icons":["Anki", "Audio_Hijack", "BBEdit_Alt", "Blender_Alt", "Cardhop", "Cinema_4D", "DaVinci_Resolve", "Dozer", "Final_Draft", "Highland_2", "Kaleidoscope", "Keka", "Magnet", "PDF_Expert", "Poolside_FM_Alt", "Reeder_Alt", "Sidenotes", "Soulver", "Spark_Alt", "Spotify_Alt_2", "Things_3_Alt", "Tot", "Turbo_Boost_Switcher_Pro", "Ulysses", "The_Unarchiver", "WeTransfer", "Zoom_Alt", "AdGuard", "LastPass", "LookUp", "Parcel", "ToothFairy", "Wipr", "Fantastical_Alt"],
       "credit": "https://github.com/nweii/",
       "name": "Nathan Cheng"
     },
 
     "Shreyas Gupta":{
-      "icons":["Apple Music", "Cisco Webex"],
+      "icons":["Apple_Music", "Cisco_Webex"],
       "credit": "https://shreyasgupta.me/",
       "name": "Shreyas Gupta"
     },
@@ -47,16 +47,339 @@
     },
 
     "Stijn de Vries":{
-      "icons":["Microsoft_Visual_Studio_Code_Alt_4", "Microsoft_Visual_Studio_Code_Alt_5", "Optimage", "Optimage_Alt", "Twitter", "Step_Two_Alt", "Discord_Alt_2", "Nova", "Github", "Pixelmator_Pro", "Pages", "Numbers", "WhatsApp"],
+      "icons":["Microsoft_Visual_Studio_Code_Alt_4", "Microsoft_Visual_Studio_Code_Alt_5", "Optimage", "Optimage_Alt", "Twitter_Alt_2", "Step_Two_Alt", "Discord_Alt_2", "Nova", "Github", "Pixelmator_Pro", "Pages", "Numbers", "WhatsApp"],
       "credit": "https://stijndv.com/goodies/",
       "name": "Stijn de Vries"
     },
 
     "octaviotti":{
-      "icons":["Microsoft_Visual_Studio_Code_Alt_4", "1Blocker_Alt", "1Password_Alt", "Ableton_LIVE", "Acorn", "Activity_Monitor_Alt", "Adblock_Plus", "AdGuard_Alt", "Adobe_Acrobat_Pro", "Adobe_Animate_Alt", "Adobe_Audition_Alt", "Adobe_Bridge_Alt", "Adobe_Character_Animator_Al", "Adobe_Creative_Cloud_Alt", "Adobe_Dimension_Alt", "Adobe_Dreamweaver_Alt", "Adobe_Fuse_Alt", "Adobe_InCopy_Alt", "Adobe_InDesign_Alt", "Adobe_Lightroom_Alt_2", "Adobe_Media_Encoder_Alt", "Adobe_Prelude_Alt", "Adobe_Premiere_Rush_Alt", "Adobe_Spark_Alt", "Affinity_Designer_Alt", "Affinity_Photo_Alt", "Affinity_Publisher_Alt", "Agenda", "AirBuddy", "Airfoil", "AirParrot", "AirPort_Utility", "Alfred_Alt", "Alternote", "Amazon_Music", "Amphetamine_Alt", "Android_File_Transfer_Alt", "Android_Studio_Alt", "Androp", "AppCleaner_Alt", "App_Store_Alt", "Artpip", "Astropad_Alt", "Atom_Alt", "Audiotool", "Audio_MIDI_Setup", "AutoCAD", "Automator", "Avast", "Backblaze", "Balsamiq_Mockups", "Bartender_Alt", "Battery_Guardian", "Battery_Monitor", "BBedit_Alt_2", "Beamer", "Betternet", "BetterTouchTool_Alt", "Be_Focused", "Bitwarden_Alt_2", "Bluetooth_File_Exchange", "Books", "Bootcamp_Assistant", "BuildMaster", "Calculator", "Calendar", "CameraBag_Cinema", "Capslocker", "Caption", "Capto", "Carbon_Copy_Cloner_Alt", "Carrot_Weather", "CCleaner_Alt", "Charles_Proxy", "CheatSheet", "Chess", "CiderTV", "Citra", "CleanMyMac_X", "CoconutBattery_Alt", "Coda_Alt", "CodeRunner_Alt", "Coffee_Buzz", "ColorSync_Utility", "Color_Slurp", "Console", "Contacts", "CorelDRAW", "CrossOver", "Daisy_Disk_Alt", "Dashboard", "DaVinci_Resolve_Alt", "Day_One_Alt", "Deckset", "DeepL", "Deezer", "Deezloader", "Deluge", "Developer", "Dictionary", "Digital_Color_Meter", "Disk_Utility_Alt", "Downie_Alt", "Dozer_Alt", "DRC", "Dropbox_Paper", "Duet_Display", "Duplicate_Finder", "Dynamo", "Eclipse", "Elmedia_Player", "Emby", "EtreCheck", "Evernote_Alt_2", "Exodus", "Facebook_Messenger_Alt_2", "Facetime", "Fantastical_Alt", "Feedback_Assistant", "FFmpeg", "Finder", "Find_My", "Firefox_Alt", "Firefox_Nightly", "Flixtools", "Flume", "Flux_Alt", "Folx_Alt", "Font_Book", "Forklift", "Franz", "Free_Download_Manager", "Garageband_Alt", "GeForce_Now", "Gemini_2", "GeoGebra", "Get_Backup_Pro", "GIPHY_Capture", "Git", "GitHub_Desktop_Alt_2", "Google_Backup_and_Sync", "Google_Calendar", "Google_Chrome", "Google_Chrome_Remote_Desktop_Alt", "Google_Docs_Alt", "Google_Drive", "Google_Earth", "Google_Gmail", "Google_Hangouts", "Google_Keep", "Google_Meet", "Google_Messages", "Google_News", "Google_Photos_Alt", "Google_Podcasts", "Google_Sheets_Alt", "Google_Slides_Alt", "Grandperspective", "Grapher", "Guitar_Pro", "HazeOver", "HiddenMe", "Holdr", "Home", "Hyper_Alt", "iCloud_Control", "IconFly", "iConvert", "iDisplay", "iHash", "iLOK_License_Manager", "Image2Icon_Alt", "ImageOptim_Alt", "Image_Capture", "iMazing", "iMovie_Alt", "Instagram_Alt_2", "Instapaper", "IntelliJ_Php_Storm_Alt", "IntelliJ_PyCharm_Alt", "iStats_Menu_Alt_2", "Itsycal", "jDownloader", "Just_Stream", "Ka-Block", "Keychain_Access", "Keynote_Alt", "Kindle", "Kodi", "LastPass_Alt", "Latest", "Launchpad_Alt", "League_of_Legends_Alt", "LiteIcon", "Logic_Pro_X_Alt_2", "Logi_Options", "Luminar", "MacDroid", "MacMedia_Forwarder_Alt", "Mactracker", "Magnet_Alt", "Mail", "Maps", "Mate_Translate_Alt", "MathKey", "Mattermost", "MegaSync", "Messages", "MetaMovie", "Microsoft_Access", "Microsoft_Edge_Alt", "Microsoft_Edge_Canary", "Microsoft_Edge_Dev", "Microsoft_Excel_Alt_2", "Microsoft_OneDrive_Alt_2", "Microsoft_OneNote_Alt_2", "Microsoft_Outlook_Alt_2", "Microsoft_PowerPoint_Alt_2", "Microsoft_Publisher_Alt", "Microsoft_SharePoint_Alt", "Microsoft_Teams_Alt_2", "Microsoft_Visual_Studio_Code_Insider", "Microsoft_Word_Alt_2", "Microsoft_Yammer_Alt", "Migration_Assistant", "MiHome", "Mission_Control", "Momentum", "Monity", "Mounty", "Movie_Explorer_Pro", "MPV", "Multitouch", "Music", "Musixmatch", "News", "NightOwl", "NotePlan", "Notes", "Notion_Alt", "NTFS_for_Mac", "Numbers_Alt", "Numi", "OBS_Alt_2", "OfficeMax_eBooks", "OmniFocus_Alt", "OmniGraffle", "OmniOutliner", "OmniPlan", "Omni_Disk_Sweeper", "OneCast", "Onlyoffice", "Onyx", "OpenEmu_Alt", "OpenMTP", "Opera_Alt", "Opera_GX", "Pages_Alt", "Paragon_NTFS_Mac", "Parallels_Desktop_Alt", "Parcel_Alt", "Paste_Alt", "Path_Finder_Alt", "pCloud_Drive", "PDF_Expert_Alt", "PDF_Squeezer", "Photos", "Photoscape_X", "Pikka", "PiPer", "Pixave", "Plex_Alt", "Pocket", "Pocket_Casts", "Podcasts", "Pomodorome", "PopClip", "Postman_Alt", "Preview", "Prizmo", "ProtonMail_Bridge", "ProtonVPN", "qBittorrent_Alt", "QQ_Music", "QR_Encoder", "Quicktime_Alt", "Radio_Silence", "Reddit_Alt", "Reeder_Alt_2", "Reflector_3", "Reflector_3_Teacher", "Reminders", "Remote_Mouse", "Remux", "Rocket", "Safari", "ScreenBrush", "Screenshot_Alt", "Script_Editor", "SD_Card_Formatter", "SelfControl", "Setapp_Alt_2", "Settings", "SF_Symbols", "Shazam_Alt", "Shotcut", "SideNotes_Alt", "Signal_Alt", "Siri", "Sketchup_Alt", "Sketch_Alt_2", "Skitch", "Skype_for_Business", "Slack_Alt_2", "Smart_Switch", "Smash", "smcFanControl", "Softorino_Youtube_Converter", "Sonos_Alt", "Sourcetree", "Spark_Alt_2", "Speedtest", "Steam", "Stickies", "Stocks", "Streamlabs_OBS", "Stremio", "Strike", "Sublime_Text_Alt", "Supremo", "Svgsus", "Syntorial", "System_Information", "TablePlus_Alt", "Tabs_Saver_for_Safari", "Tayasui_Sketches", "TeamPaper_Snap", "TeamViewer_Alt", "Terminal", "TextMate", "Text_Edit", "The_Unarchiver_Alt", "Time_Machine", "TopoCal", "Traktor_PRO", "Transmission_Alt_2", "TripMode", "Tunnelblick", "TV", "Tweetbot_Alt_2", "Twitch", "Typeeto", "Typeface", "Typora", "uBar", "Ultimate_Guitar", "Ulysses_Alt", "Unclutter", "Unlox", "Unsplash", "uTorrent_Alt", "Vanilla", "Vectornator", "Vegas_Pro", "VirtualBox", "Vivaldi", "VLC", "VMware_Fusion_Alt", "VMWare_Horizon", "VoiceOver_Utility", "Voice_Memos", "Wacom_Inkspace", "Wallpaper_Engine", "Waltr", "Webtorrent_Alt", "WeTransfer", "Whatsapp_Alt_2", "WiFi_Explorer", "Wipr", "WordPress", "XCode_Alt", "Yahoo_Mail", "Yandex_Browser", "Yeelight", "Yoink_Alt", "YouTube_Music", "YouTube_TV"],
+      "icons":["Microsoft_Visual_Studio_Code_Alt_4", "1Blocker_Alt", "1Password_Alt", "Ableton_LIVE", "Acorn", "Activity_Monitor_Alt", "Adblock_Plus", "AdGuard_Alt", "Adobe_Acrobat_Pro", "Adobe_Animate_Alt", "Adobe_Audition_Alt", "Adobe_Bridge_Alt", "Adobe_Character_Animator_Al", "Adobe_Creative_Cloud_Alt", "Adobe_Dimension_Alt", "Adobe_Dreamweaver_Alt", "Adobe_Fuse_Alt", "Adobe_InCopy_Alt", "Adobe_InDesign_Alt", "Adobe_Lightroom_Alt_2", "Adobe_Media_Encoder_Alt", "Adobe_Prelude_Alt", "Adobe_Premiere_Rush_Alt", "Adobe_Spark_Alt", "Affinity_Designer_Alt", "Affinity_Photo_Alt", "Agenda", "AirBuddy", "Airfoil", "AirParrot", "AirPort_Utility", "Alfred_Alt", "Alternote", "Amazon_Music", "Amphetamine_Alt", "Android_File_Transfer_Alt", "Android_Studio_Alt", "Androp", "AppCleaner_Alt", "App_Store_Alt", "Artpip", "Astropad_Alt", "Atom_Alt", "Audiotool", "Audio_MIDI_Setup", "AutoCAD", "Automator", "Avast", "Backblaze", "Balsamiq_Mockups", "Bartender_Alt", "Battery_Guardian", "Battery_Monitor", "BBedit_Alt_2", "Beamer", "Betternet", "BetterTouchTool_Alt", "Be_Focused", "Bitwarden_Alt_2", "Bluetooth_File_Exchange", "Books", "Bootcamp_Assistant", "BuildMaster", "Calculator", "Calendar", "CameraBag_Cinema", "Capslocker", "Caption", "Capto", "Carbon_Copy_Cloner_Alt", "Carrot_Weather", "CCleaner_Alt", "Charles_Proxy", "CheatSheet", "Chess", "CiderTV", "Citra", "CleanMyMac_X", "CoconutBattery_Alt", "Coda_Alt", "CodeRunner_Alt", "Coffee_Buzz", "ColorSync_Utility", "Color_Slurp", "Console", "Contacts", "CorelDRAW", "CrossOver", "Daisy_Disk_Alt", "Dashboard", "DaVinci_Resolve_Alt", "Day_One_Alt", "Deckset", "DeepL", "Deezer", "Deezloader", "Deluge", "Developer", "Dictionary", "Digital_Color_Meter", "Disk_Utility_Alt", "Downie_Alt", "Dozer_Alt", "DRC", "Dropbox_Paper", "Duet_Display", "Duplicate_Finder", "Dynamo", "Eclipse", "Elmedia_Player", "Emby", "EtreCheck", "Evernote_Alt_2", "Exodus", "Facebook_Messenger_Alt_2", "Facetime", "Fantastical_Alt", "Feedback_Assistant", "FFmpeg", "Finder", "Find_My", "Firefox_Alt", "Firefox_Nightly", "Flixtools", "Flume", "Flux_Alt", "Folx_Alt", "Font_Book", "Forklift", "Franz", "Free_Download_Manager", "Garageband_Alt", "GeForce_Now", "Gemini_2", "GeoGebra", "Get_Backup_Pro", "GIPHY_Capture", "Git", "GitHub_Desktop_Alt_2", "Google_Backup_and_Sync", "Google_Calendar", "Google_Chrome", "Google_Chrome_Remote_Desktop_Alt", "Google_Docs_Alt", "Google_Drive", "Google_Earth", "Google_Gmail", "Google_Hangouts", "Google_Keep", "Google_Meet", "Google_Messages", "Google_News", "Google_Photos_Alt", "Google_Podcasts", "Google_Sheets_Alt", "Google_Slides_Alt", "Grandperspective", "Grapher", "Guitar_Pro", "HazeOver", "HiddenMe", "Holdr", "Home", "Hyper_Alt", "iCloud_Control", "IconFly", "iConvert", "iDisplay", "iHash", "iLOK_License_Manager", "Image2Icon_Alt", "ImageOptim_Alt", "Image_Capture", "iMazing", "iMovie_Alt", "Instagram_Alt_2", "Instapaper", "IntelliJ_Php_Storm_Alt", "IntelliJ_PyCharm_Alt", "iStats_Menu_Alt_2", "Itsycal", "jDownloader", "Just_Stream", "Ka-Block", "Keychain_Access", "Keynote_Alt", "Kindle", "Kodi", "LastPass_Alt", "Latest", "Launchpad_Alt", "League_of_Legends_Alt", "LiteIcon", "Logic_Pro_X_Alt_2", "Logi_Options", "Luminar", "MacDroid", "MacMedia_Forwarder_Alt", "Mactracker", "Magnet_Alt", "Mail", "Maps", "Mate_Translate_Alt", "MathKey", "Mattermost", "MegaSync", "Messages", "MetaMovie", "Microsoft_Access", "Microsoft_Edge_Alt", "Microsoft_Edge_Canary", "Microsoft_Edge_Dev", "Microsoft_Excel_Alt_2", "Microsoft_OneDrive_Alt_2", "Microsoft_OneNote_Alt_2", "Microsoft_Outlook_Alt_2", "Microsoft_PowerPoint_Alt_2", "Microsoft_Publisher_Alt", "Microsoft_SharePoint_Alt", "Microsoft_Teams_Alt_2", "Microsoft_Visual_Studio_Code_Insider", "Microsoft_Word_Alt_2", "Microsoft_Yammer_Alt", "Migration_Assistant", "MiHome", "Mission_Control", "Momentum", "Monity", "Mounty", "Movie_Explorer_Pro", "MPV", "Multitouch", "Music", "Musixmatch", "News", "NightOwl", "NotePlan", "Notes", "Notion_Alt", "NTFS_for_Mac", "Numbers_Alt", "Numi", "OBS_Alt_2", "OfficeMax_eBooks", "OmniFocus_Alt", "OmniGraffle", "OmniOutliner", "OmniPlan", "Omni_Disk_Sweeper", "OneCast", "Onlyoffice", "Onyx", "OpenEmu_Alt", "OpenMTP", "Opera_Alt", "Opera_GX", "Pages_Alt", "Paragon_NTFS_Mac", "Parallels_Desktop_Alt", "Parcel_Alt", "Paste_Alt", "Path_Finder_Alt", "pCloud_Drive", "PDF_Expert_Alt", "PDF_Squeezer", "Photos", "Photoscape_X", "Pikka", "PiPer", "Pixave", "Plex_Alt", "Pocket", "Pocket_Casts", "Podcasts", "Pomodorome", "PopClip", "Postman_Alt", "Preview", "Prizmo", "ProtonMail_Bridge", "ProtonVPN", "qBittorrent_Alt", "QQ_Music", "QR_Encoder", "Quicktime_Alt", "Radio_Silence", "Reddit_Alt", "Reeder_Alt_2", "Reflector_3", "Reflector_3_Teacher", "Reminders", "Remote_Mouse", "Remux", "Rocket", "Safari", "ScreenBrush", "Screenshot_Alt", "Script_Editor", "SD_Card_Formatter", "SelfControl", "Setapp_Alt_2", "Settings", "SF_Symbols", "Shazam_Alt", "Shotcut", "SideNotes_Alt", "Signal_Alt", "Siri", "Sketchup_Alt", "Sketch_Alt_2", "Skitch", "Skype_for_Business", "Slack_Alt_2", "Smart_Switch", "Smash", "smcFanControl", "Softorino_Youtube_Converter", "Sonos_Alt", "Sourcetree", "Spark_Alt_2", "Speedtest", "Steam", "Stickies", "Stocks", "Streamlabs_OBS", "Stremio", "Strike", "Sublime_Text_Alt", "Supremo", "Svgsus", "Syntorial", "System_Information", "TablePlus_Alt", "Tabs_Saver_for_Safari", "Tayasui_Sketches", "TeamPaper_Snap", "TeamViewer_Alt", "Terminal", "TextMate", "Text_Edit", "The_Unarchiver_Alt", "Time_Machine", "TopoCal", "Traktor_PRO", "Transmission_Alt_2", "TripMode", "Tunnelblick", "TV", "Tweetbot_Alt_2", "Twitch", "Typeeto", "Typeface", "Typora", "uBar", "Ultimate_Guitar", "Ulysses_Alt", "Unclutter", "Unlox", "Unsplash", "uTorrent_Alt", "Vanilla", "Vectornator", "Vegas_Pro", "VirtualBox", "Vivaldi", "VLC", "VMware_Fusion_Alt", "VMWare_Horizon", "VoiceOver_Utility", "Voice_Memos", "Wacom_Inkspace", "Wallpaper_Engine", "Waltr", "Webtorrent_Alt", "WeTransfer", "Whatsapp_Alt_2", "WiFi_Explorer", "Wipr", "WordPress", "XCode_Alt", "Yahoo_Mail", "Yandex_Browser", "Yeelight", "Yoink_Alt", "YouTube_Music", "YouTube_TV"],
       "credit": "https://www.deviantart.com/octaviotti",
       "name": "octaviotti"
-    }
+    },
+    
+    "mmykhaylov":{
+      "icons":["Wolfram_Mathematica"],
+      "credit": "https://github.com/elrumo/macOS_Big_Sur_icons_replacements/issues?q=is%3Apr+author%3Ammykhaylov",
+      "name": "mmykhaylov"
+    },
 
+    "amadeusp":{
+      "icons":["Audirvana", "Bitwig", "Studio", "Spike", "Thunderbird"],
+      "credit": "https://github.com/amadeusp",
+      "name": "amadeusp"
+    },
+
+    "Alperen-Ozturk":{
+      "icons":["Pi_Network", "Burp_Suite", "Burp_Suite_Alt", "Burp_Suite_Alt_2", "Scroll_Reverser", "1.1.1.1", "Binance", "Windscribe", "Windscribe_Alt", "Windscribe_Alt_2"],
+      "credit": "https://github.com/elrumo/macOS_Big_Sur_icons_replacements/issues?q=is%3Apr+author%3AAlperen-Ozturk",
+      "name": "Alperen-Ozturk"
+    },
+    
+    "rtpech":{
+      "icons":["HEY", "HEY_Alt"],
+      "credit": "https://github.com/elrumo/macOS_Big_Sur_icons_replacements/issues?q=is%3Apr+author%3Artpech",
+      "name": "rtpech"
+    },
+    
+    "KiwiBlueSpring":{
+      "icons":["Adobe_Substance_Painter", "Apple_Remote_Desktop", "Archicad_23", "Big_Sur", "Boom_2", "Boom_3D", "Class_Timetable", "Cities_Skylines", "Copied", "Copied_Alt", "EarthX", "House_Flipper", "House_Flipper_Alt", "Magnet_2", "Magnet_Alt_2", "NordVPN_2", "NordVPN_Alt_2", "NordVPN_IKE", "NordVPN_IKE_Alt", "Touch_Bar_Piano", "Touch_Bar_Piano_Alt", "Unigine_Valley", "Untitled_Goose_Game"],
+      "credit": "https://github.com/elrumo/macOS_Big_Sur_icons_replacements/issues?q=is%3Apr+author%3Artpech",
+      "name": "KiwiBlueSpring"
+    },
+    
+    "Tony1324":{
+      "icons":["Blender_Alt_2"],
+      "credit": "https://github.com/elrumo/macOS_Big_Sur_icons_replacements/issues?q=is%3Apr+author%3ATony1324",
+      "name": "Tony1324"
+    },
+
+    "nielskorswagen":{
+      "icons":["Among_Us", "Blocs", "Cyberduck", "Endnote", "Mendeley"],
+      "credit": "https://github.com/nielskorswagen",
+      "name": "nielskorswagen"
+    },
+
+    "junhobaik":{
+      "icons":["KakaoTalk"],
+      "credit": "https://github.com/junhobaik",
+      "name": "junhobaik"
+    },
+
+    "pryley":{
+      "icons":["Chatwoot"],
+      "credit": "https://github.com/pryley",
+      "name": "pryley"
+    },
+
+    "TheGoodSandy":{
+      "icons":["4K_Video_Downloader", "Radarscope", "XLD"],
+      "credit": "https://github.com/TheGoodSandy",
+      "name": "TheGoodSandy"
+    },
+
+    "donaldguy":{
+      "icons":["ReadKit"],
+      "credit": "https://github.com/elrumo/macOS_Big_Sur_icons_replacements/issues?q=is%3Apr+author%3Adonaldguy",
+      "name": "donaldguy"
+    },
+
+    "Minh-Ton (©Apple)":{
+      "icons":["EverWeb"],
+      "credit": "https://apple.com",
+      "name": "Minh-Ton (©Apple)"
+    },
+
+    "marcdotre":{
+      "icons":["GoodNotes", "Zotero_Alt"],
+      "credit": "https://github.com/marcdotre",
+      "name": "marcdotre"
+    },
+
+    "holvanato":{
+      "icons":["FileBot", "MediaInfo"],
+      "credit": "https://github.com/holvanato",
+      "name": "holvanato"
+    },
+
+    "JackHinkle":{
+      "icons":["SentriCard", "RobloxStudio", "RobloxStudio_Alt", "Roblox_Alt", "Roblox_Alt2"],
+      "credit": "https://github.com/JackHinkle",
+      "name": "JackHinkle"
+    },
+
+    "GoldenChaos":{
+      "icons":["Slack_Alt_3", "YouTube", "Amazon", "Tettra", "Coda", "Sketch_Beta"],
+      "credit": "https://github.com/GoldenChaos",
+      "name": "GoldenChaos"
+    },
+
+    "Bas van der Ploeg":{
+      "icons":["AdBlock_Alt", "Cura", "Deliveries_Alt", "Elgato_Stream_Deck", "Live_View", "NodeMCU_PyFlasher", "One_Switch", "Screens_4", "Sketch_Alt", "Skype", "Slack_Alt", "Sonos", "Telegram_Alt2", "Timeline", "Transmission", "Tweetbot_Alt", "VLC_Alt", "VNC_Viewer"],
+      "credit": "https://basvanderploeg.nl/downloads/macos/big-sur/icons/",
+      "name": "Bas van der Ploeg"
+    },
+
+    "Octavian Rosca":{
+      "icons":["Adobe_Illustrator_Alt", "Adobe_Lightroom_Alt", "Adobe_Photoshop_Alt", "Adobe_Premiere_Pro_Alt", "Adobe_After_Effects_Alt", "Adobe_XD_Alt"],
+      "credit": "https://dribbble.com/OctavianRosca",
+      "name": "Octavian Rosca"
+    },
+
+    "Marc Edwards":{
+      "icons":["iStat"],
+      "credit": "https://dribbble.com/bjango",
+      "name": "Marc Edwards"
+    },
+
+    "David Liceaga":{
+      "icons":["Figma"],
+      "credit": "http://liceagadavid.com/",
+      "name": "David Liceaga"
+    },
+
+    "Andrey Davlikanov":{
+      "icons":["Apple_Arcade"],
+      "credit": "https://dribbble.com/Davlikanoff",
+      "name": "Andrey Davlikanov"
+    },
+
+    "Fabrizio Rinaldi":{
+      "icons":["Reddit"],
+      "credit": "https://dribbble.com/linuz90",
+      "name": "Fabrizio Rinaldi"
+    },
+
+    "Mashdash10":{
+      "icons":["Minecraft_Alt_2"],
+      "credit": "https://www.reddit.com/user/Mashdash10/",
+      "name": "Mashdash10"
+    },
+
+    "edwincen":{
+      "icons":["QQ", "WeChat_Alt_2", "WeChat_Work_Alt", "WeChat", "WeChat_Alt", "WeChat_Work", "DingTalk"],
+      "credit": "https://github.com/edwincen",
+      "name": "edwincen"
+    },
+
+    "noahkamara":{
+      "icons":["Sourcetree", "Termius"],
+      "credit": "https://github.com/elrumo/macOS_Big_Sur_icons_replacements/issues?q=is%3Apr+author%3Anoahkamara",
+      "name": "noahkamara"
+    },
+
+    "michaeljylam":{
+      "icons":["Camtasia", "Imaging_Edge_Desktop", "Imaging_Edge_Edit", "Imaging_Edge_Remote", "Imaging_Edge_Viewer"],
+      "credit": "https://github.com/elrumo/macOS_Big_Sur_icons_replacements/issues?q=is%3Apr+author%3Amichaeljylam",
+      "name": "michaeljylam"
+    },
+
+    "TechSynthesis":{
+      "icons":["Autodesk_Fusion_360"],
+      "credit": "https://github.com/TechSynthesis",
+      "name": "TechSynthesis"
+    },
+
+    "xKryloXRenx":{
+      "icons":["AirServer", "Ghostery", "Google_Chrome_Remote_Desktop", "Google_Keep_Alt", "HP_Smart", "Paintbrush", "PIA", "Simple_Comic", "Snapdrop", "Tab_Suspender", "Tor_Browser", "Google_Photos", "Google_Keep", "Authy"],
+      "credit": "https://www.reddit.com/user/xKryloXRenx",
+      "name": "xKryloXRenx"
+    },
+
+    "Vivalize":{
+      "icons":["Arduino", "CodeRunner"],
+      "credit": "https://github.com/Vivalize",
+      "name": "Vivalize"
+    },
+
+    "yashrajchhabra":{
+      "icons":["WebTorrent", "JiraCloud", "TunnelBear", "Android_File", "IntelliJ_DataGrip", "IntelliJ_WebStorm", "IntelliJ_Alt", "IntelliJ_PyCharm"],
+      "credit": "https://github.com/yashrajchhabra",
+      "name": "yashrajchhabra"
+    },
+
+    "billypoydar":{
+      "icons":["Noto"],
+      "credit": "https://github.com/billypoydar",
+      "name": "billypoydar"
+    },
+
+    "joepool":{
+      "icons":["Prusa_Slicer", "Hotspot_Shield", "Teamviewer", "Ultimaker_Cura"],
+      "credit": "https://github.com/joepool",
+      "name": "joepool"
+    },
+
+    "Apple":{
+      "icons":["Accessibility_Inspector", "CreateML", "Reality_Converter", "Reality_Composer", "Xcode_Helper"],
+      "credit": "https://apple.com",
+      "name": "Apple"
+    },
+
+    "rway7":{
+      "icons":["Telegram_alt", "Tweetbot", "Twitter_alt", "Transmission_Alt_3"],
+      "credit": "https://github.com/rway7",
+      "name": "rway7"
+    },
+
+    "Buschbraue":{
+      "icons":["Bitwarden", "Bitwarden_alt", "Delta", "Zotero", "Zotero_alt", "Evernote_Alt", "Obsidian", "Obsidian_Alt"],
+      "credit": "https://github.com/Buschbraue",
+      "name": "Buschbraue"
+    },
+
+    "agraaaaao":{
+      "icons":["1Password", "5217", "AdBlocker", "Adobe_Acrobat", "Adobe_After_Effects", "Adobe_Animate", "Adobe_Audition", "Adobe_Bridge", "Adobe_CC", "Adobe_Character_Animation", "Adobe_Dimension", "Adobe_Dreamweaver", "Adobe_Illustrator", "Adobe_InCopy", "Adobe_Indesign", "Adobe_Lightroom", "Adobe_Media_Encoder", "Adobe_Photoshop", "Adobe_Portfolio", "Adobe_Prelude", "Adobe_Premiere_Pro", "Adobe_Rush", "Adobe_Spark", "Adobe_Stock", "Adobe_XD", "Affinity_Designer", "Affinity_Photo", "Affinity_Publisher", "Amphetamine", "Android_Studio_Beta", "Android_Studio", "Autodesk_Sketch", "Bear_Notes", "cDock", "Chrome_Canary", "CleanMyMac", "CraftDocs", "DayOne", "Deliveries", "Framer", "FontLab", "Glance", "Google_Chrome", "HapticKey", "Image2Icon", "ImageOptim", "Instagram_Alt_2", "iTerm", "Launchpad", "Logic_Pro_X", "MagicPrefs", "Material_Colours", "Material_Palette_Generator", "Microsoft_Edge", "Microsoft_Excel", "Microsoft_OneNote", "Microsoft_Outlook", "Microsoft_Powerpoint", "Microsoft__", "Microsoft_To_Do", "Microsoft_Word", "Notability", "Notion", "Parallels_Desktop", "Permute_Dark", "Permute", "Quip", "Redacted", "Reflector", "Rhinoceros", "Screenshots", "Sensei", "Setapp", "Sip", "Sketch_copy", "Sketchup", "Slack", "Spotify_Dark", "Spotify", "Telegram", "Things_3", "ToothFairy", "Tower", "Trello", "Twitter", "Ubersischt", "Unity_Editor", "Unity_Hub", "Microsoft_Visual_Studio", "VMware_Fusion", "Wacom_Display_Settings", "Wacom_Tablet_Utility", "Whatsapp_Alt", "XScope", "Yoink", "Zoom"],
+      "credit": "https://dribbble.com/agraaaaao",
+      "name": "agraaaaao"
+    },
+
+    "Lucas Haas":{
+      "icons":["Zeplin", "Photo_Booth", "Quicktime", "Disk_Utility", "Spotify_Alt_3"],
+      "credit": "https://dribbble.com/lucashaas",
+      "name": "Lucas Haas"
+    },
+
+    "fvalle1":{
+      "icons":["KSP"],
+      "credit": "https://github.com/fvalle1",
+      "name": "fvalle1"
+    },
+
+    "dimitarnestorov":{
+      "icons":["Fork"],
+      "credit": "https://github.com/dimitarnestorov",
+      "name": "dimitarnestorov"
+    },
+
+    "Kjell291":{
+      "icons":["0_AD", "GOG_Galaxy", "OpenTTD", "Quixel_Mixer", "Quixel_Bridge"],
+      "credit": "https://github.com/Kjell291",
+      "name": "Kjell291"
+    },
+
+    "sanarena":{
+      "icons":["Money_Pro"],
+      "credit": "https://github.com/sanarena",
+      "name": "sanarena"
+    },
+
+    "Asdkjf13":{
+      "icons":["Steam_Alt", "Steam_Alt_3"],
+      "credit": "https://github.com/Asdkjf13",
+      "name": "Asdkjf13"
+    },
+
+    "Ovennell":{
+      "icons":["CCleaner", "Instagram"],
+      "credit": "https://github.com/Ovennell",
+      "name": "Ovennell"
+    },
+
+    "ThePotatoKing55":{
+      "icons":["checkra1n", "Displaperture", "Edison_Mail", "GIMP", "Origin_Alt", "Pac-Bar", "The_Sims_4"],
+      "credit": "https://github.com/ThePotatoKing55",
+      "name": "ThePotatoKing55"
+    },
+
+    "applekillerbyjames":{
+      "icons":["Mos"],
+      "credit": "https://github.com/applekillerbyjames",
+      "name": "applekillerbyjames"
+    },
+
+    "andresfelive":{
+      "icons":["Mate_Translate"],
+      "credit": "https://github.com/andresfelive",
+      "name": "andresfelive"
+    },
+
+    "elij4110":{
+      "icons":["Quicken", "Sketchup_Layout", "Sketchup_Style_Builder"],
+      "credit": "https://github.com/elij4110",
+      "name": "elij4110"
+    },
+
+    "LudoLud":{
+      "icons":["Desktop_Goose"],
+      "credit": "https://github.com/LudoLud",
+      "name": "LudoLud"
+    },
+
+    "josevazquz":{
+      "icons":["Authy", "SurfShark", "Bear_Notes_Dark"],
+      "credit": "https://github.com/josevazquz",
+      "name": "josevazquz"
+    },
+
+    "geoffmyers":{
+      "icons":["Todoist", "Arq", "Fantastical", "Intel_Power_Gadget", "Screaming_Frog_SEO_Spider",  "Carbon_Copy_Cloner", "Ring", "beaTunes", "Dialpad", "Mailplane"],
+      "credit": "https://github.com/geoffmyers",
+      "name": "geoffmyers"
+    },
+
+    "rishabh-design":{
+      "icons":["Videoder"],
+      "credit": "https://github.com/rishabh-design",
+      "name": "rishabh-design"
+    },
+
+    "Aljarus":{
+      "icons":["Docker", "Turbo_Boost_Switcher", "League_Of_Legends", "Popcorn_Time", "Steam_Alt_2", "Skype_Alt", "uTorrent", "Macs_Fan_Control"],
+      "credit": "https://github.com/Aljarus",
+      "name": "Aljarus"
+    },
+
+    "Squirrelf":{
+      "icons":["IntelliJ_PhpStorm"],
+      "credit": "https://github.com/Squirrelf",
+      "name": "Squirrelf"
+    },
+
+    "anmol":{
+      "icons":["Zoom", ],
+      "credit": "https://github.com/anmol",
+      "name": "anmol"
+    }
   }
 }
