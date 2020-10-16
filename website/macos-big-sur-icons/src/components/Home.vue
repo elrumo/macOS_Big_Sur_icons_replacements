@@ -126,7 +126,7 @@ export default {
         })
       })
 
-       fetch('https://gist.githubusercontent.com/elrumo/3476a152049ab29c7ae87011774b1046/raw/4f4679d3ff5a9621b58598dbe001e409a430f064/credits.json')
+       fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/website_2/website/macos-big-sur-icons/credits.json')
         .then(response => response.text())
         .then((data) => {
           
