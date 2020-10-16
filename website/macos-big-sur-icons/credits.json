@@ -18,7 +18,7 @@
       "name": "Gracjan"
     },
     "Ovennell":{
-      "icons":["NordVPN_Alt_2", "NordPass", "NordLocker", "Visual_Studio_Code_Alt_2", "Visual_Studio_Code_Alt_3", "CCleaner", "Tidal", "Tidal_Alt", "Instagram_Alt"],
+      "icons":["NordVPN_Alt_2", "NordPass", "NordLocker", "Visual_Studio_Code_Alt_2", "Visual_Studio_Code_Alt_3", "CCleaner", "Tidal", "Tidal_Alt", "Instagram_Alt", "CCleaner", "Instagram"],
       "credit": "https://github.com/ovennell",
       "name": "Ovennell"
     },
@@ -310,12 +310,6 @@
       "name": "Asdkjf13"
     },
 
-    "Ovennell":{
-      "icons":["CCleaner", "Instagram"],
-      "credit": "https://github.com/Ovennell",
-      "name": "Ovennell"
-    },
-
     "ThePotatoKing55":{
       "icons":["checkra1n", "Displaperture", "Edison_Mail", "GIMP", "Origin_Alt", "Pac-Bar", "The_Sims_4"],
       "credit": "https://github.com/ThePotatoKing55",
@@ -374,12 +368,6 @@
       "icons":["IntelliJ_PhpStorm"],
       "credit": "https://github.com/Squirrelf",
       "name": "Squirrelf"
-    },
-
-    "anmol":{
-      "icons":["Zoom", ],
-      "credit": "https://github.com/anmol",
-      "name": "anmol"
     }
   }
 }
