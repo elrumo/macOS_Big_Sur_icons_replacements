@@ -1,9 +1,10 @@
 const fs = require('fs');
 const _ = require('underscore')
+const path = require('path')
 
 
-const icns_file = '../icns.txt'
-const icns_dir = '../icons'
+const icns_file = path.resolve(__dirname, '../icns.txt')
+const icns_dir = path.resolve(__dirname, '../icons')
 
 const dirents = fs.readdirSync(icns_dir, {
     withFileTypes: true
@@ -24,8 +25,6 @@ let contents_of_txt = fs.readFileSync(icns_file, 'utf8').split(',\n');
 
 let comparison = (_.difference(fileNames, contents_of_txt))
 let final_txt = _.uniq(_.union(comparison, contents_of_txt));
-
-console.log(comparison)
 
 let i;
 let target_str = [];
