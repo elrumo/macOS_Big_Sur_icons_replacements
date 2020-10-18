@@ -1,7 +1,5 @@
 var list = []
 
-const fetch = require('node-fetch');
-
 fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icns.txt')
   .then(response => response.text())
   .then((data) => {
