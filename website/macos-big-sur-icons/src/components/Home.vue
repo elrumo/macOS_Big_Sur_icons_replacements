@@ -126,7 +126,7 @@ export default {
         })
       })
 
-       fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/website_2/website/macos-big-sur-icons/credits.json')
+       fetch('https://gist.githubusercontent.com/elrumo/7c9a5b8148de3dc7ef723e3c4286a08b/raw/45462ed8af4e21e412001c566d2e6468f4a05f62/credtits1.json')
         .then(response => response.text())
         .then((data) => {
           
@@ -134,23 +134,25 @@ export default {
           // console.log(creditList);
 
           for(let user in creditList){
+            console.log(creditList[user]);
             for(let icon in creditList[user].icons){
               // arrList.push(creditList[user].icons[icon])
               // console.log(arrList);
               let iconName = creditList[user].icons[icon]
-              
-              let matches = db.collection("icons").where("name", "!=", iconName)
-              matches.get().then(function (querySnapshot) {
+              // console.log(iconName);
+              let matches = db.collection("icons").where("name", "==", iconName)
+              // console.log(iconName);
+              // console.log(matches);
+              db.collection("icons").where("name", "==", iconName).get().then(function (querySnapshot) {
                   querySnapshot.forEach(function (doc) {
-                    console.log(doc.data());
                     db.collection("icons").doc(doc.id).set({
-                        // creditUrl: creditList[user].credit,
-                        // credit: creditList[user].name,
+                        creditUrl: creditList[user].credit,
+                        credit: creditList[user].name,
                         name: doc.data().name,
                         timeStamp: doc.data().timeStamp
                     }).then(function() {
-                        console.log("Document successfully written!");
-                        console.log(doc.id);
+                        // console.log("Document successfully written!");
+                        console.log(doc.id, " + ", doc.data().name);
                     })
                     .catch(function(error) {
                         console.error("Error writing document: ", error);
@@ -159,7 +161,6 @@ export default {
                   });
               }).then((data) => {
               })
-
               // console.log(iconName);
               // console.log(creditList[user].name);
               // console.log(creditList[user].credit);
