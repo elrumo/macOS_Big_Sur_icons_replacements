@@ -416,6 +416,12 @@
           "name": "Airfoil",
           "timeStamp": 123456
       },
+      "AirTable": {
+          "credit": "alessiobulfaro",
+          "creditUrl": "https://github.com/alessiobulfaro",
+          "name": "AirTable",
+          "timeStamp": 1603050652720
+      },
       "Alfred": {
           "credit": "Mattophobia",
           "creditUrl": "https://reddit.com/u/Mattophobia",
@@ -1125,8 +1131,14 @@
       },
       "CrossOver": {
           "credit": "octaviotti",
-          "creditUrl": "https://www.deviantart.com/octaviotti",
+          "creditUrl": "https://github.com/DiegoMagdaleno",
           "name": "CrossOver",
+          "timeStamp": 1603050652720
+      },
+      "Cutter": {
+          "credit": "DiegoMagdaleno",
+          "creditUrl": "https://www.deviantart.com/octaviotti",
+          "name": "Cutter",
           "timeStamp": 123456
       },
       "Cura": {
@@ -1492,6 +1504,12 @@
           "creditUrl": "https://www.deviantart.com/octaviotti",
           "name": "Exodus",
           "timeStamp": 123456
+      },
+      "Front": {
+          "credit": "amadeusp",
+          "creditUrl": "https://github.com/amadeusp",
+          "name": "Front",
+          "timeStamp": 1603050652720
       },
       "FFmpeg": {
           "credit": "octaviotti",
@@ -3005,6 +3023,12 @@
           "name": "OmniFocus_Alt",
           "timeStamp": 123456
       },
+      "OmniFocus_Alt_2": {
+          "credit": "FradSer",
+          "creditUrl": "https://github.com/FradSer",
+          "name": "OmniFocus_Alt_2",
+          "timeStamp": 1603050652720
+      },
       "OmniGraffle": {
           "credit": "octaviotti",
           "creditUrl": "https://www.deviantart.com/octaviotti",
@@ -3436,6 +3460,12 @@
           "credit": "elias",
           "name": "ReadKit",
           "timeStamp": 123456
+      },
+      "Revolver_Office": {
+        "credit": "Elias",
+        "creditUrl": "https://github.com/amadeusp",
+        "name": "Revolver_Office",
+        "timeStamp": 1603050652720
       },
       "Reality_Composer": {
           "credit": "elias",
