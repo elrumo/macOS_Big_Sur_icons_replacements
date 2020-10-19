@@ -29,7 +29,9 @@ let final_txt = _.uniq(_.union(comparison, contents_of_txt));
 let i;
 let target_str = [];
 for (i = 0; i < final_txt.length; i++) {
-    _.uniq(target_str.push(final_txt[i] + ",\n"))
+    if (final_txt[i] != "") {
+        _.uniq(target_str.push(final_txt[i] + ",\n"))
+    } else{}
 }
 
 
