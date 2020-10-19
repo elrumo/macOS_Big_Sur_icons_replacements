@@ -54,7 +54,7 @@
     
     "mmykhaylov":{
       "icons":["Wolfram_Mathematica"],
-      "credit": "https://github.com/elrumo/macOS_Big_Sur_icons_replacements/issues?q=is%3Apr+author%3Ammykhaylov",
+      "credit": "https://github.com/mmykhaylov",
       "name": "mmykhaylov"
     },
 
@@ -374,6 +374,18 @@
       "icons":["OmniFocus_Alt_2"],
       "credit": "https://github.com/FradSer",
       "name": "FradSer"
+    },
+
+    "Leavever":{
+      "icons":["Boop", "Flow"],
+      "credit": "https://github.com/Leavever",
+      "name": "Leavever"
+    },
+
+    "upintheairsheep":{
+      "icons":["Dolphin_Alt_2", "Bluestacks", "Dolphin_Alt", "Dolphin", "Google_Earth_Alt", "Google_Earth_Alt_2", "Parallels_Desktop_(Windows_7)", "Parallels_Desktop_(Windows_10)", "Parallels_Desktop_(Windows_Vista)", "Parallels_Desktop_(Windows_XP)", "Undertale", "Wine", "WineBottler"],
+      "credit": "https://github.com/upintheairsheep",
+      "name": "upintheairsheep"
     }
   }
 }
