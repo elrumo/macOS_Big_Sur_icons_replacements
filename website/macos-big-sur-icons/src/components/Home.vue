@@ -152,10 +152,13 @@ export default {
           for(let icon in list){
             let id = list[icon]
             let iconName = id.replace("_", " ")
+            id = id.replace(",", "")
+            
             // Remove all "_" from the names
             for(let i in iconName){
               i
               iconName = iconName.replace("_", " ")
+              iconName = iconName.replace(",", "")
             }
             // iconName = iconName.replace("_", " ")
             let itemObj = {
