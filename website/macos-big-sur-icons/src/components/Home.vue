@@ -154,22 +154,25 @@ export default {
             let iconName = id.replace("_", " ")
             id = id.replace(",", "")
             
-            // Remove all "_" from the names
-            for(let i in iconName){
-              i
-              iconName = iconName.replace("_", " ")
-              iconName = iconName.replace(",", "")
+            // Validation check, only add icon name if id is not empty
+            if(id != ""){
+              // Remove all "_" from the names
+              for(let i in iconName){
+                i
+                iconName = iconName.replace("_", " ")
+                iconName = iconName.replace(",", "")
+              }
+              // iconName = iconName.replace("_", " ")
+              let itemObj = {
+                name: iconName,
+                id: id,
+                url:
+                      "https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/"+id+".icns",
+                img: 
+                      "https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/"+id+".png"
+              }
+              parent.iconList.push(itemObj)
             }
-            // iconName = iconName.replace("_", " ")
-            let itemObj = {
-              name: iconName,
-              id: id,
-              url:
-                    "https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/"+id+".icns",
-              img: 
-                    "https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/"+id+".png"
-            }
-            parent.iconList.push(itemObj)
           }
           if(window.matchMedia('(prefers-color-scheme: dark)').matches){
             parent.darkMode = true
@@ -188,7 +191,7 @@ export default {
       if(!searchString){
         return iconList;
       }
-
+        
       searchString = searchString.trim().toLowerCase();
 
       iconList = iconList.filter(function(item){
