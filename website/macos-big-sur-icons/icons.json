@@ -4994,6 +4994,42 @@
             "credit": "upintheairsheep",
             "name": "WineBottler",
             "timeStamp": 1603123648965
+        },
+        "IDLE": {
+            "creditUrl": "https://yunru.se",
+            "credit": "yunruse",
+            "name": "IDLE",
+            "timeStamp": 1603202400
+        },
+        "Android_Studio_Alt_2": {
+            "creditUrl": "https://github.com/paphonb",
+            "credit": "paphonb",
+            "name": "Android_Studio_Alt_2",
+            "timeStamp": 1603189790
+        },
+        "IntelliJ_CLion": {
+            "creditUrl": "https://github.com/paphonb",
+            "credit": "paphonb",
+            "name": "IntelliJ_CLion",
+            "timeStamp": 1603168190
+        },
+        "NextDNS": {
+            "creditUrl": "https://github.com/gracjankn",
+            "credit": "gracjankn",
+            "name": "NextDNS",
+            "timeStamp": 1603168190
+        },
+        "Streaks": {
+            "creditUrl": "https://github.com/Streaks",
+            "credit": "gracjankn",
+            "name": "Streaks",
+            "timeStamp": 1603132190
+        },
+        "AirTable": {
+            "creditUrl": "https://github.com/alessiobulfaro",
+            "credit": "alessiobulfaro",
+            "name": "AirTable",
+            "timeStamp": 1603132190
         }
     }
 }
