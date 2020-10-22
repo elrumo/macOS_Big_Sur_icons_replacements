@@ -6,6 +6,8 @@ All feedback is appreciated, you can do that [@elrumo](https://bit.ly/elias-twit
 Replacement icons for popular apps in the style of macOS Big Sur.
 To view a full list of icons, go to [this website](https://macosicons.com) I created, there you can download just one or all of them at once.
 
+Please note, for my own sanity I will be checking and updating this site around twice a week, on Mondays and Thursdays. So if you make any pull requests, expect them to be merged/checked around those days. Thanks!
+
 # Table of contents
 
 1. [How do I change the app icon on my mac?](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/blob/master/README.md#how-do-i-change-the-app-icon-on-my-mac)
