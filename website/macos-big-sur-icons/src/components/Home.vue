@@ -31,7 +31,7 @@
       </h3>
 
       <p class="coral-Body--L w-100 body-text p-t-20">
-        Click on each icon to download it or on the button bellow to download all {{iconList.length}} icons. To contribute or suggest a new icon, click on the GitHub button.
+        Click on each icon to download it or on the button below to download all {{iconList.length}} icons. To contribute or suggest a new icon, click on the GitHub button.
       </p>
       
       <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank">
