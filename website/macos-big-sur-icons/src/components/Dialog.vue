@@ -70,13 +70,15 @@
           <input id="email-contributor" is="coral-textfield" labelledby="email-label" class="coral-Form-field" type="email"  v-on:change="setEmail">
         </form>
 
-        <!-- <form class="coral-Form coral-Form--vertical" >
-          <label id="yourName-label" class="coral-FieldLabel">Your name <span style="opacity: 0.5"><i>(optional)</i></span></label>
+        <form class="coral-Form coral-Form--vertical" >
+          <label id="yourName-label" class="coral-FieldLabel">Your name</label>
+          <!-- <label id="yourName-label" class="coral-FieldLabel">Your name <span style="opacity: 0.5"><i>(optional)</i></span></label> -->
           <input id="yourName-contributor" is="coral-textfield" labelledby="email-label" class="coral-Form-field" @change="setYourName">
-        </form> -->
+        </form>
 
         <form class="coral-Form coral-Form--vertical" >
-          <label id="credit-label" class="coral-FieldLabel">How should we credit you? <span style="opacity: 0.5"><i>(optional)</i></span></label>
+          <!-- <label id="credit-label" class="coral-FieldLabel">How should we credit you? <span style="opacity: 0.5"><i>(optional)</i></span></label> -->
+          <label id="credit-label" class="coral-FieldLabel">How should we credit you?</label>
           <input id="credit" is="coral-textfield" placeholder="Twitter URL, portfolio site..." labelledby="email-label" class="coral-Form-field" @change="saveCredit">
         </form>
 
@@ -198,6 +200,8 @@ export default {
           let appName = file.name.replace('.png', '');
           let fileName = randomId+'_'+`${file.name}`;
 
+          console.log(fileName);
+          
           await storage.ref('icon_submissions/'+fileName).put(file).then((value)=>{
             value.ref.getDownloadURL().then(function() {
               console.log(value);
@@ -212,7 +216,8 @@ export default {
                   timeStamp: Date.now(),
                   approved: false
               })
-              .then(function() {
+              .then((doc)=>{
+                console.log(doc);
                 parent.imageData = {},
                 parent.picture= null,
                 parent.email = ""
@@ -263,10 +268,10 @@ export default {
       //   console.log(e.target.value);
       //   this.appName = e.target.value
       // },
-      // setYourName(e){
-      //   console.log(e.target.value);
-      //   this.yourName = e.target.value
-      // },
+      setYourName(e){
+        console.log(e.target.value);
+        this.yourName = e.target.value
+      },
 
     },
 }

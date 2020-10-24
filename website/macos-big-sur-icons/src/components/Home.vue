@@ -126,53 +126,53 @@ export default {
         })
       })
 
-       fetch('https://gist.githubusercontent.com/elrumo/7c9a5b8148de3dc7ef723e3c4286a08b/raw/45462ed8af4e21e412001c566d2e6468f4a05f62/credtits1.json')
-        .then(response => response.text())
-        .then((data) => {
+      //  fetch('https://gist.githubusercontent.com/elrumo/7c9a5b8148de3dc7ef723e3c4286a08b/raw/45462ed8af4e21e412001c566d2e6468f4a05f62/credtits1.json')
+      //   .then(response => response.text())
+      //   .then((data) => {
           
-          let creditList = JSON.parse(data).users;
-          // console.log(creditList);
+      //     let creditList = JSON.parse(data).users;
+      //     // console.log(creditList);
 
-          for(let user in creditList){
-            console.log(creditList[user]);
-            for(let icon in creditList[user].icons){
-              // arrList.push(creditList[user].icons[icon])
-              // console.log(arrList);
-              let iconName = creditList[user].icons[icon]
-              // console.log(iconName);
-              let matches = db.collection("icons").where("name", "==", iconName)
-              // console.log(iconName);
-              // console.log(matches);
-              db.collection("icons").where("name", "==", iconName).get().then(function (querySnapshot) {
-                  querySnapshot.forEach(function (doc) {
-                    db.collection("icons").doc(doc.id).set({
-                        creditUrl: creditList[user].credit,
-                        credit: creditList[user].name,
-                        name: doc.data().name,
-                        timeStamp: doc.data().timeStamp
-                    }).then(function() {
-                        // console.log("Document successfully written!");
-                        console.log(doc.id, " + ", doc.data().name);
-                    })
-                    .catch(function(error) {
-                        console.error("Error writing document: ", error);
-                    });
+      //     for(let user in creditList){
+      //       console.log(creditList[user]);
+      //       for(let icon in creditList[user].icons){
+      //         // arrList.push(creditList[user].icons[icon])
+      //         // console.log(arrList);
+      //         let iconName = creditList[user].icons[icon]
+      //         // console.log(iconName);
+      //         let matches = db.collection("icons").where("name", "==", iconName)
+      //         // console.log(iconName);
+      //         // console.log(matches);
+      //         db.collection("icons").where("name", "==", iconName).get().then(function (querySnapshot) {
+      //             querySnapshot.forEach(function (doc) {
+      //               db.collection("icons").doc(doc.id).set({
+      //                   creditUrl: creditList[user].credit,
+      //                   credit: creditList[user].name,
+      //                   name: doc.data().name,
+      //                   timeStamp: doc.data().timeStamp
+      //               }).then(function() {
+      //                   // console.log("Document successfully written!");
+      //                   console.log(doc.id, " + ", doc.data().name);
+      //               })
+      //               .catch(function(error) {
+      //                   console.error("Error writing document: ", error);
+      //               });
 
-                  });
-              }).then((data) => {
-              })
-              // console.log(iconName);
-              // console.log(creditList[user].name);
-              // console.log(creditList[user].credit);
-            }
-          }
-        })
+      //             });
+      //         }).then((data) => {
+      //         })
+      //         // console.log(iconName);
+      //         // console.log(creditList[user].name);
+      //         // console.log(creditList[user].credit);
+      //       }
+      //     }
+      //   })
 
 
       
       var list = []
       // fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icns.txt')
-      fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/website_2/website/macos-big-sur-icons/icons.json')
+      fetch('https://gist.githubusercontent.com/elrumo/7d9a1d1a46332da2fe17650f72517e86/raw/f33cfd1c7f5a94e18bdb194681f5e59b97c3d811/icons.json')
         .then(response => response.text())
         .then((data) => {
           parent.iconList = JSON.parse(data).icons;

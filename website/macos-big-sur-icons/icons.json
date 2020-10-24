@@ -1310,9 +1310,9 @@
           "name": "Discord_Alt",
           "timeStamp": 123456
       },
-      "Discord_Alt2": {
+      "Discord_Alt_2": {
           "credit": "Elias",
-          "name": "Discord_Alt2",
+          "name": "Discord_Alt_2",
           "timeStamp": 123456
       },
       "Disk_Utility": {
@@ -1382,9 +1382,9 @@
           "name": "Dropbox_Alt",
           "timeStamp": 123456
       },
-      "Dropbox_Alt2": {
+      "Dropbox_Alt_2": {
           "credit": "Elias",
-          "name": "Dropbox_Alt2",
+          "name": "Dropbox_Alt_2",
           "timeStamp": 123456
       },
       "Dropbox_Paper": {
@@ -2688,29 +2688,29 @@
           "name": "Microsoft_Visual_Studio_Code_Alt",
           "timeStamp": 123456
       },
-      "Microsoft_Visual_Studio_Code_Alt2": {
+      "Microsoft_Visual_Studio_Code_Alt_2": {
           "credit": "Elias",
-          "name": "Microsoft_Visual_Studio_Code_Alt2",
+          "name": "Microsoft_Visual_Studio_Code_Alt_2",
           "timeStamp": 123456
       },
-      "Microsoft_Visual_Studio_Code_Alt3": {
+      "Microsoft_Visual_Studio_Code_Alt_3": {
           "credit": "Elias",
-          "name": "Microsoft_Visual_Studio_Code_Alt3",
+          "name": "Microsoft_Visual_Studio_Code_Alt_3",
           "timeStamp": 123456
       },
-      "Microsoft_Visual_Studio_Code_Alt4": {
+      "Microsoft_Visual_Studio_Code_Alt_4": {
           "credit": "Elias",
-          "name": "Microsoft_Visual_Studio_Code_Alt4",
+          "name": "Microsoft_Visual_Studio_Code_Alt_4",
           "timeStamp": 123456
       },
-      "Microsoft_Visual_Studio_Code_Alt5": {
+      "Microsoft_Visual_Studio_Code_Alt_5": {
           "credit": "Elias",
-          "name": "Microsoft_Visual_Studio_Code_Alt5",
+          "name": "Microsoft_Visual_Studio_Code_Alt_5",
           "timeStamp": 123456
       },
-      "Microsoft_Visual_Studio_Code_Alt6": {
+      "Microsoft_Visual_Studio_Code_Alt_6": {
           "credit": "Elias",
-          "name": "Microsoft_Visual_Studio_Code_Alt6",
+          "name": "Microsoft_Visual_Studio_Code_Alt_6",
           "timeStamp": 123456
       },
       "Microsoft_Visual_Studio_Code_Insider": {
@@ -2758,9 +2758,9 @@
           "name": "Minecraft_Alt",
           "timeStamp": 123456
       },
-      "Minecraft_Alt2": {
+      "Minecraft_Alt_2": {
           "credit": "Elias",
-          "name": "Minecraft_Alt2",
+          "name": "Minecraft_Alt_2",
           "timeStamp": 123456
       },
       "Minimal_Consent": {
@@ -3572,9 +3572,9 @@
           "name": "Roblox_Alt",
           "timeStamp": 123456
       },
-      "Roblox_Alt2": {
+      "Roblox_Alt_2": {
           "credit": "Elias",
-          "name": "Roblox_Alt2",
+          "name": "Roblox_Alt_2",
           "timeStamp": 123456
       },
       "Rocket": {
@@ -3808,9 +3808,9 @@
           "name": "Slack_Alt",
           "timeStamp": 123456
       },
-      "Slack_Alt2": {
+      "Slack_Alt_2": {
           "credit": "Elias",
-          "name": "Slack_Alt2",
+          "name": "Slack_Alt_2",
           "timeStamp": 123456
       },
       "Slack_Alt_2": {
@@ -3904,14 +3904,14 @@
           "name": "Spotify_Alt",
           "timeStamp": 123456
       },
-      "Spotify_Alt2": {
+      "Spotify_Alt_2": {
           "credit": "Elias",
-          "name": "Spotify_Alt2",
+          "name": "Spotify_Alt_2",
           "timeStamp": 123456
       },
-      "Spotify_Alt3": {
+      "Spotify_Alt_3": {
           "credit": "Elias",
-          "name": "Spotify_Alt3",
+          "name": "Spotify_Alt_3",
           "timeStamp": 123456
       },
       "Spotify_Dark": {
@@ -3930,14 +3930,14 @@
           "name": "Steam_Alt",
           "timeStamp": 123456
       },
-      "Steam_Alt2": {
+      "Steam_Alt_2": {
           "credit": "Elias",
-          "name": "Steam_Alt2",
+          "name": "Steam_Alt_2",
           "timeStamp": 123456
       },
-      "Steam_Alt3": {
+      "Steam_Alt_3": {
           "credit": "Elias",
-          "name": "Steam_Alt3",
+          "name": "Steam_Alt_3",
           "timeStamp": 123456
       },
       "Step_Two": {
@@ -4027,9 +4027,9 @@
           "name": "Swift_Playgrounds_Alt",
           "timeStamp": 123456
       },
-      "Swift_Playgrounds_Alt2": {
+      "Swift_Playgrounds_Alt_2": {
           "credit": "Elias",
-          "name": "Swift_Playgrounds_Alt2",
+          "name": "Swift_Playgrounds_Alt_2",
           "timeStamp": 123456
       },
       "Syntorial": {
@@ -4107,9 +4107,9 @@
           "name": "Telegram_Alt",
           "timeStamp": 123456
       },
-      "Telegram_Alt2": {
+      "Telegram_Alt_2": {
           "credit": "Elias",
-          "name": "Telegram_Alt2",
+          "name": "Telegram_Alt_2",
           "timeStamp": 123456
       },
       "Terminal": {
@@ -4253,9 +4253,9 @@
           "name": "Transmission_Alt",
           "timeStamp": 123456
       },
-      "Transmission_Alt2": {
+      "Transmission_Alt_2": {
           "credit": "Elias",
-          "name": "Transmission_Alt2",
+          "name": "Transmission_Alt_2",
           "timeStamp": 123456
       },
       "Transmission_Alt_2": {
@@ -4336,19 +4336,19 @@
           "name": "Twitter_Alt",
           "timeStamp": 123456
       },
-      "Twitter_Alt2": {
+      "Twitter_Alt_2": {
           "credit": "Elias",
-          "name": "Twitter_Alt2",
+          "name": "Twitter_Alt_2",
           "timeStamp": 123456
       },
-      "Twitter_Alt3": {
+      "Twitter_Alt_3": {
           "credit": "Elias",
-          "name": "Twitter_Alt3",
+          "name": "Twitter_Alt_3",
           "timeStamp": 123456
       },
-      "Twitter_Alt4": {
+      "Twitter_Alt_4": {
           "credit": "Elias",
-          "name": "Twitter_Alt4",
+          "name": "Twitter_Alt_4",
           "timeStamp": 123456
       },
       "Typeeto": {
@@ -4556,9 +4556,9 @@
           "name": "WeChat_Alt",
           "timeStamp": 123456
       },
-      "WeChat_Alt2": {
+      "WeChat_Alt_2": {
           "credit": "Elias",
-          "name": "WeChat_Alt2",
+          "name": "WeChat_Alt_2",
           "timeStamp": 123456
       },
       "WeChat_Work": {
@@ -4605,9 +4605,9 @@
           "name": "WhatsApp_Alt",
           "timeStamp": 123456
       },
-      "WhatsApp_Alt2": {
+      "WhatsApp_Alt_2": {
           "credit": "Elias",
-          "name": "WhatsApp_Alt2",
+          "name": "WhatsApp_Alt_2",
           "timeStamp": 123456
       },
       "WiFi_Explorer": {
@@ -4743,9 +4743,9 @@
           "name": "Zoom_Alt",
           "timeStamp": 123456
       },
-      "Zoom_Alt2": {
+      "Zoom_Alt_2": {
           "credit": "Elias",
-          "name": "Zoom_Alt2",
+          "name": "Zoom_Alt_2",
           "timeStamp": 123456
       },
       "Zotero": {
@@ -4950,13 +4950,13 @@
         "Google_Earth_Alt_2": {
             "creditUrl": "https://github.com/upintheairsheep",
             "credit": "upintheairsheep",
-            "name": "Google_Earth_Alt",
+            "name": "Google_Earth_Alt_2",
             "timeStamp": 1603123648965
         },
         "Google_Earth_Alt": {
             "creditUrl": "https://github.com/upintheairsheep",
             "credit": "upintheairsheep",
-            "name": "Google_Earth",
+            "name": "Google_Earth_Alt",
             "timeStamp": 1603123648965
         },
         "Parallels_Desktop_(Windows_7)": {
@@ -5024,6 +5024,12 @@
             "credit": "gracjankn",
             "name": "Streaks",
             "timeStamp": 1603132190
+        },
+        "LINE": {
+            "creditUrl": "https://github.com/paphonb",
+            "credit": "paphonb",
+            "name": "LINE",
+            "timeStamp": 1603533600
         }
     }
 }
