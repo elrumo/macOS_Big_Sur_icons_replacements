@@ -137,7 +137,7 @@
     },
 
     "JackHinkle":{
-      "icons":["SentriCard", "RobloxStudio", "RobloxStudio_Alt", "Roblox_Alt", "Roblox_Alt2"],
+      "icons":["SentriCard", "RobloxStudio", "RobloxStudio_Alt", "Roblox_Alt", "Roblox_Alt_2"],
       "credit": "https://github.com/JackHinkle",
       "name": "JackHinkle"
     },
@@ -149,7 +149,7 @@
     },
 
     "Bas van der Ploeg":{
-      "icons":["AdBlock_Alt", "Cura", "Deliveries_Alt", "Elgato_Stream_Deck", "Live_View", "NodeMCU_PyFlasher", "One_Switch", "Screens_4", "Sketch_Alt", "Skype", "Slack_Alt", "Sonos", "Telegram_Alt2", "Timeline", "Transmission", "Tweetbot_Alt", "VLC_Alt", "VNC_Viewer"],
+      "icons":["AdBlock_Alt", "Cura", "Deliveries_Alt", "Elgato_Stream_Deck", "Live_View", "NodeMCU_PyFlasher", "One_Switch", "Screens_4", "Sketch_Alt", "Skype", "Slack_Alt", "Sonos", "Telegram_Alt_2", "Timeline", "Transmission", "Tweetbot_Alt", "VLC_Alt", "VNC_Viewer"],
       "credit": "https://basvanderploeg.nl/downloads/macos/big-sur/icons/",
       "name": "Bas van der Ploeg"
     },
