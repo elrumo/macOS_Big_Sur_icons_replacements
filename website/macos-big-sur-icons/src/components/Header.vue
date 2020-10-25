@@ -37,8 +37,11 @@ export default {
             
             body.classList.toggle('coral--light')
             body.classList.toggle('coral--dark')
-            searchIcon.classList.toggle('fill-light')
-            searchIcon.classList.toggle('fill-dark')
+            if(searchIcon == null){
+            } else{
+                searchIcon.classList.toggle('fill-light')
+                searchIcon.classList.toggle('fill-dark')
+            }
             parent.darkMode = !parent.darkMode
         },
     },

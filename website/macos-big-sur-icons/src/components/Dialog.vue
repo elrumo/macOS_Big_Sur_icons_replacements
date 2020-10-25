@@ -138,9 +138,8 @@ export default {
 
         email: "",
         credit: "",
-        
-        // appName: "",
-        // yourName: "",
+        appName: "",
+        yourName: "",
 
         isLoading: false
       }
@@ -208,40 +207,41 @@ export default {
               // Add a new document in collection "cities"
               db.collection("submissions").doc().set({
                   appName: appName,
-                  // usersName: parent.yourName,
                   email: parent.email,
                   credit: parent.credit,
+                  usersName: parent.yourName,
                   fileName: fileName,
                   iconRef: value.ref.fullPath,
                   timeStamp: Date.now(),
                   approved: false
               })
-              .then((doc)=>{
-                console.log(doc);
+              .then(()=>{
                 parent.imageData = {},
                 parent.picture= null,
-                parent.email = ""
-                parent.name = ""
                 parent.uploadProgress++
                 console.log("Document successfully written!");
                 
                 function clearInput(id){
                   document.getElementById(id).value = ""
-                  Vue.delete(parent.filesToUpload, appName)
-                  Vue.delete(parent.filesToShow, appName)
                 }
                 
-                clearInput("credit")
-                clearInput("email-contributor")
-                // clearInput("yourName-contributor")
+                Vue.delete(parent.filesToUpload, appName)
+                Vue.delete(parent.filesToShow, appName)
                 
                 // Only hide dialog if all items have been uploaded
                 if (Object.keys(parent.filesToUpload).length === 0) {
                   parent.isLoading = false
                   parent.imageData = false
-                  dialog.hide()
-                  parent.showToast()
+                  parent.email = ""
+                  parent.name = ""
                   parent.uploadProgress = 0
+                  
+                  clearInput("credit")
+                  clearInput("email-contributor")
+                  clearInput("yourName-contributor")
+
+                  parent.showToast()
+                  dialog.hide()
                 }
 
               })

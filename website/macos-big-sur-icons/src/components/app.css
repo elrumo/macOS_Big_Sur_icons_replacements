@@ -159,6 +159,7 @@ ul {
     border: 1px solid;
     border-color: rgb(225, 225, 225);
     border-radius: var(--main-border-radius);
+    margin: auto;
 }
 
 .card-wrapper h3{
@@ -200,10 +201,12 @@ ul {
 
 .card-img-wrapper{
     padding: 20px 65px 5px 65px;
+    margin: auto;
 }
 
 .card-img-wrapper img{
     min-width: 74px;
+    margin: auto;
 }
 
 .hero-wrapper{
@@ -300,6 +303,10 @@ ul {
     filter: brightness(0.7);
 }
 
+.coral--light .coral-button .coral-Link{
+    color: black;
+}
+
 
 .coral--dark .coral-card{
     background: var(--coral-dark-card);
@@ -323,6 +330,47 @@ ul {
     filter: brightness(1.5);
 }
 
+.coral--dark ._coral-Button .coral-Link{
+    color: white !important;
+}
+
+.dashBoard{
+    width: 90%;
+    margin: auto;
+}
+
+.dashBoard .card-img-wrapper{
+    padding: 20px 45px 5px 45px;
+}
+
+.dashBoard .card-wrapper{
+    max-width: 250px;
+    margin-bottom: 20px;
+}
+
+.filler-space{
+    display: inline;
+    height: 10px;
+    width: 10px;
+    padding-left: 10px;
+}
+
+.coral-Heading--M a{
+    color: white;
+}
+
+.approval-img-wrapper{
+    display: grid;
+    grid-template-columns: 1fr;
+    max-width: 200px;
+    padding: 20px;
+    margin: auto;
+    row-gap: 5px;
+}
+
+.approval-img-wrapper img{
+    width: 70%;
+}
 
 
 @media only screen and (max-width: 12000px){
@@ -346,6 +394,11 @@ ul {
     .card-img-wrapper {
         padding: 10px 15px 0px 17px
     }
+    
+    .filler-space{
+        padding-left: 0px;
+        display: block;
+    } 
 
 }
 
