@@ -163,6 +163,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] LookUp
 - [x] Loopback
 - [x] MacMediaKeyForwarder
+- [x] Macs Fan Control
 - [x] MagicPrefs
 - [x] Magnet
 - [x] MainStage
@@ -211,6 +212,8 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Pipifier
 - [x] Pixelmator_Pro
 - [x] Plex
+- [x] qBittorrent
+- [x] QQ
 - [x] Quip
 - [x] Radiant
 - [x] Raindrop
@@ -218,6 +221,8 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Reeder
 - [x] Reflector
 - [x] Rhinoceros
+- [x] Roblox
+- [x] Roblox Studio
 - [x] Screenshots
 - [x] Sensei
 - [x] Setapp
@@ -225,6 +230,8 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Sip
 - [x] Sketch
 - [x] Sketchup
+- [x] Sketchup Layout
+- [x] Sketchup Style Builder
 - [x] Slack
 - [x] Spark
 - [x] Speedtest
@@ -312,7 +319,6 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] LyricsX
 - [ ] MAMP
 - [ ] MacUpdater
-- [x] Macs Fan Control
 - [ ] Mactracker
 - [ ] Minimal Consent
 - [ ] Movist Pro
@@ -322,12 +328,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Presentify
 - [ ] Private Internet Access
 - [ ] ProWritingAid
-- [x] QQ
 - [ ] Quicken
-- [x] Roblox
-- [x] Roblox Studio
-- [x] Sketchup Layout
-- [x] Sketchup Style Builder
 - [ ] SoundflowerBed
 - [ ] Speechify
 - [ ] Splice
@@ -341,7 +342,6 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] XTRAX STEMS
 - [ ] Zotero
 - [ ] mpv
-- [x] qBittorrent
 - [ ] smcFanControl
 
 ## Credits
@@ -499,7 +499,6 @@ We do not intend to steal any one's icons, if your icon has been included and yo
 |                                                 | Audio Hijack                                   |
 |                                                 | BBEdit Alt                                     |
 |                                                 | Blender                                        |
-|                                                 | Cardhop                                        |
 |                                                 | Cinema 4D                                      |
 |                                                 | DaVinci Resolve                                |
 |                                                 | Dozer                                          |
@@ -509,19 +508,18 @@ We do not intend to steal any one's icons, if your icon has been included and yo
 |                                                 | Keka                                           |
 |                                                 | Magnet                                         |
 |                                                 | PDF Expert                                     |
-|                                                 | Poolside FM Alt                                |
+|                                                 | Poolside FM                                    |
 |                                                 | Reeder Alt                                     |
 |                                                 | Sidenotes                                      |
 |                                                 | Soulver                                        |
 |                                                 | Spark Alt                                      |
 |                                                 | Spotify Alt 2                                  |
 |                                                 | Steam Alt 2                                    |
+|                                                 | Subler                                         |
 |                                                 | Things 3 Alt                                   |
-|                                                 | Tot                                            |
 |                                                 | Turbo Boost Switcher Pro                       |
 |                                                 | Ulysses                                        |
 |                                                 | The Unarchiver                                 |
-|                                                 | WeTransfer                                     |
 |                                                 | Zoom Alt                                       |
 |[Shreyas Gupta](https://shreyasgupta.me/)        | Apple Music                                    |  
 |                                                 | Cisco Webex                                    |
