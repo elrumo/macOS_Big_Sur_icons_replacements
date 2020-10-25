@@ -1,13 +1,12 @@
 <template>
   <div id="app">
-    <Home/>
+    <router-view/>
   </div>
 </template>
 
 <script>
 import Home from './components/Home.vue'
 import '@adobe/coral-spectrum'
-
 export default {
   name: 'App',
   components: {

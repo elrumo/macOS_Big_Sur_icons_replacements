@@ -38,7 +38,7 @@
       </div>
   
       <div class="icon-list-area p-t-50 p-b-50">
-          <a v-for="icon in filteredList" :key="icon.name" class="card-wrapper shadow coral-card" :href="'https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+icon.name+'.icns'">
+          <a v-for="icon in list" :key="icon.name" class="card-wrapper shadow coral-card" :href="'https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+icon.name+'.icns'">
             <div class="card-img-wrapper">
               <img loading="lazy" v-lazy="'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/'+icon.name+'.png'" class="w-full" alt="">
             </div>
@@ -67,6 +67,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import Header from './Header.vue';
 import Hero from './Hero.vue';
 import Dialog from './Dialog.vue';
@@ -120,18 +121,22 @@ export default {
       let parentObj = []
       
 
-       db.collection("icons").get().then(function (querySnapshot) {
+       db.collection("approvedIcons").get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          parent.list[doc.data().name] = doc.data()
+          Vue.set(parent.list, doc.data().name, doc.data())
+          // parent.list[doc.data().name] = doc.data()
+          // console.log(doc.data());
         })
       })
 
-      //  fetch('https://gist.githubusercontent.com/elrumo/7c9a5b8148de3dc7ef723e3c4286a08b/raw/45462ed8af4e21e412001c566d2e6468f4a05f62/credtits1.json')
+      //  fetch('https://gist.githubusercontent.com/elrumo/4f924d33ec3c3887161431e6ef17d4ff/raw/14caed269ab2739332a5659327b1231519c85c8a/credits.json')
       //   .then(response => response.text())
       //   .then((data) => {
           
       //     let creditList = JSON.parse(data).users;
       //     // console.log(creditList);
+
+      //     let iconList = []
 
       //     for(let user in creditList){
       //       console.log(creditList[user]);
@@ -143,9 +148,13 @@ export default {
       //         let matches = db.collection("icons").where("name", "==", iconName)
       //         // console.log(iconName);
       //         // console.log(matches);
-      //         db.collection("icons").where("name", "==", iconName).get().then(function (querySnapshot) {
+      //         db.collection("approvedIcons").where("name", "==", iconName).get().then(function (querySnapshot) {
       //             querySnapshot.forEach(function (doc) {
-      //               db.collection("icons").doc(doc.id).set({
+
+      //               // console.log(doc.data());
+      //               // iconList.push(doc.data())
+
+      //               db.collection("approvedIcons").doc(doc.id).set({
       //                   creditUrl: creditList[user].credit,
       //                   credit: creditList[user].name,
       //                   name: doc.data().name,
@@ -153,13 +162,14 @@ export default {
       //               }).then(function() {
       //                   // console.log("Document successfully written!");
       //                   console.log(doc.id, " + ", doc.data().name);
-      //               })
-      //               .catch(function(error) {
+      //               }).catch(function(error) {
       //                   console.error("Error writing document: ", error);
       //               });
 
       //             });
       //         }).then((data) => {
+      //           // console.log(iconList);
+      //           // console.log(iconList.length);
       //         })
       //         // console.log(iconName);
       //         // console.log(creditList[user].name);
@@ -172,31 +182,31 @@ export default {
       
       var list = []
       // fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icns.txt')
-      fetch('https://gist.githubusercontent.com/elrumo/7d9a1d1a46332da2fe17650f72517e86/raw/f33cfd1c7f5a94e18bdb194681f5e59b97c3d811/icons.json')
-        .then(response => response.text())
-        .then((data) => {
-          parent.iconList = JSON.parse(data).icons;
-          let iconList = parent.iconList
+      // fetch('https://gist.githubusercontent.com/elrumo/7d9a1d1a46332da2fe17650f72517e86/raw/f33cfd1c7f5a94e18bdb194681f5e59b97c3d811/icons.json')
+      //   .then(response => response.text())
+      //   .then((data) => {
+      //     parent.iconList = JSON.parse(data).icons;
+      //     let iconList = parent.iconList
 
-          let iconsObj = {icons:{}}
+      //     let iconsObj = {icons:{}}
 
-          // for(let icon in iconList){
-          //   // console.log(iconList[icon].credit);
-          //   db.collection("icons").doc().set({
-          //       credit: iconList[icon].credit,
-          //       name: iconList[icon].name,
-          //       timeStamp: iconList[icon].timeStamp,
-          //   })
-          //   .then(function() {
-          //     console.log("Doc Done!");
-          //   })
-          // }
+      //     // for(let icon in iconList){
+      //     //   // console.log(iconList[icon].credit);
+      //     //   db.collection("approvedIcons").doc().set({
+      //     //       credit: iconList[icon].credit,
+      //     //       name: iconList[icon].name,
+      //     //       timeStamp: iconList[icon].timeStamp,
+      //     //   })
+      //     //   .then(function() {
+      //     //     console.log("Doc Done!");
+      //     //   })
+      //     // }
 
 
-          if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-            parent.darkMode = true
-          }
-      })
+      //     if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+      //       parent.darkMode = true
+      //     }
+      // })
 
     }
   },
