@@ -2206,7 +2206,7 @@
         "Soulver": {
             "credit": "Nathan Cheng",
             "name": "Soulver",
-            "timeStamp": 123456,
+            "timeStamp": 1603584000,
             "creditUrl": "https://github.com/nweii/"
         },
         "Steam_Alt_2": {
@@ -4815,6 +4815,18 @@
             "creditUrl": "https://github.com/nweii/",
             "name": "Sidenotes",
             "timeStamp": 123456,
+            "credit": "Nathan Cheng"
+        },
+        "Brave_Alt": {
+            "creditUrl": "https://github.com/nweii/",
+            "name": "Brave_Alt",
+            "timeStamp": 1603584000,
+            "credit": "Nathan Cheng"
+        },
+        "Subler": {
+            "creditUrl": "https://github.com/nweii/",
+            "name": "Subler",
+            "timeStamp": 1603584000,
             "credit": "Nathan Cheng"
         },
         "Google_Chrome_Canary": {
