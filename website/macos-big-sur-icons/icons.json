@@ -444,14 +444,15 @@
         },
         "Microsoft_OneDrive_Alt_2": {
             "name": "Microsoft_OneDrive_Alt_2",
-            "creditUrl": "https://www.deviantart.com/octaviotti",
             "timeStamp": 123456,
-            "credit": "octaviotti"
+            "credit": "octaviotti",
+            "creditUrl": "https://www.deviantart.com/octaviotti"
         },
         "iA_Writer_Dark": {
-            "timeStamp": 123456,
             "name": "iA_Writer_Dark",
-            "credit": "Elias"
+            "timeStamp": 123456,
+            "credit": "Elias",
+            "creditUrl": "https://webbites.io"
         },
         "Slack": {
             "name": "Slack",
@@ -495,10 +496,10 @@
             "timeStamp": 123456
         },
         "Adobe_Spark": {
-            "creditUrl": "https://dribbble.com/agraaaaao",
             "name": "Adobe_Spark",
             "timeStamp": 1597363200,
             "credit": "agraaaaao",
+            "creditUrl": "https://dribbble.com/agraaaaao"
         },
         "Adobe_Premiere_Rush_Alt": {
             "creditUrl": "https://www.deviantart.com/octaviotti",
@@ -1682,10 +1683,10 @@
             "creditUrl": "https://dribbble.com/agraaaaao"
         },
         "Notability": {
+            "name": "Notability",
             "timeStamp": 1597363200,
             "credit": "agraaaaao",
             "creditUrl": "https://dribbble.com/agraaaaao"
-            "name": "Notability"
         },
         "IntelliJ_Php_Storm_Alt": {
             "credit": "octaviotti",
@@ -2801,9 +2802,9 @@
         },
         "Material_Palette_Generator": {
             "name": "Material_Palette_Generator",
-            "creditUrl": "https://dribbble.com/agraaaaao",
             "timeStamp": 1597363200,
             "credit": "agraaaaao",
+            "creditUrl": "https://dribbble.com/agraaaaao"
         },
         "Reeder_Alt": {
             "timeStamp": 123456,
