@@ -320,8 +320,9 @@
         },
         "Facebook_Messenger_Alt": {
             "name": "Facebook_Messenger_Alt",
+            "timeStamp": 1596585600,
             "credit": "Elias",
-            "timeStamp": 123456
+            "creditUrl": "https://webbites.io/"
         },
         "Stocks": {
             "timeStamp": 123456,
@@ -349,14 +350,15 @@
         },
         "The_Unarchiver_Alt": {
             "name": "The_Unarchiver_Alt",
+            "timeStamp": 1599696000,
             "credit": "octaviotti",
-            "creditUrl": "https://www.deviantart.com/octaviotti",
-            "timeStamp": 1599696000
+            "creditUrl": "https://www.deviantart.com/octaviotti"
         },
         "SentriCard_Utility": {
-            "credit": "Elias",
             "name": "SentriCard_Utility",
-            "timeStamp": 123456
+            "timeStamp": 1599350400,
+            "credit": "JackHinkle",
+            "creditUrl": "https://github.com/JackHinkle"
         },
         "Carbon_Copy_Cloner": {
             "timeStamp": 123456,
@@ -4347,10 +4349,10 @@
             "name": "Ableton"
         },
         "Firefox": {
-            "creditUrl": "https://webbites.io/#/",
             "name": "Firefox",
+            "timeStamp": 123456,
             "credit": "Elias",
-            "timeStamp": 123456
+            "creditUrl": "https://webbites.io/#/"
         },
         "DJay_Pro": {
             "timeStamp": 123456,
@@ -4819,10 +4821,10 @@
             "credit": "Nathan Cheng"
         },
         "Brave_Alt": {
-            "creditUrl": "https://github.com/nweii/",
             "name": "Brave_Alt",
             "timeStamp": 1603584000,
-            "credit": "Nathan Cheng"
+            "credit": "Nathan Cheng",
+            "creditUrl": "https://github.com/nweii/"
         },
         "Subler": {
             "creditUrl": "https://github.com/nweii/",
@@ -5449,7 +5451,140 @@
             "credit": "Elias",
             "timeStamp": 123456,
             "name": "Spotify_Alt"
+        },
+        "MySQL_Workbench": {
+            "name": "MySQL_Workbench",
+            "timeStamp": 1603584000,
+            "credit": "abraaolevi",
+            "creditUrl": "https://github.com/abraaolevi"
+        },
+        "This_War_Of_Mine": {
+            "name": "This_War_Of_Mine",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "The_Legend_Of_Grimrock": {
+            "name": "The_Legend_Of_Grimrock",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "Transistor": {
+            "name": "Transistor",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "Subnautica": {
+            "name": "Subnautica",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "Stellaris": {
+            "name": "Stellaris",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "Starcraft": {
+            "name": "Starcraft",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "Pyre": {
+            "name": "Pyre",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "PokerStars_net": {
+            "name": "PokerStars_net",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "OpenEmu_Alt_2": {
+            "name": "OpenEmu_Alt_2",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "Miro_Video_Converter": {
+            "name": "Miro_Video_Converter",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "Minion": {
+            "name": "Minion",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "Matlab": {
+            "name": "Matlab",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "MacPAR_deLuxe": {
+            "name": "MacPAR_deLuxe",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "ImageJ": {
+            "name": "ImageJ",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "GZDoom": {
+            "name": "GZDoom",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "Epic_Games_Alt": {
+            "name": "Epic_Games_Alt",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "Elder_Scrolls_Online": {
+            "name": "Elder_Scrolls_Online",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "EVE_Online": {
+            "name": "EVE_Online",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "Dolphin_Alt_3": {
+            "name": "Dolphin_Alt_3",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "Civilization_VI": {
+            "name": "Civilization_VI",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
+        },
+        "Civilization_V": {
+            "name": "Civilization_V",
+            "timeStamp": 1603411200,
+            "credit": "Imernium",
+            "creditUrl": "https://github.com/Imernium"
         }
+        
 
     }
 }
