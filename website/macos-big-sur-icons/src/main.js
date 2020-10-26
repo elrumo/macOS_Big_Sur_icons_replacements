@@ -6,8 +6,8 @@ import router from './router'
 
 Vue.config.productionTip = false
 Vue.use(VueLazyload, {
-  preLoad: 1.1,
-  loading: '',
+  preLoad: 1.3,
+  loading: 'dist/loading.gif',
 });
 
 

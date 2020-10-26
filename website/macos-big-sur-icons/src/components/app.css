@@ -80,6 +80,7 @@ ul {
     column-gap: 10px;
     max-width: 1300px;
     margin: auto;
+    z-index: 10;
 }
 
 .filter-by-wrapper{
@@ -162,6 +163,10 @@ ul {
     margin: auto;
 }
 
+.card-wrapper:hover{
+    transform: translateY(-4px);
+}
+
 .card-wrapper h3{
     margin: 2px 0px 2px 0px;
     text-decoration: none;
@@ -169,6 +174,15 @@ ul {
     text-align: center;
 }
 
+.opacity-30{
+    opacity: 30%;
+}
+.opacity-40{
+    opacity: 40%;
+}
+.opacity-50{
+    opacity: 50%;
+}
 .opacity-60{
     opacity: 60%;
 }
@@ -200,7 +214,7 @@ ul {
 }
 
 .card-img-wrapper{
-    padding: 20px 65px 5px 65px;
+    padding: 20px 65px 0px 65px;
     margin: auto;
 }
 
@@ -348,6 +362,11 @@ ul {
     margin-bottom: 20px;
 }
 
+.dashboard-wrapper{
+    max-width: 1300px;
+    margin: auto;
+}
+
 .filler-space{
     display: inline;
     height: 10px;
@@ -370,6 +389,10 @@ ul {
 
 .approval-img-wrapper img{
     width: 70%;
+}
+
+.waiting-wrapper{
+    padding-top: 30px;
 }
 
 
