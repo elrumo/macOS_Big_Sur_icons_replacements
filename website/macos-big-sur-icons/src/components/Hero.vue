@@ -7,7 +7,7 @@
       </h3>
 
       <p class="coral-Body--L w-100 body-text p-t-20">
-        Click on each icon to download it, or on the button bellow to donwload all {{Object.keys(iconList).length}} icons.
+        Click on each icon to download it, or on the button bellow to donwload all {{ list.length }} icons.
         <!-- <br><br> -->
         Click on the button bellow to contribute. Use this
         <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.sketch">Sketch</a>,
@@ -49,7 +49,7 @@ export default {
     },
 
     props:{
-      iconList: {},
+      list: {},
       submitIconDialog: String
     },
 

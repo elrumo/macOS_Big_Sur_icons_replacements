@@ -7,7 +7,7 @@
     
     <!-- Hero -->
     <Hero
-      v-bind:iconList="iconList"
+      v-bind:list="list"
       :submitIconDialog="'submitIcon'"
     />
 
@@ -19,34 +19,41 @@
     <!-- Icon Section -->
     <section class="content-wrapper">
 
-      <!-- Search bar -->
+    <!-- Search bar -->
       <div class="main-search-wrapper coral-bg p-b-15">
         <div class="m-auto main-search" style="max-width:300px;">
           <div class="shadow main-border-radius">
-            <input v-model="searchString" :placeholder="'Search ' + Object.keys(iconList).length + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
+            <input v-model="searchString" :placeholder="'Search ' + list.length + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
             <svg class="icon fill-dark" id="coral-css-icon-Magnifier" viewBox="0 0 16 16"><path d="M15.77 14.71l-4.534-4.535a6.014 6.014 0 1 0-1.06 1.06l4.533 4.535a.75.75 0 1 0 1.061-1.06zM6.5 11A4.5 4.5 0 1 1 11 6.5 4.505 4.505 0 0 1 6.5 11z"></path></svg>
           </div>
         </div>
 
-        <!-- "Filter by" button -->
-        <div class="filter-by-grid">
+      <!-- "Filter by" button -->
+        <div class="filter-by-grid" @click="changeSortOrder">
           <div class="filter-by-wrapper coral-card shadow">
-              <coral-icon v-if="filterIsDate" class="h-full" icon="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/website/macos-big-sur-icons/src/assets/clock.svg" title="Add"></coral-icon>
-              <coral-icon v-if="filterIsName" class="h-full" icon="https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/website/macos-big-sur-icons/src/assets/namingOrder.svg" title="Add"></coral-icon>
+              <coral-icon class="h-full" :icon="icons.iconsOrder" title="Add"></coral-icon>
           </div>
         </div>
       </div>
-  
+      
+    <!-- Waiting spinning circle -->
+      <div v-if="list.length == 0" class="waiting-wrapper">
+        <coral-wait size="L" indeterminate=""></coral-wait>
+      </div>
+
+    <!-- Icon list -->
       <div class="icon-list-area p-t-50 p-b-50">
-          <a v-for="icon in list" :key="icon.name" class="card-wrapper shadow coral-card" :href="'https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+icon.name+'.icns'">
+          <a v-for="icon in filteredList" :key="icon.name" class="card-wrapper shadow coral-card" :href="'https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+icon.name+'.icns'">
             <div class="card-img-wrapper">
-              <img loading="lazy" v-lazy="'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/'+icon.name+'.png'" class="w-full" alt="">
+              <div v-lazy-container="{ selector: 'img', loading: icons.loading }">
+                <img class="w-full" :data-src="'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/'+icon.name+'.png'">
+              </div>
             </div>
             <div>
               <h3 class="coral-font-color">
                 {{ prettifyName(icon.name) }}
               </h3>
-              <p class="coral-Body--XS p-b-10 opacity-60">By <a class="coral-Link" :href="icon.credit" target="_blank">{{icon.credit}}</a></p>
+              <p class="coral-Body--XS opacity-60 m-b-20"><a class="coral-Link" :href="icon.creditUrl" target="_blank">{{icon.credit}}</a> on <span class="coral-Body--XS opacity-50">{{ getDate(icon.timeStamp) }}</span></p>
             </div>
           </a>
       </div>
@@ -90,11 +97,15 @@ export default {
       iconList:{},
       searchString: "",
       iconsToShow: [],
-      filterIsDate: false,
-      filterIsName: true,
-      list: {},
+      sortByName: true,
+      list: [],
+      // list: {},
       icons:{
         success: require("../assets/icons/delete.svg"),
+        namingOrder: require("../assets/icons/namingOrder.svg"),
+        date: require("../assets/icons/date.svg"),
+        loading: require("../assets/loading.gif"),
+        iconsOrder: require("../assets/icons/namingOrder.svg")
       }
     }
   },
@@ -115,120 +126,157 @@ export default {
       return name
     },
 
+    changeSortOrder(){
+      let parent = this
+      let sortByName = parent.sortByName
+      let date = parent.icons.date
+      let namingOrder = parent.icons.namingOrder
+
+      if (sortByName) {
+        parent.icons.iconsOrder = date
+      } else{
+        parent.icons.iconsOrder = namingOrder
+      }
+
+      parent.sortByName = !sortByName
+    },
+    
+    getDate(timeStamp){
+      let newDate = new Date(timeStamp)
+      
+      let day = newDate.getUTCDate()
+      let month = newDate.getUTCMonth() + 1
+      let year = newDate.getFullYear()
+      let date = day + "/" + month + "/" + year
+
+      return date
+    },
+
     getIconsArray(){
       let parent = this
 
       let parentObj = []
-      
 
        db.collection("approvedIcons").get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          Vue.set(parent.list, doc.data().name, doc.data())
-          // parent.list[doc.data().name] = doc.data()
-          // console.log(doc.data());
+          parent.list.push(doc.data())
+          // Vue.set(parent.list, doc.data().name, doc.data())
         })
       })
-
-      //  fetch('https://gist.githubusercontent.com/elrumo/4f924d33ec3c3887161431e6ef17d4ff/raw/14caed269ab2739332a5659327b1231519c85c8a/credits.json')
-      //   .then(response => response.text())
-      //   .then((data) => {
-          
-      //     let creditList = JSON.parse(data).users;
-      //     // console.log(creditList);
-
-      //     let iconList = []
-
-      //     for(let user in creditList){
-      //       console.log(creditList[user]);
-      //       for(let icon in creditList[user].icons){
-      //         // arrList.push(creditList[user].icons[icon])
-      //         // console.log(arrList);
-      //         let iconName = creditList[user].icons[icon]
-      //         // console.log(iconName);
-      //         let matches = db.collection("icons").where("name", "==", iconName)
-      //         // console.log(iconName);
-      //         // console.log(matches);
-      //         db.collection("approvedIcons").where("name", "==", iconName).get().then(function (querySnapshot) {
-      //             querySnapshot.forEach(function (doc) {
-
-      //               // console.log(doc.data());
-      //               // iconList.push(doc.data())
-
-      //               db.collection("approvedIcons").doc(doc.id).set({
-      //                   creditUrl: creditList[user].credit,
-      //                   credit: creditList[user].name,
-      //                   name: doc.data().name,
-      //                   timeStamp: doc.data().timeStamp
-      //               }).then(function() {
-      //                   // console.log("Document successfully written!");
-      //                   console.log(doc.id, " + ", doc.data().name);
-      //               }).catch(function(error) {
-      //                   console.error("Error writing document: ", error);
-      //               });
-
-      //             });
-      //         }).then((data) => {
-      //           // console.log(iconList);
-      //           // console.log(iconList.length);
-      //         })
-      //         // console.log(iconName);
-      //         // console.log(creditList[user].name);
-      //         // console.log(creditList[user].credit);
-      //       }
-      //     }
-      //   })
-
-
       
-      var list = []
-      // fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icns.txt')
-      // fetch('https://gist.githubusercontent.com/elrumo/7d9a1d1a46332da2fe17650f72517e86/raw/f33cfd1c7f5a94e18bdb194681f5e59b97c3d811/icons.json')
-      //   .then(response => response.text())
-      //   .then((data) => {
-      //     parent.iconList = JSON.parse(data).icons;
-      //     let iconList = parent.iconList
+      let credits = {
+        // Save credits to Firebase
 
-      //     let iconsObj = {icons:{}}
+        //  fetch('https://gist.githubusercontent.com/elrumo/4f924d33ec3c3887161431e6ef17d4ff/raw/14caed269ab2739332a5659327b1231519c85c8a/credits.json')
+        //   .then(response => response.text())
+        //   .then((data) => {
+            
+        //     let creditList = JSON.parse(data).users;
+        //     // console.log(creditList);
 
-      //     // for(let icon in iconList){
-      //     //   // console.log(iconList[icon].credit);
-      //     //   db.collection("approvedIcons").doc().set({
-      //     //       credit: iconList[icon].credit,
-      //     //       name: iconList[icon].name,
-      //     //       timeStamp: iconList[icon].timeStamp,
-      //     //   })
-      //     //   .then(function() {
-      //     //     console.log("Doc Done!");
-      //     //   })
-      //     // }
+        //     let iconList = []
+
+        //     for(let user in creditList){
+        //       console.log(creditList[user]);
+        //       for(let icon in creditList[user].icons){
+        //         // arrList.push(creditList[user].icons[icon])
+        //         // console.log(arrList);
+        //         let iconName = creditList[user].icons[icon]
+        //         // console.log(iconName);
+        //         let matches = db.collection("icons").where("name", "==", iconName)
+        //         // console.log(iconName);
+        //         // console.log(matches);
+        //         db.collection("approvedIcons").where("name", "==", iconName).get().then(function (querySnapshot) {
+        //             querySnapshot.forEach(function (doc) {
+
+        //               // console.log(doc.data());
+        //               // iconList.push(doc.data())
+
+        //               db.collection("approvedIcons").doc(doc.id).set({
+        //                   creditUrl: creditList[user].credit,
+        //                   credit: creditList[user].name,
+        //                   name: doc.data().name,
+        //                   timeStamp: doc.data().timeStamp
+        //               }).then(function() {
+        //                   // console.log("Document successfully written!");
+        //                   console.log(doc.id, " + ", doc.data().name);
+        //               }).catch(function(error) {
+        //                   console.error("Error writing document: ", error);
+        //               });
+
+        //             });
+        //         }).then((data) => {
+        //           // console.log(iconList);
+        //           // console.log(iconList.length);
+        //         })
+        //         // console.log(iconName);
+        //         // console.log(creditList[user].name);
+        //         // console.log(creditList[user].credit);
+        //       }
+        //     }
+        //   })
 
 
-      //     if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-      //       parent.darkMode = true
-      //     }
-      // })
+        
+        // Save icons to Firebase
 
+        // var list = []
+        // //fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icns.txt')
+        // // fetch('https://gist.githubusercontent.com/elrumo/7d9a1d1a46332da2fe17650f72517e86/raw/f33cfd1c7f5a94e18bdb194681f5e59b97c3d811/icons.json')
+        // // fetch('https://gist.githubusercontent.com/elrumo/63d6ddfae3ce07a002738bb083fe2853/raw/fa2c93afda0a5288fae430240dda962f5d00fb64/newIcons.json')
+        //   .then(response => response.text())
+        //   .then((data) => {
+        //     parent.iconList = JSON.parse(data).icons;
+        //     let iconList = parent.iconList
+
+        //     let iconsObj = {icons:{}}
+
+        //     for(let icon in iconList){
+        //       // console.log(iconList[icon].credit);
+        //       db.collection("approvedIcons").doc().set({
+        //           credit: iconList[icon].credit,
+        //           creditUrl: iconList[icon].creditUrl,
+        //           name: iconList[icon].name,
+        //           timeStamp: iconList[icon].timeStamp,
+        //       })
+        //       .then(function() {
+        //         console.log("Doc Done!");
+        //       })
+        //     }
+
+
+        //     if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+        //       parent.darkMode = true
+        //     }
+        // })
+        }
     }
   },
 
   computed:{
+
     filteredList: function () {
 
-      var iconList = this.iconList;
+      var iconList = this.list;
       var searchString = this.searchString;
 
+      // If searchString is empty (no search by the user), return the full list of icons
       if(!searchString){
+        iconList.sort(function(a, b) {
+            var textA = a.name.toUpperCase();
+            var textB = b.name.toUpperCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        });
         return iconList;
       }
 
       searchString = searchString.trim().toLowerCase();
-
       iconList = iconList.filter(function(item){
         if(item.name.toLowerCase().indexOf(searchString) !== -1){
-          // console.log(item);
           return item;
         }
       })
+
       return iconList;
     }
 

@@ -3,7 +3,7 @@
     <Header/>
     
     <section class="dashBoard">
-      <div class="p-t-50 p-b-50">
+      <div class="p-t-50 p-b-50 dashboard-wrapper">
         <div v-for="user in icons" :key="user.usersName" class="p-b-30">
           
           <h3 class="coral-Heading--M p-b-10 text-left">
@@ -23,22 +23,18 @@
                 <h3 class="coral-font-color">
                   {{ prettifyName(icon.appName) }}
                 </h3>
-                <p class="coral-Body--XS p-b-10 opacity-60">By <a class="coral-Link" :href="icon.credit" target="_blank">{{icon.usersName}}</a></p>
+                <p class="coral-Body--XS p-b-10 opacity-60">By <a class="coral-Link" :href="user.creditUrl" target="_blank">{{icon.usersName}}</a></p>
                 
                 <div class="p-t-10">
-                  <!-- <div> -->
+                  <button is="coral-button">Approve</button>
 
-                    
-                    <button is="coral-button">Approve</button>
-                  <!-- </div> -->
                   <div class="filler-space"></div>
-                  <!-- <div> -->
-                    <a class="coral-Link" :href="'mailto:'+user.email+'?subject=macOS icons submission&body=Hi '+user.usersName+emailMsg">
-                      <button is="coral-button" variant="quiet">
-                          Contact
-                      </button>
-                    </a>
-                  <!-- </div> -->
+
+                  <a class="coral-Link" :href="'mailto:'+user.email+'?subject=macOS icons submission&body=Hi '+user.usersName+emailMsg">
+                    <button is="coral-button" variant="quiet">
+                        Contact
+                    </button>
+                  </a>
                 </div>
                 
               </div>
@@ -100,6 +96,7 @@ export default {
             let usersName = docData.usersName
             let appName = docData.appName
             let email = docData.email
+            let creditUrl = docData.credit
             // let timeStamp = doc.data().timeStamp
             // let date = new Date(timeStamp).toLocaleDateString("en-GB")
 
@@ -107,7 +104,7 @@ export default {
               console.log("usersName undefined ");
             }else{
               if(parent.icons[usersName] == undefined ){
-                Vue.set(parent.icons, usersName, {"usersName": usersName, "email": email, "icons":{}})
+                Vue.set(parent.icons, usersName, {"usersName": usersName, "email": email, "icons":{}, "creditUrl": creditUrl})
                 Vue.set(parent.icons[usersName].icons, appName, docData)
                 var imgReference = storage.ref(docData.iconRef)
                 
