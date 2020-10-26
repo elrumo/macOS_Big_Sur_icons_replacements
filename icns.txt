@@ -1,6 +1,6 @@
 0_AD,
 1.1.1.1,
-189_Cloud.
+189_Cloud,
 1Blocker_Alt,
 1Blocker,
 1Password_Alt,
