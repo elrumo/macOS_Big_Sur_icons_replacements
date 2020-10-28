@@ -202,7 +202,7 @@ export default {
 
       iconList = iconList.filter(function(item){
         if(item.name.toLowerCase().indexOf(searchString) !== -1){
-          console.log(item);
+          // console.log(item);
           return item;
         }
       })
