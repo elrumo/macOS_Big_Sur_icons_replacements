@@ -5595,6 +5595,102 @@
             "timeStamp": 1603843200,
             "credit": "Elias",
             "creditUrl": "https://webbites.io"
+        },
+        "BitBar": {
+            "name": "BitBar",
+            "timeStamp": 1603900670030,
+            "credit": "Niinjoy",
+            "creditUrl": "https://github.com/Niinjoy"
+        },
+        "Contexts": {
+            "name": "Contexts",
+            "timeStamp": 1603900670030,
+            "credit": "Niinjoy",
+            "creditUrl": "https://github.com/Niinjoy"
+        },
+        "Fantastical-Blank": {
+            "name": "Fantastical-Blank",
+            "timeStamp": 1603900670030,
+            "credit": "Niinjoy",
+            "creditUrl": "https://github.com/Niinjoy"
+        },
+        "Get_Plain_Text": {
+            "name": "Get_Plain_Text",
+            "timeStamp": 1603900670030,
+            "credit": "Niinjoy",
+            "creditUrl": "https://github.com/Niinjoy"
+        },
+        "Hookshot": {
+            "name": "Hookshot",
+            "timeStamp": 1603900670030,
+            "credit": "Niinjoy",
+            "creditUrl": "https://github.com/Niinjoy"
+        },
+        "JustFocus": {
+            "name": "JustFocus",
+            "timeStamp": 1603900670030,
+            "credit": "Niinjoy",
+            "creditUrl": "https://github.com/Niinjoy"
+        },
+        "Matlab_Alt": {
+            "name": "Matlab_Alt",
+            "timeStamp": 1603900670030,
+            "credit": "Niinjoy",
+            "creditUrl": "https://github.com/Niinjoy"
+        },
+        "NeatDownloadManager": {
+            "name": "NeatDownloadManager",
+            "timeStamp": 1603900670030,
+            "credit": "Niinjoy",
+            "creditUrl": "https://github.com/Niinjoy"
+        },
+        "Notion_Alt_2": {
+            "name": "Notion_Alt_2",
+            "timeStamp": 1603900670030,
+            "credit": "Niinjoy",
+            "creditUrl": "https://github.com/Niinjoy"
+        },
+        "Papers": {
+            "name": "Papers",
+            "timeStamp": 1603900670030,
+            "credit": "Niinjoy",
+            "creditUrl": "https://github.com/Niinjoy"
+        },
+        "Quitter": {
+            "name": "Quitter",
+            "timeStamp": 1603900670030,
+            "credit": "Niinjoy",
+            "creditUrl": "https://github.com/Niinjoy"
+        },
+        "Skim": {
+            "name": "Skim",
+            "timeStamp": 1603900670030,
+            "credit": "Niinjoy",
+            "creditUrl": "https://github.com/Niinjoy"
+        },
+        "Switch": {
+            "name": "Switch",
+            "timeStamp": 1603900670030,
+            "credit": "Niinjoy",
+            "creditUrl": "https://github.com/Niinjoy"
+        },
+        "Toggl": {
+            "name": "Toggl",
+            "timeStamp": 1603900670030,
+            "credit": "Niinjoy",
+            "creditUrl": "https://github.com/Niinjoy"
+        },
+        "WhatsOn": {
+            "name": "WhatsOn",
+            "timeStamp": 1603900670030,
+            "credit": "Niinjoy",
+            "creditUrl": "https://github.com/Niinjoy"
+        },
+        "Pixelmator": {
+            "name": "Pixelmator",
+            "timeStamp": 1603900670030,
+            "credit": "LeoAnotherUser",
+            "creditUrl": "https://github.com/LeoAnotherUser"
         }
     }
 }
