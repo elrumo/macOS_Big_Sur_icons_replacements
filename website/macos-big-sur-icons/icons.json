@@ -5298,11 +5298,11 @@
             "name": "VMWare_Horizon",
             "credit": "octaviotti"
         },
-        "Termius": {
-            "credit": "noahkamara",
-            "creditUrl": "https://github.com/elrumo/macOS_Big_Sur_icons_replacements/issues?q=is%3Apr+author%3Anoahkamara",
-            "name": "Termius",
-            "timeStamp": 123456
+        "Termius_Alt": {
+            "name": "Termius_Alt",
+            "timeStamp": 1598918400,
+            "credit": "Noah Kamara",
+            "creditUrl": "https://github.com/elrumo/macOS_Big_Sur_icons_replacements/issues?q=is%3Apr+author%3Anoahkamara"
         },
         "EarthX": {
             "credit": "KiwiBlueSpring",
@@ -5583,8 +5583,18 @@
             "timeStamp": 1603411200,
             "credit": "Imernium",
             "creditUrl": "https://github.com/Imernium"
+        },
+        "LibreOffice": {
+            "name": "LibreOffice",
+            "timeStamp": 1603843200,
+            "credit": "Imernium",
+            "creditUrl": "https://figbert.com/"
+        },
+        "Termius": {
+            "name": "Termius",
+            "timeStamp": 1603843200,
+            "credit": "Elias",
+            "creditUrl": "https://webbites.io"
         }
-        
-
     }
 }

@@ -26,7 +26,7 @@
                 <p class="coral-Body--XS p-b-10 opacity-60">By <a class="coral-Link" :href="user.creditUrl" target="_blank">{{icon.usersName}}</a></p>
                 
                 <div class="p-t-10">
-                  <button is="coral-button">Approve</button>
+                  <button @click="approveIcon(icon)" is="coral-button">Approve</button>
 
                   <div class="filler-space"></div>
 
@@ -56,6 +56,7 @@ import Header from '@/components/Header.vue';
 import * as firebase from "firebase";
 
 let db = firebase.firestore();
+let functions = firebase.functions();
 let storage = firebase.storage();
 
 export default {
@@ -78,6 +79,14 @@ export default {
         name = name.replace("_", " ")
       }
       return name
+    },
+
+    approveIcon(icon){
+      // console.log(icon);
+      const convertToIcns = functions.httpsCallable("convertToIcns")
+      convertToIcns(icon).then(result =>{
+        console.log(result.data);
+      })
     }
 
   },
@@ -90,6 +99,8 @@ export default {
         .get().then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
 
+            console.log(doc.id);
+
             let docData = doc.data();
             docData.imgUrl = ""
 
@@ -97,6 +108,9 @@ export default {
             let appName = docData.appName
             let email = docData.email
             let creditUrl = docData.credit
+            let id = doc.id
+            
+            docData.id = id
             // let timeStamp = doc.data().timeStamp
             // let date = new Date(timeStamp).toLocaleDateString("en-GB")
 
