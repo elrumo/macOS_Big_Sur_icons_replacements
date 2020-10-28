@@ -69,7 +69,7 @@
       </div>
   
       <div class="icon-list-area p-t-50 p-b-50">
-          <a v-for="icon in filteredList" :key="icon.name" class="card-wrapper shadow coral-card" :href="icon.url">
+          <a v-for="icon in filteredList" :key="setKey(icon.name)" class="card-wrapper shadow coral-card" :href="icon.url">
             <div class="card-img-wrapper">
               <img loading="lazy" v-lazy="icon.img" class="w-full" alt="">
             </div>
@@ -141,6 +141,13 @@ export default {
       parent.darkMode = !parent.darkMode
     },
 
+    setKey(name){
+      // if(name == undefined){
+        // console.log(typeof name);
+      // }
+      return name
+    },
+
     getIconsArray(){
       var list = []
       let parent = this
@@ -153,7 +160,6 @@ export default {
             let id = list[icon]
             let iconName = id.replace("_", " ")
             id = id.replace(",", "")
-            
             // Validation check, only add icon name if id is not empty
             if(id != ""){
               // Remove all "_" from the names
@@ -196,7 +202,7 @@ export default {
 
       iconList = iconList.filter(function(item){
         if(item.name.toLowerCase().indexOf(searchString) !== -1){
-          // console.log(item);
+          console.log(item);
           return item;
         }
       })
