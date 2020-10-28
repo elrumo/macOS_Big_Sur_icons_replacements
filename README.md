@@ -310,7 +310,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Hidden Bar
 - [ ] KeepingYouAwake
 - [ ] Keyboard Maestro
-- [ ] LibreOffice
+- [x] LibreOffice
 - [ ] LyricsX
 - [ ] MAMP
 - [ ] MacUpdater
@@ -937,3 +937,4 @@ We do not intend to steal any one's icons, if your icon has been included and yo
 |                                                 | Yoink Alt                                      |               
 |                                                 | YouTube Music                                  |                  
 |                                                 | YouTube TV                                     |               
+| [FIGBERT](https://figbert.com/)                 | LibreOffice                                    |
