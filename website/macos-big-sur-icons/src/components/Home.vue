@@ -31,7 +31,7 @@
       </h3>
 
       <p class="coral-Body--L w-100 body-text p-t-20">
-        Click on each icon to download it or on the button bellow to download all {{iconList.length}} icons. To contribute or suggest a new icon, click on the GitHub button.
+        Click on each icon to download it or on the button below to download all {{iconList.length}} icons. To contribute or suggest a new icon, click on the GitHub button.
       </p>
       
       <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank">
@@ -69,7 +69,7 @@
       </div>
   
       <div class="icon-list-area p-t-50 p-b-50">
-          <a v-for="icon in filteredList" :key="icon.name" class="card-wrapper shadow coral-card" :href="icon.url">
+          <a v-for="icon in filteredList" :key="setKey(icon.name)" class="card-wrapper shadow coral-card" :href="icon.url">
             <div class="card-img-wrapper">
               <img loading="lazy" v-lazy="icon.img" class="w-full" alt="">
             </div>
@@ -141,6 +141,13 @@ export default {
       parent.darkMode = !parent.darkMode
     },
 
+    setKey(name){
+      // if(name == undefined){
+        // console.log(typeof name);
+      // }
+      return name
+    },
+
     getIconsArray(){
       var list = []
       let parent = this
@@ -153,7 +160,6 @@ export default {
             let id = list[icon]
             let iconName = id.replace("_", " ")
             id = id.replace(",", "")
-            
             // Validation check, only add icon name if id is not empty
             if(id != ""){
               // Remove all "_" from the names
