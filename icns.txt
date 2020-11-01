@@ -1036,3 +1036,6 @@ weiyun,
 weiyun_sync,
 xmind_alt,
 Cascadea
+Thor
+Session_Pal
+Tab_Space
