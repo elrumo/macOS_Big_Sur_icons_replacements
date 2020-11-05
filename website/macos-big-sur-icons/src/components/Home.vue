@@ -43,17 +43,17 @@
 
     <!-- Icon list -->
       <div class="icon-list-area p-t-50 p-b-50">
-          <a v-for="icon in filteredList" :key="icon.name" class="card-wrapper shadow coral-card" :href="'https://github.com/elrumo/macOS-Big-Sur-icons-replacements/raw/master/icons/'+icon.name+'.icns'">
+          <a v-for="icon in filteredList" :key="icon.fileName" class="card-wrapper shadow coral-card" :href="icon.icnsUrl">
             <div class="card-img-wrapper">
               <div v-lazy-container="{ selector: 'img', loading: icons.loading }">
-                <img class="w-full" :data-src="'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/png/low-res/'+icon.name+'.png'">
+                <img class="w-full" :data-src="icon.imgUrl">
               </div>
             </div>
             <div>
               <h3 class="coral-font-color">
-                {{ prettifyName(icon.name) }}
+                {{ prettifyName(icon.appName) }}
               </h3>
-              <p class="coral-Body--XS opacity-60 m-b-20"><a class="coral-Link" :href="icon.creditUrl" target="_blank">{{icon.credit}}</a> on <span class="coral-Body--XS opacity-50">{{ getDate(icon.timeStamp) }}</span></p>
+              <p class="coral-Body--XS opacity-60 m-b-20"><a class="coral-Link" :href="icon.credit" target="_blank">{{icon.usersName}}</a> on <span class="coral-Body--XS opacity-50">{{ getDate(icon.timeStamp) }}</span></p>
             </div>
           </a>
       </div>
@@ -80,6 +80,8 @@ import Hero from './Hero.vue';
 import Dialog from './Dialog.vue';
 
 import * as firebase from "firebase";
+let storage = firebase.storage();
+
 
 let db = firebase.firestore();
 
@@ -157,10 +159,33 @@ export default {
 
       let parentObj = []
 
-       db.collection("approvedIcons").get().then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          parent.list.push(doc.data())
-          // Vue.set(parent.list, doc.data().name, doc.data())
+      //  db.collection("approvedIcons").get().then(function (querySnapshot) {
+       db.collection("submissions").where("approved", "==", true)
+        .get().then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            
+            let iconData = doc.data()
+            
+            let newFileName = doc.data().fileName.split(".png")
+            newFileName.pop()
+            newFileName = newFileName[0]+".icns"
+
+            console.log(newFileName);
+
+            var imgRef = storage.ref('icons_approved/'+doc.data().fileName)
+            var incsRef = storage.ref('icons_approved/'+newFileName)
+
+            imgRef.getDownloadURL().then(function(url) {
+              iconData.imgUrl = url
+
+              incsRef.getDownloadURL().then(function(url) {
+                iconData.icnsUrl = url
+                parent.list.push(iconData)
+              })
+              
+            })
+
+            // Vue.set(parent.list, doc.data().name, doc.data())
         })
       })
       
@@ -263,8 +288,8 @@ export default {
       // If searchString is empty (no search by the user), return the full list of icons
       if(!searchString){
         iconList.sort(function(a, b) {
-            var textA = a.name.toUpperCase();
-            var textB = b.name.toUpperCase();
+            var textA = a.appName.toUpperCase();
+            var textB = b.appName.toUpperCase();
             return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
         });
         return iconList;
@@ -272,7 +297,7 @@ export default {
 
       searchString = searchString.trim().toLowerCase();
       iconList = iconList.filter(function(item){
-        if(item.name.toLowerCase().indexOf(searchString) !== -1){
+        if(item.appName.toLowerCase().indexOf(searchString) !== -1){
           return item;
         }
       })

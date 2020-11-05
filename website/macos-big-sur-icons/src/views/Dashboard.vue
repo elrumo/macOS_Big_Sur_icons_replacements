@@ -41,9 +41,49 @@
 
             </div>
           </div>
+          
 
         </div>
-         
+      
+        <!-- Approved Icons -->
+        <div class="m-t-50 p-50 coral-Well">
+          <h3 class="coral-Heading--L p-b-20 m-t-0 text-left">
+            Approved
+          </h3>
+
+          <div class="icon-list-area">
+            <div v-for="icon in approvedIcons" class="card-wrapper coral-card" :key="icon.fileName">
+
+                <div class="card-img-wrapper" style="max-width: 120px;">
+                  Image
+                  <!-- <img loading="lazy" v-lazy="icon.imgUrl" class="w-full" alt=""> -->
+                </div>
+
+                <div class="p-l-15 p-r-15 p-b-5">
+                  <h3 class="coral-font-color">
+                    {{ prettifyName(icon.appName) }}
+                  </h3>
+                  <p class="coral-Body--XS p-b-10 opacity-60">By <a class="coral-Link" :href="icon.credit" target="_blank">{{icon.usersName}}</a></p>
+                  
+                  <div class="p-t-10">
+                    <button @click="" is="coral-button">Remove</button>
+
+                    <div class="filler-space"></div>
+
+                    <a class="coral-Link" :href="'mailto:'+icon.email+'?subject=macOS icons submission&body=Hi '+icon.usersName+emailMsg">
+                      <button is="coral-button" variant="quiet">
+                          Contact
+                      </button>
+                    </a>
+                  </div>
+                  
+                </div>
+
+            </div>
+          </div>
+
+        </div>
+
       </div>
     </section>
 
@@ -64,7 +104,8 @@ export default {
   data: function(){
     return{
       icons:{},
-      emailMsg: "Thanks you for your submission to macosicons.com! I'm just getting in touch with you to ask if you could ..., otherwise the icons won't work propperly. You can either email me back or re-submit the icons on macosicons.com. Thanks again, Elias webbites.io"
+      emailMsg: "Thanks you for your submission to macosicons.com! I'm just getting in touch with you to ask if you could ..., otherwise the icons won't work propperly. You can either email me back or re-submit the icons on macosicons.com. Thanks again, Elias webbites.io",
+      approvedIcons: {}
     }
   },
 
@@ -81,9 +122,12 @@ export default {
       return name
     },
 
-    approveIcon(icon){
-      // console.log(icon);
-      const convertToIcns = functions.httpsCallable("convertToIcns")
+    approveIcon(icon){  
+      console.log(icon);
+      
+      // functions.useFunctionsEmulator("http://localhost:5001")
+      const convertToIcns = functions.httpsCallable("convertToIcns");
+
       convertToIcns(icon).then(result =>{
         console.log(result.data);
       })
@@ -137,7 +181,14 @@ export default {
 
         });
       }).then(function(querySnapshot) {
-        console.log("Ho");
+      })
+
+      db.collection("submissions").where("approved", "==", true)
+        .get().then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+            console.log(doc.data());
+            parent.approvedIcons[doc.data().appName] = doc.data()
+          })
       })
 
 
