@@ -939,3 +939,6 @@ We do not intend to steal any one's icons, if your icon has been included and yo
 |                                                 | YouTube TV                                     |               
 | [FIGBERT](https://figbert.com/)                 | LibreOffice                                    |
 |                                                 | Seaglass                                       |
+|                                                 | Beaker Browser                                 |
+|                                                 | Ledger Live                                    |
+|                                                 | Vimac                                          |
