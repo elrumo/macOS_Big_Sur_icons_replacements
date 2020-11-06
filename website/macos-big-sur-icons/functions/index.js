@@ -61,7 +61,7 @@ exports.convertToIcns = functions.https.onCall((data, context) => {
 
             // Set cloud storage reference for newly creaed .icns and .png
             let icnsStorageRef = join("icons_approved", newIcnsName)
-            let pngStorageRef = join("icons_approved", newFileName + ".png")
+            let pngStorageRef = join("icons_approved/png", newFileName + ".png")
 
             console.log("pngStorageRef: ", pngStorageRef);
 
@@ -90,28 +90,48 @@ exports.convertToIcns = functions.https.onCall((data, context) => {
                     })
                 ]
             }).then(() => {
+                
+                const docRef = db.collection('submissions').doc(data.id);
 
                 // Upload low res .png to storage
                 bucket.upload(toUpload.lowResPng, {
-                    destination: pngStorageRef
-                }).then(() => {
+                    destination: pngStorageRef,
+                    predefinedAcl: 'publicRead'
+                }).then(result => {
+
                     fs.unlinkSync(toUpload.lowResPng) // Locally delete .png
                     let file = bucket.file(filePath)
+
                     file.makePublic(function (err, apiResponse) { });
+
+                    const cloudFile = result[0];
+                    return cloudFile.getMetadata();
+
+                }).then(results => {
+                    let pngUrl = results[0].mediaLink
+                    docRef.update({
+                        approved: true,
+                        pngUrl: pngUrl
+                    });
+                    console.log("pngUrl: ", pngUrl);
                 })
 
                 // Upload .icns to storage
                 bucket.upload(toUpload.tmpIcns, {
-                    destination: icnsStorageRef
-                }).then(() => {
+                    destination: icnsStorageRef,
+                    predefinedAcl: 'publicRead'
+                }).then(result => {
                     fs.unlinkSync(toUpload.tmpIcns) // Locally delete newly converted .icns
+
+                    const cloudFile = result[0];
+                    return cloudFile.getMetadata();
+                }).then(results => {
+                    let icnsUrl = results[0].mediaLink
+                    docRef.update({
+                        icnsUrl: icnsUrl
+                    });
+                    console.log("icnsUrl: ", icnsUrl);
                 })
-
-
-                const docRef = db.collection('submissions').doc(data.id);
-                docRef.update({
-                    approved: true
-                });
 
                 // Set approved to true and write new low res .png and new .icns download URL to Firestore
             })
