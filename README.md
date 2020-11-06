@@ -945,3 +945,4 @@ We do not intend to steal any one's icons, if your icon has been included and yo
 |                                                 | Beaker Browser                                 |
 |                                                 | Ledger Live                                    |
 |                                                 | Vimac                                          |
+|                                                 | Lumen                                          |
