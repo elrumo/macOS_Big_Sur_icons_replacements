@@ -125,7 +125,7 @@ export default {
     approveIcon(icon){  
       console.log(icon);
       
-      // functions.useFunctionsEmulator("http://localhost:5001")
+      functions.useFunctionsEmulator("http://localhost:5001")
       const convertToIcns = functions.httpsCallable("convertToIcns");
 
       convertToIcns(icon).then(result =>{
@@ -143,7 +143,7 @@ export default {
         .get().then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
 
-            console.log(doc.id);
+            // console.log(doc.id);
 
             let docData = doc.data();
             docData.imgUrl = ""
@@ -183,13 +183,12 @@ export default {
       }).then(function(querySnapshot) {
       })
 
-      db.collection("submissions").where("approved", "==", true)
-        .get().then(function(querySnapshot) {
-          querySnapshot.forEach(function(doc) {
-            console.log(doc.data());
-            parent.approvedIcons[doc.data().appName] = doc.data()
-          })
-      })
+      // db.collection("submissions").where("approved", "==", true)
+      //   .get().then(function(querySnapshot) {
+      //     querySnapshot.forEach(function(doc) {
+      //       parent.approvedIcons[doc.data().appName] = doc.data()
+      //     })
+      // })
 
 
   },

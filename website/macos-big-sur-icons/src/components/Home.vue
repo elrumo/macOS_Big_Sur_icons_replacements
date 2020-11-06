@@ -46,7 +46,7 @@
           <a v-for="icon in filteredList" :key="icon.fileName" class="card-wrapper shadow coral-card" :href="icon.icnsUrl">
             <div class="card-img-wrapper">
               <div v-lazy-container="{ selector: 'img', loading: icons.loading }">
-                <img class="w-full" :data-src="icon.imgUrl">
+                <img class="w-full" :data-src="icon.pngUrl">
               </div>
             </div>
             <div>
@@ -160,112 +160,114 @@ export default {
       let parentObj = []
 
       //  db.collection("approvedIcons").get().then(function (querySnapshot) {
-       db.collection("submissions").where("approved", "==", true)
+        db.collection("submissions").where("approved", "==", true)
         .get().then(function (querySnapshot) {
           querySnapshot.forEach(function (doc) {
             
             let iconData = doc.data()
+            const docRef = db.collection('submissions').doc(doc.id);
             
             let newFileName = doc.data().fileName.split(".png")
             newFileName.pop()
             newFileName = newFileName[0]+".icns"
 
-            console.log(newFileName);
-
-            var imgRef = storage.ref('icons_approved/'+doc.data().fileName)
+            var imgRef = storage.ref('icons_approved/png/'+doc.data().fileName)
             var incsRef = storage.ref('icons_approved/'+newFileName)
 
-            imgRef.getDownloadURL().then(function(url) {
-              iconData.imgUrl = url
+            let listLen = parent.list.push(iconData)
 
-              incsRef.getDownloadURL().then(function(url) {
-                iconData.icnsUrl = url
-                parent.list.push(iconData)
-              })
-              
-            })
+          // Get file URLs and write them on Firestore
+            // imgRef.getDownloadURL().then(function(url) {
+            //   docRef.update({
+            //         pngUrl: url
+            //   });
+            // }).catch((err) =>{console.log(err);})
 
-            // Vue.set(parent.list, doc.data().name, doc.data())
+            // incsRef.getDownloadURL().then(function(url) {
+            //   docRef.update({
+            //         icnsUrl: url
+            //     });
+            // }).catch((err) =>{console.log(err);})
+
         })
       })
       
-      let credits = {
+      // let credits = {
         // Save credits to Firebase
 
-        //  fetch('https://gist.githubusercontent.com/elrumo/4f924d33ec3c3887161431e6ef17d4ff/raw/14caed269ab2739332a5659327b1231519c85c8a/credits.json')
-        //   .then(response => response.text())
-        //   .then((data) => {
+        //  fetch('https://gist.githubusercontent.com/elrumo/281942475340b3d6ff0838aa120367d7/raw/6bc2a44a1a2b1e95fcba56a262a4f09006c87479/icns.json')
+        //   .then(response => response.text()).then((data) => {
             
-        //     let creditList = JSON.parse(data).users;
-        //     // console.log(creditList);
+        //     console.log(data);
+            // let creditList = JSON.parse(data);
+            // console.log("creditList: ", creditList);
 
-        //     let iconList = []
+            // let iconList = []
 
-        //     for(let user in creditList){
-        //       console.log(creditList[user]);
-        //       for(let icon in creditList[user].icons){
-        //         // arrList.push(creditList[user].icons[icon])
-        //         // console.log(arrList);
-        //         let iconName = creditList[user].icons[icon]
-        //         // console.log(iconName);
-        //         let matches = db.collection("icons").where("name", "==", iconName)
-        //         // console.log(iconName);
-        //         // console.log(matches);
-        //         db.collection("approvedIcons").where("name", "==", iconName).get().then(function (querySnapshot) {
-        //             querySnapshot.forEach(function (doc) {
+            // for(let user in creditList){
+            //   console.log(creditList[user]);
+            //   for(let icon in creditList[user].icons){
+            //     // arrList.push(creditList[user].icons[icon])
+            //     // console.log(arrList);
+            //     let iconName = creditList[user].icons[icon]
+            //     // console.log(iconName);
+            //     let matches = db.collection("icons").where("name", "==", iconName)
+            //     // console.log(iconName);
+            //     // console.log(matches);
+            //     db.collection("approvedIcons").where("name", "==", iconName).get().then(function (querySnapshot) {
+            //         querySnapshot.forEach(function (doc) {
 
-        //               // console.log(doc.data());
-        //               // iconList.push(doc.data())
+            //           // console.log(doc.data());
+            //           // iconList.push(doc.data())
 
-        //               db.collection("approvedIcons").doc(doc.id).set({
-        //                   creditUrl: creditList[user].credit,
-        //                   credit: creditList[user].name,
-        //                   name: doc.data().name,
-        //                   timeStamp: doc.data().timeStamp
-        //               }).then(function() {
-        //                   // console.log("Document successfully written!");
-        //                   console.log(doc.id, " + ", doc.data().name);
-        //               }).catch(function(error) {
-        //                   console.error("Error writing document: ", error);
-        //               });
+            //           db.collection("approvedIcons").doc(doc.id).set({
+            //               creditUrl: creditList[user].credit,
+            //               credit: creditList[user].name,
+            //               name: doc.data().name,
+            //               timeStamp: doc.data().timeStamp
+            //           }).then(function() {
+            //               // console.log("Document successfully written!");
+            //               console.log(doc.id, " + ", doc.data().name);
+            //           }).catch(function(error) {
+            //               console.error("Error writing document: ", error);
+            //           });
 
-        //             });
-        //         }).then((data) => {
-        //           // console.log(iconList);
-        //           // console.log(iconList.length);
-        //         })
-        //         // console.log(iconName);
-        //         // console.log(creditList[user].name);
-        //         // console.log(creditList[user].credit);
-        //       }
-        //     }
-        //   })
+            //         });
+            //     }).then((data) => {
+            //       // console.log(iconList);
+            //       // console.log(iconList.length);
+            //     })
+            //     // console.log(iconName);
+            //     // console.log(creditList[user].name);
+            //     // console.log(creditList[user].credit);
+            //   }
+            // }
+          // })
 
 
         
-        // Save icons to Firebase
-
-        // var list = []
-        // //fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icns.txt')
-        // // fetch('https://gist.githubusercontent.com/elrumo/7d9a1d1a46332da2fe17650f72517e86/raw/f33cfd1c7f5a94e18bdb194681f5e59b97c3d811/icons.json')
-        // // fetch('https://gist.githubusercontent.com/elrumo/63d6ddfae3ce07a002738bb083fe2853/raw/fa2c93afda0a5288fae430240dda962f5d00fb64/newIcons.json')
+        // // Save icons to Firebase
+        // fetch('https://gist.githubusercontent.com/elrumo/281942475340b3d6ff0838aa120367d7/raw/6bc2a44a1a2b1e95fcba56a262a4f09006c87479/icns.json')
         //   .then(response => response.text())
         //   .then((data) => {
         //     parent.iconList = JSON.parse(data).icons;
         //     let iconList = parent.iconList
 
         //     let iconsObj = {icons:{}}
+            
+        //     let listLen = Object.keys(iconList).length
+        //     let count = 0
 
         //     for(let icon in iconList){
-        //       // console.log(iconList[icon].credit);
-        //       db.collection("approvedIcons").doc().set({
-        //           credit: iconList[icon].credit,
-        //           creditUrl: iconList[icon].creditUrl,
-        //           name: iconList[icon].name,
-        //           timeStamp: iconList[icon].timeStamp,
-        //       })
+        //       db.collection("submissions").doc().set(iconList[icon])
         //       .then(function() {
-        //         console.log("Doc Done!");
+        //         count++
+        //         console.log(count);
+        //         if (count == listLen) {
+        //           console.log("AllDone!");
+        //         } else{
+        //           console.log("Doc Done!");
+        //         }
         //       })
         //     }
 
@@ -274,7 +276,8 @@ export default {
         //       parent.darkMode = true
         //     }
         // })
-        }
+      // }
+
     }
   },
 
