@@ -10,13 +10,11 @@
         Made by <a href="https://webbites.io/" target="_blank" class="coral-Link">Elias</a>
         </p>
 
-        <img v-if="darkMode" @click="toggleDarkMode" class="header-item-right dark-mode-btn" src="moon-light.svg" alt="dark-mode-btn">
-        <img v-if="!darkMode" @click="toggleDarkMode" class="header-item-right dark-mode-btn" src="sun-dark.svg" alt="light-mode-btn">
+        <!-- <img v-if="darkMode" class="header-item-right dark-mode-btn" href="https://twitter.com/elrumo" target="_blank" :src="icons.twitter" alt="dark-mode-btn"> -->
 
         <p class="header-item-right coral-Body--XL github-header" id="github-header" > 
         <a href="https://twitter.com/elrumo" target="_blank" class="coral-Link"> 
-            Twitter
-            <coral-icon size="S" alt="Smallest" title="XXS">
+            <coral-icon size="M" alt="Smallest" title="XS">
                     <img :src="icons.twitter">
             </coral-icon>
         </a>

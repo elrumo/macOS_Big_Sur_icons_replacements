@@ -7,12 +7,12 @@
       </h3>
 
       <p class="coral-Body--L w-100 body-text p-t-20">
-        Click on each icon to download it, or on the button bellow to donwload all {{ list.length }} icons.
+        Click on each icon to download it, or download all {{ list.length }} icons from  <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/releases/download/v1.0/icons.zip"> here. </a>
         <!-- <br><br> -->
-        Click on the button bellow to contribute. Use this
+        Click below to contribute, use this
         <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.sketch">Sketch</a>,
-        <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.fig">Figma</a> or
-        <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.ai">Illustrator</a>,
+        <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.fig">Figma</a>,
+        <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.ai">Illustrator</a>, or
         <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.psd">Photoshop</a> template to make the icons.
       </p>
 <!--       
@@ -22,17 +22,24 @@
 
       <div class="m-auto m-t-30">
         
-        <a class="" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/releases/download/v1.0/icons.zip">
-          <button  is="coral-button" variant="cta">
-            <span>Download all icons</span>
-          </button>
-        </a>
-
-        <div class="p-l-20 d-inline-block">
-          <button is="coral-button" @click="showDialog(submitIconDialog)" >
+        <div class="d-inline-block">
+          <button is="coral-button" variant="cta" @click="showDialog(submitIconDialog)" >
             <span>Contribute</span>
           </button>
         </div>
+        
+        <a class="p-l-20" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank">
+          <button  is="coral-button" variant="quiet">
+            <span>GitHub</span>
+          </button>
+        </a>
+
+
+        <!-- <div class="p-l-20 d-inline-block">
+          <button is="coral-button" variant="quiet" @click="showDialog(submitIconDialog)" >
+            <span>GitHub</span>
+          </button>
+        </div> -->
 
       </div>
 

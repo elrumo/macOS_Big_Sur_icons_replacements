@@ -192,7 +192,7 @@ export default {
         })
       })
       
-      // let credits = {
+      let credits = {
         // Save credits to Firebase
 
         //  fetch('https://gist.githubusercontent.com/elrumo/281942475340b3d6ff0838aa120367d7/raw/6bc2a44a1a2b1e95fcba56a262a4f09006c87479/icns.json')
@@ -276,7 +276,7 @@ export default {
         //       parent.darkMode = true
         //     }
         // })
-      // }
+      }
 
     }
   },
@@ -284,6 +284,7 @@ export default {
   computed:{
 
     filteredList: function () {
+      let parent = this
 
       var iconList = this.list;
       var searchString = this.searchString;
@@ -300,7 +301,7 @@ export default {
 
       searchString = searchString.trim().toLowerCase();
       iconList = iconList.filter(function(item){
-        if(item.appName.toLowerCase().indexOf(searchString) !== -1){
+        if(parent.prettifyName(item.appName).toLowerCase().indexOf(searchString) !== -1){
           return item;
         }
       })
