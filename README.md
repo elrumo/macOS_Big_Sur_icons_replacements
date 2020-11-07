@@ -946,3 +946,6 @@ We do not intend to steal any one's icons, if your icon has been included and yo
 |                                                 | Ledger Live                                    |
 |                                                 | Vimac                                          |
 |                                                 | Lumen                                          |
+| [Jonathan Simcoe](https://jdsimcoe.com/)        | Alacritty                                      |
+|                                                 | GOG Galaxy Alt                                 |
+|                                                 | Monero Wallet                                  |
