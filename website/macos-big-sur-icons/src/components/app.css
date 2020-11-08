@@ -418,6 +418,51 @@ ul {
     padding-top: 30px;
 }
 
+.redBg{
+    background: red;
+}
+
+#firebaseui-auth-container{
+    background: white;
+    max-width: 320px;
+    padding: 5px 0px 30px 0px;
+    transform: translateY(30px);
+    margin: auto;
+    border-radius: 8px;
+}
+
+#ui-sign-in-email-input{
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.firebaseui-id-submit{
+    background-color: rgb(20, 115, 230);
+    border-color: rgb(20, 115, 230);
+    color: rgb(255, 255, 255);
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 16px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
+    min-height: 32px;
+    height: auto;
+    min-width: 72px;
+    padding: 4px 14px;
+    padding-bottom: 5px;
+    padding-top: 3px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.firebaseui-id-submit:hover{
+    background-color: rgb(13, 102, 208);
+    border-color: rgb(13, 102, 208);
+    color: rgb(255, 255, 255);
+}
 
 @media only screen and (max-width: 12000px){
     ._coral-Dialog{
