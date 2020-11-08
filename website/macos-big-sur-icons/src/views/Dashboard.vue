@@ -41,6 +41,9 @@
                 </div>
 
                 <img loading="lazy" v-lazy="icon.imgUrl" class="w-full" alt="">
+                <coral-quickactions placement="center" target="_prev">
+                  <coral-quickactions-item type="button" @click="deleteSubmission(icon)" :id="icon.fileName" :icon="coralIcons.delete">Remove file</coral-quickactions-item>
+                </coral-quickactions>
               </div>
 
               <div class="p-l-15 p-r-15 p-b-5">
@@ -90,8 +93,6 @@
                   <p class="coral-Body--XS p-b-10 opacity-60">By <a class="coral-Link" :href="icon.credit" target="_blank">{{icon.usersName}}</a></p>
                   
                   <div class="p-t-10">
-                    <button @click="" is="coral-button">Remove</button>
-
                     <div class="filler-space"></div>
 
                     <a class="coral-Link" :href="'mailto:'+icon.email+'?subject=macOS icons submission&body=Hi '+icon.usersName+emailMsg">
@@ -125,7 +126,6 @@ let functions = firebase.functions();
 let storage = firebase.storage();
 
 let parent = this
-console.log(process.env) 
 
 export default {
   
@@ -134,7 +134,12 @@ export default {
       icons:{},
       emailMsg: "Thanks you for your submission to macosicons.com! I'm just getting in touch with you to ask if you could ..., otherwise the icons won't work propperly. You can either email me back or re-submit the icons on macosicons.com. Thanks again, Elias webbites.io",
       approvedIcons: {},
-      isAuth: false
+      isAuth: false,
+      coralIcons:{
+        addIcon: require("../assets/icons/add.svg"),
+        delete: require("../assets/icons/delete.svg"),
+        newItem: require("../assets/icons/newItem.svg"),
+      },
     }
   },
 
@@ -159,6 +164,36 @@ export default {
         // ...
       });
     },
+
+    deleteSubmission(icon){
+        let parent = this
+        console.log(icon);
+
+        // Delete object from Firestore
+        db.collection("submissions").doc("4fhtruC3ml38lVD7XGeV").delete().then(function() {
+          console.log("Document successfully deleted!");
+
+          Vue.delete(parent.icons[icon.usersName].icons, icon.appName) // Delete object locally
+          
+          if (Object.keys(parent.icons[icon.usersName].icons).length == 0 ) { // Delete user from UI if no icons are left
+            Vue.delete(parent.icons, icon.usersName)
+          }
+          
+        }).catch(function(error) {
+            console.error("Error removing document: ", error);
+        });
+    },
+
+// appName: "QQ"
+// approved: false
+// credit: ""
+// email: "elrumo97@me.com"
+// fileName: "1604866394274_QQ.png"
+// iconRef: "icon_submissions/1604866394274_QQ.png"
+// id: "4fhtruC3ml38lVD7XGeV"
+// imgUrl: "https://firebasestorage.googleapis.com/v0/b/macos-icons.appspot.com/o/icon_submissions%2F1604866394274_QQ.png?alt=media&token=7e9416bf-fb70-41db-977a-ef553380101e"
+// timeStamp: 1604866396390
+// usersName: "Elias"
 
     prettifyName(name){
       for(let i in name){
