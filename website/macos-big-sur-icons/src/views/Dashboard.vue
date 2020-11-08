@@ -2,8 +2,22 @@
   <div>
     <Header/>
     
-    <div id="firebaseui-auth-container"></div>
-    <div id="loader">Loading...</div>
+    <!-- Sign in well -->
+    <div id="signIn-wrapper" class="coral-Well m-t-50" style="max-width: 320px; margin: auto">
+      <div class="m-b-20">
+        <input id="email" type="email" placeholder="Email" is="coral-textfield" aria-label="text input">
+      </div>
+      <div class="m-b-20">
+        <input id="password" type="password" placeholder="Password" is="coral-textfield"  aria-label="text input">
+      </div>
+      <div class="m-t-20 m-b-10">
+        <button is="coral-button" variant="cta" @click="signIn">Sign In</button>
+      </div>
+    </div>
+    
+    <h3 id="noIcons" class="coral-Heading--M m-t-50" style="width: fit-content; margin: auto;" v-if="Object.keys(icons).length == 0">
+      No icons to aprove
+    </h3>
 
     <section class="dashBoard">
       <div class="p-t-50 p-b-50 dashboard-wrapper">
@@ -56,7 +70,7 @@
         </div>
       
         <!-- Approved Icons -->
-        <div class="m-t-50 p-50 coral-Well">
+        <div class="m-t-50 p-50 coral-Well" id="approved-icons">
           <h3 class="coral-Heading--L p-b-20 m-t-0 text-left">
             Approved
           </h3>
@@ -104,23 +118,13 @@
 import Vue from 'vue'
 import Header from '@/components/Header.vue';
 import * as firebase from "firebase";
-import * as firebaseui from "firebaseui";
+// import * as firebaseui from "firebaseui";
 
 let db = firebase.firestore();
 let functions = firebase.functions();
 let storage = firebase.storage();
 
-
-
-// Sign In UI 
-let ui = new firebaseui.auth.AuthUI(firebase.auth())
-
-ui.start('#firebaseui-auth-container', {
-  signInOptions: [
-    firebase.auth.EmailAuthProvider.PROVIDER_ID
-  ],
-});
-
+let parent = this
 console.log(process.env) 
 
 export default {
@@ -129,7 +133,8 @@ export default {
     return{
       icons:{},
       emailMsg: "Thanks you for your submission to macosicons.com! I'm just getting in touch with you to ask if you could ..., otherwise the icons won't work propperly. You can either email me back or re-submit the icons on macosicons.com. Thanks again, Elias webbites.io",
-      approvedIcons: {}
+      approvedIcons: {},
+      isAuth: false
     }
   },
 
@@ -138,6 +143,22 @@ export default {
   },
 
   methods:{
+
+    signIn(){
+      let email = document.getElementById("email").value
+      let password = document.getElementById("password").value
+      console.log(email);
+
+      firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(function(user){
+        console.log(user);
+      }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+      });
+    },
 
     prettifyName(name){
       for(let i in name){
@@ -163,57 +184,82 @@ export default {
 
       let parent = this
 
-      db.collection("submissions").where("approved", "==", false)
-        .get().then(function(querySnapshot) {
-          querySnapshot.forEach(function(doc) {
+      function showEl(id){
+        document.getElementById(id).style.display = "block"
+      }
 
-            // console.log(doc.id);
+      function hideEl(id){
+        document.getElementById(id).style.display = "none"
+      }
 
-            let docData = doc.data();
-            docData.imgUrl = ""
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // User is signed in.
+          console.log("Signed In");
+          var providerData = user.providerData;
 
-            let usersName = docData.usersName
-            let appName = docData.appName
-            let email = docData.email
-            let creditUrl = docData.credit
-            let id = doc.id
-            
-            docData.id = id
-            // let timeStamp = doc.data().timeStamp
-            // let date = new Date(timeStamp).toLocaleDateString("en-GB")
+          hideEl("signIn-wrapper")
+          showEl("approved-icons")
+          showEl("noIcons")
 
-            if (usersName == "" || usersName == undefined ) {
-              console.log("usersName undefined ");
-            }else{
-              if(parent.icons[usersName] == undefined ){
-                Vue.set(parent.icons, usersName, {"usersName": usersName, "email": email, "icons":{}, "creditUrl": creditUrl})
-                Vue.set(parent.icons[usersName].icons, appName, docData)
-                var imgReference = storage.ref(docData.iconRef)
+          db.collection("submissions").where("approved", "==", false)
+            .get().then(function(querySnapshot) {
+              querySnapshot.forEach(function(doc) {
+
+                // console.log(doc.id);
+
+                let docData = doc.data();
+                docData.imgUrl = ""
+
+                let usersName = docData.usersName
+                let appName = docData.appName
+                let email = docData.email
+                let creditUrl = docData.credit
+                let id = doc.id
                 
-                imgReference.getDownloadURL().then(function(url) {
-                  Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
-                })                
-              } else{
-                Vue.set(parent.icons[usersName].icons, appName, docData)
-                var imgReference = storage.ref(docData.iconRef)
+                docData.id = id
+                // let timeStamp = doc.data().timeStamp
+                // let date = new Date(timeStamp).toLocaleDateString("en-GB")
 
-                imgReference.getDownloadURL().then(function(url) {
-                  Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
-                })
-              }              
-            }
+                if (usersName == "" || usersName == undefined ) {
+                  console.log("usersName undefined ");
+                }else{
+                  if(parent.icons[usersName] == undefined ){
+                    Vue.set(parent.icons, usersName, {"usersName": usersName, "email": email, "icons":{}, "creditUrl": creditUrl})
+                    Vue.set(parent.icons[usersName].icons, appName, docData)
+                    var imgReference = storage.ref(docData.iconRef)
+                    
+                    imgReference.getDownloadURL().then(function(url) {
+                      Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
+                    })                
+                  } else{
+                    Vue.set(parent.icons[usersName].icons, appName, docData)
+                    var imgReference = storage.ref(docData.iconRef)
 
+                    imgReference.getDownloadURL().then(function(url) {
+                      Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
+                    })
+                  }              
+                }
+
+            });
+          }).then(function(querySnapshot) {
+            // Get all approved icons
+            // db.collection("submissions").where("approved", "==", true)
+            //   .get().then(function(querySnapshot) {
+            //     querySnapshot.forEach(function(doc) {
+            //       parent.approvedIcons[doc.data().appName] = doc.data()
+            //     })
+          })
+      }else {
+          showEl("signIn-wrapper")
+          hideEl("approved-icons")
+          hideEl("noIcons")
+            console.log("Not Signed In");
+            // User is signed out.
+            // ...
+          }
         });
-      }).then(function(querySnapshot) {
-      })
-
-      // db.collection("submissions").where("approved", "==", true)
-      //   .get().then(function(querySnapshot) {
-      //     querySnapshot.forEach(function(doc) {
-      //       parent.approvedIcons[doc.data().appName] = doc.data()
-      //     })
-      // })
-
 
   },
 
@@ -225,6 +271,6 @@ export default {
 </script>
 
 <style>
-@import '/components/app.css';
+/* @import '/components/app.css'; */
 @import '/components/snack-helper.min.css';
 </style>
