@@ -274,6 +274,21 @@ ul {
     margin: auto;
 }
 
+.loading-approval-wrapper{
+    position: absolute;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0px);
+    top: 50%;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px) saturate(0.5);
+}
+
+.loading-approval{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
 
 .coral-card{
     transition: 0.2s;
@@ -287,6 +302,10 @@ ul {
     top: 50%;
     position: relative;
     transform: translateY(-50%);
+}
+
+.drop-zone{
+    cursor: pointer;
 }
 
 .drop-zone{
@@ -355,6 +374,7 @@ ul {
 
 .dashBoard .card-img-wrapper{
     padding: 20px 45px 5px 45px;
+    position: relative;
 }
 
 .dashBoard .card-wrapper{
