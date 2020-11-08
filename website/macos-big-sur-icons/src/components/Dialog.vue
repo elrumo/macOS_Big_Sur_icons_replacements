@@ -103,9 +103,9 @@ import * as firebase from "firebase";
 
 let firebaseConfig = {
   apiKey: process.env.VUE_APP_FIREBASE_KEY,
-  messagingSenderId: process.env.MESSAGING_SENDER_ID,
-  appId: process.env.APP_ID,
-  measurementId: process.env.MEASUREMENT_ID,
+  messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
+  appId: process.env.VUE_APP_APP_ID,
+  measurementId: process.env.VUE_APP_MEASUREMENT_ID,
   authDomain: "macos-icons.firebaseapp.com",
   databaseURL: "https://macos-icons.firebaseio.com",
   projectId: "macos-icons",
@@ -114,7 +114,6 @@ let firebaseConfig = {
 
   // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-console.log(firebase.auth());
 
 let db = firebase.firestore();
 let storage = firebase.storage();

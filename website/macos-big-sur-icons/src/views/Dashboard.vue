@@ -111,16 +111,17 @@ let functions = firebase.functions();
 let storage = firebase.storage();
 
 
-// console.log(firebase.auth());
 
 // Sign In UI 
-// let ui = new firebaseui.auth.AuthUI(firebase.auth())
+let ui = new firebaseui.auth.AuthUI(firebase.auth())
 
-// ui.start('#firebaseui-auth-container', {
-//   signInOptions: [
-//     firebase.auth.EmailAuthProvider.PROVIDER_ID
-//   ],
-// });
+ui.start('#firebaseui-auth-container', {
+  signInOptions: [
+    firebase.auth.EmailAuthProvider.PROVIDER_ID
+  ],
+});
+
+console.log(process.env) 
 
 export default {
   
