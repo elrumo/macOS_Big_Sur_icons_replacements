@@ -101,9 +101,8 @@ import { mapActions } from 'vuex';
 import * as firebase from "firebase";
 // import * as firebaseui from "firebaseui";
 
-
 let firebaseConfig = {
-  apiKey: process.env.FIREBASE_KEY,
+  apiKey: process.env.VUE_APP_FIREBASE_KEY,
   messagingSenderId: process.env.MESSAGING_SENDER_ID,
   appId: process.env.APP_ID,
   measurementId: process.env.MEASUREMENT_ID,
@@ -115,6 +114,8 @@ let firebaseConfig = {
 
   // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+console.log(firebase.auth());
+
 let db = firebase.firestore();
 let storage = firebase.storage();
 
