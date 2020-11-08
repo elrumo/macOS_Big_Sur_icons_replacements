@@ -21,3 +21,4 @@ pnpm-debug.log*
 *.sw?
 
 .vercel
+website/macos-big-sur-icons/.env
