@@ -104,11 +104,14 @@
 import Vue from 'vue'
 import Header from '@/components/Header.vue';
 import * as firebase from "firebase";
-// import * as firebaseui from "firebaseui";
+import * as firebaseui from "firebaseui";
 
 let db = firebase.firestore();
 let functions = firebase.functions();
 let storage = firebase.storage();
+
+
+// console.log(firebase.auth());
 
 // Sign In UI 
 // let ui = new firebaseui.auth.AuthUI(firebase.auth())
