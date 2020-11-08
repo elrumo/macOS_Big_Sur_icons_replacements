@@ -184,7 +184,7 @@ ul {
     opacity: 50%;
 }
 .opacity-60{
-    opacity: 60%;
+    opacity: 60% !important;
 }
 
 .dark-mode-btn{
