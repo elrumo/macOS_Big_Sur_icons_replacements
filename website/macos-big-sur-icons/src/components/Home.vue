@@ -101,7 +101,6 @@ export default {
       iconsToShow: [],
       sortByName: true,
       list: [],
-      // list: {},
       icons:{
         success: require("../assets/icons/delete.svg"),
         namingOrder: require("../assets/icons/namingOrder.svg"),
