@@ -104,20 +104,20 @@
 import Vue from 'vue'
 import Header from '@/components/Header.vue';
 import * as firebase from "firebase";
-import * as firebaseui from "firebaseui";
+// import * as firebaseui from "firebaseui";
 
 let db = firebase.firestore();
 let functions = firebase.functions();
 let storage = firebase.storage();
 
 // Sign In UI 
-let ui = new firebaseui.auth.AuthUI(firebase.auth())
+// let ui = new firebaseui.auth.AuthUI(firebase.auth())
 
-ui.start('#firebaseui-auth-container', {
-  signInOptions: [
-    firebase.auth.EmailAuthProvider.PROVIDER_ID
-  ],
-});
+// ui.start('#firebaseui-auth-container', {
+//   signInOptions: [
+//     firebase.auth.EmailAuthProvider.PROVIDER_ID
+//   ],
+// });
 
 export default {
   
