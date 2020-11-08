@@ -3,19 +3,19 @@
     <Header/>
     
     <!-- Sign in well -->
-    <div id="signIn-wrapper" class="coral-Well m-t-50" style="max-width: 320px; margin: auto">
+    <div id="signIn-wrapper" class="coral-Well m-t-50">
       <div class="m-b-20">
         <input id="email" type="email" placeholder="Email" is="coral-textfield" aria-label="text input">
       </div>
       <div class="m-b-20">
         <input id="password" type="password" placeholder="Password" is="coral-textfield"  aria-label="text input">
       </div>
-      <div class="m-t-20 m-b-10">
+      <div id="signin-button" class="m-t-40 m-b-5">
         <button is="coral-button" variant="cta" @click="signIn">Sign In</button>
       </div>
     </div>
     
-    <h3 id="noIcons" class="coral-Heading--M m-t-50" style="width: fit-content; margin: auto;" v-if="Object.keys(icons).length == 0">
+    <h3 id="noIcons" class="coral-Heading--M m-t-50" v-if="isObjEmpty(icons) & isAuth">
       No icons to aprove
     </h3>
 
@@ -71,9 +71,8 @@
           
 
         </div>
-      
         <!-- Approved Icons -->
-        <div class="m-t-50 p-50 coral-Well" id="approved-icons">
+        <div v-if="!isObjEmpty(approvedIcons)"  class="m-t-50 p-50 coral-Well" id="approved-icons">
           <h3 class="coral-Heading--L p-b-20 m-t-0 text-left">
             Approved
           </h3>
@@ -165,6 +164,10 @@ export default {
       });
     },
 
+    isObjEmpty(obj){
+      return Object.keys(obj).length == 0
+    },
+
     deleteSubmission(icon){
         let parent = this
         console.log(icon);
@@ -206,84 +209,80 @@ export default {
 
   mounted: function(){  
 
-      let parent = this
+    let parent = this
 
-      function showEl(id){
-        document.getElementById(id).style.display = "block"
-      }
+    function showEl(id){
+      document.getElementById(id).style.display = "block"
+    }
+    function hideEl(id){
+      document.getElementById(id).style.display = "none"
+    }
 
-      function hideEl(id){
-        document.getElementById(id).style.display = "none"
-      }
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+        console.log("Signed In");
+        var providerData = user.providerData;
 
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          // User is signed in.
-          console.log("Signed In");
-          var providerData = user.providerData;
+        hideEl("signIn-wrapper")
+        
+        parent.isAuth = true
+        console.log(parent.isAuth);
 
-          hideEl("signIn-wrapper")
-          showEl("approved-icons")
-          showEl("noIcons")
+        db.collection("submissions").where("approved", "==", false)
+          .get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
 
-          db.collection("submissions").where("approved", "==", false)
-            .get().then(function(querySnapshot) {
-              querySnapshot.forEach(function(doc) {
+              let docData = doc.data();
+              docData.imgUrl = ""
 
-                // console.log(doc.id);
+              let usersName = docData.usersName
+              let appName = docData.appName
+              let email = docData.email
+              let creditUrl = docData.credit
+              let id = doc.id
+              
+              docData.id = id
 
-                let docData = doc.data();
-                docData.imgUrl = ""
+              if (usersName == "" || usersName == undefined ) {
+                console.log("usersName undefined ");
+              }else{
+                if(parent.icons[usersName] == undefined ){
+                  Vue.set(parent.icons, usersName, {"usersName": usersName, "email": email, "icons":{}, "creditUrl": creditUrl})
+                  Vue.set(parent.icons[usersName].icons, appName, docData)
+                  var imgReference = storage.ref(docData.iconRef)
+                  
+                  imgReference.getDownloadURL().then(function(url) {
+                    Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
+                  })                
+                } else{
+                  Vue.set(parent.icons[usersName].icons, appName, docData)
+                  var imgReference = storage.ref(docData.iconRef)
 
-                let usersName = docData.usersName
-                let appName = docData.appName
-                let email = docData.email
-                let creditUrl = docData.credit
-                let id = doc.id
-                
-                docData.id = id
-                // let timeStamp = doc.data().timeStamp
-                // let date = new Date(timeStamp).toLocaleDateString("en-GB")
+                  imgReference.getDownloadURL().then(function(url) {
+                    Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
+                  })
+                }              
+              }
 
-                if (usersName == "" || usersName == undefined ) {
-                  console.log("usersName undefined ");
-                }else{
-                  if(parent.icons[usersName] == undefined ){
-                    Vue.set(parent.icons, usersName, {"usersName": usersName, "email": email, "icons":{}, "creditUrl": creditUrl})
-                    Vue.set(parent.icons[usersName].icons, appName, docData)
-                    var imgReference = storage.ref(docData.iconRef)
-                    
-                    imgReference.getDownloadURL().then(function(url) {
-                      Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
-                    })                
-                  } else{
-                    Vue.set(parent.icons[usersName].icons, appName, docData)
-                    var imgReference = storage.ref(docData.iconRef)
+          });
+        }).then(function(querySnapshot) {
+          
+          // Get all approved icons
+          // db.collection("submissions").where("approved", "==", true)
+          //   .get().then(function(querySnapshot) {
+          //     querySnapshot.forEach(function(doc) {
+          //       parent.approvedIcons[doc.data().appName] = doc.data()
+          //     })
 
-                    imgReference.getDownloadURL().then(function(url) {
-                      Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
-                    })
-                  }              
-                }
-
-            });
-          }).then(function(querySnapshot) {
-            // Get all approved icons
-            // db.collection("submissions").where("approved", "==", true)
-            //   .get().then(function(querySnapshot) {
-            //     querySnapshot.forEach(function(doc) {
-            //       parent.approvedIcons[doc.data().appName] = doc.data()
-            //     })
-          })
+        })
       }else {
-          showEl("signIn-wrapper")
-          hideEl("approved-icons")
-          hideEl("noIcons")
-            console.log("Not Signed In");
-            // User is signed out.
-            // ...
-          }
-        });
+        showEl("signIn-wrapper")
+        console.log("Not Signed In");
+          // User is signed out.
+          // ...
+        }
+    });
 
   },
 

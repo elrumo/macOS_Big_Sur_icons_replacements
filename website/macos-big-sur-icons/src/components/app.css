@@ -229,6 +229,26 @@ ul {
     padding-bottom: 60px;
 }
 
+#noIcons{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#signIn-wrapper{
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    max-width: 420px;
+    padding: 30px 20px;
+}
+
+#signin-button{
+}
+
 .main-heading{
     padding-top: 50px;
 }
