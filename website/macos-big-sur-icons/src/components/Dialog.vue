@@ -13,7 +13,7 @@
         <ul class="coral-List p-t-10 p-b-10">
           <li class="coral-List-item">Icon submited must be a .png file</li>
           <li class="coral-List-item">Use <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.sketch" class="coral-Link">this </a> template for dimensions and reference.</li>
-          <li class="coral-List-item">The file name must be the same as the name of the app.</li>
+          <li class="coral-List-item"> <b> The file name must be the same as the name of the app. </b></li>
         </ul>
 
         <!-- , submit a .png file with at least a height of 1048px and make sure <b>the file name is the name of the app.</b> -->
@@ -79,7 +79,7 @@
         <form class="coral-Form coral-Form--vertical" >
           <!-- <label id="credit-label" class="coral-FieldLabel">How should we credit you? <span style="opacity: 0.5"><i>(optional)</i></span></label> -->
           <label id="credit-label" class="coral-FieldLabel">How should we credit you?</label>
-          <input id="credit" is="coral-textfield" placeholder="Twitter URL, portfolio site..." labelledby="email-label" class="coral-Form-field" @change="saveCredit">
+          <input id="credit" is="coral-textfield" placeholder="GitHub or Twitter URL, portfolio site..." labelledby="email-label" class="coral-Form-field" @change="saveCredit">
         </form>
 
       </div>
@@ -100,16 +100,18 @@ import Vue from 'vue'
 import { mapActions } from 'vuex';
 import * as firebase from "firebase";
 
+
 let firebaseConfig = {
   apiKey: process.env.FIREBASE_KEY,
-  authDomain: "macos-icons.firebaseapp.com",
-  databaseURL: "https://macos-icons.firebaseio.com",
-  projectId: "macos-icons",
-  storageBucket: "macos-icons.appspot.com",
   messagingSenderId: process.env.MESSAGING_SENDER_ID,
   appId: process.env.APP_ID,
   measurementId: process.env.MEASUREMENT_ID,
+  authDomain: "macos-icons.firebaseapp.com",
+  databaseURL: "https://macos-icons.firebaseio.com",
+  projectId: "macos-icons",
+  storageBucket: "macos-icons.appspot.com"
 };
+
   // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 let db = firebase.firestore();

@@ -48,6 +48,13 @@ exports.convertToIcns = functions.https.onCall((data, context) => {
 
     const tmpFilePath = join(os.tmpdir(), newFileName + ".png");
 
+    const docRef = db.collection('submissions').doc(data.id);
+    
+    // Set icon to is reviewing to let me know the conversion process has started
+    docRef.update({
+        isReview: true
+    });
+
     bucket.file(filePath).download({ destination: tmpFilePath }).then(() => {
         (async () => {
 
@@ -90,8 +97,6 @@ exports.convertToIcns = functions.https.onCall((data, context) => {
                     })
                 ]
             }).then(() => {
-                
-                const docRef = db.collection('submissions').doc(data.id);
 
                 // Upload low res .png to storage
                 bucket.upload(toUpload.lowResPng, {

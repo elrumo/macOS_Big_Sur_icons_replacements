@@ -2,6 +2,9 @@
   <div>
     <Header/>
     
+    <div id="firebaseui-auth-container"></div>
+    <div id="loader">Loading...</div>
+
     <section class="dashBoard">
       <div class="p-t-50 p-b-50 dashboard-wrapper">
         <div v-for="user in icons" :key="user.usersName" class="p-b-30">
@@ -16,6 +19,13 @@
             <div v-for="icon in user.icons" class="card-wrapper coral-card" :key="icon.fileName">
 
               <div class="card-img-wrapper" style="max-width: 120px;">
+                
+                <div v-if="icon.isReview" class="loading-approval-wrapper">
+                  <div class="loading-approval">
+                    <coral-wait indeterminate=""></coral-wait>
+                  </div>
+                </div>
+
                 <img loading="lazy" v-lazy="icon.imgUrl" class="w-full" alt="">
               </div>
 
@@ -94,10 +104,20 @@
 import Vue from 'vue'
 import Header from '@/components/Header.vue';
 import * as firebase from "firebase";
+import * as firebaseui from "firebaseui";
 
 let db = firebase.firestore();
 let functions = firebase.functions();
 let storage = firebase.storage();
+
+// Sign In UI 
+// let ui = new firebaseui.auth.AuthUI(firebase.auth())
+
+// ui.start('#firebaseui-auth-container', {
+//   signInOptions: [
+//     firebase.auth.EmailAuthProvider.PROVIDER_ID
+//   ],
+// });
 
 export default {
   
