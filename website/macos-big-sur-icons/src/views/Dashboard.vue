@@ -184,17 +184,6 @@ export default {
         });
     },
 
-// appName: "QQ"
-// approved: false
-// credit: ""
-// email: "elrumo97@me.com"
-// fileName: "1604866394274_QQ.png"
-// iconRef: "icon_submissions/1604866394274_QQ.png"
-// id: "4fhtruC3ml38lVD7XGeV"
-// imgUrl: "https://firebasestorage.googleapis.com/v0/b/macos-icons.appspot.com/o/icon_submissions%2F1604866394274_QQ.png?alt=media&token=7e9416bf-fb70-41db-977a-ef553380101e"
-// timeStamp: 1604866396390
-// usersName: "Elias"
-
     prettifyName(name){
       for(let i in name){
         name = name.replace("_", " ")
