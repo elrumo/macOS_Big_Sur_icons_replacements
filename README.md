@@ -28,19 +28,11 @@ Download the template for [Sketch](https://github.com/elrumo/macOS_Big_Sur_icons
 Here are some rules you show know:
 
 - Don't use spaces for the icon names, instead use "\_"
-- When using the template, export in 1x (high res) and 0.25x (low res)
-- Before uploading the icons, add their names exactly as they have been exported to the [icons.txt](https://bit.ly/macOSicons-txt) file
-- Use [this free app](http://www.img2icnsapp.com) to convert the .png to a usable .icns
-- Make a Pull Request with the new icons
+- When using the template, export in 1x (high res).
+- Go to [macosicons.com](https://macosicons.com/) and click on "Contribute"
 - If you are creating an icon for an open-source project, please consider submitting the icon to their respective repository for their use as well.
 
-### I don't know how to make a pull request or I'm not familiar with GitHub
-
-Not a problem! This repo can also be a great introduction to the open source community and GitHub for designers, so welcome if you're new to this!
-
-If you're new to GitHub, or you've never made a pull request, try following [this article](https://www.freecodecamp.org/news/how-to-make-your-first-pull-request-on-github-3/). Did you manage? Congrats! If you're still not quite sure about how to make pull requests, crate a new issue [here](https://bit.ly/macOSicons-help) and try to explain where you're stuck, and if that still doesn't work for you, simply upload the icons on a shared drive and share them with us on the newly created issue.
-<br>
-<br>
+If you'd like to contribute code to the website, feel free to create a pull request or an issue exlaining what you're planning on doing.
 
 ## List
 
