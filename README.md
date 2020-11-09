@@ -4,7 +4,7 @@
 All feedback is appreciated, you can do that [@elrumo](https://bit.ly/elias-twitter) on Twitter***
 
 Replacement icons for popular apps in the style of macOS Big Sur.
-To view a full list of icons, go to [this website](https://macosicons.com) I created, there you can download just one or all of them at once.
+To view a full list of icons, go to [this website](https://macosicons.com), now you can also submit icons directly from there.
 
 Please note, for my own sanity I will be checking and updating this site around twice a week, on Mondays and Thursdays. So if you make any pull requests, expect them to be merged/checked around those days. Thanks!
 
