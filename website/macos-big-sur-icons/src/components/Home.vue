@@ -97,6 +97,7 @@ export default {
   data(){
     return{
       iconList:{},
+      gitHubList:[],
       searchString: "",
       iconsToShow: [],
       sortByName: true,
@@ -157,40 +158,65 @@ export default {
       let parent = this
 
       let parentObj = []
+      let list = []
+      fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icns.txt')
+        .then(response => response.text()).then((data) => {
 
-      //  db.collection("approvedIcons").get().then(function (querySnapshot) {
-        db.collection("submissions").where("approved", "==", true)
-        .get().then(function (querySnapshot) {
-          querySnapshot.forEach(function (doc) {
-            
-            let iconData = doc.data()
-            const docRef = db.collection('submissions').doc(doc.id);
-            
-            let newFileName = doc.data().fileName.split(".png")
-            newFileName.pop()
-            newFileName = newFileName[0]+".icns"
+          list = data.split(",\n")
 
-            var imgRef = storage.ref('icons_approved/png/'+doc.data().fileName)
-            var incsRef = storage.ref('icons_approved/'+newFileName)
+          console.log(list);
 
-            let listLen = parent.list.push(iconData)
 
-          // Get file URLs and write them on Firestore
-            // imgRef.getDownloadURL().then(function(url) {
-            //   docRef.update({
-            //         pngUrl: url
-            //   });
-            // }).catch((err) =>{console.log(err);})
 
-            // incsRef.getDownloadURL().then(function(url) {
-            //   docRef.update({
-            //         icnsUrl: url
-            //     });
-            // }).catch((err) =>{console.log(err);})
 
-        })
+          //  db.collection("approvedIcons").get().then(function (querySnapshot) {
+          db.collection("submissions").where("approved", "==", true)
+          .get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+              
+              let iconData = doc.data()
+              const docRef = db.collection('submissions').doc(doc.id);
+              
+              // console.log(creditList.iconData); 
+
+              let newFileName = doc.data().fileName.split(".png")
+              newFileName.pop()
+              newFileName = newFileName[0]+".icns"
+
+              var imgRef = storage.ref('icons_approved/png/'+doc.data().fileName)
+              var incsRef = storage.ref('icons_approved/'+newFileName)
+
+              let listLen = parent.list.push(iconData)
+
+            // Get file URLs and write them on Firestore
+              // imgRef.getDownloadURL().then(function(url) {
+              //   docRef.update({
+              //         pngUrl: url
+              //   });
+              // }).catch((err) =>{console.log(err);})
+
+              // incsRef.getDownloadURL().then(function(url) {
+              //   docRef.update({
+              //         icnsUrl: url
+
+              //     });
+              // }).catch((err) =>{console.log(err);})
+
+            })
+          }).then((data)=>{
+            parent.gitHubList = list
+              // for(let icon in list){
+              //   if(parent.list[icon].appName != list[icon]){
+              //     console.log(parent.list[icon].appName, ": ", list[icon]);
+              //   }
+              // }
+          })
+          
+
+
+
       })
-      
+
       let credits = {
         // Save credits to Firebase
 
@@ -286,6 +312,7 @@ export default {
       let parent = this
 
       var iconList = this.list;
+      var gitHubList = this.gitHubList;
       var searchString = this.searchString;
 
       // If searchString is empty (no search by the user), return the full list of icons
@@ -295,6 +322,19 @@ export default {
             var textB = b.appName.toUpperCase();
             return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
         });
+
+        gitHubList.sort(function(a, b) {
+            var textA = a.toUpperCase();
+            var textB = b.toUpperCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        });
+
+        // for(let icon in gitHubList){
+        //   if(parent.list[icon].appName != gitHubList[icon]){
+        //     console.log(parent.list[icon].appName, ": ", gitHubList[icon]);
+        //   }
+        // }
+
         return iconList;
       }
 
