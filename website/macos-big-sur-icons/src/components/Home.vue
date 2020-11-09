@@ -159,17 +159,11 @@ export default {
 
       let parentObj = []
       let list = []
-      fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icns.txt')
-        .then(response => response.text()).then((data) => {
+      // fetch('https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icns.txt')
+      //   .then(response => response.text()).then((data) => {
+      //     list = data.split(",\n")
+      //     console.log(list);
 
-          list = data.split(",\n")
-
-          console.log(list);
-
-
-
-
-          //  db.collection("approvedIcons").get().then(function (querySnapshot) {
           db.collection("submissions").where("approved", "==", true)
           .get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
@@ -215,7 +209,7 @@ export default {
 
 
 
-      })
+      // })
 
       let credits = {
         // Save credits to Firebase
@@ -323,11 +317,11 @@ export default {
             return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
         });
 
-        gitHubList.sort(function(a, b) {
-            var textA = a.toUpperCase();
-            var textB = b.toUpperCase();
-            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-        });
+        // gitHubList.sort(function(a, b) {
+        //     var textA = a.toUpperCase();
+        //     var textB = b.toUpperCase();
+        //     return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        // });
 
         // for(let icon in gitHubList){
         //   if(parent.list[icon].appName != gitHubList[icon]){
