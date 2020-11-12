@@ -519,8 +519,8 @@ We do not intend to steal any one's icons, if your icon has been included and yo
 |                                                 | Zoom Alt                                       |
 |[Shreyas Gupta](https://shreyasgupta.me/)        | Apple Music                                    |  
 |                                                 | Cisco Webex                                    |
-|[ProgrammerGeek123 (©Apple)](https://www.apple.com) | Apple Classroom                             |  
-|                                                 | Xcode Beta                                     |
+|[ProgrammerGeek123](https://github.com/programmergeek123)| Apple Classroom                        |
+|[Apple (c)](https://www.apple.com)               | Xcode Beta                                     |
 |                                                 | Xcode Helper Beta                              |
 |                                                 | Accessibility Inspector                        |
 |                                                 | File Merge Beta                                |
