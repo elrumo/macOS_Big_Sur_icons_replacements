@@ -1044,4 +1044,6 @@ Zoom,
 Zoom_Alt,
 Zoom_Alt_2,
 Zotero,
-Zotero_Alt
+Zotero_Alt,
+Zyndicate,
+Zyndicate_Dark
