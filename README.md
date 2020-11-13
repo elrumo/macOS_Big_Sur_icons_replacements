@@ -112,6 +112,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Dropbox_alt2
 - [x] DuckDuckGo
 - [x] Electron
+- [x] Emacs
 - [x] Emcee
 - [x] Epic_games
 - [x] Evernote
@@ -943,3 +944,4 @@ We do not intend to steal any one's icons, if your icon has been included and yo
 |                                                 | GOG Galaxy Alt                                 |
 |                                                 | Monero Wallet                                  |
 | [Jonathan Simcoe](https://jdsimcoe.com/)        | Alacritty                                      |
+| [Love Lagerkvist](https://motform.org/)         | Emacs                                          |
