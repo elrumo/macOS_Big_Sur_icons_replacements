@@ -1,6 +1,9 @@
 <template>
 <div id="hero" class="hero-wrapper">
-      <h3 class="main-heading coral-Heading--XL coral-Heading--regular">
+      <div class="PH-badge">
+        <a href="https://www.producthunt.com/posts/free-1000-macos-icons?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-free-1000-macos-icons" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=274722&theme=light" alt="Free 1000+ macOS Icons  - Open Source and community led Big Sur icons. Submit your own | Product Hunt" style="width: 200px; height: 54px;" width="200" height="54" /></a>
+      </div>
+      <h3 class="main-heading m-t-0 p-t-20 coral-Heading--XL coral-Heading--regular">
         <span class="f-w-100 f-s-26">macOS Big Sur</span>
         <br>
         Replacement Icons

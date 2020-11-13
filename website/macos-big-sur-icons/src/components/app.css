@@ -24,6 +24,14 @@ ul {
     padding-inline-end: 25px;
 }
 
+.PH-badge{
+    margin-top: 60px;
+    margin-bottom: 10px; 
+    left: 50%;
+    position: relative;
+    transform: translateX(-50%);
+}
+
 .icon-upload-grid{
     display: grid !important;
     grid-template-columns: 1fr;
@@ -50,7 +58,7 @@ ul {
 
 .header{
     height: fit-content;
-    padding: 20px 30px 20px 30px;
+    padding: 15px 30px 20px 30px;
 }
 
 .transform-centre{
@@ -531,9 +539,9 @@ ul {
         grid-template-columns: 1fr 1fr;
     }
     
-    #github-header{
+    /* #github-header{
         display: none;
-    }
+    } */
     
 }
 
