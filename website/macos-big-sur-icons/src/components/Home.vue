@@ -42,7 +42,7 @@
       </div>
 
     <!-- Icon list -->
-      <div class="icon-list-area p-t-50 p-b-50">
+      <div class="icon-list-area p-t-20 p-b-50">
           <a v-for="icon in filteredList" :key="icon.fileName" class="card-wrapper shadow coral-card" :href="icon.icnsUrl">
             <div class="card-img-wrapper">
               <div v-lazy-container="{ selector: 'img', loading: icons.loading }">
