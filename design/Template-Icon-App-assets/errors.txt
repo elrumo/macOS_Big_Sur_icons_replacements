@@ -1,0 +1,1 @@
+[2020-11-15 20:26:05] layer "- Make sure name of the exported .png is the name of the app,  ": Expected end of input but "i" found.
