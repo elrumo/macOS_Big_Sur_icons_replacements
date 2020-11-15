@@ -48,7 +48,8 @@
 
               <div class="p-l-15 p-r-15 p-b-5">
                 <h3 class="coral-font-color">
-                  {{ prettifyName(icon.appName) }}
+                  <input class="editable-input" style="border: none" type="text" variant="quiet" :value="prettifyName(icon.appName)" is="coral-textfield" aria-label="text input">
+                  <!-- {{ prettifyName(icon.appName) }} -->
                 </h3>
                 <p class="coral-Body--XS p-b-10 opacity-60">By <a class="coral-Link" :href="user.creditUrl" target="_blank">{{icon.usersName}}</a></p>
                 
@@ -171,10 +172,19 @@ export default {
     deleteSubmission(icon){
         let parent = this
         console.log(icon);
+  
+        let fileRef = storage.ref().child(icon.iconRef)
+        
+        fileRef.delete().then(function() {
+          console.log(icon.appName, " deleted successfully.");
+        }).catch(function(error) {
+          console.log("Uh-oh, an error occurred with: ", icon.appName, " with ID: ", icon.id);
+        });
 
         // Delete object from Firestore
-        db.collection("submissions").doc("4fhtruC3ml38lVD7XGeV").delete().then(function() {
+        db.collection("submissions").doc(icon.id).delete().then(function() {
           console.log("Document successfully deleted!");
+          
 
           Vue.delete(parent.icons[icon.usersName].icons, icon.appName) // Delete object locally
           
@@ -185,6 +195,7 @@ export default {
         }).catch(function(error) {
             console.error("Error removing document: ", error);
         });
+
     },
 
     prettifyName(name){

@@ -492,6 +492,10 @@ ul {
     cursor: pointer;
 }
 
+.editable-input{
+    text-align: center;
+}
+
 .firebaseui-id-submit:hover{
     background-color: rgb(13, 102, 208);
     border-color: rgb(13, 102, 208);
