@@ -20,7 +20,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",
     "@vue/cli-plugin-router": "^4.5.8",
-    "@vue/cli-service": "~4.4.0",
+    "@vue/cli-service": "^4.4.6",
     "core-js": "^3.6.5",
     "push-dir": "^0.4.1",
     "vue": "^2.6.12",

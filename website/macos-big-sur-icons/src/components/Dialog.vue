@@ -112,6 +112,7 @@ let firebaseConfig = {
   storageBucket: "macos-icons.appspot.com"
 };
 
+
   // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 

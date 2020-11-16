@@ -24,6 +24,21 @@ ul {
     padding-inline-end: 25px;
 }
 
+.PH-badge{
+    margin-top: 60px;
+    margin-bottom: 10px; 
+    left: 50%;
+    position: relative;
+    transform: translateX(-50%);
+}
+
+.gitHub-sponsor{
+    height: 190px;
+    width: 90%;
+    max-width: 730px;
+    border-radius: 8px;
+}
+
 .icon-upload-grid{
     display: grid !important;
     grid-template-columns: 1fr;
@@ -50,7 +65,7 @@ ul {
 
 .header{
     height: fit-content;
-    padding: 20px 30px 20px 30px;
+    padding: 15px 30px 20px 30px;
 }
 
 .transform-centre{
@@ -409,6 +424,11 @@ ul {
     margin: auto;
 }
 
+.dashboard-edit-user{
+    cursor: pointer;
+    transform: translate(5px, 2px);
+}
+
 .filler-space{
     display: inline;
     height: 10px;
@@ -477,6 +497,11 @@ ul {
     cursor: pointer;
 }
 
+#editable-input{
+    text-align: center;
+    border: none;
+}
+
 .firebaseui-id-submit:hover{
     background-color: rgb(13, 102, 208);
     border-color: rgb(13, 102, 208);
@@ -525,16 +550,35 @@ ul {
         width: 100%;
     }
 
+    .gitHub-sponsor{
+        height: 220px;
+    }
 }
+
+@media only screen and (max-width: 600px){
+    .gitHub-sponsor{
+        height: 230px;
+    }
+}
+
 @media only screen and (max-width: 512px){
     .icon-list-area{
         grid-template-columns: 1fr 1fr;
     }
     
-    #github-header{
-        display: none;
+    .gitHub-sponsor{
+        height: 310px;
     }
+    /* #github-header{
+        display: none;
+    } */
     
+}
+
+@media only screen and (max-width: 412px){
+    .gitHub-sponsor{
+        height: 330px;
+    }
 }
 
 @media only screen and (max-width: 320px){
