@@ -519,8 +519,9 @@ We do not intend to steal any one's icons, if your icon has been included and yo
 |                                                 | Zoom Alt                                       |
 |[Shreyas Gupta](https://shreyasgupta.me/)        | Apple Music                                    |  
 |                                                 | Cisco Webex                                    |
-|[ProgrammerGeek123 (©Apple)](https://www.apple.com) | Apple Classroom                             |  
-|                                                 | Xcode Beta                                     |
+|[ProgrammerGeek123](https://github.com/programmergeek123)| Apple Classroom                        |
+|                                                 | Install macOS Big Sur (all devices)            |
+|[Apple (c)](https://www.apple.com)               | Xcode Beta                                     |
 |                                                 | Xcode Helper Beta                              |
 |                                                 | Accessibility Inspector                        |
 |                                                 | File Merge Beta                                |
@@ -528,7 +529,6 @@ We do not intend to steal any one's icons, if your icon has been included and yo
 |                                                 | CreateML                                       |
 |                                                 | Simulator Beta                                 |
 |                                                 | Reality Converter                              |
-|                                                 | Install macOS Big Sur (all devices)            |
 |[Stijn de Vries](https://stijndv.com/goodies/)   | Microsoft Visual Studio Code Alt4              |  
 |                                                 | Microsoft Visual Studio Code Alt5              |
 |                                                 | Optimage                                       |
