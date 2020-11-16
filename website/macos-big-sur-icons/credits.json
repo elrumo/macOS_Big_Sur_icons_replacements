@@ -227,7 +227,7 @@
     },
 
     "yashrajchhabra":{
-      "icons":["WebTorrent", "JiraCloud", "TunnelBear", "Android_File", "IntelliJ_DataGrip", "IntelliJ_WebStorm", "IntelliJ_Alt", "IntelliJ_PyCharm"],
+      "icons":["WebTorrent", "JiraCloud", "TunnelBear", "Android_File", "IntelliJ_DataGrip", "IntelliJ_WebStorm", "IntelliJ", "IntelliJ_PyCharm", "IntelliJ_RubyMine", "TunnelBlick_Alt", "WebTorrent_Alt2", "YouTube_Music_Alt"],
       "credit": "https://github.com/yashrajchhabra",
       "name": "yashrajchhabra"
     },
