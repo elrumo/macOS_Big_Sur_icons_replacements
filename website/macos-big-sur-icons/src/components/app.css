@@ -424,6 +424,11 @@ ul {
     margin: auto;
 }
 
+.dashboard-edit-user{
+    cursor: pointer;
+    transform: translate(5px, 2px);
+}
+
 .filler-space{
     display: inline;
     height: 10px;
@@ -492,8 +497,9 @@ ul {
     cursor: pointer;
 }
 
-.editable-input{
+#editable-input{
     text-align: center;
+    border: none;
 }
 
 .firebaseui-id-submit:hover{
