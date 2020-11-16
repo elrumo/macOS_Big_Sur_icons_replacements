@@ -19,6 +19,33 @@
       No icons to aprove
     </h3>
 
+
+
+  <!-- Edit user dialog -->
+    <coral-dialog id="editUserDialog">
+      <coral-dialog-header>{{ selectedUser.usersName }}</coral-dialog-header>
+      
+      <coral-dialog-content>  
+        <form class="coral-Form coral-Form--vertical" style="max-width:300px;">
+          <label id="nameEditUser" class="coral-FieldLabel">usersName</label>
+          <input id="nameEditUserInput" is="coral-textfield" @change="editDoc(selectedUser, $event, 'usersName', true)" :value="selectedUser.usersName" labelledby="nameEditUser" class="coral-Form-field">
+
+          <label id="creditEditUser" class="coral-FieldLabel">Credit</label>
+          <input id="creditEditUserInput" is="coral-textfield" @change="editDoc(selectedUser, $event, 'credit', true)" :value="selectedUser.creditUrl" labelledby="creditEditUser" class="coral-Form-field">
+
+          <label id="emailEditUser" class="coral-FieldLabel">email</label>
+          <input id="emailEditUserInput" is="coral-textfield" @change="editDoc(selectedUser, $event, 'email', true)" :value="selectedUser.email" labelledby="emailEditUser" class="coral-Form-field">
+        </form>
+      </coral-dialog-content>
+
+      <coral-dialog-footer>
+        <button is="coral-button" variant="primary" coral-close="">Done</button>
+      </coral-dialog-footer>
+    </coral-dialog>
+
+
+
+
     <section class="dashBoard">
       <div class="p-t-50 p-b-50 dashboard-wrapper">
         <div v-for="user in icons" :key="user.usersName" class="p-b-30">
@@ -27,6 +54,7 @@
             <a :href="'mailto:'+user.email+'?subject=macOS icons submission'">
               {{ user.usersName }}
             </a>
+            <img @click="showDialog('editUserDialog', user)" class="dashboard-edit-user" :src="coralIcons.edit" alt="">
           </h3>
 
           <div class="icon-list-area">
@@ -40,7 +68,12 @@
                   </div>
                 </div>
 
-                <img loading="lazy" v-lazy="icon.imgUrl" class="w-full" alt="">
+                <!-- <img loading="lazy" v-lazy="icon.imgUrl" class="w-full" alt=""> -->
+                
+                <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
+                  <img class="w-full" :data-src="icon.imgUrl">
+                </div>
+
                 <coral-quickactions placement="center" target="_prev">
                   <coral-quickactions-item type="button" @click="deleteSubmission(icon)" :id="icon.fileName" :icon="coralIcons.delete">Remove file</coral-quickactions-item>
                 </coral-quickactions>
@@ -48,7 +81,7 @@
 
               <div class="p-l-15 p-r-15 p-b-5">
                 <h3 class="coral-font-color">
-                  <input class="editable-input" style="border: none" type="text" variant="quiet" :value="prettifyName(icon.appName)" is="coral-textfield" aria-label="text input">
+                  <input id="editable-input" @change="editDoc(icon, $event, 'appName', false)" type="text" variant="quiet" :value="prettifyName(icon.appName)" is="coral-textfield" aria-label="text input">
                   <!-- {{ prettifyName(icon.appName) }} -->
                 </h3>
                 <p class="coral-Body--XS p-b-10 opacity-60">By <a class="coral-Link" :href="user.creditUrl" target="_blank">{{icon.usersName}}</a></p>
@@ -135,10 +168,13 @@ export default {
       emailMsg: "Thanks you for your submission to macosicons.com! I'm just getting in touch with you to ask if you could ..., otherwise the icons won't work propperly. You can either email me back or re-submit the icons on macosicons.com. Thanks again, Elias webbites.io",
       approvedIcons: {},
       isAuth: false,
+      selectedUser: {},
       coralIcons:{
         addIcon: require("../assets/icons/add.svg"),
         delete: require("../assets/icons/delete.svg"),
         newItem: require("../assets/icons/newItem.svg"),
+        edit: require("../assets/icons/edit.svg"),
+        loading: require("../assets/loading.gif"),
       },
     }
   },
@@ -148,6 +184,49 @@ export default {
   },
 
   methods:{
+    
+    showDialog(dialogId, user){
+      let parent = this
+      
+      let nameEditUserInput = document.getElementById("nameEditUserInput")
+      let creditEditUserInput = document.getElementById("creditEditUserInput")
+      let emailEditUserInput = document.getElementById("emailEditUserInput")
+
+      nameEditUserInput.value = user.usersName
+      creditEditUserInput.value = user.creditUrl
+      emailEditUserInput.value = user.email
+
+      document.getElementById(dialogId).show()
+      parent.selectedUser = user
+
+      console.log(user);
+    },
+
+    editDoc(icon, e, field, isMultipleIcons){
+      let newName = e.target.value
+
+      console.log(newName);
+      if(isMultipleIcons){
+        for(let doc in icon.icons){
+          db.collection("submissions").doc(icon.icons[doc].id).update({
+            [field]: newName
+          }).then(function() {
+              console.log("Document successfully updated!");
+          }).catch(function(error) {
+              console.error("Error updating document: ", error);
+          });
+        }
+      } else if(!isMultipleIcons){
+        db.collection("submissions").doc(icon.id).update({
+          [field]: newName
+        }).then(function() {
+            console.log("Document successfully updated!");
+        }).catch(function(error) {
+            // The document probably doesn't exist.
+            console.error("Error updating document: ", error);
+        });
+      }
+    },
 
     signIn(){
       let email = document.getElementById("email").value
