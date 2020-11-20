@@ -29,8 +29,8 @@ const algoliasearch = require('algoliasearch');
 
 // Initialise the Algolia Client
 
-// const client = algoliasearch(env.algolia.appid, env.algolia.apikey);
-const client = algoliasearch(algolia.appid, algolia.apikey);
+const client = algoliasearch(env.algolia.appid, env.algolia.apikey);
+// const client = algoliasearch(algolia.appid, algolia.apikey);
 const index = client.initIndex('macOSicons');
 
 exports.indexIcon = functions.firestore
@@ -58,35 +58,35 @@ exports.deleteIndexIcon = functions.firestore
     
 
 // Export all documents to Algolia
-exports.indexIconTest = functions.https.onCall((snap, context) => {
-    const data = snap
+// exports.indexIconTest = functions.https.onCall((snap, context) => {
+//     const data = snap
 
-    let dbCollection = db.collection("submissions")
+//     let dbCollection = db.collection("submissions")
     
-    dbCollection.get().then(function (querySnapshot) {
-        let num = 1
-        querySnapshot.forEach(function (doc) {
-            let indexData = doc.data()
-            indexData.objectID = doc.id;
+//     dbCollection.get().then(function (querySnapshot) {
+//         let num = 1
+//         querySnapshot.forEach(function (doc) {
+//             let indexData = doc.data()
+//             indexData.objectID = doc.id;
 
-            console.log(indexData.objectID);
+//             console.log(indexData.objectID);
             
-            index.saveObject(indexData).then(()=>{
-                console.log(num++);
-            }).catch((e)=>{
-                console.log(e);
-            })
-        })
-    })
+//             index.saveObject(indexData).then(()=>{
+//                 console.log(num++);
+//             }).catch((e)=>{
+//                 console.log(e);
+//             })
+//         })
+//     })
 
-    data.objectID = data.id;
-    console.log(data.id);
+//     data.objectID = data.id;
+//     console.log(data.id);
     
-    // Add the data to the algolia index
-    return index.saveObject(data).catch((e)=>{
-        console.log(e);
-    })
-}),
+//     // Add the data to the algolia index
+//     return index.saveObject(data).catch((e)=>{
+//         console.log(e);
+//     })
+// }),
 
 exports.convertToIcns = functions.https.onCall((data, context) => {
 
