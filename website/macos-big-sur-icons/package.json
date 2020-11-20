@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@adobe/coral-spectrum": "^4.10.8",
+    "algoliasearch": "^4.8.0",
     "firebase": "^7.24.0",
     "firebaseui": "^4.7.1",
     "simple-git": "^2.21.0",

@@ -29,10 +29,6 @@ const algoliasearch = require('algoliasearch');
 
 // Initialise the Algolia Client
 
-let algolia = {
-    appid:"P1TXH7ZFB3",
-    apikey:"2ac908ff4127882c09c926d59ecf6c05"
-}
 // const client = algoliasearch(env.algolia.appid, env.algolia.apikey);
 const client = algoliasearch(algolia.appid, algolia.apikey);
 const index = client.initIndex('macOSicons');
