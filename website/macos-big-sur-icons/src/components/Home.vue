@@ -178,7 +178,7 @@ export default {
     loadMore(){
       let parent = this
       console.log(lastVisible);
-      dbCollection.startAfter(lastVisible).limit(25).get().then(function(querySnapshot){
+      dbCollection.startAfter(lastVisible).limit(20).get().then(function(querySnapshot){
         querySnapshot.forEach(function(doc){
           setTimeout(() => {
               parent.scrolledToBottom = true
@@ -215,7 +215,7 @@ export default {
       let parentObj = []
       let list = []
 
-      dbCollection.limit(30)
+      dbCollection.limit(20)
       .get().then(function (querySnapshot) {
 
         lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
