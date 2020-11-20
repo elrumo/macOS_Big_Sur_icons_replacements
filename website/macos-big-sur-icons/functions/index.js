@@ -23,17 +23,75 @@ admin.initializeApp()
 const db = admin.firestore();
 const bucket = admin.storage().bucket("macos-icons.appspot.com")
 
-// console.log(workingDir);
-// if (workingDir) {
-//     // console.log(tmpFilePath);
-// } else{
-//     console.log(false);
-// }
+const env = functions.config()
 
-// var httpsReference = bucket.refFromURL('https://firebasestorage.googleapis.com/v0/b/macos-icons.appspot.com/o/icon_submissions%2F1603576951238_Atom.png?alt=media&token=6b75a71b-1306-47a2-9c95-827c4b4fe8d2');
+const algoliasearch = require('algoliasearch');
 
+// Initialise the Algolia Client
 
-// HTTP Request - convertToIcns
+let algolia = {
+    appid:"P1TXH7ZFB3",
+    apikey:"2ac908ff4127882c09c926d59ecf6c05"
+}
+// const client = algoliasearch(env.algolia.appid, env.algolia.apikey);
+const client = algoliasearch(algolia.appid, algolia.apikey);
+const index = client.initIndex('macOSicons');
+
+exports.indexIcon = functions.firestore
+    .document('submissions/{iconId}')
+    .onCreate((snap, context) => {
+        const data = snap
+        data.objectID = data.id;
+        console.log(data.id);
+        
+        // Add the data to the algolia index
+        return index.saveObject(data).catch((e)=>{
+            console.log(e);
+    })
+});
+    
+exports.deleteIndexIcon = functions.firestore
+    .document('submissions/{iconId}')
+    .onDelete((snap, context) => {
+        const objectId = snap.id;
+
+        // Delete an ID from the algolia index
+        return index.deleteObject(objectId);
+
+})    
+    
+
+// Export all documents to Algolia
+exports.indexIconTest = functions.https.onCall((snap, context) => {
+    const data = snap
+
+    let dbCollection = db.collection("submissions")
+    
+    dbCollection.get().then(function (querySnapshot) {
+        let num = 1
+        querySnapshot.forEach(function (doc) {
+            let indexData = doc.data()
+            indexData.objectID = doc.id;
+
+            console.log(indexData.objectID);
+            
+            index.saveObject(indexData).then(()=>{
+                console.log(num++);
+            }).catch((e)=>{
+                console.log(e);
+            })
+        })
+    })
+
+    data.objectID = data.id;
+    console.log(data.id);
+    
+    // Add the data to the algolia index
+    return index.saveObject(data).catch((e)=>{
+        console.log(e);
+    })
+}),
+
 exports.convertToIcns = functions.https.onCall((data, context) => {
 
     const filePath = data.iconRef
