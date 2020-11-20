@@ -87,7 +87,8 @@
                 <p class="coral-Body--XS p-b-10 opacity-60">By <a class="coral-Link" :href="user.creditUrl" target="_blank">{{icon.usersName}}</a></p>
                 
                 <div class="p-t-10">
-                  <button @click="approveIcon(icon)" is="coral-button">Approve</button>
+                  <!-- <button @click="approveIcon(icon)" is="coral-button">Approve</button> -->
+                  <button @click="indexIcon(icon)" is="coral-button">indexIcon</button>
 
                   <div class="filler-space"></div>
 
@@ -160,6 +161,10 @@ let storage = firebase.storage();
 
 let parent = this
 
+// let dbCollection = db.collection("submissions").where("approved", "==", false)
+let dbCollection = db.collection("submissions").where("approved", "==", false).orderBy("usersName").orderBy("timeStamp")
+let lastVisible
+
 export default {
   
   data: function(){
@@ -169,6 +174,8 @@ export default {
       approvedIcons: {},
       isAuth: false,
       selectedUser: {},
+      scrolledToBottom: true,
+      isSearch: false,
       coralIcons:{
         addIcon: require("../assets/icons/add.svg"),
         delete: require("../assets/icons/delete.svg"),
@@ -286,14 +293,82 @@ export default {
 
     approveIcon(icon){  
       console.log(icon);
-      
       // functions.useFunctionsEmulator("http://localhost:5001")
       const convertToIcns = functions.httpsCallable("convertToIcns");
-
+      
       convertToIcns(icon).then(result =>{
         console.log(result.data);
       })
-    }
+    },
+
+    indexIcon(icon){  
+      console.log(icon);
+      functions.useFunctionsEmulator("http://localhost:5001")
+      const indexIcon = functions.httpsCallable("indexIconTest");
+      
+      indexIcon(icon).then(result =>{
+        console.log(result.data);
+      })
+    },
+
+    loadMore(){
+      let parent = this
+      console.log(lastVisible);
+      dbCollection.startAfter(lastVisible).limit(25).get().then(function(querySnapshot){
+        querySnapshot.forEach(function(doc){
+          setTimeout(() => {
+              parent.scrolledToBottom = true
+          }, 300);
+
+            let docData = doc.data();
+            docData.imgUrl = ""
+
+            let usersName = docData.usersName
+            let appName = docData.appName
+            let email = docData.email
+            let creditUrl = docData.credit
+            let id = doc.id
+            
+            docData.id = id
+
+            if (usersName == "" || usersName == undefined ) {
+              console.log("usersName undefined ");
+            }else{
+              if(parent.icons[usersName] == undefined ){
+                Vue.set(parent.icons, usersName, {"usersName": usersName, "email": email, "icons":{}, "creditUrl": creditUrl})
+                Vue.set(parent.icons[usersName].icons, appName, docData)
+                var imgReference = storage.ref(docData.iconRef)
+                
+                imgReference.getDownloadURL().then(function(url) {
+                  Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
+                })                
+              } else{
+                Vue.set(parent.icons[usersName].icons, appName, docData)
+                var imgReference = storage.ref(docData.iconRef)
+
+                imgReference.getDownloadURL().then(function(url) {
+                  Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
+                })
+              }              
+            }
+
+        })
+        lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
+      })
+
+    },
+
+    scroll () {
+      let parent = this
+      window.onscroll = () => {
+        let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 1200
+
+        if (bottomOfWindow && parent.scrolledToBottom && !parent.isSearch) {
+          parent.scrolledToBottom = false // replace it with your code
+          parent.loadMore()
+        }
+      }
+    },
 
   },
 
@@ -319,10 +394,11 @@ export default {
         parent.isAuth = true
         console.log(parent.isAuth);
 
-        db.collection("submissions").where("approved", "==", false)
+        dbCollection.limit(30)
           .get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
-
+              lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
+              
               let docData = doc.data();
               docData.imgUrl = ""
 
@@ -357,14 +433,7 @@ export default {
 
           });
         }).then(function(querySnapshot) {
-          
-          // Get all approved icons
-          // db.collection("submissions").where("approved", "==", true)
-          //   .get().then(function(querySnapshot) {
-          //     querySnapshot.forEach(function(doc) {
-          //       parent.approvedIcons[doc.data().appName] = doc.data()
-          //     })
-
+          parent.scroll()
         })
       }else {
         showEl("signIn-wrapper")
