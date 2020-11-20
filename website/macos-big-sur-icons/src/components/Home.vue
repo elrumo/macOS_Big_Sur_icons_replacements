@@ -287,7 +287,7 @@ export default {
         return parent.dataToShow
       }
 
-      index.search(parent.searchString, { hitsPerPage: 1000 }).then(function(responses) {
+      index.search(parent.searchString, {filters: 'approved:true', hitsPerPage: 1000 }).then(function(responses) {
         console.log(responses.hits);
         
         return parent.dataToShow = responses.hits

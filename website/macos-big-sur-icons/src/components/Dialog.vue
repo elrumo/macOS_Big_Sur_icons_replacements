@@ -59,11 +59,6 @@
             </div>
           </div>
         </coral-fileupload>
-        
-        <!-- <form class="coral-Form coral-Form--vertical" >
-          <label id="appName-label" class="coral-FieldLabel">Name of app</label>
-          <input id="appName-contributor" is="coral-textfield" labelledby="email-label" class="coral-Form-field" @change="setAppName">
-        </form> -->
 
         <form class="coral-Form coral-Form--vertical" >
           <label id="email-label" class="coral-FieldLabel">Your email</label>
