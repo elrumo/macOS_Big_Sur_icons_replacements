@@ -87,8 +87,8 @@
                 <p class="coral-Body--XS p-b-10 opacity-60">By <a class="coral-Link" :href="user.creditUrl" target="_blank">{{icon.usersName}}</a></p>
                 
                 <div class="p-t-10">
-                  <!-- <button @click="approveIcon(icon)" is="coral-button">Approve</button> -->
-                  <button @click="indexIcon(icon)" is="coral-button">indexIcon</button>
+                  <button @click="approveIcon(icon)" is="coral-button">Approve</button>
+                  <!-- <button @click="indexIcon(icon)" is="coral-button">indexIcon</button> -->
 
                   <div class="filler-space"></div>
 

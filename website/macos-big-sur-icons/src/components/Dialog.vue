@@ -79,7 +79,7 @@
         <form class="coral-Form coral-Form--vertical" >
           <!-- <label id="credit-label" class="coral-FieldLabel">How should we credit you? <span style="opacity: 0.5"><i>(optional)</i></span></label> -->
           <label id="credit-label" class="coral-FieldLabel">How should we credit you?</label>
-          <input id="credit" is="coral-textfield" placeholder="GitHub or Twitter URL, portfolio site..." labelledby="email-label" class="coral-Form-field" @change="saveCredit">
+          <input id="credit" is="coral-textfield" type="url" placeholder="MAKE SURE IT'S A FULL URL: GitHub, Twitter, portfolio site... " labelledby="email-label" class="coral-Form-field" @change="saveCredit">
         </form>
 
       </div>
