@@ -17,7 +17,7 @@
       </h3>
 
       <p class="coral-Body--L w-100 body-text p-t-20">
-        Click on each icon to download it, or download all {{ list.length }} icons from  <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/releases/download/v1.0/icons.zip"> here. </a>
+        Click on each icon to download it, or download all {{ iconListLen }} icons from  <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/releases/download/v1.0/icons.zip"> here. </a>
         <!-- <br><br> -->
         Click below to contribute, use this
         <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.sketch">Sketch</a>,
@@ -67,7 +67,8 @@ export default {
 
     props:{
       list: {},
-      submitIconDialog: String
+      submitIconDialog: String,
+      iconListLen: 0,
     },
 
     methods:{
