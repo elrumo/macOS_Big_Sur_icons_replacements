@@ -2,6 +2,10 @@
   <div>
     <Header/>
     
+    <coral-toast id="iconUpdated" variant="success">
+      All icons have been updated
+    </coral-toast>
+
     <!-- Sign in well -->
     <div id="signIn-wrapper" class="coral-Well m-t-50">
       <div class="m-b-20">
@@ -255,11 +259,12 @@ export default {
     },
 
     editDoc(icon, e, field, isMultipleIcons){
+      let parent = this
       let newName = e.target.value
 
       console.log(newName);
       if(isMultipleIcons){
-        let listLen = icon.icons.length
+        let listLen = Object.keys(icon.icons).length
         let count = 0
 
         for(let doc in icon.icons){
@@ -269,6 +274,7 @@ export default {
               count++
               if (count == listLen) {
                 parent.showToast({id:"iconUpdated"})
+                console.log("All documents successfully updated!");
               }    
               console.log("Document successfully updated!");
           }).catch(function(error) {
