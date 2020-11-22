@@ -18,6 +18,14 @@
       😄 All icons have been uploaded.
     </coral-toast>
 
+    <coral-toast id="iconApproved" variant="success">
+      Icon has been approved
+    </coral-toast>
+
+    <coral-toast id="approveError" variant="error">
+      There has been an error, please Approve again
+    </coral-toast>
+
     <!-- <div style="display: none"> {{search}} </div> -->
     <!-- Icon Section -->
     <section class="content-wrapper">
@@ -57,6 +65,8 @@
 
     <!-- Icon list -->
         <div v-if="isAuth" class="icon-list-area p-t-20 p-b-50">
+          
+          <!-- Search Bar -->
           <div  v-for="icon in search" :key="icon.fileName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper coral-card">
               <div class="card-img-wrapper" style="max-width: 120px;">
                 
@@ -166,17 +176,19 @@ export default {
     return{
       iconList:{},
       searchString: "",
-      noIcons: true,
       iconsToShow: [],
-      sortByName: true,
       list: [],
+
       scrolledToBottom: true,
+      sortByName: true,
       isSearch: false,
+      noIcons: true,
+      isAuth: false,
+
       iconListLen: 0,
       lastVisible: {},
       dataToShow: [],
       activeIcon: {},
-      isAuth: false,
       searchResults: [],
       icons:{
         success: require("../assets/icons/delete.svg"),
@@ -326,18 +338,30 @@ export default {
 
     editDoc(icon, e, field){
       let newName = e.target.value
-
+      let parent = this
+      
       console.log(icon);
       console.log(newName);
 
-      db.collection("submissions").doc(icon.id).update({
+      if (parent.isSearch) {
+        db.collection("submissions").doc(icon.objectID).update({
           [field]: newName
-      }).then(function() {
-          console.log("Document successfully updated!");
-      }).catch(function(error) {
-          // The document probably doesn't exist.
-          console.error("Error updating document: ", error);
-      });
+        }).then(function() {
+            console.log("Document successfully updated!");
+        }).catch(function(error) {
+            // The document probably doesn't exist.
+            console.error("Error updating document: ", error);
+        });
+      } else{
+        db.collection("submissions").doc(icon.id).update({
+            [field]: newName
+        }).then(function() {
+            console.log("Document successfully updated!");
+        }).catch(function(error) {
+            // The document probably doesn't exist.
+            console.error("Error updating document: ", error);
+        });
+      }
     },
 
     changeDate(icon, e){

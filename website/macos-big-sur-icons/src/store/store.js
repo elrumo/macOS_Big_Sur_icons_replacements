@@ -33,8 +33,8 @@ export default new Vuex.Store({
   },
   
   actions: {
-    showToast(){
-      document.getElementById("successToast").show();
+    showToast(store, dialogId){
+      document.getElementById(dialogId.id).show();
     },
 
     pushDataToArr(store, iconData){
