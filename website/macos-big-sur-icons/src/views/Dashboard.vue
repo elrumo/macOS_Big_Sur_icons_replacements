@@ -259,10 +259,17 @@ export default {
 
       console.log(newName);
       if(isMultipleIcons){
+        let listLen = icon.icons.length
+        let count = 0
+
         for(let doc in icon.icons){
           db.collection("submissions").doc(icon.icons[doc].id).update({
             [field]: newName
           }).then(function() {
+              count++
+              if (count == listLen) {
+                parent.showToast({id:"iconUpdated"})
+              }    
               console.log("Document successfully updated!");
           }).catch(function(error) {
               console.error("Error updating document: ", error);

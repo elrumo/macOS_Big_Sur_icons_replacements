@@ -18,6 +18,10 @@
       😄 All icons have been uploaded.
     </coral-toast>
 
+    <coral-toast id="iconUpdated" variant="success">
+      All icons have been updated
+    </coral-toast>
+
     <coral-toast id="iconApproved" variant="success">
       Icon has been approved
     </coral-toast>
