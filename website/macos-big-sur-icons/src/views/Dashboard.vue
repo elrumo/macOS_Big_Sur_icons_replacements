@@ -173,6 +173,7 @@
 
 <script>
 import Vue from 'vue'
+import { mapActions } from 'vuex';
 import Header from '@/components/Header.vue';
 import * as firebase from "firebase";
 // import * as firebaseui from "firebaseui";
@@ -217,6 +218,7 @@ export default {
   },
 
   methods:{
+    ...mapActions(['showToast']),
     
     showDialog(dialogId, user){
       let parent = this
