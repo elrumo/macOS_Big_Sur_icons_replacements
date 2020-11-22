@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Vuex from 'vuex'
 import App from './App.vue'
 import VueLazyload from 'vue-lazyload'
 import store from './store/store'
@@ -9,6 +10,7 @@ Vue.use(VueLazyload, {
   preLoad: 1.3,
   loading: 'dist/loading.gif',
 });
+Vue.use(Vuex)
 
 
 new Vue({
