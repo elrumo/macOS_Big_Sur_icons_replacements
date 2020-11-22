@@ -159,8 +159,6 @@ let db = firebase.firestore();
 let functions = firebase.functions();
 let storage = firebase.storage();
 
-let parent = this
-
 // let dbCollection = db.collection("submissions").where("approved", "==", false)
 let dbCollection = db.collection("submissions").where("approved", "==", false).orderBy("usersName").orderBy("timeStamp")
 let lastVisible

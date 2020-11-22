@@ -15,12 +15,10 @@
           <li class="coral-List-item">Use <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.sketch" class="coral-Link">this </a> template for dimensions and reference.</li>
           <li class="coral-List-item"> <b> The file name must be the same as the name of the app. </b></li>
         </ul>
-
-        <!-- , submit a .png file with at least a height of 1048px and make sure <b>the file name is the name of the app.</b> -->
       </div>
+      
       <div v-if="isLoading" class="loading-overlay">
         <div class="loading-popup">
-          <!-- <coral-wait size="M" class="loading-animation"></coral-wait> -->
           <coral-progress indeterminate>{{ uploadProgress }}/{{ totalNumFiles }} icons uploaded</coral-progress>
         </div>
       </div>
@@ -67,12 +65,10 @@
 
         <form class="coral-Form coral-Form--vertical" >
           <label id="yourName-label" class="coral-FieldLabel">Your name</label>
-          <!-- <label id="yourName-label" class="coral-FieldLabel">Your name <span style="opacity: 0.5"><i>(optional)</i></span></label> -->
           <input id="yourName-contributor" is="coral-textfield" labelledby="email-label" class="coral-Form-field" @change="setYourName">
         </form>
 
         <form class="coral-Form coral-Form--vertical" >
-          <!-- <label id="credit-label" class="coral-FieldLabel">How should we credit you? <span style="opacity: 0.5"><i>(optional)</i></span></label> -->
           <label id="credit-label" class="coral-FieldLabel">How should we credit you?</label>
           <input id="credit" is="coral-textfield" type="url" placeholder="MAKE SURE IT'S A FULL URL: GitHub, Twitter, portfolio site... " labelledby="email-label" class="coral-Form-field" @change="saveCredit">
         </form>
@@ -96,20 +92,20 @@ import { mapActions } from 'vuex';
 import * as firebase from "firebase";
 // import * as firebaseui from "firebaseui";
 
-let firebaseConfig = {
-  apiKey: process.env.VUE_APP_FIREBASE_KEY,
-  messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
-  appId: process.env.VUE_APP_APP_ID,
-  measurementId: process.env.VUE_APP_MEASUREMENT_ID,
-  authDomain: "macos-icons.firebaseapp.com",
-  databaseURL: "https://macos-icons.firebaseio.com",
-  projectId: "macos-icons",
-  storageBucket: "macos-icons.appspot.com"
-};
+// let firebaseConfig = {
+//   apiKey: process.env.VUE_APP_FIREBASE_KEY,
+//   messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
+//   appId: process.env.VUE_APP_APP_ID,
+//   measurementId: process.env.VUE_APP_MEASUREMENT_ID,
+//   authDomain: "macos-icons.firebaseapp.com",
+//   databaseURL: "https://macos-icons.firebaseio.com",
+//   projectId: "macos-icons",
+//   storageBucket: "macos-icons.appspot.com"
+// };
 
 
-  // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+//   // Initialize Firebase
+// firebase.initializeApp(firebaseConfig);
 
 let db = firebase.firestore();
 let storage = firebase.storage();

@@ -9,7 +9,6 @@
     "deploy": "npm run build; push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
-    "@adobe/coral-spectrum": "^4.10.8",
     "algoliasearch": "^4.8.0",
     "firebase": "^7.24.0",
     "firebaseui": "^4.7.1",
@@ -19,6 +18,7 @@
     "vuex": "^3.5.1"
   },
   "devDependencies": {
+    "@adobe/coral-spectrum": "^4.10.8",
     "@vue/cli-plugin-babel": "~4.4.0",
     "@vue/cli-plugin-router": "^4.5.8",
     "@vue/cli-service": "^4.4.6",
