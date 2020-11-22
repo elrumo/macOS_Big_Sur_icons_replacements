@@ -351,6 +351,7 @@ export default {
 
     approveIcon(icon){  
       console.log(icon);
+      let parent = this
       // functions.useFunctionsEmulator("http://localhost:5001")
       const convertToIcns = functions.httpsCallable("convertToIcns");
       
