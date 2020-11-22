@@ -16,7 +16,7 @@
           <li class="coral-List-item"> <b> The file name must be the same as the name of the app. </b></li>
         </ul>
       </div>
-      
+
       <div v-if="isLoading" class="loading-overlay">
         <div class="loading-popup">
           <coral-progress indeterminate>{{ uploadProgress }}/{{ totalNumFiles }} icons uploaded</coral-progress>
@@ -235,7 +235,7 @@ export default {
                   clearInput("email-contributor")
                   clearInput("yourName-contributor")
 
-                  parent.showToast()
+                  parent.showToast({id:"successToast"})
                   dialog.hide()
                 }
 

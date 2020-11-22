@@ -43,11 +43,19 @@
       </coral-dialog-footer>
     </coral-dialog>
 
-
-
-
     <section class="dashBoard">
-      <div class="p-t-50 p-b-50 dashboard-wrapper">
+      
+      <!-- Search Bar -->
+      <div v-if="isAuth" @click="isSearch = true" class="main-search-wrapper coral-bg p-b-15">
+        <div class="m-auto main-search">
+          <div class="shadow main-border-radius">
+            <input v-model="searchString" :placeholder="'(Not working yet) - Icons to approve: ' + iconListLen" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
+            <svg class="icon fill-dark" id="coral-css-icon-Magnifier" viewBox="0 0 16 16"><path d="M15.77 14.71l-4.534-4.535a6.014 6.014 0 1 0-1.06 1.06l4.533 4.535a.75.75 0 1 0 1.061-1.06zM6.5 11A4.5 4.5 0 1 1 11 6.5 4.505 4.505 0 0 1 6.5 11z"></path></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-t-20 p-b-50 dashboard-wrapper">
         <div v-for="user in icons" :key="user.usersName" class="p-b-30">
           
           <h3 class="coral-Heading--M p-b-10 text-left">
@@ -67,36 +75,50 @@
                     <coral-wait indeterminate=""></coral-wait>
                   </div>
                 </div>
-
-                <!-- <img loading="lazy" v-lazy="icon.imgUrl" class="w-full" alt=""> -->
                 
                 <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
                   <img class="w-full" :data-src="icon.imgUrl">
                 </div>
 
-                <coral-quickactions placement="center" target="_prev">
-                  <coral-quickactions-item type="button" @click="deleteSubmission(icon)" :id="icon.fileName" :icon="coralIcons.delete">Remove file</coral-quickactions-item>
-                </coral-quickactions>
+
+                <div class="quick-actions-wrapper">
+                  <div class="quick-action-el">
+                    <coral-icon @click="deleteSubmission(icon)" class="h-full quick-action-icon" :id="icon.fileName" :icon="coralIcons.delete" title="Delete"></coral-icon>
+                  </div>
+                </div>
+
               </div>
 
-              <div class="p-l-15 p-r-15 p-b-5">
-                <h3 class="coral-font-color">
-                  <input id="editable-input" @change="editDoc(icon, $event, 'appName', false)" type="text" variant="quiet" :value="prettifyName(icon.appName)" is="coral-textfield" aria-label="text input">
-                  <!-- {{ prettifyName(icon.appName) }} -->
-                </h3>
-                <p class="coral-Body--XS p-b-10 opacity-60">By <a class="coral-Link" :href="user.creditUrl" target="_blank">{{icon.usersName}}</a></p>
+              <div class="p-l-15 p-r-15 p-b-0">                
                 
-                <div class="p-t-10">
-                  <button @click="approveIcon(icon)" is="coral-button">Approve</button>
-                  <!-- <button @click="indexIcon(icon)" is="coral-button">indexIcon</button> -->
+                <!-- Date Submited -->                
+                <p class="coral-Body--XS opacity-60 m-b-0">
+                  <input class="editable-input coral-Body--XS opacity-50 m-b-0" @change="changeDate(icon, $event)" type="text" variant="quiet" :value="getDate(icon.timeStamp)" is="coral-textfield" aria-label="text input">
+                </p>
+                  
+                <!-- App name -->
+                <h3 class="coral-font-color m-b-0">
+                  <input class="editable-input f-w-800 m-b-0" @change="editDoc(icon, $event, 'appName', false)" type="text" variant="quiet" :value="prettifyName(icon.appName)" is="coral-textfield" aria-label="text input">
+                </h3>
 
-                  <div class="filler-space"></div>
+                <!-- User's name -->
+                <p class="coral-Body--XS p-b-0 opacity-80 m-b-0"><input class="editable-input" @change="editDoc(icon, $event, 'usersName')" type="text" variant="quiet" :value="icon.usersName" is="coral-textfield" aria-label="text input"></p>
+                
+                <!-- Credit URL -->
+                <p v-if="icon.credit !='' " class="coral-Body--XS p-b-0 opacity-50 m-b-0"><input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="icon.credit" is="coral-textfield" aria-label="text input"></p>
+                <p v-if="icon.credit =='' " class="coral-Body--XS p-b-0 opacity-50 m-b-0"><input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="'n/a'" is="coral-textfield" aria-label="text input"></p>
 
-                  <a class="coral-Link" :href="'mailto:'+user.email+'?subject=macOS icons submission&body=Hi '+user.usersName+emailMsg">
-                    <button is="coral-button" variant="quiet">
-                        Contact
-                    </button>
-                  </a>
+                <div class="p-t-15">
+                  <button @click="approveIcon(icon)" class="coral-btn coral-btn-primary">Approve</button>
+
+                  <!-- Contact -->
+                  <!-- <div v-if="user.email != 'user@email.com'" class="p-t-10"> 
+                    <a class="coral-Link" :href="'mailto:'+user.email+'?subject=macOS icons submission&body=Hi '+user.usersName+emailMsg">
+                      <button is="coral-button" variant="quiet">
+                          Contact
+                      </button>
+                    </a>
+                  </div> -->
                 </div>
                 
               </div>
@@ -168,12 +190,18 @@ export default {
   data: function(){
     return{
       icons:{},
+      
+      // Search
+      isSearch: false,
+      searchString: "",
+      iconListLen: 0,
+
       emailMsg: "Thanks you for your submission to macosicons.com! I'm just getting in touch with you to ask if you could ..., otherwise the icons won't work propperly. You can either email me back or re-submit the icons on macosicons.com. Thanks again, Elias webbites.io",
       approvedIcons: {},
       isAuth: false,
       selectedUser: {},
       scrolledToBottom: true,
-      isSearch: false,
+
       coralIcons:{
         addIcon: require("../assets/icons/add.svg"),
         delete: require("../assets/icons/delete.svg"),
@@ -205,6 +233,23 @@ export default {
       parent.selectedUser = user
 
       console.log(user);
+    },
+    
+    getDate(timeStamp){
+      let newDate = new Date(timeStamp)
+      
+      let day = newDate.getUTCDate()
+        if (day < 10) {
+          day = "0"+day
+        }
+      let month = newDate.getUTCMonth() + 1
+        if (month < 10) {
+          month = "0"+month
+        }
+      let year = newDate.getFullYear()
+      let date = day + "/" + month + "/" + year
+
+      return date
     },
 
     editDoc(icon, e, field, isMultipleIcons){
@@ -295,7 +340,11 @@ export default {
       const convertToIcns = functions.httpsCallable("convertToIcns");
       
       convertToIcns(icon).then(result =>{
+        parent.showToast({id:"successToast"})
         console.log(result.data);
+      }).catch((e)=>{
+        console.log(e);
+        parent.showToast({id:"approveError"})
       })
     },
 
@@ -306,6 +355,14 @@ export default {
       
       indexIcon(icon).then(result =>{
         console.log(result.data);
+      })
+    },
+    
+
+    getIconListLen(){
+      let parent = this
+      dbCollection.onSnapshot(function(doc){
+        parent.iconListLen = doc.docs.length
       })
     },
 
@@ -373,6 +430,8 @@ export default {
   mounted: function(){  
 
     let parent = this
+    
+    parent.getIconListLen();
 
     function showEl(id){
       document.getElementById(id).style.display = "block"
@@ -392,7 +451,7 @@ export default {
         parent.isAuth = true
         console.log(parent.isAuth);
 
-        dbCollection.limit(30)
+        dbCollection.limit(25)
           .get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
               lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
@@ -407,21 +466,45 @@ export default {
               let id = doc.id
               
               docData.id = id
+              
+              let imgReference
 
               if (usersName == "" || usersName == undefined ) {
-                console.log("usersName undefined ");
+                
+                if(parent.icons["Undefined"] == undefined ){
+                  Vue.set(parent.icons, "Undefined", {"usersName": "Undefined", "email": email, "icons":{}, "creditUrl": creditUrl})
+                  Vue.set(parent.icons["Undefined"].icons, appName, docData)
+                  imgReference = storage.ref(docData.iconRef)
+                  
+                  imgReference.getDownloadURL().then(function(url) {
+                    Vue.set(parent.icons["Undefined"].icons[appName], "imgUrl",  url)
+                    Vue.set(parent.icons["Undefined"].icons[appName], "usersName",  "Undefined")
+                    Vue.set(parent.icons["Undefined"], "usersName",  "Undefined")
+                  })                
+                } else{
+                  // console.log("Undefined: ", docData);
+                    Vue.set(parent.icons["Undefined"].icons, appName, docData)
+                    Vue.set(parent.icons["Undefined"].icons[appName], "usersName",  "Undefined")
+                    Vue.set(parent.icons["Undefined"], "usersName",  "Undefined")
+                    imgReference = storage.ref(docData.iconRef)
+
+                    imgReference.getDownloadURL().then(function(url) {
+                      Vue.set(parent.icons["Undefined"].icons[appName], "imgUrl",  url)
+                    })              
+                }
+
               }else{
                 if(parent.icons[usersName] == undefined ){
                   Vue.set(parent.icons, usersName, {"usersName": usersName, "email": email, "icons":{}, "creditUrl": creditUrl})
                   Vue.set(parent.icons[usersName].icons, appName, docData)
-                  var imgReference = storage.ref(docData.iconRef)
+                  imgReference = storage.ref(docData.iconRef)
                   
                   imgReference.getDownloadURL().then(function(url) {
                     Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
                   })                
                 } else{
                   Vue.set(parent.icons[usersName].icons, appName, docData)
-                  var imgReference = storage.ref(docData.iconRef)
+                  imgReference = storage.ref(docData.iconRef)
 
                   imgReference.getDownloadURL().then(function(url) {
                     Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
