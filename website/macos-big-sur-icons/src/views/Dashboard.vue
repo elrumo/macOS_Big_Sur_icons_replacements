@@ -6,6 +6,14 @@
       All icons have been updated
     </coral-toast>
 
+    <coral-toast id="iconApproved" variant="success">
+      Icon has been approved
+    </coral-toast>
+
+    <coral-toast id="approveError" variant="error">
+      There has been an error, please Approve again
+    </coral-toast>
+
     <!-- Sign in well -->
     <div id="signIn-wrapper" class="coral-Well m-t-50">
       <div class="m-b-20">
@@ -356,7 +364,7 @@ export default {
       const convertToIcns = functions.httpsCallable("convertToIcns");
       
       convertToIcns(icon).then(result =>{
-        parent.showToast({id:"successToast"})
+        parent.showToast({id:"iconApproved"})
         console.log(result.data);
       }).catch((e)=>{
         console.log(e);
