@@ -17,16 +17,16 @@
       </h3>
 
       <p class="coral-Body--L w-100 body-text p-t-20">
-        Click on each icon to download it, or download all {{ iconListLen }} icons from  <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/releases/download/v1.0/icons.zip"> here. </a>
+        Click on each icon to download it, <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/releases/download/v1.0/icons.zip"> download </a> all {{ iconListLen }} icons, or visit the  <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank"> GitHub  </a> repo.
         <!-- <br><br> -->
-        Click below to contribute, use this
+        To contribute and make new icons, use these templates:
         <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.sketch">Sketch</a>,
         <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.fig">Figma</a>,
         <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.ai">Illustrator</a>, or
-        <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.psd">Photoshop</a> template to make the icons.
+        <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.psd">Photoshop</a>.
       </p>
-<!--       
-      <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank">
+      
+      <!-- <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank">
         GitHub
       </a> -->
 
@@ -38,9 +38,15 @@
           </button>
         </div>
         
-        <a class="p-l-20" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank">
+        <!-- <a class="p-l-20" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank">
           <button  is="coral-button" variant="quiet">
             <span>GitHub</span>
+          </button>
+        </a> -->
+
+        <a class="p-l-20" href="https://www.paypal.com/donate/?hosted_button_id=VS64ARMNSB67J" target="_blank">
+          <button  is="coral-button" variant="quiet">
+            <span>One-time Donation</span>
           </button>
         </a>
 
