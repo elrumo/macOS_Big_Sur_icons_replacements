@@ -189,7 +189,7 @@ export default {
       noIcons: true,
       isAuth: false,
 
-      iconListLen: 0,
+      iconListLen: 2159,
       lastVisible: {},
       dataToShow: [],
       activeIcon: {},
@@ -214,7 +214,7 @@ export default {
   mounted: function(){
     let parent = this;
 
-    this.getIconListLen();
+    // this.getIconListLen();
     this.getIconsArray();
 
      firebase.auth().onAuthStateChanged(function(user) {
