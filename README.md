@@ -4,7 +4,9 @@
 All feedback is appreciated, you can do that [@elrumo](https://bit.ly/elias-twitter) on Twitter***
 
 Replacement icons for popular apps in the style of macOS Big Sur.
-To view a full list of icons, go to [this website](https://macosicons.com) I created, there you can download just one or all of them at once.
+To view a full list of icons, go to [this website](https://macosicons.com), now you can also submit icons directly from there.
+
+Please note, for my own sanity I will be checking and updating this site around twice a week, on Mondays and Thursdays. So if you make any pull requests, expect them to be merged/checked around those days. Thanks!
 
 # Table of contents
 
@@ -21,25 +23,16 @@ It's super easy! We've made sure that all icons here work with no problem. You j
 <img style="text-align: left" src="https://i.imgur.com/0Vj6sFS.png" width="300">
 
 ## I'd like to contribute
+Download the template for [Sketch](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.sketch), [Figma](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template_App_Icon.fig), [Photoshop](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.psd) or [Illustrator](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.ai).
 
 Here are some rules you show know:
 
 - Don't use spaces for the icon names, instead use "\_"
-- When using the template, export in 1x (high res) and 0.25x (low res)
-- Before uploading the icons, add their names exactly as they have been exported to the [icons.txt](https://bit.ly/macOSicons-txt) file
-- Use [this free app](http://www.img2icnsapp.com) to convert the .png to a usable .icns
-- Make a Pull Request with the new icons
+- When using the template, export in 1x (high res).
+- Go to [macosicons.com](https://macosicons.com/) and click on "Contribute"
 - If you are creating an icon for an open-source project, please consider submitting the icon to their respective repository for their use as well.
 
-### I don't know how to make a pull request or I'm not familiar with GitHub
-
-Not a problem! This repo can also be a great introduction to the open source community and GitHub for designers, so welcome if you're new to this!
-
-First of all, you'll need to download the template for the icons [here](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.sketch).
-
-If you're new to GitHub, or you've never made a pull request, try following [this article](https://www.freecodecamp.org/news/how-to-make-your-first-pull-request-on-github-3/). Did you manage? Congrats! If you're still not quite sure about how to make pull requests, crate a new issue [here](https://bit.ly/macOSicons-help) and try to explain where you're stuck, and if that still doesn't work for you, simply upload the icons on a shared drive and share them with us on the newly created issue.
-<br>
-<br>
+If you'd like to contribute code to the website, feel free to create a pull request or an issue exlaining what you're planning on doing.
 
 ## List
 
@@ -309,7 +302,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [ ] Hidden Bar
 - [ ] KeepingYouAwake
 - [ ] Keyboard Maestro
-- [ ] LibreOffice
+- [x] LibreOffice
 - [ ] LyricsX
 - [ ] MAMP
 - [ ] MacUpdater
@@ -526,8 +519,9 @@ We do not intend to steal any one's icons, if your icon has been included and yo
 |                                                 | Zoom Alt                                       |
 |[Shreyas Gupta](https://shreyasgupta.me/)        | Apple Music                                    |  
 |                                                 | Cisco Webex                                    |
-|[ProgrammerGeek123 (©Apple)](https://www.apple.com) | Apple Classroom                             |  
-|                                                 | Xcode Beta                                     |
+|[ProgrammerGeek123](https://github.com/programmergeek123)| Apple Classroom                        |
+|                                                 | Install macOS Big Sur (all devices)            |
+|[Apple (c)](https://www.apple.com)               | Xcode Beta                                     |
 |                                                 | Xcode Helper Beta                              |
 |                                                 | Accessibility Inspector                        |
 |                                                 | File Merge Beta                                |
@@ -535,7 +529,6 @@ We do not intend to steal any one's icons, if your icon has been included and yo
 |                                                 | CreateML                                       |
 |                                                 | Simulator Beta                                 |
 |                                                 | Reality Converter                              |
-|                                                 | Install macOS Big Sur (all devices)            |
 |[Stijn de Vries](https://stijndv.com/goodies/)   | Microsoft Visual Studio Code Alt4              |  
 |                                                 | Microsoft Visual Studio Code Alt5              |
 |                                                 | Optimage                                       |
@@ -936,3 +929,17 @@ We do not intend to steal any one's icons, if your icon has been included and yo
 |                                                 | Yoink Alt                                      |               
 |                                                 | YouTube Music                                  |                  
 |                                                 | YouTube TV                                     |               
+| [FIGBERT](https://figbert.com/)                 | LibreOffice                                    |
+|                                                 | Syncthing                                      |
+|                                                 | Godot                                          |
+|                                                 | Chromium                                       |
+|                                                 | Seaglass                                       |
+|                                                 | Beaker Browser                                 |
+|                                                 | Ledger Live                                    |
+|                                                 | Vimac                                          |
+|                                                 | Blender_Alt_3                                  |
+|                                                 | Secretive                                      |
+|                                                 | Lumen                                          |
+|                                                 | GOG Galaxy Alt                                 |
+|                                                 | Monero Wallet                                  |
+| [Jonathan Simcoe](https://jdsimcoe.com/)        | Alacritty                                      |
