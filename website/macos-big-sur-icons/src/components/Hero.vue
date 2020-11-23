@@ -46,7 +46,8 @@
 
         <a class="p-l-20" href="https://www.paypal.com/donate/?hosted_button_id=VS64ARMNSB67J" target="_blank">
           <button  is="coral-button" variant="quiet">
-            <span>One-time Donation</span>
+            <span>Buy me a hot chocolate</span>
+            <!-- <span>One-time Donation</span> -->
           </button>
         </a>
 
