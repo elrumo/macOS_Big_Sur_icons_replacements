@@ -38,12 +38,49 @@ exports.indexIcon = functions.firestore
     .onCreate((snap, context) => {
         const data = snap
         data.objectID = data.id;
-        console.log(data.id);
+        console.log(data.appName);
         
         // Add the data to the algolia index
-        return index.saveObject(data).catch((e)=>{
+        return index.saveObject(data).then((result)=>{
+            console.log(result);
+        }).catch((e)=>{
             console.log(e);
     })
+});
+
+exports.updateIndexIcon = functions.firestore
+    .document('submissions/{iconId}')
+    .onUpdate((change, context) => {
+        
+        const data = change.after.data()
+        // console.log(data);
+        // data.objectID = data.id;
+        // console.log("data: ", data);
+        // // console.log("context: ", context);
+
+        let updatedIcon = [{
+            appName: data.appName,
+            approved: data.approved,
+            
+            credit: data.credit,
+            email: data.email,
+            fileName: data.fileName,
+            iconRef: data.iconRef,
+            timeStamp: data.timeStamp,
+            usersName: data.usersName,
+            isReview: data.isReview,
+            icnsUrl: data.icnsUrl,
+            pngUrl: data.pngUrl,
+
+            objectID: change.after.id
+        }]
+        
+        // Add the data to the algolia index
+        return index.partialUpdateObjects(updatedIcon).then((result)=>{
+            console.log(result);
+        }).catch((e)=>{
+            console.log(e);
+        })
 });
     
 exports.deleteIndexIcon = functions.firestore
