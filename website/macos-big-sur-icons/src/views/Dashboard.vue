@@ -358,13 +358,15 @@ export default {
     },
 
     approveIcon(icon){  
-      console.log(icon);
       let parent = this
+      console.log(icon);
+      let parentIcon = parent.icons[icon.usersName].icons[icon.appName]
       // functions.useFunctionsEmulator("http://localhost:5001")
       const convertToIcns = functions.httpsCallable("convertToIcns");
       
       convertToIcns(icon).then(result =>{
         parent.showToast({id:"iconApproved"})
+        Vue.set(parentIcon, 'isReview', true)
         console.log(result.data);
       }).catch((e)=>{
         console.log(e);
