@@ -60,12 +60,7 @@
         <p class="coral-Body--S">
           No resutls
         </p>
-        <!-- <coral-wait size="L" indeterminate=""></coral-wait> -->
       </div>
-
-
-
-    <!-- Say "No icons found", when user searches and no icons are found. -->
 
     <!-- Icon list -->
         <div v-if="isAuth" class="icon-list-area p-t-20 p-b-50">
@@ -99,10 +94,16 @@
 
                   <p class="coral-Body--XS p-b-0 opacity-80 m-b-0"><input class="editable-input" @change="editDoc(icon, $event, 'usersName')" type="text" variant="quiet" :value="icon.usersName" is="coral-textfield" aria-label="text input"></p>
                   <p class="coral-Body--XS p-b-0 opacity-50 m-b-0"><input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="icon.credit" is="coral-textfield" aria-label="text input"></p>
+                  <div v-if="icon.email != 'user@email.com' && icon.email " class="p-t-10"> 
+                    <a class="coral-Link" :href="'mailto:'+icon.email+'?subject=macOS icons submission&body='+icon.usersName">
+                          email
+                    </a>
+                  </div>
               </div>
           </div>
         </div>
 
+      <!-- Seen when no auth  -->
         <div v-if="!isAuth" class="icon-list-area p-t-20 p-b-50">
           <a v-for="icon in search" :key="icon.fileName" class="card-wrapper shadow coral-card" :href="icon.icnsUrl">
             <div class="card-img-wrapper">

@@ -124,8 +124,8 @@
                   <button @click="approveIcon(icon)" class="coral-btn coral-btn-primary">Approve</button>
 
                   <!-- Contact -->
-                  <div v-if="user.email != 'user@email.com'" class="p-t-10"> 
-                    <a class="coral-Link" :href="'mailto:'+user.email+'?subject=macOS icons submission&body=Hi '+user.usersName+emailMsg">
+                  <div v-if="icon.email != 'user@email.com'" class="p-t-10"> 
+                    <a class="coral-Link" :href="'mailto:'+icon.email+'?subject=macOS icons submission&body='+icon.usersName">
                           email
                     </a>
                   </div>
