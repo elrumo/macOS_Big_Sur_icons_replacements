@@ -58,7 +58,7 @@
 
       <div v-if="noIcons" class="waiting-wrapper">
         <p class="coral-Body--S">
-          No resutls
+          No results
         </p>
       </div>
 
