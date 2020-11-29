@@ -22,6 +22,8 @@ It's super easy! We've made sure that all icons here work with no problem. You j
 <br>
 <img style="text-align: left" src="https://i.imgur.com/0Vj6sFS.png" width="300">
 
+If you want to restore to the original icon, select "File/Get Info", and then select "Edit/Cut".
+
 ## I'd like to contribute
 Download the template for [Sketch](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.sketch), [Figma](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template_App_Icon.fig), [Photoshop](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.psd) or [Illustrator](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.ai).
 
