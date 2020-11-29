@@ -190,7 +190,7 @@ export default {
       noIcons: true,
       isAuth: false,
 
-      iconListLen: 2377,
+      iconListLen: "2,613",
       lastVisible: {},
       dataToShow: [],
       activeIcon: {},
