@@ -14,6 +14,10 @@
       :iconListLen="iconListLen"
     />
 
+    <div id="614423561">
+      {{ adScript }}
+    </div>
+
     <coral-toast id="successToast" variant="success">
       😄 All icons have been uploaded.
     </coral-toast>
@@ -228,7 +232,16 @@ export default {
   },
 
   methods:{
-    
+
+    adScript(){
+      try {
+        window._mNHandle.queue.push(function (){
+            window._mNDetails.loadTag("614423561", "300x250", "614423561");
+        });
+      }
+      catch (error) {}
+    },   
+
     prettifyName(name){
       // let newName = name
       for(let i in name){
