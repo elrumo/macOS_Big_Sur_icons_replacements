@@ -325,9 +325,10 @@ ul {
     left: 50%;
     transform: translate3d(-50%, -50%, 0px);
     top: 50%;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(5px) saturate(0.5);
+    width: 80%;
+    height: 80%;
+    /* backdrop-filter: blur(5px) saturate(0.5); */
+    backdrop-filter: blur(3px);
 }
 
 .loading-approval{
