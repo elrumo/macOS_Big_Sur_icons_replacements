@@ -84,7 +84,7 @@
                 
                 <div v-if="icon.isReview" class="loading-approval-wrapper">
                   <div class="loading-approval">
-                    <coral-wait indeterminate=""></coral-wait>
+                    <!-- <coral-wait indeterminate=""></coral-wait> -->
                   </div>
                 </div>
                 
