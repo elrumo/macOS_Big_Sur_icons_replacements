@@ -14,7 +14,7 @@
       :iconListLen="iconListLen"
     />
 
-    <div id="614423561">
+    <div class="hide" id="614423561">
       {{ adScript }}
     </div>
 
