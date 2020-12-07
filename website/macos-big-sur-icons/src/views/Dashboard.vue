@@ -355,9 +355,10 @@ export default {
       return name
     },
 
-    approveIcon(icon){  
+    async approveIcon(icon){  
       let parent = this
       console.log(icon);
+
       let parentIcon = parent.icons[icon.usersName].icons[icon.appName]
       // functions.useFunctionsEmulator("http://localhost:5001")
       const convertToIcns = functions.httpsCallable("convertToIcns");

@@ -331,6 +331,10 @@ ul {
     backdrop-filter: blur(3px);
 }
 
+.hide{
+    visibility: hidden;
+}
+
 .loading-approval{
     position: relative;
     top: 50%;
