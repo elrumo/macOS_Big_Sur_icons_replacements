@@ -184,6 +184,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] Mosaic
 - [x] Motion
 - [x] Musescore
+- [x] Nest
 - [x] Netflix
 - [x] NordVPN
 - [x] NordVPN 2
@@ -340,7 +341,7 @@ The following icons are either being worked on or have been suggested. If you ha
 
 ## Credits
 
-We do not intend to steal any one's icons, if your icon has been included and you have not given us explicit persmission is only because it was freely avaliable. If you would like your icons removed, please send an email to Elias at <elias.ruiz.monserrat@gmail.com> with the name of the icons to remove and some proof you made them, like a screenshot or a link to your page.
+We do not intend to steal any one's icons, if your icon has been included and you have not given us explicit permission it is only because it was freely available. If you would like your icons removed, please send an email to Elias at <elias.ruiz.monserrat@gmail.com> with the name of the icons to remove and some proof you made them, like a screenshot or a link to your page.
 
 | Designed By                                     | Icon Name                                      |
 | ----------------------------------------------- | ---------------------------------------------  |
@@ -943,3 +944,4 @@ We do not intend to steal any one's icons, if your icon has been included and yo
 |                                                 | GOG Galaxy Alt                                 |
 |                                                 | Monero Wallet                                  |
 | [Jonathan Simcoe](https://jdsimcoe.com/)        | Alacritty                                      |
+| [Chris Messina](https://github.com/chrismessina)| Nest                                           |
