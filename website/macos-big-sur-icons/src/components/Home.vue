@@ -194,7 +194,7 @@ export default {
       noIcons: true,
       isAuth: false,
 
-      iconListLen: "2,866",
+      iconListLen: "3,070",
       lastVisible: {},
       dataToShow: [],
       activeIcon: {},
@@ -218,6 +218,10 @@ export default {
 
   mounted: function(){
     let parent = this;
+    
+    // this.$ga.disable()
+
+    // console.log(this.$ga);
 
     // this.getIconListLen();
     this.getIconsArray();
