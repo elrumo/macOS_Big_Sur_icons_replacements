@@ -219,8 +219,18 @@ export default {
   mounted: function(){
     let parent = this;
     
-    // this.$ga.disable()
+    
+     db.collection("meta").doc("pageCount").update({
+        visits: firebase.firestore.FieldValue.increment(1)
+      }).then(function() {
+          console.log("Document plus 1");
+      }).catch(function(error) {
+          // The document probably doesn't exist.
+          console.error("Error updating document: ", error);
+      });
 
+
+    // this.$ga.disable()
     // console.log(this.$ga);
 
     // this.getIconListLen();
