@@ -33,6 +33,9 @@ ul {
 }
 
 .gitHub-sponsor{
+    margin: auto;
+    text-align: left;
+    cursor: pointer;
     height: 190px;
     width: 90%;
     max-width: 730px;
