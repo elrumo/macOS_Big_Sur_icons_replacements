@@ -527,6 +527,8 @@ Mailplane,
 MainStage,
 MakeCode_for_microbit,
 Malwarebytes,
+MAMP.
+MAMP_Alt,
 Maps,
 Material_Colors,
 Material_Palette_Generator,
