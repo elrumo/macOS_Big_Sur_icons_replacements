@@ -2,12 +2,6 @@
   <div id="hero" class="hero-wrapper">
     <div class="PH-badge">
       <Sponsor class="gitHub-sponsor"/>
-      <!-- <iframe class="gitHub-sponsor" src="https://github.com/sponsors/elrumo/card" title="Sponsor elrumo" height="100%" width="auto" style="border: 0;"></iframe> -->
-
-      <!-- <a href="https://www.producthunt.com/posts/1000-free-macos-big-sur-icons?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-1000-free-macos-big-sur-icons" target="_blank">
-          <img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=274722&theme=light&period=daily" alt="1000+ free macOS Big Sur Icons - Open source and community created icons for macOS Big Sur. | Product Hunt" style="width: 250px; height: 54px;" width="200" height="54"/>
-        </a> -->
-      <!-- <a href="https://www.producthunt.com/posts/free-1000-macos-icons?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-free-1000-macos-icons" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=274722&theme=light" alt="Free 1000+ macOS Icons  - Open Source and community led Big Sur icons. Submit your own | Product Hunt" style="width: 200px; height: 54px;" width="200" height="54" /></a> -->
     </div>
 
     <h3
