@@ -33,6 +33,26 @@ const client = algoliasearch(env.algolia.appid, env.algolia.apikey);
 // const client = algoliasearch(algolia.appid, algolia.apikey);
 const index = client.initIndex('macOSicons');
 
+exports.exportFirestore2Json = functions.https.onRequest((request, response) => {
+    db.collection("submissions").get().then(function(querySnapshot) {
+        const orders = [];
+        var order = null
+
+         querySnapshot.forEach(doc => {
+             order = doc.data();
+             orders.push(order);
+         });
+
+         response.send(JSON.stringify(orders))
+
+         return true
+    })
+    .catch(function(error) {
+        console.error("Error adding document: ", error);
+        return false
+    });
+})
+
 exports.indexIcon = functions.firestore
     .document('submissions/{iconId}')
     .onCreate((snap, context) => {
