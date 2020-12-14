@@ -26,10 +26,6 @@
       :iconListLen="iconListLen"
     />
 
-    <div class="hide" id="614423561">
-      {{ adScript }}
-    </div>
-
     <coral-toast id="successToast" variant="success">
       😄 All icons have been uploaded.
     </coral-toast>
@@ -121,7 +117,7 @@
 
       <!-- Seen when no auth  -->
         <div v-if="!isAuth" class="icon-list-area p-t-20 p-b-50">
-          <a v-for="icon in search" :key="icon.fileName" class="card-wrapper shadow coral-card" :href="icon.icnsUrl">
+          <a v-for="icon in search" :key="icon.fileName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper shadow coral-card" :href="icon.icnsUrl">
             <div class="card-img-wrapper">
               <div v-lazy-container="{ selector: 'img', loading: icons.loading }">
                 <img class="w-full" :data-src="icon.pngUrl">
@@ -155,7 +151,6 @@
 
 <script>
 import Vue from 'vue';
-import algoliasearch from 'algoliasearch'
 
 import Header from './Header.vue';
 import Hero from './Hero.vue';
@@ -163,11 +158,19 @@ import iconCard from './iconCard.vue';
 import Dialog from './Dialog.vue';
 import deleteDialog from './deleteDialog.vue';
 
+import algoliasearch from 'algoliasearch'
 import * as firebase from "firebase";
 import { Search } from '@adobe/coral-spectrum';
+import Parse from 'parse'
 
 const storage = firebase.storage();
 const db = firebase.firestore();
+
+Parse.initialize("macOSicons");
+Parse.serverURL = 'http://82.145.63.160:1337/parse'
+
+const Icons = Parse.Object.extend("Icons");
+const icons = new Icons();
 
 // let order = ["timeStamp", "desc"]
 let order = ["appName", ""]
@@ -181,6 +184,8 @@ let algolia = {
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
 const index = client.initIndex('macOSicons')
+
+const docLimit = 20
 
 export default {
   name: 'Home',
@@ -205,6 +210,7 @@ export default {
       isSearch: false,
       noIcons: true,
       isAuth: false,
+      howManyRecords: 0,
 
       iconListLen: "3,070",
       lastVisible: {},
@@ -232,14 +238,14 @@ export default {
     let parent = this;
     
     
-     db.collection("meta").doc("pageCount").update({
-        visits: firebase.firestore.FieldValue.increment(1)
-      }).then(function() {
-          console.log("Document plus 1");
-      }).catch(function(error) {
-          // The document probably doesn't exist.
-          console.error("Error updating document: ", error);
-      });
+    //  db.collection("meta").doc("pageCount").update({
+    //     visits: firebase.firestore.FieldValue.increment(1)
+    //   }).then(function() {
+    //       console.log("Document plus 1");
+    //   }).catch(function(error) {
+    //       // The document probably doesn't exist.
+    //       console.error("Error updating document: ", error);
+    //   });
 
 
     // this.$ga.disable()
@@ -257,16 +263,7 @@ export default {
      })
   },
 
-  methods:{
-
-    adScript(){
-      try {
-        window._mNHandle.queue.push(function (){
-            window._mNDetails.loadTag("614423561", "300x250", "614423561");
-        });
-      }
-      catch (error) {}
-    },   
+  methods:{ 
 
     prettifyName(name){
       // let newName = name
@@ -309,28 +306,36 @@ export default {
       return date
     },
 
-    loadMore(){
+    async loadMore(){
       let parent = this
-      console.log(lastVisible);
-      dbCollection.startAfter(lastVisible).limit(20).get().then(function(querySnapshot){
-        querySnapshot.forEach(function(doc){
-          setTimeout(() => {
-              parent.scrolledToBottom = true
-          }, 300);
-          let iconData = doc.data()
-          iconData.id = doc.id
-          parent.$store.dispatch("pushDataToArr", {arr: "list", data: iconData, func: "loadMore"})
-          // parent.list.push(doc.data())
-        })
-        lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
-      })
+      let howManyRecords = parent.howManyRecords
+      
+      parent.howManyRecords = howManyRecords + docLimit
+
+      const query = new Parse.Query(Icons);
+      query.equalTo("approved", true)
+      query.ascending("appName");
+      query.skip(howManyRecords);
+      query.limit(docLimit);
+      const results = await query.find()
+      
+      setTimeout(() => {
+          parent.scrolledToBottom = true
+      }, 800);
+
+      for(let result in results){
+        let objData = results[result].attributes
+        let iconData = objData
+
+        parent.$store.dispatch("pushDataToArr", {arr: "list", data: iconData, func: "loadMore"})
+      }
 
     },
 
     scroll() {
       let parent = this
       window.onscroll = () => {
-        let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 1200
+        let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000
 
         if (bottomOfWindow && parent.scrolledToBottom && !parent.isSearch) {
           parent.scrolledToBottom = false // replace it with your code
@@ -346,32 +351,30 @@ export default {
       })
     },
 
-    getIconsArray(){
+    async getIconsArray(){
       let parent = this
+      
+      const query = new Parse.Query(Icons);
+      query.equalTo("approved", true)
+      query.ascending("appName");
+      query.limit(docLimit);
+      parent.howManyRecords = docLimit
+      const results = await query.find()
 
-      dbCollection.limit(15)
-      .get().then(function (querySnapshot) {
+      for(let result in results){
+        let objData = results[result].attributes
+        let iconData = objData
+        let newFileName = objData.fileName.split(".png")
+        newFileName.pop()
+        // newFileName = newFileName[0]+".icns"
 
-        lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
+        storage.ref('icons_approved/png/'+objData.fileName)
+        storage.ref('icons_approved/'+newFileName)
+        parent.$store.commit('pushDataToArr', {arr: "list", data: iconData, func: "getIconsArray"})
+      }
 
-        querySnapshot.forEach(function (doc) {
-          let iconData = doc.data()
-          
-          let newFileName = doc.data().fileName.split(".png")
-          newFileName.pop()
-          newFileName = newFileName[0]+".icns"
-          
-          iconData.id = doc.id
-          storage.ref('icons_approved/png/'+doc.data().fileName)
-          storage.ref('icons_approved/'+newFileName)
-          parent.$store.commit('pushDataToArr', {arr: "list", data: iconData, func: "getIconsArray"})
-          // parent.list.push(iconData)
-        })
-      }).then(()=>{
-        // parent.dataToShow =  parent.list
-        // parent.$store.dispatch("pushDataToArr", {arr: "dataToShow", data: this.$store.state.list})
-        parent.scroll()
-      })
+      parent.scroll()
+
     },
 
     showDialog(dialogId, icon){
