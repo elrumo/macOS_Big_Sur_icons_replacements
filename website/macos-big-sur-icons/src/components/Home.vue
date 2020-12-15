@@ -367,11 +367,11 @@ export default {
           storage.ref('icons_approved/'+newFileName)
           parent.$store.commit('pushDataToArr', {arr: "list", data: iconData, func: "getIconsArray"})
           
-          let carbon = document.getElementById("carbonads")
-          carbon.classList.add("coral-card")
           // parent.list.push(iconData)
         })
       }).then(()=>{
+          let carbon = document.getElementById("carbonads")
+          carbon.classList.add("coral-card")
         // parent.dataToShow =  parent.list
         // parent.$store.dispatch("pushDataToArr", {arr: "dataToShow", data: this.$store.state.list})
         parent.scroll()
