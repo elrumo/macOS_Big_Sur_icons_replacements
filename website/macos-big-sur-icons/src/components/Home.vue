@@ -123,6 +123,10 @@
 
       <!-- Seen when no auth  -->
         <div v-if="!isAuth" class="icon-list-area p-t-20 p-b-50">
+          
+          <!-- Carbon ads -->
+          <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+
           <a v-for="icon in search" :key="icon.fileName" class="card-wrapper shadow coral-card" :href="icon.icnsUrl">
             <div class="card-img-wrapper">
               <div v-lazy-container="{ selector: 'img', loading: icons.loading }">
