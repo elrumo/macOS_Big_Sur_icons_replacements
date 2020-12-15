@@ -80,7 +80,7 @@
         target="_blank"
       >
         <button is="coral-button" variant="quiet">
-          <span>Buy me a hot chocolate</span>
+          <span class="p-r-5 f-s-16">☕️</span> <span>Buy me a hot chocolate</span>
           <!-- <span>One-time Donation</span> -->
         </button>
       </a>
