@@ -27,7 +27,7 @@ ul {
 .PH-badge{
     margin-top: 40px;
     left: 50%;
-    opacity: 0.5;
+    opacity: 0.5;   
     position: relative;
     transform: translateX(-50%);
     transition: 0.2s;
@@ -41,7 +41,7 @@ ul {
     margin: auto;
     text-align: left;
     cursor: pointer;
-    height: 190px;
+    height: 100%;
     width: 90%;
     max-width: 730px;
     border-radius: 8px;
@@ -258,7 +258,7 @@ ul {
 }
 
 .hero-wrapper{
-    padding-bottom: 60px;
+    padding-bottom: 40px;
 }
 
 #noIcons{
@@ -697,35 +697,40 @@ ul {
         width: 100%;
     }
 
-    .gitHub-sponsor{
+    /* .gitHub-sponsor{
         height: 220px;
-    }
+    } */
 }
 
-@media only screen and (max-width: 600px){
-    .gitHub-sponsor{
-        height: 230px;
-    }
-}
+/* @media only screen and (max-width: 600px){ */
+    /* .gitHub-sponsor{
+        height: 100%;
+    } */
+/* } */
 
 @media only screen and (max-width: 512px){
     .icon-list-area{
         grid-template-columns: 1fr 1fr;
     }
     
-    .gitHub-sponsor{
+    /* .gitHub-sponsor{
         height: 310px;
-    }
+    } */
     /* #github-header{
         display: none;
     } */
     
 }
 
-@media only screen and (max-width: 412px){
-    .gitHub-sponsor{
-        height: 330px;
+@media only screen and (max-width: 460px){
+    .PH-badge{
+        margin-bottom: 30px;
     }
+}
+@media only screen and (max-width: 412px){
+    /* .gitHub-sponsor{
+        height: 330px;
+    } */
 }
 
 @media only screen and (max-width: 320px){
