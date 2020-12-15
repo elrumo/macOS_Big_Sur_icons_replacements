@@ -45,8 +45,8 @@
 
 #carbonads .carbon-wrap {
     display: grid;
-    padding: 18px 7px 0px 7px;
-    grid-template-rows: 0.7fr 1fr;
+    padding: 18px 7px 10px 7px;
+    grid-template-rows: auto;
 }
 
 #_carbonads_js:after{
@@ -67,9 +67,11 @@
 
 .carbon-text {
     font-size: 13px;
-    padding: 20px 5px 5px 5px;
-    line-height: 1.5;
+    padding: 2px 5px 0px 5px;
+    line-height: 1.4;
     text-align: center;
+
+    margin: 10px 0px 0px 0px !important;
     /* color: rgb(227, 227, 227) !important; */
 }
 
@@ -79,7 +81,7 @@
     padding: 8px 10px;
     
     opacity: 0.5;
-    margin-bottom: 20px !important;
+    margin-bottom: 13px !important;
     width: 70%;
     border-radius: 7px;
     

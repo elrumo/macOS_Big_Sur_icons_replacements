@@ -128,6 +128,7 @@
           <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
 
           <a v-for="icon in search" :key="icon.fileName" class="card-wrapper shadow coral-card" :href="icon.icnsUrl">
+            <!-- <div style="position: relative; top: 50%; transform: translateY(-60%);"> -->
             <div class="card-img-wrapper">
               <div v-lazy-container="{ selector: 'img', loading: icons.loading }">
                 <img class="w-full" :data-src="icon.pngUrl">
@@ -139,6 +140,7 @@
               </h3>
               <p class="coral-Body--XS opacity-60 m-b-20"><a class="coral-Link" :href="icon.credit" target="_blank">{{icon.usersName}}</a> on <span class="coral-Body--XS opacity-50">{{ getDate(icon.timeStamp) }}</span></p>
             </div>
+            <!-- </div> -->
           </a>
         </div>
 
