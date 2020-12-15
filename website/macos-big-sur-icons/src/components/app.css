@@ -25,11 +25,16 @@ ul {
 }
 
 .PH-badge{
-    margin-top: 60px;
-    margin-bottom: 10px; 
+    margin-top: 40px;
     left: 50%;
+    opacity: 0.5;
     position: relative;
     transform: translateX(-50%);
+    transition: 0.2s;
+}
+
+.PH-badge:hover{
+    opacity: 1;
 }
 
 .gitHub-sponsor{

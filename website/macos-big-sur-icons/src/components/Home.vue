@@ -45,8 +45,7 @@
     <coral-toast id="approveError" variant="error">
       There has been an error, please Approve again
     </coral-toast>
-
-    <!-- <div style="display: none"> {{search}} </div> -->
+    
     <!-- Icon Section -->
     <section class="content-wrapper">
     
@@ -81,41 +80,44 @@
     <!-- Icon list -->
         <div v-if="isAuth" class="icon-list-area p-t-20 p-b-50">
           
+          <!-- Carbon ads -->
+          <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+          
           <!-- Search Bar -->
-          <div  v-for="icon in search" :key="icon.fileName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper coral-card">
-              <div class="card-img-wrapper" style="max-width: 120px;">
-                
-                <a :href="icon.icnsUrl">
-                  <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                    <img class="w-full" :data-src="icon.pngUrl">
-                  </div>
-                </a>
+          <div  v-for="icon in search" :key="icon.fileName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper coral-card">    
+            <div class="card-img-wrapper" style="max-width: 120px;">  
 
-                <div class="quick-actions-wrapper">
-                  <div class="quick-action-el">
-                    <coral-icon @click="showDialog('deleteDialog', icon)" class="h-full quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
-                  </div>
+              <a :href="icon.icnsUrl">
+                <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
+                  <img class="w-full" :data-src="icon.pngUrl">
                 </div>
-                  
+              </a>
+
+              <div class="quick-actions-wrapper">
+                <div class="quick-action-el">
+                  <coral-icon @click="showDialog('deleteDialog', icon)" class="h-full quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
+                </div>
               </div>
+                
+            </div>
 
-              <div class="p-l-15 p-r-15 p-b-15">
+            <div class="p-l-15 p-r-15 p-b-15">
 
-                  <p class="coral-Body--XS opacity-60 m-b-0">
-                    <input class="editable-input coral-Body--XS opacity-50 m-b-0" @change="changeDate(icon, $event)" type="text" variant="quiet" :value="getDate(icon.timeStamp)" is="coral-textfield" aria-label="text input">
-                  </p>
-                  <h3 class="coral-font-color m-b-0">
-                    <input class="editable-input f-w-800 m-b-0" @change="editDoc(icon, $event, 'appName')" type="text" variant="quiet" :value="prettifyName(icon.appName)" is="coral-textfield" aria-label="text input">
-                  </h3>
+                <p class="coral-Body--XS opacity-60 m-b-0">
+                  <input class="editable-input coral-Body--XS opacity-50 m-b-0" @change="changeDate(icon, $event)" type="text" variant="quiet" :value="getDate(icon.timeStamp)" is="coral-textfield" aria-label="text input">
+                </p>
+                <h3 class="coral-font-color m-b-0">
+                  <input class="editable-input f-w-800 m-b-0" @change="editDoc(icon, $event, 'appName')" type="text" variant="quiet" :value="prettifyName(icon.appName)" is="coral-textfield" aria-label="text input">
+                </h3>
 
-                  <p class="coral-Body--XS p-b-0 opacity-80 m-b-0"><input class="editable-input" @change="editDoc(icon, $event, 'usersName')" type="text" variant="quiet" :value="icon.usersName" is="coral-textfield" aria-label="text input"></p>
-                  <p class="coral-Body--XS p-b-0 opacity-50 m-b-0"><input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="icon.credit" is="coral-textfield" aria-label="text input"></p>
-                  <div v-if="icon.email != 'user@email.com' && icon.email " class="p-t-10"> 
-                    <a class="coral-Link" :href="'mailto:'+icon.email+'?subject=macOS icons submission&body='+icon.usersName">
-                          email
-                    </a>
-                  </div>
-              </div>
+                <p class="coral-Body--XS p-b-0 opacity-80 m-b-0"><input class="editable-input" @change="editDoc(icon, $event, 'usersName')" type="text" variant="quiet" :value="icon.usersName" is="coral-textfield" aria-label="text input"></p>
+                <p class="coral-Body--XS p-b-0 opacity-50 m-b-0"><input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="icon.credit" is="coral-textfield" aria-label="text input"></p>
+                <div v-if="icon.email != 'user@email.com' && icon.email " class="p-t-10"> 
+                  <a class="coral-Link" :href="'mailto:'+icon.email+'?subject=macOS icons submission&body='+icon.usersName">
+                        email
+                  </a>
+                </div>
+            </div>
           </div>
         </div>
 
@@ -230,16 +232,15 @@ export default {
 
   mounted: function(){
     let parent = this;
-    
-    
-     db.collection("meta").doc("pageCount").update({
-        visits: firebase.firestore.FieldValue.increment(1)
-      }).then(function() {
-          console.log("Document plus 1");
-      }).catch(function(error) {
-          // The document probably doesn't exist.
-          console.error("Error updating document: ", error);
-      });
+
+    db.collection("meta").doc("pageCount").update({
+      visits: firebase.firestore.FieldValue.increment(1)
+    }).then(function() {
+        console.log("Document plus 1");
+    }).catch(function(error) {
+        // The document probably doesn't exist.
+        console.error("Error updating document: ", error);
+    });
 
 
     // this.$ga.disable()
@@ -365,6 +366,9 @@ export default {
           storage.ref('icons_approved/png/'+doc.data().fileName)
           storage.ref('icons_approved/'+newFileName)
           parent.$store.commit('pushDataToArr', {arr: "list", data: iconData, func: "getIconsArray"})
+          
+          let carbon = document.getElementById("carbonads")
+          carbon.classList.add("coral-card")
           // parent.list.push(iconData)
         })
       }).then(()=>{
@@ -484,5 +488,6 @@ export default {
 
 <style>
   @import url(app.css);
+  @import url(carbon.css);
   @import url(snack-helper.min.css);
 </style>
