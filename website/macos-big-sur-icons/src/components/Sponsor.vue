@@ -15,9 +15,9 @@
 
         <div class="d-sm-flex flex-auto">
           <a
-            aria-label="Donate to using PayPal"
+            aria-label="Support the project on PayPal"
             target="_blank"
-            href="https://github.com/sponsors/elrumo?o=esc"
+            href="https://www.paypal.com/donate?hosted_button_id=5PMNX4DPW83KN"
             style="color: black"
           >
           <div class="flex-sm-auto mr-sm-3">
