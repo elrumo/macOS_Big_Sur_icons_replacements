@@ -27,7 +27,7 @@ ul {
 .PH-badge{
     margin-top: 40px;
     left: 50%;
-    opacity: 0.5;   
+    /* opacity: 0.5;    */
     position: relative;
     transform: translateX(-50%);
     transition: 0.2s;
