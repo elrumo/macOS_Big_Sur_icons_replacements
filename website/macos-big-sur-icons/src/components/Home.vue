@@ -207,6 +207,7 @@ export default {
 
       scrolledToBottom: true,
       sortByName: true,
+      sortBy: "appName",
       isSearch: false,
       noIcons: true,
       isAuth: false,
@@ -279,14 +280,17 @@ export default {
       let sortByName = parent.sortByName
       let date = parent.icons.date
       let namingOrder = parent.icons.namingOrder
+      
+      console.log(sortByName);
 
-      if (sortByName) {
+      if (parent.sortByName) {
         parent.icons.iconsOrder = date
       } else{
         parent.icons.iconsOrder = namingOrder
       }
 
-      parent.sortByName = !sortByName
+      parent.sortByName = !parent.sortByName
+      
     },
     
     getDate(timeStamp){
@@ -314,7 +318,7 @@ export default {
 
       const query = new Parse.Query(Icons);
       query.equalTo("approved", true)
-      query.ascending("appName");
+      query.ascending(parent.sortBy);
       query.skip(howManyRecords);
       query.limit(docLimit);
       const results = await query.find()
@@ -354,9 +358,12 @@ export default {
     async getIconsArray(){
       let parent = this
       
+      const params =  { movie: "The Matrix" };
+      const ratings = await Parse.Cloud.run("helloWorld", params);
+
       const query = new Parse.Query(Icons);
       query.equalTo("approved", true)
-      query.ascending("appName");
+      query.ascending(parent.sortBy);
       query.limit(docLimit);
       parent.howManyRecords = docLimit
       const results = await query.find()
