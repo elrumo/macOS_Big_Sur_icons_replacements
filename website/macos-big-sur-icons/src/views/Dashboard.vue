@@ -423,17 +423,24 @@ export default {
       console.log(icon);
 
       let parentIcon = parent.icons[icon.usersName].icons[icon.appName]
-      // functions.useFunctionsEmulator("http://localhost:5001")
-      const convertToIcns = functions.httpsCallable("convertToIcns");
-      
-      convertToIcns(icon).then(result =>{
+
+      Parse.Cloud.run("approve", icon).then((result)=>{
+        console.log(result);
+        // Vue.set(parentIcon, 'isReview', true)
         parent.showToast({id:"iconApproved"})
-        Vue.set(parentIcon, 'isReview', true)
-        console.log(result.data);
       }).catch((e)=>{
         console.log(e);
         parent.showToast({id:"approveError"})
-      })
+      });
+
+      // convertToIcns(icon).then(result =>{
+      //   parent.showToast({id:"iconApproved"})
+      //   Vue.set(parentIcon, 'isReview', true)
+      //   console.log(result.data);
+      // }).catch((e)=>{
+      //   console.log(e);
+      //   parent.showToast({id:"approveError"})
+      // })
     },
 
     indexIcon(icon){  
@@ -536,13 +543,16 @@ export default {
         query.equalTo("approved", false)
         query.ascending("usersName");
         query.limit(docLimit);
-        parent.howManyRecords = docLimit
         const results = await query.find()
+
+        parent.howManyRecords = docLimit
         
         for(let result in results){
           let docObj = results[result].attributes;
           let docData = JSON.parse(JSON.stringify(docObj));
-          console.log(docData);
+          docData.id = results[result].id
+          
+          console.log("docData.id: ", docData.id);
 
           docData.imgUrl = ""
           
@@ -582,15 +592,15 @@ export default {
             if(parent.icons[usersName] == undefined ){
               Vue.set(parent.icons, usersName, {"usersName": usersName, "email": email, "icons":{}, "creditUrl": creditUrl})
               Vue.set(parent.icons[usersName].icons, appName, docData)
-              imgReference = storage.ref(docData.iconRef)
               
+              imgReference = storage.ref(docData.iconRef)
               imgReference.getDownloadURL().then(function(url) {
                 Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
               })                
             } else{
               Vue.set(parent.icons[usersName].icons, appName, docData)
+              
               imgReference = storage.ref(docData.iconRef)
-
               imgReference.getDownloadURL().then(function(url) {
                 Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
               })

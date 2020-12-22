@@ -186,7 +186,7 @@ export default {
           const Icons = Parse.Object.extend("Icons");
           const icons = new Icons()
 
-          const parseFile = new Parse.File(fileName, file); // Set file to new Parse object 
+          const parseFile = new Parse.File(fileName, file); // Set file to new Parse object
           parseFile.save().then((uploaded) => {
             console.log("Success: ", uploaded._url);
 
@@ -196,13 +196,14 @@ export default {
               credit: parent.credit,
               usersName: parent.yourName,
               fileName: fileName,
-              highResUrl: uploaded._url,
-              highResFile: parseFile,
+              highResPng: parseFile,
+              highResPngURL: uploaded._url,
               timeStamp: Date.now(),
               approved: false
             }
 
             icons.set(dataToStore);
+            console.log(icons);
 
             icons.save().then((icons) => { // Reset input boxes
               
