@@ -77,6 +77,9 @@
     <!-- Icon list -->
         <div v-if="isAuth" class="icon-list-area p-t-20 p-b-50">
           
+          <!-- Carbon ads -->
+          <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+
           <!-- Search Bar -->
           <div  v-for="icon in search" :key="icon.fileName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper coral-card">
               <div class="card-img-wrapper" style="max-width: 120px;">
@@ -171,6 +174,8 @@ Parse.serverURL = 'http://82.145.63.160:1337/parse'
 
 const Icons = Parse.Object.extend("Icons");
 const icons = new Icons();
+
+console.log(icons);
 
 // let order = ["timeStamp", "desc"]
 let order = ["appName", ""]
@@ -357,9 +362,6 @@ export default {
 
     async getIconsArray(){
       let parent = this
-      
-      const params =  { movie: "The Matrix" };
-      const ratings = await Parse.Cloud.run("helloWorld", params);
 
       const query = new Parse.Query(Icons);
       query.equalTo("approved", true)
