@@ -34,7 +34,8 @@
 
     
     <div class="m-t-40">
-      <input type="file" id="profilePhotoFileUpload" @change="uploadFile">
+      <!-- <input type="file" id="profilePhotoFileUpload" @change="uploadFile"> -->
+      <button is="coral-button" variant="cta" @click="migrateFiles">Migrate Files</button>
     </div>
 
   <!-- Edit user dialog -->
@@ -93,7 +94,7 @@
                 </div>
                 
                 <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                  <img class="w-full" :data-src="icon.imgUrl">
+                  <img class="w-full" :data-src="icon.highResPngURL">
                 </div>
 
 
@@ -365,17 +366,6 @@ export default {
         }
         
       }
-
-
-      // firebase.auth().signInWithEmailAndPassword(email, password)
-      // .then(function(user){
-      //   console.log(user);
-      // }).catch(function(error) {
-      //   // Handle Errors here.
-      //   var errorCode = error.code;
-      //   var errorMessage = error.message;
-      //   // ...
-      // });
     },
 
     isObjEmpty(obj){
@@ -426,21 +416,28 @@ export default {
 
       Parse.Cloud.run("approve", icon).then((result)=>{
         console.log(result);
-        // Vue.set(parentIcon, 'isReview', true)
+        Vue.set(parentIcon, 'isReview', true)
         parent.showToast({id:"iconApproved"})
       }).catch((e)=>{
         console.log(e);
         parent.showToast({id:"approveError"})
       });
+    },
 
-      // convertToIcns(icon).then(result =>{
-      //   parent.showToast({id:"iconApproved"})
-      //   Vue.set(parentIcon, 'isReview', true)
-      //   console.log(result.data);
-      // }).catch((e)=>{
-      //   console.log(e);
-      //   parent.showToast({id:"approveError"})
-      // })
+    async migrateFiles(){  
+      let parent = this
+      
+      let params = {
+        url: "http://82.145.63.160:1337/parse/files/macOSicons/c0ad2c7645e64ae7449339f0f8a38ccc_image.png"
+      }
+
+      Parse.Cloud.run("migrateFiles", params).then((result)=>{
+        console.log(result);
+        parent.showToast({id:"iconApproved"})
+      }).catch((e)=>{
+        console.log(e);
+        parent.showToast({id:"approveError"})
+      });
     },
 
     indexIcon(icon){  
@@ -582,9 +579,9 @@ export default {
               Vue.set(parent.icons["Undefined"], "usersName",  "Undefined")
               imgReference = storage.ref(docData.iconRef)
 
-              imgReference.getDownloadURL().then(function(url) {
-                Vue.set(parent.icons["Undefined"].icons[appName], "imgUrl",  url)
-              })              
+              // imgReference.getDownloadURL().then(function(url) {
+              //   Vue.set(parent.icons["Undefined"].icons[appName], "imgUrl",  url)
+              // })              
             }
 
           }else{
@@ -593,17 +590,17 @@ export default {
               Vue.set(parent.icons, usersName, {"usersName": usersName, "email": email, "icons":{}, "creditUrl": creditUrl})
               Vue.set(parent.icons[usersName].icons, appName, docData)
               
-              imgReference = storage.ref(docData.iconRef)
-              imgReference.getDownloadURL().then(function(url) {
-                Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
-              })                
+              // imgReference = storage.ref(docData.iconRef)
+              // imgReference.getDownloadURL().then(function(url) {
+              //   Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
+              // })                
             } else{
               Vue.set(parent.icons[usersName].icons, appName, docData)
               
-              imgReference = storage.ref(docData.iconRef)
-              imgReference.getDownloadURL().then(function(url) {
-                Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
-              })
+              // imgReference = storage.ref(docData.iconRef)
+              // imgReference.getDownloadURL().then(function(url) {
+              //   Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
+              // })
             }
 
           }
