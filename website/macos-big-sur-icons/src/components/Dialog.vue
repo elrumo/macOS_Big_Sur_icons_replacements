@@ -2,19 +2,20 @@
   <coral-dialog id="submitIcon">
 
     <coral-dialog-header>
-      Submit an icon
+      Temporarily down for maintenance
     </coral-dialog-header>
     
     <coral-dialog-content>
       
       <div class="dialog-text">
-        <b> We'll let you know by email when the icon has been approved. </b>
+        <b> Temporarily down while I migrate the site to servers kindly provided by <a class="coral-Link" href="https://fosshost.org" target="_blank">Fosshost</a>.</b> To stay up to date follow me on <a class="coral-Link" href="https://twitter.com/elrumo" target="_blank">Twitter</a>.
+        <!-- <b> We'll let you know by email when the icon has been approved. </b> -->
         <br>
-        <ul class="coral-List p-t-10 p-b-10">
+        <!-- <ul class="coral-List p-t-10 p-b-10">
           <li class="coral-List-item">Icon submited must be a .png file</li>
           <li class="coral-List-item">Use <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.sketch" class="coral-Link">this </a> template for dimensions and reference.</li>
           <li class="coral-List-item"> <b> The file name must be the same as the name of the app. </b></li>
-        </ul>
+        </ul> -->
       </div>
 
       <div v-if="isLoading" class="loading-overlay">
@@ -24,8 +25,11 @@
       </div>
 
       <div class="icon-upload-grid">
-        
-        <div v-if="imageData" class="icons-preview-wrapper">
+
+          <p style="max-width: 380px;">
+            Checkout my other proejct, a new bookmarking service called <a class="coral-Link" href="https://bit.ly/webbites" target="_blank">WebBites</a>.
+          </p>
+        <!-- <div v-if="imageData" class="icons-preview-wrapper">
           
           <div v-for="icon in filesToShow" class="icon-preview" :key="icon.name">
             <img :src="icon.img">
@@ -71,7 +75,7 @@
         <form class="coral-Form coral-Form--vertical" >
           <label id="credit-label" class="coral-FieldLabel">How should we credit you?</label>
           <input id="credit" is="coral-textfield" type="url" placeholder="MAKE SURE IT'S A FULL URL: GitHub, Twitter, portfolio site... " labelledby="email-label" class="coral-Form-field" @change="saveCredit">
-        </form>
+        </form> -->
 
       </div>
   
