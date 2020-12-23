@@ -147,6 +147,7 @@ The following icons are either being worked on or have been suggested. If you ha
 - [x] ImageOptim
 - [x] Instagram
 - [x] Install macOS Beta
+- [x] IntelliJ AppCode
 - [x] Keka
 - [x] Keyboard_Maestro
 - [x] LastPass
@@ -719,7 +720,8 @@ We do not intend to steal any one's icons, if your icon has been included and yo
 |                                                 | iMazing                                        |            
 |                                                 | iMovie Alt                                     |               
 |                                                 | Instagram Alt 2                                |                     
-|                                                 | Instapaper                                     |               
+|                                                 | Instapaper                                     | 
+|                                                 | IntelliJ AppCode                               |             
 |                                                 | IntelliJ Php Storm Alt                         |                           
 |                                                 | IntelliJ PyCharm Alt                           |                           
 |                                                 | iStats Menu Alt 2                              |                        
