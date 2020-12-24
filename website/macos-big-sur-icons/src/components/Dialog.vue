@@ -27,7 +27,7 @@
       <div class="icon-upload-grid">
 
           <p style="max-width: 380px;">
-            Checkout my other proejct, a new bookmarking service called <a class="coral-Link" href="https://bit.ly/webbites" target="_blank">WebBites</a>.
+            Meanwhile you can checkout my other proejct, a new bookmarking service called <a class="coral-Link" href="https://bit.ly/webbites" target="_blank">WebBites</a>.
           </p>
         <!-- <div v-if="imageData" class="icons-preview-wrapper">
           
