@@ -33,6 +33,26 @@ const client = algoliasearch(env.algolia.appid, env.algolia.apikey);
 // const client = algoliasearch(algolia.appid, algolia.apikey);
 const index = client.initIndex('macOSicons');
 
+exports.exportFirestore2Json = functions.https.onRequest((request, response) => {
+    db.collection("submissions").get().then(function(querySnapshot) {
+        const orders = [];
+        var order = null
+
+         querySnapshot.forEach(doc => {
+             order = doc.data();
+             orders.push(order);
+         });
+
+         response.send(JSON.stringify(orders))
+
+         return true
+    })
+    .catch(function(error) {
+        console.error("Error adding document: ", error);
+        return false
+    });
+})
+
 exports.indexIcon = functions.firestore
     .document('submissions/{iconId}')
     .onCreate((snap, context) => {
@@ -149,7 +169,7 @@ exports.convertToIcns = functions.https.onCall((data, context) => {
     bucket.file(filePath).download({ destination: tmpFilePath }).then(() => {
         (async () => {
 
-            let input = fs.readFileSync(tmpFilePath)
+            let input = fs.readFileSync(tmpFilePath) // Reads temp saved file
             let output = png2icons.createICNS(input, png2icons.BILINEAR, 0);
 
             let toUpload = {
@@ -157,7 +177,7 @@ exports.convertToIcns = functions.https.onCall((data, context) => {
                 lowResPng: join(os.tmpdir(), newFileName + ".png"),   // Set path for new low-res image
             }
 
-            // Set cloud storage reference for newly creaed .icns and .png
+            // Set cloud storage reference for newly created .icns and .png
             let icnsStorageRef = join("icons_approved", newIcnsName)
             let pngStorageRef = join("icons_approved/png", newFileName + ".png")
 
