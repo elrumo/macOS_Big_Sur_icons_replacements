@@ -26,6 +26,10 @@
       :iconListLen="iconListLen"
     />
 
+    <coral-toast id="errorToast" variant="error">
+      {{ toastMsg }}
+    </coral-toast>
+
     <coral-toast id="successToast" variant="success">
       😄 All icons have been uploaded.
     </coral-toast>
@@ -45,7 +49,6 @@
     <!-- <div style="display: none"> {{search}} </div> -->
     <!-- Icon Section -->
     <section class="content-wrapper">
-    
     <!-- Search bar -->
       <div @click="isSearch = true" class="main-search-wrapper coral-bg p-b-15">
         <div class="m-auto main-search" style="max-width:300px;">
@@ -63,7 +66,7 @@
         </div>
       </div>
       
-    <!-- Wai ting spinning circle -->
+    <!-- Waiting spinning circle -->
       <div v-if="this.$store.state.list == 0" class="waiting-wrapper">
         <coral-wait size="L" indeterminate=""></coral-wait>
       </div>
@@ -74,19 +77,22 @@
         </p>
       </div>
 
+      <button v-if="isAuth" @click="logout" is="coral-button" variant="quiet">
+        Logout
+      </button>
+
     <!-- Icon list -->
         <div v-if="isAuth" class="icon-list-area p-t-20 p-b-50">
-          
           <!-- Carbon ads -->
           <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
 
           <!-- Search Bar -->
-          <div  v-for="icon in search" :key="icon.fileName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper coral-card">
+          <div  v-for="icon in search" :key="icon.appName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper coral-card">
               <div class="card-img-wrapper" style="max-width: 120px;">
                 
                 <a :href="icon.icnsUrl">
                   <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                    <img class="w-full" :data-src="icon.pngUrl">
+                    <img class="w-full" :data-src="icon.lowResPngUrl">
                   </div>
                 </a>
 
@@ -120,10 +126,10 @@
 
       <!-- Seen when no auth  -->
         <div v-if="!isAuth" class="icon-list-area p-t-20 p-b-50">
-          <a v-for="icon in search" :key="icon.fileName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper shadow coral-card" :href="icon.icnsUrl">
+          <a v-for="icon in search" :key="icon.appName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper shadow coral-card" :href="icon.icnsUrl">
             <div class="card-img-wrapper">
               <div v-lazy-container="{ selector: 'img', loading: icons.loading }">
-                <img class="w-full" :data-src="icon.pngUrl">
+                <img class="w-full" :data-src="icon.lowResPngUrl">
               </div>
             </div>
             <div>
@@ -175,8 +181,6 @@ Parse.serverURL = 'http://82.145.63.160:1337/parse'
 const Icons = Parse.Object.extend("Icons");
 const icons = new Icons();
 
-console.log(icons);
-
 // let order = ["timeStamp", "desc"]
 let order = ["appName", ""]
 let dbCollection = db.collection("submissions").where("approved", "==", true).orderBy(order[0])
@@ -216,6 +220,7 @@ export default {
       isSearch: false,
       noIcons: true,
       isAuth: false,
+      
       howManyRecords: 0,
 
       iconListLen: "3,070",
@@ -242,34 +247,24 @@ export default {
 
   mounted: function(){
     let parent = this;
-    
-    
-    //  db.collection("meta").doc("pageCount").update({
-    //     visits: firebase.firestore.FieldValue.increment(1)
-    //   }).then(function() {
-    //       console.log("Document plus 1");
-    //   }).catch(function(error) {
-    //       // The document probably doesn't exist.
-    //       console.error("Error updating document: ", error);
-    //   });
 
-
-    // this.$ga.disable()
-    // console.log(this.$ga);
-
-    // this.getIconListLen();
     this.getIconsArray();
 
-     firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        // User is signed in.
+    if(Parse.User.current()){
         console.log("Signed In");
         parent.isAuth = true
-      }
-     })
+    }
   },
 
   methods:{ 
+
+    logout(){
+      console.log("HI");
+      parent.isAuth = false
+      Parse.User.logOut().then(() => {
+        const currentUser = Parse.User.current();  // this will now be null
+      });
+    },
 
     prettifyName(name){
       // let newName = name
@@ -372,13 +367,13 @@ export default {
 
       for(let result in results){
         let objData = results[result].attributes
-        let iconData = objData
-        let newFileName = objData.fileName.split(".png")
-        newFileName.pop()
-        // newFileName = newFileName[0]+".icns"
+        let iconData = {}
+        
+        for(let data in objData){
+           iconData[data] = objData[data]
+        }
+        iconData.id = results[result].id
 
-        storage.ref('icons_approved/png/'+objData.fileName)
-        storage.ref('icons_approved/'+newFileName)
         parent.$store.commit('pushDataToArr', {arr: "list", data: iconData, func: "getIconsArray"})
       }
 
@@ -461,6 +456,10 @@ export default {
 
   computed:{
 
+    toastMsg(){
+      return this.$store.state.toastMsg
+    },
+
     search(){
       let parent = this
 
@@ -482,7 +481,7 @@ export default {
       return parent.$store.state.dataToShow
       // return  parent.dataToShow
     },
-    
+
     iconListStore(){
       return this.$store.state.list
     },

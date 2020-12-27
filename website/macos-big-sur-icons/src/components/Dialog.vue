@@ -130,7 +130,7 @@ export default {
     },
 
     methods:{
-      ...mapActions(['showToast']),
+      ...mapActions(['showToast', 'errorToast']),
 
       removeFile(e){
         let parent = this
@@ -179,9 +179,17 @@ export default {
         for(let fileNum in parent.filesToUpload){
           let file =  parent.filesToUpload[fileNum];
           let appName = file.name.replace('.png', '');
-          let fileName = `${file.name}`;
+          let fileName;
+          
+          if (/^[A-Za-z][A-Za-z0-9]*$/.test(file.name)) {
+            fileName = `${file.name}`
+          } else {
+            let d = new Date()
+            fileName = Math.round(Math.random()*10000 + d.getTime() )
+            fileName = fileName.toString()
+          }
 
-          console.log(fileName);
+          console.log(fileName, file.name);
           
           const Icons = Parse.Object.extend("Icons");
           const icons = new Icons()
@@ -196,8 +204,8 @@ export default {
               credit: parent.credit,
               usersName: parent.yourName,
               fileName: fileName,
-              highResPng: parseFile,
-              highResPngURL: uploaded._url,
+              highResPngFile: parseFile,
+              highResPngUrl: uploaded._url,
               timeStamp: Date.now(),
               approved: false
             }
@@ -244,6 +252,9 @@ export default {
 
           }, function(error) {
             console.log(error);
+            parent.isLoading = false
+            parent.errorToast({msg:"Please, make sure no special characters are used."})
+            // document.getElementById("Sh")
             // The file either could not be read, or could not be saved to Parse.
           });
 
