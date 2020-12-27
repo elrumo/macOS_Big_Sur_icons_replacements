@@ -8,7 +8,8 @@ export default new Vuex.Store({
 
   state: {
     list:[],
-    dataToShow: []
+    dataToShow: [],
+    toastMsg: "YOOOOO",
   },
 
   mutations: {   
@@ -36,6 +37,11 @@ export default new Vuex.Store({
   actions: {
     showToast(store, dialogId){
       document.getElementById(dialogId.id).show();
+    },
+
+    errorToast(store, msg){
+      store.state.toastMsg = msg.msg
+      document.getElementById('errorToast').show();
     },
 
     pushDataToArr(store, iconData){
