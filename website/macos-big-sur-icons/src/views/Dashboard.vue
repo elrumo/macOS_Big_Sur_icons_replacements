@@ -14,6 +14,10 @@
       There has been an error, please Approve again
     </coral-toast>
 
+    <coral-toast id="error" variant="error">
+      There has been an error, please try again.
+    </coral-toast>
+
     <!-- Sign in well -->
     <div v-if="!isAuth" id="signIn-wrapper" class="coral-Well m-t-50">
       <div class="m-b-20">
@@ -86,16 +90,15 @@
             <div v-for="icon in user.icons" class="card-wrapper coral-card" :key="icon.fileName">
 
               <div class="card-img-wrapper" style="max-width: 120px;">
-                
                 <div v-if="icon.isReview" class="loading-approval-wrapper">
                   <div class="loading-approval">
-                    <!-- <coral-wait indeterminate=""></coral-wait> -->
                   </div>
                 </div>
-                
-                <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                  <img class="w-full" :data-src="icon.highResPngURL">
-                </div>
+                <a :href="icon.imgUrl">
+                  <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
+                    <img class="w-full" :data-src="icon.imgUrl">
+                  </div>
+                </a>
 
 
                 <div class="quick-actions-wrapper">
@@ -225,6 +228,7 @@ export default {
       iconListLen: 0,
 
       howManyRecords: 0,
+      sortBy: "usersName",
 
       emailMsg: "Thanks you for your submission to macosicons.com! I'm just getting in touch with you to ask if you could ..., otherwise the icons won't work propperly. You can either email me back or re-submit the icons on macosicons.com. Thanks again, Elias webbites.io",
       approvedIcons: {},
@@ -304,38 +308,42 @@ export default {
       return date
     },
 
-    editDoc(icon, e, field, isMultipleIcons){
+    async editDoc(icon, e, field, isMultipleIcons){
       let parent = this
       let newName = e.target.value
 
       console.log(newName);
+
       if(isMultipleIcons){
         let listLen = Object.keys(icon.icons).length
         let count = 0
 
         for(let doc in icon.icons){
-          db.collection("submissions").doc(icon.icons[doc].id).update({
-            [field]: newName
-          }).then(function() {
-              count++
-              if (count == listLen) {
-                parent.showToast({id:"iconUpdated"})
-                console.log("All documents successfully updated!");
-              }    
-              console.log("Document successfully updated!");
-          }).catch(function(error) {
-              console.error("Error updating document: ", error);
-          });
+
+          const IconsBase = Parse.Object.extend("Icons");
+          const query = new Parse.Query(IconsBase);
+          const docToEdit = await query.get(icon.icons[doc].id)
+
+          docToEdit.set({ [field]: newName }) // Save icnsToStore obj with .icns file and its url to Parse server
+          docToEdit.save().then(() =>{
+            console.log(field, "updated.");
+          }).catch((e) =>{
+            document.getElementById("error").show()
+          })
+
         }
       } else if(!isMultipleIcons){
-        db.collection("submissions").doc(icon.id).update({
-          [field]: newName
-        }).then(function() {
-            console.log("Document successfully updated!");
-        }).catch(function(error) {
-            // The document probably doesn't exist.
-            console.error("Error updating document: ", error);
-        });
+
+        const IconsBase = Parse.Object.extend("Icons");
+        const query = new Parse.Query(IconsBase);
+        const docToEdit = await query.get(icon.id)
+
+        docToEdit.set({ [field]: newName }) // Save icnsToStore obj with .icns file and its url to Parse server
+        docToEdit.save().then(() =>{
+          console.log(field, "updated.");
+        }).catch((e) =>{
+          document.getElementById("error").show()
+        })
       }
     },
 
@@ -352,13 +360,16 @@ export default {
       });
 
       try {
-        await user.signUp();
+        await user.signUp().then(()=>{
+          parent.isAuth =  true;
+        });
         console.log();
       } catch (error) {
         console.log(error.code);
 
         if (error.code == 202) { // 202 error = email arleady exists, so attemptying to log them in instead.
           Parse.User.logIn(email, password).then((user) => { // Logging in user
+            parent.isAuth = true;
             console.log(user);
           }).catch((error) =>{
             console.log(error);
@@ -372,40 +383,30 @@ export default {
       return Object.keys(obj).length == 0
     },
 
-    deleteSubmission(icon){
+    async deleteSubmission(icon){
         let parent = this
         console.log(icon);
-  
-        let fileRef = storage.ref().child(icon.iconRef)
-        
-        fileRef.delete().then(function() {
-          console.log(icon.appName, " deleted successfully.");
-        }).catch(function(error) {
-          console.log("Uh-oh, an error occurred with: ", icon.appName, " with ID: ", icon.id);
-        });
 
-        // Delete object from Firestore
-        db.collection("submissions").doc(icon.id).delete().then(function() {
-          console.log("Document successfully deleted!");
-          
+        let query = new Parse.Query(Icons)
+        let docToDelete = await query.get(icon.id);
 
+        docToDelete.destroy().then(() =>{
           Vue.delete(parent.icons[icon.usersName].icons, icon.appName) // Delete object locally
           
           if (Object.keys(parent.icons[icon.usersName].icons).length == 0 ) { // Delete user from UI if no icons are left
             Vue.delete(parent.icons, icon.usersName)
           }
-          
-        }).catch(function(error) {
-            console.error("Error removing document: ", error);
-        });
+        }).catch((e) =>{
+          console.log(e);
+        })
 
     },
 
     prettifyName(name){
-      for(let i in name){
-        name = name.replace("_", " ")
-      }
+        // for(let i in name){
+      name = name.replaceAll("_", " ")
       return name
+      //   }
     },
 
     async approveIcon(icon){  
@@ -458,54 +459,61 @@ export default {
       })
     },
 
-    loadMore(){
-      let parent = this
-      console.log(lastVisible);
-      dbCollection.startAfter(lastVisible).limit(25).get().then(function(querySnapshot){
-        querySnapshot.forEach(function(doc){
-          setTimeout(() => {
-              parent.scrolledToBottom = true
-          }, 300);
+    async loadMore(){
 
-            let docData = doc.data();
+      let parent = this
+      let howManyRecords = parent.howManyRecords
+      
+      parent.howManyRecords = howManyRecords + docLimit
+
+      const query = new Parse.Query(Icons);
+      query.equalTo("approved", false)
+      query.ascending(parent.sortBy);
+      query.skip(howManyRecords);
+      query.limit(docLimit);
+      const results = await query.find()
+      
+      setTimeout(() => {
+          parent.scrolledToBottom = true
+      }, 800);
+
+      for(let result in results){
+        let objData = results[result].attributes
+        let iconData = objData
+
+
+            let docData = {}
+            for(let key in objData){
+              docData[key] = objData[key]
+            }
+
             docData.imgUrl = ""
 
             let usersName = docData.usersName
             let appName = docData.appName
             let email = docData.email
             let creditUrl = docData.credit
-            let id = doc.id
             
-            docData.id = id
+            docData.id = results[result].id
 
             if (usersName == "" || usersName == undefined ) {
               console.log("usersName undefined ");
+              console.log("docData: ", docData);
             }else{
               if(parent.icons[usersName] == undefined ){
                 Vue.set(parent.icons, usersName, {"usersName": usersName, "email": email, "icons":{}, "creditUrl": creditUrl})
                 Vue.set(parent.icons[usersName].icons, appName, docData)
-                var imgReference = storage.ref(docData.iconRef)
-                
-                imgReference.getDownloadURL().then(function(url) {
-                  Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
-                })                
+                Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  docData.highResPngUrl)        
               } else{
                 Vue.set(parent.icons[usersName].icons, appName, docData)
-                var imgReference = storage.ref(docData.iconRef)
-
-                imgReference.getDownloadURL().then(function(url) {
-                  Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
-                })
+                Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  docData.highResPngUrl)
               }              
             }
-
-        })
-        lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
-      })
+      }
 
     },
 
-    scroll () {
+    scroll() {
       let parent = this
       window.onscroll = () => {
         let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 1200
@@ -548,10 +556,8 @@ export default {
           let docObj = results[result].attributes;
           let docData = JSON.parse(JSON.stringify(docObj));
           docData.id = results[result].id
-          
-          console.log("docData.id: ", docData.id);
 
-          docData.imgUrl = ""
+          docData.imgUrl = docData.highResPngUrl
           
           let usersName = docData.usersName
           let appName = docData.appName
@@ -565,23 +571,12 @@ export default {
             if(parent.icons["Undefined"] == undefined ){
               Vue.set(parent.icons, "Undefined", {"usersName": "Undefined", "email": email, "icons":{}, "creditUrl": creditUrl})
               Vue.set(parent.icons["Undefined"].icons, appName, docData)
-              imgReference = storage.ref(docData.iconRef)
-              
-              imgReference.getDownloadURL().then(function(url) {
-                Vue.set(parent.icons["Undefined"].icons[appName], "imgUrl",  url)
-                Vue.set(parent.icons["Undefined"].icons[appName], "usersName",  "Undefined")
-                Vue.set(parent.icons["Undefined"], "usersName",  "Undefined")
-              })                
+              Vue.set(parent.icons["Undefined"].icons[appName], "usersName",  "Undefined")
+              Vue.set(parent.icons["Undefined"], "usersName",  "Undefined")                
             } else{
-              // console.log("Undefined: ", docData);
               Vue.set(parent.icons["Undefined"].icons, appName, docData)
               Vue.set(parent.icons["Undefined"].icons[appName], "usersName",  "Undefined")
               Vue.set(parent.icons["Undefined"], "usersName",  "Undefined")
-              imgReference = storage.ref(docData.iconRef)
-
-              // imgReference.getDownloadURL().then(function(url) {
-              //   Vue.set(parent.icons["Undefined"].icons[appName], "imgUrl",  url)
-              // })              
             }
 
           }else{
@@ -590,21 +585,13 @@ export default {
               Vue.set(parent.icons, usersName, {"usersName": usersName, "email": email, "icons":{}, "creditUrl": creditUrl})
               Vue.set(parent.icons[usersName].icons, appName, docData)
               
-              // imgReference = storage.ref(docData.iconRef)
-              // imgReference.getDownloadURL().then(function(url) {
-              //   Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
-              // })                
             } else{
               Vue.set(parent.icons[usersName].icons, appName, docData)
-              
-              // imgReference = storage.ref(docData.iconRef)
-              // imgReference.getDownloadURL().then(function(url) {
-              //   Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
-              // })
             }
 
           }
         }
+        parent.scroll()
       }
 
       getParseData()
@@ -613,91 +600,7 @@ export default {
       parent.isAuth = false
       console.log("You are not logged in");
     }
-
-    // firebase.auth().onAuthStateChanged(function(user) {
-    //   if (!user) {
-    //     // User is signed in.
-    //     console.log("Signed In");
-    //     var providerData = user.providerData;
-
-    //     hideEl("signIn-wrapper")
-        
-    //     parent.isAuth = true
-    //     console.log(parent.isAuth);
-
-    //     dbCollection.limit(25)
-    //       .get().then(function(querySnapshot) {
-    //         querySnapshot.forEach(function(doc) {
-    //           lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
-              
-    //           let docData = doc.data();
-    //           docData.imgUrl = ""
-
-    //           let usersName = docData.usersName
-    //           let appName = docData.appName
-    //           let email = docData.email
-    //           let creditUrl = docData.credit
-    //           let id = doc.id
-              
-    //           docData.id = id
-              
-    //           let imgReference
-
-    //           if (usersName == "" || usersName == undefined ) {
-                
-    //             if(parent.icons["Undefined"] == undefined ){
-    //               Vue.set(parent.icons, "Undefined", {"usersName": "Undefined", "email": email, "icons":{}, "creditUrl": creditUrl})
-    //               Vue.set(parent.icons["Undefined"].icons, appName, docData)
-    //               imgReference = storage.ref(docData.iconRef)
-                  
-    //               imgReference.getDownloadURL().then(function(url) {
-    //                 Vue.set(parent.icons["Undefined"].icons[appName], "imgUrl",  url)
-    //                 Vue.set(parent.icons["Undefined"].icons[appName], "usersName",  "Undefined")
-    //                 Vue.set(parent.icons["Undefined"], "usersName",  "Undefined")
-    //               })                
-    //             } else{
-    //               // console.log("Undefined: ", docData);
-    //                 Vue.set(parent.icons["Undefined"].icons, appName, docData)
-    //                 Vue.set(parent.icons["Undefined"].icons[appName], "usersName",  "Undefined")
-    //                 Vue.set(parent.icons["Undefined"], "usersName",  "Undefined")
-    //                 imgReference = storage.ref(docData.iconRef)
-
-    //                 imgReference.getDownloadURL().then(function(url) {
-    //                   Vue.set(parent.icons["Undefined"].icons[appName], "imgUrl",  url)
-    //                 })              
-    //             }
-
-    //           }else{
-    //             if(parent.icons[usersName] == undefined ){
-    //               Vue.set(parent.icons, usersName, {"usersName": usersName, "email": email, "icons":{}, "creditUrl": creditUrl})
-    //               Vue.set(parent.icons[usersName].icons, appName, docData)
-    //               imgReference = storage.ref(docData.iconRef)
-                  
-    //               imgReference.getDownloadURL().then(function(url) {
-    //                 Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
-    //               })                
-    //             } else{
-    //               Vue.set(parent.icons[usersName].icons, appName, docData)
-    //               imgReference = storage.ref(docData.iconRef)
-
-    //               imgReference.getDownloadURL().then(function(url) {
-    //                 Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  url)
-    //               })
-    //             }              
-    //           }
-
-    //       });
-    //     }).then(function(querySnapshot) {
-    //       parent.scroll()
-    //     })
-    //   }else {
-    //     showEl("signIn-wrapper")
-    //     console.log("Not Signed In");
-    //       // User is signed out.
-    //       // ...
-    //   }
-    // });
-
+    
   },
 
   computed:{
