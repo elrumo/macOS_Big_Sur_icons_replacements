@@ -15,12 +15,9 @@
 </template>
 
 <script>
-
-import Parse from 'parse'
-
-Parse.initialize("macOSicons");
-Parse.serverURL = 'http://82.145.63.160:1337/parse'
-const Icons = Parse.Object.extend("Icons");
+import * as firebase from "firebase";
+const storage = firebase.storage();
+const db = firebase.firestore();
 
 export default {
     name:"deleteDialog",
@@ -30,34 +27,27 @@ export default {
     },
 
     methods:{
-        async deleteIcon(icon){
+        deleteIcon(icon){
             let parent = this
             console.log(icon);
-
-            let query = new Parse.Query(Icons)
-            let docToDelete = await query.get(icon.id);
-
-            docToDelete.destroy().then(() =>{
-                parent.$store.dispatch('deleteItem', icon)
-            }).catch((e) =>{
-            console.log(e);
-            })
             
-            // fileRefIcns.delete().then(function() {
-            //         console.log(icon.appName, " deleted successfully.");
-            //     })
-            // .catch((error)=>{
-            //     console.log("Uh-oh, an error occurred with: ", icon.appName, " with ID: ", icon.id);
-            //     console.log(error);
-            // })
+            let fileRefIcns = storage.ref().child("icons_approved/"+icon.icnsFileName)
+            
+            fileRefIcns.delete().then(function() {
+                    console.log(icon.appName, " deleted successfully.");
+                })
+            .catch((error)=>{
+                console.log("Uh-oh, an error occurred with: ", icon.appName, " with ID: ", icon.id);
+                console.log(error);
+            })
 
-            // // Delete object from Firestore
-            // db.collection("submissions").doc(icon.objectID).delete().then(function() {
-            //     console.log("Document successfully deleted!");
-            //     parent.$store.dispatch('deleteItem', icon)
-            // }).catch(function(error) {
-            //     console.error("Error removing document: ", error);
-            // });
+            // Delete object from Firestore
+            db.collection("submissions").doc(icon.objectID).delete().then(function() {
+                console.log("Document successfully deleted!");
+                parent.$store.dispatch('deleteItem', icon)
+            }).catch(function(error) {
+                console.error("Error removing document: ", error);
+            });
         },
     }
     

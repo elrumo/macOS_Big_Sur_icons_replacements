@@ -26,9 +26,9 @@
       :iconListLen="iconListLen"
     />
 
-    <coral-toast id="errorToast" variant="error">
-      {{ toastMsg }}
-    </coral-toast>
+    <div class="hide" id="614423561">
+      {{ adScript }}
+    </div>
 
     <coral-toast id="successToast" variant="success">
       😄 All icons have been uploaded.
@@ -48,6 +48,7 @@
     
     <!-- Icon Section -->
     <section class="content-wrapper">
+    
     <!-- Search bar -->
       <div @click="isSearch = true" class="main-search-wrapper coral-bg p-b-15">
         <div class="m-auto main-search" style="max-width:300px;">
@@ -65,7 +66,7 @@
         </div>
       </div>
       
-    <!-- Waiting spinning circle -->
+    <!-- Wai ting spinning circle -->
       <div v-if="this.$store.state.list == 0" class="waiting-wrapper">
         <coral-wait size="L" indeterminate=""></coral-wait>
       </div>
@@ -76,24 +77,21 @@
         </p>
       </div>
 
-      <button v-if="isAuth" @click="logout" is="coral-button" variant="quiet">
-        Logout
-      </button>
-
     <!-- Icon list -->
         <div v-if="isAuth" class="icon-list-area p-t-20 p-b-50">
+          
           <!-- Carbon ads -->
-          <script class="coral-card" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
-
+          <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+          
           <!-- Search Bar -->
-          <div  v-for="icon in search" :key="icon.appName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper coral-card">
-              <div class="card-img-wrapper" style="max-width: 120px;">
-                
-                <a :href="icon.icnsUrl">
-                  <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                    <img class="w-full" :data-src="icon.lowResPngUrl">
-                  </div>
-                </a>
+          <div  v-for="icon in search" :key="icon.fileName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper coral-card">    
+            <div class="card-img-wrapper" style="max-width: 120px;">  
+
+              <a :href="icon.icnsUrl">
+                <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
+                  <img class="w-full" :data-src="icon.pngUrl">
+                </div>
+              </a>
 
               <div class="quick-actions-wrapper">
                 <div class="quick-action-el">
@@ -129,10 +127,11 @@
           <!-- Carbon ads -->
           <script class="coral-card" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
 
-          <a v-for="icon in search" :key="icon.appName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper shadow coral-card" :href="icon.icnsUrl">
+          <a v-for="icon in search" :key="icon.fileName" class="card-wrapper shadow coral-card" :href="icon.icnsUrl">
+            <!-- <div style="position: relative; top: 50%; transform: translateY(-60%);"> -->
             <div class="card-img-wrapper">
               <div v-lazy-container="{ selector: 'img', loading: icons.loading }">
-                <img class="w-full" :data-src="icon.lowResPngUrl">
+                <img class="w-full" :data-src="icon.pngUrl">
               </div>
             </div>
             <div>
@@ -164,6 +163,7 @@
 
 <script>
 import Vue from 'vue';
+import algoliasearch from 'algoliasearch'
 
 import Header from './Header.vue';
 import Hero from './Hero.vue';
@@ -171,19 +171,11 @@ import iconCard from './iconCard.vue';
 import Dialog from './Dialog.vue';
 import deleteDialog from './deleteDialog.vue';
 
-import algoliasearch from 'algoliasearch'
 import * as firebase from "firebase";
 import { Search } from '@adobe/coral-spectrum';
-import Parse from 'parse'
 
 const storage = firebase.storage();
 const db = firebase.firestore();
-
-Parse.initialize("macOSicons");
-Parse.serverURL = 'http://82.145.63.160:1337/parse'
-
-const Icons = Parse.Object.extend("Icons");
-const icons = new Icons();
 
 // let order = ["timeStamp", "desc"]
 let order = ["appName", ""]
@@ -197,8 +189,6 @@ let algolia = {
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
 const index = client.initIndex('macOS_parse')
-
-const docLimit = 20
 
 export default {
   name: 'Home',
@@ -220,12 +210,9 @@ export default {
 
       scrolledToBottom: true,
       sortByName: true,
-      sortBy: "appName",
       isSearch: false,
       noIcons: true,
       isAuth: false,
-      
-      howManyRecords: 0,
 
       iconListLen: "3,294",
       lastVisible: {},
@@ -252,23 +239,41 @@ export default {
   mounted: function(){
     let parent = this;
 
+    db.collection("meta").doc("pageCount").update({
+      visits: firebase.firestore.FieldValue.increment(1)
+    }).then(function() {
+        console.log("Document plus 1");
+    }).catch(function(error) {
+        // The document probably doesn't exist.
+        console.error("Error updating document: ", error);
+    });
+
+
+    // this.$ga.disable()
+    // console.log(this.$ga);
+
+    // this.getIconListLen();
     this.getIconsArray();
 
-    if(Parse.User.current()){
+     firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
         console.log("Signed In");
         parent.isAuth = true
-    }
+      }
+     })
   },
 
-  methods:{ 
+  methods:{
 
-    logout(){
-      console.log("HI");
-      parent.isAuth = false
-      Parse.User.logOut().then(() => {
-        const currentUser = Parse.User.current();  // this will now be null
-      });
-    },
+    adScript(){
+      try {
+        window._mNHandle.queue.push(function (){
+            window._mNDetails.loadTag("614423561", "300x250", "614423561");
+        });
+      }
+      catch (error) {}
+    },   
 
     prettifyName(name){
       // let newName = name
@@ -284,17 +289,14 @@ export default {
       let sortByName = parent.sortByName
       let date = parent.icons.date
       let namingOrder = parent.icons.namingOrder
-      
-      console.log(sortByName);
 
-      if (parent.sortByName) {
+      if (sortByName) {
         parent.icons.iconsOrder = date
       } else{
         parent.icons.iconsOrder = namingOrder
       }
 
-      parent.sortByName = !parent.sortByName
-      
+      parent.sortByName = !sortByName
     },
     
     getDate(timeStamp){
@@ -314,36 +316,28 @@ export default {
       return date
     },
 
-    async loadMore(){
+    loadMore(){
       let parent = this
-      let howManyRecords = parent.howManyRecords
-      
-      parent.howManyRecords = howManyRecords + docLimit
-
-      const query = new Parse.Query(Icons);
-      query.equalTo("approved", true)
-      query.ascending(parent.sortBy);
-      query.skip(howManyRecords);
-      query.limit(docLimit);
-      const results = await query.find()
-      
-      setTimeout(() => {
-          parent.scrolledToBottom = true
-      }, 800);
-
-      for(let result in results){
-        let objData = results[result].attributes
-        let iconData = objData
-
-        parent.$store.dispatch("pushDataToArr", {arr: "list", data: iconData, func: "loadMore"})
-      }
+      console.log(lastVisible);
+      dbCollection.startAfter(lastVisible).limit(20).get().then(function(querySnapshot){
+        querySnapshot.forEach(function(doc){
+          setTimeout(() => {
+              parent.scrolledToBottom = true
+          }, 300);
+          let iconData = doc.data()
+          iconData.id = doc.id
+          parent.$store.dispatch("pushDataToArr", {arr: "list", data: iconData, func: "loadMore"})
+          // parent.list.push(doc.data())
+        })
+        lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
+      })
 
     },
 
     scroll() {
       let parent = this
       window.onscroll = () => {
-        let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000
+        let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 1200
 
         if (bottomOfWindow && parent.scrolledToBottom && !parent.isSearch) {
           parent.scrolledToBottom = false // replace it with your code
@@ -359,40 +353,35 @@ export default {
       })
     },
 
-    async getIconsArray(){
+    getIconsArray(){
       let parent = this
 
-      const query = new Parse.Query(Icons);
-      query.equalTo("approved", true)
-      query.ascending(parent.sortBy);
-      query.limit(docLimit);
-      parent.howManyRecords = docLimit
+      dbCollection.limit(15)
+      .get().then(function (querySnapshot) {
 
-      const results = await query.find()
+        lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
 
-      setTimeout(() => {
-        try {
+        querySnapshot.forEach(function (doc) {
+          let iconData = doc.data()
+          
+          let newFileName = doc.data().fileName.split(".png")
+          newFileName.pop()
+          newFileName = newFileName[0]+".icns"
+          
+          iconData.id = doc.id
+          storage.ref('icons_approved/png/'+doc.data().fileName)
+          storage.ref('icons_approved/'+newFileName)
+          parent.$store.commit('pushDataToArr', {arr: "list", data: iconData, func: "getIconsArray"})
+          
+          // parent.list.push(iconData)
+        })
+      }).then(()=>{
           let carbon = document.getElementById("carbonads")
-          carbon.classList.add("coral-card") 
-        } catch (error) {
-          console.log(error);
-        }
-      }, 400);
-
-      for(let result in results){
-        let objData = results[result].attributes
-        let iconData = {}
-        
-        for(let data in objData){
-           iconData[data] = objData[data]
-        }
-        iconData.id = results[result].id
-
-        parent.$store.commit('pushDataToArr', {arr: "list", data: iconData, func: "getIconsArray"})
-      }
-
-      parent.scroll()
-
+          carbon.classList.add("coral-card")
+        // parent.dataToShow =  parent.list
+        // parent.$store.dispatch("pushDataToArr", {arr: "dataToShow", data: this.$store.state.list})
+        parent.scroll()
+      })
     },
 
     showDialog(dialogId, icon){
@@ -478,10 +467,6 @@ export default {
 
   computed:{
 
-    toastMsg(){
-      return this.$store.state.toastMsg
-    },
-
     search(){
       let parent = this
 
@@ -503,7 +488,7 @@ export default {
       return parent.$store.state.dataToShow
       // return  parent.dataToShow
     },
-
+    
     iconListStore(){
       return this.$store.state.list
     },
