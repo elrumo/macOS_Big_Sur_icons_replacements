@@ -127,7 +127,7 @@
         <div v-if="!isAuth" class="icon-list-area p-t-20 p-b-50">
           
           <!-- Carbon ads -->
-          <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+          <script class="coral-card" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
 
           <a v-for="icon in search" :key="icon.appName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper shadow coral-card" :href="icon.icnsUrl">
             <div class="card-img-wrapper">
@@ -196,7 +196,7 @@ let algolia = {
 }
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
-const index = client.initIndex('macOSicons')
+const index = client.initIndex('macOS_parse')
 
 const docLimit = 20
 
@@ -367,7 +367,17 @@ export default {
       query.ascending(parent.sortBy);
       query.limit(docLimit);
       parent.howManyRecords = docLimit
+
       const results = await query.find()
+
+      setTimeout(() => {
+        try {
+          let carbon = document.getElementById("carbonads")
+          carbon.classList.add("coral-card") 
+        } catch (error) {
+          console.log(error);
+        }
+      }, 400);
 
       for(let result in results){
         let objData = results[result].attributes
@@ -449,10 +459,18 @@ export default {
   watch:{
     searchString: function (search) {
       let parent = this
-      index.search(search, {filters: 'approved:true', hitsPerPage: 100 }).then(function(responses) {
+      index.search(search, { hitsPerPage: 150 }).then(function(responses) {
         // console.log(responses.hits);
         // parent.dataToShow = responses.hits
-        parent.$store.dispatch("setDataToArr", {arr: "dataToShow", data: responses.hits, func: "searchAlgolia"})
+
+        let searchData = []
+        for(let hit in responses.hits){
+          if (responses.hits[hit].approved == true) {
+            searchData.push(responses.hits[hit])
+          }
+        }
+
+        parent.$store.dispatch("setDataToArr", {arr: "dataToShow", data: searchData, func: "searchAlgolia"})
         // parent.$store.dispatch("pushDataToArr", {arr: "dataToShow", data: responses.hits, func: "searchAlgolia"})
       });
     }
