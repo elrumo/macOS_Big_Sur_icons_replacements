@@ -23,7 +23,7 @@ It's super easy! We've made sure that all icons here work with no problem. You j
 <img style="text-align: left" src="https://i.imgur.com/0Vj6sFS.png" width="300">
 
 ## I'd like to contribute
-Download the template for [Sketch](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.sketch), [Figma](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template_App_Icon.fig), [Photoshop](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.psd) or [Illustrator](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template%20-%20Icon%20-%20App.ai).
+Download the template for [Sketch](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.sketch), [Figma](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.fig), [Photoshop](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.psd) or [Illustrator](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.ai).
 
 Here are some rules you show know:
 
