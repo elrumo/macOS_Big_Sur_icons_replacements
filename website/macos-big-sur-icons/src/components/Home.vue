@@ -377,7 +377,7 @@ export default {
         } catch (error) {
           console.log(error);
         }
-      }, 400);
+      }, 800);
 
       for(let result in results){
         let objData = results[result].attributes
