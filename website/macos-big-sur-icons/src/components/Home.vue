@@ -126,6 +126,10 @@
 
       <!-- Seen when no auth  -->
         <div v-if="!isAuth" class="icon-list-area p-t-20 p-b-50">
+
+          <!-- Carbon ads -->
+          <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+          
           <a v-for="icon in search" :key="icon.appName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper shadow coral-card" :href="icon.icnsUrl">
             <div class="card-img-wrapper">
               <div v-lazy-container="{ selector: 'img', loading: icons.loading }">
@@ -175,7 +179,11 @@ import Parse from 'parse'
 const storage = firebase.storage();
 const db = firebase.firestore();
 
-Parse.initialize("macOSicons");
+const PARSE_APP_ID = process.env.PARSE_APP_ID
+const PARSE_JAVASCRIPT_KEY = process.env.PARSE_JAVASCRIPT_KEY
+const PARSE_MASTERKEY = process.env.PARSE_MASTERKEY
+
+Parse.initialize(PARSE_APP_ID, PARSE_JAVASCRIPT_KEY, PARSE_MASTERKEY);
 Parse.serverURL = 'http://82.145.63.160:1337/parse'
 
 const Icons = Parse.Object.extend("Icons");
