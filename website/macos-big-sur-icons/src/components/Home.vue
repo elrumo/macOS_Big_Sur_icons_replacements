@@ -183,6 +183,8 @@ const PARSE_APP_ID = process.env.PARSE_APP_ID
 const PARSE_JAVASCRIPT_KEY = process.env.PARSE_JAVASCRIPT_KEY
 const PARSE_MASTERKEY = process.env.PARSE_MASTERKEY
 
+console.log(PARSE_MASTERKEY);
+
 Parse.initialize(PARSE_APP_ID, PARSE_JAVASCRIPT_KEY, PARSE_MASTERKEY);
 Parse.serverURL = 'http://82.145.63.160:1337/parse'
 
