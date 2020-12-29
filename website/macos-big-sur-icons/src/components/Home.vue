@@ -179,13 +179,13 @@ import Parse from 'parse'
 const storage = firebase.storage();
 const db = firebase.firestore();
 
-const PARSE_APP_ID = process.env.PARSE_APP_ID
-const PARSE_JAVASCRIPT_KEY = process.env.PARSE_JAVASCRIPT_KEY
-const PARSE_MASTERKEY = process.env.PARSE_MASTERKEY
+const VUEPARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
+const PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
+const PARSE_MASTERKEY = process.env.VUE_APP_PARSE_MASTERKEY
 
-console.log(PARSE_MASTERKEY);
+console.log(process.env);
 
-Parse.initialize(PARSE_APP_ID, PARSE_JAVASCRIPT_KEY, PARSE_MASTERKEY);
+Parse.initialize(PARSE_APP_ID, PARSE_JAVASCRIPT_KEY, PARSE_MASTERKEY)
 Parse.serverURL = 'http://82.145.63.160:1337/parse'
 
 const Icons = Parse.Object.extend("Icons");
