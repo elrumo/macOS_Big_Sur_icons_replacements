@@ -188,6 +188,8 @@ console.log(process.env);
 Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY, VUE_APP_PARSE_MASTERKEY)
 Parse.serverURL = 'http://82.145.63.160:1337/parse'
 
+console.log(Parse);
+
 const Icons = Parse.Object.extend("Icons");
 const icons = new Icons();
 
