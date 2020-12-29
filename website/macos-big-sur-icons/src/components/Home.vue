@@ -179,9 +179,9 @@ import Parse from 'parse'
 const storage = firebase.storage();
 const db = firebase.firestore();
 
-const VUEPARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
-const PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
-const PARSE_MASTERKEY = process.env.VUE_APP_PARSE_MASTERKEY
+const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
+const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
+const VUE_APP_PARSE_MASTERKEY = process.env.VUE_APP_PARSE_MASTERKEY
 
 console.log(process.env);
 
