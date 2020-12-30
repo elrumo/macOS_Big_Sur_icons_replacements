@@ -176,15 +176,15 @@ import * as firebase from "firebase";
 import { Search } from '@adobe/coral-spectrum';
 import Parse from 'parse'
 
-const storage = firebase.storage();
-const db = firebase.firestore();
+import dotenv from 'dotenv';
+dotenv.config()
+
 
 const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
 const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 const VUE_APP_PARSE_MASTERKEY = process.env.VUE_APP_PARSE_MASTERKEY
 
 Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY, VUE_APP_PARSE_MASTERKEY)
-console.log("Parse: ", Parse);
 Parse.serverURL = 'http://82.145.63.160:1337/parse'
 
 var Icons
@@ -198,7 +198,7 @@ try {
 
 // let order = ["timeStamp", "desc"]
 let order = ["appName", ""]
-let dbCollection = db.collection("submissions").where("approved", "==", true).orderBy(order[0])
+// let dbCollection = db.collection("submissions").where("approved", "==", true).orderBy(order[0])
 let lastVisible
 
 let algolia = {
@@ -392,6 +392,11 @@ export default {
         parent.$store.commit('pushDataToArr', {arr: "list", data: iconData, func: "getIconsArray"})
       }
 
+      setTimeout(() => {
+        let carbon = document.getElementById("carbonads")
+        carbon.classList.add("coral-card")
+      }, 500);
+
       parent.scroll()
 
     },
@@ -511,4 +516,5 @@ export default {
 <style>
   @import url(app.css);
   @import url(snack-helper.min.css);
+  @import url(carbon.css);
 </style>
