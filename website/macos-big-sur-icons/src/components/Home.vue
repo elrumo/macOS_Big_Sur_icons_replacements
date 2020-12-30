@@ -238,7 +238,7 @@ export default {
       
       howManyRecords: 0,
 
-      iconListLen: "3,070",
+      iconListLen: "3,480",
       lastVisible: {},
       dataToShow: [],
       activeIcon: {},
