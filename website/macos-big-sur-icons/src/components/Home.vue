@@ -183,10 +183,9 @@ const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
 const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 const VUE_APP_PARSE_MASTERKEY = process.env.VUE_APP_PARSE_MASTERKEY
 
-// Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY, VUE_APP_PARSE_MASTERKEY)
+Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY, VUE_APP_PARSE_MASTERKEY)
 console.log("Parse: ", Parse);
-// Parse.initialize("macOSicons", "macOSicons", "macOSicons")
-// Parse.serverURL = 'http://82.145.63.160:1337/parse'
+Parse.serverURL = 'http://82.145.63.160:1337/parse'
 
 var Icons
 var icons
@@ -208,7 +207,7 @@ let algolia = {
 }
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
-const index = client.initIndex('macOSicons')
+const index = client.initIndex('macOS_parse')
 
 const docLimit = 20
 
@@ -461,8 +460,8 @@ export default {
   watch:{
     searchString: function (search) {
       let parent = this
-      index.search(search, {filters: 'approved:true', hitsPerPage: 100 }).then(function(responses) {
-        // console.log(responses.hits);
+      
+      index.search(search, {filters: `approved:true`, hitsPerPage: 150 }).then(function(responses) {
         // parent.dataToShow = responses.hits
         parent.$store.dispatch("setDataToArr", {arr: "dataToShow", data: responses.hits, func: "searchAlgolia"})
         // parent.$store.dispatch("pushDataToArr", {arr: "dataToShow", data: responses.hits, func: "searchAlgolia"})
