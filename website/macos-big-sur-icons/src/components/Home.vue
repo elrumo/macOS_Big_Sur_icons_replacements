@@ -183,13 +183,19 @@ const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
 const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 const VUE_APP_PARSE_MASTERKEY = process.env.VUE_APP_PARSE_MASTERKEY
 
-Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY, VUE_APP_PARSE_MASTERKEY)
-Parse.serverURL = 'http://82.145.63.160:1337/parse'
+// Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY, VUE_APP_PARSE_MASTERKEY)
+console.log("Parse: ", Parse);
+// Parse.initialize("macOSicons", "macOSicons", "macOSicons")
+// Parse.serverURL = 'http://82.145.63.160:1337/parse'
 
-console.log(Parse);
-
-const Icons = Parse.Object.extend("Icons");
-const icons = new Icons();
+var Icons
+var icons
+try {
+  Icons = Parse.Object.extend("Icons");
+  icons = new Icons();
+} catch (error) {
+  console.log("PARSEEEEE: ", error);
+}
 
 // let order = ["timeStamp", "desc"]
 let order = ["appName", ""]
