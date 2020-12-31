@@ -172,7 +172,6 @@ import Dialog from './Dialog.vue';
 import deleteDialog from './deleteDialog.vue';
 
 import algoliasearch from 'algoliasearch'
-import * as firebase from "firebase";
 import { Search } from '@adobe/coral-spectrum';
 import Parse from 'parse'
 
@@ -183,7 +182,7 @@ const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
 const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 const VUE_APP_PARSE_MASTERKEY = process.env.VUE_APP_PARSE_MASTERKEY
 
-Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY, VUE_APP_PARSE_MASTERKEY)
+Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://onionicons.com/parse'
 
 var Icons = Parse.Object.extend("Icons");
@@ -261,15 +260,6 @@ export default {
         console.log("Signed In");
         parent.isAuth = true
     }
-
-    const fb = firebase.functions()
-
-    fb.useFunctionsEmulator("http://localhost:5001");
-    const jsonExport = fb.httpsCallable("exportFirestore2Json");
-        
-    jsonExport().then(result =>{
-      console.log(result);
-    })
 
   },
 
