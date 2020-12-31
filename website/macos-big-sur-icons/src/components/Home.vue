@@ -185,16 +185,13 @@ const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 const VUE_APP_PARSE_MASTERKEY = process.env.VUE_APP_PARSE_MASTERKEY
 
 Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY, VUE_APP_PARSE_MASTERKEY)
-Parse.serverURL = 'https://onionicons.com/parse'
 
-var Icons
-var icons
-try {
-  Icons = Parse.Object.extend("Icons");
-  icons = new Icons();
-} catch (error) {
-  console.log("PARSEEEEE: ", error);
-}
+Parse.serverURL = 'http://onionicons.com/parse'
+
+var Icons = Parse.Object.extend("Icons");
+var icons = new Icons();
+
+console.log(icons);
 
 // let order = ["timeStamp", "desc"]
 let order = ["appName", ""]
