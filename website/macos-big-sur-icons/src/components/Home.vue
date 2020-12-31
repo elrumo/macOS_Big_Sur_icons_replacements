@@ -364,7 +364,7 @@ export default {
       })
     },
 
-    getIconsArray(){
+    async getIconsArray(){
       let parent = this
       
       const query = new Parse.Query(Icons);
