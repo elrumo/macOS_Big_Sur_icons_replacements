@@ -15,7 +15,7 @@ const imageminPngquant = require('imagemin-pngquant'); // Plugin for imagemin to
 
 
 const join = path.join
-const dirnam  = path.dirname
+const dirnam = path.dirname
 
 functions.config()
 admin.initializeApp()
@@ -33,25 +33,48 @@ const client = algoliasearch(env.algolia.appid, env.algolia.apikey);
 // const client = algoliasearch(algolia.appid, algolia.apikey);
 const index = client.initIndex('macOSicons');
 
+exports.exportFirestore2Json = functions.https.onCall(() => {
+    var data
+    db.collection("submissions").where("timeStamp", ">=", 1608940800000).get().then(function (querySnapshot) {
+        const orders = [];
+        var order = null
+
+        querySnapshot.forEach(doc => {
+            order = doc.data();
+            orders.push(order);
+        });
+
+        data = JSON.stringify(orders)
+        console.log(data);
+
+        return { message: JSON.stringify(orders) }
+    })
+        .catch(function (error) {
+            console.error("Error adding document: ", error);
+            return false
+        });
+    return data
+})
+
 exports.indexIcon = functions.firestore
     .document('submissions/{iconId}')
     .onCreate((snap, context) => {
         const data = snap
         data.objectID = data.id;
         console.log(data.appName);
-        
+
         // Add the data to the algolia index
-        return index.saveObject(data).then((result)=>{
+        return index.saveObject(data).then((result) => {
             console.log(result);
-        }).catch((e)=>{
+        }).catch((e) => {
             console.log(e);
-    })
-});
+        })
+    });
 
 exports.updateIndexIcon = functions.firestore
     .document('submissions/{iconId}')
     .onUpdate((change, context) => {
-        
+
         const data = change.after.data()
         // console.log(data);
         // data.objectID = data.id;
@@ -61,7 +84,7 @@ exports.updateIndexIcon = functions.firestore
         let updatedIcon = [{
             appName: data.appName,
             approved: data.approved,
-            
+
             credit: data.credit,
             email: data.email,
             fileName: data.fileName,
@@ -74,15 +97,15 @@ exports.updateIndexIcon = functions.firestore
 
             objectID: change.after.id
         }]
-        
+
         // Add the data to the algolia index
-        return index.partialUpdateObjects(updatedIcon).then((result)=>{
+        return index.partialUpdateObjects(updatedIcon).then((result) => {
             console.log(result);
-        }).catch((e)=>{
+        }).catch((e) => {
             console.log(e);
         })
-});
-    
+    });
+
 exports.deleteIndexIcon = functions.firestore
     .document('submissions/{iconId}')
     .onDelete((snap, context) => {
@@ -91,15 +114,15 @@ exports.deleteIndexIcon = functions.firestore
         // Delete an ID from the algolia index
         return index.deleteObject(objectId);
 
-})    
-    
+    })
+
 
 // Export all documents to Algolia
 // exports.indexIconTest = functions.https.onCall((snap, context) => {
 //     const data = snap
 
 //     let dbCollection = db.collection("submissions")
-    
+
 //     dbCollection.get().then(function (querySnapshot) {
 //         let num = 1
 //         querySnapshot.forEach(function (doc) {
@@ -107,7 +130,7 @@ exports.deleteIndexIcon = functions.firestore
 //             indexData.objectID = doc.id;
 
 //             console.log(indexData.objectID);
-            
+
 //             index.saveObject(indexData).then(()=>{
 //                 console.log(num++);
 //             }).catch((e)=>{
@@ -118,7 +141,7 @@ exports.deleteIndexIcon = functions.firestore
 
 //     data.objectID = data.id;
 //     console.log(data.id);
-    
+
 //     // Add the data to the algolia index
 //     return index.saveObject(data).catch((e)=>{
 //         console.log(e);
@@ -140,7 +163,7 @@ exports.convertToIcns = functions.https.onCall((data, context) => {
     const tmpFilePath = join(os.tmpdir(), newFileName + ".png");
 
     const docRef = db.collection('submissions').doc(data.id);
-    
+
     // Set icon to is reviewing to let me know the conversion process has started
     docRef.update({
         isReview: true
@@ -149,7 +172,7 @@ exports.convertToIcns = functions.https.onCall((data, context) => {
     bucket.file(filePath).download({ destination: tmpFilePath }).then(() => {
         (async () => {
 
-            let input = fs.readFileSync(tmpFilePath)
+            let input = fs.readFileSync(tmpFilePath) // Reads temp saved file
             let output = png2icons.createICNS(input, png2icons.BILINEAR, 0);
 
             let toUpload = {
@@ -157,7 +180,7 @@ exports.convertToIcns = functions.https.onCall((data, context) => {
                 lowResPng: join(os.tmpdir(), newFileName + ".png"),   // Set path for new low-res image
             }
 
-            // Set cloud storage reference for newly creaed .icns and .png
+            // Set cloud storage reference for newly created .icns and .png
             let icnsStorageRef = join("icons_approved", newIcnsName)
             let pngStorageRef = join("icons_approved/png", newFileName + ".png")
 
