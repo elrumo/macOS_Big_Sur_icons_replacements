@@ -172,7 +172,7 @@ import Dialog from './Dialog.vue';
 import deleteDialog from './deleteDialog.vue';
 
 import algoliasearch from 'algoliasearch'
-import * as firebase from "firebase";
+// import * as firebase from "firebase";
 import { Search } from '@adobe/coral-spectrum';
 import Parse from 'parse'
 
@@ -192,6 +192,8 @@ var icons = new Icons();
 // let order = ["timeStamp", "desc"]
 let order = ["appName", ""]
 let lastVisible
+
+console.log(process.env);
 
 let algolia = {
     appid: process.env.VUE_APP_ALGOLIA_APPID,
