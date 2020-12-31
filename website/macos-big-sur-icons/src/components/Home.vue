@@ -179,26 +179,18 @@ import Parse from 'parse'
 import dotenv from 'dotenv';
 dotenv.config()
 
-
 const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
 const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 const VUE_APP_PARSE_MASTERKEY = process.env.VUE_APP_PARSE_MASTERKEY
 
 Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY, VUE_APP_PARSE_MASTERKEY)
+Parse.serverURL = 'https://onionicons.com/parse'
 
-Parse.serverURL = 'http://82.145.63.160:1337/parse'
-// Parse.serverURL = 'https://onionicons.com/parse'
-
-
-console.log(Parse);
 var Icons = Parse.Object.extend("Icons");
-console.log(Icons);
 var icons = new Icons();
-
 
 // let order = ["timeStamp", "desc"]
 let order = ["appName", ""]
-// let dbCollection = db.collection("submissions").where("approved", "==", true).orderBy(order[0])
 let lastVisible
 
 let algolia = {
