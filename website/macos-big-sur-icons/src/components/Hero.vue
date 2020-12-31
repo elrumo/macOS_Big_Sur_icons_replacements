@@ -33,17 +33,17 @@
       To contribute and make new icons, use these templates:
       <a
         class="coral-Link"
-        href="http://82.145.63.160:1337/parse/files/macOSicons/cd04572e1cefd8c6a017f1422f13ea09_Template-Icon-App.sketch"
+        href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.sketch"
         >Sketch</a
       >,
       <a
         class="coral-Link"
-        href="http://82.145.63.160:1337/parse/files/macOSicons/ea404ea43049839734099c08e08551b4_Template-Icon-App.fig"
+        href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.fig"
         >Figma</a
       >,
       <a
         class="coral-Link"
-        href="http://82.145.63.160:1337/parse/files/macOSicons/49b00ff2cc6631044209f6881a766883_Template-Icon-App.ai"
+        href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.ai"
         >Illustrator</a
       >, or
       <a
@@ -81,7 +81,7 @@
       >
         <button is="coral-button" variant="quiet">
           <span>Buy me a hot chocolate</span>
-          <!-- <span>One-time Donation</span> -->
+          <!-- <span class="p-r-5 f-s-16">☕️</span> <span>Buy me a hot chocolate</span> -->
         </button>
       </a>
 

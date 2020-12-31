@@ -26,9 +26,9 @@
       :iconListLen="iconListLen"
     />
 
-    <coral-toast id="errorToast" variant="error">
-      {{ toastMsg }}
-    </coral-toast>
+    <div class="hide" id="614423561">
+      {{ adScript }}
+    </div>
 
     <coral-toast id="successToast" variant="success">
       😄 All icons have been uploaded.
@@ -45,10 +45,10 @@
     <coral-toast id="approveError" variant="error">
       There has been an error, please Approve again
     </coral-toast>
-
-    <!-- <div style="display: none"> {{search}} </div> -->
+    
     <!-- Icon Section -->
     <section class="content-wrapper">
+    
     <!-- Search bar -->
       <div @click="isSearch = true" class="main-search-wrapper coral-bg p-b-15">
         <div class="m-auto main-search" style="max-width:300px;">
@@ -66,7 +66,7 @@
         </div>
       </div>
       
-    <!-- Waiting spinning circle -->
+    <!-- Wai ting spinning circle -->
       <div v-if="this.$store.state.list == 0" class="waiting-wrapper">
         <coral-wait size="L" indeterminate=""></coral-wait>
       </div>
@@ -77,63 +77,60 @@
         </p>
       </div>
 
-      <button v-if="isAuth" @click="logout" is="coral-button" variant="quiet">
-        Logout
-      </button>
-
     <!-- Icon list -->
         <div v-if="isAuth" class="icon-list-area p-t-20 p-b-50">
+          
           <!-- Carbon ads -->
           <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
-
+          
           <!-- Search Bar -->
-          <div  v-for="icon in search" :key="icon.appName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper coral-card">
-              <div class="card-img-wrapper" style="max-width: 120px;">
-                
-                <a :href="icon.icnsUrl">
-                  <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                    <img class="w-full" :data-src="icon.lowResPngUrl">
-                  </div>
-                </a>
+          <div  v-for="icon in search" :key="icon.fileName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper coral-card">    
+            <div class="card-img-wrapper" style="max-width: 120px;">  
 
-                <div class="quick-actions-wrapper">
-                  <div class="quick-action-el">
-                    <coral-icon @click="showDialog('deleteDialog', icon)" class="h-full quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
-                  </div>
+              <a :href="icon.icnsUrl">
+                <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
+                  <img class="w-full" :data-src="icon.pngUrl">
                 </div>
-                  
+              </a>
+
+              <div class="quick-actions-wrapper">
+                <div class="quick-action-el">
+                  <coral-icon @click="showDialog('deleteDialog', icon)" class="h-full quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
+                </div>
               </div>
+                
+            </div>
 
-              <div class="p-l-15 p-r-15 p-b-15">
+            <div class="p-l-15 p-r-15 p-b-15">
 
-                  <p class="coral-Body--XS opacity-60 m-b-0">
-                    <input class="editable-input coral-Body--XS opacity-50 m-b-0" @change="changeDate(icon, $event)" type="text" variant="quiet" :value="getDate(icon.timeStamp)" is="coral-textfield" aria-label="text input">
-                  </p>
-                  <h3 class="coral-font-color m-b-0">
-                    <input class="editable-input f-w-800 m-b-0" @change="editDoc(icon, $event, 'appName')" type="text" variant="quiet" :value="prettifyName(icon.appName)" is="coral-textfield" aria-label="text input">
-                  </h3>
+                <p class="coral-Body--XS opacity-60 m-b-0">
+                  <input class="editable-input coral-Body--XS opacity-50 m-b-0" @change="changeDate(icon, $event)" type="text" variant="quiet" :value="getDate(icon.timeStamp)" is="coral-textfield" aria-label="text input">
+                </p>
+                <h3 class="coral-font-color m-b-0">
+                  <input class="editable-input f-w-800 m-b-0" @change="editDoc(icon, $event, 'appName')" type="text" variant="quiet" :value="prettifyName(icon.appName)" is="coral-textfield" aria-label="text input">
+                </h3>
 
-                  <p class="coral-Body--XS p-b-0 opacity-80 m-b-0"><input class="editable-input" @change="editDoc(icon, $event, 'usersName')" type="text" variant="quiet" :value="icon.usersName" is="coral-textfield" aria-label="text input"></p>
-                  <p class="coral-Body--XS p-b-0 opacity-50 m-b-0"><input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="icon.credit" is="coral-textfield" aria-label="text input"></p>
-                  <div v-if="icon.email != 'user@email.com' && icon.email " class="p-t-10"> 
-                    <a class="coral-Link" :href="'mailto:'+icon.email+'?subject=macOS icons submission&body='+icon.usersName">
-                          email
-                    </a>
-                  </div>
-              </div>
+                <p class="coral-Body--XS p-b-0 opacity-80 m-b-0"><input class="editable-input" @change="editDoc(icon, $event, 'usersName')" type="text" variant="quiet" :value="icon.usersName" is="coral-textfield" aria-label="text input"></p>
+                <p class="coral-Body--XS p-b-0 opacity-50 m-b-0"><input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="icon.credit" is="coral-textfield" aria-label="text input"></p>
+                <div v-if="icon.email != 'user@email.com' && icon.email " class="p-t-10"> 
+                  <a class="coral-Link" :href="'mailto:'+icon.email+'?subject=macOS icons submission&body='+icon.usersName">
+                        email
+                  </a>
+                </div>
+            </div>
           </div>
         </div>
 
       <!-- Seen when no auth  -->
         <div v-if="!isAuth" class="icon-list-area p-t-20 p-b-50">
-
-          <!-- Carbon ads -->
-          <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
           
-          <a v-for="icon in search" :key="icon.appName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper shadow coral-card" :href="icon.icnsUrl">
+          <!-- Carbon ads -->
+          <script class="coral-card" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+
+          <a v-for="icon in search" :key="icon.fileName" class="card-wrapper shadow coral-card" :href="icon.icnsUrl">
             <div class="card-img-wrapper">
               <div v-lazy-container="{ selector: 'img', loading: icons.loading }">
-                <img class="w-full" :data-src="icon.lowResPngUrl">
+                <img class="w-full" :data-src="icon.pngUrl">
               </div>
             </div>
             <div>
@@ -142,6 +139,7 @@
               </h3>
               <p class="coral-Body--XS opacity-60 m-b-20"><a class="coral-Link" :href="icon.credit" target="_blank">{{icon.usersName}}</a> on <span class="coral-Body--XS opacity-50">{{ getDate(icon.timeStamp) }}</span></p>
             </div>
+            <!-- </div> -->
           </a>
         </div>
 
@@ -164,6 +162,7 @@
 
 <script>
 import Vue from 'vue';
+import algoliasearch from 'algoliasearch'
 
 import Header from './Header.vue';
 import Hero from './Hero.vue';
@@ -171,10 +170,8 @@ import iconCard from './iconCard.vue';
 import Dialog from './Dialog.vue';
 import deleteDialog from './deleteDialog.vue';
 
-import algoliasearch from 'algoliasearch'
 import * as firebase from "firebase";
 import { Search } from '@adobe/coral-spectrum';
-import Parse from 'parse'
 
 import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config()
@@ -223,14 +220,12 @@ export default {
 
       scrolledToBottom: true,
       sortByName: true,
-      sortBy: "appName",
       isSearch: false,
       noIcons: true,
       isAuth: false,
-      
-      howManyRecords: 0,
 
       iconListLen: "3,480",
+      
       lastVisible: {},
       dataToShow: [],
       activeIcon: {},
@@ -255,33 +250,41 @@ export default {
   mounted: function(){
     let parent = this;
 
+    db.collection("meta").doc("pageCount").update({
+      visits: firebase.firestore.FieldValue.increment(1)
+    }).then(function() {
+        console.log("Document plus 1");
+    }).catch(function(error) {
+        // The document probably doesn't exist.
+        console.error("Error updating document: ", error);
+    });
+
+
+    // this.$ga.disable()
+    // console.log(this.$ga);
+
+    // this.getIconListLen();
     this.getIconsArray();
 
-    if(Parse.User.current()){
+     firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
         console.log("Signed In");
         parent.isAuth = true
-    }
-
-    const fb = firebase.functions()
-
-    fb.useFunctionsEmulator("http://localhost:5001");
-    const jsonExport = fb.httpsCallable("exportFirestore2Json");
-        
-    jsonExport().then(result =>{
-      console.log(result);
-    })
-
+      }
+     })
   },
 
-  methods:{ 
+  methods:{
 
-    logout(){
-      console.log("HI");
-      parent.isAuth = false
-      Parse.User.logOut().then(() => {
-        const currentUser = Parse.User.current();  // this will now be null
-      });
-    },
+    adScript(){
+      try {
+        window._mNHandle.queue.push(function (){
+            window._mNDetails.loadTag("614423561", "300x250", "614423561");
+        });
+      }
+      catch (error) {}
+    },   
 
     prettifyName(name){
       // let newName = name
@@ -297,17 +300,14 @@ export default {
       let sortByName = parent.sortByName
       let date = parent.icons.date
       let namingOrder = parent.icons.namingOrder
-      
-      console.log(sortByName);
 
-      if (parent.sortByName) {
+      if (sortByName) {
         parent.icons.iconsOrder = date
       } else{
         parent.icons.iconsOrder = namingOrder
       }
 
-      parent.sortByName = !parent.sortByName
-      
+      parent.sortByName = !sortByName
     },
     
     getDate(timeStamp){
@@ -327,36 +327,28 @@ export default {
       return date
     },
 
-    async loadMore(){
+    loadMore(){
       let parent = this
-      let howManyRecords = parent.howManyRecords
-      
-      parent.howManyRecords = howManyRecords + docLimit
-
-      const query = new Parse.Query(Icons);
-      query.equalTo("approved", true)
-      query.ascending(parent.sortBy);
-      query.skip(howManyRecords);
-      query.limit(docLimit);
-      const results = await query.find()
-      
-      setTimeout(() => {
-          parent.scrolledToBottom = true
-      }, 800);
-
-      for(let result in results){
-        let objData = results[result].attributes
-        let iconData = objData
-
-        parent.$store.dispatch("pushDataToArr", {arr: "list", data: iconData, func: "loadMore"})
-      }
+      console.log(lastVisible);
+      dbCollection.startAfter(lastVisible).limit(20).get().then(function(querySnapshot){
+        querySnapshot.forEach(function(doc){
+          setTimeout(() => {
+              parent.scrolledToBottom = true
+          }, 300);
+          let iconData = doc.data()
+          iconData.id = doc.id
+          parent.$store.dispatch("pushDataToArr", {arr: "list", data: iconData, func: "loadMore"})
+          // parent.list.push(doc.data())
+        })
+        lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
+      })
 
     },
 
     scroll() {
       let parent = this
       window.onscroll = () => {
-        let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000
+        let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 1200
 
         if (bottomOfWindow && parent.scrolledToBottom && !parent.isSearch) {
           parent.scrolledToBottom = false // replace it with your code
@@ -372,9 +364,9 @@ export default {
       })
     },
 
-    async getIconsArray(){
+    getIconsArray(){
       let parent = this
-
+      
       const query = new Parse.Query(Icons);
       query.equalTo("approved", true)
       query.ascending(parent.sortBy);
@@ -400,7 +392,6 @@ export default {
       }, 500);
 
       parent.scroll()
-
     },
 
     showDialog(dialogId, icon){
@@ -467,20 +458,24 @@ export default {
   watch:{
     searchString: function (search) {
       let parent = this
-      
+
       index.search(search, {filters: `approved:true`, hitsPerPage: 150 }).then(function(responses) {
         // parent.dataToShow = responses.hits
-        parent.$store.dispatch("setDataToArr", {arr: "dataToShow", data: responses.hits, func: "searchAlgolia"})
+
+        let searchData = []
+        for(let hit in responses.hits){
+          if (responses.hits[hit].approved == true) {
+            searchData.push(responses.hits[hit])
+          }
+        }
+
+        parent.$store.dispatch("setDataToArr", {arr: "dataToShow", data: searchData, func: "searchAlgolia"})
         // parent.$store.dispatch("pushDataToArr", {arr: "dataToShow", data: responses.hits, func: "searchAlgolia"})
       });
     }
   },
 
   computed:{
-
-    toastMsg(){
-      return this.$store.state.toastMsg
-    },
 
     search(){
       let parent = this
@@ -503,7 +498,7 @@ export default {
       return parent.$store.state.dataToShow
       // return  parent.dataToShow
     },
-
+    
     iconListStore(){
       return this.$store.state.list
     },
@@ -517,6 +512,7 @@ export default {
 
 <style>
   @import url(app.css);
+  @import url(carbon.css);
   @import url(snack-helper.min.css);
   @import url(carbon.css);
 </style>

@@ -172,7 +172,7 @@ exports.convertToIcns = functions.https.onCall((data, context) => {
     bucket.file(filePath).download({ destination: tmpFilePath }).then(() => {
         (async () => {
 
-            let input = fs.readFileSync(tmpFilePath) // Reads temp saved file
+            let input = fs.readFileSync(tmpFilePath)
             let output = png2icons.createICNS(input, png2icons.BILINEAR, 0);
 
             let toUpload = {
@@ -180,7 +180,7 @@ exports.convertToIcns = functions.https.onCall((data, context) => {
                 lowResPng: join(os.tmpdir(), newFileName + ".png"),   // Set path for new low-res image
             }
 
-            // Set cloud storage reference for newly created .icns and .png
+            // Set cloud storage reference for newly creaed .icns and .png
             let icnsStorageRef = join("icons_approved", newIcnsName)
             let pngStorageRef = join("icons_approved/png", newFileName + ".png")
 
