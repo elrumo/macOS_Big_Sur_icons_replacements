@@ -1,9 +1,11 @@
 <template>
     <div id="header" class="header">
         <p class="header-item-left coral-Body--S p-t-5">
-        <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank" class="coral-Link">
-            GitHub
-        </a>
+            
+               Hosting by <a href="https://fosshost.org/" target="_blank" class="coral-Link"> fosshost</a>
+            <!-- <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank" class="coral-Link">
+                GitHub
+            </a> -->
         </p>
         
         <p class="coral-Body--S p-t-5 d-inline-block absolute transform-centre">

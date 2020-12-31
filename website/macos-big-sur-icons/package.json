@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "algoliasearch": "^4.8.0",
+    "dotenv": "^8.2.0",
     "firebase": "^7.24.0",
     "firebaseui": "^4.7.1",
     "parse": "^2.18.0",
