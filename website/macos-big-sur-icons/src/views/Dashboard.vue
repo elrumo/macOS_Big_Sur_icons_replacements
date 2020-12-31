@@ -39,7 +39,7 @@
     
     <div class="m-t-40">
       <!-- <input type="file" id="profilePhotoFileUpload" @change="uploadFile"> -->
-      <button is="coral-button" variant="cta" @click="migrateFiles">Migrate Files</button>
+      <!-- <button is="coral-button" variant="cta" @click="migrateFiles">Migrate Files</button> -->
     </div>
 
   <!-- Edit user dialog -->
@@ -198,7 +198,7 @@ import * as firebase from "firebase";
 import Parse from 'parse'
 
 Parse.initialize("macOSicons");
-Parse.serverURL = 'http://82.145.63.160:1337/parse'
+Parse.serverURL = 'https://onionicons.com/parse'
 const Icons = Parse.Object.extend("Icons");
 const icons = new Icons();
 
@@ -425,21 +425,21 @@ export default {
       });
     },
 
-    async migrateFiles(){  
-      let parent = this
+    // async migrateFiles(){  
+    //   let parent = this
       
-      let params = {
-        url: "http://82.145.63.160:1337/parse/files/macOSicons/c0ad2c7645e64ae7449339f0f8a38ccc_image.png"
-      }
+    //   let params = {
+    //     url: "http://82.145.63.160:1337/parse/files/macOSicons/c0ad2c7645e64ae7449339f0f8a38ccc_image.png"
+    //   }
 
-      Parse.Cloud.run("migrateFiles", params).then((result)=>{
-        console.log(result);
-        parent.showToast({id:"iconApproved"})
-      }).catch((e)=>{
-        console.log(e);
-        parent.showToast({id:"approveError"})
-      });
-    },
+    //   Parse.Cloud.run("migrateFiles", params).then((result)=>{
+    //     console.log(result);
+    //     parent.showToast({id:"iconApproved"})
+    //   }).catch((e)=>{
+    //     console.log(e);
+    //     parent.showToast({id:"approveError"})
+    //   });
+    // },
 
     indexIcon(icon){  
       console.log(icon);
