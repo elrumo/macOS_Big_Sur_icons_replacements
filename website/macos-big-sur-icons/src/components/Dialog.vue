@@ -2,15 +2,14 @@
   <coral-dialog id="submitIcon">
 
     <coral-dialog-header>
-      Temporarily down for maintenance
+      Submit an icon
     </coral-dialog-header>
     
     <coral-dialog-content>
       
       <div class="dialog-text">
-        <!-- <b> Temporarily down while I migrate the site to servers kindly provided by <a class="coral-Link" href="https://fosshost.org" target="_blank">Fosshost</a>.</b> To stay up to date follow me on <a class="coral-Link" href="https://twitter.com/elrumo" target="_blank">Twitter</a>. -->
-        <!-- <b> We'll let you know by email when the icon has been approved. </b> -->
-        <!-- <br> -->
+        <b> We'll let you know by email when the icon has been approved. </b>
+        <br>
         <ul class="coral-List p-t-10 p-b-10">
           <li class="coral-List-item">Icon submited must be a .png file</li>
           <li class="coral-List-item">Use <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.sketch" class="coral-Link">this </a> template for dimensions and reference.</li>
@@ -25,10 +24,7 @@
       </div>
 
       <div class="icon-upload-grid">
-
-          <!-- <p style="max-width: 380px;">
-            Meanwhile you can checkout my other proejct, a new bookmarking service called <a class="coral-Link" href="https://bit.ly/webbites" target="_blank">WebBites</a>.
-          </p> -->
+        
         <div v-if="imageData" class="icons-preview-wrapper">
           
           <div v-for="icon in filesToShow" class="icon-preview" :key="icon.name">
@@ -94,72 +90,46 @@
 import Vue from 'vue'
 import { mapActions } from 'vuex';
 import * as firebase from "firebase";
-// import * as firebaseui from "firebaseui";
-
-// let firebaseConfig = {
-//   apiKey: process.env.VUE_APP_FIREBASE_KEY,
-//   messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
-//   appId: process.env.VUE_APP_APP_ID,
-//   measurementId: process.env.VUE_APP_MEASUREMENT_ID,
-//   authDomain: "macos-icons.firebaseapp.com",
-//   databaseURL: "https://macos-icons.firebaseio.com",
-//   projectId: "macos-icons",
-//   storageBucket: "macos-icons.appspot.com"
-// };
-
-
-//   // Initialize Firebase
-// firebase.initializeApp(firebaseConfig);
-
+import Parse from 'parse'
+Parse.initialize("macOSicons");
+Parse.serverURL = 'http://82.145.63.160:1337/parse'
 let db = firebase.firestore();
 let storage = firebase.storage();
-
 export default {
     name:"Dialog",
-
     props:{
     },
-
     data(){
       return{
         imageData: false,
         filesToShow: {},
         filesToUpload: {},
-
         coralIcons:{
           addIcon: require("../assets/icons/add.svg"),
           delete: require("../assets/icons/delete.svg"),
           newItem: require("../assets/icons/newItem.svg"),
         },
-
         uploadProgress: 0,
         totalNumFiles: 0,
-
         email: "",
         credit: "",
         appName: "",
         yourName: "",
-
         isLoading: false
       }
     },
-
     methods:{
-      ...mapActions(['showToast']),
-
+      ...mapActions(['showToast', 'errorToast']),
       removeFile(e){
         let parent = this
         let iconName = e.target.id;
-
         Vue.delete(parent.filesToShow, iconName)
         Vue.delete(parent.filesToUpload, iconName)
-
         // If imageURL is empty, show the upload files component
         if (Object.keys(parent.filesToShow).length === 0) {
           parent.imageData = false
         }
       },
-
       selectIcon(event) {
         // Get selected image
         let parent = this
@@ -170,7 +140,6 @@ export default {
           let file = files[fileNum].file
           let fileName = file.name.replace('.png', '')
           parent.filesToUpload[fileName] = file
-
           // Create URL of file to dislay back the image
           const objectURL = window.URL.createObjectURL(file);
           let value = {
@@ -179,43 +148,49 @@ export default {
           }
           parent.$set(parent.filesToShow, fileName, value)
         }
-
         parent.totalNumFiles = Object.keys(parent.filesToShow).length
         parent.imageData = true
         
       },
-
-
       async onUpload(){
         let parent = this
         parent.isLoading = true
         let dialog = document.getElementById('submitIcon')
-
-        let randomId = Math.floor(Math.random() * 1000 + Date.now())
-
         for(let fileNum in parent.filesToUpload){
           let file =  parent.filesToUpload[fileNum];
           let appName = file.name.replace('.png', '');
-          let fileName = randomId+'_'+`${file.name}`;
-
-          console.log(fileName);
+          let fileName;
           
-          await storage.ref('icon_submissions/'+fileName).put(file).then((value)=>{
-            value.ref.getDownloadURL().then(function() {
-              console.log(value);
-              // Add a new document in collection "cities"
-              db.collection("submissions").doc().set({
-                  appName: appName,
-                  email: parent.email,
-                  credit: parent.credit,
-                  usersName: parent.yourName,
-                  fileName: fileName,
-                  iconRef: value.ref.fullPath,
-                  timeStamp: Date.now(),
-                  approved: false
-              })
-              .then(()=>{
-                parent.imageData = {},
+          if (/^[A-Za-z][A-Za-z0-9]*$/.test(file.name)) {
+            fileName = `${file.name}`
+          } else {
+            let d = new Date()
+            fileName = Math.round(Math.random()*10000 + d.getTime() )
+            fileName = fileName.toString()
+          }
+          console.log(fileName, file.name);
+          
+          const Icons = Parse.Object.extend("Icons");
+          const icons = new Icons()
+          const parseFile = new Parse.File(fileName, file); // Set file to new Parse object
+          parseFile.save().then((uploaded) => {
+            console.log("Success: ", uploaded._url);
+            let dataToStore = {
+              appName: appName,
+              email: parent.email,
+              credit: parent.credit,
+              usersName: parent.yourName,
+              fileName: fileName,
+              highResPngFile: parseFile,
+              highResPngUrl: uploaded._url,
+              timeStamp: Date.now(),
+              approved: false
+            }
+            icons.set(dataToStore);
+            console.log(icons);
+            icons.save().then((icons) => { // Reset input boxes
+              
+              parent.imageData = {},
                 parent.picture= null,
                 parent.uploadProgress++
                 console.log("Document successfully written!");
@@ -226,35 +201,34 @@ export default {
                 
                 Vue.delete(parent.filesToUpload, appName)
                 Vue.delete(parent.filesToShow, appName)
-                
-                // Only hide dialog if all items have been uploaded
-                if (Object.keys(parent.filesToUpload).length === 0) {
+               if (Object.keys(parent.filesToUpload).length === 0) {
                   parent.isLoading = false
                   parent.imageData = false
-                  parent.email = ""
-                  parent.name = ""
+                  parent.email, parent.name = ""
                   parent.uploadProgress = 0
                   
-                  clearInput("credit")
-                  clearInput("email-contributor")
-                  clearInput("yourName-contributor")
-
+                  let inputs = ["credit", "email-contributor", "yourName-contributor"]
+                  for(let i in inputs){
+                    clearInput(inputs[i])  
+                  }
+                  // clearInput("credit")
+                  // clearInput("email-contributor")
+                  // clearInput("yourName-contributor")
                   parent.showToast({id:"successToast"})
                   dialog.hide()
                 }
-
-              })
-              .catch(function(error) {
-                console.error("Error writing document: ", error);
-                // parent.isLoading = false
-              });
-
-            });
-          });          
+            },(error)=>{
+              console.log("Data NOT saved: ", error);
+            })
+          }, function(error) {
+            console.log(error);
+            parent.isLoading = false
+            parent.errorToast({msg:"Please, make sure no special characters are used."})
+            // document.getElementById("Sh")
+            // The file either could not be read, or could not be saved to Parse.
+          });
         }
-
       },
-
       setEmail(e){
         console.log(e.target.value);
         this.email = e.target.value
@@ -271,11 +245,9 @@ export default {
         console.log(e.target.value);
         this.yourName = e.target.value
       },
-
     },
 }
 </script>
 
 <style>
-
 </style>
