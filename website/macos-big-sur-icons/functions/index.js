@@ -33,6 +33,7 @@ const client = algoliasearch(env.algolia.appid, env.algolia.apikey);
 // const client = algoliasearch(algolia.appid, algolia.apikey);
 const index = client.initIndex('macOSicons');
 
+// exports.exportFirestore2Json = functions.https.onRequest(() => { // Used for local development
 exports.exportFirestore2Json = functions.https.onCall(() => {
     var data
     db.collection("submissions").where("timeStamp", ">=", 1608940800000).get().then(function (querySnapshot) {

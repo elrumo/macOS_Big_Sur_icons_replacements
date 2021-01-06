@@ -91,8 +91,10 @@ import Vue from 'vue'
 import { mapActions } from 'vuex';
 import * as firebase from "firebase";
 import Parse from 'parse'
+
 Parse.initialize("macOSicons");
-Parse.serverURL = 'http://82.145.63.160:1337/parse'
+Parse.serverURL = 'https://onionicons.com/parse'
+
 let db = firebase.firestore();
 let storage = firebase.storage();
 export default {
@@ -186,6 +188,7 @@ export default {
               timeStamp: Date.now(),
               approved: false
             }
+            console.log(uploaded._url);
             icons.set(dataToStore);
             console.log(icons);
             icons.save().then((icons) => { // Reset input boxes
