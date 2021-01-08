@@ -14,21 +14,25 @@
 
     <p class="coral-Body--L w-100 body-text p-t-20">
       Click on each icon to download it,
-      <a
-        class="coral-Link"
-        href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/releases/download/v1.0/icons.zip"
-      >
+      <!-- <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/releases/download/v1.0/icons.zip">
         download
       </a>
-      all {{ iconListLen }} icons, or visit the
-      <a
+      all {{ iconListLen }} icons,  -->
+      <!-- visit the -->
+      <!-- <a
         class="coral-Link"
         href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements"
         target="_blank"
       >
-        GitHub
+        GitHub 
+      </a> -->
+      <a
+        class="coral-Link"
+        href="https://twitter.com/intent/tweet?text=Check%20out%20macOSicons.com%20for%20over%203,500%20BigSur%20ready%20icons%20by%20@elrumo"
+        target="_blank"
+      >
+        and share it on Twitter.
       </a>
-      repo.
       <!-- <br><br> -->
       To contribute and make new icons, use these templates:
       <a
@@ -57,7 +61,7 @@
         GitHub
       </a> -->
 
-    <div class="m-auto m-t-30">
+    <div class="m-auto m-t-35">
       <div class="d-inline-block">
         <button
           is="coral-button"
@@ -80,8 +84,8 @@
         target="_blank"
       >
         <button is="coral-button" variant="quiet">
-          <span>Buy me a hot chocolate</span>
-          <!-- <span class="p-r-5 f-s-16">☕️</span> <span>Buy me a hot chocolate</span> -->
+          <!-- <span>☕️ Buy me a hot chocolate</span> -->
+          <span class="p-r-5 f-s-16">☕️</span> <span>Buy me a hot chocolate</span>
         </button>
       </a>
 

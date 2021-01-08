@@ -229,7 +229,7 @@ export default {
       
       howManyRecords: 0,
 
-      iconListLen: "3,480",
+      iconListLen: 3_480,
       lastVisible: {},
       dataToShow: [],
       activeIcon: {},
@@ -371,6 +371,11 @@ export default {
       query.limit(docLimit);
       parent.howManyRecords = docLimit
       const results = await query.find()
+
+      query.count().then((count) =>{
+        console.log(count);
+        parent.iconListLen = count
+      })
 
       for(let result in results){
         let objData = results[result].attributes
