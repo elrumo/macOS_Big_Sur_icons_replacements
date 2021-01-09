@@ -177,6 +177,7 @@ export default {
           const parseFile = new Parse.File(fileName, file); // Set file to new Parse object
           parseFile.save().then((uploaded) => {
             console.log("Success: ", uploaded._url);
+            let iconUrl = uploaded._url.replace('http:', "https:")
             let dataToStore = {
               appName: appName,
               email: parent.email,
@@ -184,11 +185,11 @@ export default {
               usersName: parent.yourName,
               fileName: fileName,
               highResPngFile: parseFile,
-              highResPngUrl: uploaded._url,
+              highResPngUrl: iconUrl,
               timeStamp: Date.now(),
               approved: false
             }
-            console.log(uploaded._url);
+            console.log(iconUrl);
             icons.set(dataToStore);
             console.log(icons);
             icons.save().then((icons) => { // Reset input boxes
