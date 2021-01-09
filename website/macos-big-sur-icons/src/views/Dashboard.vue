@@ -359,6 +359,8 @@ export default {
         email: email
       });
 
+      await console.log(user);
+
       try {
         await user.signUp().then(()=>{
           parent.isAuth =  true;
@@ -425,22 +427,6 @@ export default {
       });
     },
 
-    // async migrateFiles(){  
-    //   let parent = this
-      
-    //   let params = {
-    //     url: "http://82.145.63.160:1337/parse/files/macOSicons/c0ad2c7645e64ae7449339f0f8a38ccc_image.png"
-    //   }
-
-    //   Parse.Cloud.run("migrateFiles", params).then((result)=>{
-    //     console.log(result);
-    //     parent.showToast({id:"iconApproved"})
-    //   }).catch((e)=>{
-    //     console.log(e);
-    //     parent.showToast({id:"approveError"})
-    //   });
-    // },
-
     indexIcon(icon){  
       console.log(icon);
       functions.useFunctionsEmulator("http://localhost:5001")
@@ -452,10 +438,11 @@ export default {
     },
     
 
-    getIconListLen(){
+    getIconListLen(query){
       let parent = this
-      dbCollection.onSnapshot(function(doc){
-        parent.iconListLen = doc.docs.length
+      query.count().then((count) =>{
+        console.log(count);
+        parent.iconListLen = count
       })
     },
 
@@ -530,8 +517,6 @@ export default {
   mounted: function(){  
 
     let parent = this
-    
-    parent.getIconListLen();
 
     function showEl(id){
       document.getElementById(id).style.display = "block"
@@ -549,6 +534,8 @@ export default {
         query.ascending("usersName");
         query.limit(docLimit);
         const results = await query.find()
+
+        parent.getIconListLen(query); // Get how many icons to approve.
 
         parent.howManyRecords = docLimit
         
