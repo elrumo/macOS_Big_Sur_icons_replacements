@@ -24,7 +24,7 @@
       v-bind:list="list"
       :submitIconDialog="'submitIcon'"
       :iconListLen="iconListLen"
-      :iconsEmpty="this.$store.state.list != 0"
+      :iconsEmpty="!loadingError"
     />
 
     <coral-toast id="errorToast" variant="error">
@@ -51,7 +51,7 @@
     <!-- Icon Section -->
     <section class="content-wrapper">
     <!-- Search bar -->
-      <div v-if="this.$store.state.list != 0" @click="isSearch = true" class="main-search-wrapper coral-bg p-b-15">
+      <div v-if="!loadingError" @click="isSearch = true" class="main-search-wrapper coral-bg p-b-15">
         <div class="m-auto main-search" style="max-width:300px;">
           <div class="shadow main-border-radius">
             <input v-model="searchString" :placeholder="'Search ' + iconListLen + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
@@ -68,8 +68,11 @@
       </div>
       
     <!-- Loading spinning circle -->
-      <div v-if="this.$store.state.list == 0" class="waiting-wrapper">
-        
+      <div v-if="this.$store.state.list == 0 & !loadingError" class="waiting-wrapper">
+        <coral-wait size="L" indeterminate=""></coral-wait>
+      </div>
+
+      <div v-if="loadingError" class="waiting-wrapper">
         <h3 class="coral-Heading--M">
           The site is temporarily down for maintenance purposes.
           <br>
@@ -84,8 +87,6 @@
             </a>
           to stay up to date.
         </h3>
-
-        <!-- <coral-wait size="L" indeterminate=""></coral-wait> -->
       </div>
 
       <div v-if="noIcons" class="waiting-wrapper">
@@ -99,7 +100,7 @@
       </button>
 
     <!-- Icon list -->
-        <div v-if="isAuth" class="icon-list-area p-t-20 p-b-50">
+        <div v-if="isAuth & !loadingError" class="icon-list-area p-t-20 p-b-50">
           <!-- Carbon ads -->
           <!-- <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script> -->
 
@@ -142,7 +143,7 @@
         </div>
 
       <!-- Seen when no auth  -->
-        <div v-if="!isAuth" class="icon-list-area p-t-20 p-b-50">
+        <div v-if="!isAuth & !loadingError" class="icon-list-area p-t-20 p-b-50">
 
           <!-- Carbon ads -->
           <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
@@ -167,7 +168,7 @@
     </section>
 
     <!-- Footer -->
-    <section class="footer">
+    <section v-if="loadingError" class="footer">
       <footer class="p-b-20 coral-Body--S">
         Made with ❤️ by <a href="https://bit.ly/elias-webbites" target="_blank" class="coral-Link">Elias</a>
         <dir class="d-inline-block m-0 p-l-15 p-r-10">
@@ -176,6 +177,17 @@
         <a href="https://www.paypal.com/donate?hosted_button_id=VS64ARMNSB67J" target="_blank" class="coral-Link">Support the project</a>
       </footer>
     </section>
+
+    <section v-else>
+      <footer class="p-b-20 coral-Body--S">
+        Made with ❤️ by <a href="https://bit.ly/elias-webbites" target="_blank" class="coral-Link">Elias</a>
+        <dir class="d-inline-block m-0 p-l-15 p-r-10">
+          <hr class="coral-Divider--M coral-Divider--vertical m-0" style="height:14px;">
+        </dir>
+        <a href="https://www.paypal.com/donate?hosted_button_id=VS64ARMNSB67J" target="_blank" class="coral-Link">Support the project</a>
+      </footer>
+    </section>
+
   </div>
 </template>
 
@@ -243,6 +255,7 @@ export default {
       isSearch: false,
       noIcons: true,
       isAuth: false,
+      loadingError: false,
       
       howManyRecords: 0,
 
@@ -381,37 +394,43 @@ export default {
 
     async getIconsArray(){
       let parent = this
+      try {
 
-      const query = new Parse.Query(Icons);
-      query.equalTo("approved", true)
-      query.ascending(parent.sortBy);
-      query.limit(docLimit);
-      parent.howManyRecords = docLimit
-      const results = await query.find()
+        const query = new Parse.Query(Icons);
+        query.equalTo("approved", true)
+        query.ascending(parent.sortBy);
+        query.limit(docLimit);
+        parent.howManyRecords = docLimit
+        const results = await query.find()
 
-      query.count().then((count) =>{
-        console.log(count);
-        parent.iconListLen = count
-      })
+        query.count().then((count) =>{
+          console.log(count);
+          parent.iconListLen = count
+        })
 
-      for(let result in results){
-        let objData = results[result].attributes
-        let iconData = {}
-        
-        for(let data in objData){
-           iconData[data] = objData[data]
+        for(let result in results){
+          let objData = results[result].attributes
+          let iconData = {}
+          
+          for(let data in objData){
+            iconData[data] = objData[data]
+          }
+          iconData.id = results[result].id
+
+          parent.$store.commit('pushDataToArr', {arr: "list", data: iconData, func: "getIconsArray"})
         }
-        iconData.id = results[result].id
 
-        parent.$store.commit('pushDataToArr', {arr: "list", data: iconData, func: "getIconsArray"})
+        setTimeout(() => {
+          let carbon = document.getElementById("carbonads")
+          carbon.classList.add("coral-card")
+        }, 500);
+
+        parent.scroll()
+
+      } catch (error) {
+        parent.loadingError = "true"
+        console.log("loadingError: ", error);
       }
-
-      setTimeout(() => {
-        let carbon = document.getElementById("carbonads")
-        carbon.classList.add("coral-card")
-      }, 500);
-
-      parent.scroll()
 
     },
 
