@@ -24,6 +24,7 @@
       v-bind:list="list"
       :submitIconDialog="'submitIcon'"
       :iconListLen="iconListLen"
+      :iconsEmpty="this.$store.state.list != 0"
     />
 
     <coral-toast id="errorToast" variant="error">
@@ -50,7 +51,7 @@
     <!-- Icon Section -->
     <section class="content-wrapper">
     <!-- Search bar -->
-      <div @click="isSearch = true" class="main-search-wrapper coral-bg p-b-15">
+      <div v-if="this.$store.state.list != 0" @click="isSearch = true" class="main-search-wrapper coral-bg p-b-15">
         <div class="m-auto main-search" style="max-width:300px;">
           <div class="shadow main-border-radius">
             <input v-model="searchString" :placeholder="'Search ' + iconListLen + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
@@ -66,9 +67,25 @@
         </div>
       </div>
       
-    <!-- Waiting spinning circle -->
+    <!-- Loading spinning circle -->
       <div v-if="this.$store.state.list == 0" class="waiting-wrapper">
-        <coral-wait size="L" indeterminate=""></coral-wait>
+        
+        <h3 class="coral-Heading--M p-t-30">
+          The site is temporarily down for maintenance purposes.
+          <br>
+        </h3>
+        <h3 class="coral-Heading--S coral-Heading--light">
+          Check again in an hour or follow me on
+            <a class="coral-Link"
+              href="https://twitter.com/elrumo"
+              target="_blank"
+            >
+              Twitter
+            </a>
+          to stay up to date.
+        </h3>
+
+        <!-- <coral-wait size="L" indeterminate=""></coral-wait> -->
       </div>
 
       <div v-if="noIcons" class="waiting-wrapper">
@@ -150,7 +167,7 @@
     </section>
 
     <!-- Footer -->
-    <section>
+    <section class="footer">
       <footer class="p-b-20 coral-Body--S">
         Made with ❤️ by <a href="https://bit.ly/elias-webbites" target="_blank" class="coral-Link">Elias</a>
         <dir class="d-inline-block m-0 p-l-15 p-r-10">
