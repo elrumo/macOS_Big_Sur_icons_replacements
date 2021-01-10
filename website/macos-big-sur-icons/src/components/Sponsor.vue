@@ -31,7 +31,7 @@
           </div>
           </a>
 
-          <div>
+          <div class="sponsor-buttons">
             <a
               class="btn"
               aria-label="Sponsor @elrumo"

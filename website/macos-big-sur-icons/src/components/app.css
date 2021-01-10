@@ -195,6 +195,12 @@ ul {
     position : absolute;
     left : 50%;
     transform : translateX(-50%);
+    width: 100%;
+}
+
+.sponsor-buttons{
+    display: grid;
+    grid-template-columns: 1fr;
 }
 
 .card-wrapper h3{
@@ -723,6 +729,11 @@ ul {
     .icon-list-area{
         grid-template-columns: 1fr 1fr;
     }
+
+    .footer{
+        bottom: inherit;
+    }
+
     
     /* .gitHub-sponsor{
         height: 310px;

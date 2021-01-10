@@ -70,7 +70,7 @@
     <!-- Loading spinning circle -->
       <div v-if="this.$store.state.list == 0" class="waiting-wrapper">
         
-        <h3 class="coral-Heading--M p-t-30">
+        <h3 class="coral-Heading--M">
           The site is temporarily down for maintenance purposes.
           <br>
         </h3>
