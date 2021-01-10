@@ -190,6 +190,13 @@ ul {
     transform: translateY(-4px);
 }
 
+.footer{
+    bottom : 0px;
+    position : absolute;
+    left : 50%;
+    transform : translateX(-50%);
+}
+
 .card-wrapper h3{
     margin: 2px 0px 2px 0px;
     text-decoration: none;
