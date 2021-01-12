@@ -78,7 +78,7 @@
           <br>
         </h3>
         <h3 class="coral-Heading--S coral-Heading--light">
-          Check again in an hour or follow me on
+          Check again in a few minutes or follow me on
             <a class="coral-Link"
               href="https://twitter.com/elrumo"
               target="_blank"
