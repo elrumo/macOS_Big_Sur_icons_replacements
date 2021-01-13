@@ -149,7 +149,7 @@
           <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
           
           <a v-for="icon in search" :key="icon.appName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper shadow coral-card" :href="icon.icnsUrl">
-            <div class="card-img-wrapper">
+            <div @click="addClickCount(icon)" class="card-img-wrapper">
               <div v-lazy-container="{ selector: 'img', loading: icons.loading }">
                 <img class="w-full" :data-src="icon.lowResPngUrl">
               </div>
@@ -294,6 +294,22 @@ export default {
   },
 
   methods:{ 
+
+    async addClickCount(icon){
+      let id = icon.id
+
+      let query = new Parse.Query(Icons)
+      let docToUpdate = await query.get(id)
+
+      docToUpdate.increment("downloads")
+      docToUpdate.save().then(() => {
+        console.log("Saved!!");
+      }).catch((e) => {
+        console.log("error: ", e);
+      })
+      
+      // console.log(id);
+    },
 
     logout(){
       console.log("HI");
