@@ -298,6 +298,9 @@ export default {
     async addClickCount(icon){
       let id = icon.id
 
+      console.log("icon: ", icon);
+      console.log("ID: ", id);
+
       let query = new Parse.Query(Icons)
       let docToUpdate = await query.get(id)
 
@@ -382,8 +385,13 @@ export default {
 
       for(let result in results){
         let objData = results[result].attributes
-        let iconData = objData
+        let iconData = {}
 
+        for(let data in objData){
+          iconData[data] = objData[data]
+        }
+        iconData.id = results[result].id  
+        
         parent.$store.dispatch("pushDataToArr", {arr: "list", data: iconData, func: "loadMore"})
       }
 
@@ -432,6 +440,7 @@ export default {
             iconData[data] = objData[data]
           }
           iconData.id = results[result].id
+          console.log(iconData.id);
 
           parent.$store.commit('pushDataToArr', {arr: "list", data: iconData, func: "getIconsArray"})
         }
