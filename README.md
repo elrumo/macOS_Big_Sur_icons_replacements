@@ -3,8 +3,9 @@
 <br>
 All feedback is appreciated, you can do that [@elrumo](https://bit.ly/elias-twitter) on Twitter***
 
+Replacement icons for popular apps in the style of macOS Big Sur.
 
-To view all the icons and submit new ones, go to [this website](https://macosicons.com).
+##To view all the icons and submit new ones, go to [this website](https://macosicons.com).
 
 It's super easy! We've made sure that all icons here work with no problem. You just need to download the icon you want, find the app to update on Finder, select it and "File/Get Info" or "cmd + i and drag and drop the downloaded .icns file to the new window.
 <br>
