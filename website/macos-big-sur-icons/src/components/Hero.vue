@@ -102,7 +102,7 @@
 
         <a
           class="p-l-20"
-          href="https://donorbox.org/macosicons"
+          href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
           target="_blank"
         >
           <button is="coral-button" variant="quiet">
