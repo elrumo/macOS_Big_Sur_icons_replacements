@@ -20,3 +20,6 @@ Here are some rules you show know:
 - If you are creating an icon for an open-source project, please consider submitting the icon to their respective repository for their use as well.
 
 Credits can be seen on [macOSicons.com](https://macosicons.com/)
+
+
+Feel free to use the icons on this repository, but if you are going to use them in a way that will make you money, please, get in touch directly with me first.
