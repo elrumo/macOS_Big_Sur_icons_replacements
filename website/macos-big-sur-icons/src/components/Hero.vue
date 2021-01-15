@@ -1,6 +1,6 @@
 <template>
   <div id="hero" class="hero-wrapper">
-    
+
     <div class="PH-badge">
       <Sponsor class="gitHub-sponsor"/>
     </div>
@@ -40,24 +40,38 @@
         To contribute and make new icons, use these templates:
         <a
           class="coral-Link"
+          @click="updateCount('cftvIOYXek')"
+        >
+        <!-- <a
+          class="coral-Link"
           href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.sketch"
-          >Sketch</a
-        >,
+          @click="updateCount('cftvIOYXek')"
+        > -->
+          Sketch
+        </a>
+        ,
         <a
           class="coral-Link"
           href="https://www.figma.com/community/file/930870327989917713/MacOS-Big-Sur-icon-template"
-          >Figma</a
-        >,
+          @click="updateCount('ecCJEYIUyF')"
+        >
+          Figma
+        </a>
+        ,
         <a
           class="coral-Link"
           href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.ai"
-          >Illustrator</a
-        >, or
+          @click="updateCount('fu7UfKs2zz')"
+        >
+          Illustrator
+        </a>
+        , or
         <a
           class="coral-Link"
           href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.psd"
-          >Photoshop</a
-        >.
+        >
+          Photoshop
+        </a>.
       </p>
 
       <!-- <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank">
@@ -88,7 +102,8 @@
         >
           <button is="coral-button" variant="quiet">
             <!-- <span>☕️ Buy me a hot chocolate</span> -->
-            <span class="p-r-5 f-s-16">☕️</span> <span>Buy me a hot chocolate</span>
+            <!-- <span class="p-r-5 f-s-16">☕️</span> <span>Buy me a hot chocolate</span> -->
+            <span class="p-r-5 f-s-16">☕️</span> <span>Support the project</span>
           </button>
         </a>
 
@@ -104,6 +119,22 @@
 
 <script>
 import Sponsor from "./Sponsor.vue";
+
+// import Parse from 'parse'
+// import dotenv from 'dotenv'; // Used to access env varaibles
+// dotenv.config()
+
+// const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
+// const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
+// const VUE_APP_PARSE_MASTERKEY = process.env.VUE_APP_PARSE_MASTERKEY
+
+// Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
+// Parse.serverURL = 'https://onionicons.com/parse'
+
+// var Icons = Parse.Object.extend("Icons");
+// var icons = new Icons();
+
+
 
 export default {
   name: "Hero",
@@ -121,10 +152,28 @@ export default {
     list: {},
     submitIconDialog: String,
     iconListLen: 0,
-    iconsEmpty: Boolean
+    iconsEmpty: Boolean,
+    parseObj: {},
   },
 
   methods: {
+
+    async updateCount(id){
+      let parent = this;
+
+      let Icons = await parent.parseObj
+
+      let query = new Icons.Query(Icons)
+      let docToUpdate = await query.get(id)
+
+      docToUpdate.increment("downloads")
+      docToUpdate.save().then(() => {
+        console.log("Saved!!");
+      }).catch((e) => {
+        console.log("error: ", e);
+      })
+    },
+
     showDialog(dialog) {
       let dialogEl = document.getElementById(dialog);
       dialogEl.show();

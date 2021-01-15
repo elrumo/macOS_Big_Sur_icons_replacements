@@ -25,6 +25,7 @@
       :submitIconDialog="'submitIcon'"
       :iconListLen="iconListLen"
       :iconsEmpty="!loadingError"
+      :parseObj="getParseObj"
     />
 
     <coral-toast id="errorToast" variant="error">
@@ -533,6 +534,10 @@ export default {
   },
 
   computed:{
+
+    getParseObj(){
+      return Icons
+    },
 
     toastMsg(){
       return this.$store.state.toastMsg
