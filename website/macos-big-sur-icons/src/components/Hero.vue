@@ -31,9 +31,14 @@
           or follow the develoment on 
         <a
           class="coral-Link"
-          href="https://twitter.com/intent/tweet?text=Check%20out%20macOSicons.com%20for%20over%203,500%20BigSur%20ready%20icons%20by%20@elrumo"
+          href="https://twitter.com/elrumo"
           target="_blank"
         >
+        <!-- <a
+          class="coral-Link"
+          href="https://twitter.com/intent/tweet?text=Check%20out%20macOSicons.com%20for%20over%203,500%20BigSur%20ready%20icons%20by%20@elrumo"
+          target="_blank"
+        > -->
           Twitter.
         </a>
         <!-- <br><br> -->
@@ -97,13 +102,13 @@
 
         <a
           class="p-l-20"
-          href="https://www.paypal.com/donate?hosted_button_id=5PMNX4DPW83KN"
+          href="https://donorbox.org/macosicons"
           target="_blank"
         >
           <button is="coral-button" variant="quiet">
             <!-- <span>☕️ Buy me a hot chocolate</span> -->
             <!-- <span class="p-r-5 f-s-16">☕️</span> <span>Buy me a hot chocolate</span> -->
-            <span class="p-r-5 f-s-16">☕️</span> <span>Support the project</span>
+            <span>Donate</span>
           </button>
         </a>
 
