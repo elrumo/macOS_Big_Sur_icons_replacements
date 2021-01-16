@@ -45,6 +45,7 @@
         To contribute and make new icons, use these templates:
         <a
           class="coral-Link"
+          href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.sketch"
           @click="updateCount('cftvIOYXek')"
         >
         <!-- <a
