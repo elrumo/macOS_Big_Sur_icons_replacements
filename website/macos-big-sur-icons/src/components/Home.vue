@@ -61,11 +61,22 @@
         </div>
 
       <!-- "Filter by" button -->
-        <div class="filter-by-grid" @click="changeSortOrder">
+        <!-- <div class="filter-by-grid" @click="changeSortOrder">
           <div class="filter-by-wrapper coral-card shadow">
               <coral-icon class="h-full" :icon="icons.iconsOrder" title="Add"></coral-icon>
           </div>
+        </div> -->
+
+        <div @click="changeOS" class="switch-wrapper coral-card shadow main-border-radius">
+          <div id="macOStext" class="switch-text">
+            macOS
+          </div>
+          <div id="iOStext" class="switch-text text-not-selected">
+            iOS
+          </div>
+          <div id="osSwitcher" class="switch-btn"></div>
         </div>
+
       </div>
       
     <!-- Loading spinning circle -->
@@ -109,7 +120,13 @@
           <div  v-for="icon in search" :key="icon.appName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper coral-card">
               <div class="card-img-wrapper" style="max-width: 120px;">
                 
-                <a :href="icon.icnsUrl">
+                <a v-if="isMacOs" :href="icon.icnsUrl">
+                  <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
+                    <img class="w-full" :data-src="icon.lowResPngUrl">
+                  </div>
+                </a>
+
+                <a v-else :href="icon.iOSUrl">
                   <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
                     <img class="w-full" :data-src="icon.lowResPngUrl">
                   </div>
@@ -149,7 +166,7 @@
           <!-- Carbon ads -->
           <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
           
-          <a v-for="icon in search" :key="icon.appName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper shadow coral-card" :href="icon.icnsUrl">
+          <a v-for="icon in search" :key="icon.appName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper shadow coral-card" :href="downladUrl(icon)" target="_blank" download>
             <div @click="addClickCount(icon)" class="card-img-wrapper">
               <div v-lazy-container="{ selector: 'img', loading: icons.loading }">
                 <img class="w-full" :data-src="icon.lowResPngUrl">
@@ -162,6 +179,8 @@
               <p class="coral-Body--XS opacity-60 m-b-20"><a class="coral-Link" :href="icon.credit" target="_blank">{{icon.usersName}}</a> on <span class="coral-Body--XS opacity-50">{{ getDate(icon.timeStamp) }}</span></p>
             </div>
           </a>
+          
+
         </div>
 
       <!-- </div> -->
@@ -260,6 +279,8 @@ export default {
       
       howManyRecords: 0,
 
+      isMacOs: true,
+
       iconListLen: 3_480,
       lastVisible: {},
       dataToShow: [],
@@ -295,6 +316,31 @@ export default {
   },
 
   methods:{ 
+
+    changeOS(){
+      let parent = this;
+
+      function toggleClass(id, cssClass){
+        document.getElementById(id).classList.toggle(cssClass)
+      }
+
+      toggleClass("osSwitcher", "switchRight")
+      toggleClass("iOStext", "text-not-selected")
+      toggleClass("macOStext", "text-not-selected")
+
+      parent.isMacOs = !parent.isMacOs
+    },
+
+
+    downladUrl(icon){
+      let parent = this
+      
+      if (parent.isMacOs) {
+        return icon.icnsUrl
+      } else {
+        return icon.iOSUrl
+      }
+    },
 
     async addClickCount(icon){
       let id = icon.id
@@ -441,7 +487,6 @@ export default {
             iconData[data] = objData[data]
           }
           iconData.id = results[result].id
-          console.log(iconData.id);
 
           parent.$store.commit('pushDataToArr', {arr: "list", data: iconData, func: "getIconsArray"})
         }
@@ -449,7 +494,7 @@ export default {
         setTimeout(() => {
           let carbon = document.getElementById("carbonads")
           carbon.classList.add("coral-card")
-        }, 500);
+        }, 1000);
 
         parent.scroll()
 
