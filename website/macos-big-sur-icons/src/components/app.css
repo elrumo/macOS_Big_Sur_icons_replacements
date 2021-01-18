@@ -99,11 +99,59 @@ ul {
     padding-top: 0px;
     top: 0;
     display: grid;
-    grid-template-columns: 1fr 50px;
+    grid-template-columns: auto 170px;
     column-gap: 10px;
     max-width: 1300px;
     margin: auto;
     z-index: 10;
+}
+
+.switch-text{
+    margin: auto;
+    z-index: 2;
+    font-weight: 600;
+    transition: 0.2s;
+    user-select: none;
+}
+
+.switch-wrapper{
+    position: relative;
+    margin-top: var(--padding-top-search);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: solid 1px var(--coral-dark-border);
+}
+
+.switch-btn{
+    position: absolute;
+    padding: 9px;
+    width: 33%;
+    height: calc(100% - 30px);
+    border-radius: 5px;
+    backdrop-filter: brightness(70%);
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    transition: 0.3s;
+}
+
+.text-not-selected{
+    opacity: 0.4;
+}
+
+.switchRight{
+    left: 75%;
+}
+
+
+.coral--dark .switch-btn{
+    background-color: rgb(50, 50, 50);
+    border: solid 1px rgb(74, 74, 74);
+}
+
+.coral--light .switch-btn{
+    background-color: rgb(245, 245, 245);
+    border: solid 1px rgb(74, 74, 74);
 }
 
 .filter-by-wrapper{
@@ -633,6 +681,7 @@ ul {
     border-radius: 5px;
     margin-left: 10px;
 }
+
 
 .firebaseui-id-submit{
     background-color: rgb(20, 115, 230);

@@ -101,12 +101,13 @@
             </button>
           </a> -->
 
+          <!-- href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" -->
         <a
           class="p-l-20"
-          href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+          href="https://ko-fi.com/I3I63CFCN"
           target="_blank"
         >
-          <button is="coral-button" variant="quiet">
+          <button is="coral-button">
             <!-- <span>☕️ Buy me a hot chocolate</span> -->
             <!-- <span class="p-r-5 f-s-16">☕️</span> <span>Buy me a hot chocolate</span> -->
             <span>Donate</span>
@@ -139,8 +140,6 @@ import Sponsor from "./Sponsor.vue";
 
 // var Icons = Parse.Object.extend("Icons");
 // var icons = new Icons();
-
-
 
 export default {
   name: "Hero",
@@ -191,6 +190,10 @@ export default {
   },
 
   mounted: function() {},
+
+  computed: {
+  }
+
 };
 </script>
 
