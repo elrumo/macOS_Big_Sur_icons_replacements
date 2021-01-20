@@ -17,7 +17,7 @@
           <a
             aria-label="Support the project on PayPal"
             target="_blank"
-            href="https://www.paypal.com/donate?hosted_button_id=5PMNX4DPW83KN"
+            href="https://github.com/sponsors/elrumo?o=esc"
             style="color: black"
           >
           <div class="flex-sm-auto mr-sm-3">
