@@ -1,7 +1,5 @@
 # macOS Big Sur - Replacements Icons
-You contact me [@elrumo](https://bit.ly/elias-twitter) on Twitter or by [email](mailto:elias.ruiz.monserrat@gmail.com)***
-
-Replacement icons for popular apps in the style of macOS Big Sur.
+**You contact me [@elrumo](https://bit.ly/elias-twitter) on Twitter or by [email](mailto:elias.ruiz.monserrat@gmail.com)**
 
 ## To view all the icons and submit new ones, go to [this website](https://macosicons.com).
 
