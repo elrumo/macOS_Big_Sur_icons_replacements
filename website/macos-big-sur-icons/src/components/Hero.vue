@@ -20,27 +20,23 @@
           download
         </a>
         all {{ iconListLen }} icons,  -->
-        visit the
-        <a
-          class="coral-Link"
-          href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements"
-          target="_blank"
-        >
-          GitHub page
-        </a>
-          or follow the develoment on 
+        follow the develoment on 
         <a
           class="coral-Link"
           href="https://twitter.com/elrumo"
           target="_blank"
         >
-        <!-- <a
-          class="coral-Link"
-          href="https://twitter.com/intent/tweet?text=Check%20out%20macOSicons.com%20for%20over%203,500%20BigSur%20ready%20icons%20by%20@elrumo"
-          target="_blank"
-        > -->
-          Twitter.
+        <b>Twitter,</b>
         </a>
+        or visit the
+        <a
+          class="coral-Link"
+          href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements"
+          target="_blank"
+        >
+          GitHub
+        </a>
+         page.
         <!-- <br><br> -->
         To contribute and make new icons, use these templates:
         <a
@@ -101,10 +97,10 @@
             </button>
           </a> -->
 
-          <!-- href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" -->
+          <!-- href="https://ko-fi.com/I3I63CFCN" -->
         <a
           class="p-l-20"
-          href="https://ko-fi.com/I3I63CFCN"
+          href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
           target="_blank"
         >
           <button is="coral-button">
