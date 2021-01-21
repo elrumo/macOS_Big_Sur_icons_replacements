@@ -1,9 +1,9 @@
 <template>
-  <div id="hero" class="hero-wrapper">
+  <div id="hero" class="hero-wrapper p-t-30">
 
-    <div class="PH-badge">
+    <!-- <div class="PH-badge">
       <Sponsor class="gitHub-sponsor"/>
-    </div>
+    </div> -->
   
   <div v-if="iconsEmpty">    
       <h3
@@ -15,19 +15,19 @@
       </h3>
 
       <p class="coral-Body--L w-100 body-text p-t-20">
-        Click on each icon to download it,
-        <!-- <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/releases/download/v1.0/icons.zip">
-          download
+          Sponsor the project on
+        <a class="coral-Link" href="https://github.com/sponsors/elrumo">
+         GitHub
         </a>
-        all {{ iconListLen }} icons,  -->
-        follow the develoment on 
+        and follow the develoment on 
         <a
           class="coral-Link"
           href="https://twitter.com/elrumo"
           target="_blank"
         >
-        <b>Twitter,</b>
+          <b>Twitter.</b>
         </a>
+        <!-- </a>
         or visit the
         <a
           class="coral-Link"
@@ -36,7 +36,7 @@
         >
           GitHub
         </a>
-         page.
+         page. -->
         <!-- <br><br> -->
         To contribute and make new icons, use these templates:
         <a
@@ -49,25 +49,23 @@
           href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.sketch"
           @click="updateCount('cftvIOYXek')"
         > -->
-          Sketch
+          Sketch,
         </a>
-        ,
         <a
           class="coral-Link"
           href="https://www.figma.com/community/file/930870327989917713/MacOS-Big-Sur-icon-template"
           @click="updateCount('ecCJEYIUyF')"
         >
-          Figma
+          Figma,
         </a>
-        ,
         <a
           class="coral-Link"
           href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.ai"
           @click="updateCount('fu7UfKs2zz')"
         >
-          Illustrator
+          Illustrator,
         </a>
-        , or
+        or
         <a
           class="coral-Link"
           href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.psd"
@@ -98,15 +96,17 @@
           </a> -->
 
           <!-- href="https://ko-fi.com/I3I63CFCN" -->
+          <!-- href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" -->
         <a
           class="p-l-20"
-          href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+          href="https://www.buymeacoffee.com/elrumo"
           target="_blank"
         >
           <button is="coral-button">
             <!-- <span>☕️ Buy me a hot chocolate</span> -->
             <!-- <span class="p-r-5 f-s-16">☕️</span> <span>Buy me a hot chocolate</span> -->
-            <span>Donate</span>
+            <!-- <span>Donate</span> -->
+            <span>Help keep this site alive</span>
           </button>
         </a>
 
