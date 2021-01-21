@@ -2,7 +2,7 @@
     <div id="header" class="header">
         <p class="header-item-left coral-Body--S p-t-5">
             <a href="mailto:elias.ruiz.monserrat@gmail.com" target="_blank" class="coral-Link">
-                Contact me
+                Contact
             </a> 
         </p>
         
