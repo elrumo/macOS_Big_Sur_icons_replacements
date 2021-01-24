@@ -26,6 +26,7 @@ ul {
 
 .PH-badge{
     margin-top: 40px;
+    margin-bottom: 25px;
     left: 50%;
     /* opacity: 0.5;    */
     position: relative;
@@ -35,6 +36,26 @@ ul {
 
 .PH-badge:hover{
     opacity: 1;
+}
+
+.Box{
+    transition: 0.3s;
+}
+
+.coral--dark .Box{
+    box-shadow: 0px 20px 20px -10px rgba(0,0,0,0.5);
+}
+
+.coral--light .Box{
+    box-shadow: 0px 20px 30px -10px rgba(0,0,0,0.2);
+}
+
+.coral--dark .Box:hover{
+    box-shadow: 0px 45px 40px -30px rgba(0,0,0,0.8);
+}
+
+.coral--light .Box:hover{
+    box-shadow: 0px 50px 40px -30px rgba(0,0,0,0.3);
 }
 
 .gitHub-sponsor{
@@ -110,7 +131,7 @@ ul {
     margin: auto;
     z-index: 2;
     font-weight: 600;
-    transition: 0.2s;
+    transition: 0.1s;
     user-select: none;
 }
 

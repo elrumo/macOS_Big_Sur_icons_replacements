@@ -116,10 +116,8 @@
 
     <!-- Icon list -->
         <div v-if="isAuth & !loadingError" class="icon-list-area p-t-20 p-b-50">
-          <!-- Carbon ads -->
-          <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
-
-          <!-- Search Bar -->
+          
+          <!-- Icons -->
           <div  v-for="icon in search" :key="icon.appName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper coral-card">
               <div class="card-img-wrapper" style="max-width: 120px;">
                 
