@@ -1,9 +1,9 @@
 <template>
   <div id="hero" class="hero-wrapper p-t-30">
 
-    <!-- <div class="PH-badge">
+    <div class="PH-badge">
       <Sponsor class="gitHub-sponsor"/>
-    </div> -->
+    </div>
   
   <div v-if="iconsEmpty">    
       <h3
@@ -96,17 +96,17 @@
           </a> -->
 
           <!-- href="https://ko-fi.com/I3I63CFCN" -->
-          <!-- href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" -->
+          <!-- href="https://www.buymeacoffee.com/elrumo" -->
         <a
           class="p-l-20"
-          href="https://www.buymeacoffee.com/elrumo"
           target="_blank"
+          href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
         >
-          <button is="coral-button">
+          <button is="coral-button" variant="quiet">
             <!-- <span>☕️ Buy me a hot chocolate</span> -->
             <!-- <span class="p-r-5 f-s-16">☕️</span> <span>Buy me a hot chocolate</span> -->
-            <!-- <span>Donate</span> -->
-            <span>Help keep this site alive</span>
+            <span>Donate</span>
+            <!-- <span>Help keep this site alive</span> -->
           </button>
         </a>
 
