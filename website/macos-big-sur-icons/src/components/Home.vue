@@ -293,7 +293,7 @@ export default {
         success: require("../assets/icons/delete.svg"),
         namingOrder: require("../assets/icons/namingOrder.svg"),
         date: require("../assets/icons/date.svg"),
-        loading: require("../assets/loading.gif"),
+        loading: require("../assets/no-app-icon.png"),
         iconsOrder: require("../assets/icons/namingOrder.svg")
       },
       coralIcons:{
@@ -301,7 +301,8 @@ export default {
         delete: require("../assets/icons/delete.svg"),
         newItem: require("../assets/icons/newItem.svg"),
         edit: require("../assets/icons/edit.svg"),
-        loading: require("../assets/loading.gif"),
+        loading: require("../assets/no-app-icon.png"),
+        // loading: require("../assets/loading.gif"),
       }
     }
   },
