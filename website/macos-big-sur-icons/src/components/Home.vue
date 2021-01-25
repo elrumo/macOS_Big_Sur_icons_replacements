@@ -302,7 +302,6 @@ export default {
         newItem: require("../assets/icons/newItem.svg"),
         edit: require("../assets/icons/edit.svg"),
         loading: require("../assets/no-app-icon.png"),
-        // loading: require("../assets/loading.gif"),
       }
     }
   },
