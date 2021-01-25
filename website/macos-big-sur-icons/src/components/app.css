@@ -877,3 +877,22 @@ ul {
 ._coral-Search-input{
     padding-left: 50px;
 }
+
+.imageLoad {
+    background: linear-gradient(180deg, #5d5d5d, #eeeeee);
+    background-size: 400% 400%;
+
+    animation: imageLoad 2s ease infinite;
+}
+
+@keyframes imageLoad {
+    0% {
+        background-position: 50% 0
+    }
+    50% {
+        background-position: 50% 100%
+    }
+    100% {
+        background-position: 50% 0
+    }
+}
