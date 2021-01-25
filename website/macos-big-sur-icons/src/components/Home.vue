@@ -86,7 +86,7 @@
 
       <div v-if="loadingError" class="waiting-wrapper">
         
-        <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+        <!-- <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script> -->
 
         <h3 class="coral-Heading--M">
           The site is temporarily down for maintenance purposes.
@@ -230,11 +230,11 @@ dotenv.config()
 
 const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
 const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
-const VUE_APP_PARSE_MASTERKEY = process.env.VUE_APP_PARSE_MASTERKEY
 
 Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://onionicons.com/parse'
 
+// var Icons = Parse.Object.extend("Icons");
 var Icons = Parse.Object.extend("Icons");
 var icons = new Icons();
 
@@ -291,7 +291,7 @@ export default {
         success: require("../assets/icons/delete.svg"),
         namingOrder: require("../assets/icons/namingOrder.svg"),
         date: require("../assets/icons/date.svg"),
-        loading: require("../assets/loading.gif"),
+        loading: require("../assets/no-app-icon.png"),
         iconsOrder: require("../assets/icons/namingOrder.svg")
       },
       coralIcons:{
@@ -299,7 +299,7 @@ export default {
         delete: require("../assets/icons/delete.svg"),
         newItem: require("../assets/icons/newItem.svg"),
         edit: require("../assets/icons/edit.svg"),
-        loading: require("../assets/loading.gif"),
+        loading: require("../assets/no-app-icon.png"),
       }
     }
   },
@@ -455,13 +455,6 @@ export default {
           parent.loadMore()
         }
       }
-    },
-
-    getIconListLen(){
-      let parent = this
-      dbCollection.onSnapshot(function(doc){
-        parent.iconListLen = doc.docs.length
-      })
     },
 
     async getIconsArray(){
