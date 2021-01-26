@@ -313,8 +313,6 @@ export default {
 
     // let parseUser = parent.parseUser
     // let parsePass = parent.parsePass
-    let parseUser = "example@example.com"
-    let parsePass = "example@example.com"
     
     Parse.User.enableUnsafeCurrentUser()
 
@@ -335,7 +333,6 @@ export default {
       })
     }
     
-
   },
 
   methods:{ 
