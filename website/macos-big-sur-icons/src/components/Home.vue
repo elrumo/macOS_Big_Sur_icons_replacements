@@ -310,10 +310,9 @@ export default {
   mounted: function(){
     let parent = this;
 
-    // parseUser = parent.parseUser
-    // parsePass = parent.parsePass
+    let parseUser = parent.parseUser
+    let parsePass = parent.parsePass
 
-    this.getIconsArray();
     
     Parse.User.enableUnsafeCurrentUser()
 
@@ -321,10 +320,12 @@ export default {
     if(Parse.User.current()){
       if (Parse.User.current().attributes.isAdmin) {
         parent.isAuth = true
+        parent.getIconsArray();
         }
     } else{
       Parse.User.logIn(parseUser, parsePass).then(()=>{
         console.log("Signed Insss");
+        parent.getIconsArray();
       })
     }
 
