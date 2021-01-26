@@ -231,7 +231,8 @@ dotenv.config()
 const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
 const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
-Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
+// Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
+Parse.initialize("macOSicons", "macOSicons")
 Parse.serverURL = 'https://onionicons.com/parse'
 
 var Icons = Parse.Object.extend("Icons");
@@ -310,9 +311,10 @@ export default {
   mounted: function(){
     let parent = this;
 
-    let parseUser = parent.parseUser
-    let parsePass = parent.parsePass
-
+    // let parseUser = parent.parseUser
+    // let parsePass = parent.parsePass
+    let parseUser = "example@example.com"
+    let parsePass = "example@example.com"
     
     Parse.User.enableUnsafeCurrentUser()
 
@@ -320,16 +322,19 @@ export default {
     if(Parse.User.current()){
       if (Parse.User.current().attributes.isAdmin) {
         parent.isAuth = true
-        }
+      }else{
+        console.log("hi");
+        parent.getIconsArray();
+      }
     } else{
       Parse.User.logIn(parseUser, parsePass).then(()=>{
         console.log("Signed Insss");
+        parent.getIconsArray();
       }).catch((e)=>{
         console.log("login: ", e);
       })
     }
     
-    parent.getIconsArray();
 
   },
 
