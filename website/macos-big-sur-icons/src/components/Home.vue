@@ -319,6 +319,7 @@ export default {
     // if(Parse.User.current()){
     if(Parse.User.current()){
       if (Parse.User.current().attributes.isAdmin) {
+        parent.getIconsArray();
         parent.isAuth = true
       }else{
         console.log("hi");
