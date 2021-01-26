@@ -86,7 +86,7 @@
 
       <div v-if="loadingError" class="waiting-wrapper">
         
-        <!-- <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script> -->
+        <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
 
         <h3 class="coral-Heading--M">
           The site is temporarily down for maintenance purposes.
@@ -234,7 +234,6 @@ const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://onionicons.com/parse'
 
-// var Icons = Parse.Object.extend("Icons");
 var Icons = Parse.Object.extend("Icons");
 var icons = new Icons();
 
@@ -246,6 +245,10 @@ let algolia = {
     appid: process.env.VUE_APP_ALGOLIA_APPID,
     apikey: process.env.VUE_APP_ALGOLIA_KEY
 }
+
+let parseUser = process.env.VUE_APP_PARSE_USER
+let parsePass = process.env.VUE_APP_PARSE_PASS
+
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
 const index = client.initIndex('macOS_parse')
@@ -307,11 +310,22 @@ export default {
   mounted: function(){
     let parent = this;
 
-    this.getIconsArray();
+    // parseUser = parent.parseUser
+    // parsePass = parent.parsePass
 
+    this.getIconsArray();
+    
+    Parse.User.enableUnsafeCurrentUser()
+
+    // if(Parse.User.current()){
     if(Parse.User.current()){
-        console.log("Signed In");
+      if (Parse.User.current().attributes.isAdmin) {
         parent.isAuth = true
+        }
+    } else{
+      Parse.User.logIn(parseUser, parsePass).then(()=>{
+        console.log("Signed Insss");
+      })
     }
 
   },
