@@ -248,6 +248,10 @@ let algolia = {
     apikey: process.env.VUE_APP_ALGOLIA_KEY
 }
 
+let parseUser = process.env.VUE_APP_PARSE_USER
+let parsePass = process.env.VUE_APP_PARSE_PASS
+
+
 const client = algoliasearch(algolia.appid, algolia.apikey);
 const index = client.initIndex('macOS_parse')
 
@@ -308,9 +312,12 @@ export default {
   mounted: function(){
     let parent = this;
 
+    // parseUser = parent.parseUser
+    // parsePass = parent.parsePass
+
     this.getIconsArray();
     
-    // Parse.User.enableUnsafeCurrentUser()
+    Parse.User.enableUnsafeCurrentUser()
 
     // if(Parse.User.current()){
     if(Parse.User.current()){
@@ -318,7 +325,7 @@ export default {
         parent.isAuth = true
         }
     } else{
-      Parse.User.logIn(process.env.PARSE_USER, process.env.PARSE_PASS).then(()=>{
+      Parse.User.logIn(parseUser, parsePass).then(()=>{
         console.log("Signed Insss");
       })
     }
