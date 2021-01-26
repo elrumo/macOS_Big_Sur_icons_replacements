@@ -199,6 +199,7 @@ import Parse from 'parse'
 
 Parse.initialize("macOSicons");
 Parse.serverURL = 'https://onionicons.com/parse'
+
 const Icons = Parse.Object.extend("Icons");
 const icons = new Icons();
 
@@ -241,7 +242,7 @@ export default {
         delete: require("../assets/icons/delete.svg"),
         newItem: require("../assets/icons/newItem.svg"),
         edit: require("../assets/icons/edit.svg"),
-        loading: require("../assets/loading.gif"),
+        loading: require("../assets/no-app-icon.png"),
       },
     }
   },
@@ -526,8 +527,10 @@ export default {
     }
 
     if (currentUser) {
+      if (!Parse.User.current().attributes.isAdmin) {
+        return
+      }
       parent.isAuth = true
-      
       async function getParseData(){
         const query = new Parse.Query(Icons);
         query.equalTo("approved", false)
