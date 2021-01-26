@@ -320,14 +320,14 @@ export default {
     if(Parse.User.current()){
       if (Parse.User.current().attributes.isAdmin) {
         parent.isAuth = true
-        parent.getIconsArray();
         }
     } else{
       Parse.User.logIn(parseUser, parsePass).then(()=>{
         console.log("Signed Insss");
-        parent.getIconsArray();
       })
     }
+    
+    parent.getIconsArray();
 
   },
 
