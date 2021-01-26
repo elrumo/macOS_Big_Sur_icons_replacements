@@ -310,13 +310,9 @@ export default {
 
   mounted: function(){
     let parent = this;
-
-    // let parseUser = parent.parseUser
-    // let parsePass = parent.parsePass
     
     Parse.User.enableUnsafeCurrentUser()
 
-    // if(Parse.User.current()){
     if(Parse.User.current()){
       if (Parse.User.current().attributes.isAdmin) {
         parent.getIconsArray();
