@@ -324,6 +324,8 @@ export default {
     } else{
       Parse.User.logIn(parseUser, parsePass).then(()=>{
         console.log("Signed Insss");
+      }).catch((e)=>{
+        console.log("login: ", e);
       })
     }
     
