@@ -1,23 +1,61 @@
 <template>
     <div id="header" class="header">
-        <p class="header-item-left coral-Body--S p-t-5">
-            <a href="mailto:elias.ruiz.monserrat@gmail.com" target="_blank" class="coral-Link">
-                Contact
-            </a> 
-        </p>
         
-        <p class="coral-Body--S p-t-5 d-inline-block absolute transform-centre">
+        <p class="header-item coral-Body--S d-inline-block">
             By 
             <a href="https://webbites.io/" target="_blank" class="coral-Link">
                 Elias
             </a> 
         </p>
 
-        <!-- <img v-if="darkMode" class="header-item-right dark-mode-btn" href="https://twitter.com/elrumo" target="_blank" :src="icons.twitter" alt="dark-mode-btn"> -->
+        
+        <div class="header-grid-btns">
 
-        <p class="header-item-right coral-Body--S p-t-5">
-            Hosting by <a href="https://fosshost.org/" target="_blank" class="coral-Link"> fosshost</a>
-        </p>
+            <div>
+                <router-link to="/how-to">
+                    <button
+                        is="coral-button"
+                        variant="quiet"
+                    >
+                        <span>How do I install an icon?</span>
+                    </button>
+                </router-link>
+            </div>
+
+            <div>
+                <router-link to="/about">
+                    <button
+                        is="coral-button"
+                        variant="quiet"
+                    >
+                        <span>About</span>
+                    </button>
+                </router-link>
+            </div>
+           
+            <div>
+                <a class="" target="_blank" href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" >
+                    <button
+                        is="coral-button"
+                    >
+                        <span>Donate</span>
+                    </button>
+                </a>
+            </div>
+
+            <div>
+                <button
+                    is="coral-button"
+                    variant="cta"
+                    @click="showDialog(submitIconDialog)"
+                >
+                    <span>Submit icons</span>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Twitter -->
         <!-- <p class="header-item-right coral-Body--XL github-header" id="github-header" > 
             <a href="https://twitter.com/elrumo" target="_blank" class="coral-Link"> 
                 <coral-icon size="M" alt="Smallest" title="XS">
@@ -41,6 +79,10 @@ export default {
         }
     },
 
+    props:{
+        submitIconDialog: String,
+    },
+
     methods:{
         toggleDarkMode(){
             let parent = this
@@ -55,6 +97,11 @@ export default {
                 searchIcon.classList.toggle('fill-dark')
             }
             parent.darkMode = !parent.darkMode
+        },
+
+        showDialog(dialog) {
+            let dialogEl = document.getElementById(dialog);
+            dialogEl.show();
         },
     },
 
