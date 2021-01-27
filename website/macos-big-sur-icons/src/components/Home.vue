@@ -2,8 +2,10 @@
   <div>
     
     <Dialog/>
-    <!-- Header -->
-    <Header/>
+    
+    <Header
+       :submitIconDialog="'submitIcon'"
+    />
     
     <deleteDialog :icon="activeIcon"/>
 
