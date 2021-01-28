@@ -21,7 +21,6 @@ export default new Vuex.Store({
       if (Array.isArray(iconData.data)) {
         store[iconData.arr] = iconData.data
       } else{
-        // console.log("data is object: ", iconData.data);
         store[iconData.arr].push(iconData.data)
       }
     },
