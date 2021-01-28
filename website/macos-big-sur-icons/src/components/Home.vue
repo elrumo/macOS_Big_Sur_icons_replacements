@@ -118,7 +118,7 @@
         <div v-if="isAuth & !loadingError" class="icon-list-area p-t-20 p-b-50">
           
           <!-- Icons -->
-          <div  v-for="icon in search" :key="icon.appName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper coral-card">
+          <div  v-for="icon in search" :key="icon.appName" class="card-wrapper coral-card">
               <div class="card-img-wrapper" style="max-width: 120px;">
                 
                 <a v-if="isMacOs" :href="icon.icnsUrl">
@@ -167,7 +167,7 @@
           <!-- Carbon ads -->
           <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
           
-          <a v-for="icon in search" :key="icon.appName+Math.floor(Math.random() * Math.floor(9999))" class="card-wrapper shadow coral-card" :href="downladUrl(icon)" target="_blank" download>
+          <a v-for="icon in search" :key="icon.appName" class="card-wrapper shadow coral-card" :href="downladUrl(icon)" target="_blank" download>
             <div @click="addClickCount(icon)" class="card-img-wrapper">
               <div v-lazy-container="{ selector: 'img', loading: icons.loading }">
                 <img class="w-full" :data-src="icon.lowResPngUrl">
