@@ -183,7 +183,7 @@
           <a v-for="icon in search" :key="icon.lowResPngUrl" class="card-wrapper shadow coral-card" :href="downladUrl(icon)" target="_blank" download>
             <div @click="addClickCount(icon)" class="card-img-wrapper">
               
-              <div v-lazy-container="{ selector: 'img', loading: icons.loading }">
+              <div v-lazy-container="{ selector: 'img', loading: icons.loading }" >
                 <img class="w-full" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
               </div>
               
