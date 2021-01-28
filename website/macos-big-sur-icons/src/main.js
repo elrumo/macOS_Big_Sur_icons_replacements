@@ -13,9 +13,12 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+const loadimage = require('./assets/no-app-icon.png')
+
 Vue.use(VueLazyload, {
   preLoad: 1.3,
-  loading: 'dist/loading.gif',
+  loading: loadimage,
+  attempt: 2,
 });
 
 Vue.use(Vuex)
