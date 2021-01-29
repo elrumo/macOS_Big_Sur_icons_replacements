@@ -1,7 +1,9 @@
 <template>
     <div id="header" class="header coral-bg">
-        <div class="header-wrapper">
 
+        <Dialog/>
+
+        <div class="header-wrapper">
             <p class="header-item coral-Body--S d-inline-block">
                 Built by 
                 <a href="https://webbites.io/" target="_blank" class="coral-Link">
@@ -13,12 +15,21 @@
             <div class="header-grid-btns">
 
                 <div>
+                    <router-link to="/about">
+                        <button is="coral-button" variant="quiet">
+                            <span>About</span>
+                        </button>
+                    </router-link>
+                </div>
+
+                <div>
                     <router-link to="/how-to">
                         <button is="coral-button" variant="quiet">
                             <span>How do I install an icon?</span>
                         </button>
                     </router-link>
                 </div>
+        
 
                 <div>
                     <a class="" target="_blank" href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" >
@@ -27,17 +38,9 @@
                         </button>
                     </a>
                 </div>
-        
+
                 <div>
-                    <router-link to="/about">
-                        <button is="coral-button" variant="quiet">
-                            <span>About</span>
-                        </button>
-                    </router-link>
-                </div>
-        
-                <div>
-                    <button is="coral-button" variant="cta" @click="showDialog(submitIconDialog)">
+                    <button is="coral-button" variant="cta" @click="showDialog('submitIcon')">
                         <span>Submit icons</span>
                     </button>
                 </div>
@@ -57,9 +60,15 @@
 </template>
 
 <script>
+import Dialog from './Dialog.vue'
+
 export default {
     name:"Header",
     
+    components:{
+        Dialog
+    },
+
     data(){
         return{
             darkMode: false,
@@ -93,6 +102,11 @@ export default {
             let dialogEl = document.getElementById(dialog);
             dialogEl.show();
         },
+
+        showDialog(dialogId){
+            document.getElementById(dialogId).show()
+        },
+
     },
 
     mounted: function(){
