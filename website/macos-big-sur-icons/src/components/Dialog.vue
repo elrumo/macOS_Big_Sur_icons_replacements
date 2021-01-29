@@ -89,14 +89,11 @@
 <script>
 import Vue from 'vue'
 import { mapActions } from 'vuex';
-import * as firebase from "firebase";
 import Parse from 'parse'
 
 Parse.initialize("macOSicons");
 Parse.serverURL = 'https://onionicons.com/parse'
 
-let db = firebase.firestore();
-let storage = firebase.storage();
 export default {
     name:"Dialog",
     props:{
@@ -215,9 +212,7 @@ export default {
                   for(let i in inputs){
                     clearInput(inputs[i])  
                   }
-                  // clearInput("credit")
-                  // clearInput("email-contributor")
-                  // clearInput("yourName-contributor")
+
                   parent.showToast({id:"successToast"})
                   dialog.hide()
                 }
@@ -227,8 +222,7 @@ export default {
           }, function(error) {
             console.log(error);
             parent.isLoading = false
-            parent.errorToast({msg:"Please, make sure no special characters are used."})
-            // document.getElementById("Sh")
+            parent.errorToast({msg:"There was an error, get in touch @elrumo on Twitter"})
             // The file either could not be read, or could not be saved to Parse.
           });
         }
