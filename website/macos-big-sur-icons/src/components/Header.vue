@@ -1,10 +1,13 @@
 <template>
-    <div id="header" class="header coral-bg">
+    <div
+        id="header"
+        :class="{'scrolled-shadow': distanceFromTop & scrolled, 'scrolled-header': scrolled, header: true, 'coral-bg':true}"
+    >
 
         <Dialog/>
 
         <div class="header-wrapper">
-            <p class="header-item coral-Body--S d-inline-block">
+            <p class="header-item coral-Body--S mobile-hidden">
                 Built by 
                 <a href="https://webbites.io/" target="_blank" class="coral-Link">
                     Elias
@@ -14,18 +17,26 @@
             
             <div class="header-grid-btns">
 
-                <div>
+                <!-- <div>
                     <router-link to="/about">
                         <button is="coral-button" variant="quiet">
                             <span>About</span>
                         </button>
                     </router-link>
-                </div>
+                </div> -->
 
-                <div>
+                <div v-if="this.$route.name != 'HowTo'">
                     <router-link to="/how-to">
                         <button is="coral-button" variant="quiet">
                             <span>How do I install an icon?</span>
+                        </button>
+                    </router-link>
+                </div>
+
+                <div v-else>
+                    <router-link to="/">
+                        <button is="coral-button" variant="quiet">
+                            <span>Back to all Icons</span>
                         </button>
                     </router-link>
                 </div>
@@ -39,7 +50,7 @@
                     </a>
                 </div>
 
-                <div>
+                <div class="mobile-hidden">
                     <button is="coral-button" variant="cta" @click="showDialog('submitIcon')">
                         <span>Submit icons</span>
                     </button>
@@ -74,28 +85,29 @@ export default {
             darkMode: false,
             icons:{
                 twitter: require("../assets/icons/twitter.svg"),
-            }
+            },
+            scrolled: false,
         }
     },
 
     props:{
         submitIconDialog: String,
+        distanceFromTop: true,
     },
 
     methods:{
+
+        handleScroll () {
+            this.scrolled = window.scrollY > 20;
+        },
+
         toggleDarkMode(){
             let parent = this
             let body = document.getElementById("body")
-            let searchIcon = document.getElementById("coral-css-icon-Magnifier")
             
-            body.classList.toggle('coral--light')
-            body.classList.toggle('coral--dark')
-            if(searchIcon == null){
-            } else{
-                searchIcon.classList.toggle('fill-light')
-                searchIcon.classList.toggle('fill-dark')
-            }
-            parent.darkMode = !parent.darkMode
+            body.classList.remove('coral--light')
+            body.classList.add('coral--dark')
+            parent.darkMode = true
         },
 
         showDialog(dialog) {
@@ -112,10 +124,17 @@ export default {
     mounted: function(){
         let parent = this
         
+        window.addEventListener('scroll', this.handleScroll);
+
         if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+
             parent.toggleDarkMode()
         }
-    }
+    },
+
+    destroyed () {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
 }
 </script>
 

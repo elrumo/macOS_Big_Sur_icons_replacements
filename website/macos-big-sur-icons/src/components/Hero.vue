@@ -15,12 +15,12 @@
           Replacement Icons
         </h3>
 
-        <p class="coral-Body--L w-100 body-text p-t-20">
+        <p class="coral-Body--L w-100 body-text">
             Sponsor the project on
           <a class="coral-Link" href="https://github.com/sponsors/elrumo">
-          GitHub
+            GitHub
           </a>
-          and follow the develoment on 
+            and follow its develoment on 
           <a
             class="coral-Link"
             href="https://twitter.com/elrumo"
@@ -28,18 +28,8 @@
           >
             <b>Twitter.</b>
           </a>
-          <!-- </a>
-          or visit the
-          <a
-            class="coral-Link"
-            href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements"
-            target="_blank"
-          >
-            GitHub
-          </a>
-          page. -->
-          <!-- <br><br> -->
-          To contribute and make new icons, use these templates:
+          
+          Templates to contribute:
           <a
             class="coral-Link"
             href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.sketch"
@@ -71,13 +61,9 @@
             class="coral-Link"
             href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.psd"
           >
-            Photoshop
-          </a>.
+            Photoshop.
+          </a>
         </p>
-
-        <!-- <a class="coral-Link" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank">
-            GitHub
-          </a> -->
 
         <div class="m-auto m-t-35">
           <div class="d-inline-block">
@@ -86,40 +72,29 @@
               variant="cta"
               @click="showDialog(submitIconDialog)"
             >
-              <span>Contribute</span>
+              <span>Submit icons</span>
             </button>
           </div>
-
-          <!-- <a class="p-l-20" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" target="_blank">
-              <button  is="coral-button" variant="quiet">
-                <span>GitHub</span>
-              </button>
-            </a> -->
 
             <!-- href="https://ko-fi.com/I3I63CFCN" -->
             <!-- href="https://www.buymeacoffee.com/elrumo" -->
           <a
-            class="p-l-20"
+            class="p-l-20 mobile-hidden"
             target="_blank"
             href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
           >
             <button is="coral-button" variant="quiet">
               <!-- <span>☕️ Buy me a hot chocolate</span> -->
               <!-- <span class="p-r-5 f-s-16">☕️</span> <span>Buy me a hot chocolate</span> -->
-              <span>Donate</span>
+              <span>Buy me a coffee</span>
               <!-- <span>Help keep this site alive</span> -->
             </button>
           </a>
-
-          <!-- <div class="p-l-20 d-inline-block">
-              <button is="coral-button" variant="quiet" @click="showDialog(submitIconDialog)" >
-                <span>GitHub</span>
-              </button>
-            </div> -->
+          
         </div>
     </div>
     
-    <img class="hero-img" :src="imgs.heroImg" alt="">
+    <img class="hero-img mobile-hidden" :src="imgs.heroImg" alt="">
 
   </div>
 </div>
@@ -127,20 +102,6 @@
 
 <script>
 import Sponsor from "./Sponsor.vue";
-
-// import Parse from 'parse'
-// import dotenv from 'dotenv'; // Used to access env varaibles
-// dotenv.config()
-
-// const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
-// const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
-// const VUE_APP_PARSE_MASTERKEY = process.env.VUE_APP_PARSE_MASTERKEY
-
-// Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
-// Parse.serverURL = 'https://onionicons.com/parse'
-
-// var Icons = Parse.Object.extend("Icons");
-// var icons = new Icons();
 
 export default {
   name: "Hero",

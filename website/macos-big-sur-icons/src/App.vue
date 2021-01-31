@@ -9,11 +9,6 @@ import Home from './components/Home.vue'
 import '@adobe/coral-spectrum/dist/js/coral.js'
 import '@adobe/coral-spectrum/dist/css/coral.css'
 
-// import parse from 'parse'
-// parse.initialize("macOSicons");
-// parse.serverURL = 'http://localhost:1337/parse'
-// console.log(parse);
-
 export default {
   name: 'App',
   components: {

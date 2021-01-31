@@ -4,12 +4,7 @@ import App from './App.vue'
 import VueLazyload from 'vue-lazyload'
 import store from './store/store'
 import router from './router'
-// import VueAnalytics from 'vue-analytics'
-
-// Vue.use(VueAnalytics, {
-//   id: 'UA-46945907-10',
-//   disabled: false,
-// })
+import VueMobileDetection from 'vue-mobile-detection'
 
 Vue.config.productionTip = false
 
@@ -20,6 +15,8 @@ Vue.use(VueLazyload, {
   loading: loadimage,
   attempt: 2,
 });
+
+Vue.use(VueMobileDetection)
 
 Vue.use(Vuex)
 
