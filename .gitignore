@@ -24,3 +24,4 @@ pnpm-debug.log*
 .env
 website/macos-big-sur-icons/.env
 website/.DS_Store
+website/.DS_Store
