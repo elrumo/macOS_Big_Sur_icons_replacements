@@ -4,8 +4,8 @@
     <!-- <Dialog/> -->
     
     <Header
-       :submitIconDialog="'submitIcon'"
-       :class="{'scrolled-shadow': distanceFromTop & scrolled, 'scrolled-header': scrolled}"
+      :submitIconDialog="'submitIcon'"
+      :distanceFromTop="distanceFromTop"
     />
     
     <deleteDialog :icon="activeIcon"/>
@@ -248,22 +248,15 @@ dotenv.config()
 const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
 const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
-// Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
-Parse.initialize("macOSicons", "macOSicons")
+Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://onionicons.com/parse'
 
 var Icons = Parse.Object.extend("Icons");
 var icons = new Icons();
 
-// let order = ["timeStamp", "desc"]
-let order = ["appName", ""]
-let lastVisible
-
 let algolia = {
-    appid: "P1TXH7ZFB3",
-    apikey: "0ba04276e457028f3e11e38696eab32c"
-    // appid: process.env.VUE_APP_ALGOLIA_APPID,
-    // apikey: process.env.VUE_APP_ALGOLIA_KEY
+    appid: process.env.VUE_APP_ALGOLIA_APPID,
+    apikey: process.env.VUE_APP_ALGOLIA_KEY
 }
 
 let parseUser = process.env.VUE_APP_PARSE_USER
@@ -362,7 +355,6 @@ export default {
   methods:{ 
 
     handleScroll () {
-      this.scrolled = window.scrollY > 20;
       this.distanceFromTop =  document.getElementById("searchBar").getBoundingClientRect().y > 65
     },
 
@@ -661,8 +653,8 @@ export default {
 }
 </script>
 
-<style>
-  @import url(app.css);
+<style lang="less">
+  @import url(app.less);
   @import url(snack-helper.min.css);
   @import url(carbon.css);
 </style>

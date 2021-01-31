@@ -1,31 +1,126 @@
+.isMobile #carbonads{
+    margin: 15px auto !important;
+}
+
+.single-ad #carbonads{
+    max-width: 205px;
+    margin: 0 0 0 auto;
+    opacity: 0.8;
+}
+
+.single-ad #carbonads:hover{
+    opacity: 1;
+}
+
+.single-ad #carbonads * {
+    margin-left: auto;
+    padding: initial;
+  }
+  
+.single-ad #carbonads {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+      Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Helvetica, Arial,
+      sans-serif;
+  }
+  
+.single-ad #carbonads {
+    display: flex;
+    max-width: 330px;
+    background-color: hsl(0, 0%, 98%);
+    box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, 0.1);
+    z-index: 100;
+  }
+  
+.single-ad #carbonads a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+.single-ad #carbonads a:hover {
+    color: inherit;
+  }
+  
+.single-ad #carbonads span {
+    position: relative;
+    display: block;
+    overflow: hidden;
+  }
+  
+.single-ad #carbonads .carbon-wrap {
+    display: flex;
+  }
+  
+.single-ad #carbonads .carbon-img {
+    display: block;
+    margin: 0;
+    line-height: 1;
+  }
+  
+.single-ad #carbonads .carbon-img img {
+    display: block;
+  }
+  
+.single-ad #carbonads .carbon-text {
+    font-size: 13px;
+    padding: 10px;
+    margin-bottom: 16px;
+    line-height: 1.5;
+    text-align: left;
+  }
+  
+.single-ad #carbonads .carbon-poweredby {
+    display: block;
+    padding: 6px 8px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    font-size: 8px;
+    line-height: 1;
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    max-width: 155px;
+    margin-bottom: 10px !important;
+}
+
+/* background: #f1f1f2; */
+  
+
+
+
+
+
+
+
 #carbonads {
+    display: flex;
+    max-width: 330px;
+    box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, 0.1);
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-radius: var(--main-border-radius);
+    margin: auto;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
     transition: 0.2s;
 }
 
 #carbonads:hover {
     transform: translateY(-4px);
-    /* border: 0.5px ; */
     border: inherit;
 }
 
 
-#carbonads {
-    display: flex;
-    max-width: 330px;
+.coral--dark #carbonads{
+    background: var(--coral-dark-card);
+    color: var(--coral-light-border);
+}
 
-    box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, 0.1);
-    /* background: var(--coral-dark-card); */
-    /* border-color: var(--coral-dark-border) !important; */
-    /* color: var(--coral-light-border); */
-
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    box-sizing: border-box;
-    /* border: 0.5px solid; */
-    border-radius: var(--main-border-radius);
-    margin: auto;
+.coral--light #carbonads{
+    background: var(--coral-light-card) ;
+    color: var(--coral-dark-border) !important;
 }
 
 #carbonads a {
@@ -45,7 +140,7 @@
 
 #carbonads .carbon-wrap {
     display: grid;
-    padding: 18px 7px 10px 7px;
+    padding: 8px 7px 10px 7px;
     grid-template-rows: auto;
 }
 
@@ -63,6 +158,7 @@
 .carbon-img img {
     border-radius: 7px;
     display: block;
+    margin: auto;
 }
 
 .carbon-text {
@@ -70,9 +166,7 @@
     padding: 2px 5px 0px 5px;
     line-height: 1.4;
     text-align: center;
-
     margin: 10px 0px 0px 0px !important;
-    /* color: rgb(227, 227, 227) !important; */
 }
 
 .carbon-poweredby {
