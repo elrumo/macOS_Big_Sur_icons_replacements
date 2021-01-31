@@ -1,70 +1,140 @@
 <template>
-    <div id="header" class="header">
-        <p class="header-item-left coral-Body--S p-t-5">
-            <a href="mailto:elias.ruiz.monserrat@gmail.com" target="_blank" class="coral-Link">
-                Contact
-            </a> 
-        </p>
+    <div
+        id="header"
+        :class="{'scrolled-shadow': distanceFromTop & scrolled, 'scrolled-header': scrolled, header: true, 'coral-bg':true}"
+    >
+
+        <Dialog/>
+
+        <div class="header-wrapper">
+            <p class="header-item coral-Body--S mobile-hidden">
+                Built by 
+                <a href="https://webbites.io/" target="_blank" class="coral-Link">
+                    Elias
+                </a> 
+            </p>
+
+            
+            <div class="header-grid-btns">
+
+                <!-- <div>
+                    <router-link to="/about">
+                        <button is="coral-button" variant="quiet">
+                            <span>About</span>
+                        </button>
+                    </router-link>
+                </div> -->
+
+                <div v-if="this.$route.name != 'HowTo'">
+                    <router-link to="/how-to">
+                        <button is="coral-button" variant="quiet">
+                            <span>How do I install an icon?</span>
+                        </button>
+                    </router-link>
+                </div>
+
+                <div v-else>
+                    <router-link to="/">
+                        <button is="coral-button" variant="quiet">
+                            <span>Back to all Icons</span>
+                        </button>
+                    </router-link>
+                </div>
         
-        <p class="coral-Body--S p-t-5 d-inline-block absolute transform-centre">
-            By 
-            <a href="https://webbites.io/" target="_blank" class="coral-Link">
-                Elias
-            </a> 
-        </p>
 
-        <!-- <img v-if="darkMode" class="header-item-right dark-mode-btn" href="https://twitter.com/elrumo" target="_blank" :src="icons.twitter" alt="dark-mode-btn"> -->
+                <div>
+                    <a class="" target="_blank" href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" >
+                        <button is="coral-button">
+                            <span>Donate</span>
+                        </button>
+                    </a>
+                </div>
 
-        <p class="header-item-right coral-Body--S p-t-5">
-            Hosting by <a href="https://fosshost.org/" target="_blank" class="coral-Link"> fosshost</a>
-        </p>
-        <!-- <p class="header-item-right coral-Body--XL github-header" id="github-header" > 
-            <a href="https://twitter.com/elrumo" target="_blank" class="coral-Link"> 
-                <coral-icon size="M" alt="Smallest" title="XS">
-                        <img :src="icons.twitter">
-                </coral-icon>
-            </a>
-        </p> -->
+                <div class="mobile-hidden">
+                    <button is="coral-button" variant="cta" @click="showDialog('submitIcon')">
+                        <span>Submit icons</span>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Twitter -->
+            <!-- <p class="header-item-right coral-Body--XL github-header" id="github-header" > 
+                <a href="https://twitter.com/elrumo" target="_blank" class="coral-Link"> 
+                    <coral-icon size="M" alt="Smallest" title="XS">
+                            <img :src="icons.twitter">
+                    </coral-icon>
+                </a>
+            </p> -->
+        </div>
     </div>
 </template>
 
 <script>
+import Dialog from './Dialog.vue'
+
 export default {
     name:"Header",
     
+    components:{
+        Dialog
+    },
+
     data(){
         return{
             darkMode: false,
             icons:{
                 twitter: require("../assets/icons/twitter.svg"),
-            }
+            },
+            scrolled: false,
         }
     },
 
+    props:{
+        submitIconDialog: String,
+        distanceFromTop: true,
+    },
+
     methods:{
+
+        handleScroll () {
+            this.scrolled = window.scrollY > 20;
+        },
+
         toggleDarkMode(){
             let parent = this
             let body = document.getElementById("body")
-            let searchIcon = document.getElementById("coral-css-icon-Magnifier")
             
-            body.classList.toggle('coral--light')
-            body.classList.toggle('coral--dark')
-            if(searchIcon == null){
-            } else{
-                searchIcon.classList.toggle('fill-light')
-                searchIcon.classList.toggle('fill-dark')
-            }
-            parent.darkMode = !parent.darkMode
+            body.classList.remove('coral--light')
+            body.classList.add('coral--dark')
+            parent.darkMode = true
         },
+
+        showDialog(dialog) {
+            let dialogEl = document.getElementById(dialog);
+            dialogEl.show();
+        },
+
+        showDialog(dialogId){
+            document.getElementById(dialogId).show()
+        },
+
     },
 
     mounted: function(){
         let parent = this
         
+        window.addEventListener('scroll', this.handleScroll);
+
         if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+
             parent.toggleDarkMode()
         }
-    }
+    },
+
+    destroyed () {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
 }
 </script>
 

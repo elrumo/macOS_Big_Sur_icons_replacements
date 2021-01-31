@@ -1,15 +1,17 @@
 :root{
     --padding-top-search: 15px;
-    --main-border-radius: 8px;
+    --main-border-radius: 7px;
 
-    --coral-dark-bg: rgb(50, 50, 50);
+    --coral-dark-bg: rgba(50, 50, 50, 1);
     --coral-dark-border: rgb(75, 75, 75);
     --coral-dark-border-hover: rgb(95, 95, 95);
     --coral-dark-card: rgb(37, 37, 37);
     
-    --coral-light-bg: rgb(245, 245, 245);
+    --coral-light-bg: rgba(245, 245, 245, 1);
     --coral-light-border: rgb(255, 255, 255);
     --coral-light-card: rgb(255, 255, 255);
+
+    --page-width: 85%;
 
     --icon-preview-dimensions: 100px;
 }
@@ -18,17 +20,99 @@ a{
     text-decoration: none;
 }
 
+.coral--dark a{
+    color: rgb(75, 156, 245);
+}
+
+.coral--light a{
+    color: rgb(13, 102, 208);;
+}
 
 ul {
     padding-inline-start: 25px;
     padding-inline-end: 25px;
 }
 
+main{
+    text-align: left;
+}
+
+.instructions-well{
+    position: relative;
+    display: grid;
+    grid-template-columns: 0.9fr 1fr;
+    padding: 0px 0px 0px 20px;
+    gap: 40px;
+    color: white;
+    align-items: center;
+}
+
+.instructions-title{
+    align-self: center;
+    max-width: 440px;
+ }
+
+.instructions-img{
+    position: relative;
+    width: 100%;
+    align-self: center;
+    top: 6px;
+}
+
+.instructions-img-wrapper{
+    position: relative;
+    justify-content: right;
+}
+
+.gradient::after{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    content: "";
+    left: 0;
+}
+
+.coral--dark .instructions-img-wrapper::after{
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 50%, #353535 100%);
+}
+
+.coral--light .instructions-img-wrapper::after{
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 50%, #f1f1f1 100%)
+}
+
+
+.instructions-grid{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 45px;
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+.instructions-item{
+    // box-shadow: 0px 24px 44px -10px rgba(0, 0, 0, 0.1);
+    padding: 0px 0 0 16px;
+    overflow: hidden;
+}
+
+.h2-marked h2{
+    font-weight: 400 !important;
+    font-size: 1.7rem;
+}
+
+.coral--dark .h2-marked{
+    color: var(--coral-light-border);
+}
+
+.coral--light .h2-marked{
+    color: var(--coral-dark-border);
+}
+
+
 .PH-badge{
     margin-top: 40px;
     margin-bottom: 25px;
     left: 50%;
-    /* opacity: 0.5;    */
     position: relative;
     transform: translateX(-50%);
     transition: 0.2s;
@@ -63,7 +147,7 @@ ul {
     text-align: left;
     cursor: pointer;
     height: 100%;
-    width: 90%;
+    width: var(--page-width);
     max-width: 730px;
     border-radius: 8px;
 }
@@ -92,9 +176,53 @@ ul {
     border-radius: var(--main-border-radius)
 }
 
-.header{
+.scrolled-header{
+    transform: translateY(-15px) !important;
+}
+
+.scrolled-shadow{
+    box-shadow: 0px 5px 50px 0px rgba(0,0,0,0.3) !important;
+    transform: translateY(0px);
+}
+
+.header-wrapper{
+    display: grid;
     height: fit-content;
-    padding: 15px 30px 20px 30px;
+    padding: 30px 30px 15px 30px;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+    align-content: start;
+    max-width: 1300px;
+    margin: auto;
+    width: var(--page-width);
+}
+
+.header{
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    transition: 0.3s;
+}
+
+.header-grid-btns{
+    display: inline-flex;
+    flex-wrap: wrap;
+    /* display: grid;
+    grid-template-columns: auto auto auto auto;
+    justify-content: space-between; */
+    /* column-gap: 20px; */
+    /* align-content: start; */
+}
+
+.header-grid-btns > div{
+    padding-left: 20px;
+}
+
+.header-item{
+    justify-content: center;
+    align-items: center;
+    margin: auto !important;
 }
 
 .transform-centre{
@@ -111,20 +239,28 @@ ul {
 }
 
 .content-wrapper{
-    width: 90%;
+    width: var(--page-width);
     margin: auto;
+    max-width: 1150px;
 }
 
 .main-search-wrapper{
     position: sticky;
     padding-top: 0px;
-    top: 0;
+    top: 60px;
+    z-index: 1;
+    width: 100%;
+    margin: auto;
+    transition: 0.2s;
+    backdrop-filter: saturate(180%) blur(20px);
+}
+
+.search{
     display: grid;
     grid-template-columns: auto 170px;
     column-gap: 10px;
     max-width: 1300px;
     margin: auto;
-    z-index: 10;
 }
 
 .switch-text{
@@ -344,7 +480,32 @@ ul {
 }
 
 .hero-wrapper{
-    padding-bottom: 40px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    max-width: 1300px;
+    padding: 40px 0px 40px 0px;
+    margin: 30px 0px 30px 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+}
+
+.hero-text-area{
+    text-align: left;
+    max-width: 600px;
+}
+
+.hero-img{
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid rgba(256, 256, 256, 0.3);
+    box-shadow: 0px 25px 24px -10px rgba(0, 0, 0, 0.25);
+    transition: 0.3s;
+}
+.hero-img:hover{
+    box-shadow: 0px 50px 30px -25px rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(256, 256, 256, 0.7);
 }
 
 #noIcons{
@@ -369,6 +530,7 @@ ul {
 
 .main-heading{
     padding-top: 50px;
+    padding-bottom: 10px;
 }
 
 .loading-overlay{
@@ -408,10 +570,7 @@ ul {
 }
 
 .body-text{
-    padding-left: 40px;
     padding-right: 40px;
-    max-width: 600px;
-    margin: auto;
 }
 
 .loading-approval-wrapper{
@@ -500,6 +659,10 @@ ul {
     background: var(--coral-dark-bg);
 }
 
+.coral--light .coral-bg{
+    background: var(--coral-light-bg);
+}
+
 .coral--dark ._coral-Icon{
     filter: brightness(1.2);
 }
@@ -513,7 +676,7 @@ ul {
 }
 
 .dashBoard{
-    width: 90%;
+    width: var(--page-width);
     padding-top: 70px;
     margin: auto;
 }
@@ -633,6 +796,10 @@ ul {
     color: white;
 }
 
+._coral-Button{
+    border-radius: var(--main-border-radius) !important;
+}
+
 .quick-actions-wrapper{
     position: absolute;
     left: 50%;
@@ -689,42 +856,6 @@ ul {
     background: red;
 }
 
-#firebaseui-auth-container{
-    background: white;
-    max-width: 320px;
-    padding: 5px 0px 30px 0px;
-    transform: translateY(30px);
-    margin: auto;
-    border-radius: 8px;
-}
-
-#ui-sign-in-email-input{
-    border-radius: 5px;
-    margin-left: 10px;
-}
-
-
-.firebaseui-id-submit{
-    background-color: rgb(20, 115, 230);
-    border-color: rgb(20, 115, 230);
-    color: rgb(255, 255, 255);
-    border-width: 2px;
-    border-style: solid;
-    border-radius: 16px;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
-    border-bottom-right-radius: 16px;
-    border-bottom-left-radius: 16px;
-    min-height: 32px;
-    height: auto;
-    min-width: 72px;
-    padding: 4px 14px;
-    padding-bottom: 5px;
-    padding-top: 3px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-}
 
 .editable-input{
     text-align: center;
@@ -740,6 +871,29 @@ ul {
     background-color: rgb(13, 102, 208);
     border-color: rgb(13, 102, 208);
     color: rgb(255, 255, 255);
+}
+
+
+.coral-Well{
+    border-radius: 10px !important;
+}
+
+.coral--dark .coral-Well{
+    border-color: #595959 !important;
+}
+
+.coral--light .coral-Well{
+    border-color: #e0e0e0 !important;
+}
+
+.desktop-hidden{
+    display: none;
+}
+
+.text-and-ad-wrapper{
+    display: grid;
+    grid-template-columns: auto auto;
+    padding-top: 50px;
 }
 
 @media only screen and (max-width: 12000px){
@@ -784,18 +938,26 @@ ul {
         width: 100%;
     }
 
-    /* .gitHub-sponsor{
-        height: 220px;
-    } */
+    .instructions-well{
+        grid-template-columns: 1fr;
+        gap: 0px;
+        padding: 0px;
+    }
+
+    .instructions-item{
+        padding-bottom: 0px !important;
+        padding-top: 10px !important;
+    }
+
+    .h2-marked h2{
+        font-size: 1.25rem;
+        margin-bottom: 10px;
+    }
+
 }
 
-/* @media only screen and (max-width: 600px){ */
-    /* .gitHub-sponsor{
-        height: 100%;
-    } */
-/* } */
 
-@media only screen and (max-width: 512px){
+@media only screen and (max-width: 612px){
     .icon-list-area{
         grid-template-columns: 1fr 1fr;
     }
@@ -804,14 +966,41 @@ ul {
         bottom: inherit;
     }
 
-    
-    /* .gitHub-sponsor{
-        height: 310px;
-    } */
-    /* #github-header{
+    .mobile-hidden{
         display: none;
-    } */
+    }
+
+    .desktop-hidden{
+        display: block;
+    }
+
+    .hero-wrapper{
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 10px 0px 20px 0px;
+        margin-top: 0px;
+    }
+
+    .text-and-ad-wrapper{
+        padding-top: 0px;
+    }
     
+    .header-wrapper{
+        grid-template-columns: auto;
+        width: fit-content;
+    }
+    
+    .header-grid-btns > div{
+        padding: 0;
+    }
+
+    .header-grid-btns {
+        display: grid;
+        grid-template-columns: auto auto;
+        gap: 20px;
+    }
 }
 
 @media only screen and (max-width: 460px){

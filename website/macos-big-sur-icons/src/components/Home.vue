@@ -1,9 +1,12 @@
 <template>
   <div>
     
-    <Dialog/>
-    <!-- Header -->
-    <Header/>
+    <!-- <Dialog/> -->
+    
+    <Header
+      :submitIconDialog="'submitIcon'"
+      :distanceFromTop="distanceFromTop"
+    />
     
     <deleteDialog :icon="activeIcon"/>
 
@@ -48,35 +51,45 @@
       There has been an error, please Approve again
     </coral-toast>
 
+
     <!-- <div style="display: none"> {{search}} </div> -->
     <!-- Icon Section -->
-    <section class="content-wrapper">
+    <section class="">
     <!-- Search bar -->
-      <div v-if="!loadingError" @click="isSearch = true" class="main-search-wrapper coral-bg p-b-15">
-        <div class="m-auto main-search" style="max-width:300px;">
-          <div class="shadow main-border-radius">
-            <input v-model="searchString" :placeholder="'Search ' + iconListLen + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
-            <svg class="icon fill-dark" id="coral-css-icon-Magnifier" viewBox="0 0 16 16"><path d="M15.77 14.71l-4.534-4.535a6.014 6.014 0 1 0-1.06 1.06l4.533 4.535a.75.75 0 1 0 1.061-1.06zM6.5 11A4.5 4.5 0 1 1 11 6.5 4.505 4.505 0 0 1 6.5 11z"></path></svg>
+    
+      <div
+        v-if="!loadingError"
+        @click="isSearch = true"
+        id="searchBar"
+        class="main-search-wrapper coral-bg p-b-15"
+        :class="{'scrolled-shadow': !distanceFromTop}"
+      >
+        <div class="content-wrapper search">
+          
+          <div class="m-auto main-search" style="max-width:300px;">
+            <div class="shadow main-border-radius">
+              <input v-model="searchString" :placeholder="'Search ' + iconListLen + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
+              <svg class="icon fill-dark" id="coral-css-icon-Magnifier" viewBox="0 0 16 16"><path d="M15.77 14.71l-4.534-4.535a6.014 6.014 0 1 0-1.06 1.06l4.533 4.535a.75.75 0 1 0 1.061-1.06zM6.5 11A4.5 4.5 0 1 1 11 6.5 4.505 4.505 0 0 1 6.5 11z"></path></svg>
+            </div>
+          </div>
+
+        <!-- "Filter by" button -->
+          <!-- <div class="filter-by-grid" @click="changeSortOrder">
+            <div class="filter-by-wrapper coral-card shadow">
+                <coral-icon class="h-full" :icon="icons.iconsOrder" title="Add"></coral-icon>
+            </div>
+          </div> -->
+
+          <div @click="changeOS" class="switch-wrapper coral-card shadow main-border-radius">
+            <div id="macOStext" class="switch-text">
+              macOS
+            </div>
+            <div id="iOStext" class="switch-text text-not-selected">
+              iOS
+            </div>
+            <div id="osSwitcher" class="switch-btn"></div>
           </div>
         </div>
-
-      <!-- "Filter by" button -->
-        <!-- <div class="filter-by-grid" @click="changeSortOrder">
-          <div class="filter-by-wrapper coral-card shadow">
-              <coral-icon class="h-full" :icon="icons.iconsOrder" title="Add"></coral-icon>
-          </div>
-        </div> -->
-
-        <div @click="changeOS" class="switch-wrapper coral-card shadow main-border-radius">
-          <div id="macOStext" class="switch-text">
-            macOS
-          </div>
-          <div id="iOStext" class="switch-text text-not-selected">
-            iOS
-          </div>
-          <div id="osSwitcher" class="switch-btn"></div>
-        </div>
-
       </div>
       
     <!-- Loading spinning circle -->
@@ -114,7 +127,7 @@
         Logout
       </button>
 
-    <!-- Icon list -->
+    <!-- Icon list when Auth-->
         <div v-if="isAuth & !loadingError" class="icon-list-area p-t-20 p-b-50">
           
           <!-- Icons -->
@@ -123,13 +136,13 @@
                 
                 <a v-if="isMacOs" :href="icon.icnsUrl">
                   <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                    <img class="w-full" :data-src="icon.lowResPngUrl">
+                    <img class="w-full" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
                   </div>
                 </a>
 
                 <a v-else :href="icon.iOSUrl">
                   <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                    <img class="w-full" :data-src="icon.lowResPngUrl">
+                    <img class="w-full" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
                   </div>
                 </a>
 
@@ -161,17 +174,20 @@
           </div>
         </div>
 
-      <!-- Seen when no auth  -->
-        <div v-if="!isAuth & !loadingError" class="icon-list-area p-t-20 p-b-50">
+    <!-- Seen when no auth  -->
+        <div v-if="!isAuth & !loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper">
 
           <!-- Carbon ads -->
           <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+
+          <a v-for="icon in search" :key="icon.lowResPngUrl" class="card-wrapper shadow coral-card" :href="downladUrl(icon)" target="_blank" download>
           
-          <a v-for="icon in search" :key="icon.icnsUrl" class="card-wrapper shadow coral-card" :href="downladUrl(icon)" target="_blank" download>
             <div @click="addClickCount(icon)" class="card-img-wrapper">
-              <div v-lazy-container="{ selector: 'img', loading: icons.loading }">
-                <img class="w-full" :data-src="icon.lowResPngUrl">
+              
+              <div v-lazy-container="{ selector: 'img', loading: icons.loading }" >
+                <img class="w-full" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
               </div>
+              
             </div>
             <div>
               <h3 class="coral-font-color">
@@ -213,7 +229,7 @@
 </template>
 
 <script>
-import Vue from 'vue';
+// import Vue from 'vue';
 
 import Header from './Header.vue';
 import Hero from './Hero.vue';
@@ -225,22 +241,19 @@ import algoliasearch from 'algoliasearch'
 import { Search } from '@adobe/coral-spectrum';
 import Parse from 'parse'
 
+import VueLoadImage from 'vue-load-image'
+
 import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config()
 
 const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
 const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
-// Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
-Parse.initialize("macOSicons", "macOSicons")
+Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://onionicons.com/parse'
 
 var Icons = Parse.Object.extend("Icons");
 var icons = new Icons();
-
-// let order = ["timeStamp", "desc"]
-let order = ["appName", ""]
-let lastVisible
 
 let algolia = {
     appid: process.env.VUE_APP_ALGOLIA_APPID,
@@ -264,11 +277,15 @@ export default {
     Hero,
     iconCard,
     Dialog,
-    deleteDialog
+    deleteDialog,
+    'vue-load-image': VueLoadImage
   },
 
   data(){
     return{
+
+      nn: [1,2,3,4,5],
+
       iconList:{},
       searchString: "",
       iconsToShow: [],
@@ -286,11 +303,13 @@ export default {
 
       isMacOs: true,
 
-      iconListLen: 3_480,
+      scrolled: false,
+      distanceFromTop: true ,
+
+      iconListLen: 4_378,
       lastVisible: {},
       dataToShow: [],
       activeIcon: {},
-      searchResults: [],
       icons:{
         success: require("../assets/icons/delete.svg"),
         namingOrder: require("../assets/icons/namingOrder.svg"),
@@ -311,6 +330,8 @@ export default {
   mounted: function(){
     let parent = this;
     
+    window.addEventListener('scroll', this.handleScroll);
+
     Parse.User.enableUnsafeCurrentUser()
 
     if(Parse.User.current()){
@@ -333,6 +354,10 @@ export default {
   },
 
   methods:{ 
+
+    handleScroll () {
+      this.distanceFromTop =  document.getElementById("searchBar").getBoundingClientRect().y > 65
+    },
 
     changeOS(){
       let parent = this;
@@ -375,7 +400,6 @@ export default {
         console.log("error: ", e);
       })
       
-      // console.log(id);
     },
 
     logout(){
@@ -387,11 +411,7 @@ export default {
     },
 
     prettifyName(name){
-      // let newName = name
-      for(let i in name){
-        name = name.replace("_", " ")
-      }
-      // console.log(newName);
+      name = name.replaceAll("_", " ")
       return name
     },
 
@@ -467,7 +487,7 @@ export default {
         let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000
 
         if (bottomOfWindow && parent.scrolledToBottom && !parent.isSearch) {
-          parent.scrolledToBottom = false // replace it with your code
+          parent.scrolledToBottom = false
           parent.loadMore()
         }
       }
@@ -582,8 +602,8 @@ export default {
       
       index.search(search, {filters: `approved:true`, hitsPerPage: 150 }).then(function(responses) {
         // parent.dataToShow = responses.hits
-        parent.$store.dispatch("setDataToArr", {arr: "dataToShow", data: responses.hits, func: "searchAlgolia"})
-        // parent.$store.dispatch("pushDataToArr", {arr: "dataToShow", data: responses.hits, func: "searchAlgolia"})
+        // parent.$store.dispatch("setDataToArr", {arr: "dataToShow", data: responses.hits, func: "searchAlgolia"})
+        parent.$store.dispatch("pushDataToArr", {arr: "dataToShow", data: responses.hits, func: "searchAlgolia"})
       });
     }
   },
@@ -602,7 +622,6 @@ export default {
       let parent = this
 
       // If searchString is empty (no search by the user), return the full list of icons
-      // if(!parent.searchString){
       if(!parent.searchString){
         parent.isSearch = false
         parent.noIcons = false
@@ -626,13 +645,17 @@ export default {
 
   },
 
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
+
   props: {
   }
 }
 </script>
 
-<style>
-  @import url(app.css);
+<style lang="less">
+  @import url(app.less);
   @import url(snack-helper.min.css);
   @import url(carbon.css);
 </style>
