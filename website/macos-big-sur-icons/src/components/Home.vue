@@ -221,7 +221,7 @@
         <dir class="d-inline-block m-0 p-l-15 p-r-10">
           <hr class="coral-Divider--M coral-Divider--vertical m-0" style="height:14px;">
         </dir>
-        <a href="https://www.paypal.com/donate?hosted_button_id=VS64ARMNSB67J" target="_blank" class="coral-Link">Support the project</a>
+        <a href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" target="_blank" class="coral-Link">Support the project</a>
       </footer>
     </section>
 
