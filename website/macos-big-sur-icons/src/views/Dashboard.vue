@@ -194,13 +194,12 @@ import Vue from 'vue'
 import { mapActions } from 'vuex';
 import Header from '@/components/Header.vue';
 
-import Parse from 'parse'
+// import Parse from 'parse'
 
 Parse.initialize("macOSicons");
 Parse.serverURL = 'https://onionicons.com/parse'
 
 const Icons = Parse.Object.extend("Icons");
-const icons = new Icons();
 
 Parse.User.enableUnsafeCurrentUser() // Enable cache for user auth, to avoid having to always login
 const currentUser = Parse.User.current(); // Check if user is currently logged in or not
