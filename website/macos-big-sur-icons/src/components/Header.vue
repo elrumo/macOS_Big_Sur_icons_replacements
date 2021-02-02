@@ -8,9 +8,18 @@
 
         <div class="header-wrapper">
             <p class="header-item coral-Body--S mobile-hidden">
-                Built by 
+                Built by
                 <a href="https://webbites.io/" rel="noopener" target="_blank" class="coral-Link">
                     Elias
+                </a> 
+
+                <dir class="d-inline-block m-0 p-l-15 p-r-10">
+                    <hr class="coral-Divider--M coral-Divider--vertical m-0" style="height:14px;">
+                </dir>
+
+                Hosting by
+                <a href="https://fosshost.org/" rel="noopener" target="_blank" class="coral-Link">
+                    FossHost
                 </a> 
             </p>
 
