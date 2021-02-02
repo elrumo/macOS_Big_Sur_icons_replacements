@@ -24,10 +24,6 @@
 
       <div class="instructions-grid m-t-30">        
         <HowToSteps v-for="step in steps" :key="step.name" :step='step'/>
-        
-        <!-- <div class="single-ad ">
-          <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
-        </div> -->
       </div>
 
     </main>
@@ -84,10 +80,6 @@ export default {
   },
   
   methods: {
-    // mobile() {
-    //   console.log(this.$isMobile());
-    //   return
-    // }
   }
 
 }
