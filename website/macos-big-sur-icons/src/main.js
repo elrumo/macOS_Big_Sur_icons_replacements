@@ -19,7 +19,6 @@ Vue.use(VueMobileDetection)
 Vue.use(Vuex)
 
 
-
 new Vue({
   render: h => h(App),
   router,

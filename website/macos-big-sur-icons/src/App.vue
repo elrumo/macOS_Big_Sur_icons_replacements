@@ -18,7 +18,6 @@ import '@adobe/coral-spectrum/coral-component-search'
 
 import '@adobe/coral-spectrum/coral-css-link'
 import '@adobe/coral-spectrum/coral-css-formgroup'
-import '@adobe/coral-spectrum/coral-css-body'
 import '@adobe/coral-spectrum/coral-css-well'
 import '@adobe/coral-spectrum/coral-css-divider'
 
