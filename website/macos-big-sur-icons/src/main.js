@@ -15,10 +15,9 @@ Vue.use(VueLazyload, {
   loading: loadimage,
   attempt: 2,
 });
-
 Vue.use(VueMobileDetection)
-
 Vue.use(Vuex)
+
 
 
 new Vue({

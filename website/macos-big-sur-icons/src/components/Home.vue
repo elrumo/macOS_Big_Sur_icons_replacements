@@ -107,7 +107,7 @@
         </h3>
         <h3 class="coral-Heading--S coral-Heading--light">
           Check again in a few minutes or follow me on
-            <a class="coral-Link"
+            <a rel="noopener" class="coral-Link"
               href="https://twitter.com/elrumo"
               target="_blank"
             >
@@ -134,13 +134,13 @@
           <div  v-for="icon in search" :key="icon.icnsUrl" class="card-wrapper coral-card">
               <div class="card-img-wrapper" style="max-width: 120px;">
                 
-                <a v-if="isMacOs" :href="icon.icnsUrl">
+                <a rel="noopener" v-if="isMacOs" :href="icon.icnsUrl">
                   <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
                     <img class="w-full" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
                   </div>
                 </a>
 
-                <a v-else :href="icon.iOSUrl">
+                <a rel="noopener" v-else :href="icon.iOSUrl">
                   <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
                     <img class="w-full" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
                   </div>
@@ -166,7 +166,7 @@
                   <p class="coral-Body--XS p-b-0 opacity-80 m-b-0"><input class="editable-input" @change="editDoc(icon, $event, 'usersName')" type="text" variant="quiet" :value="icon.usersName" is="coral-textfield" aria-label="text input"></p>
                   <p class="coral-Body--XS p-b-0 opacity-50 m-b-0"><input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="icon.credit" is="coral-textfield" aria-label="text input"></p>
                   <div v-if="icon.email != 'user@email.com' && icon.email " class="p-t-10"> 
-                    <a class="coral-Link" :href="'mailto:'+icon.email+'?subject=macOS icons submission&body='+icon.usersName">
+                    <a rel="noopener" class="coral-Link" :href="'mailto:'+icon.email+'?subject=macOS icons submission&body='+icon.usersName">
                           email
                     </a>
                   </div>
@@ -180,7 +180,7 @@
           <!-- Carbon ads -->
           <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
 
-          <a v-for="icon in search" :key="icon.lowResPngUrl" class="card-wrapper shadow coral-card" :href="downladUrl(icon)" target="_blank" download>
+          <a rel="noopener" v-for="icon in search" :key="icon.lowResPngUrl" class="card-wrapper shadow coral-card" :href="downladUrl(icon)" target="_blank" download>
           
             <div @click="addClickCount(icon)" class="card-img-wrapper">
               
@@ -190,10 +190,24 @@
               
             </div>
             <div>
+              
               <h3 class="coral-font-color">
                 {{ prettifyName(icon.appName) }}
               </h3>
-              <p class="coral-Body--XS opacity-60 m-b-20"><a class="coral-Link" :href="icon.credit" target="_blank">{{icon.usersName}}</a> on <span class="coral-Body--XS opacity-50">{{ getDate(icon.timeStamp) }}</span></p>
+              
+              <p class="coral-Body--XS opacity-60 m-b-20">
+                <a v-if="icon.credit" rel="noopener" class="coral-Link" :href="icon.credit" target="_blank">
+                  {{icon.usersName}}
+                </a>
+                <b v-else >
+                  {{icon.usersName}}
+                </b>
+                on
+                <span class="coral-Body--XS opacity-50">
+                  {{ getDate(icon.timeStamp) }}
+                </span>
+              </p>
+
             </div>
           </a>
           
@@ -207,21 +221,21 @@
     <!-- Footer -->
     <section v-if="loadingError" class="footer">
       <footer class="p-b-20 coral-Body--S">
-        Made with ❤️ by <a href="https://bit.ly/elias-webbites" target="_blank" class="coral-Link">Elias</a>
+        Made with ❤️ by <a rel="noopener" href="https://bit.ly/elias-webbites" target="_blank" class="coral-Link">Elias</a>
         <dir class="d-inline-block m-0 p-l-15 p-r-10">
           <hr class="coral-Divider--M coral-Divider--vertical m-0" style="height:14px;">
         </dir>
-        <a href="https://www.paypal.com/donate?hosted_button_id=VS64ARMNSB67J" target="_blank" class="coral-Link">Support the project</a>
+        <a rel="noopener" href="https://www.paypal.com/donate?hosted_button_id=VS64ARMNSB67J" target="_blank" class="coral-Link">Support the project</a>
       </footer>
     </section>
 
     <section v-else>
       <footer class="p-b-20 coral-Body--S">
-        Made with ❤️ by <a href="https://bit.ly/elias-webbites" target="_blank" class="coral-Link">Elias</a>
+        Made with ❤️ by <a rel="noopener" href="https://bit.ly/elias-webbites" target="_blank" class="coral-Link">Elias</a>
         <dir class="d-inline-block m-0 p-l-15 p-r-10">
           <hr class="coral-Divider--M coral-Divider--vertical m-0" style="height:14px;">
         </dir>
-        <a href="https://www.paypal.com/donate?hosted_button_id=VS64ARMNSB67J" target="_blank" class="coral-Link">Support the project</a>
+        <a rel="noopener" href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" target="_blank" class="coral-Link">Support the project</a>
       </footer>
     </section>
 
@@ -229,8 +243,6 @@
 </template>
 
 <script>
-// import Vue from 'vue';
-
 import Header from './Header.vue';
 import Hero from './Hero.vue';
 import iconCard from './iconCard.vue';
@@ -238,7 +250,6 @@ import Dialog from './Dialog.vue';
 import deleteDialog from './deleteDialog.vue';
 
 import algoliasearch from 'algoliasearch'
-import { Search } from '@adobe/coral-spectrum';
 import Parse from 'parse'
 
 import VueLoadImage from 'vue-load-image'
@@ -253,7 +264,6 @@ Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://onionicons.com/parse'
 
 var Icons = Parse.Object.extend("Icons");
-var icons = new Icons();
 
 let algolia = {
     appid: process.env.VUE_APP_ALGOLIA_APPID,

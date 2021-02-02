@@ -17,11 +17,11 @@
 
         <p class="coral-Body--L w-100 body-text">
             Sponsor the project on
-          <a class="coral-Link" href="https://github.com/sponsors/elrumo">
+          <a rel="noopener" class="coral-Link" href="https://github.com/sponsors/elrumo">
             GitHub
           </a>
             and follow its develoment on 
-          <a
+          <a rel="noopener"
             class="coral-Link"
             href="https://twitter.com/elrumo"
             target="_blank"
@@ -30,35 +30,39 @@
           </a>
           
           Templates to contribute:
-          <a
+          <a rel="noopener"
             class="coral-Link"
             href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.sketch"
+            alt="Sketch template"
             @click="updateCount('cftvIOYXek')"
           >
-          <!-- <a
+          <!-- <a rel="noopener"
             class="coral-Link"
             href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.sketch"
             @click="updateCount('cftvIOYXek')"
           > -->
             Sketch,
           </a>
-          <a
+          <a rel="noopener"
             class="coral-Link"
             href="https://www.figma.com/community/file/930870327989917713/MacOS-Big-Sur-icon-template"
+            alt="Figma template"
             @click="updateCount('ecCJEYIUyF')"
           >
             Figma,
           </a>
-          <a
+          <a rel="noopener"
             class="coral-Link"
+            alt="Illustrator template"
             href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.ai"
             @click="updateCount('fu7UfKs2zz')"
           >
             Illustrator,
           </a>
           or
-          <a
+          <a rel="noopener"
             class="coral-Link"
+            alt="Photoshop template"
             href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.psd"
           >
             Photoshop.
@@ -78,7 +82,7 @@
 
             <!-- href="https://ko-fi.com/I3I63CFCN" -->
             <!-- href="https://www.buymeacoffee.com/elrumo" -->
-          <a
+          <a rel="noopener"
             class="p-l-20 mobile-hidden"
             target="_blank"
             href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
