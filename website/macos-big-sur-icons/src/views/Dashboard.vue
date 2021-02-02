@@ -194,7 +194,7 @@ import Vue from 'vue'
 import { mapActions } from 'vuex';
 import Header from '@/components/Header.vue';
 
-// import Parse from 'parse'
+import Parse from 'parse'
 
 Parse.initialize("macOSicons");
 Parse.serverURL = 'https://onionicons.com/parse'
