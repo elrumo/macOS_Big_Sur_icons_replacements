@@ -37,23 +37,23 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import * as firebase from "firebase";
+// import Vue from 'vue';
+// import * as firebase from "firebase";
 
-let firebaseConfig = {
-  apiKey: process.env.VUE_APP_FIREBASE_KEY,
-  messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
-  appId: process.env.VUE_APP_APP_ID,
-  measurementId: process.env.VUE_APP_MEASUREMENT_ID,
-  authDomain: "macos-icons.firebaseapp.com",
-  databaseURL: "https://macos-icons.firebaseio.com",
-  projectId: "macos-icons",
-  storageBucket: "macos-icons.appspot.com"
-};
-firebase.initializeApp(firebaseConfig);
+// let firebaseConfig = {
+//   apiKey: process.env.VUE_APP_FIREBASE_KEY,
+//   messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
+//   appId: process.env.VUE_APP_APP_ID,
+//   measurementId: process.env.VUE_APP_MEASUREMENT_ID,
+//   authDomain: "macos-icons.firebaseapp.com",
+//   databaseURL: "https://macos-icons.firebaseio.com",
+//   projectId: "macos-icons",
+//   storageBucket: "macos-icons.appspot.com"
+// };
+// firebase.initializeApp(firebaseConfig);
 
-let db = firebase.firestore();
-let storage = firebase.storage();
+// let db = firebase.firestore();
+// let storage = firebase.storage();
 
 export default {
     name: "iconCard",
@@ -92,28 +92,28 @@ export default {
             let parent = this
             console.log(icon);
     
-            let fileRef = storage.ref().child(icon.iconRef)
+            // let fileRef = storage.ref().child(icon.iconRef)
             
-            fileRef.delete().then(function() {
-            console.log(icon.appName, " deleted successfully.");
-            }).catch(function(error) {
-            console.log("Uh-oh, an error occurred with: ", icon.appName, " with ID: ", icon.id);
-            });
+            // fileRef.delete().then(function() {
+            // console.log(icon.appName, " deleted successfully.");
+            // }).catch(function(error) {
+            // console.log("Uh-oh, an error occurred with: ", icon.appName, " with ID: ", icon.id);
+            // });
 
-            // Delete object from Firestore
-            db.collection("submissions").doc(icon.id).delete().then(function() {
-            console.log("Document successfully deleted!");
+            // // Delete object from Firestore
+            // db.collection("submissions").doc(icon.id).delete().then(function() {
+            // console.log("Document successfully deleted!");
             
 
-            Vue.delete(parent.icons[icon.usersName].icons, icon.appName) // Delete object locally
+            // Vue.delete(parent.icons[icon.usersName].icons, icon.appName) // Delete object locally
             
-            if (Object.keys(parent.icons[icon.usersName].icons).length == 0 ) { // Delete user from UI if no icons are left
-                Vue.delete(parent.icons, icon.usersName)
-            }
+            // if (Object.keys(parent.icons[icon.usersName].icons).length == 0 ) { // Delete user from UI if no icons are left
+            //     Vue.delete(parent.icons, icon.usersName)
+            // }
             
-            }).catch(function(error) {
-                console.error("Error removing document: ", error);
-            });
+            // }).catch(function(error) {
+            //     console.error("Error removing document: ", error);
+            // });
 
         },
 
@@ -123,14 +123,14 @@ export default {
             console.log(icon);
             console.log(newName);
 
-            db.collection("submissions").doc(icon.id).update({
-                [field]: newName
-            }).then(function() {
-                console.log("Document successfully updated!");
-            }).catch(function(error) {
-                // The document probably doesn't exist.
-                console.error("Error updating document: ", error);
-            });
+            // db.collection("submissions").doc(icon.id).update({
+            //     [field]: newName
+            // }).then(function() {
+            //     console.log("Document successfully updated!");
+            // }).catch(function(error) {
+            //     // The document probably doesn't exist.
+            //     console.error("Error updating document: ", error);
+            // });
         },
 
     }

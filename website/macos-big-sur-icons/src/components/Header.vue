@@ -9,7 +9,7 @@
         <div class="header-wrapper">
             <p class="header-item coral-Body--S mobile-hidden">
                 Built by 
-                <a href="https://webbites.io/" target="_blank" class="coral-Link">
+                <a href="https://webbites.io/" rel="noopener" target="_blank" class="coral-Link">
                     Elias
                 </a> 
             </p>
@@ -43,7 +43,7 @@
         
 
                 <div>
-                    <a class="" target="_blank" href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" >
+                    <a rel="noopener" class="" target="_blank" href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" >
                         <button is="coral-button">
                             <span>Donate</span>
                         </button>
@@ -60,7 +60,7 @@
 
             <!-- Twitter -->
             <!-- <p class="header-item-right coral-Body--XL github-header" id="github-header" > 
-                <a href="https://twitter.com/elrumo" target="_blank" class="coral-Link"> 
+                <a rel="noopener" href="https://twitter.com/elrumo" target="_blank" class="coral-Link"> 
                     <coral-icon size="M" alt="Smallest" title="XS">
                             <img :src="icons.twitter">
                     </coral-icon>
