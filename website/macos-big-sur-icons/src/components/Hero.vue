@@ -5,10 +5,17 @@
     <!-- <div class="PH-badge">
       <Sponsor class="gitHub-sponsor"/>
     </div> -->
-  
     <div class="hero-text-area" v-if="iconsEmpty">    
+        
+        <p class="coral-Body--S desktop-hidden">
+          Hosting by
+          <a href="https://fosshost.org/" rel="noopener" target="_blank" class="coral-Link">
+              FossHost
+          </a> 
+        </p>
+
         <h3
-          class="main-heading m-t-0 p-t-20 coral-Heading--XL coral-Heading--regular"
+          class="main-heading m-t-0 coral-Heading--XL coral-Heading--regular"
         >
           <span class="f-w-100 f-s-26">macOS Big Sur</span>
           <br />
@@ -82,18 +89,18 @@
 
             <!-- href="https://ko-fi.com/I3I63CFCN" -->
             <!-- href="https://www.buymeacoffee.com/elrumo" -->
-          <a rel="noopener"
+          <!-- <a rel="noopener"
             class="p-l-20 mobile-hidden"
             target="_blank"
             href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
           >
             <button is="coral-button" variant="quiet">
-              <!-- <span>☕️ Buy me a hot chocolate</span> -->
-              <!-- <span class="p-r-5 f-s-16">☕️</span> <span>Buy me a hot chocolate</span> -->
               <span>Buy me a coffee</span>
-              <!-- <span>Help keep this site alive</span> -->
             </button>
-          </a>
+          </a> -->
+              <!-- <span>☕️ Buy me a hot chocolate</span> -->
+              <!-- <span>Help keep this site alive</span> -->
+              <!-- <span class="p-r-5 f-s-16">☕️</span> <span>Buy me a hot chocolate</span> -->
           
         </div>
     </div>
