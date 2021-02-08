@@ -15,21 +15,32 @@
 </template>
 
 <script>
-// import * as firebase from "firebase";
-// const storage = firebase.storage();
-// const db = firebase.firestore();
+import Vue from 'vue'
+
 
 export default {
     name:"deleteDialog",
 
     props:{
         icon: {},
+        Icons: "",
+        Parse: ""
     },
 
     methods:{
-        deleteIcon(icon){
+        async deleteIcon(icon){
             let parent = this
-            console.log(icon);
+            let Parse = parent.Parse
+
+            let query = new Parse.Query(parent.Icons)
+            let docToDelete = await query.get(icon.objectID);
+
+            docToDelete.destroy().then(() =>{
+                parent.$store.dispatch('deleteItem', icon)
+                // Vue.delete(parent.icons[icon.usersName].icons, icon.appName) // Delete object locally
+            }).catch((e) =>{
+            console.log(e);
+            })
             
             // let fileRefIcns = storage.ref().child("icons_approved/"+icon.icnsFileName)
             

@@ -8,7 +8,7 @@
       :distanceFromTop="distanceFromTop"
     />
     
-    <deleteDialog :icon="activeIcon"/>
+    <deleteDialog :icon="activeIcon" :Icons="Icons" :Parse="Parse"/>
 
     <coral-dialog id="bitcoin">
         <coral-dialog-header>Donate</coral-dialog-header>
@@ -265,6 +265,8 @@ Parse.serverURL = 'https://onionicons.com/parse'
 
 var Icons = Parse.Object.extend("Icons");
 
+console.log();
+
 let algolia = {
     appid: process.env.VUE_APP_ALGOLIA_APPID,
     apikey: process.env.VUE_APP_ALGOLIA_KEY
@@ -294,7 +296,8 @@ export default {
   data(){
     return{
 
-      nn: [1,2,3,4,5],
+      Icons: Icons,
+      Parse: Parse,
 
       iconList:{},
       searchString: "",
@@ -551,32 +554,24 @@ export default {
       document.getElementById(dialogId).show()
     },
 
-    editDoc(icon, e, field){
+    async editDoc(icon, e, field){
       let newName = e.target.value
-      let parent = this
       
+      console.log(icon.objectID);
       console.log(icon);
       console.log(newName);
+      
+      const IconsBase = Parse.Object.extend("Icons");
+      const query = new Parse.Query(IconsBase);
+      const docToEdit = await query.get(icon.objectID)
 
-      if (parent.isSearch) {
-        db.collection("submissions").doc(icon.objectID).update({
-          [field]: newName
-        }).then(function() {
-            console.log("Document successfully updated!");
-        }).catch(function(error) {
-            // The document probably doesn't exist.
-            console.error("Error updating document: ", error);
-        });
-      } else{
-        db.collection("submissions").doc(icon.id).update({
-            [field]: newName
-        }).then(function() {
-            console.log("Document successfully updated!");
-        }).catch(function(error) {
-            // The document probably doesn't exist.
-            console.error("Error updating document: ", error);
-        });
-      }
+      docToEdit.set({ [field]: newName }) // Save icnsToStore obj with .icns file and its url to Parse server
+      docToEdit.save().then(() =>{
+        console.log(field, "updated.");
+      }).catch((e) =>{
+        document.getElementById("error").show()
+      })
+
     },
 
     changeDate(icon, e){
