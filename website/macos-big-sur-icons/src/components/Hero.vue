@@ -89,7 +89,7 @@
 
             <!-- href="https://ko-fi.com/I3I63CFCN" -->
             <!-- href="https://www.buymeacoffee.com/elrumo" -->
-          <!-- <a rel="noopener"
+          <a rel="noopener"
             class="p-l-20 mobile-hidden"
             target="_blank"
             href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
@@ -97,7 +97,7 @@
             <button is="coral-button" variant="quiet">
               <span>Buy me a coffee</span>
             </button>
-          </a> -->
+          </a>
               <!-- <span>☕️ Buy me a hot chocolate</span> -->
               <!-- <span>Help keep this site alive</span> -->
               <!-- <span class="p-r-5 f-s-16">☕️</span> <span>Buy me a hot chocolate</span> -->
