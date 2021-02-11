@@ -471,7 +471,7 @@ export default {
 
       const query = new Parse.Query(Icons);
       query.equalTo("approved", true)
-      query.ascending(parent.sortBy);
+      query.descending("createdAt");
       query.skip(howManyRecords);
       query.limit(docLimit);
       const results = await query.find()
