@@ -403,8 +403,14 @@ export default {
     },
 
     async addClickCount(icon){
-      let id = icon.id
       let parent = this
+
+      if (icon.id) {
+        var id = icon.id
+      } else {
+        var id = icon.objectID
+      }
+
       
       // Get today's date
       var today = new Date();
@@ -427,7 +433,7 @@ export default {
         window.plausible("Downloads", {props: {
           platform: platform, 
           icon: icon.appName + ' - '+icon.id, 
-          macOS: icon.appName + ' - '+icon.id,
+          iOS: icon.appName + ' - '+icon.id,
           date: today
         }})
       }
