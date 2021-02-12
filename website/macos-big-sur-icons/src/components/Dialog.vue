@@ -154,7 +154,15 @@ export default {
       async onUpload(){
         let parent = this
         
-        window.plausible("IconSubmission")
+        // Get today's date
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = dd + '/' + mm + '/' + yyyy;
+
+        window.plausible("IconSubmission", {props: { date: today}})
 
         parent.isLoading = true
         let dialog = document.getElementById('submitIcon')
