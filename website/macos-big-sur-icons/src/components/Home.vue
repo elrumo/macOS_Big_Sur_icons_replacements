@@ -265,7 +265,6 @@ Parse.serverURL = 'https://onionicons.com/parse'
 
 var Icons = Parse.Object.extend("Icons");
 
-
 let algolia = {
     appid: process.env.VUE_APP_ALGOLIA_APPID,
     apikey: process.env.VUE_APP_ALGOLIA_KEY
@@ -274,7 +273,6 @@ let algolia = {
 let parseUser = process.env.VUE_APP_PARSE_USER
 let parsePass = process.env.VUE_APP_PARSE_PASS
 
-console.log(VUE_APP_PARSE_JAVASCRIPT_KEY, parsePass);
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
 const index = client.initIndex('macOS_parse')
@@ -352,7 +350,6 @@ export default {
         parent.getIconsArray();
         parent.isAuth = true
       }else{
-        console.log("hi");
         parent.getIconsArray();
       }
     } else{
