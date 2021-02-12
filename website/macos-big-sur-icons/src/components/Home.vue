@@ -416,7 +416,7 @@ export default {
 
       if (parent.isMacOs) {
         var platform = "macOS"
-        window.plausible("Downloads", {props: {platform: platform, icon: icon.appName, date: today}})
+        window.plausible("Downloads", {props: {platform: platform, icon: icon.appName + '( '+id+' )' , date: today}})
       } else {
         var platform = "iOS"
         window.plausible("Downloads", {props: {platform: platform, icon: icon.appName, date: today}})
