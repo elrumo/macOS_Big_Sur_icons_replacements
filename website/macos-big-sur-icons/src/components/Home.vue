@@ -266,10 +266,8 @@ import VueLoadImage from 'vue-load-image'
 import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config()
 
-const VUE_APP_PARSE_APP_ID = "macOSicons"
-const VUE_APP_PARSE_JAVASCRIPT_KEY = "macOSicons"
-// const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
-// const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
+const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
+const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
 Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://onionicons.com/parse'
@@ -277,16 +275,12 @@ Parse.serverURL = 'https://onionicons.com/parse'
 var Icons = Parse.Object.extend("Icons");
 
 let algolia = {
-    appid: "P1TXH7ZFB3",
-    apikey: "0ba04276e457028f3e11e38696eab32c"
-    // appid: process.env.VUE_APP_ALGOLIA_APPID,
-    // apikey: process.env.VUE_APP_ALGOLIA_KEY
+    appid: process.env.VUE_APP_ALGOLIA_APPID,
+    apikey: process.env.VUE_APP_ALGOLIA_KEY
 }
 
-let parseUser = "example@example.com"
-let parsePass = "example@example.com"
-// let parseUser = process.env.VUE_APP_PARSE_USER
-// let parsePass = process.env.VUE_APP_PARSE_PASS
+let parseUser = process.env.VUE_APP_PARSE_USER
+let parsePass = process.env.VUE_APP_PARSE_PASS
 
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
