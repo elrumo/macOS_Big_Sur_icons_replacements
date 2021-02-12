@@ -405,25 +405,33 @@ export default {
     async addClickCount(icon){
       let id = icon.id
       let parent = this
+      
+      // Get today's date
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+
+      today = dd + '/' + mm + '/' + yyyy;
 
       if (parent.isMacOs) {
         var platform = "macOS"
-        window.plausible("Downloads", {props: {platform: platform, icon: icon.appName}})
+        window.plausible("Downloads", {props: {platform: platform, icon: icon.appName, date: today}})
       } else {
         var platform = "iOS"
-        window.plausible("Downloads", {props: {platform: platform, icon: icon.appName}})
+        window.plausible("Downloads", {props: {platform: platform, icon: icon.appName, date: today}})
       }
 
 
-      console.log("icon: ", icon);
-      console.log("ID: ", id);
+      // console.log("icon: ", icon);
+      // console.log("ID: ", id);
 
       let query = new Parse.Query(Icons)
       let docToUpdate = await query.get(id)
 
       docToUpdate.increment("downloads")
       docToUpdate.save().then(() => {
-        console.log("Saved!!");
+        // console.log("Saved!!");
       }).catch((e) => {
         console.log("error: ", e);
       })
