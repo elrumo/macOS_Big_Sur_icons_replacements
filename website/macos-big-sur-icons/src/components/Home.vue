@@ -180,7 +180,15 @@
           <!-- Carbon ads -->
           <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
 
-          <a rel="noopener" v-for="icon in search" :key="icon.lowResPngUrl" class="card-wrapper shadow coral-card" :href="downladUrl(icon)" target="_blank" download>
+          <a
+            rel="noopener"
+            v-for="icon in search"
+            :key="icon.lowResPngUrl"
+            class="card-wrapper shadow coral-card"
+            :href="downladUrl(icon)"
+            target="_blank"
+            download
+          >
           
             <div @click="addClickCount(icon)" class="card-img-wrapper">
               
@@ -396,6 +404,16 @@ export default {
 
     async addClickCount(icon){
       let id = icon.id
+      let parent = this
+
+      var platfrom
+      if (parent.isMacOs) {
+        platform = "macOS"
+      } else {
+        platform = "iOS"
+      }
+
+      window.plausible("Downloads", {props: {platform: platform, icon: icon.appName}})
 
       console.log("icon: ", icon);
       console.log("ID: ", id);
