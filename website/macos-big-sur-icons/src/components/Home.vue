@@ -188,9 +188,10 @@
             :href="downladUrl(icon)"
             target="_blank"
             download
+            @click="addClickCount(icon)"
           >
           
-            <div @click="addClickCount(icon)" class="card-img-wrapper">
+            <div class="card-img-wrapper">
               
               <div v-lazy-container="{ selector: 'img', loading: icons.loading }" >
                 <img class="w-full" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
