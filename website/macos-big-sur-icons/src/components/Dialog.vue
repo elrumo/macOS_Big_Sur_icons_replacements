@@ -153,6 +153,9 @@ export default {
       },
       async onUpload(){
         let parent = this
+        
+        window.plausible("IconSubmission")
+
         parent.isLoading = true
         let dialog = document.getElementById('submitIcon')
         for(let fileNum in parent.filesToUpload){

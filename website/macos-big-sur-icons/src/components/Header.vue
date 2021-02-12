@@ -122,8 +122,6 @@ export default {
         showDialog(dialog) {
             let dialogEl = document.getElementById(dialog);
             dialogEl.show();
-            console.log(window.plausible("Downloads"));
-            window.plausible("Downloads")
         },
 
     },
