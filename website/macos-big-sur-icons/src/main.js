@@ -5,6 +5,7 @@ import VueLazyload from 'vue-lazyload'
 import store from './store/store'
 import router from './router'
 import VueMobileDetection from 'vue-mobile-detection'
+import './registerServiceWorker'
 
 Vue.config.productionTip = false
 
