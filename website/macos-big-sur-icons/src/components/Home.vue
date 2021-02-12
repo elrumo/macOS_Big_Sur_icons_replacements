@@ -406,14 +406,14 @@ export default {
       let id = icon.id
       let parent = this
 
-      var platfrom
       if (parent.isMacOs) {
-        platform = "macOS"
+        var platform = "macOS"
+        window.plausible("Downloads", {props: {platform: platform, icon: icon.appName}})
       } else {
-        platform = "iOS"
+        var platform = "iOS"
+        window.plausible("Downloads", {props: {platform: platform, icon: icon.appName}})
       }
 
-      window.plausible("Downloads", {props: {platform: platform, icon: icon.appName}})
 
       console.log("icon: ", icon);
       console.log("ID: ", id);
