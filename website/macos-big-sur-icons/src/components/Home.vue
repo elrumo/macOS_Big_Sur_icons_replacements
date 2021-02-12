@@ -418,16 +418,16 @@ export default {
         var platform = "macOS"
         window.plausible("Downloads", {props: {
           platform: platform, 
-          icon: icon.appName + '( '+icon.id+' )', 
-          macOS: icon.appName + '( '+icon.id+' )',
+          icon: icon.appName + ' - '+icon.id, 
+          macOS: icon.appName + ' - '+icon.id,
           date: today
         }})
       } else {
         var platform = "iOS"
         window.plausible("Downloads", {props: {
           platform: platform, 
-          icon: icon.appName + '( '+icon.id+' )', 
-          iOS: icon.appName + '( '+icon.id+' )', ,
+          icon: icon.appName + ' - '+icon.id, 
+          macOS: icon.appName + ' - '+icon.id,
           date: today
         }})
       }
