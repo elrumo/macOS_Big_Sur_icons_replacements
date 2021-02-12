@@ -122,10 +122,7 @@ export default {
         showDialog(dialog) {
             let dialogEl = document.getElementById(dialog);
             dialogEl.show();
-        },
-
-        showDialog(dialogId){
-            document.getElementById(dialogId).show()
+            plausible("Downloads")
         },
 
     },
