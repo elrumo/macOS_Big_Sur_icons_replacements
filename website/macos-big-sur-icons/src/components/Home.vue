@@ -426,7 +426,8 @@ export default {
           platform: platform, 
           icon: icon.appName + ' - '+icon.id, 
           macOS: icon.appName + ' - '+icon.id,
-          date: today
+          date: today,
+          users: icon.usersName
         }})
       } else {
         var platform = "iOS"
@@ -434,7 +435,8 @@ export default {
           platform: platform, 
           icon: icon.appName + ' - '+icon.id, 
           iOS: icon.appName + ' - '+icon.id,
-          date: today
+          date: today,
+          users: icon.usersName
         }})
       }
 
