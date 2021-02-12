@@ -432,8 +432,11 @@ export default {
         var platform = "macOS"
         window.plausible("downloadedIcons", {props: {
           platform: platform, 
-          icon: icon.appName + ' - '+id, 
-          macOS: icon.appName + ' - '+id,
+          icon: {
+            name:icon.appName + ' - '+id,
+            date: today,
+            platform: platform
+          },
           date: today,
           users: icon.usersName
         }})
