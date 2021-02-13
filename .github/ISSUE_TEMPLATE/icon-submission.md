@@ -7,10 +7,4 @@ assignees: ''
 
 ---
 
-### Name of app
-
-### Link to download the icons
-To remember to submit:
-- A low res .png
-- A high res .png
-- A .icns file made with [Image2Icon](www.img2icnsapp.com) or similar
+## To make icon submissions, please go directly to [macOSicons.com](https://macosicons.com/)
