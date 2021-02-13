@@ -17,7 +17,7 @@
                 <dir class="d-inline-block m-0 p-l-15 p-r-10">
                     <hr class="coral-Divider--M coral-Divider--vertical m-0" style="height:14px;">
                 </dir>
-
+                
                 Hosting by
                 <a href="https://fosshost.org/" rel="noopener" target="_blank" class="coral-Link">
                     FossHost
@@ -27,13 +27,16 @@
             
             <div class="header-grid-btns">
 
-                <!-- <div>
-                    <router-link to="/about">
+                <div>
+                    <a
+                        href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/discussions"
+                        rel="noopener" target="_blank"
+                    >
                         <button is="coral-button" variant="quiet">
-                            <span>About</span>
+                            <span>Forum</span>
                         </button>
-                    </router-link>
-                </div> -->
+                    </a>
+                </div>
 
                 <div v-if="this.$route.name != 'HowTo'">
                     <router-link to="/how-to">
