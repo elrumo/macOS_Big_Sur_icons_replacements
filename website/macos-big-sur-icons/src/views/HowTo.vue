@@ -3,26 +3,69 @@
 
     <Header :distanceFromTop="true"/>
 
-    <div class="single-ad isMobile">
-      <script v-if="isMobile" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+    <div class="single-ad">
+      <!-- <script v-if="isMobile" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script> -->
     </div>
 
     <main class="content-wrapper" style="max-width: 1050px !important">
       
-      <div class="text-and-ad-wrapper">
-        <div>
-          <h3 class="coral-Heading--XL">Installation Instructions</h3>
-          <h3 class="coral-Heading--M coral-Heading--light m-t-10">macOS</h3>
-        </div>
+      <!-- <div class="text-and-ad-wrapper"> -->
+      <!-- <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script> -->
+        
+      <div>
 
-        <div>
+        <h3 class="coral-Heading--XL p-b-30 p-t-30">Instructions</h3>
+
+        <div class="text-and-ad-wrapper">
+
+          <div>
+
+            <p class="coral-Body--M m-b-30">
+              Here you'll find all the information you need to chanege the icon of your favorite macOS and iOS app (iOS guide comming soon).
+              If you have any questions or need help, do not heistate to get in touch with me on
+                <a rel="noopener"
+                  class="coral-Link"
+                  href="https://twitter.com/elrumo"
+                  target="_blank"
+                >
+              Tiwtter
+                </a>
+              or ask the community on our
+                <a rel="noopener"
+                  class="coral-Link"
+                  href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/discussions"
+                  target="_blank"
+                >
+              forums.
+              </a>
+            </p>
+
+            <a href="#how-to-install" class="coral-Link">
+              <h3 class="coral-Heading--S coral-Link">
+                <ul>
+                  How to install an icon
+                </ul>
+              </h3>
+            </a> 
+
+            <a href="" class="coral-Link">
+              <h3 class="coral-Heading--S coral-Link">
+                <ul>
+                  How to restore an app to its oringal icon
+                </ul>
+              </h3>
+            </a> 
+          </div>
+
           <div class="single-ad mobile-ad">
             <script v-if="!isMobile" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
           </div>
+          
         </div>
-      </div>
 
-      <div class="instructions-grid m-t-30">        
+      </div>
+ 
+      <div class="instructions-grid m-t-30" id="how-to-install">        
         <HowToSteps v-for="step in steps" :key="step.name" :step='step'/>
       </div>
 
