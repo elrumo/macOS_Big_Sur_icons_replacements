@@ -2,8 +2,14 @@
     margin: 15px auto !important;
 }
 
+.single-ad{
+    /* margin: 0 0 0 auto; */
+}
+
 .single-ad #carbonads{
-    max-width: 205px;
+    max-width: 225px;
+    margin: 0;
+    height: fit-content;
     margin: 0 0 0 auto;
     opacity: 0.8;
 }
@@ -25,7 +31,7 @@
   
 .single-ad #carbonads {
     display: flex;
-    max-width: 330px;
+    max-width: 360px;
     background-color: hsl(0, 0%, 98%);
     box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, 0.1);
     z-index: 100;
@@ -89,7 +95,11 @@
 
 
 
-
+@media only screen and (max-width: 720px){
+    .single-ad #carbonads {
+        max-width:none;
+    }
+}
 
 
 

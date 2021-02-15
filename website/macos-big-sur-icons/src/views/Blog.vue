@@ -12,8 +12,10 @@
 import Header from '@/components/Header.vue'
 import { getPosts } from '@/api/posts';
 
+import smoothscroll from 'smoothscroll-polyfill';
+
 export default {
-  name: 'About',
+  name: 'Blog',
 
   components: {
     Header
@@ -27,6 +29,8 @@ export default {
 
   mounted: async function(){
     const parent = this;
+    
+    // smoothscroll.polyfill();
 
     const posts = await getPosts();
     for(let post in posts){

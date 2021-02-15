@@ -9,7 +9,8 @@
     "deploy": "npm run build; push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
-    "register-service-worker": "^1.7.1"
+    "register-service-worker": "^1.7.1",
+    "smoothscroll-polyfill": "^0.4.4"
   },
   "devDependencies": {
     "@adobe/coral-spectrum": "^4.10.12",

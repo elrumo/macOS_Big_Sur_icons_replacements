@@ -16,6 +16,10 @@
     --icon-preview-dimensions: 100px;
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
 a{
     text-decoration: none;
 }
@@ -893,8 +897,11 @@ main{
 
 .text-and-ad-wrapper{
     display: grid;
-    grid-template-columns: auto auto;
-    padding-top: 50px;
+    grid-template-columns: 1.3fr 1fr;
+    margin: 0px 0px 70px 0px;
+    gap: 30px;
+    // grid-template-columns: auto auto;
+    // padding-top: 50px;
 }
 
 @media only screen and (max-width: 12000px){
@@ -924,6 +931,11 @@ main{
         display: block;
     } 
 
+    .text-and-ad-wrapper{
+        grid-template-columns: 1.2fr 1.2fr;
+        padding-top: 0px;
+    }
+
 }
 
 @media only screen and (max-width: 720px){
@@ -950,6 +962,11 @@ main{
         padding-top: 10px !important;
     }
 
+    .text-and-ad-wrapper{
+        grid-template-columns: 1fr;
+        padding-top: 0px;
+    }
+    
     .h2-marked h2{
         font-size: 1.25rem;
         margin-bottom: 10px;
@@ -989,10 +1006,6 @@ main{
     
     .hero-wrapper .coral-Body--S{
         margin-bottom: 5px;
-    }
-
-    .text-and-ad-wrapper{
-        padding-top: 0px;
     }
     
     .header-wrapper{
