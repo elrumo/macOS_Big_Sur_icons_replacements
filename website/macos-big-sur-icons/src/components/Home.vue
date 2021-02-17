@@ -352,6 +352,12 @@ export default {
     
     window.addEventListener('scroll', this.handleScroll);
 
+    let routerName = this.$router.currentRoute.name
+    if(routerName == "Search"){
+      let serachQuery = this.$router.currentRoute.params.search
+      parent.searchString = serachQuery
+    }
+
     Parse.User.enableUnsafeCurrentUser()
 
     if(Parse.User.current()){
