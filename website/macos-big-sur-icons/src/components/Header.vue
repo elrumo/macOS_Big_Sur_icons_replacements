@@ -41,7 +41,7 @@
                 <div v-if="this.$route.name != 'HowTo'">
                     <router-link to="/how-to">
                         <button is="coral-button" variant="quiet">
-                            <span>How to</span>
+                            <span>Instructions</span>
                         </button>
                     </router-link>
                 </div>

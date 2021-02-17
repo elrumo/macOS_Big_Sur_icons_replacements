@@ -37,7 +37,13 @@ const routes = [
     path: '/forum',
     name: 'Forum',
     component: () => import('../views/Forum.vue')
-  }
+  },
+  {
+    path: '/:search',
+    name: 'Search',
+    component: HomeView
+  },
+
 ]
 
 const router = new VueRouter({
