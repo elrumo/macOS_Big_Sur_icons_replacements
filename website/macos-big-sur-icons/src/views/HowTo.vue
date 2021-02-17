@@ -65,7 +65,7 @@
 
       </div>
  
-      <div class="instructions-grid m-t-30" id="how-to-install">        
+      <div class="instructions-grid p-t-60" id="how-to-install">        
         <HowToSteps v-for="step in steps" :key="step.name" :step='step'/>
       </div>
 
