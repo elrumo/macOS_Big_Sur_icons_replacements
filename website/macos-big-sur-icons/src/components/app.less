@@ -563,11 +563,36 @@ main{
 }
 
 .icon{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-15px);
+    padding: 17px 20px;
+    transition: 0.3s;
+}
+
+.searchBar-left{
+    left: 0px;
     width: 15px;
     height: 15px;
-    position: absolute;
-    left: 20px;
-    top: 50%;
+    opacity: 0.5;
+    transform: translateY(-17px);
+}
+
+.searchBar-right{
+    right: 0px;
+    opacity: 0.4;
+}
+
+.searchBar-right:opacity{
+    opacity: 1;
+}
+
+.coral--light .icon{
+    fill: var(--coral-dark-card);
+}
+
+.coral--dark .icon{
+    fill: var(--coral-light-card);
 }
 
 .body-text{
@@ -963,6 +988,23 @@ main{
         grid-template-columns: 1fr 1fr;
     }
 
+    .icon{
+        padding: 17px 15px;
+    }
+
+    .searchBar{
+        padding: 20px 40px !important;
+    }
+
+    .switch-btn {
+        padding: 10px 6px;
+        border-radius: 4px;
+    }
+
+    .search{
+        grid-template-columns: auto 140px;
+    }
+    
     .footer{
         bottom: inherit;
     }
@@ -1062,7 +1104,7 @@ main{
 }
 
 .searchBar{
-    padding: 20px 45px !important;
+    padding: 20px 45px;
     height: 50px !important;
     border-radius: var(--main-border-radius) !important;
     font-size: 1rem !important;
