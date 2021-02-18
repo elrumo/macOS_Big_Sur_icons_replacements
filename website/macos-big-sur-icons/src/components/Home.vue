@@ -69,16 +69,20 @@
           <div class="m-auto main-search" style="max-width:300px;">
             <div class="shadow main-border-radius">
               <input v-model="searchString" :placeholder="'Search ' + iconListLen + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
-              <svg class="icon fill-dark" id="coral-css-icon-Magnifier" viewBox="0 0 16 16"><path d="M15.77 14.71l-4.534-4.535a6.014 6.014 0 1 0-1.06 1.06l4.533 4.535a.75.75 0 1 0 1.061-1.06zM6.5 11A4.5 4.5 0 1 1 11 6.5 4.505 4.505 0 0 1 6.5 11z"></path></svg>
+              
+              <!-- Search icon -->
+              <svg class="icon searchBar-left" id="coral-css-icon-Magnifier" viewBox="0 0 16 16">
+                <path d="M15.77 14.71l-4.534-4.535a6.014 6.014 0 1 0-1.06 1.06l4.533 4.535a.75.75 0 1 0 1.061-1.06zM6.5 11A4.5 4.5 0 1 1 11 6.5 4.505 4.505 0 0 1 6.5 11z"></path>
+              </svg>
+              
+              <!-- Cross icon -->
+              <svg v-if="searchString" @click="clearSearch" class="icon searchBar-right" xmlns="http://www.w3.org/2000/svg" height="12" viewBox="0 0 12 12" width="12">
+                <title>CrossLarge</title>
+                <rect id="ToDelete" fill="#ff13dc" opacity="0" width="12" height="12" /><path d="M11.69673,10.28266,7.41406,6l4.28267-4.28266A.9999.9999,0,1,0,10.28266.30327L6,4.58594,1.71734.30327A.9999.9999,0,1,0,.30327,1.71734L4.58594,6,.30327,10.28266a.9999.9999,0,1,0,1.41407,1.41407L6,7.41406l4.28266,4.28267a.9999.9999,0,1,0,1.41407-1.41407Z" />
+              </svg>
+
             </div>
           </div>
-
-        <!-- "Filter by" button -->
-          <!-- <div class="filter-by-grid" @click="changeSortOrder">
-            <div class="filter-by-wrapper coral-card shadow">
-                <coral-icon class="h-full" :icon="icons.iconsOrder" title="Add"></coral-icon>
-            </div>
-          </div> -->
 
           <div @click="changeOS" class="switch-wrapper coral-card shadow main-border-radius">
             <div id="macOStext" class="switch-text">
@@ -97,6 +101,7 @@
         <coral-wait size="L" indeterminate=""></coral-wait>
       </div>
 
+    <!-- Loading error -->
       <div v-if="loadingError" class="waiting-wrapper">
         
         <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
@@ -379,6 +384,10 @@ export default {
   },
 
   methods:{ 
+    
+    clearSearch(){
+      this.searchString = ""
+    },
 
     handleScroll () {
       this.distanceFromTop =  document.getElementById("searchBar").getBoundingClientRect().y > 65
