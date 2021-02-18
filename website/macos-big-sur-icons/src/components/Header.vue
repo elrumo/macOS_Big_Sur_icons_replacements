@@ -49,7 +49,7 @@
                 <div v-if="this.$route.name != 'HowTo'">
                     <router-link to="/how-to">
                         <button is="coral-button" variant="quiet">
-                            <span>How to</span>
+                            <span>Instructions</span>
                         </button>
                     </router-link>
                 </div>
@@ -66,7 +66,7 @@
                 <div>
                     <a rel="noopener" class="" target="_blank" href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" >
                         <button is="coral-button">
-                            <span>Donate</span>
+                            <span>Buy me a coffee</span>
                         </button>
                     </a>
                 </div>
