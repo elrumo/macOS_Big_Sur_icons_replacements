@@ -39,6 +39,10 @@
       😄 All icons have been uploaded.
     </coral-toast>
 
+    <coral-toast id="successMessage" variant="success">
+      {{ message }}
+    </coral-toast>
+
     <coral-toast id="iconUpdated" variant="success">
       All icons have been updated
     </coral-toast>
@@ -76,10 +80,21 @@
               </svg>
               
               <!-- Cross icon -->
-              <svg v-if="searchString" @click="clearSearch" class="icon searchBar-right" xmlns="http://www.w3.org/2000/svg" height="12" viewBox="0 0 12 12" width="12">
-                <title>CrossLarge</title>
-                <rect id="ToDelete" fill="#ff13dc" opacity="0" width="12" height="12" /><path d="M11.69673,10.28266,7.41406,6l4.28267-4.28266A.9999.9999,0,1,0,10.28266.30327L6,4.58594,1.71734.30327A.9999.9999,0,1,0,.30327,1.71734L4.58594,6,.30327,10.28266a.9999.9999,0,1,0,1.41407,1.41407L6,7.41406l4.28266,4.28267a.9999.9999,0,1,0,1.41407-1.41407Z" />
-              </svg>
+              <transition name="fade">
+                <div v-if="searchString" class="searchBar-right">
+                    <svg @click="clearSearch" class="icon " xmlns="http://www.w3.org/2000/svg" height="12" viewBox="0 0 12 12" width="12">
+                      <title>CrossLarge</title>
+                      <rect id="ToDelete" fill="#ff13dc" opacity="0" width="12" height="12" /><path d="M11.69673,10.28266,7.41406,6l4.28267-4.28266A.9999.9999,0,1,0,10.28266.30327L6,4.58594,1.71734.30327A.9999.9999,0,1,0,.30327,1.71734L4.58594,6,.30327,10.28266a.9999.9999,0,1,0,1.41407,1.41407L6,7.41406l4.28266,4.28267a.9999.9999,0,1,0,1.41407-1.41407Z" />
+                    </svg>
+
+                    <!-- <div class="mobile-hidden"> -->
+                      <button class="mobile-hidden" @click="copySearch" is="coral-button">
+                        Share search
+                      </button>
+                    <!-- </div> -->
+
+                </div>
+              </transition>
 
             </div>
           </div>
@@ -331,6 +346,8 @@ export default {
       scrolled: false,
       distanceFromTop: true ,
 
+      message: "",
+
       iconListLen: 4_378,
       lastVisible: {},
       dataToShow: [],
@@ -385,6 +402,17 @@ export default {
 
   methods:{ 
     
+    async copySearch(){
+      let parent = this;
+      let toCopy = "https://macosicons.com/" + parent.searchString
+      
+      await navigator.clipboard.writeText(toCopy);
+
+      parent.message = "✅ Link copied to your clipboard"
+      
+      parent.$store.dispatch('successMessage', {id: "successMessage"})
+    },
+
     clearSearch(){
       this.searchString = ""
     },
@@ -406,7 +434,6 @@ export default {
 
       parent.isMacOs = !parent.isMacOs
     },
-
 
     downladUrl(icon){
       let parent = this
@@ -664,8 +691,6 @@ export default {
       let parent = this
       
       index.search(search, {filters: `approved:true`, hitsPerPage: 150 }).then(function(responses) {
-        // parent.dataToShow = responses.hits
-        // parent.$store.dispatch("setDataToArr", {arr: "dataToShow", data: responses.hits, func: "searchAlgolia"})
         parent.$store.dispatch("pushDataToArr", {arr: "dataToShow", data: responses.hits, func: "searchAlgolia"})
       });
     }

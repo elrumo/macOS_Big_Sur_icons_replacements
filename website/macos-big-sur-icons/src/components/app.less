@@ -274,7 +274,6 @@ main{
 
 .switch-wrapper{
     position: relative;
-    margin-top: var(--padding-top-search);
     display: grid;
     grid-template-columns: 1fr 1fr;
     border: solid 1px var(--coral-dark-border);
@@ -333,7 +332,7 @@ main{
 .main-search{
     position: relative;
     width: 100%;
-    padding-top: var(--padding-top-search);
+    // padding-top: var(--padding-top-search);
     min-width: none !important;
     max-width: 1300px !important;
     border-radius: var(--main-border-radius);
@@ -563,27 +562,49 @@ main{
 }
 
 .icon{
-    position: absolute;
-    top: 50%;
-    transform: translateY(-15px);
     padding: 17px 20px;
-    transition: 0.3s;
+    transition: 0.2s;
 }
 
 .searchBar-left{
+    position: absolute;
+    top: 50%;
     left: 0px;
     width: 15px;
     height: 15px;
     opacity: 0.5;
-    transform: translateY(-17px);
+    transform: translateY(-50%);
+}
+
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
 }
 
 .searchBar-right{
-    right: 0px;
-    opacity: 0.4;
+    position: absolute;
+    right: 10px;
+    height: 52px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: 0.2s;
 }
 
 .searchBar-right:opacity{
+    opacity: 1;
+}
+
+.searchBar-right > *{
+    display: inline-block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.searchBar-right > svg{
+    opacity: 0.6;
+}
+
+.searchBar-right > svg:hover{
     opacity: 1;
 }
 
@@ -1013,6 +1034,10 @@ main{
         display: none;
     }
 
+    .searchBar-right{
+        right: 0px;
+    }
+
     .desktop-hidden{
         display: block;
     }
@@ -1104,7 +1129,7 @@ main{
 }
 
 .searchBar{
-    padding: 20px 45px;
+    padding: 20px 160px 20px 45px;
     height: 50px !important;
     border-radius: var(--main-border-radius) !important;
     font-size: 1rem !important;
