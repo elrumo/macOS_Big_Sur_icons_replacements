@@ -51,6 +51,13 @@ export default new Vuex.Store({
       console.log(store.state.dataToShow);
       let indexOf = store.state.dataToShow.indexOf(item)
       store.state.dataToShow.splice(indexOf, 1);
+    },
+
+    successMessage(data){
+      let id = data.id
+      let toast = document.getElementById("successMessage")
+
+      toast.show();
     }
 
   },  

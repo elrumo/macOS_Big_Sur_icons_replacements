@@ -21,7 +21,7 @@ import '@adobe/coral-spectrum/coral-css-formgroup'
 import '@adobe/coral-spectrum/coral-css-well'
 import '@adobe/coral-spectrum/coral-css-divider'
 
-// import '@adobe/coral-spectrum/dist/css/coral.css' 
+import '@adobe/spectrum-css/dist/icons/loadIcons.js' 
 
 export default {
   name: 'App',
