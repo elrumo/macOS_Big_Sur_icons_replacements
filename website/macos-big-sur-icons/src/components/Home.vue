@@ -409,8 +409,12 @@ export default {
       await navigator.clipboard.writeText(toCopy);
 
       parent.message = "✅ Link copied to your clipboard"
-      
       parent.$store.dispatch('successMessage', {id: "successMessage"})
+
+      window.plausible("downloadedIcons", {props: {
+        sharedTerm: parent.searchString,
+        date: today,
+      }})
     },
 
     clearSearch(){
