@@ -347,6 +347,7 @@ export default {
       distanceFromTop: true ,
 
       message: "",
+      today: "",
 
       iconListLen: 4_378,
       lastVisible: {},
@@ -373,6 +374,16 @@ export default {
     let parent = this;
     
     window.addEventListener('scroll', this.handleScroll);
+    
+    // Get today's date
+    ////////////////////////////////////////////////////////////////
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    today = dd + '/' + mm + '/' + yyyy;
+    parent.today = today;
+    ////////////////////////////////////////////////////////////////
 
     let routerName = this.$router.currentRoute.name
     if(routerName == "Search"){
@@ -401,7 +412,7 @@ export default {
   },
 
   methods:{ 
-    
+
     async copySearch(){
       let parent = this;
       let toCopy = "https://macosicons.com/" + parent.searchString
@@ -413,7 +424,7 @@ export default {
 
       window.plausible("PageShared", {props: {
         sharedTerm: parent.searchString,
-        date: today,
+        date: parent.today,
       }})
     },
 
@@ -458,15 +469,7 @@ export default {
         var id = icon.objectID
       }
 
-      console.log(id);
-      
-      // Get today's date
-      var today = new Date();
-      var dd = String(today.getDate()).padStart(2, '0');
-      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-      var yyyy = today.getFullYear();
-
-      today = dd + '/' + mm + '/' + yyyy;
+      let today = parent.today
 
       if (parent.isMacOs) {
         var platform = "macOS"
