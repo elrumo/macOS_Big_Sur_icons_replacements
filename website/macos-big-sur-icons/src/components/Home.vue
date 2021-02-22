@@ -411,7 +411,7 @@ export default {
       parent.message = "✅ Link copied to your clipboard"
       parent.$store.dispatch('successMessage', {id: "successMessage"})
 
-      window.plausible("downloadedIcons", {props: {
+      window.plausible("PageShared", {props: {
         sharedTerm: parent.searchString,
         date: today,
       }})
