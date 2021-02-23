@@ -216,6 +216,15 @@
               <div v-lazy-container="{ selector: 'img', loading: icons.loading }" >
                 <img class="w-full" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
               </div>
+
+              <!-- <div class="quick-actions-wrapper">
+                <div class="quick-action-el">
+                  <coral-icon @click="showDialog('deleteDialog', icon)" class="h-full quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
+                </div>
+                <div class="quick-action-el">
+                  <coral-icon @click="showDialog('deleteDialog', icon)" class="h-full quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
+                </div>
+              </div> -->
               
             </div>
             <div>

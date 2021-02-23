@@ -247,13 +247,12 @@ main{
 
 .main-search-wrapper{
     position: sticky;
-    padding-top: 0px;
+    padding-top: 10px;
     top: 60px;
     z-index: 1;
     width: 100%;
     margin: auto;
     transition: 0.2s;
-    backdrop-filter: saturate(180%) blur(20px);
 }
 
 .search{
@@ -852,6 +851,8 @@ main{
     left: 50%;
     top: 55%;
     transform: translate(-50%, -50%);
+    display: grid;
+    grid-template-columns: auto auto;
     width: fit-content;
     height: 42px;
     border-radius: 5px;
@@ -1077,6 +1078,9 @@ main{
         gap: 20px;
     }
     
+    .main-search-wrapper{
+        padding-top: 5px;
+    }
 }
 
 @media only screen and (max-width: 460px){
