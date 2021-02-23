@@ -1,7 +1,7 @@
 import GhostContentAPI from "@tryghost/content-api"
 
 const api = new GhostContentAPI({
-    url: 'https://onionicons.com/blog',
+    url: 'https://onionicons.com/blog/',
     key: 'dc182528d2e8d5e9bc0051918c',
     version: "v3"
   });
