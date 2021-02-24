@@ -94,7 +94,7 @@
                   <div class="loading-approval">
                   </div>
                 </div>
-                <a :href="icon.imgUrl">
+                <a target="_blank" :href="icon.imgUrl">
                   <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
                     <img class="w-full" :data-src="icon.imgUrl">
                   </div>
