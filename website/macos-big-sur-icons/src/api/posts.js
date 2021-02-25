@@ -13,3 +13,11 @@ export async function getPosts() {
         console.error(err);
     });
 }
+
+export async function getBlogPost(postSlug) {
+    console.log(await api.posts.read({slug: postSlug}, {formats: ['html', 'plaintext']}));
+    return await api.posts.read({slug: postSlug}, {formats: ['html', 'plaintext']})
+    .catch(err => {
+        console.error(err);
+    });
+}

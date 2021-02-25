@@ -3,45 +3,51 @@
       <Header/>
       
       <div class="blog-list-wrapper">
-
-        <div class="m-t-50 post-wrapper" v-for="post in posts" :key="post.title">
- 
-          <p class="coral-Detail coral-Detail--L opacity-80">
-            {{ getDate(post.published_at) }}
-          </p>
         
-          <h3 class=" coral-Heading--L m-t-0">
-            {{ post.title }}
-          </h3>
-
-          <h3 class=" coral-Heading--S coral-Heading--light m-t-10">
-            {{ post.excerpt }}
-          </h3>
-
-          <a href="">
-            <p class="coral-Detail coral-Detail--XL m-t-30">
-              Read more
+        <div class="blog-intro-wrapper">
+          <router-link to="/blog">
+            <p class="coral-Detail read-more read-more-left coral-Detail--XL m-t-30 coral-Link">
+              All Posts
             </p>
-          </a>
+          </router-link>
 
-          <hr class="coral-Divider--S m-t-40">
+          <h3 class="coral-Heading--XXL coral-Heading--heavy">{{ blogPost.title }}</h3>
 
+          <p class="coral-Body--XL">{{ blogPost.excerpt }}</p>
+          
+          <hr class="coral-Divider--S m-t-20 m-b-10">
+
+          <p class="coral-Detail coral-Detail--L opacity-80 m-b-50 m-l-10">
+            <span class="coral-Detail--light">
+              {{ getDate(blogPost.published_at) }}
+            </span>
+            <span class="m-l-5 m-r-5">•</span>
+            <span class="coral-Detail--light">
+              {{ blogPost.reading_time }} Min Read
+            </span>
+          </p>
+          
+          <figure class="post-full-image">
+            <img :src="blogPost.feature_image"/>
+          </figure>
+          <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
         </div>
 
+        <div class="blog-post-wrapper post-full-content" v-html="blogPost.html"> </div>
+      
       </div>
   </div>
-  <!-- <div class="m-t-50" v-html="post.html"></div> -->
 </template>
 
 <script>
 // @ is an alias to /src
 import Header from '@/components/Header.vue'
-import { getPosts } from '@/api/posts';
+import { getBlogPost } from '@/api/posts';
 
 import smoothscroll from 'smoothscroll-polyfill';
 
 export default {
-  name: 'Blog',
+  name: 'BlogPost',
 
   components: {
     Header
@@ -49,19 +55,20 @@ export default {
 
   data: function(){
     return {
-      posts: {}
+      blogPost: {}
     }
   },
 
   mounted: async function(){
     const parent = this;
-    const posts = await getPosts();
 
-    for(let post in posts){
-      console.log(posts[post].title);
-    }
+    let routerName = this.$router.currentRoute.params.post
 
-    parent.posts = posts;
+    const blogPost = await getBlogPost(routerName);
+    parent.blogPost = blogPost;
+
+
+
   },
 
   methods:{
@@ -151,24 +158,6 @@ export default {
 }
 </script>
 
-<style>
-
-  .blog-list-wrapper{
-    width: var(--page-width);
-    margin: auto;
-    max-width: 640px;
-    text-align: left;
-  }
-
-  /* .post-wrapper{
-    padding: 20px;
-    transition: 0.2s;
-  }
-  .post-wrapper:hover{
-    box-shadow: 0px 10px 50px -5px rgb(0 0 0 / 30%);
-    border-radius: 4px;
-    transform: translateY(-5px);
-    cursor: pointer;
-  } */
-
+<style lang="less">
+  @import '@/CSS/blog.less';
 </style>
