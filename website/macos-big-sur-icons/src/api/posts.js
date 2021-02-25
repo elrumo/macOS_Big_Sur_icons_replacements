@@ -1,15 +1,14 @@
 import GhostContentAPI from "@tryghost/content-api"
 
 const api = new GhostContentAPI({
-    url: 'https://onionicons.com/blog/',
-    key: 'dc182528d2e8d5e9bc0051918c',
+    url: 'https://onionicons.com/blog',
+    key: '1fd32b6e7eb72918e7e63a3719',
     version: "v3"
   });
   
 export async function getPosts() {
-    return await api.posts.browse({
-            limit: "all"
-        })
+    console.log(await api.posts.browse({page: 1}));
+    return await api.posts.browse({})
     .catch(err => {
         console.error(err);
     });
