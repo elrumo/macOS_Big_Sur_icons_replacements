@@ -1,7 +1,5 @@
 <template>
   <div>
-    <Header/>
-    
     <coral-toast id="iconUpdated" variant="success">
       All icons have been updated
     </coral-toast>
@@ -192,7 +190,6 @@
 <script>
 import Vue from 'vue'
 import { mapActions } from 'vuex';
-import Header from '@/components/Header.vue';
 
 import Parse from 'parse'
 
@@ -210,6 +207,9 @@ const docLimit = 20
 
 export default {
   
+  components:{
+  },
+
   data: function(){
     return{
       icons:{},
@@ -236,10 +236,6 @@ export default {
         loading: require("../assets/no-app-icon.png"),
       },
     }
-  },
-
-  components:{
-    Header
   },
 
   methods:{

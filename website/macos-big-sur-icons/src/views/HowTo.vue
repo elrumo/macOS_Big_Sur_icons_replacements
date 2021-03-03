@@ -1,99 +1,99 @@
 <template>
-<div>
-
-    <Header :distanceFromTop="true"/>
-
-    <div class="single-ad">
+  <div>
+    <!-- <div class="single-ad"> -->
       <!-- <script v-if="isMobile" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script> -->
-    </div>
+    <!-- </div> -->
 
     <main class="content-wrapper" style="max-width: 1050px !important">
       
       <!-- <div class="text-and-ad-wrapper"> -->
       <!-- <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script> -->
-        
-      <div>
+      <H3-Description :text="introText"/>
 
-        <h3 class="coral-Heading--XL p-b-30 p-t-30">Instructions</h3>
-
-        <div class="text-and-ad-wrapper">
-
-          <div>
-
-            <p class="coral-Body--M m-b-30">
-              Here you'll find all the information you need to chanege the icon of your favorite macOS and iOS app (iOS guide comming soon).
-              If you have any questions or need help, do not heistate to get in touch with me on
-                <a rel="noopener"
-                  class="coral-Link"
-                  href="https://twitter.com/elrumo"
-                  target="_blank"
-                >
-              Tiwtter
-                </a>
-              or ask the community on our
-                <a rel="noopener"
-                  class="coral-Link"
-                  href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/discussions"
-                  target="_blank"
-                >
-              forums.
-              </a>
-            </p>
-
-            <a href="#how-to-install" class="coral-Link">
-              <h3 class="coral-Heading--S coral-Link">
-                <ul>
-                  How to install an icon
-                </ul>
-              </h3>
-            </a> 
-
-            <a href="" class="coral-Link">
-              <h3 class="coral-Heading--S coral-Link">
-                <ul>
-                  How to restore an app to its oringal icon
-                </ul>
-              </h3>
-            </a> 
-          </div>
-
-          <div class="single-ad mobile-ad">
-            <script v-if="!isMobile" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
-          </div>
-          
-        </div>
-
-      </div>
- 
-      <div class="instructions-grid p-t-60" id="how-to-install">        
+      <div class="instructions-grid card-grid" id="how-to-install">        
         <HowToSteps v-for="step in steps" :key="step.name" :step='step'/>
       </div>
 
     </main>
-
-    <footer class="p-b-20 coral-Body--S">
-      Made with ❤️ by <a href="https://bit.ly/elias-webbites" target="_blank" class="coral-Link">Elias</a>
-      <dir class="d-inline-block m-0 p-l-15 p-r-10">
-        <hr class="coral-Divider--M coral-Divider--vertical m-0" style="height:14px;">
-      </dir>
-      <a href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" target="_blank" class="coral-Link">Support the project</a>
-    </footer>
-
-</div>
+  </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Header from '@/components/Header.vue'
 import HowToSteps from '@/components/HowToSteps.vue'
-import VueMobileDetection from 'vue-mobile-detection'
+import H3Description from '@/components/H3_Description.vue'
 
 export default {
   name: 'HowTo',
-  
+
+  metaInfo: {
+      // if no subcomponents specify a metaInfo.title, this title will be used
+      title: 'How to change app icons in macOS Big Sur',
+      description:"Guide to donlwoad and change app icons in macOS Big Sur using Finder and a website with over 5000+ free app icons.",
+      // all titles will be injected into this template
+      titleTemplate: '%s | macOSicons',
+      meta:[
+        // Facebook
+        {
+          property: 'og:url',
+          vmid:     'og:url',
+          content:  'https://macosicons.com/how-to/'
+        },
+        {
+          property: 'og:title',
+          vmid:     'og:title',
+          content:  'How to change app icons in macOS Big Sur',
+        },
+        {
+          property: 'og:description',
+          vmid:     'og:description',
+          content:  'Guide to donlwoad and change app icons in macOS Big Sur using Finder and a website with over 5000+ free app icons.',
+        },
+        {
+          property: 'og:image',
+          vmid:     'og:image',
+          content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/design/How_To-Thumbnail.jpg'
+        },
+
+        // Twitter
+        {
+          property: 'twitter:url',
+          vmid:     'twitter:url',
+          content:  'https://macosicons.com/how-to/'
+        },
+        {
+          property: 'twitter:title',
+          vmid:     'twitter:title',
+          content:  'How to change app icons in macOS Big Sur'
+        },
+        {
+          property: 'twitter:description',
+          vmid:     'twitter:description',
+          content:  'Guide to donlwoad and change app icons in macOS Big Sur using Finder and a website with over 5000+ free app icons.',
+        },
+        {
+          property: 'twitter:image',
+          vmid:     'twitter:image',
+          content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/design/How_To-Thumbnail.jpg'
+        },
+      ]
+  },
+
+  mounted: function(){
+    console.log(this.$metaInfo);        
+  },
+
   data(){
     return {
       isMobile: this.$isMobile(),
+
+      introText:{
+        h3: "How to change app icons in macOS Big Sur",
+        description: "Here you'll find all the information you need to chanege the icon of your favorite macOS and iOS app. For help or support ask me on [Twitter](https://twitter.com/elrumo) or ask on our [forum](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/discussions).",
+        isAd: true
+      },
+
       steps:{
         download:{
           name: "download",
@@ -119,7 +119,8 @@ export default {
 
   components: {
     Header,
-    HowToSteps
+    HowToSteps,
+    H3Description    
   },
   
   methods: {

@@ -33,7 +33,7 @@ a{
 }
 
 ul {
-    padding-inline-start: 25px;
+    padding-inline-start: 10px;
     padding-inline-end: 25px;
 }
 
@@ -56,16 +56,20 @@ main{
     max-width: 440px;
  }
 
-.instructions-img{
+.card-img{
     position: relative;
     width: 100%;
     align-self: center;
+}
+
+.instructions-card-img{
     top: 6px;
 }
 
 .instructions-img-wrapper{
     position: relative;
-    justify-content: right;
+    // justify-content: right;
+    height: 100%;
 }
 
 .gradient::after{
@@ -85,12 +89,16 @@ main{
 }
 
 
-.instructions-grid{
+.card-grid{
     display: grid;
-    grid-template-columns: 1fr;
     gap: 45px;
     margin: auto;
+    padding-top: 20px;
     margin-bottom: 50px;
+}
+
+.instructions-grid{
+    grid-template-columns: 1fr;
 }
 
 .instructions-item{
@@ -99,17 +107,24 @@ main{
     overflow: hidden;
 }
 
-.h2-marked h2{
+.marked h2{
     font-weight: 400 !important;
     font-size: 1.7rem;
     padding: 0px 16px;
 }
 
-.coral--dark .h2-marked{
+.marked h3{
+    font-weight: 300;
+    margin: 0px 0px 15px 0px;
+    font-size: 1.1rem;
+    padding: 5px 15px;
+}
+
+.coral--dark .marked{
     color: var(--coral-light-border);
 }
 
-.coral--light .h2-marked{
+.coral--light .marked{
     color: var(--coral-dark-border);
 }
 
@@ -132,15 +147,17 @@ main{
 }
 
 .coral--dark .Box{
-    box-shadow: 0px 20px 20px -10px rgba(0,0,0,0.5);
+    box-shadow: 0px 10px 60px -5px rgb(0 0 0 / 20%);
 }
 
 .coral--light .Box{
-    box-shadow: 0px 20px 30px -10px rgba(0,0,0,0.2);
+    box-shadow: 0px 10px 60px -5px rgb(0 0 0 / 20%);
 }
 
 .coral--dark .Box:hover{
-    box-shadow: 0px 45px 40px -30px rgba(0,0,0,0.8);
+    box-shadow: 0px 20px 60px -15px rgb(0 0 0 / 50%);
+    transform: translateY(-5px);
+    cursor: pointer;
 }
 
 .coral--light .Box:hover{
@@ -202,6 +219,39 @@ main{
     width: var(--page-width);
 }
 
+.mobile-nav-options{
+    width: calc(100% - 20px * 2);
+    padding: 50px 20px 30px 20px;
+    background-color: var(--coral-dark-bg);
+    box-shadow: 0px 25px 35px -10px rgb(0 0 0 / 20%);
+}
+
+.mobile-nav-wrapper{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    height: 100vh;
+    backdrop-filter: blur(2px);
+    transition: 0.2s;
+}
+
+.burger-menu{
+    // display: none;
+    color: white;
+}
+
+.burger-btn{
+    width: fit-content;
+    margin: auto 0px auto auto;
+}
+
+.burger-btn:focus .burger-menu{
+    color: red;
+}
+
+
 .header{
     width: 100%;
     position: sticky;
@@ -210,9 +260,16 @@ main{
     transition: 0.3s;
 }
 
+.header-logo-name{
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 10px;
+}
+
 .header-grid-btns{
     display: inline-flex;
     flex-wrap: wrap;
+    justify-content: center;
     /* display: grid;
     grid-template-columns: auto auto auto auto;
     justify-content: space-between; */
@@ -228,6 +285,8 @@ main{
     justify-content: center;
     align-items: center;
     margin: auto !important;
+    height: 100%;
+    line-height: 2rem;
 }
 
 .transform-centre{
@@ -726,6 +785,10 @@ main{
 
 } */
 
+.burger-btn coral-icon img{
+    width: 24px
+}
+
 .coral-btn{
     border-width: 2px;
     border-style: solid;
@@ -900,9 +963,19 @@ main{
     grid-template-columns: 1.3fr 1fr;
     margin: 0px 0px 0px 0px;
     gap: 30px;
+    justify-items: end;
     // grid-template-columns: auto auto;
     // padding-top: 50px;
 }
+
+.h3-description > h1{
+    max-width: 550px;
+}
+
+.h3-description-body{
+    max-width: 550px;
+}
+
 
 @media only screen and (max-width: 12000px){
     ._coral-Dialog{
@@ -915,6 +988,29 @@ main{
     .icon-list-area{
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
+
+    .desktop-hidden{
+        display: block;
+    }
+
+    .mobile-hidden{
+        display: none;
+    }
+    
+    .header-grid-btns > div > *{
+        width: 100%;
+        justify-content: start;
+    }
+
+    .coral-Divider--S{
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+
+    .mobile-nav-options{
+        padding: 50px 20px 15px 20px;
+    }
+
 }
 
 @media only screen and (max-width: 966px){
@@ -938,6 +1034,7 @@ main{
 
 }
 
+
 @media only screen and (max-width: 720px){
     .icon-list-area{
         grid-template-columns: 1fr 1fr 1fr;
@@ -945,6 +1042,10 @@ main{
 
     .card-img-wrapper {
         padding: 10px 15px 0px 17px
+    }
+
+    .instructions-grid{
+        padding-top: 50px
     }
 
     .main-search{
@@ -959,15 +1060,15 @@ main{
 
     .instructions-item{
         padding-bottom: 0px !important;
-        padding-top: 10px !important;
+        // padding-top: 10px !important;
     }
 
     .text-and-ad-wrapper{
-        grid-template-columns: 1fr;
+        display: block;
         padding-top: 0px;
     }
     
-    .h2-marked h2{
+    .marked h2{
         font-size: 1.25rem;
         margin-bottom: 10px;
     }
@@ -982,14 +1083,6 @@ main{
 
     .footer{
         bottom: inherit;
-    }
-
-    .mobile-hidden{
-        display: none;
-    }
-
-    .desktop-hidden{
-        display: block;
     }
     
     .main-heading{
@@ -1009,18 +1102,26 @@ main{
     }
     
     .header-wrapper{
+        align-items: center;
+        // grid-template-columns: auto;
+        // width: fit-content;
+    }
+    
+    .header-grid-btns {
+        display: grid;
         grid-template-columns: auto;
-        width: fit-content;
+        gap: 20px;
+        justify-content: start;
     }
     
     .header-grid-btns > div{
+        width: calc(100vw - 20px * 2);
         padding: 0;
     }
 
-    .header-grid-btns {
-        display: grid;
-        grid-template-columns: auto auto auto;
-        gap: 20px;
+    .h3-description h3{
+        margin-top: 30px;
+        padding-top: 0px;
     }
     
 }

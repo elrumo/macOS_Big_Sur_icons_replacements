@@ -1,6 +1,11 @@
 <template>
   <div id="app">
+    <Header
+      :distanceFromTop="true"
+      :submitIconDialog="'submitIcon'"
+    />
     <router-view/>
+    <Footer/>
   </div>
 </template>
 
@@ -15,18 +20,23 @@ import '@adobe/coral-spectrum/coral-component-quickactions'
 import '@adobe/coral-spectrum/coral-component-fileupload'
 import '@adobe/coral-spectrum/coral-component-textfield'
 import '@adobe/coral-spectrum/coral-component-search'
+import '@adobe/coral-spectrum/coral-component-overlay'
 
 import '@adobe/coral-spectrum/coral-css-link'
 import '@adobe/coral-spectrum/coral-css-formgroup'
 import '@adobe/coral-spectrum/coral-css-well'
 import '@adobe/coral-spectrum/coral-css-divider'
 
-// import '@adobe/coral-spectrum/dist/css/coral.css' 
+import Footer from '@/components/Footer.vue'
+import Header from '@/components/Header.vue'
 
 export default {
   name: 'App',
   components: {
-  }
+    Header,
+    Footer
+  },
+  methods:{}
 }
 </script>
 
