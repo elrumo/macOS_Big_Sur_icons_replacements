@@ -1,11 +1,8 @@
 <template>
   <div>
-    <Header/>
-    <keep-alive>
       <div class="blog-list-wrapper">
 
         <div class="m-t-50 post-wrapper" v-for="post in posts" :key="post.title">
- 
           <p class="coral-Detail coral-Detail--L opacity-80">
             {{ getDate(post.published_at) }}
           </p>
@@ -25,41 +22,48 @@
           </router-link>
 
           <hr class="coral-Divider--S m-t-40">
+        </div>
 
+        <div class="single-ad mobile-ad m-t-50 m-b-50">
+          <script async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
         </div>
 
       </div>
-    </keep-alive>
+
   </div>
   <!-- <div class="m-t-50" v-html="post.html"></div> -->
 </template>
 
 <script>
 // @ is an alias to /src
-import Header from '@/components/Header.vue'
 import { getPosts } from '@/api/posts';
 
-import smoothscroll from 'smoothscroll-polyfill';
+import localPosts from '@/api/posts.json';
 
 export default {
   name: 'BlogHome',
 
   components: {
-    Header
   },
 
   data: function(){
     return {
-      posts: {}
+      postsFetched: false,
+      posts: localPosts,
     }
   },
 
   mounted: async function(){
     const parent = this;
+    let storeBlogData = parent.$store.state.blogPosts
 
-    const posts = await getPosts();
+    if (storeBlogData.length == undefined) {
+      const posts = await getPosts();
+      parent.$store.commit('pushBlogs', posts)
+    }
 
-    parent.posts = posts;
+    parent.posts = parent.$store.state.blogPosts;
+    
   },
 
   methods:{

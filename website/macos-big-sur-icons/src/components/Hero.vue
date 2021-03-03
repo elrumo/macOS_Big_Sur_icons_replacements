@@ -7,20 +7,21 @@
     </div> -->
     <div class="hero-text-area" v-if="iconsEmpty">    
         
-        <p class="coral-Body--S desktop-hidden">
+        <!-- <p class="coral-Body--S desktop-hidden"> -->
+        <p class="coral-Body--S m-b-0">
           Hosting by
           <a href="https://fosshost.org/" rel="noopener" target="_blank" class="coral-Link">
               FossHost
           </a> 
         </p>
 
-        <h3
+        <h1
           class="main-heading m-t-0 coral-Heading--XL coral-Heading--regular"
         >
           <span class="f-w-100 f-s-26">macOS Big Sur</span>
           <br />
-          Replacement Icons
-        </h3>
+          Free app icons
+        </h1>
 
         <p class="coral-Body--L w-100 body-text">
             Sponsor the project on
@@ -93,6 +94,7 @@
             class="p-l-20 mobile-hidden"
             target="_blank"
             href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+            @click="logDonation('hero')"
           >
             <button is="coral-button" variant="quiet">
               <span>Buy me a coffee</span>
@@ -138,6 +140,12 @@ export default {
   },
 
   methods: {
+    
+    logDonation(location){
+      window.plausible("logDonation", {props: {
+          location: location, 
+      }})
+    },
 
     async updateCount(id){
       let parent = this;

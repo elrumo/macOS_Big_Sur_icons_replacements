@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import VueMeta from 'vue-meta'
+
 import HomeView from '../views/HomeView.vue'
 import BlogPost from '../views/BlogPost.vue'
 import BlogHome from '../views/BlogHome.vue'
 
 Vue.use(VueRouter)
+Vue.use(VueMeta)
 
 const routes = [
   {
@@ -44,6 +47,11 @@ const routes = [
     path: '/forum',
     name: 'Forum',
     component: () => import('../views/Forum.vue')
+  },
+  {
+    path: '/resources',
+    name: 'Resources',
+    component: () => import('../views/Resources.vue')
   },
 ]
 

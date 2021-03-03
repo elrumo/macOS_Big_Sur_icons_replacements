@@ -4,11 +4,15 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+import localPosts from '@/api/posts.json';
+
 export default new Vuex.Store({
 
   state: {
     list:[],
-    dataToShow: []
+    dataToShow: [],
+    blogPosts: {},
+    localPosts: localPosts
   },
 
   mutations: {   
@@ -29,8 +33,12 @@ export default new Vuex.Store({
     setDataToArr(store, iconData){
       console.log("func: ", iconData.func)
       store[iconData.arr] = iconData.data
-    }
+    },
   
+    pushBlogs(store, blogData){
+      store.blogPosts = blogData;
+    }
+
   },
   
   actions: {
@@ -51,12 +59,19 @@ export default new Vuex.Store({
       console.log(store.state.dataToShow);
       let indexOf = store.state.dataToShow.indexOf(item)
       store.state.dataToShow.splice(indexOf, 1);
+    },
+
+    pushBlogs(store, blogData){
+      store.commit('pushBlogs', blogData)
     }
 
   },  
 
 
   getters: {
+    getBlogPost(store, blogData){
+      return store.blogPosts
+    }
   }
 
 })

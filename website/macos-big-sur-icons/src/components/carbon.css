@@ -7,10 +7,10 @@
 }
 
 .single-ad #carbonads{
-    max-width: 225px;
-    margin: 0;
+    /* max-width: 225px; */
     height: fit-content;
-    margin: 0 0 0 auto;
+    margin: auto;
+    /* margin: 0 0 0 auto; */
     opacity: 0.8;
 }
 
@@ -68,8 +68,8 @@
   
 .single-ad #carbonads .carbon-text {
     font-size: 13px;
-    padding: 10px;
-    margin-bottom: 16px;
+    margin: auto;
+    padding: 0px 0px 20px 10px;
     line-height: 1.5;
     text-align: left;
   }
@@ -86,12 +86,52 @@
     position: absolute;
     bottom: 0;
     right: 10px;
-    max-width: 155px;
+    width: calc(100% - 174px);
     margin-bottom: 10px !important;
 }
 
 /* background: #f1f1f2; */
   
+
+/* Resources card ad */
+/* //////////////////////////////////////////////////////////////// */
+.resources-card-ad .carbon-text{
+    padding: 0px
+}
+
+.resources-card-ad .carbon-wrap{
+    gap: 5px;
+}
+
+.resources-card-ad #carbonads{
+    padding: 15px 15px 15px 15px;
+    max-width: none;
+}
+
+.resources-card-ad #carbonads > span{
+    gap: 10px;
+}
+
+.resources-card-ad #carbonads > span > a{
+    position: relative;
+    width: calc(100% - 20px);
+    height: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    max-width: 250px;
+}
+
+.resources-card-ad #carbonads .carbon-wrap{
+    padding: 0px;
+}
+
+.resources-card-ad .carbon-poweredby{
+    margin: 0px auto;
+}
+
+/* //////////////////////////////////////////////////////////////// */
+
+
 
 
 
@@ -176,7 +216,7 @@
     padding: 2px 5px 0px 5px;
     line-height: 1.4;
     text-align: center;
-    margin: 10px 0px 0px 0px !important;
+    margin: 10px 0px 0px 0px;
 }
 
 .carbon-poweredby {
@@ -185,7 +225,7 @@
     padding: 8px 10px;
     
     opacity: 0.5;
-    margin-bottom: 13px !important;
+    margin-bottom: 13px;
     width: 70%;
     border-radius: 7px;
     
