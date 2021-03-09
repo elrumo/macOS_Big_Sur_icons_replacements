@@ -92,7 +92,7 @@
                   <div class="loading-approval">
                   </div>
                 </div>
-                <a :href="icon.imgUrl">
+                <a :href="icon.imgUrl" target="_blank">
                   <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
                     <img class="w-full" :data-src="icon.imgUrl">
                   </div>
@@ -107,7 +107,7 @@
 
               </div>
 
-              <div class="p-l-15 p-r-15 p-b-0">                
+              <div class="card-text-wrapper p-l-15 p-r-15 p-b-0">                
                 
                 <!-- Date Submited -->                
                 <p class="coral-Body--XS opacity-60 m-b-0">
@@ -142,42 +142,6 @@
             </div>
           </div>
           
-
-        </div>
-        <!-- Approved Icons -->
-        <div v-if="!isObjEmpty(approvedIcons)"  class="m-t-50 p-50 coral-Well" id="approved-icons">
-          <h3 class="coral-Heading--L p-b-20 m-t-0 text-left">
-            Approved
-          </h3>
-
-          <div class="icon-list-area">
-            <div v-for="icon in approvedIcons" class="card-wrapper coral-card" :key="icon.fileName">
-
-                <div class="card-img-wrapper" style="max-width: 120px;">
-                  Image
-                  <!-- <img loading="lazy" v-lazy="icon.imgUrl" class="w-full" alt=""> -->
-                </div>
-
-                <div class="p-l-15 p-r-15 p-b-5">
-                  <h3 class="coral-font-color">
-                    {{ prettifyName(icon.appName) }}
-                  </h3>
-                  <p class="coral-Body--XS p-b-10 opacity-60">By <a class="coral-Link" :href="icon.credit" target="_blank">{{icon.usersName}}</a></p>
-                  
-                  <div class="p-t-10">
-                    <div class="filler-space"></div>
-
-                    <a class="coral-Link" :href="'mailto:'+icon.email+'?subject=macOS icons submission&body=Hi '+icon.usersName+emailMsg">
-                      <button is="coral-button" variant="quiet">
-                          Contact
-                      </button>
-                    </a>
-                  </div>
-                  
-                </div>
-
-            </div>
-          </div>
 
         </div>
 

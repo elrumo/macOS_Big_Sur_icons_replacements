@@ -1,7 +1,9 @@
 <template>
     <div>
         <div class="h3-description">
-            <h1 class="coral-Heading--XXL p-b-0 p-t-30">{{ text.h3 }}</h1>
+            <h1 class="coral-Heading--XL resource-heading">
+               <b> {{ text.h3 }}</b>
+            </h1>
 
             <div class="h3-description-body" v-if="!text.isAd">
                 <p class="coral-Body--L f-w-500 m-b-50" v-html="markItDown">
@@ -38,7 +40,7 @@ export default {
     computed: {
         markItDown(){
             let text = this.text.description
-            console.log(Marked(text, { sanitize: true }));
+            
             return Marked(text, { sanitize: true })
         }
     }
