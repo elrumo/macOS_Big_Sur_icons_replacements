@@ -16,7 +16,7 @@
                 </router-link>
                 <p class="header-item coral-Body--S">
                     By
-                    <a href="https://webbites.io/" rel="noopener" target="_blank" class="coral-Link">
+                    <a href="https://webbites.io/" rel="noopener" target="_blank" class="underline">
                         Elias
                     </a> 
                 </p>
