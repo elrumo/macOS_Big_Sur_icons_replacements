@@ -1,50 +1,9 @@
-
-// START Resources View
-////////////////////////////////////////////////////////////////
-
-.resource-description{
-  position: relative;
-}
-
-.resource-content-wrapper{
-  padding: 15px 0px 40px 0px;
-  display: grid;
-  grid-template-columns: minmax(400px, 800px) minmax(260px, 380px);
-  gap: 40px;
-}
-
-.resource-content-wrapper .post-full-image{
-  width: 100%;
-}
-
-.moreResources{
-  display: grid;
-  grid-template-columns: auto;
-  gap: 15px;
-  padding: 70px 0px 40px 0px;
-}
-
-.resource-excerpt{
-  padding-bottom: 30px;
-}
-
-// .moreResources .resources-grid{
-//   grid-template-columns: auto auto minmax(314px, calc(100vw / 3 - 18vw));
-// }
-
-// END Resources View
-////////////////////////////////////////////////////////////////
-
-
-// START Resources Card
-////////////////////////////////////////////////////////////////
 .resources-grid{
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: auto auto auto;
   gap: 30px;
   padding-bottom: 20px;
   padding-top: 0px;
 }
-
 
 .resources-card-wrapper{
   position: relative;
@@ -68,15 +27,6 @@
 }
 
 
-@media only screen and (max-width: 1200px){
-  
-  .resource-content-wrapper{
-    grid-template-columns: 9 minmax(260px, 450px);
-    gap: 40px;
-  }
-
-}
-
 @media only screen and (max-width: 1004px){
 
   .resources-grid{
@@ -87,35 +37,17 @@
     padding: 10px 25px;
   }
 
-  .resource-description h3{
-    font-size: 1.5rem;
-  }
-
-  .resource-excerpt{
-    padding-bottom: 20px;
-  }
-
 }
 
 @media only screen and (max-width: 900px){
-  
+
   .resources-grid{
     grid-template-columns: auto auto;
     gap: 20px;
   }
-  
+
   .resources-card-title{
     padding: 20px 25px;
-  }
-  
-}
-
-@media only screen and (max-width: 820px){
-  
-  .resource-content-wrapper{
-    padding: 15px 0px 40px 0px;
-    grid-template-columns: auto;
-    gap: 40px;
   }
 
 }

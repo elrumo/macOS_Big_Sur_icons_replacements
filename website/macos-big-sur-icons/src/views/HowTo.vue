@@ -4,7 +4,7 @@
       <!-- <script v-if="isMobile" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script> -->
     <!-- </div> -->
 
-    <main class="content-wrapper-compact">
+    <main class="content-wrapper" style="max-width: 1050px !important">
       
       <!-- <div class="text-and-ad-wrapper"> -->
       <!-- <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script> -->
@@ -97,19 +97,19 @@ export default {
       steps:{
         download:{
           name: "download",
-          text:"### Download the icon you want from [**macOSicons.com**](https://macosicons.com)",
+          text:"## Download the icon you want from [**macOSicons.com**](https://macosicons.com)",
           img: require("../assets/Instructions/downloadIcon.png"),
           gradient: false,
         },
         getInfo:{
           name: "getInfo",
-          text:"### Find the app on Finder, right click on it and select **Get Info**",
+          text:"## Find the app on Finder, right click on it and select **Get Info**",
           img: require("../assets/Instructions/getInfo.png"),
           gradient: true,
         },
         setApp:{
           name: "setApp",
-          text:"### Drag the downloaded file to the current icon on the Info window",
+          text:"## Drag the downloaded file to the current icon on the Info window",
           img: require("../assets/Instructions/setApp.png"),
           gradient: true,
         }

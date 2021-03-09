@@ -1,5 +1,5 @@
 <template>
-   <footer class="footer p-b-20 coral-Body--S">
+   <footer class="p-b-20 coral-Body--S">
       Made with ❤️ by <a href="https://bit.ly/elias-webbites" target="_blank" class="coral-Link">Elias</a>
       <dir class="d-inline-block m-0 p-l-15 p-r-10">
         <hr class="coral-Divider--M coral-Divider--vertical m-0" style="height:14px;">

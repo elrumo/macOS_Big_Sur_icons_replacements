@@ -46,7 +46,7 @@
         class="main-search-wrapper coral-bg p-b-15"
         :class="{'scrolled-shadow': !distanceFromTop}"
       >
-        <div class="content-wrapper-regular search">
+        <div class="content-wrapper search">
           
           <div class="m-auto main-search" style="max-width:300px;">
             <div class="shadow main-border-radius">
@@ -80,6 +80,8 @@
       </div>
 
       <div v-if="loadingError" class="waiting-wrapper">
+        
+        <!-- <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script> -->
 
         <h3 class="coral-Heading--M">
           The site is temporarily down for maintenance purposes.
@@ -108,7 +110,7 @@
       </button>
 
     <!-- Icon list when Auth-->
-        <div v-if="isAuth & !loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular">
+        <div v-if="isAuth & !loadingError" class="icon-list-area p-t-20 p-b-50">
           
           <!-- Icons -->
           <div  v-for="icon in search" :key="icon.icnsUrl" class="card-wrapper coral-card">
@@ -134,7 +136,7 @@
                   
               </div>
 
-              <div class="card-text-wrapper p-l-15 p-r-15 p-b-15">
+              <div class="p-l-15 p-r-15 p-b-15">
 
                   <p class="coral-Body--XS opacity-60 m-b-0">
                     <input class="editable-input coral-Body--XS opacity-50 m-b-0" @change="changeDate(icon, $event)" type="text" variant="quiet" :value="getDate(icon.timeStamp)" is="coral-textfield" aria-label="text input">
@@ -155,7 +157,7 @@
         </div>
 
     <!-- Seen when no auth  -->
-        <div v-if="!isAuth & !loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular">
+        <div v-if="!isAuth & !loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper">
 
           <!-- Carbon ads -->
           <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
@@ -178,8 +180,7 @@
               </div>
               
             </div>
-            
-            <div class="card-text-wrapper">
+            <div>
               
               <h3 class="coral-font-color">
                 {{ prettifyName(icon.appName) }}
@@ -193,7 +194,7 @@
                   {{icon.usersName}}
                 </b>
                 on
-                <span class="coral-Body--XS opacity-80">
+                <span class="coral-Body--XS opacity-50">
                   {{ getDate(icon.timeStamp) }}
                 </span>
               </p>
@@ -223,14 +224,11 @@ import VueLoadImage from 'vue-load-image'
 import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config()
 
-// TODO: remove credentiaks
-const VUE_APP_PARSE_APP_ID = "macOSicons"
-const VUE_APP_PARSE_JAVASCRIPT_KEY = "macOSicons"
-// const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
-// const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
+const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
+const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
 Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
-Parse.serverURL = 'https://media.macosicons.com/parse'
+Parse.serverURL = 'https://onionicons.com/parse'
 
 var Icons = Parse.Object.extend("Icons");
 
@@ -239,13 +237,8 @@ let algolia = {
     apikey: process.env.VUE_APP_ALGOLIA_KEY
 }
 
-// TODO: remove credentiaks
-let parseUser = "example@example.com"
-let parsePass = "example@example.com"
-// let parseUser = "elrumo97@me.com"
-// let parsePass = "espigot1"
-// let parseUser = process.env.VUE_APP_PARSE_USER
-// let parsePass = process.env.VUE_APP_PARSE_PASS
+let parseUser = process.env.VUE_APP_PARSE_USER
+let parsePass = process.env.VUE_APP_PARSE_PASS
 
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
@@ -365,7 +358,7 @@ export default {
     
     window.addEventListener('scroll', this.handleScroll);
 
-    // Parse.User.enableUnsafeCurrentUser()
+    Parse.User.enableUnsafeCurrentUser()
 
     if(Parse.User.current()){
       if (Parse.User.current().attributes.isAdmin) {
@@ -395,7 +388,6 @@ export default {
 
     handleScroll () {
       this.distanceFromTop =  document.getElementById("searchBar").getBoundingClientRect().y > 65
-      console.log(document.getElementById("searchBar").getBoundingClientRect().y);
     },
 
     changeOS(){

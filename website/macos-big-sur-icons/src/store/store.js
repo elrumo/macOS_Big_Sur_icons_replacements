@@ -5,20 +5,14 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 import localPosts from '@/api/posts.json';
-import { getPages, getSinglePage } from '@/api/posts';
 
 export default new Vuex.Store({
 
   state: {
     list:[],
     dataToShow: [],
-    
     blogPosts: {},
-    localPosts: localPosts,
-
-    resourcesData: getPages(0),
-    singleResourceData: {},
-    moreResources: getPages(2)
+    localPosts: localPosts
   },
 
   mutations: {   
@@ -43,10 +37,6 @@ export default new Vuex.Store({
   
     pushBlogs(store, blogData){
       store.blogPosts = blogData;
-    },
-
-    getSinglePageMutation(store, pageData){
-      store.singleResourceData = pageData;
     }
 
   },
@@ -54,11 +44,6 @@ export default new Vuex.Store({
   actions: {
     showToast(store, dialogId){
       document.getElementById(dialogId.id).show();
-    },
-
-    getPageData(store){
-      console.log(store.resourcesData);
-      return "Hi"
     },
 
     pushDataToArr(store, iconData){
@@ -78,13 +63,7 @@ export default new Vuex.Store({
 
     pushBlogs(store, blogData){
       store.commit('pushBlogs', blogData)
-    },
-
-    async getSinglePageAction(store, slug){
-
-      return getSinglePage(slug)
     }
-
 
   },  
 
