@@ -1,8 +1,8 @@
 import GhostContentAPI from "@tryghost/content-api"
 
 // TODO: Remove API Key
-const VUE_APP_GHOST_KEY = "1fd32b6e7eb72918e7e63a3719"
-// const VUE_APP_GHOST_KEY = process.env.VUE_APP_GHOST_KEY
+
+const VUE_APP_GHOST_KEY = process.env.VUE_APP_GHOST_KEY
 
 const api = new GhostContentAPI({
     url: 'https://onionicons.com/blog',
