@@ -12,7 +12,7 @@
                 </coral-quickactions>
             </div>
 
-            <div class="p-l-15 p-r-15 p-b-5">
+            <div class="p-l-15 p-r-15 p-b-5 card-text-wrapper">
                 <h3 class="coral-font-color">
                         <input class="editable-input" @change="editDoc(icon, $event, 'appName', false)" type="text" variant="quiet" :value="prettifyName(icon.appName)" is="coral-textfield" aria-label="text input">
                 </h3>

@@ -1,19 +1,21 @@
 <template>
-    <div class="coral-Well instructions-item Box">
-        <div class="resources-card-wrapper">
-        
-        <div :class="{ 'instructions-img-wrapper': true, 'gradient':step.gradient }">
-            <img class="card-img resources-card-img" :src="step.img" alt="">
-        </div>
+    <router-link :to="'/resources/' + step.slug">
+        <div class="coral-Well instructions-item Box">
+            <div class="resources-card-wrapper">
+            
+            <div class="instructions-img-wrapper">
+                <img class="card-img resources-card-img" :src="step.feature_image" alt="">
+            </div>
 
-        <div class="resources-card-title">
-            <p class="coral-Body--L f-w-500 m-0">
-                {{ step.text }}
-            </p>
-        </div>
+            <div class="resources-card-title">
+                <p class="coral-Body--L f-w-500 m-0">
+                    {{ step.title }}
+                </p>
+            </div>
 
+            </div>
         </div>
-    </div>
+    </router-link>
 </template>
 
 <script>

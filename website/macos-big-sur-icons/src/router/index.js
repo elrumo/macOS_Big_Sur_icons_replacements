@@ -53,6 +53,11 @@ const routes = [
     name: 'Resources',
     component: () => import('../views/Resources.vue')
   },
+  {
+    path: '/resources/:resource',
+    name: 'Resources',
+    component: () => import('../views/ResourceView.vue')
+  },
 ]
 
 const router = new VueRouter({
