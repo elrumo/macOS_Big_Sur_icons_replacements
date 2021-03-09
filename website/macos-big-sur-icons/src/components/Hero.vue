@@ -1,5 +1,5 @@
 <template>
-<div class="content-wrapper-regular">
+<div class="content-wrapper">
   <div id="hero" class="hero-wrapper">
 
     <!-- <div class="PH-badge">
@@ -24,7 +24,7 @@
         </h1>
 
         <p class="coral-Body--L w-100 body-text">
-            <!-- Sponsor the project on
+            Sponsor the project on
           <a rel="noopener" class="coral-Link" href="https://github.com/sponsors/elrumo">
             GitHub
           </a>
@@ -34,43 +34,76 @@
             href="https://twitter.com/elrumo"
             target="_blank"
           >
-            Twitter.
-          </a> -->
+            <b>Twitter.</b>
+          </a>
           
-          To contribute, download our free templates from the
-            <router-link to="/resources">
-            <b> resources page. </b>
-            </router-link>
+          Templates to contribute:
+          <a rel="noopener"
+            class="coral-Link"
+            href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.sketch"
+            alt="Sketch template"
+            @click="updateCount('cftvIOYXek')"
+          >
+          <!-- <a rel="noopener"
+            class="coral-Link"
+            href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.sketch"
+            @click="updateCount('cftvIOYXek')"
+          > -->
+            Sketch,
+          </a>
+          <a rel="noopener"
+            class="coral-Link"
+            href="https://www.figma.com/community/file/930870327989917713/MacOS-Big-Sur-icon-template"
+            alt="Figma template"
+            @click="updateCount('ecCJEYIUyF')"
+          >
+            Figma,
+          </a>
+          <a rel="noopener"
+            class="coral-Link"
+            alt="Illustrator template"
+            href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.ai"
+            @click="updateCount('fu7UfKs2zz')"
+          >
+            Illustrator,
+          </a>
+          or
+          <a rel="noopener"
+            class="coral-Link"
+            alt="Photoshop template"
+            href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.psd"
+          >
+            Photoshop.
+          </a>
         </p>
 
         <div class="m-auto m-t-35">
-
-          <a rel="noopener"
-            class="mobile-hidden"
-            target="_blank"
-            href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
-            @click="logDonation('hero')"
-          >
-            <button is="coral-button" variant="outline">
-              <span>Buy me a coffee</span>
-            </button>
-          </a>
-
-          <div class="p-l-20 d-inline-block">
+          <div class="d-inline-block">
             <button
               is="coral-button"
-              variant="quiet"
+              variant="cta"
               @click="showDialog(submitIconDialog)"
             >
               <span>Submit icons</span>
             </button>
           </div>
 
-
-          <!-- <span>☕️ Buy me a hot chocolate</span> -->
-          <!-- <span>Help keep this site alive</span> -->
-          <!-- <span class="p-r-5 f-s-16">☕️</span> <span>Buy me a hot chocolate</span> -->
-      
+            <!-- href="https://ko-fi.com/I3I63CFCN" -->
+            <!-- href="https://www.buymeacoffee.com/elrumo" -->
+          <a rel="noopener"
+            class="p-l-20 mobile-hidden"
+            target="_blank"
+            href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+            @click="logDonation('hero')"
+          >
+            <button is="coral-button" variant="quiet">
+              <span>Buy me a coffee</span>
+            </button>
+          </a>
+              <!-- <span>☕️ Buy me a hot chocolate</span> -->
+              <!-- <span>Help keep this site alive</span> -->
+              <!-- <span class="p-r-5 f-s-16">☕️</span> <span>Buy me a hot chocolate</span> -->
+          
         </div>
     </div>
     

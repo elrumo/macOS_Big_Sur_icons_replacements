@@ -4,9 +4,7 @@
       :distanceFromTop="true"
       :submitIconDialog="'submitIcon'"
     />
-    <router-view
-      class="min-height"
-    />
+    <router-view/>
     <Footer/>
   </div>
 </template>
@@ -49,13 +47,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  min-height: 100vh;
-  /* position: table; */
 } 
-
-.min-height{
-  min-height: calc(100vh - 155px);
-  margin: auto;
-}
-
 </style>

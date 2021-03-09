@@ -1,11 +1,11 @@
 <template>
   <div>
-    <main class="content-wrapper-compact">
+    <main class="content-wrapper" style="max-width: 1050px !important">
 
       <H3-Description :text="introText"/>
 
       <div class="resources-grid card-grid" id="how-to-install">        
-        <ResourcesCard v-for="resource in resourcesData" :key="resource.name" :step='resource'/>
+        <ResourcesCard v-for="step in steps" :key="step.name" :step='step'/>
 
         <div class="resources-card-ad">
           <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
@@ -22,8 +22,6 @@ import Header from '@/components/Header.vue'
 import ResourcesCard from '@/components/ResourcesCard.vue'
 import Footer from '@/components/Footer.vue'
 import H3Description from '@/components/H3_Description.vue'
-
-import pages from '@/api/pages.json';
 
 export default {
   name: 'Resources',
@@ -43,17 +41,29 @@ export default {
         description: "Resources to help you design, showcase and share icons for macOS and other platforms soon.",
         isAd: false
       },
-      resourcesData: pages
+      steps:{
+        download:{
+          name: "bigSurDock",
+          text:"macOS Big Sur Dock",
+          img: require("../assets/Resources/Dock_Light.jpg"),
+          gradient: false,
+        },
+        getInfo:{
+          name: "bigSurIconTemplate",
+          text:"macOS Big Sur eMacs Icon",
+          img: require("../assets/Resources/emac_icon.jpg"),
+          gradient: false,
+        },
+        setApp:{
+          name: "setApp",
+          text:"macOS Big Sur App Icon",
+          img: require("../assets/Resources/icon_template.jpg"),
+          gradient: false,
+        }
+      }
     }
   },
   
-  mounted: async function(){
-    const parent = this;
-    let storeResourcesData = parent.$store.state.resourcesData
-    console.log("storeResourcesData: ", await storeResourcesData);
-    parent.resourcesData = await storeResourcesData;
-  },
-
   methods: {
   }
 
