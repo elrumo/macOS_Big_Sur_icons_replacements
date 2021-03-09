@@ -224,9 +224,10 @@ import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config()
 
 // TODO: remove credentiaks
-
-const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
-const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
+const VUE_APP_PARSE_APP_ID = "macOSicons"
+const VUE_APP_PARSE_JAVASCRIPT_KEY = "macOSicons"
+// const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
+// const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
 Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://media.macosicons.com/parse'
@@ -239,8 +240,12 @@ let algolia = {
 }
 
 // TODO: remove credentiaks
-let parseUser = process.env.VUE_APP_PARSE_USER
-let parsePass = process.env.VUE_APP_PARSE_PASS
+let parseUser = "example@example.com"
+let parsePass = "example@example.com"
+// let parseUser = "elrumo97@me.com"
+// let parsePass = "espigot1"
+// let parseUser = process.env.VUE_APP_PARSE_USER
+// let parsePass = process.env.VUE_APP_PARSE_PASS
 
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
