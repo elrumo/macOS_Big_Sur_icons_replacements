@@ -20,6 +20,10 @@ html{
     scroll-behavior: smooth;
 }
 
+body{
+    overflow-y: scroll;
+}
+
 a{
     text-decoration: none;
 }
@@ -59,7 +63,6 @@ main{
 .card-img{
     position: relative;
     width: 100%;
-    align-self: center;
 }
 
 .instructions-card-img{
@@ -68,8 +71,12 @@ main{
 
 .instructions-img-wrapper{
     position: relative;
-    // justify-content: right;
     height: 100%;
+}
+
+.instructions-well .instructions-img-wrapper{
+    width: 70%;
+    margin: auto 0 auto auto;
 }
 
 .gradient::after{
@@ -91,7 +98,7 @@ main{
 
 .card-grid{
     display: grid;
-    gap: 45px;
+    gap: 35px;
     margin: auto;
     padding-top: 20px;
     margin-bottom: 50px;
@@ -114,6 +121,12 @@ main{
 }
 
 .marked h3{
+    // margin: 0px 0px 15px 0px;
+    font-size: 1.5rem;
+    padding: 5px 15px;
+}
+
+.marked h4{
     font-weight: 300;
     margin: 0px 0px 15px 0px;
     font-size: 1.1rem;
@@ -302,10 +315,17 @@ main{
     float: right;
 }
 
-.content-wrapper{
+.content-wrapper-regular{
     width: var(--page-width);
     margin: auto;
     max-width: 1150px;
+    // min-height: calc(100vh - 155px);
+}
+
+.content-wrapper-compact{
+    width: var(--page-width);
+    max-width: 1050px !important;
+    margin: auto;
 }
 
 .main-search-wrapper{
@@ -453,6 +473,12 @@ main{
     border-color: rgb(225, 225, 225);
     border-radius: var(--main-border-radius);
     margin: auto;
+    // padding: 0px 10px;
+}
+
+.card-text-wrapper{
+    max-width: 90%;
+    margin: auto;
 }
 
 .card-wrapper:hover{
@@ -460,11 +486,13 @@ main{
 }
 
 .footer{
-    bottom : 0px;
-    position : absolute;
-    left : 50%;
-    transform : translateX(-50%);
-    width: 100%;
+    // bottom : 0px;
+    // position : absolute;
+    // left : 50%;
+    // transform : translateX(-50%);
+    // width: 100%;
+    height: fit-content;
+    // display: table-row;
 }
 
 .sponsor-buttons{
@@ -477,6 +505,8 @@ main{
     text-decoration: none;
     font-size: 0.9rem;
     text-align: center;
+    // max-width: 90%;
+    // margin: auto;
 }
 
 .opacity-0{
@@ -634,7 +664,8 @@ main{
 }
 
 .body-text{
-    padding-right: 40px;
+    // padding-right: 40px;
+    max-width: 350px;
 }
 
 .loading-approval-wrapper{
@@ -968,6 +999,10 @@ main{
     // padding-top: 50px;
 }
 
+.h3-description{
+    margin-top: 50px;
+}
+
 .h3-description > h1{
     max-width: 550px;
 }
@@ -975,6 +1010,12 @@ main{
 .h3-description-body{
     max-width: 550px;
 }
+
+
+
+
+
+
 
 
 @media only screen and (max-width: 12000px){
@@ -1073,6 +1114,17 @@ main{
         margin-bottom: 10px;
     }
 
+    .marked h3{
+        font-size: 1.2rem;
+    }
+
+    .instructions-well .instructions-img-wrapper{
+        position: relative;
+        height: 100%;
+        width: 70%;
+        margin: auto;
+    }
+
 }
 
 
@@ -1081,9 +1133,9 @@ main{
         grid-template-columns: 1fr 1fr;
     }
 
-    .footer{
-        bottom: inherit;
-    }
+    // .footer{
+    //     bottom: inherit;
+    // }
     
     .main-heading{
         padding-top: 0px;

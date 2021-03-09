@@ -95,6 +95,26 @@
 
 /* Resources card ad */
 /* //////////////////////////////////////////////////////////////// */
+
+.resource-description .single-ad{
+    position: absolute;
+    bottom: 0;
+}
+
+.resource-content-wrapper #carbonads{
+    max-width: none;
+}
+
+.resource-content-wrapper #carbonads .carbon-text {
+    padding: 0px 0px 30px 15px;
+}
+
+.resources-card-ad{
+    height: 100%;
+    min-width: calc(100vw / 3 - 18vw);
+    max-width: 320px;
+}
+
 .resources-card-ad .carbon-text{
     padding: 0px
 }
@@ -134,6 +154,21 @@
 
 
 
+
+@media only screen and (max-width: 1440px){
+    .resources-card-ad{
+        height: 100%;
+        min-width: none;
+        max-width: 320px;
+    }
+}
+
+@media only screen and (max-width: 900px){
+    .resources-card-ad{
+        height: 100%;
+        width: 100%;
+    }
+}
 
 @media only screen and (max-width: 720px){
     .single-ad #carbonads {
@@ -186,6 +221,13 @@
     position: relative;
     display: grid;
     overflow: hidden;
+}
+
+.icon-list-area #carbonads span {
+    position: relative;
+    display: grid;
+    overflow: hidden;
+    padding-bottom: 10px;
 }
 
 #carbonads .carbon-wrap {
