@@ -36,12 +36,24 @@
 
       <div class="blog-post-wrapper post-full-content" v-html="blogPost.html"> </div>
     
+      <section class="p-b-50 m-b-50">
+        
+        <div class="">
+          <hr class="coral-Divider--S">
+        </div>
+    
+        <H3-Description :text="subscribe"/>    
+
+      </section>
+    
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import H3Description from '@/components/H3_Description.vue'
+
 import { getBlogPost } from '@/api/posts';
 import localPosts from '@/api/posts.json';
 
@@ -49,11 +61,19 @@ export default {
   name: 'BlogPost',
 
   components: {
+    H3Description
   },
 
   data: function(){
     return {
-      blogPost: localPosts
+      blogPost: localPosts,
+       subscribe:{
+        h3: "The Icons Blog",
+        description: "Hi! I'm [Elias](https://eliasruiz.com), and I'm building a platform for all things icons and design. You can support this project and read about this journey on this blog and by subscribing below.",
+        isAd: false,
+        isCenter: true,
+        isButton: true
+      },
     }
   },
 
