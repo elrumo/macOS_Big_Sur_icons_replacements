@@ -51,7 +51,11 @@
             href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
             @click="logDonation('hero')"
           >
-            <button is="coral-button" variant="outline">
+            <button
+              is="coral-button"
+              variant="cta"
+            >
+              <!-- variant="outline" -->
               <span>Buy me a coffee</span>
             </button>
           </a>

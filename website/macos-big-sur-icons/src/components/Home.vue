@@ -395,7 +395,6 @@ export default {
 
     handleScroll () {
       this.distanceFromTop =  document.getElementById("searchBar").getBoundingClientRect().y > 65
-      console.log(document.getElementById("searchBar").getBoundingClientRect().y);
     },
 
     changeOS(){
@@ -573,7 +572,6 @@ export default {
         const results = await query.find()
 
         query.count().then((count) =>{
-          console.log(count);
           parent.iconListLen = count
         })
 

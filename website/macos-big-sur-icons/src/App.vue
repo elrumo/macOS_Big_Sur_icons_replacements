@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header
-      :distanceFromTop="true"
+      :distanceFromTop="distanceFromTop"
       :submitIconDialog="'submitIcon'"
     />
     <router-view
@@ -38,7 +38,23 @@ export default {
     Header,
     Footer
   },
-  methods:{}
+  data(){
+    return{
+      distanceFromTop: true
+    }
+  },
+  methods:{
+    handleScroll () {
+      let parent = this
+      let currentRoute = parent.$router.currentRoute.name;
+      if (currentRoute == "Home") {
+        this.distanceFromTop =  document.getElementById("searchBar").getBoundingClientRect().y > 65;
+      }
+    },
+  },
+  mounted: function(){
+    window.addEventListener('scroll', this.handleScroll);
+  }
 }
 </script>
 

@@ -4,8 +4,19 @@
 
       <H3-Description :text="introText"/>
 
-      <div class="resources-grid card-grid" id="how-to-install">        
-        <ResourcesCard v-for="resource in resourcesData" :key="resource.name" :step='resource'/>
+      <div class="resources-grid card-grid" id="how-to-install">
+        
+        <ResourcesCard
+          :step='instructions'
+          :link="instructions.link"
+        />
+
+        <ResourcesCard
+          v-for="resource in resourcesData"
+          :key="resource.name"
+          :link="'/resources/'+resource.slug"
+          :step='resource'
+        />
 
         <div class="resources-card-ad">
           <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
@@ -40,8 +51,14 @@ export default {
       isMobile: this.$isMobile(),
       introText:{
         h3: "Resources",
-        description: "Resources to help you design, showcase and share icons for macOS and other platforms soon.",
+        description: "Resources to help you design, showcase and share icons for macOS and other platforms (soon).",
         isAd: false
+      },
+      instructions:{
+        title: "How to change app icons",
+        feature_image: require("../assets/Instructions/setApp.png"),
+        link: "/how-to",
+        gradient: true,
       },
       resourcesData: pages
     }
@@ -50,7 +67,7 @@ export default {
   mounted: async function(){
     const parent = this;
     let storeResourcesData = parent.$store.state.resourcesData
-    console.log("storeResourcesData: ", await storeResourcesData);
+    // console.log("storeResourcesData: ", await storeResourcesData);
     parent.resourcesData = await storeResourcesData;
   },
 

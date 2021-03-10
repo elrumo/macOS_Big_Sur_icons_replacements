@@ -76,11 +76,11 @@
                         </div>
 
                         <!-- Instructions -->
-                        <div @click="away" v-if="this.$route.name != 'HowTo'">
+                        <!-- <div @click="away" v-if="this.$route.name != 'HowTo'">
                             <router-link to="/how-to" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
                                 Instructions
                             </router-link>
-                        </div>
+                        </div> -->
                         <hr class="coral-Divider--S">
                         
                         <!-- Buy me a coffee -->
@@ -144,13 +144,13 @@
                     </div>
 
                     <!-- Instructions -->
-                    <div>
+                    <!-- <div>
                         <router-link to="/how-to">
                             <button is="coral-button" variant="quiet">
                                 <span>Instructions</span>
                             </button>
                         </router-link>
-                    </div>
+                    </div> -->
                     
                     <!-- Buy me a coffee -->
                     <div>

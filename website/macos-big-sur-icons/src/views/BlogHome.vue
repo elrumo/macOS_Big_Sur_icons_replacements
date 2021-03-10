@@ -2,7 +2,16 @@
   <div>
       <div class="blog-list-wrapper">
         
-        <iframe class="subscribe-blog-wrapper" src="https://blog.macosicons.com/blog/#subscribe" frameborder="0"></iframe>
+        <!-- <iframe class="subscribe-blog-wrapper" src="https://blog.macosicons.com/blog/#subscribe" frameborder="0"></iframe> -->
+
+        <section class="p-t-50 p-b-50 m-b-50">
+          <H3-Description :text="subscribe"/>
+          
+          <div class="p-t-20">
+            <hr class="coral-Divider--S m-t-50">
+          </div>
+
+        </section>
 
         <div class="m-t-50 post-wrapper" v-for="post in posts" :key="post.title">
           <p class="coral-Detail coral-Detail--L opacity-80">
@@ -39,6 +48,7 @@
 <script>
 // @ is an alias to /src
 import { getPosts } from '@/api/posts';
+import H3Description from '@/components/H3_Description.vue'
 
 import localPosts from '@/api/posts.json';
 
@@ -46,12 +56,20 @@ export default {
   name: 'BlogHome',
 
   components: {
+    H3Description
   },
 
   data: function(){
     return {
       postsFetched: false,
       posts: localPosts,
+      subscribe:{
+        h3: "The Icons Blog",
+        description: "Hi! I'm [Elias](https://eliasruiz.com), and I'm building a platform for all things icons and design. You can support this project and read about this journey on this blog and by subscribing below.",
+        isAd: false,
+        isCenter: true,
+        isButton: true
+      },
     }
   },
 
