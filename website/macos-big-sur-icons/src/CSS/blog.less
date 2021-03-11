@@ -1,0 +1,307 @@
+  .read-more{
+    font-weight: 800;
+    transition: 0.3s;
+  }
+
+  .read-more:hover{
+    text-decoration: none;
+  }
+
+  .read-more-right::after{
+    position: relative;
+    transition: 0.3s;
+    left: 0px;
+    content: "→";
+  }
+
+  .read-more-right:hover::after{
+    left: 5px;
+  }
+
+  .read-more-left::before{
+    position: relative;
+    transition: 0.3s;
+    left: 0px;
+    content: "←";
+  }
+
+  .read-more-left:hover::before{
+    left: -5px;
+  }
+
+  .coral--dark .read-more:hover{
+    filter: brightness(1.2);
+  }
+
+  .coral--light .read-more:hover{
+    filter: brightness(0.7);
+  }
+  
+
+  .blog-list-wrapper{
+    width: var(--page-width);
+    margin: auto;
+    max-width: 680px;
+    text-align: left;
+  }
+
+  .blog-post-wrapper{
+    text-align: left;
+    transition: 0.2s;
+    font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  }
+  .coral--dark .blog-post-wrapper{
+    color: var(--coral-light-bg);
+  }
+
+  .coral--light .blog-post-wrapper{
+    color: var(--coral-dark-bg);
+  }
+  
+  .blog-post-wrapper figure{
+    margin: auto;
+    width: 100%;
+    padding: 20px 0px;
+    left: 50%;
+    position: relative;
+    transform: translateX(-50%);
+  }
+
+/* IMAGES START */
+  .blog-post-wrapper img{
+    width: 100%;
+    height: auto;
+  }
+  .post-full-image{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    margin: 25px 0 50px;
+    background: #e4eaed;
+    border-radius: 5px;
+    width: 90vw;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 900px;
+  }
+
+  .post-full-image img {
+    width: 100%;
+    height: auto;
+  }
+
+  .kg-image {
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .kg-gallery-image:not(:first-of-type) {
+    margin: 0 0 0 .75em;
+  }
+
+  .kg-gallery-container{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-width: 1040px;
+    width: 85vw;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .kg-gallery-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .kg-gallery-image{
+    flex: 1.5 1 0%;
+  }
+/* IMAGES END */
+
+
+/* BOOKMARK CARD START */
+  .kg-bookmark-card {
+    width: 100%;
+  }
+
+  .post-full-content .kg-bookmark-container {
+    display: flex;
+    min-height: 148px;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+    border-radius: 3px;
+    text-decoration: none;
+  }
+
+  .coral--dark .kg-bookmark-container{
+    color: var(--coral-light-bg);
+    box-shadow: 0 0 1px hsl(0deg 0% 100% / 90%);
+  }
+
+  .coral--light .kg-bookmark-container{
+    color: var(--coral-dark-bg);
+    box-shadow: 0 2px 5px -1px rgb(0 0 0 / 15%), 0 0 1px rgb(0 0 0 / 9%);
+  }
+
+  .kg-bookmark-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .kg-bookmark-thumbnail {
+    position: relative;
+    min-width: 33%;
+    max-height: 100%;
+  }
+  .kg-bookmark-thumbnail img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0 3px 3px 0;
+    -o-object-fit: cover;
+    object-fit: cover;
+  }
+
+  .kg-bookmark-title {
+    font-size: 1.2rem;
+    line-height: 1.5em;
+    font-weight: 600;
+    transition: color .2s ease-in-out;
+  }
+  .kg-bookmark-description {
+    display: -webkit-box;
+    overflow-y: hidden;
+    margin-top: 12px;
+    max-height: 48px;
+    font-size: 0.9rem;
+    opacity: 0.9;
+    line-height: 1.5em;
+    font-weight: 400;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .kg-bookmark-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 14px;
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+
+  .post-full-content .kg-bookmark-icon {
+    margin-right: 8px;
+    width: 22px;
+    height: 22px;
+  }
+  
+  .kg-bookmark-author {
+    line-height: 1.5em;
+    font-size: 1rem;
+  }
+
+  .kg-bookmark-author:after {
+    content: "•";
+    margin: 0 6px;
+  }
+
+  .kg-bookmark-container:hover .kg-bookmark-title {
+    color: rgb(75, 156, 245);
+  }
+/* BOOKMARK CARD END */
+
+
+  pre {
+    overflow-x: auto;
+    margin: 1.5em 0 3em;
+    padding: 20px;
+    max-width: 100%;
+    border: 1px solid #000;
+    font-size: 1rem;
+    line-height: 1.5em;
+    background: #0e1012;
+    border-radius: 5px;
+    color: var(--coral-light-bg);
+  }
+
+
+/* TEXT STYLE START*/
+  .blog-post-wrapper h2{
+    margin: .5em 0 .4em;
+    font-size: 1.8rem;
+    line-height: 1.25em;
+    font-weight: 600;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+    margin-top: 1.7em;
+  }
+
+  .blog-post-wrapper a{
+    transition: 0.2s;
+    text-decoration: underline;
+  }
+
+  .coral--dark .blog-post-wrapper a:hover{
+    /* filter: brightness(1.3); */
+  }
+
+  .coral--light .blog-post-wrapper a:hover{
+    /* filter: brightness(0.5); */
+  }
+
+  .blog-post-wrapper p{
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.75;
+    font-style: normal;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .resource-description .blog-post-wrapper p{
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .subscribe-blog-wrapper{
+    width: 100%;
+  }
+
+  .blog-post-wrapper ol{
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+  }
+
+  .blog-post-wrapper li{
+    margin: .5em 0;
+    line-height: 1.6em;
+    font-size: 1rem;
+  }
+
+  .blog-post-wrapper blockquote{
+    margin: 0 0 1.5em;
+    font-size: 1rem;
+    padding: 0 1.5em;
+    border-left: 3px solid #3eb0ef;
+  }
+/* TEXT STYLE END*/
+
+
+@media only screen and (max-width: 812px){
+  .blog-post-wrapper figure{
+    width: 100%;
+    left: 0;
+    transform: translateX(0);
+    padding: 10px 0px;
+  }
+}

@@ -3,11 +3,11 @@
         <div class="instructions-well">
         
         <div class="instructions-title">
-            <div class="h2-marked" v-html="markItDown"></div>
+            <div class="marked" v-html="markItDown"></div>
         </div>
 
         <div :class="{ 'instructions-img-wrapper': true, 'gradient':step.gradient }">
-            <img class="instructions-img" :src="step.img" alt="">
+            <img class="card-img instructions-card-img" :src="step.img" alt="">
         </div>
 
         </div>

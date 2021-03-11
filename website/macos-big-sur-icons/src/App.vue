@@ -1,6 +1,13 @@
 <template>
   <div id="app">
-    <router-view/>
+    <Header
+      :distanceFromTop="distanceFromTop"
+      :submitIconDialog="'submitIcon'"
+    />
+    <router-view
+      class="min-height"
+    />
+    <Footer/>
   </div>
 </template>
 
@@ -15,17 +22,40 @@ import '@adobe/coral-spectrum/coral-component-quickactions'
 import '@adobe/coral-spectrum/coral-component-fileupload'
 import '@adobe/coral-spectrum/coral-component-textfield'
 import '@adobe/coral-spectrum/coral-component-search'
+import '@adobe/coral-spectrum/coral-component-overlay'
 
 import '@adobe/coral-spectrum/coral-css-link'
 import '@adobe/coral-spectrum/coral-css-formgroup'
 import '@adobe/coral-spectrum/coral-css-well'
 import '@adobe/coral-spectrum/coral-css-divider'
 
+import Footer from '@/components/Footer.vue'
+import Header from '@/components/Header.vue'
+
 import '@adobe/spectrum-css/dist/icons/loadIcons.js' 
 
 export default {
   name: 'App',
   components: {
+    Header,
+    Footer
+  },
+  data(){
+    return{
+      distanceFromTop: true
+    }
+  },
+  methods:{
+    handleScroll () {
+      let parent = this
+      let currentRoute = parent.$router.currentRoute.name;
+      if (currentRoute == "Home") {
+        this.distanceFromTop =  document.getElementById("searchBar").getBoundingClientRect().y > 65;
+      }
+    },
+  },
+  mounted: function(){
+    window.addEventListener('scroll', this.handleScroll);
   }
 }
 </script>
@@ -37,5 +67,13 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  min-height: 100vh;
+  /* position: table; */
 } 
+
+.min-height{
+  min-height: calc(100vh - 155px);
+  margin: auto;
+}
+
 </style>
