@@ -4,11 +4,21 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+import localPosts from '@/api/posts.json';
+import { getPages, getSinglePage } from '@/api/posts';
+
 export default new Vuex.Store({
 
   state: {
     list:[],
-    dataToShow: []
+    dataToShow: [],
+    
+    blogPosts: {},
+    localPosts: localPosts,
+
+    resourcesData: getPages(0),
+    singleResourceData: {},
+    moreResources: getPages(2)
   },
 
   mutations: {   
@@ -29,13 +39,26 @@ export default new Vuex.Store({
     setDataToArr(store, iconData){
       console.log("func: ", iconData.func)
       store[iconData.arr] = iconData.data
-    }
+    },
   
+    pushBlogs(store, blogData){
+      store.blogPosts = blogData;
+    },
+
+    getSinglePageMutation(store, pageData){
+      store.singleResourceData = pageData;
+    }
+
   },
   
   actions: {
     showToast(store, dialogId){
       document.getElementById(dialogId.id).show();
+    },
+
+    getPageData(store){
+      console.log(store.resourcesData);
+      return "Hi"
     },
 
     pushDataToArr(store, iconData){
@@ -53,6 +76,15 @@ export default new Vuex.Store({
       store.state.dataToShow.splice(indexOf, 1);
     },
 
+    pushBlogs(store, blogData){
+      store.commit('pushBlogs', blogData)
+    },
+
+    async getSinglePageAction(store, slug){
+
+      return getSinglePage(slug)
+    },
+  
     successMessage(data){
       let id = data.id
       let toast = document.getElementById("successMessage")
@@ -60,10 +92,14 @@ export default new Vuex.Store({
       toast.show();
     }
 
+
   },  
 
 
   getters: {
+    getBlogPost(store, blogData){
+      return store.blogPosts
+    }
   }
 
 })

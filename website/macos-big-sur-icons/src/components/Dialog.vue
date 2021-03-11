@@ -12,7 +12,10 @@
         <br>
         <ul class="coral-List p-t-10 p-b-10">
           <li class="coral-List-item">Icon submited must be a .png file</li>
-          <li class="coral-List-item">Use <a alt="Download Sketch template" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.sketch" class="coral-Link"> this Sketch </a> template for dimensions and reference.</li>
+          <li class="coral-List-item">
+            Download template from the <router-link coral-close="" to="/resources"> <b> resources page. </b></router-link>
+          </li>
+          <!-- <li class="coral-List-item">Use <a alt="Download Sketch template" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.sketch" class="coral-Link"> this Sketch </a> template for dimensions and reference.</li> -->
           <li class="coral-List-item"> <b> The file name must be the same as the name of the app. </b></li>
         </ul>
       </div>

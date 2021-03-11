@@ -1,0 +1,212 @@
+<template>
+  <div>
+    <div class="blog-list-wrapper">
+      <div class="blog-intro-wrapper">
+        <router-link to="/blog">
+          <p class="coral-Detail read-more read-more-left coral-Detail--XL m-t-30 coral-Link">
+            All Posts
+          </p>
+        </router-link>
+
+        <h3 class="coral-Heading--XXL coral-Heading--heavy">{{ blogPost.title }}</h3>
+
+        <p class="coral-Body--XL">{{ blogPost.excerpt }}</p>
+        
+        <hr class="coral-Divider--S m-t-20 m-b-10">
+
+        <p class="coral-Detail coral-Detail--L opacity-80 m-b-50 m-l-10">
+          <span class="coral-Detail--light">
+            {{ getDate(blogPost.published_at) }}
+          </span>
+          <span class="m-l-5 m-r-5">•</span>
+          <span class="coral-Detail--light">
+            {{ blogPost.reading_time }} Min Read
+          </span>
+        </p>
+        
+        <figure class="post-full-image">
+          <img :src="blogPost.feature_image"/>
+        </figure>
+
+        <div class="single-ad mobile-ad m-t-50">
+          <script async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
+        </div>
+
+      </div>
+
+      <div class="blog-post-wrapper post-full-content" v-html="blogPost.html"> </div>
+    
+      <section class="p-b-50 m-b-50">
+        
+        <div class="">
+          <hr class="coral-Divider--S">
+        </div>
+    
+        <H3-Description :text="subscribe"/>    
+
+      </section>
+    
+    </div>
+  </div>
+</template>
+
+<script>
+// @ is an alias to /src
+import H3Description from '@/components/H3_Description.vue'
+
+import { getBlogPost } from '@/api/posts';
+import localPosts from '@/api/posts.json';
+
+export default {
+  name: 'BlogPost',
+
+  components: {
+    H3Description
+  },
+
+  data: function(){
+    return {
+      blogPost: localPosts,
+       subscribe:{
+        h3: "The Icons Blog",
+        description: "Hi! I'm [Elias](https://eliasruiz.com), and I'm building a platform for all things icons and design. You can support this project and read about this journey on this blog and by subscribing below.",
+        isAd: false,
+        isCenter: true,
+        isButton: true
+      },
+    }
+  },
+
+  mounted: async function(){
+    const parent = this;
+
+    let routerName = this.$router.currentRoute.params.post
+    let storeBlogData = parent.$store.state.blogPosts
+    let localBlogData = parent.$store.state.localPosts
+    // console.log(localBlogData);
+    
+    // Check if blog data has already been fetched, if not, fetch only the blog required
+    if (storeBlogData.length == undefined) {
+      const blogPost = await getBlogPost(routerName);
+      
+      //  Botched together to get local blog data while real blog is loading. Temporary fix, this will need to be server side rendered.
+      for(let post in Object.keys(localBlogData)){
+        try {
+          if (localBlogData[post].slug == routerName) {
+            // console.log(localBlogData[post].html);
+            parent.blogPost = localBlogData[post];
+          }
+        } catch (error) {
+        }
+      }
+
+      // If the blog post requested does not exists, redirect user to main blog page
+      if (blogPost == undefined) { 
+        parent.$router.push('/blog')
+      }
+      
+      parent.blogPost = blogPost;
+
+    } else{
+      for(let post in Object.keys(storeBlogData)){
+        try {
+          if (storeBlogData[post].slug == routerName) {
+            parent.blogPost = storeBlogData[post];
+          }
+        } catch (error) {
+        }
+      }
+    }
+
+  },
+
+  methods:{
+    getDate(dateString){
+      // var date = dateString;
+      let date = new Date(dateString);
+      var monthDate = date.getDate();
+      var year = date.getUTCFullYear();
+
+      let weekDay = date.getUTCDay()
+      switch (weekDay) {
+        case 0:
+          weekDay = "Monday"
+          break;
+        case 1:
+          weekDay = "Tuesday"
+          break;
+        case 2:
+          weekDay = "Wendesday"
+          break;
+        case 3:
+          weekDay = "Thursday"
+          break;
+        case 4:
+          weekDay = "Friday"
+          break;
+        case 5:
+          weekDay = "Saturday"
+          break;
+        case 6:
+          weekDay = "Sunday"
+          break;
+          
+        default:
+          break;
+      }
+      
+      let month = date.getUTCMonth();
+      switch (month) {
+        case 0:
+          month = "Jan"
+          break;
+        case 1:
+          month = "Feb"
+          break;
+        case 2:
+          month = "March"
+          break;
+        case 3:
+          month = "Apr"
+          break;
+        case 4:
+          month = "May"
+          break;
+        case 5:
+          month = "Jun"
+          break;
+        case 6:
+          month = "Jul"
+          break;
+        case 7:
+          month = "Aug"
+          break;
+        case 8:
+          month = "Sep"
+          break;
+        case 9:
+          month = "Oct"
+          break;
+        case 10:
+          month = "Nov"
+          break;
+        case 11:
+          month = "Dec"
+          break;
+          
+        default:
+          break;
+      }
+      // var date = new Date(dateString);
+      return month + " " + monthDate + ', ' + year
+    }
+  },
+
+  computed:{
+  }
+}
+</script>
+
+<style lang="less">
+  @import '@/CSS/blog.less';
+</style>
