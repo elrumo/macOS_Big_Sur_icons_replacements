@@ -5,12 +5,13 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 import localPosts from '@/api/posts.json';
+import icons from '@/api/icons.json';
 import { getPages, getSinglePage } from '@/api/posts';
 
 export default new Vuex.Store({
 
   state: {
-    list:[],
+    list: icons,
     dataToShow: [],
     
     blogPosts: {},

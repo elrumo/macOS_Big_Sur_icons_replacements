@@ -253,7 +253,6 @@ import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config()
 
 // TODO: remove credentiaks
-
 const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
 const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
@@ -291,8 +290,10 @@ export default {
 
    metaInfo: {
       // if no subcomponents specify a metaInfo.title, this title will be used
-      title: 'How to change app icons in macOS Big Sur',
-      description:"Instructions on how to donlwoad and change app icons in macOS Big Sur using Finder and a website with over 5000+ free app icons.",
+      // title: 'How to change app icons in macOS Big Sur',
+      title: 'macOS app icon pack - 5000+ free and open source icons for Big Sur & iOS',
+      // description:"Instructions on how to donlwoad and change app icons in macOS Big Sur using Finder and a website with over 5000+ free app icons.",
+      description:"Free 5000+ App icons for macOS in the style of macOS Big Sur. Fully open source and community led. How to install custom icons on macOS Big Sur.",
       // all titles will be injected into this template
       titleTemplate: '%s | macOSicons',
       meta:[
@@ -366,7 +367,7 @@ export default {
       message: "",
       today: "",
 
-      iconListLen: 4_378,
+      iconListLen: 5_385,
       lastVisible: {},
       dataToShow: [],
       activeIcon: {},
@@ -635,6 +636,8 @@ export default {
         query.count().then((count) =>{
           parent.iconListLen = count
         })
+        
+        parent.$store.state.list = []
 
         for(let result in results){
           let objData = results[result].attributes
@@ -651,7 +654,7 @@ export default {
         setTimeout(() => {
           let carbon = document.getElementById("carbonads")
           carbon.classList.add("coral-card")
-        }, 1000);
+        }, 800);
 
         parent.scroll()
 
