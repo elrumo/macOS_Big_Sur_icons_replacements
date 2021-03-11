@@ -46,6 +46,59 @@ export default {
     H3Description
   },
 
+     metaInfo: {
+      // if no subcomponents specify a metaInfo.title, this title will be used
+      title: 'Free icon templates resources for macOS Big Sur.',
+      description:"Resources and templates to help you design and showcase icons for macOS.",
+      // all titles will be injected into this template
+      titleTemplate: '%s | macOSicons',
+      meta:[
+        // Facebook
+        {
+          property: 'og:url',
+          vmid:     'og:url',
+          content:  'https://macosicons.com/resources'
+        },
+        {
+          property: 'og:title',
+          vmid:     'og:title',
+          content:  'Free icon templates resources and over 5000+ icons for macOS Big Sur.',
+        },
+        {
+          property: 'og:description',
+          vmid:     'og:description',
+          content:  'Resources and templates to help you design and showcase icons for macOS. Over 5000+ free icons ready for Big Sur.',
+        },
+        {
+          property: 'og:image',
+          vmid:     'og:image',
+          content:  'https://macosicons.com/img/intro-instructions.543ccaf7.jpg'
+        },
+
+        // Twitter
+        {
+          property: 'twitter:url',
+          vmid:     'twitter:url',
+          content:  'https://macosicons.com/resources'
+        },
+        {
+          property: 'twitter:description',
+          vmid:     'twitter:description',
+          content:  'Resources and templates to help you design and showcase icons for macOS. Over 5000+ free icons ready for Big Sur.',
+        },
+        {
+          property: 'twitter:title',
+          vmid:     'twitter:title',
+          content:  'Free icon templates resources and over 5000+ icons for macOS Big Sur.',
+        },
+        {
+          property: 'twitter:image',
+          vmid:     'twitter:image',
+          content:  'https://macosicons.com/img/intro-instructions.543ccaf7.jpg'
+        },
+      ]
+  },
+
   data(){
     return {
       isMobile: this.$isMobile(),
