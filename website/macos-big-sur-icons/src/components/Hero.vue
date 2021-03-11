@@ -60,10 +60,20 @@
             </button>
           </a>
 
-          <div class="d-inline-block">
+          <div class="d-inline-block mobile-hidden">
             <button
               is="coral-button"
               variant="quiet"
+              @click="showDialog(submitIconDialog)"
+            >
+              <span>Submit icons</span>
+            </button>
+          </div>
+
+          <div class="d-inline-block desktop-hidden">
+            <button
+              is="coral-button"
+              variant="cta"
               @click="showDialog(submitIconDialog)"
             >
               <span>Submit icons</span>
