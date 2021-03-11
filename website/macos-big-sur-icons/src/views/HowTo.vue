@@ -5,7 +5,11 @@
     <!-- </div> -->
 
     <main class="content-wrapper-compact">
-      
+      <router-link to="/resources">
+        <p class="coral-Detail read-more read-more-left coral-Detail--XL m-t-30 coral-Link">
+          All Resources
+        </p>
+      </router-link>
       <!-- <div class="text-and-ad-wrapper"> -->
       <!-- <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script> -->
       <H3-Description :text="introText"/>
