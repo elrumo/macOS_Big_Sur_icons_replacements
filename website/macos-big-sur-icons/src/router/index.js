@@ -58,6 +58,12 @@ const routes = [
     name: 'Resources',
     component: () => import('../views/ResourceView.vue')
   },
+  {
+    path: '/:search',
+    name: 'Search',
+    component: HomeView
+  },
+
 ]
 
 const router = new VueRouter({

@@ -83,6 +83,13 @@ export default new Vuex.Store({
     async getSinglePageAction(store, slug){
 
       return getSinglePage(slug)
+    },
+  
+    successMessage(data){
+      let id = data.id
+      let toast = document.getElementById("successMessage")
+
+      toast.show();
     }
 
 

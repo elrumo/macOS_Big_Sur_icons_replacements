@@ -75,7 +75,7 @@
                                 </span>
                             </router-link>
                         </div>
-
+                        
                         <!-- Instructions -->
                         <!-- <div @click="away" v-if="this.$route.name != 'HowTo'">
                             <router-link to="/how-to" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
