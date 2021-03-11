@@ -21,6 +21,10 @@
       😄 All icons have been uploaded.
     </coral-toast>
 
+    <coral-toast id="successMessage" variant="success">
+      {{ message }}
+    </coral-toast>
+
     <coral-toast id="iconUpdated" variant="success">
       All icons have been updated
     </coral-toast>
@@ -51,16 +55,31 @@
           <div class="m-auto main-search" style="max-width:300px;">
             <div class="shadow main-border-radius">
               <input v-model="searchString" :placeholder="'Search ' + iconListLen + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
-              <svg class="icon fill-dark" id="coral-css-icon-Magnifier" viewBox="0 0 16 16"><path d="M15.77 14.71l-4.534-4.535a6.014 6.014 0 1 0-1.06 1.06l4.533 4.535a.75.75 0 1 0 1.061-1.06zM6.5 11A4.5 4.5 0 1 1 11 6.5 4.505 4.505 0 0 1 6.5 11z"></path></svg>
+              
+              <!-- Search icon -->
+              <svg class="icon searchBar-left" id="coral-css-icon-Magnifier" viewBox="0 0 16 16">
+                <path d="M15.77 14.71l-4.534-4.535a6.014 6.014 0 1 0-1.06 1.06l4.533 4.535a.75.75 0 1 0 1.061-1.06zM6.5 11A4.5 4.5 0 1 1 11 6.5 4.505 4.505 0 0 1 6.5 11z"></path>
+              </svg>
+              
+              <!-- Cross icon -->
+              <transition name="fade">
+                <div v-if="searchString" class="searchBar-right">
+                    <svg @click="clearSearch" class="icon " xmlns="http://www.w3.org/2000/svg" height="12" viewBox="0 0 12 12" width="12">
+                      <title>CrossLarge</title>
+                      <rect id="ToDelete" fill="#ff13dc" opacity="0" width="12" height="12" /><path d="M11.69673,10.28266,7.41406,6l4.28267-4.28266A.9999.9999,0,1,0,10.28266.30327L6,4.58594,1.71734.30327A.9999.9999,0,1,0,.30327,1.71734L4.58594,6,.30327,10.28266a.9999.9999,0,1,0,1.41407,1.41407L6,7.41406l4.28266,4.28267a.9999.9999,0,1,0,1.41407-1.41407Z" />
+                    </svg>
+
+                    <!-- <div class="mobile-hidden"> -->
+                      <button class="mobile-hidden" @click="copySearch" is="coral-button">
+                        Share search
+                      </button>
+                    <!-- </div> -->
+
+                </div>
+              </transition>
+
             </div>
           </div>
-
-        <!-- "Filter by" button -->
-          <!-- <div class="filter-by-grid" @click="changeSortOrder">
-            <div class="filter-by-wrapper coral-card shadow">
-                <coral-icon class="h-full" :icon="icons.iconsOrder" title="Add"></coral-icon>
-            </div>
-          </div> -->
 
           <div @click="changeOS" class="switch-wrapper coral-card shadow main-border-radius">
             <div id="macOStext" class="switch-text">
@@ -79,6 +98,7 @@
         <coral-wait size="L" indeterminate=""></coral-wait>
       </div>
 
+    <!-- Loading error -->
       <div v-if="loadingError" class="waiting-wrapper">
 
         <h3 class="coral-Heading--M">
@@ -176,6 +196,15 @@
               <div v-lazy-container="{ selector: 'img', loading: icons.loading }" >
                 <img class="w-full" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
               </div>
+
+              <!-- <div class="quick-actions-wrapper">
+                <div class="quick-action-el">
+                  <coral-icon @click="showDialog('deleteDialog', icon)" class="h-full quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
+                </div>
+                <div class="quick-action-el">
+                  <coral-icon @click="showDialog('deleteDialog', icon)" class="h-full quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
+                </div>
+              </div> -->
               
             </div>
             
@@ -334,6 +363,9 @@ export default {
       scrolled: false,
       distanceFromTop: true ,
 
+      message: "",
+      today: "",
+
       iconListLen: 4_378,
       lastVisible: {},
       dataToShow: [],
@@ -359,6 +391,22 @@ export default {
     let parent = this;
     
     window.addEventListener('scroll', this.handleScroll);
+    
+    // Get today's date
+    ////////////////////////////////////////////////////////////////
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    today = dd + '/' + mm + '/' + yyyy;
+    parent.today = today;
+    ////////////////////////////////////////////////////////////////
+
+    let routerName = this.$router.currentRoute.name
+    if(routerName == "Search"){
+      let serachQuery = this.$router.currentRoute.params.search
+      parent.searchString = serachQuery
+    }
 
     // Parse.User.enableUnsafeCurrentUser()
 
@@ -388,6 +436,25 @@ export default {
       }})
     },
 
+    async copySearch(){
+      let parent = this;
+      let toCopy = "https://macosicons.com/" + parent.searchString
+      
+      await navigator.clipboard.writeText(toCopy);
+
+      parent.message = "✅ Link copied to your clipboard"
+      parent.$store.dispatch('successMessage', {id: "successMessage"})
+
+      window.plausible("PageShared", {props: {
+        sharedTerm: parent.searchString,
+        date: parent.today,
+      }})
+    },
+
+    clearSearch(){
+      this.searchString = ""
+    },
+
     handleScroll () {
       this.distanceFromTop =  document.getElementById("searchBar").getBoundingClientRect().y > 65
     },
@@ -405,7 +472,6 @@ export default {
 
       parent.isMacOs = !parent.isMacOs
     },
-
 
     downladUrl(icon){
       let parent = this
@@ -654,8 +720,6 @@ export default {
       let parent = this
       
       index.search(search, {filters: `approved:true`, hitsPerPage: 150 }).then(function(responses) {
-        // parent.dataToShow = responses.hits
-        // parent.$store.dispatch("setDataToArr", {arr: "dataToShow", data: responses.hits, func: "searchAlgolia"})
         parent.$store.dispatch("pushDataToArr", {arr: "dataToShow", data: responses.hits, func: "searchAlgolia"})
       });
     }

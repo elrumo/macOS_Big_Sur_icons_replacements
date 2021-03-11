@@ -7,6 +7,4 @@ assignees: ''
 
 ---
 
-### Name of app
-
-### Website of the app requested
+# To make icon requests, please use the [Discussions](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/discussions) feature, do not create an issue to make icon requests.

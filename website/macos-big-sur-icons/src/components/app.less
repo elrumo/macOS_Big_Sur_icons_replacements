@@ -337,13 +337,12 @@ main{
 
 .main-search-wrapper{
     position: sticky;
-    padding-top: 0px;
+    padding-top: 10px;
     top: 60px;
     z-index: 1;
     width: 100%;
     margin: auto;
     transition: 0.2s;
-    backdrop-filter: saturate(180%) blur(20px);
 }
 
 .search{
@@ -364,7 +363,6 @@ main{
 
 .switch-wrapper{
     position: relative;
-    margin-top: var(--padding-top-search);
     display: grid;
     grid-template-columns: 1fr 1fr;
     border: solid 1px var(--coral-dark-border);
@@ -423,7 +421,7 @@ main{
 .main-search{
     position: relative;
     width: 100%;
-    padding-top: var(--padding-top-search);
+    // padding-top: var(--padding-top-search);
     min-width: none !important;
     max-width: 1300px !important;
     border-radius: var(--main-border-radius);
@@ -675,11 +673,58 @@ main{
 }
 
 .icon{
+    padding: 17px 20px;
+    transition: 0.2s;
+}
+
+.searchBar-left{
+    position: absolute;
+    top: 50%;
+    left: 0px;
     width: 15px;
     height: 15px;
+    opacity: 0.5;
+    transform: translateY(-50%);
+}
+
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+}
+
+.searchBar-right{
     position: absolute;
-    left: 20px;
+    right: 10px;
+    height: 52px;
     top: 50%;
+    transform: translateY(-50%);
+    transition: 0.2s;
+}
+
+.searchBar-right:opacity{
+    opacity: 1;
+}
+
+.searchBar-right > *{
+    display: inline-block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.searchBar-right > svg{
+    opacity: 0.6;
+}
+
+.searchBar-right > svg:hover{
+    opacity: 1;
+}
+
+.coral--light .icon{
+    fill: var(--coral-dark-card);
+}
+
+.coral--dark .icon{
+    fill: var(--coral-light-card);
 }
 
 .body-text{
@@ -923,6 +968,8 @@ main{
     left: 50%;
     top: 55%;
     transform: translate(-50%, -50%);
+    display: grid;
+    grid-template-columns: auto auto;
     width: fit-content;
     height: 42px;
     border-radius: 5px;
@@ -1207,6 +1254,9 @@ main{
         padding-top: 0px;
     }
     
+    .main-search-wrapper{
+        padding-top: 5px;
+    }
 }
 
 @media only screen and (max-width: 460px){
@@ -1259,7 +1309,7 @@ main{
 }
 
 .searchBar{
-    padding: 20px 45px !important;
+    padding: 20px 160px 20px 45px;
     height: 50px !important;
     border-radius: var(--main-border-radius) !important;
     font-size: 1rem !important;
