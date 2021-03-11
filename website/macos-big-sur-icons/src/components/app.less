@@ -1052,7 +1052,7 @@ main{
 }
 
 .desktop-hidden{
-    display: none;
+    display: none !important;
 }
 
 .text-and-ad-wrapper{
@@ -1125,14 +1125,6 @@ main{
 
 @media only screen and (max-width: 966px){
 
-    .desktop-hidden{
-        display: block;
-    }
-
-    .mobile-hidden{
-        display: none;
-    }
-
     .card-wrapper{
         max-width: 350px;   
     }
@@ -1154,6 +1146,14 @@ main{
 }
 
 @media only screen and (max-width: 720px){
+
+    .desktop-hidden{
+        display: block !important;
+    }
+
+    .mobile-hidden{
+        display: none !important;
+    }
 
     .icon-list-area{
         grid-template-columns: 1fr 1fr 1fr;
@@ -1257,6 +1257,10 @@ main{
     .main-search-wrapper{
         padding-top: 5px;
     }
+
+    .searchBar-right{
+        right: 0px;
+    }
 }
 
 @media only screen and (max-width: 460px){
@@ -1305,11 +1309,13 @@ main{
 }
 
 ._coral-Textfield{
+    padding: 5px 11px 5px 11px;
     width: 100% !important;
 }
 
 .searchBar{
-    padding: 20px 160px 20px 45px;
+    // padding: 20px 160px 20px 45px;
+    padding-right: 40px;
     height: 50px !important;
     border-radius: var(--main-border-radius) !important;
     font-size: 1rem !important;
