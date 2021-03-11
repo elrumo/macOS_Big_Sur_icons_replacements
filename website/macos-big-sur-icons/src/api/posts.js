@@ -4,7 +4,7 @@ import GhostContentAPI from "@tryghost/content-api"
 const VUE_APP_GHOST_KEY = process.env.VUE_APP_GHOST_KEY
 
 const api = new GhostContentAPI({
-    url: 'https://onionicons.com/blog',
+    url: 'https://blog.macosicons.com/blog',
     key: VUE_APP_GHOST_KEY,
     version: "v3"
 });

@@ -46,7 +46,7 @@
         <div class="m-auto m-t-35">
 
           <a rel="noopener"
-            class="mobile-hidden"
+            class="mobile-hidden p-r-20"
             target="_blank"
             href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
             @click="logDonation('hero')"
@@ -56,11 +56,11 @@
               variant="cta"
             >
               <!-- variant="outline" -->
-              <span>Buy me a coffee</span>
+              <span>Donate</span>
             </button>
           </a>
 
-          <div class="p-l-20 d-inline-block">
+          <div class="d-inline-block">
             <button
               is="coral-button"
               variant="quiet"

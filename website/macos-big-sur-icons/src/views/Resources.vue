@@ -2,7 +2,7 @@
   <div>
     <main class="content-wrapper-compact">
 
-      <H3-Description :text="introText"/>
+      <H3-Description :text="introText" class="m-b-50"/>
 
       <div class="resources-grid card-grid" id="how-to-install">
         
@@ -51,14 +51,13 @@ export default {
       isMobile: this.$isMobile(),
       introText:{
         h3: "Resources",
-        description: "Resources to help you design, showcase and share icons for macOS and other platforms (soon).",
+        description: "Here you'll find guides, resources and templates to help you design and showcase icons for macOS.",
         isAd: false
       },
       instructions:{
         title: "How to change app icons",
-        feature_image: require("../assets/Instructions/setApp.png"),
+        feature_image: require("../assets/Instructions/intro-instructions.jpg"),
         link: "/how-to",
-        gradient: true,
       },
       resourcesData: pages
     }

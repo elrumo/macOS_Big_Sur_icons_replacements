@@ -59,15 +59,16 @@
                         </div>
                         
                         <!-- blog -->
-                        <div @click="away" v-if="this.$route.name != 'BlogHome'">
+                        <!-- <div @click="away" v-if="this.$route.name != 'BlogHome'">
                             <router-link to="/blog" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
                                 <span>
                                     Blog
                                 </span>
                             </router-link>
-                        </div>
-
-                        <div @click="away" v-if="this.$route.name != 'Resources'">
+                        </div> -->
+                        
+                        <!-- Resources -->
+                        <div @click="away">
                             <router-link to="/resources" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
                                 <span>
                                     Resources
@@ -86,7 +87,7 @@
                         <!-- Buy me a coffee -->
                         <div>
                             <a rel="noopener" class="_coral-Button _coral-Button--primary _coral-Button--quiet" target="_blank" href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" @click="logDonation('header')">
-                                <span>Buy me a coffee</span>
+                                <span>Donate</span>
                             </a>
                         </div>
                         
@@ -126,13 +127,13 @@
                     </div>
                     
                     <!-- blog -->
-                    <div>
+                    <!-- <div>
                         <router-link to="/blog">
                             <button is="coral-button" variant="quiet">
                                 <span>Blog</span>
                             </button>
                         </router-link>
-                    </div>
+                    </div> -->
 
                     <!-- Resources -->
                     <div>
@@ -156,7 +157,7 @@
                     <div>
                         <a rel="noopener" class="" target="_blank" href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" @click="logDonation('header')">
                             <button is="coral-button">
-                                <span>Buy me a coffee</span>
+                                <span>Donate</span>
                             </button>
                         </a>
                     </div>

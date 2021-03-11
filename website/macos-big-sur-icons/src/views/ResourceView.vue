@@ -11,7 +11,7 @@
     <div class="resource-content-wrapper">
 
       <div class="resource-image">  
-        <figure class="post-full-image m-0">
+        <figure class="post-full-image m-0 coral-Well p-0">
           <img :src="resourceItem.feature_image"/>
         </figure>
       </div>
@@ -45,7 +45,10 @@
       <div class="resources-grid card-grid" id="how-to-install">
         
         <div v-for="resource in resourcesData" :key="resource.name" @click="getPageData">
-          <ResourcesCard :step='resource'/>
+          <ResourcesCard
+            :step='resource'
+            :link="'/resources/'+resource.slug"
+          />
         </div>
 
         <div class="resources-card-ad">
@@ -185,6 +188,8 @@ export default {
       let storeResourcesData = parent.resourcesData
       let storeResourceItem = parent.$store.state.singleResourceData
       
+      console.log("resourcesData: ", await moreResources);
+
       for(let post in Object.keys(storeResourcesData)){
         try {
           if (storeResourcesData[post].slug == routerName) {

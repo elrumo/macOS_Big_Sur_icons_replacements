@@ -6,12 +6,12 @@
             </h1>
 
             <div class="h3-description-body" v-if="!text.isAd">
-                <p class="coral-Body--L f-w-500 m-b-50" v-html="markItDown">
+                <p class="coral-Body--L f-w-500" v-html="markItDown">
                 </p>
             </div>
 
             <div v-else class="text-and-ad-wrapper">
-                <p class="coral-Body--L f-w-500 m-b-50" v-html="markItDown">
+                <p class="coral-Body--L f-w-500 " v-html="markItDown">
                 </p>
                 <div class="single-ad mobile-ad">
                     <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
