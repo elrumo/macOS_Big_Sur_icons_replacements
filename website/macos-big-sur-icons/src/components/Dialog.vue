@@ -95,7 +95,7 @@ import { mapActions } from 'vuex';
 import Parse from 'parse'
 
 Parse.initialize("macOSicons");
-Parse.serverURL = 'https://onionicons.com/parse'
+Parse.serverURL = 'https://media.macosicons.com/parse'
 
 export default {
     name:"Dialog",

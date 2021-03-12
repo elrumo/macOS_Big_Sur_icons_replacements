@@ -21,12 +21,14 @@
           <h3 class="coral-Heading--L coral-Heading--heavy m-0">
             {{ resourceItem.title }}
           </h3>        
+
           <!-- <p class="coral-Detail coral-Detail--L opacity-80 ">
             <span class="coral-Detail--light">
-              {{ getDate(resourceItem.published_at) }}
+              {{ getDate(resourceItem.author) }}
             </span>
           </p> -->
-          <hr class="coral-Divider--S m-t-20 m-b-10 m-b-20">
+
+          <hr class="coral-Divider--S m-t-15 m-b-15">
         </div>
 
         <!-- Resource Content -->
@@ -84,12 +86,18 @@ export default {
     return {
       resourceItem: localPosts,
       resourcesData: pages,
-      showAd: true
+      showAd: true,
+      meta: {
+        title: "Yooo"
+      },
+      fullUrl: ""
     }
   },
 
   mounted: async function(){
     let parent = this;
+    
+    console.log("title: ", parent.$router);
 
     parent.getPageData()
   },
@@ -188,7 +196,9 @@ export default {
       let storeResourcesData = parent.resourcesData
       let storeResourceItem = parent.$store.state.singleResourceData
       
-      console.log("resourcesData: ", await moreResources);
+      parent.fullUrl = "https://macosicons.com/"+routerName
+
+      // console.log("resourcesData: ", await moreResources);
 
       for(let post in Object.keys(storeResourcesData)){
         try {
@@ -238,11 +248,68 @@ export default {
           }
         }
       }
-    }
+    },
+
   },
 
   computed:{
-  }
+  },
+
+  metaInfo() {
+    return {
+      // if no subcomponents specify a metaInfo.title, this title will be used
+      title: this.resourceItem.title,
+      description: this.resourceItem.excerpt,
+      // all titles will be injected into this template
+      titleTemplate: '%s | macOSicons',
+      meta:[
+        // Facebook
+        {
+          property: 'og:url',
+          vmid:     'og:url',
+          content:   this.fullUrl,
+        },
+        {
+          property: 'og:title',
+          vmid:     'og:title',
+          content:  this.resourceItem.title + ". Over 5000+ free icons for Big Sur.",
+        },
+        {
+          property: 'og:description',
+          vmid:     'og:description',
+          content:  this.resourceItem.excerpt + ". Over 5000+ free icons for Big Sur.",
+        },
+        {
+          property: 'og:image',
+          vmid:     'og:image',
+          content:  this.resourceItem.feature_image,
+        },
+
+        // Twitter
+        {
+          property: 'twitter:url',
+          vmid:     'twitter:url',
+          content:   this.fullUrl,
+        },
+        {
+          property: 'twitter:description',
+          vmid:     'twitter:description',
+          content:  this.resourceItem.excerpt + ". Over 5000+ free icons for Big Sur.",
+        },
+        {
+          property: 'twitter:title',
+          vmid:     'twitter:title',
+          content:  this.resourceItem.title + ". Over 5000+ free icons for Big Sur.",
+        },
+        {
+          property: 'twitter:image',
+          vmid:     'twitter:image',
+          content:  this.resourceItem.feature_image,
+        },
+      ]
+    }
+  },
+
 }
 </script>
 
