@@ -255,60 +255,60 @@ export default {
   computed:{
   },
 
-  metaInfo() {
-    return {
-      // if no subcomponents specify a metaInfo.title, this title will be used
-      title: this.resourceItem.title,
-      description: this.resourceItem.excerpt,
-      // all titles will be injected into this template
-      titleTemplate: '%s | macOSicons',
-      meta:[
-        // Facebook
-        {
-          property: 'og:url',
-          vmid:     'og:url',
-          content:   this.fullUrl,
-        },
-        {
-          property: 'og:title',
-          vmid:     'og:title',
-          content:  this.resourceItem.title + ". Over 5000+ free icons for Big Sur.",
-        },
-        {
-          property: 'og:description',
-          vmid:     'og:description',
-          content:  this.resourceItem.excerpt + ". Over 5000+ free icons for Big Sur.",
-        },
-        {
-          property: 'og:image',
-          vmid:     'og:image',
-          content:  this.resourceItem.feature_image,
-        },
+  // metaInfo() {
+  //   return {
+  //     // if no subcomponents specify a metaInfo.title, this title will be used
+  //     title: this.resourceItem.title,
+  //     description: this.resourceItem.excerpt,
+  //     // all titles will be injected into this template
+  //     titleTemplate: '%s | macOSicons',
+  //     meta:[
+  //       // Facebook
+  //       {
+  //         property: 'og:url',
+  //         vmid:     'og:url',
+  //         content:   this.fullUrl,
+  //       },
+  //       {
+  //         property: 'og:title',
+  //         vmid:     'og:title',
+  //         content:  this.resourceItem.title + ". Over 5000+ free icons for Big Sur.",
+  //       },
+  //       {
+  //         property: 'og:description',
+  //         vmid:     'og:description',
+  //         content:  this.resourceItem.excerpt + ". Over 5000+ free icons for Big Sur.",
+  //       },
+  //       {
+  //         property: 'og:image',
+  //         vmid:     'og:image',
+  //         content:  this.resourceItem.feature_image,
+  //       },
 
-        // Twitter
-        {
-          property: 'twitter:url',
-          vmid:     'twitter:url',
-          content:   this.fullUrl,
-        },
-        {
-          property: 'twitter:description',
-          vmid:     'twitter:description',
-          content:  this.resourceItem.excerpt + ". Over 5000+ free icons for Big Sur.",
-        },
-        {
-          property: 'twitter:title',
-          vmid:     'twitter:title',
-          content:  this.resourceItem.title + ". Over 5000+ free icons for Big Sur.",
-        },
-        {
-          property: 'twitter:image',
-          vmid:     'twitter:image',
-          content:  this.resourceItem.feature_image,
-        },
-      ]
-    }
-  },
+  //       // Twitter
+  //       {
+  //         property: 'twitter:url',
+  //         vmid:     'twitter:url',
+  //         content:   this.fullUrl,
+  //       },
+  //       {
+  //         property: 'twitter:description',
+  //         vmid:     'twitter:description',
+  //         content:  this.resourceItem.excerpt + ". Over 5000+ free icons for Big Sur.",
+  //       },
+  //       {
+  //         property: 'twitter:title',
+  //         vmid:     'twitter:title',
+  //         content:  this.resourceItem.title + ". Over 5000+ free icons for Big Sur.",
+  //       },
+  //       {
+  //         property: 'twitter:image',
+  //         vmid:     'twitter:image',
+  //         content:  this.resourceItem.feature_image,
+  //       },
+  //     ]
+  //   }
+  // },
 
 }
 </script>
