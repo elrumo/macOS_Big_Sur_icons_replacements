@@ -300,44 +300,44 @@ export default {
         // Facebook
         {
           property: 'og:url',
-          vmid:     'og:url',
+          // vmid:     'og:url',
           content:  'https://macosicons.com'
         },
         {
           property: 'og:title',
-          vmid:     'og:title',
+          // vmid:     'og:title',
           content:  'macOS app icon pack - 5000+ free and open source icons for Big Sur & iOS',
         },
         {
           property: 'og:description',
-          vmid:     'og:description',
+          // vmid:     'og:description',
           content:  'Free 5000+ App icons for macOS in the style of macOS Big Sur. Fully open source and community led. How to install custom icons on macOS Big Sur.',
         },
         {
           property: 'og:image',
-          vmid:     'og:image',
+          // vmid:     'og:image',
           content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Thumbnail_2021.jpg'
         },
 
         // Twitter
         {
           property: 'twitter:url',
-          vmid:     'twitter:url',
+          // vmid:     'twitter:url',
           content:  'https://macosicons.com'
         },
         {
           property: 'twitter:description',
-          vmid:     'twitter:description',
+          // vmid:     'twitter:description',
           content:  'Free 5000+ App icons for macOS in the style of macOS Big Sur. Fully open source and community led. How to install custom icons on macOS Big Sur.',
         },
         {
           property: 'twitter:title',
-          vmid:     'twitter:title',
+          // vmid:     'twitter:title',
           content:  'macOS app icon pack - 5000+ free and open source icons for Big Sur & iOS',
         },
         {
           property: 'twitter:image',
-          vmid:     'twitter:image',
+          // vmid:     'twitter:image',
           content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Thumbnail_2021.jpg'
         },
       ]
