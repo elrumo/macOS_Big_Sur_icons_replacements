@@ -42,7 +42,8 @@
             <a
                 v-if="text.isButton"
                 href="https://blog.macosicons.com/blog/#subscribe"
-                rel="noopener" target="_blank"
+                rel="noopener"
+                target="_blank"
             >
                 <button is="coral-button" variant="cta">
                     <span>Subscribe to blog</span>
