@@ -16,7 +16,11 @@
                 </router-link>
                 <p class="header-item coral-Body--S">
                     By
-                    <a href="https://webbites.io/" rel="noopener" target="_blank" class="underline">
+                    <a href="https://webbites.io/"
+                        rel="noopener"
+                        target="_blank"
+                        class="underline"
+                    >
                         Elias
                     </a> 
                 </p>
@@ -86,7 +90,13 @@
                         
                         <!-- Buy me a coffee -->
                         <div>
-                            <a rel="noopener" class="_coral-Button _coral-Button--primary _coral-Button--quiet" target="_blank" href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" @click="logDonation('header')">
+                            <a
+                                rel="noopener"
+                                target="_blank"
+                                class="_coral-Button _coral-Button--primary _coral-Button--quiet"
+                                href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+                                @click="logDonation('header')"
+                            >
                                 <span>Donate</span>
                             </a>
                         </div>
