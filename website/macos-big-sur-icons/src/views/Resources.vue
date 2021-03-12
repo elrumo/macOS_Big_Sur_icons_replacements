@@ -72,7 +72,7 @@ export default {
         {
           property: 'og:image',
           vmid:     'og:image',
-          content:  'https://macosicons.com/img/intro-instructions.543ccaf7.jpg'
+          content:  'https://github.com/elrumo/macOS_Big_Sur_icons_replacements/blob/master/icons/Social/low-res/Resources-thumbnail.jpg?raw=true'
         },
 
         // Twitter
@@ -94,7 +94,7 @@ export default {
         {
           property: 'twitter:image',
           vmid:     'twitter:image',
-          content:  'https://macosicons.com/img/intro-instructions.543ccaf7.jpg'
+          content:  'https://github.com/elrumo/macOS_Big_Sur_icons_replacements/blob/master/icons/Social/low-res/Resources-thumbnail.jpg?raw=true'
         },
       ]
   },
