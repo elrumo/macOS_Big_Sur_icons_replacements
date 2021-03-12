@@ -316,7 +316,7 @@ export default {
         {
           property: 'og:image',
           vmid:     'og:image',
-          content:  'https://github.com/elrumo/macOS_Big_Sur_icons_replacements/blob/master/icons/Social/low-res/Thumbnail_2021.jpg'
+          content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Thumbnail_2021.jpg'
         },
 
         // Twitter
@@ -338,7 +338,7 @@ export default {
         {
           property: 'twitter:image',
           vmid:     'twitter:image',
-          content:  'https://github.com/elrumo/macOS_Big_Sur_icons_replacements/blob/master/icons/Social/low-res/Thumbnail_2021.jpg'
+          content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Thumbnail_2021.jpg'
         },
       ]
   },
