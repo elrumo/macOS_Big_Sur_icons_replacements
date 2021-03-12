@@ -288,7 +288,7 @@ export default {
     'vue-load-image': VueLoadImage
   },
 
-   metaInfo: {
+  metaInfo: {
       // if no subcomponents specify a metaInfo.title, this title will be used
       // title: 'How to change app icons in macOS Big Sur',
       title: 'macOS app icon pack - 5000+ free and open source icons for Big Sur & iOS',
@@ -313,6 +313,11 @@ export default {
           vmid:     'og:description',
           content:  'Free 5000+ App icons for macOS in the style of macOS Big Sur. Fully open source and community led. How to install custom icons on macOS Big Sur.',
         },
+        {
+          property: 'og:image',
+          vmid:     'og:image',
+          content:  'https://github.com/elrumo/macOS_Big_Sur_icons_replacements/blob/master/icons/Social/low-res/Thumbnail_2021.jpg?raw=true'
+        },
 
         // Twitter
         {
@@ -333,7 +338,7 @@ export default {
         {
           property: 'twitter:image',
           vmid:     'twitter:image',
-          content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Thumbnail%20200.jpg'
+          content:  'https://github.com/elrumo/macOS_Big_Sur_icons_replacements/blob/master/icons/Social/low-res/Thumbnail_2021.jpg?raw=true'
         },
       ]
   },
