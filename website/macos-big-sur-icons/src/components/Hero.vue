@@ -153,7 +153,7 @@ export default {
 
     (function() {
       if (typeof _bsa !== 'undefined' && _bsa) {
-        _bsa.init('custom', 'CVADC53U', 'placement:demo',
+        _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom'
         {
           target: '#iconbar-js',
           template: `
