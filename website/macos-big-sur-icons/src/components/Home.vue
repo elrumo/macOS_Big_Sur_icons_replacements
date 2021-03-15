@@ -107,7 +107,8 @@
         </h3>
         <h3 class="coral-Heading--S coral-Heading--light">
           Check again in a few minutes or follow me on
-            <a rel="noopener" class="coral-Link"
+            <a rel="noopener"
+              class="coral-Link"
               href="https://twitter.com/elrumo"
               target="_blank"
             >
@@ -178,7 +179,8 @@
         <div v-if="!isAuth & !loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular">
 
           <!-- Carbon ads -->
-          <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+            <!-- <div id="native-grid-js" class="native-js"></div> -->
+            <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
 
           <a
             rel="noopener"
@@ -395,7 +397,7 @@ export default {
 
   mounted: function(){
     let parent = this;
-    
+
     window.addEventListener('scroll', this.handleScroll);
     
     // Get today's date
@@ -783,4 +785,5 @@ export default {
   @import url(app.less);
   @import url(snack-helper.min.css);
   @import url(carbon.css);
+
 </style>
