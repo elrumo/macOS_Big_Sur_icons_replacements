@@ -33,7 +33,7 @@
         <p class="coral-Body--L w-100 body-text">
           To contribute, download free icon templates from the
             <router-link to="/resources">
-            <b> resources page. </b>
+            <span class="underline"> resources page. </span>
             </router-link>
         </p>
         
@@ -149,6 +149,8 @@ export default {
   },
 
   mounted: function() {
+    // let adId = document.getElementById("_custom_")
+
     (function() {
       if (typeof _bsa !== 'undefined' && _bsa) {
         _bsa.init('custom', 'CVADC53U', 'placement:demo',
@@ -164,6 +166,8 @@ export default {
         );
       }
     })();
+
+
   },
 
   computed: {
