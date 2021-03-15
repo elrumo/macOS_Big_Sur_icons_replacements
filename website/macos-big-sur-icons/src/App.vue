@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+            <!-- <div id="logobar"></div> -->
+
     <Header
       :distanceFromTop="distanceFromTop"
       :submitIconDialog="'submitIcon'"

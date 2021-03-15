@@ -217,6 +217,10 @@
     color: inherit;
 }
 
+#carbonads:hover .carbon-img img {
+    opacity: 1;
+}
+
 #carbonads span {
     position: relative;
     display: grid;
@@ -251,6 +255,8 @@
     border-radius: 7px;
     display: block;
     margin: auto;
+    opacity: 0.8;
+    transition: 0.3s;
 }
 
 .carbon-text {

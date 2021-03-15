@@ -56,44 +56,36 @@ export default {
         // Facebook
         {
           property: 'og:url',
-          // vmid:     'og:url',
           content:  'https://macosicons.com/resources'
         },
         {
           property: 'og:title',
-          // vmid:     'og:title',
           content:  'Free icon templates resources and over 5000+ icons for macOS Big Sur.',
         },
         {
           property: 'og:description',
-          // vmid:     'og:description',
           content:  'Resources and templates to help you design and showcase icons for macOS. Over 5000+ free icons ready for Big Sur.',
         },
         {
           property: 'og:image',
-          // vmid:     'og:image',
           content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Resources-thumbnail.jpg'
         },
 
         // Twitter
         {
           property: 'twitter:url',
-          // vmid:     'twitter:url',
           content:  'https://macosicons.com/resources'
         },
         {
           property: 'twitter:description',
-          vmid:     'twitter:description',
           content:  'Resources and templates to help you design and showcase icons for macOS. Over 5000+ free icons ready for Big Sur.',
         },
         {
           property: 'twitter:title',
-          // vmid:     'twitter:title',
           content:  'Free icon templates resources and over 5000+ icons for macOS Big Sur.',
         },
         {
           property: 'twitter:image',
-          // vmid:     'twitter:image',
           content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Resources-thumbnail.jpg'
         },
       ]
