@@ -12,7 +12,8 @@
           <!-- <p class="coral-Body--XS">
             Sponsored by
           </p> -->
-          <div v-if="ad" class="" id="iconbar-js"></div>
+          <NativeAd/>
+          <!-- <div v-if="ad" class="" id="iconbar-js"></div> -->
         </div>
 
         <p class="coral-Body--S m-b-0 desktop-hidden">
@@ -91,12 +92,14 @@
 
 <script>
 import Sponsor from "./Sponsor.vue";
+import NativeAd from "./NativeAd.vue";
 
 export default {
   name: "Hero",
 
   components:{
-    Sponsor
+    Sponsor,
+    NativeAd
   },
 
   data() {
@@ -154,23 +157,7 @@ export default {
   },
   
   mounted: function() {
-    let adId = document.getElementById("iconbar-js")
-
-    if (typeof _bsa !== 'undefined' && _bsa) {
-      _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
-      {
-        target: '#iconbar-js',
-        template: `
-            <a href="##statlink##" target="_blank" rel="noopener sponsored" class="bsa-link">
-            <div class="bsa-icon" style="background-image: url(##image##); background-color: ##backgroundColor##;"></div>
-            <div class="bsa-desc">##company## - ##tagline##</div>
-            </a>
-          `
-        }
-      );
-    }
-
-
+    
   },
 
   computed: {

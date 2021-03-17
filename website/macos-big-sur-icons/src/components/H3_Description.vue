@@ -17,7 +17,9 @@
                 <p class="coral-Body--XS">
                     Sponsored by
                 </p>
-                <div class="" id="iconbar-js"></div>
+                
+                <NativeAd/>
+                <!-- <div class="" id="iconbar-js"></div> -->
             </div>
             <!-- <div class="text-and-ad-wrapper">
                 <p class="coral-Body--L f-w-500 " v-html="markItDown">
@@ -65,12 +67,17 @@
 
 <script>
 import Marked from 'marked';
+import NativeAd from "./NativeAd.vue";
 
 export default {
     name: "H3_Description",
     
     props:{
         text:{},
+    },
+    
+    components:{
+        NativeAd
     },
 
     data: function(){
@@ -79,19 +86,7 @@ export default {
     },
 
     mounted: function(){
-        if (typeof _bsa !== 'undefined' && _bsa) {
-            _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
-            {
-                target: '#iconbar-js',
-                template: `
-                    <a href="##statlink##" target="_blank" rel="noopener sponsored" class="bsa-link">
-                    <div class="bsa-icon" style="background-image: url(##image##); background-color: ##backgroundColor##;"></div>
-                    <div class="bsa-desc">##company## - ##tagline##</div>
-                    </a>
-                `
-                }
-            );
-        }
+
     },
     
     computed: {
