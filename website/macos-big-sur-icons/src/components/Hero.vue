@@ -9,10 +9,10 @@
         
 
         <div class="ad-hero">
-          <p class="coral-Body--XS p-b-5">
+          <p class="coral-Body--XS">
             Sponsored by
           </p>
-          <div class="opacity-80" id="iconbar-js"></div>
+          <div v-if="ad" class="" id="iconbar-js"></div>
         </div>
 
         <p class="coral-Body--S m-b-0 desktop-hidden">
@@ -27,18 +27,19 @@
         >
           <span class="f-w-100 f-s-26">macOS Big Sur</span>
           <br />
+          <!-- The Icons Page -->
           Free app icons
         </h1>
 
         <p class="coral-Body--L w-100 body-text">
-          To contribute, download free icon templates from the
+          To contribute, download our free icon templates from the
             <router-link to="/resources">
             <span class="underline"> resources page. </span>
             </router-link>
         </p>
         
 
-        <div class="m-auto m-t-35">
+        <div class="m-auto m-t-45">
 
           <div class="d-inline-block mobile-hidden">
             <button
@@ -100,6 +101,7 @@ export default {
 
   data() {
     return {
+      ad: true,
       // imgs:{
       //   heroImg: require("../assets/icons_hero.jpg")
       // }
@@ -148,24 +150,25 @@ export default {
     },
   },
 
+  destroyed: function() {
+  },
+  
   mounted: function() {
-    // let adId = document.getElementById("_custom_")
+    let adId = document.getElementById("iconbar-js")
 
-    (function() {
-      if (typeof _bsa !== 'undefined' && _bsa) {
-        _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
-        {
-          target: '#iconbar-js',
-          template: `
-              <a href="##statlink##" target="_blank" rel="noopener sponsored" class="bsa-link">
-              <div class="bsa-icon" style="background-image: url(##image##); background-color: ##backgroundColor##;"></div>
-              <div class="bsa-desc">##company## - ##tagline##</div>
-              </a>
-            `
-          }
-        );
-      }
-    })();
+    if (typeof _bsa !== 'undefined' && _bsa) {
+      _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
+      {
+        target: '#iconbar-js',
+        template: `
+            <a href="##statlink##" target="_blank" rel="noopener sponsored" class="bsa-link">
+            <div class="bsa-icon" style="background-image: url(##image##); background-color: ##backgroundColor##;"></div>
+            <div class="bsa-desc">##company## - ##tagline##</div>
+            </a>
+          `
+        }
+      );
+    }
 
 
   },
@@ -191,17 +194,17 @@ export default {
 
 #iconbar-js{
   transition: 0.3s;
-  height: 40px
+  height: 40px;
 }
-
 #iconbar-js:hover{
   transform: translateY(-3px);
   opacity: 1;
 }
 
 .bsa-link {
+  border: 1px solid rgba(256, 256, 256, 0.3);
   position: relative;
-  top: -6px;
+  /* top: -6px; */
   display: inline-flex;
   height: 40px;
   border-radius: 5px;

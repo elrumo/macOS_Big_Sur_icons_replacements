@@ -1,22 +1,31 @@
 <template>
     <div>
-        <div class="h3-description" v-if="!text.isCenter">
+        
+
+
+        <div class="h3-description m-t-20" v-if="!text.isCenter">
             <h1 class="coral-Heading--XL resource-heading">
                <b> {{ text.h3 }}</b>
             </h1>
 
-            <div class="h3-description-body" v-if="!text.isAd">
+            <div class="h3-description-body">
                 <p class="coral-Body--L f-w-500" v-html="markItDown">
                 </p>
             </div>
 
-            <div v-else class="text-and-ad-wrapper">
+            <div v-if="text.isAd" class="m-t-40 m-b-20">
+                <p class="coral-Body--XS">
+                    Sponsored by
+                </p>
+                <div class="" id="iconbar-js"></div>
+            </div>
+            <!-- <div class="text-and-ad-wrapper">
                 <p class="coral-Body--L f-w-500 " v-html="markItDown">
                 </p>
                 <div class="single-ad mobile-ad">
                     <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <div v-else class="h3-description h3-description-center">
@@ -41,7 +50,7 @@
 
             <a
                 v-if="text.isButton"
-                href="https://blog.macosicons.com/blog/#subscribe"
+                :href="text.link"
                 rel="noopener"
                 target="_blank"
             >
@@ -66,6 +75,22 @@ export default {
 
     data: function(){
         return{
+        }
+    },
+
+    mounted: function(){
+        if (typeof _bsa !== 'undefined' && _bsa) {
+            _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
+            {
+                target: '#iconbar-js',
+                template: `
+                    <a href="##statlink##" target="_blank" rel="noopener sponsored" class="bsa-link">
+                    <div class="bsa-icon" style="background-image: url(##image##); background-color: ##backgroundColor##;"></div>
+                    <div class="bsa-desc">##company## - ##tagline##</div>
+                    </a>
+                `
+                }
+            );
         }
     },
     

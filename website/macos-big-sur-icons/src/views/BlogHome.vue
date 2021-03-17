@@ -4,7 +4,7 @@
         
         <!-- <iframe class="subscribe-blog-wrapper" src="https://blog.macosicons.com/blog/#subscribe" frameborder="0"></iframe> -->
 
-        <section class="p-t-50 p-b-50 m-b-50">
+        <section class="p-t-50 p-b-20">
           <H3-Description :text="subscribe"/>
           
           <div class="p-t-20">
@@ -14,25 +14,25 @@
         </section>
 
         <div class="m-t-50 post-wrapper" v-for="post in posts" :key="post.title">
-          <p class="coral-Detail coral-Detail--L opacity-80">
-            {{ getDate(post.published_at) }}
-          </p>
-        
-          <h3 class=" coral-Heading--L coral-Heading--heavy m-t-0">
-            {{ post.title }}
-          </h3>
-
-          <h3 class=" coral-Heading--S coral-Heading--light m-t-10">
-            {{ post.excerpt }}
-          </h3>
-
           <router-link :to="'/blog/'+post.slug">
-            <p class="coral-Detail read-more read-more-right coral-Detail--XL m-t-30 coral-Link">
-              Read more
+            <p class="coral-Detail coral-Detail--L opacity-80">
+              {{ getDate(post.published_at) }}
             </p>
-          </router-link>
+          
+            <h3 class=" coral-Heading--L coral-Heading--heavy m-t-0">
+                {{ post.title }}
+            </h3>
 
-          <hr class="coral-Divider--S m-t-40">
+            <h3 class=" coral-Heading--S coral-Heading--light m-t-20">
+              {{ post.excerpt }}
+            </h3>
+
+              <p class="coral-Detail read-more read-more-right coral-Detail--XL m-t-30 coral-Link">
+                Read more
+              </p>
+
+            <hr class="coral-Divider--S m-t-50">
+          </router-link>
         </div>
 
         <div class="single-ad mobile-ad m-t-50 m-b-50">
@@ -65,10 +65,11 @@ export default {
       posts: localPosts,
       subscribe:{
         h3: "The Icons Blog",
-        description: "Hi! I'm [Elias](https://eliasruiz.com), and I'm building a platform for all things icons and design. You can support this project and read about this journey on this blog and by subscribing below.",
+        description: "Hi! I'm [Elias](https://eliasruiz.com), and I'm building a platform for all things icons. You can support this project and read about my journey, tips and more by subscribing below.",
+        link: "https://blog.macosicons.com/blog/#/portal",
         isAd: false,
         isCenter: true,
-        isButton: true
+        isButton: true,
       },
     }
   },
