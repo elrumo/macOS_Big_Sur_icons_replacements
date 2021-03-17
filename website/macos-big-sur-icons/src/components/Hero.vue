@@ -9,9 +9,9 @@
         
 
         <div class="ad-hero">
-          <p class="coral-Body--XS">
+          <!-- <p class="coral-Body--XS">
             Sponsored by
-          </p>
+          </p> -->
           <div v-if="ad" class="" id="iconbar-js"></div>
         </div>
 
