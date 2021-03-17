@@ -2,7 +2,7 @@
   <div>
     <main class="content-wrapper-compact">
 
-      <H3-Description :text="introText" class="m-b-50"/>
+      <H3-Description :text="introText" class="m-b-40"/>
 
       <div class="resources-grid card-grid" id="how-to-install">
         
@@ -46,7 +46,7 @@ export default {
     H3Description
   },
 
-     metaInfo: {
+  metaInfo: {
       // if no subcomponents specify a metaInfo.title, this title will be used
       title: 'Free icon templates resources for macOS Big Sur.',
       description:"Resources and templates to help you design and showcase icons for macOS.",
@@ -97,7 +97,7 @@ export default {
       introText:{
         h3: "Resources",
         description: "Here you'll find guides, resources and templates to help you design and showcase icons for macOS.",
-        isAd: false
+        isAd: true
       },
       instructions:{
         title: "How to change app icons",

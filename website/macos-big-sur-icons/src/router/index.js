@@ -51,11 +51,12 @@ const routes = [
   {
     path: '/resources',
     name: 'Resources',
-    component: () => import('../views/Resources.vue')
+    component: () => import('../views/Resources.vue'),
+    meta: { requiresAuth: true }
   },
   {
     path: '/resources/:resource',
-    name: 'Resources',
+    name: 'Resource',
     component: () => import('../views/ResourceView.vue')
   },
   {
