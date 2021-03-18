@@ -1,5 +1,5 @@
 <template>
-  <div class="" id="iconbar-js"></div>
+  <div @click="adClick" class="" id="iconbar-js"></div>
 </template>
 
 <script>
@@ -36,8 +36,7 @@ export default {
       getAd()
 
       setTimeout(() =>{
-      console.log("_bsa: ", _bsa);
-      console.log("_bsa: ", _bsa.callback(_bsa));
+      // console.log("_bsa: ", _bsa);
         let el = document.getElementById("customAd")
         if (!el) {
           getAd()
@@ -47,7 +46,14 @@ export default {
 
     props:{},
 
-    methods:{}
+    methods:{
+      adClick(){
+        let parent = this
+        window.plausible("adClick", {props: {
+          path: parent.$router.currentRoute.name, 
+        }})
+      }
+    }
 }
 </script>
 
