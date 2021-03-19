@@ -191,11 +191,11 @@
                     </div>
                     
                     <!-- Submit icons -->
-                    <div class="hide-on-shrink">
+                    <!-- <div class="hide-on-shrink">
                         <button is="coral-button" variant="cta" @click="showDialog('submitIcon')">
                             <span>Submit icons</span>
                         </button>
-                    </div>
+                    </div> -->
                     
                     <!-- Twitter -->
                     <a href="https://twitter.com/elrumo" target="_blank" rel="noopener">
