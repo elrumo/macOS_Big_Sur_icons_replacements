@@ -128,19 +128,6 @@ export default {
     },
 
     async updateCount(id){
-      let parent = this;
-
-      let Icons = await parent.parseObj
-
-      let query = new Icons.Query(Icons)
-      let docToUpdate = await query.get(id)
-
-      docToUpdate.increment("downloads")
-      docToUpdate.save().then(() => {
-        console.log("Saved!!");
-      }).catch((e) => {
-        console.log("error: ", e);
-      })
     },
 
     showDialog(dialog) {

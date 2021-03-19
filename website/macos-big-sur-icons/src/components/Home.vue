@@ -526,15 +526,15 @@ export default {
       // console.log("icon: ", icon);
       // console.log("ID: ", id);
 
-      let query = new Parse.Query(Icons)
-      let docToUpdate = await query.get(id)
+      // let query = new Parse.Query(Icons)
+      // let docToUpdate = await query.get(id)
 
-      docToUpdate.increment("downloads")
-      docToUpdate.save().then(() => {
-        // console.log("Saved!!");
-      }).catch((e) => {
-        console.log("error: ", e);
-      })
+      // docToUpdate.increment("downloads")
+      // docToUpdate.save().then(() => {
+      //   // console.log("Saved!!");
+      // }).catch((e) => {
+      //   console.log("error: ", e);
+      // })
       
     },
 

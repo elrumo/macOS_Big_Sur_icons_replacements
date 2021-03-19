@@ -132,7 +132,7 @@
             <!-- Desktop -->
             <div class="mobile-hidden">
                 <div class="header-grid-btns">
-                    
+
                     <!-- Back to all icons -->
                     <div class="opacity-50" v-if="this.$route.name != 'Home'">
                         <router-link to="/">
@@ -196,6 +196,11 @@
                             <span>Submit icons</span>
                         </button>
                     </div>
+
+                    <a href="https://twitter.com/elrumo" target="_blank" rel="noopener">
+                        <img :src="icons.twitter" class="header-item header-icon" alt="">
+                    </a>
+
                 </div>
             </div>
 
