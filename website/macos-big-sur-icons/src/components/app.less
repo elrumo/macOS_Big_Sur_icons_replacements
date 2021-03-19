@@ -311,7 +311,7 @@ main{
 
 .header-icon{
     height: 22px;
-    padding: 0px 20px;
+    padding: 0px 0px 0px 20px;
     cursor: pointer;
     position: relative;
     top: 50%;
@@ -1144,7 +1144,7 @@ main{
 
 }
 
-@media only screen and (max-width: 966px){
+@media only screen and (max-width: 1024px){
 
     .card-wrapper{
         max-width: 350px;   
@@ -1162,6 +1162,10 @@ main{
     .text-and-ad-wrapper{
         grid-template-columns: 1.2fr 1.2fr;
         padding-top: 0px;
+    }
+    
+    .hide-on-shrink{
+        display: none;
     }
 
 }
