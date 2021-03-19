@@ -115,7 +115,7 @@
                                 href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
                                 @click="logDonation('header')"
                             >
-                                <span>Donate</span>
+                                <span>Buy me a coffee</span>
                             </a>
                         </div>
                         
@@ -185,18 +185,19 @@
                     <div>
                         <a rel="noopener" class="" target="_blank" href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" @click="logDonation('header')">
                             <button is="coral-button">
-                                <span>Donate</span>
+                                <span>Buy me a coffee</span>
                             </button>
                         </a>
                     </div>
                     
                     <!-- Submit icons -->
-                    <div>
+                    <div class="hide-on-shrink">
                         <button is="coral-button" variant="cta" @click="showDialog('submitIcon')">
                             <span>Submit icons</span>
                         </button>
                     </div>
-
+                    
+                    <!-- Twitter -->
                     <a href="https://twitter.com/elrumo" target="_blank" rel="noopener">
                         <img :src="icons.twitter" class="header-item header-icon" alt="">
                     </a>
