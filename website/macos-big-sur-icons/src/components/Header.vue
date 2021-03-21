@@ -26,11 +26,11 @@
                     </a> 
 
                     <span class="mobile-hidden">
-                        <dir class="d-inline-block m-0 p-l-10 p-r-10">
+                        <!-- <dir class="d-inline-block m-0 p-l-10 p-r-10">
                             <hr class="coral-Divider--M coral-Divider--vertical m-0" style="height:14px;">
-                        </dir>
+                        </dir> -->
                         
-                        <span class=" opacity-70">
+                        <!-- <span class=" opacity-70">
                             Hosting by
                             <a href="https://fosshost.org/"
                                 rel="noopener"
@@ -39,7 +39,7 @@
                             >
                                 FossHost
                             </a> 
-                        </span>
+                        </span> -->
                     </span>
                 </p>
             </div>
@@ -81,13 +81,13 @@
                         </div>
                         
                         <!-- blog -->
-                        <!-- <div @click="away" v-if="this.$route.name != 'BlogHome'">
+                        <div @click="away" v-if="this.$route.name != 'BlogHome'">
                             <router-link to="/blog" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
                                 <span>
                                     Blog
                                 </span>
                             </router-link>
-                        </div> -->
+                        </div>
                         
                         <!-- Resources -->
                         <div @click="away">
@@ -132,7 +132,11 @@
             <!-- Desktop -->
             <div class="mobile-hidden">
                 <div class="header-grid-btns">
-
+                    
+                    <!-- Twitter -->
+                    <a href="https://twitter.com/elrumo" class="header-icon-wrapper" target="_blank" rel="noopener">
+                        <img :src="icons.twitter" class="header-item header-icon" alt="">
+                    </a>
                     <!-- Back to all icons -->
                     <div class="opacity-50" v-if="this.$route.name != 'Home'">
                         <router-link to="/">
@@ -155,13 +159,13 @@
                     </div>
                     
                     <!-- blog -->
-                    <!-- <div>
+                    <div>
                         <router-link to="/blog">
                             <button is="coral-button" variant="quiet">
                                 <span>Blog</span>
                             </button>
                         </router-link>
-                    </div> -->
+                    </div>
 
                     <!-- Resources -->
                     <div>
@@ -171,37 +175,23 @@
                             </button>
                         </router-link>
                     </div>
-
-                    <!-- Instructions -->
-                    <!-- <div>
-                        <router-link to="/how-to">
-                            <button is="coral-button" variant="quiet">
-                                <span>Instructions</span>
-                            </button>
-                        </router-link>
-                    </div> -->
                     
                     <!-- Buy me a coffee -->
-                    <div>
+                    <!-- <div class="p-l-10 hide-on-shrink">
                         <a rel="noopener" class="" target="_blank" href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" @click="logDonation('header')">
                             <button is="coral-button">
                                 <span>Buy me a coffee</span>
                             </button>
                         </a>
-                    </div>
+                    </div> -->
                     
                     <!-- Submit icons -->
-                    <!-- <div class="hide-on-shrink">
+                    <div class="p-l-20">
                         <button is="coral-button" variant="cta" @click="showDialog('submitIcon')">
                             <span>Submit icons</span>
                         </button>
-                    </div> -->
+                    </div>
                     
-                    <!-- Twitter -->
-                    <a href="https://twitter.com/elrumo" target="_blank" rel="noopener">
-                        <img :src="icons.twitter" class="header-item header-icon" alt="">
-                    </a>
-
                 </div>
             </div>
 
@@ -300,7 +290,15 @@ export default {
 
     mounted: function(){
         let parent = this
-        
+
+        // Check user's colour theme
+        let isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (isDark) {
+            window.plausible("colourTheme", {props: { Theme: "Dark" }})
+        }else{
+            window.plausible("colourTheme", {props: { Theme: "Light" }})
+        }
+
         window.addEventListener('scroll', this.handleScroll);
 
         if(window.matchMedia('(prefers-color-scheme: dark)').matches){

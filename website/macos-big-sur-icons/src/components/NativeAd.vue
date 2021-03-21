@@ -1,5 +1,10 @@
 <template>
-  <div @click="adClick" class="" id="iconbar-js"></div>
+  <div :class="{fullWidth: fullWidth}">
+    <p v-if="sponsored" class="coral-Detail coral-Detail--S coral-Detail--light opacity-50">
+      Sponsored
+    </p>
+    <div @click="adClick" class="" id="iconbar-js"></div>
+  </div>
 </template>
 
 <script>
@@ -7,7 +12,10 @@
 export default {
     name:"NativeAd",
 
-    directives:{},
+    props:{
+      sponsored:'',
+      fullWidth:''
+    },
 
     components:{},
     
@@ -44,8 +52,6 @@ export default {
       }, 500)
     },
 
-    props:{},
-
     methods:{
       adClick(){
         let parent = this
@@ -58,5 +64,7 @@ export default {
 </script>
 
 <style>
-
+  .fullWidth .bsa-link{
+    width: 100%
+  }
 </style>

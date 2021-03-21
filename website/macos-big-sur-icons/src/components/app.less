@@ -298,7 +298,7 @@ main{
 }
 
 .header-grid-btns > div{
-    padding-left: 15px;
+    // padding-left: 15px;
 }
 
 .header-item{
@@ -309,13 +309,17 @@ main{
     line-height: 2rem;
 }
 
+.header-icon-wrapper{
+    position: absolute;
+    height: fit-content;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 .header-icon{
     height: 22px;
-    padding: 0px 0px 0px 20px;
+    padding: 0px 0px 0px 0px;
     cursor: pointer;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
     transition: 0.2s;
 }
 
@@ -1140,6 +1144,13 @@ main{
 
     .mobile-nav-options{
         padding: 50px 20px 15px 20px;
+    }
+
+    .header-icon-wrapper{
+        position: relative;
+        left: 0;
+        transform: none;
+        padding-right: 10px;
     }
 
 }
