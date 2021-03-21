@@ -28,21 +28,28 @@
           <img :src="blogPost.feature_image"/>
         </figure>
 
-        <div class="single-ad mobile-ad m-t-50">
-          <script async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
+        <div class="single-ad mobile-ad m-t-50 p-b-10">
+          <NativeAd
+            :sponsored="true"
+            :fullWidth="true"
+          />
         </div>
 
       </div>
 
       <div class="blog-post-wrapper post-full-content" v-html="blogPost.html"> </div>
+      
+      <div class="single-ad mobile-ad p-b-20 p-t-20">
+        <script async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
+      </div>
     
-      <section class="p-b-50 m-b-50">
+      <section class="p-t-20 m-b-50 p-b-20">
         
         <div class="">
           <hr class="coral-Divider--S">
         </div>
     
-        <H3-Description :text="subscribe"/>    
+        <H3-Description :text="subscribe"/>
 
       </section>
     
@@ -53,6 +60,7 @@
 <script>
 // @ is an alias to /src
 import H3Description from '@/components/H3_Description.vue'
+import NativeAd from '@/components/NativeAd.vue'
 
 import { getBlogPost } from '@/api/posts';
 import localPosts from '@/api/posts.json';
@@ -61,15 +69,16 @@ export default {
   name: 'BlogPost',
 
   components: {
-    H3Description
+    H3Description,
+    NativeAd
   },
 
   data: function(){
     return {
       blogPost: localPosts,
        subscribe:{
-        h3: "The Icons Blog",
-        description: "Hi! I'm [Elias](https://eliasruiz.com), and I'm building a platform for all things icons and design. You can support this project and read about this journey on this blog and by subscribing below.",
+        h3: "The macOSicons blog",
+        description: "Hi! I'm [Elias](https://eliasruiz.com), and I'm building a platform for all things icons. You can support this project and read about my journey, tips and more by subscribing below.",
         isAd: false,
         isCenter: true,
         isButton: true
@@ -78,6 +87,7 @@ export default {
   },
 
   mounted: async function(){
+
     const parent = this;
 
     let routerName = this.$router.currentRoute.params.post

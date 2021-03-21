@@ -6,6 +6,25 @@
     /* margin: 0 0 0 auto; */
 }
 
+.mobile-ad #carbonads{
+    max-width: none !important;
+    background: none !important;
+    box-shadow: none !important;
+    padding: 0px !important;
+}
+
+.mobile-ad .carbon-wrap{
+    padding: 0px !important;
+}
+
+.mobile-ad .carbon-poweredby{
+    text-align: right !important;
+}
+
+.mobile-ad .carbon-poweredby{
+    background: none;
+}
+
 .single-ad #carbonads{
     /* max-width: 225px; */
     height: fit-content;

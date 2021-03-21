@@ -16,7 +16,7 @@
           <!-- <div v-if="ad" class="" id="iconbar-js"></div> -->
         </div>
 
-        <p class="coral-Body--S m-b-0 desktop-hidden">
+        <p class="coral-Body--S m-b-0">
           Hosting by
           <a href="https://fosshost.org/" rel="noopener" target="_blank" class="coral-Link">
               FossHost
@@ -61,7 +61,7 @@
           >
             <button
               is="coral-button"
-              variant="quiet"
+              variant="outline"
             >
               <span>Buy me a coffee</span>
             </button>

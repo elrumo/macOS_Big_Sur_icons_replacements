@@ -55,6 +55,7 @@
                 :href="text.link"
                 rel="noopener"
                 target="_blank"
+                data-instant
             >
                 <button is="coral-button" variant="cta">
                     <span>Subscribe to blog</span>
