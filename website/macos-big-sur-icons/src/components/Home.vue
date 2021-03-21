@@ -448,6 +448,7 @@ export default {
           parent.getIconsArray();
         }).catch((e)=>{
           console.log("login: ", e);
+          Parse.User.logOut();
           handleParseError(e)
         })
       }
@@ -652,6 +653,19 @@ export default {
 
     async getIconsArray(){
       let parent = this
+
+      function handleParseError(err){
+        switch (err.code) {
+          case Parse.Error.INVALID_SESSION_TOKEN:
+            Parse.User.logOut();
+            window.location.reload()
+            break;
+        
+          default:
+            break;
+        }
+      }
+
       try {
 
         const query = new Parse.Query(Icons);
@@ -688,6 +702,7 @@ export default {
 
       } catch (error) {
         parent.loadingError = "true"
+        handleParseError(error)
         console.log("loadingError: ", error);
       }
 
