@@ -478,17 +478,41 @@ export default {
       document.getElementById(id).style.display = "none"
     }
 
+    function handleParseError(err){
+      switch (err.code) {
+        case Parse.Error.INVALID_SESSION_TOKEN:
+          Parse.User.logOut();
+          window.location.reload()
+          break;
+      
+        default:
+          break;
+      }
+    }
+
     if (currentUser) {
       if (!Parse.User.current().attributes.isAdmin) {
+        parent.$router.push({ path: '/' })
+        Parse.User.logOut();
+        console.log("Hiii");
         return
       }
+
       parent.isAuth = true
+
       async function getParseData(){
         const query = new Parse.Query(Icons);
         query.equalTo("approved", false)
         query.ascending("usersName");
         query.limit(docLimit);
-        const results = await query.find()
+          
+        
+        try{
+          var results = await query.find()
+        } catch (error) {
+            console.log(error);
+            handleParseError(error)
+        }
 
         parent.getIconListLen(query); // Get how many icons to approve.
 

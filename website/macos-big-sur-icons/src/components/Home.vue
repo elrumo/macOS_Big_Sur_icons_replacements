@@ -97,6 +97,7 @@
       <div v-if="this.$store.state.list == 0 & !loadingError" class="waiting-wrapper">
         <coral-wait size="L" indeterminate=""></coral-wait>
       </div>
+
     <!-- Loading error -->
       <div v-if="loadingError" class="waiting-wrapper">
 
@@ -423,21 +424,35 @@ export default {
     }
 
     // Parse.User.enableUnsafeCurrentUser()
-
-    if(Parse.User.current()){
-      if (Parse.User.current().attributes.isAdmin) {
-        parent.getIconsArray();
-        parent.isAuth = true
-      }else{
-        parent.getIconsArray();
+    function handleParseError(err){
+      switch (err.code) {
+        case Parse.Error.INVALID_SESSION_TOKEN:
+          Parse.User.logOut();
+          loginParse()
+          break;
+      
+        default:
+          break;
       }
-    } else{
-      Parse.User.logIn(parseUser, parsePass).then(()=>{
-        console.log("Signed Insss");
-        parent.getIconsArray();
-      }).catch((e)=>{
-        console.log("login: ", e);
-      })
+    }
+
+    function loginParse(){
+      if(Parse.User.current()){
+        if (Parse.User.current().attributes.isAdmin) {
+          parent.getIconsArray();
+          parent.isAuth = true
+        }else{
+          parent.getIconsArray();
+        }
+      } else{
+        Parse.User.logIn(parseUser, parsePass).then(()=>{
+          console.log("Signed Insss");
+          parent.getIconsArray();
+        }).catch((e)=>{
+          console.log("login: ", e);
+          handleParseError(e)
+        })
+      }
     }
     
   },
