@@ -138,8 +138,8 @@
                         <a href="https://twitter.com/elrumo" class="" target="_blank" rel="noopener">
                             <img :src="icons.twitter" class="header-item header-icon" alt="Twitter logo">
                         </a>
-                        <a href="https://discord.gg/spkQYzBZ" class="" target="_blank" rel="noopener">
-                            <!-- <img :src="icons.discord" class="header-item header-icon" alt="Discord Logo"> -->
+                        <a href="https://discord.gg/spkQYzBZ" class="p-l-20" target="_blank" rel="noopener">
+                            <img :src="icons.discord" class="header-item header-icon" alt="Discord Logo">
                         </a>
                     </div>
                     <!-- Back to all icons -->
@@ -225,6 +225,7 @@ export default {
             darkMode: false,
             icons:{
                 twitter: require("../assets/icons/twitter.svg"),
+                discord: require("../assets/icons/Discord.svg"),
                 burgerMenu: require("../assets/icons/burgerMenu.svg"),
             },
             isMenu: false,
