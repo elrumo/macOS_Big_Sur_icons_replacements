@@ -97,10 +97,10 @@
       <div v-if="this.$store.state.list == 0 & !loadingError" class="waiting-wrapper">
         <coral-wait size="L" indeterminate=""></coral-wait>
       </div>
-
     <!-- Loading error -->
       <div v-if="loadingError" class="waiting-wrapper">
 
+        <NativeAd/>
         <h3 class="coral-Heading--M">
           The site is temporarily down for maintenance purposes.
           <br>
@@ -249,6 +249,7 @@ import Hero from './Hero.vue';
 import iconCard from './iconCard.vue';
 import Dialog from './Dialog.vue';
 import deleteDialog from './deleteDialog.vue';
+import NativeAd from './NativeAd.vue';
 
 import algoliasearch from 'algoliasearch'
 import Parse from 'parse'
@@ -291,7 +292,8 @@ export default {
     iconCard,
     Dialog,
     deleteDialog,
-    'vue-load-image': VueLoadImage
+    'vue-load-image': VueLoadImage,
+    NativeAd
   },
 
   metaInfo: {

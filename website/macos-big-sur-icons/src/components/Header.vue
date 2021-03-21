@@ -134,9 +134,14 @@
                 <div class="header-grid-btns">
                     
                     <!-- Twitter -->
-                    <a href="https://twitter.com/elrumo" class="header-icon-wrapper" target="_blank" rel="noopener">
-                        <img :src="icons.twitter" class="header-item header-icon" alt="">
-                    </a>
+                    <div class="header-icon-wrapper">
+                        <a href="https://twitter.com/elrumo" class="" target="_blank" rel="noopener">
+                            <img :src="icons.twitter" class="header-item header-icon" alt="Twitter logo">
+                        </a>
+                        <a href="https://discord.gg/spkQYzBZ" class="" target="_blank" rel="noopener">
+                            <!-- <img :src="icons.discord" class="header-item header-icon" alt="Discord Logo"> -->
+                        </a>
+                    </div>
                     <!-- Back to all icons -->
                     <div class="opacity-50" v-if="this.$route.name != 'Home'">
                         <router-link to="/">
