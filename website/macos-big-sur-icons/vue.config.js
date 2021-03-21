@@ -12,7 +12,15 @@ module.exports = {
         // Required - The path to the webpack-outputted app to prerender.
         staticDir: path.join(__dirname, 'dist'),
         // Required - Routes to render.
-        routes: [ '/', '/resources', '/resources/macos-big-sur-app-icon', '/resources/macos-big-sur-dock'],
+        routes: [ 
+          '/',
+          '/WhatsApp',
+          '/blog',
+          '/blog/welcome-to-the-blog-3',
+          '/resources',
+          '/resources/macos-big-sur-app-icon',
+          '/resources/macos-big-sur-dock'
+        ],
       })
     ] : []
   }

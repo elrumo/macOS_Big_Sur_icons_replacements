@@ -31,7 +31,49 @@ const routes = [
   {
     path: '/blog',
     name: 'BlogHome',
-    component: BlogHome
+    component: BlogHome,
+    meta: { 
+      title: 'Blog - Free app icon Dock template for macOS Big Sur.',
+      description: 'Free 5000+ App icons for macOS in the style of macOS Big Sur. Fully open source and community led.',
+      titleTemplate: '%s | macOSicons',
+      meta:[
+        // Facebook
+        {
+          property: 'og:url',
+          content:  'https://macosicons.com/blog'
+        },
+        {
+          property: 'og:title',
+          content:  'Free app icon Dock template for macOS Big Sur.',
+        },
+        {
+          property: 'og:description',
+          content:  'Free 5000+ App icons for macOS in the style of macOS Big Sur. Fully open source and community led.',
+        },
+        {
+          property: 'og:image',
+          content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Thumbnail_2021.jpg'
+        },
+
+        // Twitter
+        {
+          property: 'twitter:url',
+          content:  'https://macosicons.com/blog'
+        },
+        {
+          property: 'twitter:description',
+          content:  'Free 5000+ App icons for macOS in the style of macOS Big Sur. Fully open source and community led.'
+        },
+        {
+          property: 'twitter:title',
+          content:  'Free app icon Dock template for macOS Big Sur.',
+        },
+        {
+          property: 'twitter:image',
+          content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Thumbnail_2021.jpg'
+        },
+      ]
+    }
   },
   {
     path: '/blog/:post',
@@ -88,7 +130,50 @@ const routes = [
   {
     path: '/how-to',
     name: 'HowTo',
-    component: () => import('../views/HowTo.vue')
+    component: () => import('../views/HowTo.vue'),
+    meta:{
+      title: 'How to change app icons in macOS Big Sur',
+      description:"Guide to donlwoad and change app icons in macOS Big Sur using Finder and a website with over 5000+ free app icons.",
+      // all titles will be injected into this template
+      titleTemplate: '%s | macOSicons',
+      meta:[
+        // Facebook
+        {
+          property: 'og:url',
+          content:  'https://macosicons.com/how-to/'
+        },
+        {
+          property: 'og:title',
+          content:  'How to change app icons in macOS Big Sur',
+        },
+        {
+          property: 'og:description',
+          content:  'Guide to donlwoad and change app icons in macOS Big Sur using Finder and a website with over 5000+ free app icons.',
+        },
+        {
+          property: 'og:image',
+          content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/design/How_To-Thumbnail.jpg'
+        },
+
+        // Twitter
+        {
+          property: 'twitter:url',
+          content:  'https://macosicons.com/how-to/'
+        },
+        {
+          property: 'twitter:title',
+          content:  'How to change app icons in macOS Big Sur'
+        },
+        {
+          property: 'twitter:description',
+          content:  'Guide to donlwoad and change app icons in macOS Big Sur using Finder and a website with over 5000+ free app icons.',
+        },
+        {
+          property: 'twitter:image',
+          content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/design/How_To-Thumbnail.jpg'
+        },
+      ]
+    }
   },
   {
     path: '/forum',
@@ -245,6 +330,53 @@ const routes = [
     path: '/:search',
     name: 'Search',
     component: HomeView
+  },
+  {
+    path: '/WhatsApp',
+    name: 'WhatsApp',
+    component: HomeView,
+    meta: { 
+      title: 'Free WhatsApp icons for macOS Big Sur.',
+      description:"Free WhatsApp and 5000+ App icons for macOS in the style of macOS Big Sur. Fully open source and community led.",
+      titleTemplate: '%s | macOSicons',
+      meta:[
+        // Facebook
+        {
+          property: 'og:url',
+          content:  'https://macosicons.com/WhatsApp'
+        },
+        {
+          property: 'og:title',
+          content:  'Free WhatsApp icons for macOS Big Sur.',
+        },
+        {
+          property: 'og:description',
+          content:  'Free WhatsApp and 5000+ App icons for macOS in the style of macOS Big Sur. Fully open source and community led.',
+        },
+        {
+          property: 'og:image',
+          content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/high-res/whatsapp-thumbnail.jpg'
+        },
+
+        // Twitter
+        {
+          property: 'twitter:url',
+          content:  'https://macosicons.com/WhatsApp'
+        },
+        {
+          property: 'twitter:description',
+          content:  'Free WhatsApp and 5000+ App icons for macOS in the style of macOS Big Sur. Fully open source and community led.',
+        },
+        {
+          property: 'twitter:title',
+          content:  'Free WhatsApp icons for macOS Big Sur.',
+        },
+        {
+          property: 'twitter:image',
+          content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/high-res/whatsapp-thumbnail.jpg'
+        },
+      ]
+    }
   },
 
 ]
