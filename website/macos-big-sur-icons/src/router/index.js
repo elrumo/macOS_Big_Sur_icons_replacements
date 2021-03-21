@@ -52,7 +52,48 @@ const routes = [
     path: '/resources',
     name: 'Resources',
     component: () => import('../views/Resources.vue'),
-    meta: { requiresAuth: true }
+    meta: { 
+      title: 'Free icon templates resources for macOS Big Sur.',
+      description:"Resources and templates to help you design and showcase icons for macOS.",
+      titleTemplate: '%s | macOSicons',
+      meta:[
+        // Facebook
+        {
+          property: 'og:url',
+          content:  'https://macosicons.com/resources'
+        },
+        {
+          property: 'og:title',
+          content:  'Free icon templates resources and over 5000+ icons for macOS Big Sur.',
+        },
+        {
+          property: 'og:description',
+          content:  'Resources and templates to help you design and showcase icons for macOS. Over 5000+ free icons ready for Big Sur.',
+        },
+        {
+          property: 'og:image',
+          content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Resources-thumbnail.jpg'
+        },
+
+        // Twitter
+        {
+          property: 'twitter:url',
+          content:  'https://macosicons.com/resources'
+        },
+        {
+          property: 'twitter:description',
+          content:  'Resources and templates to help you design and showcase icons for macOS. Over 5000+ free icons ready for Big Sur.',
+        },
+        {
+          property: 'twitter:title',
+          content:  'Free icon templates resources and over 5000+ icons for macOS Big Sur.',
+        },
+        {
+          property: 'twitter:image',
+          content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Resources-thumbnail.jpg'
+        },
+      ]
+    }
   },
   {
     path: '/resources/:resource',
