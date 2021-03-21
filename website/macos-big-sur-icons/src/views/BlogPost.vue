@@ -97,7 +97,6 @@ export default {
     
     // Check if blog data has already been fetched, if not, fetch only the blog required
     if (storeBlogData.length == undefined) {
-      const blogPost = await getBlogPost(routerName);
       
       //  Botched together to get local blog data while real blog is loading. Temporary fix, this will need to be server side rendered.
       for(let post in Object.keys(localBlogData)){
@@ -107,9 +106,10 @@ export default {
             parent.blogPost = localBlogData[post];
           }
         } catch (error) {
-        }
+          }
       }
 
+      const blogPost = await getBlogPost(routerName);
       // If the blog post requested does not exists, redirect user to main blog page
       if (blogPost == undefined) { 
         parent.$router.push('/blog')

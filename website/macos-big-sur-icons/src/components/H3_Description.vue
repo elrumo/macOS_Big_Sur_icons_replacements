@@ -57,7 +57,7 @@
                 target="_blank"
                 data-instant
             >
-                <button is="coral-button" variant="cta">
+                <button @click="logSubscription" is="coral-button" variant="cta">
                     <span>Subscribe to blog</span>
                 </button>
             </a>
@@ -90,6 +90,15 @@ export default {
 
     },
     
+    methods:{
+        logSubscription(){
+            let currentPath = parent.$router.currentRoute.name;
+            window.plausible("logSubscription", {props: {
+                path: currentPath, 
+            }})
+        },
+    },
+
     computed: {
         markItDown(){
             let text = this.text.description
