@@ -439,22 +439,22 @@ export default {
     function loginParse(){
       if(Parse.User.current()){
         if (Parse.User.current().attributes.isAdmin) {
-          parent.getIconsArray();
           parent.isAuth = true
-        }else{
-          parent.getIconsArray();
         }
+        parent.getIconsArray();
       } else{
         Parse.User.logIn(parseUser, parsePass).then(()=>{
           console.log("Signed Insss");
           parent.getIconsArray();
         }).catch((e)=>{
           console.log("login: ", e);
-          handleParseError(e)
+          // handleParseError(e)
         })
       }
     }
     
+    loginParse()
+
   },
 
   methods:{ 
