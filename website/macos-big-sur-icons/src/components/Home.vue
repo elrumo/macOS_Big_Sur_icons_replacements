@@ -448,7 +448,7 @@ export default {
           parent.getIconsArray();
         }).catch((e)=>{
           console.log("login: ", e);
-          // handleParseError(e)
+          handleParseError(e)
         })
       }
     }
