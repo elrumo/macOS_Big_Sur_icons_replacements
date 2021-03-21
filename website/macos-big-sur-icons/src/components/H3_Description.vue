@@ -92,6 +92,7 @@ export default {
     
     methods:{
         logSubscription(){
+            let parent = this
             let currentPath = parent.$router.currentRoute.name;
             window.plausible("logSubscription", {props: {
                 path: currentPath, 
