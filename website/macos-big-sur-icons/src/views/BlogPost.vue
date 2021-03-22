@@ -79,6 +79,7 @@ export default {
        subscribe:{
         h3: "The macOSicons blog",
         description: "Hi! I'm [Elias](https://eliasruiz.com), and I'm building a platform for all things icons. You can support this project and read about my journey, tips and more by subscribing below.",
+        link: "https://blog.macosicons.com/blog/#/portal",
         isAd: false,
         isCenter: true,
         isButton: true

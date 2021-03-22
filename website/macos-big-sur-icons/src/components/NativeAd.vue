@@ -25,8 +25,10 @@ export default {
     },
 
     mounted: function(){
+      
       function getAd(){
         if (typeof _bsa !== 'undefined' && _bsa) {
+          console.log(_bsa);
           _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
           {
             target: '#iconbar-js',
@@ -49,7 +51,7 @@ export default {
         if (!el) {
           getAd()
         }
-      }, 500)
+      }, 600)
     },
 
     methods:{
