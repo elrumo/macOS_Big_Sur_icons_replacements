@@ -78,7 +78,10 @@
         <div v-for="user in icons" :key="user.usersName" class="p-b-30">
           
           <h3 class="coral-Heading--M p-b-10 text-left">
-            <a :href="'mailto:'+user.email+'?subject=macOS icons submission'">
+            <a
+              :href="'mailto:'+user.email+'?subject=macOS icons submission'"
+              @click="copyText(user.usersName)"
+            >
               {{ user.usersName }}
             </a>
             <img @click="showDialog('editUserDialog', user)" class="dashboard-edit-user" :src="coralIcons.edit" alt="">
@@ -205,6 +208,10 @@ export default {
 
   methods:{
     ...mapActions(['showToast']),
+
+    async copyText(toCopy){
+      await navigator.clipboard.writeText(toCopy);
+    },
     
     uploadFile(){
       const fileUploadControl = document.getElementById("profilePhotoFileUpload");
