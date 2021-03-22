@@ -210,6 +210,7 @@ export default {
     ...mapActions(['showToast']),
 
     async copyText(toCopy){
+      await navigator.clipboard.writeText("https://macosicons.com/"+toCopy);
       await navigator.clipboard.writeText(toCopy);
     },
     
