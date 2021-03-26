@@ -185,15 +185,24 @@
                     
                     <!-- Buy me a coffee -->
                     <div class="p-l-10 hide-on-shrink">
-                        <a rel="noopener" class="" target="_blank" href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" @click="logDonation('header')">
-                            <button is="coral-button">
+                        <a
+                            rel="noopener"
+                            class=""
+                            target="_blank"
+                            href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+                            @click="logDonation('header')"
+                        >
+                            <button
+                                is="coral-button"
+                                variant="quiet"
+                            >
                                 <span>Buy me a coffee</span>
                             </button>
                         </a>
                     </div>
                     
                     <!-- Submit icons -->
-                    <div class="p-l-20">
+                    <div class="p-l-10">
                         <button is="coral-button" variant="cta" @click="showDialog('submitIcon')">
                             <span>Submit icons</span>
                         </button>
