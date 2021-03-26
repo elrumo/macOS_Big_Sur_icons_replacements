@@ -77,7 +77,23 @@
             >
               <span>Submit icons</span>
             </button>
+
+            <a
+              rel="noopener"
+              class="m-l-20"
+              target="_blank"
+              href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+              @click="logDonation('header')"
+            >
+                <button
+                    is="coral-button"
+                    variant="quiet"
+                >
+                    <span>Buy me a coffee</span>
+                </button>
+            </a>
           </div>
+
         </div>
 
 
