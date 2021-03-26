@@ -34,7 +34,8 @@ import '@adobe/coral-spectrum/coral-css-divider'
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
 
-import '@adobe/spectrum-css/dist/icons/loadIcons.js' 
+import '@adobe/spectrum-css/dist/icons/spectrum-css-icons.svg' 
+// import '@adobe/spectrum-css/dist/icons/loadIcons.js' 
 
 export default {
   name: 'App',

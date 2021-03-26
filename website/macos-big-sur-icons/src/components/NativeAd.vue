@@ -1,5 +1,5 @@
 <template>
-  <div :class="{fullWidth: fullWidth}">
+  <div :class="{fullWidth: fullWidth, 'mobile-hidden': true,}">
     <p v-if="sponsored" class="coral-Detail coral-Detail--S coral-Detail--light opacity-50">
       Sponsored
     </p>
@@ -25,7 +25,7 @@ export default {
     },
 
     mounted: function(){
-      
+
       function getAd(){
         if (typeof _bsa !== 'undefined' && _bsa) {
           console.log(_bsa);
