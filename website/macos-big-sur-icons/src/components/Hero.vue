@@ -8,13 +8,14 @@
     <div class="hero-text-area" v-if="iconsEmpty">    
         
 
-        <div class="ad-hero">
+        <div class="ad-hero mobile-hidden">
           <!-- <p class="coral-Body--XS">
             Sponsored by
           </p> -->
           <NativeAd/>
-          <!-- <div v-if="ad" class="" id="iconbar-js"></div> -->
         </div>
+
+        <div class="desktop-hidden m-t-20"></div>
 
         <p class="coral-Body--S m-b-0">
           Hosting by

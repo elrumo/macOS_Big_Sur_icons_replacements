@@ -41,44 +41,36 @@ export default {
         // Facebook
         {
           property: 'og:url',
-          // vmid:     'og:url',
           content:  'https://macosicons.com/how-to/'
         },
         {
           property: 'og:title',
-          // vmid:     'og:title',
           content:  'How to change app icons in macOS Big Sur',
         },
         {
           property: 'og:description',
-          // vmid:     'og:description',
           content:  'Guide to donlwoad and change app icons in macOS Big Sur using Finder and a website with over 5000+ free app icons.',
         },
         {
           property: 'og:image',
-          // vmid:     'og:image',
           content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/design/How_To-Thumbnail.jpg'
         },
 
         // Twitter
         {
           property: 'twitter:url',
-          // vmid:     'twitter:url',
           content:  'https://macosicons.com/how-to/'
         },
         {
           property: 'twitter:title',
-          // vmid:     'twitter:title',
           content:  'How to change app icons in macOS Big Sur'
         },
         {
           property: 'twitter:description',
-          // vmid:     'twitter:description',
           content:  'Guide to donlwoad and change app icons in macOS Big Sur using Finder and a website with over 5000+ free app icons.',
         },
         {
           property: 'twitter:image',
-          // vmid:     'twitter:image',
           content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/design/How_To-Thumbnail.jpg'
         },
       ]
