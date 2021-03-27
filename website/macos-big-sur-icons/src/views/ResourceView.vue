@@ -1,70 +1,84 @@
 <template>
   <div>
     <div class="content-wrapper-compact text-left">
-
+      
+      <!-- Back to all resources -->
       <router-link to="/resources">
         <p class="coral-Detail read-more read-more-left coral-Detail--XL m-t-30 coral-Link">
           All Resources
         </p>
       </router-link>
 
-    <div class="resource-content-wrapper">
-
-      <div class="resource-image">  
-        <figure class="post-full-image m-0 coral-Well p-0">
-          <img :src="resourceItem.feature_image"/>
-        </figure>
+      <div v-if="resourceItem.id == undefined" style="min-height: 350px" class="waiting-wrapper">
+        <coral-wait size="L" indeterminate=""></coral-wait>
       </div>
-
-      <div class="resource-description">
-        <div>
-          <h3 class="coral-Heading--L coral-Heading--heavy m-0">
-            {{ resourceItem.title }}
-          </h3>        
-
-          <!-- <p class="coral-Detail coral-Detail--L opacity-80 ">
-            <span class="coral-Detail--light">
-              {{ getDate(resourceItem.author) }}
-            </span>
-          </p> -->
-
-          <hr class="coral-Divider--S m-t-15 m-b-15">
-        </div>
-
-        <!-- Resource Content -->
-        <p class="coral-Body--M resource-excerpt">{{ resourceItem.excerpt }}</p>
-        <div class="blog-post-wrapper post-full-content" id="page-js" v-html="resourceItem.html"></div>
-
-      </div>
-
-
-    </div>
-    <!-- More resources -->
-    <div class="moreResources">
-
-      <h3 class="coral-Heading--L coral-Heading--heavy m-0">More resources</h3>
-
-      <div class="resources-grid card-grid" id="how-to-install">
+      
+      <!-- Resource Wrappper -->
+      <div
+        v-if="resourceItem.id != undefined"
+        class="resource-content-wrapper"
+      >
         
-        <div v-for="resource in resourcesData" :key="resource.name" @click="getPageData">
-          <ResourcesCard
-            :step='resource'
-            :link="'/resources/'+resource.slug"
+        <!-- Resource Image -->
+        <div class="resource-image">  
+          <figure class="post-full-image m-0 coral-Well p-0">
+            <img :src="resourceItem.feature_image"/>
+          </figure>
+          <NativeAd
+            class="m-t-20"
+            sponsored="true"
           />
         </div>
+        
+        <!-- Resource Description -->
+        <div class="resource-description">
+          <div>
+            <h3 class="coral-Heading--L coral-Heading--heavy m-0">
+              {{ resourceItem.title }}
+            </h3>        
 
-        <div class="resources-card-ad">
-          <div v-if="showAd" class="resources-card-ad">
-            <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+            <!-- <p class="coral-Detail coral-Detail--L opacity-80 ">
+              <span class="coral-Detail--light">
+                {{ getDate(resourceItem.author) }}
+              </span>
+            </p> -->
+
+            <hr class="coral-Divider--S m-t-15 m-b-15">
           </div>
+
+          <!-- Resource Content -->
+          <p class="coral-Body--M resource-excerpt">{{ resourceItem.excerpt }}</p>
+          <div class="blog-post-wrapper post-full-content" id="page-js" v-html="resourceItem.html"></div>
+        </div>
+
+      </div>
+      
+      <!-- More resources -->
+      <div class="moreResources">
+        <h3 class="coral-Heading--L coral-Heading--heavy m-0">
+          More resources
+        </h3>
+
+        <div class="resources-grid card-grid" id="how-to-install">
+          
+          <div v-for="resource in resourcesData" :key="resource.name" @click="getPageData">
+            <ResourcesCard
+              :step='resource'
+              :link="'/resources/'+resource.slug"
+            />
+          </div>
+
+          <div class="resources-card-ad">
+            <div class="resources-card-ad">
+              <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+            </div>
+          </div>
+
         </div>
 
       </div>
 
     </div>
-
-    </div>
-  
   </div>
 </template>
 
@@ -72,6 +86,7 @@
 // @ is an alias to /src
 import localPosts from '@/api/posts.json';
 import ResourcesCard from '@/components/ResourcesCard.vue'
+import NativeAd from "@/components/NativeAd.vue";
 
 import pages from '@/api/pages.json';
 
@@ -79,16 +94,16 @@ export default {
   name: 'ResourceView',
 
   components: {
-    ResourcesCard
+    ResourcesCard,
+    NativeAd
   },
 
   data: function(){
     return {
       resourceItem: localPosts,
       resourcesData: pages,
-      showAd: true,
       meta: {
-        title: "Yooo"
+        title: ""
       },
       fullUrl: ""
     }
@@ -96,8 +111,6 @@ export default {
 
   mounted: async function(){
     let parent = this;
-    
-    console.log("title: ", parent.$router);
 
     parent.getPageData()
   },
@@ -222,7 +235,7 @@ export default {
           parent.$router.push('/resources')
         }
 
-        console.log("storeResourceItem: ", storeResourceItem);
+        // console.log("storeResourceItem: ", storeResourceItem);
         // Botched together to get local blog data while real blog is loading. Temporary fix, this will need to be server side rendered.
         for(let post in Object.keys(storeResourceItem)){
           try {
@@ -237,7 +250,7 @@ export default {
         parent.resourceItem = resourceItem;
 
       } else{
-        console.log("Gii");
+        // console.log("Gii");
         // Get individual page from all resources data 
         for(let post in Object.keys(storeResourcesData)){
           try {

@@ -42,7 +42,8 @@
         
 
         <div class="m-auto m-t-45">
-
+          
+          <!-- Desktop Buttons -->
           <div class="d-inline-block mobile-hidden">
             <button
               is="coral-button"
@@ -51,24 +52,25 @@
             >
               <span>Submit icons</span>
             </button>
+
+            <a
+              rel="noopener"
+              class="p-l-20"
+              target="_blank"
+              href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+              @click="logDonation('hero')"
+            >
+              <button
+                is="coral-button"
+                variant="quiet"
+              >
+                <span>Buy me a coffee</span>
+              </button>
+            </a>
+
           </div>
 
-          <a
-            rel="noopener"
-            class="mobile-hidden p-l-20"
-            target="_blank"
-            href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
-            @click="logDonation('hero')"
-          >
-            <button
-              is="coral-button"
-              variant="outline"
-            >
-              <span>Buy me a coffee</span>
-            </button>
-          </a>
-
-
+          <!-- Mobile Buttons -->
           <div class="d-inline-block desktop-hidden">
             <button
               is="coral-button"
