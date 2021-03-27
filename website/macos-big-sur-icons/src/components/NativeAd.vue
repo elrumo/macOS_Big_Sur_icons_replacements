@@ -27,8 +27,8 @@ export default {
     mounted: function(){
 
       function getAd(){
+        console.log("_bsa");
         if (typeof _bsa !== 'undefined' && _bsa) {
-          console.log(_bsa);
           _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
           {
             target: '#iconbar-js',
@@ -40,6 +40,10 @@ export default {
               `
             }
           );
+          let el = document.getElementById("customAd")
+          // if (!el) {
+          //   console.log(el);
+          // }
         }
       }
 
@@ -48,7 +52,8 @@ export default {
       setTimeout(() =>{
       // console.log("_bsa: ", _bsa);
         let el = document.getElementById("customAd")
-        if (!el) {
+        console.log(!el);
+        if (el == null) {
           getAd()
         }
       }, 600)

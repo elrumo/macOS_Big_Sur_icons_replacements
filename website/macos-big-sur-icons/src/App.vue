@@ -18,6 +18,11 @@ import '@adobe/coral-spectrum/coral-component-dialog'
 import '@adobe/coral-spectrum/coral-component-button'
 import '@adobe/coral-spectrum/coral-component-toast'
 import '@adobe/coral-spectrum/coral-component-icon'
+
+import '@adobe/coral-spectrum/coral-component-icon/src/resources/spectrum-icons.svg';
+import '@adobe/coral-spectrum/coral-component-icon/src/resources/spectrum-icons-color.svg';
+import '@adobe/coral-spectrum/coral-component-icon/src/resources/spectrum-css-icons.svg';
+
 import '@adobe/coral-spectrum/coral-component-wait'
 import '@adobe/coral-spectrum/coral-component-progress'
 import '@adobe/coral-spectrum/coral-component-quickactions'
