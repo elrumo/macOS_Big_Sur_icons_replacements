@@ -138,13 +138,13 @@
                 
                 <a rel="noopener" v-if="isMacOs" :href="icon.icnsUrl">
                   <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                    <img class="w-full" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
+                    <img  :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
                   </div>
                 </a>
 
                 <a rel="noopener" v-else :href="icon.iOSUrl">
                   <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                    <img class="w-full" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
+                    <img  :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
                   </div>
                 </a>
 
@@ -201,7 +201,7 @@
             <div class="card-img-wrapper">
               
               <div v-lazy-container="{ selector: 'img', loading: icons.loading }" >
-                <img class="w-full" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
+                <img  :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
               </div>
 
               <!-- <div class="quick-actions-wrapper">

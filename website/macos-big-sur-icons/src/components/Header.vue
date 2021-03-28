@@ -121,6 +121,16 @@
                             </a>
                         </div>
                         
+                        <!-- Twitter -->
+                        <div class="header-icon-wrapper">
+                            <a href="https://twitter.com/elrumo" class="" target="_blank" rel="noopener">
+                                <img :src="icons.twitter" class="header-item header-icon" alt="Twitter logo">
+                            </a>
+                            <a href="https://discord.gg/f4mTRyyTkT" class="p-l-20" target="_blank" rel="noopener">
+                                <img :src="icons.discord" class="header-item header-icon" alt="Discord Logo">
+                            </a>
+                        </div>
+
                         <!-- Submit icons -->
                         <!-- <div>
                             <button class="_coral-Button _coral-Button--primary _coral-Button--quiet" @click="showDialog('submitIcon')">
@@ -140,7 +150,7 @@
                         <a href="https://twitter.com/elrumo" class="" target="_blank" rel="noopener">
                             <img :src="icons.twitter" class="header-item header-icon" alt="Twitter logo">
                         </a>
-                        <a href="https://discord.gg/spkQYzBZ" class="p-l-20" target="_blank" rel="noopener">
+                        <a href="https://discord.gg/f4mTRyyTkT" class="p-l-20" target="_blank" rel="noopener">
                             <img :src="icons.discord" class="header-item header-icon" alt="Discord Logo">
                         </a>
                     </div>
