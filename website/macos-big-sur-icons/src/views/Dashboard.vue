@@ -85,6 +85,7 @@
               {{ user.usersName }}
             </a>
             <img @click="showDialog('editUserDialog', user)" class="dashboard-edit-user" :src="coralIcons.edit" alt="">
+            <img @click="sendEmail(user)" class="dashboard-edit-user p-l-15" :src="coralIcons.email" alt="">
           </h3>
 
           <div class="icon-list-area">
@@ -202,6 +203,7 @@ export default {
         newItem: require("../assets/icons/newItem.svg"),
         edit: require("../assets/icons/edit.svg"),
         loading: require("../assets/no-app-icon.png"),
+        email: require("../assets/icons/email.svg"),
       },
     }
   },
@@ -381,6 +383,19 @@ export default {
       Parse.Cloud.run("approve", icon).then((result)=>{
         console.log(result);
         Vue.set(parentIcon, 'isReview', true)
+        parent.showToast({id:"iconApproved"})
+      }).catch((e)=>{
+        console.log(e);
+        parent.showToast({id:"approveError"})
+      });
+    },
+
+    async sendEmail(icon){  
+      let parent = this
+      console.log(icon);
+
+      Parse.Cloud.run("sendEmail", icon).then((result)=>{
+        console.log(result);
         parent.showToast({id:"iconApproved"})
       }).catch((e)=>{
         console.log(e);
