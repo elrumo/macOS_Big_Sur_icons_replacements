@@ -33,6 +33,7 @@
     "marked": "^1.2.8",
     "nuxt": "^2.14.12",
     "parse": "^2.18.0",
+    "prerender-spa-plugin": "^3.4.0",
     "push-dir": "^0.4.1",
     "simple-git": "^2.21.0",
     "vue": "^2.6.12",
