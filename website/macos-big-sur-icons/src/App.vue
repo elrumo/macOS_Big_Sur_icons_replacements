@@ -7,6 +7,7 @@
       :submitIconDialog="'submitIcon'"
     />
     <router-view
+      :key="$route.fullPath"
       class="min-height"
     />
     <Footer/>

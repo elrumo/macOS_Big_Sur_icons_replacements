@@ -32,6 +32,7 @@
           <NativeAd
             :sponsored="true"
             :fullWidth="true"
+            :key="$route.fullPath + 'ad'"
           />
         </div>
 

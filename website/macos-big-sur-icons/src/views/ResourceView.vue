@@ -27,6 +27,7 @@
           <NativeAd
             class="m-t-20"
             sponsored="true"
+            :key="$route.fullPath + 'ad'"
           />
         </div>
         

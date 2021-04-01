@@ -12,7 +12,7 @@
           <!-- <p class="coral-Body--XS">
             Sponsored by
           </p> -->
-          <NativeAd/>
+          <NativeAd :key="$route.fullPath + 'ad'"/>
         </div>
 
         <div class="desktop-hidden m-t-20"></div>
@@ -30,7 +30,7 @@
           <span class="f-w-100 f-s-26">macOS Big Sur</span>
           <br />
           <!-- The Icons Page -->
-          Free app icons
+          <strike>Free</strike> Paid app icons
         </h1>
 
         <p class="coral-Body--L w-100 body-text">

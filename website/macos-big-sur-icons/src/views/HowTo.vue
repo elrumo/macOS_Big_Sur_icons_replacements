@@ -76,8 +76,7 @@ export default {
       ]
   },
 
-  mounted: function(){
-    console.log(this.$metaInfo);        
+  mounted: function(){     
   },
 
   data(){

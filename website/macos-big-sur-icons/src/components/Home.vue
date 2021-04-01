@@ -127,7 +127,7 @@
     <!-- Loading error -->
       <div v-if="loadingError" class="waiting-wrapper">
 
-        <NativeAd/>
+        <NativeAd :key="$route.fullPath + 'ad'"/>
         <h3 class="coral-Heading--M">
           The site is temporarily down for maintenance purposes.
           <br>
