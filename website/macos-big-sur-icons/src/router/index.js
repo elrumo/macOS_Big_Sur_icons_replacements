@@ -104,7 +104,7 @@ const routes = [
         },
         {
           property: 'og:image',
-          content:  'https://blog.macosicons.com/blog/content/images/2021/04/payToView-1.jpg'
+          content:  'https://blog.macosicons.com/blog/content/images/2021/04/NewPaidAccess.jpg'
         },
 
         // Twitter
@@ -122,7 +122,7 @@ const routes = [
         },
         {
           property: 'twitter:image',
-          content:  'https://blog.macosicons.com/blog/content/images/2021/04/payToView-1.jpg'
+          content:  'https://blog.macosicons.com/blog/content/images/2021/04/NewPaidAccess.jpg'
         },
       ]
     }
