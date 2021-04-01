@@ -55,7 +55,7 @@ export default {
         if (!_bsa.exists(el)) {
           getAd()
         }
-      }, 200)
+      }, 800)
     },
 
     methods:{
