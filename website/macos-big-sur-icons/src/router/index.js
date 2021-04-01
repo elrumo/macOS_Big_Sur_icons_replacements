@@ -87,6 +87,7 @@ const routes = [
     meta: { 
       title: 'New paid access for macOSicons.com',
       description:"Just joking, look at the date. You do not have to pay anything. But...",
+      image: "https://blog.macosicons.com/blog/content/images/2021/04/NewPaidAccess.jpg",
       titleTemplate: '%s | macOSicons',
       meta:[
         // Facebook
