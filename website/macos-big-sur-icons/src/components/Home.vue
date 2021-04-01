@@ -4,6 +4,32 @@
     <!-- <Dialog/> -->
     <deleteDialog :icon="activeIcon" :Icons="Icons" :Parse="Parse"/>
 
+    <coral-dialog id="newDialog" open style="text-align: left;">
+      <coral-dialog-header>Pay to view</coral-dialog-header>
+      
+      <coral-dialog-content style="max-width: 350px">
+        <p class="coral-Body--M">
+          Unfortunately this website will now be only accessible through a one time purchase of $9.99.
+          <br>
+          <br>
+          <router-link class="coral-Link" to="/blog/new-paid-access">
+            Read the blog to learn more.
+          </router-link>
+        </p>
+      </coral-dialog-content>
+
+      <coral-dialog-footer>
+        <button is="coral-button" variant="quiet" coral-close="">Cancel</button>
+         <a rel="noopener"
+            class="coral-Link"
+            href="https://py.pl/UKrQC"
+            target="_blank"
+          >
+          <button is="coral-button" variant="CTA" coral-close="">Purchase pass</button>
+        </a>
+      </coral-dialog-footer>
+    </coral-dialog>
+
     <!-- Hero -->
     <Hero
       v-bind:list="list"
@@ -821,5 +847,13 @@ export default {
   @import url(app.less);
   @import url(snack-helper.min.css);
   @import url(carbon.css);
+
+  .paypal-wrapper{
+    margin-top: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 7px;
+  }
+
 
 </style>
