@@ -18,7 +18,7 @@
                     Sponsored by
                 </p>
                 
-                <NativeAd/>
+                <NativeAd :key="$route.fullPath + 'ad'"/>
                 <!-- <div class="" id="iconbar-js"></div> -->
             </div>
             <!-- <div class="text-and-ad-wrapper">
