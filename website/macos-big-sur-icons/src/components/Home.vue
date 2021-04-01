@@ -20,13 +20,16 @@
 
       <coral-dialog-footer>
         <button is="coral-button" variant="quiet" coral-close="">Cancel</button>
-         <a rel="noopener"
-            class="coral-Link"
-            href="https://py.pl/UKrQC"
-            target="_blank"
-          >
-          <button is="coral-button" variant="CTA" coral-close="">Purchase pass</button>
-        </a>
+          <button is="coral-button" variant="CTA">
+            <a rel="noopener"
+              class="coral-Link"
+              href="https://py.pl/UKrQC"
+              target="_blank"
+              @click="logDonation('pass-dialog')"
+            >
+              Purchase pass
+            </a>
+          </button>
       </coral-dialog-footer>
     </coral-dialog>
 
@@ -569,21 +572,6 @@ export default {
           users: icon.usersName
         }})
       }
-
-
-      // console.log("icon: ", icon);
-      // console.log("ID: ", id);
-
-      // let query = new Parse.Query(Icons)
-      // let docToUpdate = await query.get(id)
-
-      // docToUpdate.increment("downloads")
-      // docToUpdate.save().then(() => {
-      //   // console.log("Saved!!");
-      // }).catch((e) => {
-      //   console.log("error: ", e);
-      // })
-      
     },
 
     logout(){

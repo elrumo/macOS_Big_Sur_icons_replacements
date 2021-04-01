@@ -35,7 +35,7 @@
               class="p-l-20"
               target="_blank"
               href="https://py.pl/UKrQC"
-              @click="logDonation('hero')"
+              @click="logDonation('pass-hero')"
             >
             Free</a></strike> Paid app icons
           <!-- <strike> <router-link to="blog/new-paid-access">Free</router-link></strike> Paid app icons -->
