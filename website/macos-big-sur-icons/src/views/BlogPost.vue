@@ -39,9 +39,9 @@
 
       <div class="blog-post-wrapper post-full-content" v-html="blogPost.html"> </div>
       
-      <div class="single-ad mobile-ad p-b-20 p-t-20">
+      <!-- <div class="single-ad mobile-ad p-b-20 p-t-20">
         <script async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
-      </div>
+      </div> -->
     
       <section class="p-t-20 m-b-50 p-b-20">
         
