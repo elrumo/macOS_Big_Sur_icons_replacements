@@ -217,6 +217,7 @@ export default {
     title: 'New paid access for macOSicons.com',
     description:"Just joking, look at the date. You do not have to pay anything. But...",
     titleTemplate: '%s | macOSicons',
+    image: "https://blog.macosicons.com/blog/content/images/2021/04/NewPaidAccess.jpg",
     meta:[
       // Facebook
       {
