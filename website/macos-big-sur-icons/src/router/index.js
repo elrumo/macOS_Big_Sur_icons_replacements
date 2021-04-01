@@ -92,7 +92,7 @@ const routes = [
         // Facebook
         {
           property: 'og:url',
-          content:  'https://macosicons.com/resources/welcome-to-the-blog-3'
+          content:  'https://macosicons.com/blog/new-paid-access'
         },
         {
           property: 'og:title',
