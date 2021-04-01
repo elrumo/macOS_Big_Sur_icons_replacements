@@ -81,6 +81,53 @@ const routes = [
     component: BlogPost
   },
   {
+    path: '/blog/new-paid-access',
+    name: 'New Paid Access',
+    component: BlogPost,
+    meta: { 
+      title: 'New paid access for macOSicons.com',
+      description:"Just joking, look at the date. You do not have to pay anything. But...",
+      titleTemplate: '%s | macOSicons',
+      meta:[
+        // Facebook
+        {
+          property: 'og:url',
+          content:  'https://macosicons.com/resources/welcome-to-the-blog-3'
+        },
+        {
+          property: 'og:title',
+          content:  'New paid access for macOSicons.com',
+        },
+        {
+          property: 'og:description',
+          content:  'Just joking, look at the date. You do not have to pay anything. But...',
+        },
+        {
+          property: 'og:image',
+          content:  'https://blog.macosicons.com/blog/content/images/2021/04/payToView-1.jpg'
+        },
+
+        // Twitter
+        {
+          property: 'twitter:url',
+          content:  'https://macosicons.com/resources'
+        },
+        {
+          property: 'twitter:description',
+          content:  'Just joking, look at the date. You do not have to pay anything. But...',
+        },
+        {
+          property: 'twitter:title',
+          content:  'New paid access for macOSicons.com',
+        },
+        {
+          property: 'twitter:image',
+          content:  'https://blog.macosicons.com/blog/content/images/2021/04/payToView-1.jpg'
+        },
+      ]
+    }
+  },
+  {
     path: '/blog/welcome-to-the-blog-3',
     name: 'BlogPost-Welcome',
     component: BlogPost,
