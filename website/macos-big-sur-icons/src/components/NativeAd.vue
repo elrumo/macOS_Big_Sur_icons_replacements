@@ -41,6 +41,7 @@ export default {
             }
           );
           let el = document.getElementById("customAd")
+          console.log(el);
           // if (!el) {
           //   console.log(el);
           // }
@@ -50,13 +51,11 @@ export default {
       getAd()
 
       setTimeout(() =>{
-      // console.log("_bsa: ", _bsa);
         let el = document.getElementById("customAd")
-        console.log(!el);
-        if (el == null) {
+        if (!_bsa.exists(el)) {
           getAd()
         }
-      }, 600)
+      }, 200)
     },
 
     methods:{
