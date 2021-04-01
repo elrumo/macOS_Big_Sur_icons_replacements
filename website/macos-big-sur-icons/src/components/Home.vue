@@ -20,16 +20,16 @@
 
       <coral-dialog-footer>
         <button is="coral-button" variant="quiet" coral-close="">Cancel</button>
-          <button is="coral-button" variant="CTA">
             <a rel="noopener"
               class="coral-Link"
               href="https://py.pl/UKrQC"
               target="_blank"
               @click="logDonation('pass-dialog')"
             >
+          <button is="coral-button" variant="CTA">
               Purchase pass
-            </a>
           </button>
+            </a>
       </coral-dialog-footer>
     </coral-dialog>
 
