@@ -30,7 +30,15 @@
           <span class="f-w-100 f-s-26">macOS Big Sur</span>
           <br />
           <!-- The Icons Page -->
-          <strike>Free</strike> Paid app icons
+          <strike> <a
+              rel="noopener"
+              class="p-l-20"
+              target="_blank"
+              href="https://py.pl/UKrQC"
+              @click="logDonation('hero')"
+            >
+            Free</a></strike> Paid app icons
+          <!-- <strike> <router-link to="blog/new-paid-access">Free</router-link></strike> Paid app icons -->
         </h1>
 
         <p class="coral-Body--L w-100 body-text">
@@ -53,18 +61,20 @@
               <span>Submit icons</span>
             </button>
 
+              <!-- href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" -->
             <a
               rel="noopener"
               class="p-l-20"
               target="_blank"
-              href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+              href="https://py.pl/UKrQC"
               @click="logDonation('hero')"
             >
               <button
                 is="coral-button"
                 variant="quiet"
               >
-                <span>Buy me a coffee</span>
+                <span>Get unlimited pass</span>
+                <!-- <span>Buy me a coffee</span> -->
               </button>
             </a>
 

@@ -13,7 +13,7 @@
           <br>
           <br>
           <router-link class="coral-Link" to="/blog/new-paid-access">
-            Read the blog to learn more.
+            <b>Read the blog to learn more.</b>
           </router-link>
         </p>
       </coral-dialog-content>

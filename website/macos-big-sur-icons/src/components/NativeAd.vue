@@ -44,15 +44,15 @@ export default {
       }
 
       let el = document.getElementById("customAd")
-      console.log(_bsa.testData);
       getAd(el)
 
       setTimeout(() =>{
-        console.log(_bsa.exists(el));
+        if (!_bsa.exists(el)) {
           getAd(el)
           _bsa.reload("#iconbar-js")
+        }
       //   }
-      }, 1800)
+      }, 800)
     },
 
     methods:{
