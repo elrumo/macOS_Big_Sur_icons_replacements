@@ -4,7 +4,7 @@
     <!-- <Dialog/> -->
     <deleteDialog :icon="activeIcon" :Icons="Icons" :Parse="Parse"/>
 
-    <coral-dialog id="newDialog" open style="text-align: left;">
+    <!-- <coral-dialog id="newDialog" open style="text-align: left;">
       <coral-dialog-header>Pay to view</coral-dialog-header>
       
       <coral-dialog-content style="max-width: 350px">
@@ -31,7 +31,7 @@
           </button>
             </a>
       </coral-dialog-footer>
-    </coral-dialog>
+    </coral-dialog> -->
 
     <!-- Hero -->
     <Hero
