@@ -30,15 +30,7 @@
           <span class="f-w-100 f-s-26">macOS Big Sur</span>
           <br />
           <!-- The Icons Page -->
-          <strike> <a
-              rel="noopener"
-              class="p-l-20"
-              target="_blank"
-              href="https://py.pl/UKrQC"
-              @click="logDonation('pass-hero')"
-            >
-            Free</a></strike> Paid app icons
-          <!-- <strike> <router-link to="blog/new-paid-access">Free</router-link></strike> Paid app icons -->
+           Free app icons
         </h1>
 
         <p class="coral-Body--L w-100 body-text">
