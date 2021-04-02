@@ -40,17 +40,23 @@
 
       <div class="blog-post-wrapper post-full-content" v-html="blogPost.html"> </div>
       
-      <!-- <div class="single-ad mobile-ad p-b-20 p-t-20">
-        <script async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
-      </div> -->
-    
-      <section class="p-t-20 m-b-50 p-b-20">
+
+        <div class="single-ad p-b-20 p-t-30">
+          <script async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
+        </div>
+
+
+      <section class="p-t-30 m-b-50 p-b-50">
         
         <div class="">
           <hr class="coral-Divider--S">
         </div>
     
-        <H3-Description :text="subscribe"/>
+        <H3-Description class="p-t-10 p-b-40" :text="subscribe"/>
+     
+        <div class="">
+          <hr class="coral-Divider--S">
+        </div>
 
       </section>
     
@@ -65,6 +71,8 @@ import NativeAd from '@/components/NativeAd.vue'
 
 import { getBlogPost } from '@/api/posts';
 import localPosts from '@/api/posts.json';
+
+let name = "get"
 
 export default {
   name: 'BlogPost',
@@ -214,48 +222,50 @@ export default {
     }
   },
 
-  metaInfo: { 
-    title: 'New paid access for macOSicons.com',
-    description:"Just joking, look at the date. You do not have to pay anything. But...",
-    titleTemplate: '%s | macOSicons',
-    image: "https://blog.macosicons.com/blog/content/images/2021/04/NewPaidAccess.jpg",
-    meta:[
-      // Facebook
-      {
-        property: 'og:url',
-        content:  'https://macosicons.com/blog/new-paid-access'
-      },
-      {
-        property: 'og:title',
-        content:  'New paid access for macOSicons.com',
-      },
-      {
-        property: 'og:description',
-        content:  'Just joking, look at the date. You do not have to pay anything. But...',
-      },
-      {
-        property: 'og:image',
-        content:  'https://blog.macosicons.com/blog/content/images/2021/04/NewPaidAccess.jpg'
-      },
+  metaInfo() {   
+    return {
+      title: this.blogPost.title,
+      description: this.blogPost.excerpt,
+      titleTemplate: '%s | macOSicons',
+      image: this.blogPost.feature_image,
+      meta:[
+        // Facebook
+        {
+          property: 'og:url',
+          content:  "https://macosicons.com" + this.$router.currentRoute.path
+        },
+        {
+          property: 'og:title',
+          content:  this.blogPost.title,
+        },
+        {
+          property: 'og:description',
+          content:  this.blogPost.excerpt,
+        },
+        {
+          property: 'og:image',
+          content:  this.blogPost.feature_image
+        },
 
-      // Twitter
-      {
-        property: 'twitter:url',
-        content:  'https://macosicons.com/resources'
-      },
-      {
-        property: 'twitter:description',
-        content:  'Just joking, look at the date. You do not have to pay anything. But...',
-      },
-      {
-        property: 'twitter:title',
-        content:  'New paid access for macOSicons.com',
-      },
-      {
-        property: 'twitter:image',
-        content:  'https://blog.macosicons.com/blog/content/images/2021/04/NewPaidAccess.jpg'
-      },
-    ]
+        // Twitter
+        {
+          property: 'twitter:url',
+          content:  "https://macosicons.com" + this.$router.currentRoute.path
+        },
+        {
+          property: 'twitter:title',
+          content:  this.blogPost.title,
+        },
+        {
+          property: 'twitter:description',
+          content: this.blogPost.excerpt,
+        },
+        {
+          property: 'twitter:image',
+          content:  this.blogPost.feature_image
+        },
+      ]
+    }
   },
   
   computed:{

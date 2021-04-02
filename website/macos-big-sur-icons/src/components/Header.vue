@@ -102,7 +102,7 @@
                                 @click="logDonation('header')"
                             >
                                 <button is="coral-button" variant="cta">
-                                    <span>Buy me a coffee</span>
+                                    <span>Donate</span>
                                 </button>
                             </a>
                         </div>
@@ -192,7 +192,7 @@
                                 is="coral-button"
                                 variant="quiet"
                             >
-                                <span>Buy me a coffee</span>
+                                <span>Donate</span>
                             </button>
                         </a>
                     </div>

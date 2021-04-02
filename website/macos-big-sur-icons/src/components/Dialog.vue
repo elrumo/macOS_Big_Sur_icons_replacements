@@ -8,6 +8,16 @@
     <coral-dialog-content>
       
       <div class="dialog-text">
+        On the night of the 2nd of April, the databse where all the icons are hosted was hacked and taken ransom.
+        <br>
+        <br>
+        The hacker deleted all the submissions and is asking for 0.015btc (around $900) to get it back. I have a backup which I'm working on getting it online.
+        <br>
+        <br>
+        To read more about the incident, whcih unfortunately is not an April Fool's joke, read the blog post.
+      </div>
+
+      <!-- <div class="dialog-text">
         <b> We'll let you know by email when the icon has been approved. </b>
         <br>
         <ul class="coral-List p-t-10 p-b-10">
@@ -15,18 +25,17 @@
           <li class="coral-List-item">
             Download template from the <router-link coral-close="" to="/resources"> <b> resources page. </b></router-link>
           </li>
-          <!-- <li class="coral-List-item">Use <a alt="Download Sketch template" href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/raw/master/design/Template-Icon-App.sketch" class="coral-Link"> this Sketch </a> template for dimensions and reference.</li> -->
           <li class="coral-List-item"> <b> The file name must be the same as the name of the app. </b></li>
         </ul>
-      </div>
+      </div> -->
 
-      <div v-if="isLoading" class="loading-overlay">
+      <!-- <div v-if="isLoading" class="loading-overlay">
         <div class="loading-popup">
           <coral-progress indeterminate>{{ uploadProgress }}/{{ totalNumFiles }} icons uploaded</coral-progress>
         </div>
-      </div>
+      </div> -->
 
-      <div class="icon-upload-grid">
+      <!-- <div class="icon-upload-grid">
         
         <div v-if="imageData" class="icons-preview-wrapper">
           
@@ -76,7 +85,7 @@
           <input id="credit" is="coral-textfield" type="url" placeholder="MAKE SURE IT'S A FULL URL: GitHub, Twitter, portfolio site... " labelledby="email-label" class="coral-Form-field" @change="saveCredit">
         </form>
 
-      </div>
+      </div> -->
   
     </coral-dialog-content>
     

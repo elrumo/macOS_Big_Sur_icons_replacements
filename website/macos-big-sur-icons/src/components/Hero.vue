@@ -34,11 +34,17 @@
         </h1>
 
         <p class="coral-Body--L w-100 body-text">
+          A hacker has deleted the database with all the icons. I'm working on restoring a backup.
+            <router-link to="/blog/hacked">
+              <span class="underline">Read more on the blog. </span>
+            </router-link>
+        </p>
+        <!-- <p class="coral-Body--L w-100 body-text">
           To contribute, download our free icon templates from the
             <router-link to="/resources">
             <span class="underline"> resources page. </span>
             </router-link>
-        </p>
+        </p> -->
         
 
         <div class="m-auto m-t-45">
@@ -53,20 +59,18 @@
               <span>Submit icons</span>
             </button>
 
-              <!-- href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" -->
             <a
               rel="noopener"
               class="p-l-20"
               target="_blank"
-              href="https://py.pl/UKrQC"
+              href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
               @click="logDonation('hero')"
             >
               <button
                 is="coral-button"
                 variant="quiet"
               >
-                <span>Get unlimited pass</span>
-                <!-- <span>Buy me a coffee</span> -->
+                <span>Donate</span>
               </button>
             </a>
 
