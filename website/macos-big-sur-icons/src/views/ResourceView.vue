@@ -229,6 +229,7 @@ export default {
 
       // Check if blog data has already been fetched, if not, fetch only the blog required
       if (moreResources.length == undefined) {
+        console.log( parent.resourcesData);
         const resourceItem = await parent.$store.dispatch('getSinglePageAction', routerName);
         
         // If the blog post requested does not exists, redirect user to main blog page
