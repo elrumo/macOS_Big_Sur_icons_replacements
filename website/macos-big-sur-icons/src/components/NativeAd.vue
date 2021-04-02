@@ -31,7 +31,7 @@ export default {
       let parent = this
 
       function getAd(el){
-        if (typeof _bsa !== 'undefined' && !_bsa.exists(el)) {
+        if (typeof _bsa !== 'undefined' && !parent.isAd) {
           _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
           {
             target: '#iconbar-js',
@@ -43,11 +43,19 @@ export default {
               `
             }
           );
-          parent.isAd == true
         }
       }
 
       let el = document.getElementById("customAd")
+
+      window.BSANativeCallback = (a) => {
+        const total = a.ads.length;
+        if (!total) {
+          getAd(el)
+          parent.isAd = true
+        }
+      }
+
       getAd(el)
 
       if (!parent.isAd) {
@@ -55,10 +63,10 @@ export default {
         setTimeout(() =>{
           if (!_bsa.exists(el)) {
             getAd(el)
-            // _bsa.reload("#iconbar-js")
           }
         }, 800)
       }
+
     },
 
     methods:{
