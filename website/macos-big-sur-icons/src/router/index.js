@@ -229,7 +229,7 @@ const routes = [
     component: () => import('../views/Forum.vue')
   },
   {
-    path: '/resources/macos-big-sur-app-icon',
+    path: '/resources/"macos-big-sur-app-icon"',
     name: 'Resource-BigSur-template',
     component: () => import('../views/ResourceView.vue'),
     meta: { 
@@ -276,7 +276,7 @@ const routes = [
     }
   },
   {
-    path: '/resources/macos-big-sur-dock',
+    path: '/resources/"macos-big-sur-dock"',
     name: 'Resource-BigSur-dock-template',
     component: () => import('../views/ResourceView.vue'),
     meta: { 

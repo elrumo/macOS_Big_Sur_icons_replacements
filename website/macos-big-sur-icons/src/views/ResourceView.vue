@@ -229,7 +229,7 @@ export default {
 
       // Check if blog data has already been fetched, if not, fetch only the blog required
       if (moreResources.length == undefined) {
-        console.log( parent.resourcesData);
+        console.log( this.$router.currentRoute);
         const resourceItem = await parent.$store.dispatch('getSinglePageAction', routerName);
         
         // If the blog post requested does not exists, redirect user to main blog page
@@ -252,7 +252,6 @@ export default {
         parent.resourceItem = resourceItem;
 
       } else{
-        // console.log("Gii");
         // Get individual page from all resources data 
         for(let post in Object.keys(storeResourcesData)){
           try {

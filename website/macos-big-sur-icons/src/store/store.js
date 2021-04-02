@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+import localPages from '@/api/pages.json';
 import localPosts from '@/api/posts.json';
 import icons from '@/api/icons.json';
 import { getPages, getSinglePage } from '@/api/posts';
@@ -17,7 +18,7 @@ export default new Vuex.Store({
     blogPosts: {},
     localPosts: localPosts,
 
-    resourcesData: getPages(0),
+    resourcesData: localPages,
     singleResourceData: {},
     moreResources: getPages(2)
   },

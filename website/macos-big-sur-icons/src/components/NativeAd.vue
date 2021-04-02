@@ -22,10 +22,13 @@ export default {
     
     data(){
         return{
+          isAd: false,
         }
     },
     
     mounted: function(){
+
+      let parent = this
 
       function getAd(el){
         if (typeof _bsa !== 'undefined' && !_bsa.exists(el)) {
@@ -40,19 +43,22 @@ export default {
               `
             }
           );
+          parent.isAd == true
         }
       }
 
       let el = document.getElementById("customAd")
       getAd(el)
 
-      setTimeout(() =>{
-        if (!_bsa.exists(el)) {
-          getAd(el)
-          _bsa.reload("#iconbar-js")
-        }
-      //   }
-      }, 800)
+      if (!parent.isAd) {
+        console.log(parent.isAd);
+        setTimeout(() =>{
+          if (!_bsa.exists(el)) {
+            getAd(el)
+            // _bsa.reload("#iconbar-js")
+          }
+        }, 800)
+      }
     },
 
     methods:{
