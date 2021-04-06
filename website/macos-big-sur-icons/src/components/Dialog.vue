@@ -7,17 +7,14 @@
     
     <coral-dialog-content>
       
-      <div class="dialog-text">
-        On the night of the 2nd of April, the databse where all the icons are hosted was hacked and taken ransom.
+      <div class="dialog-text coral-Well m-b-25">
+        On the 2nd of April, the databse with all the icons was hacked and deleted. Everything has been secured and is now safe to upload icons. Some old icons might still be unavailabe while I work to get as many icons as I can back.
         <br>
         <br>
-        The hacker deleted all the submissions and is asking for 0.015btc (around $900) to get it back. I have a backup which I'm working on getting it online.
-        <br>
-        <br>
-        To read more about the incident, whcih unfortunately is not an April Fool's joke, read the blog post.
+        To read more about the incident, <router-link to="/blog/hacked"> read the blog post. </router-link>
       </div>
 
-      <!-- <div class="dialog-text">
+      <div class="dialog-text">
         <b> We'll let you know by email when the icon has been approved. </b>
         <br>
         <ul class="coral-List p-t-10 p-b-10">
@@ -27,15 +24,15 @@
           </li>
           <li class="coral-List-item"> <b> The file name must be the same as the name of the app. </b></li>
         </ul>
-      </div> -->
+      </div>
 
-      <!-- <div v-if="isLoading" class="loading-overlay">
+      <div v-if="isLoading" class="loading-overlay">
         <div class="loading-popup">
           <coral-progress indeterminate>{{ uploadProgress }}/{{ totalNumFiles }} icons uploaded</coral-progress>
         </div>
-      </div> -->
+      </div>
 
-      <!-- <div class="icon-upload-grid">
+      <div class="icon-upload-grid">
         
         <div v-if="imageData" class="icons-preview-wrapper">
           
@@ -85,7 +82,7 @@
           <input id="credit" is="coral-textfield" type="url" placeholder="MAKE SURE IT'S A FULL URL: GitHub, Twitter, portfolio site... " labelledby="email-label" class="coral-Form-field" @change="saveCredit">
         </form>
 
-      </div> -->
+      </div>
   
     </coral-dialog-content>
     
@@ -192,7 +189,7 @@ export default {
           }
           console.log(fileName, file.name);
           
-          const Icons = Parse.Object.extend("Icons");
+          const Icons = Parse.Object.extend("Icons2");
           const icons = new Icons()
           const parseFile = new Parse.File(fileName, file); // Set file to new Parse object
           parseFile.save().then((uploaded) => {

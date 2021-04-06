@@ -33,10 +33,12 @@
            Free app icons
         </h1>
 
-        <p class="coral-Body--L w-100 body-text">
-          A hacker has deleted the database with all the icons. I'm working on restoring a backup.
+        <p class="coral-Body--L w-100 body-text coral-Well m-t-10">
+          Icon submissions back to normal, I'm working hard on getting as may icons as I can back. More info soon.
+          <br>
+          <br>
             <router-link to="/blog/hacked">
-              <span class="underline">Read more on the blog. </span>
+              <span class="underline"> Read more about the hack. </span>
             </router-link>
         </p>
         <!-- <p class="coral-Body--L w-100 body-text">
@@ -47,7 +49,7 @@
         </p> -->
         
 
-        <div class="m-auto m-t-45">
+        <div class="m-auto m-t-35">
           
           <!-- Desktop Buttons -->
           <div class="d-inline-block mobile-hidden">

@@ -35,10 +35,10 @@
           </router-link>
         </div>
 
-        <div class="single-ad mobile-ad m-t-50 m-b-50">
+        <div class="single-ad p-b-20 p-t-30">
           <script async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
         </div>
-
+        
       </div>
 
   </div>

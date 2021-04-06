@@ -296,7 +296,7 @@ const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://media.macosicons.com/parse'
 
-var Icons = Parse.Object.extend("Icons");
+var Icons = Parse.Object.extend("Icons2");
 
 let algolia = {
     appid: process.env.VUE_APP_ALGOLIA_APPID,
@@ -304,8 +304,8 @@ let algolia = {
 }
 
 // TODO: remove credentiaks
-let parseUser = process.env.VUE_APP_PARSE_USER
-let parsePass = process.env.VUE_APP_PARSE_PASS
+let parseUser = process.env.VUE_APP_PARSE_USER_EMAIL
+let parsePass = process.env.VUE_APP_PARSE_USER_PASS
 
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
@@ -630,7 +630,7 @@ export default {
 
       const query = new Parse.Query(Icons);
       query.equalTo("approved", true)
-      query.descending("createdAt");
+      query.descending("timeStamp");
       query.skip(howManyRecords);
       query.limit(docLimit);
       const results = await query.find()
@@ -684,7 +684,7 @@ export default {
 
         const query = new Parse.Query(Icons);
         query.equalTo("approved", true)
-        query.descending("createdAt");
+        query.descending("timeStamp");
         query.limit(docLimit);
         parent.howManyRecords = docLimit
         const results = await query.find()
@@ -735,7 +735,7 @@ export default {
       console.log(icon);
       console.log(newName);
       
-      const IconsBase = Parse.Object.extend("Icons");
+      const IconsBase = Parse.Object.extend("Icons2");
       const query = new Parse.Query(IconsBase);
       const docToEdit = await query.get(icon.objectID)
 
