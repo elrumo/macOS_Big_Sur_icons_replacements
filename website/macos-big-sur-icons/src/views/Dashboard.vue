@@ -165,7 +165,7 @@ import Parse from 'parse'
 Parse.initialize("macOSicons");
 Parse.serverURL = 'https://media.macosicons.com/parse'
 
-const Icons = Parse.Object.extend("Icons");
+const Icons = Parse.Object.extend("Icons2");
 
 Parse.User.enableUnsafeCurrentUser() // Enable cache for user auth, to avoid having to always login
 const currentUser = Parse.User.current(); // Check if user is currently logged in or not
@@ -283,7 +283,7 @@ export default {
 
         for(let doc in icon.icons){
 
-          const IconsBase = Parse.Object.extend("Icons");
+          const IconsBase = Parse.Object.extend("Icons2");
           const query = new Parse.Query(IconsBase);
           const docToEdit = await query.get(icon.icons[doc].id)
 
@@ -297,7 +297,7 @@ export default {
         }
       } else if(!isMultipleIcons){
 
-        const IconsBase = Parse.Object.extend("Icons");
+        const IconsBase = Parse.Object.extend("Icons2");
         const query = new Parse.Query(IconsBase);
         const docToEdit = await query.get(icon.id)
 
@@ -324,24 +324,42 @@ export default {
 
       await console.log(user);
 
-      try {
-        await user.signUp().then(()=>{
-          parent.isAuth =  true;
-        });
-        console.log();
-      } catch (error) {
-        console.log(error.code);
+        Parse.User.logIn(email, password).then((user) => { // Logging in user
+        parent.isAuth = true;
+        console.log(user);
+      }).catch((error) =>{
+        console.log(error);
+      })
 
-        if (error.code == 202) { // 202 error = email arleady exists, so attemptying to log them in instead.
-          Parse.User.logIn(email, password).then((user) => { // Logging in user
-            parent.isAuth = true;
-            console.log(user);
-          }).catch((error) =>{
-            console.log(error);
-          })
-        }
+      // try {
+      //   await user.signUp().then(()=>{
+      //     parent.isAuth =  true;
+      //   });
+      //   console.log();
+      // } catch (error) {
+      //   console.log(error.code);
+
+      //   Parse.User.logIn(email, password).then((user) => { // Logging in user
+      //     parent.isAuth = true;
+      //     console.log(user);
+      //   }).catch((error) =>{
+      //     console.log(error);
+      //   })
+
+      //   if (error.code == 202) { // 202 error = email arleady exists, so attemptying to log them in instead.
+      //     Parse.User.logIn(email, password).then((user) => { // Logging in user
+      //       parent.isAuth = true;
+      //       console.log(user);
+      //     }).catch((error) =>{
+      //       console.log(error);
+      //     })
+      //   }
+
+      //   if (error.code == 119) { // 202 error = Does not have persmission to sign up.
+      //     console.log(error);
+      //   }
         
-      }
+      // }
     },
 
     isObjEmpty(obj){
