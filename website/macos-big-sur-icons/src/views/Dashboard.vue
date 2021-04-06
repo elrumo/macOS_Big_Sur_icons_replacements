@@ -330,36 +330,6 @@ export default {
       }).catch((error) =>{
         console.log(error);
       })
-
-      // try {
-      //   await user.signUp().then(()=>{
-      //     parent.isAuth =  true;
-      //   });
-      //   console.log();
-      // } catch (error) {
-      //   console.log(error.code);
-
-      //   Parse.User.logIn(email, password).then((user) => { // Logging in user
-      //     parent.isAuth = true;
-      //     console.log(user);
-      //   }).catch((error) =>{
-      //     console.log(error);
-      //   })
-
-      //   if (error.code == 202) { // 202 error = email arleady exists, so attemptying to log them in instead.
-      //     Parse.User.logIn(email, password).then((user) => { // Logging in user
-      //       parent.isAuth = true;
-      //       console.log(user);
-      //     }).catch((error) =>{
-      //       console.log(error);
-      //     })
-      //   }
-
-      //   if (error.code == 119) { // 202 error = Does not have persmission to sign up.
-      //     console.log(error);
-      //   }
-        
-      // }
     },
 
     isObjEmpty(obj){
@@ -419,18 +389,7 @@ export default {
         console.log(e);
         parent.showToast({id:"approveError"})
       });
-    },
-
-    indexIcon(icon){  
-      console.log(icon);
-      functions.useFunctionsEmulator("http://localhost:5001")
-      const indexIcon = functions.httpsCallable("indexIconTest");
-      
-      indexIcon(icon).then(result =>{
-        console.log(result.data);
-      })
-    },
-    
+    },    
 
     getIconListLen(query){
       let parent = this
@@ -450,6 +409,7 @@ export default {
       const query = new Parse.Query(Icons);
       query.equalTo("approved", false)
       query.ascending(parent.sortBy);
+      query.exists("highResPngFile");
       query.skip(howManyRecords);
       query.limit(docLimit);
       const results = await query.find()
@@ -474,7 +434,7 @@ export default {
             let appName = docData.appName
             let email = docData.email
             let creditUrl = docData.credit
-            
+
             docData.id = results[result].id
 
             if (usersName == "" || usersName == undefined ) {
@@ -535,7 +495,6 @@ export default {
       if (!Parse.User.current().attributes.isAdmin) {
         parent.$router.push({ path: '/' })
         Parse.User.logOut();
-        console.log("Hiii");
         return
       }
 
@@ -545,6 +504,7 @@ export default {
         const query = new Parse.Query(Icons);
         query.equalTo("approved", false)
         query.ascending("usersName");
+        query.exists("highResPngFile");
         query.limit(docLimit);
           
         

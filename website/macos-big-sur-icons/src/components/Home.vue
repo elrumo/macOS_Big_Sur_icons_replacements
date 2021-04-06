@@ -210,7 +210,7 @@
         </div>
 
     <!-- Seen when no auth  -->
-        <div v-if="!isAuth & !loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular">
+        <div v-if="!isAuth & !loadingError" id="iconListArea" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular">
 
           <!-- Carbon ads -->
             <!-- <div id="native-grid-js" class="native-js"></div> -->
@@ -290,8 +290,10 @@ import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config()
 
 // TODO: remove credentiaks
-const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
-const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
+const VUE_APP_PARSE_APP_ID = "macOSicons"
+const VUE_APP_PARSE_JAVASCRIPT_KEY = "macOSicons"
+// const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
+// const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
 Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://media.macosicons.com/parse'
@@ -731,13 +733,20 @@ export default {
     async editDoc(icon, e, field){
       let newName = e.target.value
       
-      console.log(icon.objectID);
+      let id
+      if (icon.algoliaID == undefined) {
+          id = icon.id
+      } else {
+          id = icon.algoliaID
+      }
+
       console.log(icon);
-      console.log(newName);
-      
+      console.log(id);
+
       const IconsBase = Parse.Object.extend("Icons2");
       const query = new Parse.Query(IconsBase);
-      const docToEdit = await query.get(icon.objectID)
+      const docToEdit = await query.get(id)
+
 
       docToEdit.set({ [field]: newName }) // Save icnsToStore obj with .icns file and its url to Parse server
       docToEdit.save().then(() =>{

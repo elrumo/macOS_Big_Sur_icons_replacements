@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueMeta from 'vue-meta'
 
-import HomeView from '../views/HomeView.vue'
+import Home from '../components/Home.vue'
 import BlogPost from '../views/BlogPost.vue'
 import BlogHome from '../views/BlogHome.vue'
 
@@ -13,7 +13,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: HomeView
+    component: () => import('../components/Home.vue')
   },
   {
     path: '/dashboard',
@@ -377,12 +377,12 @@ const routes = [
   {
     path: '/:search',
     name: 'Search',
-    component: HomeView
+    component: Home
   },
   {
     path: '/WhatsApp',
     name: 'WhatsApp',
-    component: HomeView,
+    component: Home,
     meta: { 
       title: 'Free WhatsApp icons for macOS Big Sur.',
       description:"Free WhatsApp and 5000+ App icons for macOS in the style of macOS Big Sur. Fully open source and community led.",
