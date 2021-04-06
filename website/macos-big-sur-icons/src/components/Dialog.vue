@@ -67,6 +67,9 @@
           </div>
         </coral-fileupload>
 
+        <!-- <form class="coral-Form coral-Form--vertical" > -->
+        <!-- </form> -->
+
         <form class="coral-Form coral-Form--vertical" >
           <label id="email-label" class="coral-FieldLabel">Your email</label>
           <input id="email-contributor" is="coral-textfield" labelledby="email-label" class="coral-Form-field" type="email"  v-on:change="setEmail">
@@ -76,11 +79,13 @@
           <label id="yourName-label" class="coral-FieldLabel">Your name</label>
           <input id="yourName-contributor" is="coral-textfield" labelledby="email-label" class="coral-Form-field" @change="setYourName">
         </form>
-
+        
         <form class="coral-Form coral-Form--vertical" >
           <label id="credit-label" class="coral-FieldLabel">How should we credit you?</label>
           <input id="credit" is="coral-textfield" type="url" placeholder="MAKE SURE IT'S A FULL URL: GitHub, Twitter, portfolio site... " labelledby="email-label" class="coral-Form-field" @change="saveCredit">
         </form>
+
+        <coral-checkbox id="isReupload">I'm re-uploading an icon that was previously on the site</coral-checkbox>
 
       </div>
   
@@ -160,6 +165,7 @@ export default {
         parent.imageData = true
         
       },
+
       async onUpload(){
         let parent = this
         
@@ -175,6 +181,8 @@ export default {
 
         parent.isLoading = true
         let dialog = document.getElementById('submitIcon')
+        let isReupload = document.getElementById('isReupload').checked
+
         for(let fileNum in parent.filesToUpload){
           let file =  parent.filesToUpload[fileNum];
           let appName = file.name.replace('.png', '');
@@ -204,6 +212,7 @@ export default {
               fileName: fileName,
               highResPngFile: parseFile,
               highResPngUrl: iconUrl,
+              isReupload: isReupload,
               timeStamp: Date.now(),
               approved: false,
             }

@@ -20,14 +20,16 @@ import '@adobe/coral-spectrum/coral-component-button'
 import '@adobe/coral-spectrum/coral-component-toast'
 import '@adobe/coral-spectrum/coral-component-icon'
 
-import '@adobe/coral-spectrum/coral-component-icon/src/resources/spectrum-icons.svg';
-import '@adobe/coral-spectrum/coral-component-icon/src/resources/spectrum-icons-color.svg';
-import '@adobe/coral-spectrum/coral-component-icon/src/resources/spectrum-css-icons.svg';
+// import '@adobe/coral-spectrum/coral-component-icon/src/resources/spectrum-icons.svg';
+// import '@adobe/coral-spectrum/coral-component-icon/src/resources/spectrum-icons-color.svg';
+// import '@adobe/coral-spectrum/coral-component-icon/src/resources/spectrum-css-icons.svg';
 
+import '@adobe/coral-spectrum/coral-component-checkbox'
 import '@adobe/coral-spectrum/coral-component-wait'
 import '@adobe/coral-spectrum/coral-component-progress'
 import '@adobe/coral-spectrum/coral-component-quickactions'
 import '@adobe/coral-spectrum/coral-component-fileupload'
+import '@adobe/coral-spectrum/coral-component-textfield'
 import '@adobe/coral-spectrum/coral-component-textfield'
 import '@adobe/coral-spectrum/coral-component-search'
 import '@adobe/coral-spectrum/coral-component-overlay'
