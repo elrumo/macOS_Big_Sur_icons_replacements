@@ -24,6 +24,7 @@ import '@adobe/coral-spectrum/coral-component-icon'
 // import '@adobe/coral-spectrum/coral-component-icon/src/resources/spectrum-icons-color.svg';
 // import '@adobe/coral-spectrum/coral-component-icon/src/resources/spectrum-css-icons.svg';
 
+import '@adobe/coral-spectrum/coral-component-status'
 import '@adobe/coral-spectrum/coral-component-checkbox'
 import '@adobe/coral-spectrum/coral-component-wait'
 import '@adobe/coral-spectrum/coral-component-progress'

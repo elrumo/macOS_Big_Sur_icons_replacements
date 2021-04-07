@@ -90,7 +90,7 @@
 
           <div class="icon-list-area">
             <div v-for="icon in user.icons" class="card-wrapper coral-card" :key="icon.fileName">
-
+              <coral-status v-if="icon.isReupload" variant="success"></coral-status>
               <div class="card-img-wrapper" style="max-width: 120px;">
                 <div v-if="icon.isReview" class="loading-approval-wrapper">
                   <div class="loading-approval">
