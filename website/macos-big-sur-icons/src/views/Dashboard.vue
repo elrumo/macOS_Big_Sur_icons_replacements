@@ -91,8 +91,8 @@
           <div class="icon-list-area">
             <div v-for="icon in user.icons" class="card-wrapper coral-card" :key="icon.fileName">
               
-              <coral-status v-if="icon.isReupload && icon.isAuthor" variant="warning"></coral-status>
-              <coral-status v-if="icon.isReupload && !icon.isAuthor" variant="success"></coral-status>
+              <coral-status v-if="icon.isReupload && icon.isAuthor" variant="success"></coral-status>
+              <coral-status v-if="icon.isReupload && !icon.isAuthor" variant="warning"></coral-status>
 
               <div class="card-img-wrapper" style="max-width: 120px;">
                 <div v-if="icon.isReview" class="loading-approval-wrapper">
