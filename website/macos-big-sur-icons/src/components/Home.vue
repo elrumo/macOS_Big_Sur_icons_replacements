@@ -179,7 +179,7 @@
 
                 <div class="quick-actions-wrapper">
                   <div class="quick-action-el">
-                    <coral-icon @click="showDialog('deleteDialog', icon)" class="h-full quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
+                    <coral-icon @click="showDialog('deleteDialog', icon)" class="quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
                   </div>
                 </div>
                   
@@ -235,10 +235,10 @@
 
               <!-- <div class="quick-actions-wrapper">
                 <div class="quick-action-el">
-                  <coral-icon @click="showDialog('deleteDialog', icon)" class="h-full quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
+                  <coral-icon @click="showDialog('deleteDialog', icon)" class="quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
                 </div>
                 <div class="quick-action-el">
-                  <coral-icon @click="showDialog('deleteDialog', icon)" class="h-full quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
+                  <coral-icon @click="showDialog('deleteDialog', icon)" class="quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
                 </div>
               </div> -->
               
