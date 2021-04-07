@@ -106,7 +106,7 @@
 
                 <div class="quick-actions-wrapper">
                   <div class="quick-action-el">
-                    <coral-icon @click="deleteSubmission(icon)" class="h-full quick-action-icon" :id="icon.fileName" :icon="coralIcons.delete" title="Delete"></coral-icon>
+                    <coral-icon @click="deleteSubmission(icon)" class="quick-action-icon" :id="icon.fileName" :icon="coralIcons.delete" title="Delete"></coral-icon>
                   </div>
                 </div>
 
