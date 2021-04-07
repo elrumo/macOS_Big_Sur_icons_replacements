@@ -1,6 +1,9 @@
 <template>
     <router-link :to="link">
         <div class="coral-Well instructions-item Box">
+            <div class="new-pill" v-if="isNew(step)">
+                <coral-status variant="info">New</coral-status>
+            </div>
             <div class="resources-card-wrapper">
             
             <div v-if="!step.gradient" class="instructions-img-wrapper">
@@ -46,6 +49,21 @@ export default {
     },
 
     mounted: function(){
+    },
+
+    methods:{
+        isNew(item){
+            let postDate = new Date(item.created_at)
+            postDate = Date.parse(postDate)
+            postDate = postDate + 172800000 // Ads 48 hours to page date
+            let dateNow = Date.now()
+
+            if (item.created_at == undefined || postDate < dateNow) {
+                return false
+            } else {
+                return true;
+            }
+        }
     },
     
     computed: {

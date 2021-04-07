@@ -26,12 +26,17 @@ export async function getBlogPost(postSlug) {
 }
 
 export async function getPages(n) { 
-    let pages = api.pages.browse({limit: n, order: 'published_at DESC'});
-    // console.log(await pages);
-    return await pages
-    .catch(err => {
-        console.error("err: ", err);
-    });
+    let pages = await api.pages.browse({limit: n, order: 'published_at DESC'});
+    
+    // Check if page is featured and place it at the front
+    pages.forEach(async page => {
+        if (page.featured) {
+            pages.splice(pages.indexOf(page), 1)
+            pages.unshift(page)
+        }
+    })
+    
+    return pages
 }
 
 export async function getSinglePage(resourceSlug) { 

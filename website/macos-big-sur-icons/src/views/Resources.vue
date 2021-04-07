@@ -36,6 +36,8 @@ import H3Description from '@/components/H3_Description.vue'
 
 import pages from '@/api/pages.json';
 
+import { mapActions } from 'vuex'
+
 export default {
   name: 'Resources',
   
@@ -111,11 +113,18 @@ export default {
   mounted: async function(){
     const parent = this;
     let storeResourcesData = parent.$store.state.resourcesData
-    // console.log("storeResourcesData: ", await storeResourcesData);
+    parent.getPages()
     parent.resourcesData = await storeResourcesData;
   },
 
   methods: {
+    ...mapActions([
+      'getPageData,'  
+    ]),
+
+    async getPages(){
+      console.log(getPageData);
+    }
   }
 
 }

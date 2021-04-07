@@ -9,6 +9,7 @@ import localPosts from '@/api/posts.json';
 import icons from '@/api/icons.json';
 import { getPages, getSinglePage } from '@/api/posts';
 
+
 export default new Vuex.Store({
 
   state: {
@@ -18,9 +19,9 @@ export default new Vuex.Store({
     blogPosts: {},
     localPosts: localPosts,
 
-    resourcesData: localPages,
+    resourcesData: getPages(10),
     singleResourceData: {},
-    moreResources: getPages(2)
+    moreResources: getPages(10)
   },
 
   mutations: {   
@@ -28,6 +29,10 @@ export default new Vuex.Store({
       store.list.push(iconData)
     },
     
+    pushAllPages(){
+      return localPages
+    },
+
     pushDataToArr(store, iconData){
       // console.log("func: ", iconData.func);
       if (Array.isArray(iconData.data)) {
@@ -57,7 +62,7 @@ export default new Vuex.Store({
     showToast(store, dialogId){
       document.getElementById(dialogId.id).show();
     },
-
+    
     getPageData(store){
       console.log(store.resourcesData);
       return "Hi"
