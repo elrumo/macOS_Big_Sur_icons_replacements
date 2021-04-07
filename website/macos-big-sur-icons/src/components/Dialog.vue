@@ -85,12 +85,19 @@
           <input id="credit" is="coral-textfield" type="url" placeholder="MAKE SURE IT'S A FULL URL: GitHub, Twitter, portfolio site... " labelledby="email-label" class="coral-Form-field" @change="saveCredit">
         </form>
 
-        <section>
+        <section class="p-t-5">
           <div>
-            <coral-checkbox id="isReupload">I'm re-uploading an icon that was previously on the site</coral-checkbox>
+            <coral-checkbox id="isReupload">
+              I'm re-uploading an icon that was previously on the site
+            </coral-checkbox>
           </div>
+
           <div>
-            <coral-checkbox id="isAuthor">I'm the original author of these icons</coral-checkbox>
+            <coral-checkbox id="isAuthor">I'm the original author of these icons. 
+              <span class="opacity-80 p-l-5 f-w-200 coral-Body--XS">
+                (It's ok if you aren't)
+              </span>
+            </coral-checkbox>
           </div>
         </section>
 
