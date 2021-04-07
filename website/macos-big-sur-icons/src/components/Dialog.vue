@@ -85,7 +85,14 @@
           <input id="credit" is="coral-textfield" type="url" placeholder="MAKE SURE IT'S A FULL URL: GitHub, Twitter, portfolio site... " labelledby="email-label" class="coral-Form-field" @change="saveCredit">
         </form>
 
-        <coral-checkbox id="isReupload">I'm re-uploading an icon that was previously on the site</coral-checkbox>
+        <section>
+          <div>
+            <coral-checkbox id="isReupload">I'm re-uploading an icon that was previously on the site</coral-checkbox>
+          </div>
+          <div>
+            <coral-checkbox id="isAuthor">I'm the original author of these icons</coral-checkbox>
+          </div>
+        </section>
 
       </div>
   
@@ -182,6 +189,7 @@ export default {
         parent.isLoading = true
         let dialog = document.getElementById('submitIcon')
         let isReupload = document.getElementById('isReupload').checked
+        let isAuthor = document.getElementById('isAuthor').checked
 
         for(let fileNum in parent.filesToUpload){
           let file =  parent.filesToUpload[fileNum];
@@ -209,10 +217,12 @@ export default {
               email: parent.email,
               credit: parent.credit,
               usersName: parent.yourName,
+              uploadedBy: parent.yourName,
               fileName: fileName,
               highResPngFile: parseFile,
               highResPngUrl: iconUrl,
               isReupload: isReupload,
+              isAuthor: isAuthor,
               timeStamp: Date.now(),
               approved: false,
             }
