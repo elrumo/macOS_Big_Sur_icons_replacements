@@ -437,6 +437,8 @@ export default {
     let parent = this;
 
     window.addEventListener('scroll', this.handleScroll);
+
+    console.log(Parse.Analytics.track("test", "test2"));
     
     // Get today's date
     ////////////////////////////////////////////////////////////////
