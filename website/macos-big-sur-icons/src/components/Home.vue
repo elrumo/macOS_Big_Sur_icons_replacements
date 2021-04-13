@@ -33,6 +33,8 @@
       </coral-dialog-footer>
     </coral-dialog> -->
 
+    {{ getTotalRestore }}
+
     <!-- Hero -->
     <Hero
       v-bind:list="list"
@@ -289,7 +291,7 @@ import VueLoadImage from 'vue-load-image'
 import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config()
 
-// TODO: remove credentiaks
+// TODO: remove credentials
 const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
 const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
@@ -793,6 +795,17 @@ export default {
   },
 
   computed:{
+
+    async getTotalRestore(){
+      const query = new Parse.Query(Icons)
+      // query.exists("highResPngFile")
+      // query.doesNotExist("highResPngFile")
+      query.exists("icnsFile")
+      let numIcons = await query.count()
+      console.log(numIcons);
+      
+      // return numIcons
+    },
 
     getParseObj(){
       return Icons
