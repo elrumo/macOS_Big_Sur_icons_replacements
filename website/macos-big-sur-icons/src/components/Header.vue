@@ -306,11 +306,11 @@ export default {
 
         // Check user's colour theme
         let isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-        if (isDark) {
-            window.plausible("colourTheme", {props: { Theme: "Dark" }})
-        }else{
-            window.plausible("colourTheme", {props: { Theme: "Light" }})
-        }
+        // if (isDark) {
+        //     window.plausible("colourTheme", {props: { Theme: "Dark" }})
+        // }else{
+        //     window.plausible("colourTheme", {props: { Theme: "Light" }})
+        // }
 
         window.addEventListener('scroll', this.handleScroll);
 
