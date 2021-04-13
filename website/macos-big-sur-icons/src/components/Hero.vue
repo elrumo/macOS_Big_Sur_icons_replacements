@@ -30,7 +30,7 @@
           <span class="f-w-100 f-s-26">macOS Big Sur</span>
           <br />
           <!-- The Icons Page -->
-           Free app icons
+           Replacement app icons
         </h1>
 
         <p class="coral-Body--L w-100 body-text coral-Well m-t-10">
