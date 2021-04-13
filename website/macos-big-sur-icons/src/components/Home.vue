@@ -226,8 +226,8 @@
             :href="downladUrl(icon)"
             target="_blank"
             download
-            @click="addClickCount(icon)"
           >
+          <!-- @click="addClickCount(icon)" -->
           
             <div class="card-img-wrapper">
               
