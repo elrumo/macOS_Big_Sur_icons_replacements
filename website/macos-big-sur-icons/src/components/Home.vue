@@ -33,7 +33,7 @@
       </coral-dialog-footer>
     </coral-dialog> -->
 
-    {{ getTotalRestore }}
+    <!-- {{ getTotalRestore }} -->
 
     <!-- Hero -->
     <Hero
