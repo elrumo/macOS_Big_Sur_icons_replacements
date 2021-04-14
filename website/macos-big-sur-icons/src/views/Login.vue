@@ -30,8 +30,7 @@ export default {
   methods: {
     async appleLogin(){
       const response = await window.AppleID.auth.signIn();
-      console.log("response: " + response);
-      console.log("response.user: " + response.user);
+      console.log("response: ", response);
     }
   },
 
