@@ -15,6 +15,7 @@
 
 <script>
 import Parse from 'parse'
+import jwt_decode from 'jwt-decode';
 
 export default {
   name: 'About',
@@ -29,8 +30,37 @@ export default {
   
   methods: {
     async appleLogin(){
+      let parent = this;
       const response = await window.AppleID.auth.signIn();
-      console.log("response: ", response);
+      // console.log("response: ", response);
+      const userToLogin = new Parse.User();
+
+      const decodedIdToken = jwt_decode(response.authorization.id_token);
+      console.log(decodedIdToken);
+      
+      let appleEmail = decodedIdToken.email
+      let appleId = decodedIdToken.sub
+      let token = response.authorization.id_token
+
+      userToLogin.set('username', appleEmail);
+      userToLogin.set('email', appleEmail)
+
+      let authData = {
+        id:  appleId,
+        token: token
+      }
+
+      console.log(authData);
+
+      await userToLogin.linkWith('apple', {
+        authData: authData
+        })
+        .then(async (loggedInUser) =>{
+        console.log(loggedInUser);
+      }).catch((error) => {
+        console.log(error);
+      })
+      
     }
   },
 
@@ -38,13 +68,6 @@ export default {
     let parent = this
 
     // let currentUser = await Parse.User.currentAsync();
-    // const user = new Parse.User();
-
-    // user.linkWith('apple', {authData: parent.appleAuth}).then((authData) => {
-    //   console.log(authData);
-    // }).catch((error) => {
-    //   console.log(error);
-    // })
     //  async function logIn(){
       // await user.linkWith('apple', {authData:parent.appleAuth}).then
     //    }
@@ -52,11 +75,13 @@ export default {
 
      AppleID.auth.init({
         clientId : process.env.VUE_APP_APPLE_CLIENTID,
-        scope : 'name email',
+        scope : 'email',
         redirectURI : process.env.VUE_APP_APPLE_REDIRECT,
         state : process.env.VUE_APP_APPLE_STATE,
         usePopup : true //or false defaults to false
     });
+
+
 
   }
 
