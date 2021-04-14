@@ -1,6 +1,6 @@
 <template>
   <div>
-        <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in"></div>
+        <div @click="appleLogin" style="height: 40px; width: 100px; background: black;" ></div>
 
     <!-- <vue-apple-signin></vue-apple-signin> -->
     <!-- <vue-apple-signin
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import Parse from 'parse'
 
 export default {
   name: 'About',
@@ -21,8 +22,35 @@ export default {
   components: {
   },
 
-  mounted: function(){
-     
+  data(){
+    return {
+    }
+  },
+  
+  methods: {
+    async appleLogin(){
+      const response = await window.AppleID.auth.signIn();
+      console.log("response: " + response);
+      console.log("response.user: " + response.user);
+    }
+  },
+
+  mounted: async function(){
+    let parent = this
+
+    // let currentUser = await Parse.User.currentAsync();
+    // const user = new Parse.User();
+
+    // user.linkWith('apple', {authData: parent.appleAuth}).then((authData) => {
+    //   console.log(authData);
+    // }).catch((error) => {
+    //   console.log(error);
+    // })
+    //  async function logIn(){
+      // await user.linkWith('apple', {authData:parent.appleAuth}).then
+    //    }
+    //  logIn()
+
      AppleID.auth.init({
         clientId : process.env.VUE_APP_APPLE_CLIENTID,
         scope : 'name email',
@@ -30,16 +58,8 @@ export default {
         state : process.env.VUE_APP_APPLE_STATE,
         usePopup : true //or false defaults to false
     });
- 
-
-    const singInApple = async () => {
-      const response = await window.AppleID.auth.signIn();
-      console.log(response);
-      return response;
-    };
-
-    singInApple()
 
   }
+
 }
 </script>
