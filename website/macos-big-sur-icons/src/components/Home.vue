@@ -301,8 +301,10 @@ Parse.serverURL = 'https://media.macosicons.com/parse'
 var Icons = Parse.Object.extend("Icons2");
 
 let algolia = {
-    appid: process.env.VUE_APP_ALGOLIA_APPID,
-    apikey: process.env.VUE_APP_ALGOLIA_KEY
+    appid: "P1TXH7ZFB3",
+    apikey: "0ba04276e457028f3e11e38696eab32c"
+    // appid: process.env.VUE_APP_ALGOLIA_APPID,
+    // apikey: process.env.VUE_APP_ALGOLIA_KEY
 }
 
 // TODO: remove credentiaks
@@ -633,6 +635,7 @@ export default {
       const query = new Parse.Query(Icons);
       query.equalTo("approved", true)
       query.descending("timeStamp");
+      query.exists("icnsFile");
       query.skip(howManyRecords);
       query.limit(docLimit);
       const results = await query.find()
@@ -717,7 +720,7 @@ export default {
         parent.scroll()
 
       } catch (error) {
-        parent.loadingError = "true"
+        // parent.loadingError = "true"
         handleParseError(error)
         console.log("loadingError: ", error);
       }
