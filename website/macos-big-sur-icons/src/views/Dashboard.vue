@@ -165,7 +165,9 @@ import { mapActions } from 'vuex';
 
 import Parse from 'parse'
 
-Parse.initialize("macOSicons");
+const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
+const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
+Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY);
 Parse.serverURL = 'https://media.macosicons.com/parse'
 
 const Icons = Parse.Object.extend("Icons2");
@@ -376,7 +378,7 @@ export default {
         Vue.set(parentIcon, 'isReview', true)
         parent.showToast({id:"iconApproved"})
       }).catch((e)=>{
-        console.log(e);
+        console.log("error: ", e);
         parent.showToast({id:"approveError"})
       });
     },
