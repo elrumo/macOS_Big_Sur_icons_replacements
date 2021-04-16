@@ -300,6 +300,7 @@ Parse.serverURL = 'https://media.macosicons.com/parse'
 
 var Icons = Parse.Object.extend("Icons2");
 
+  // TODO: remove credentiaks
 let algolia = {
     appid: process.env.VUE_APP_ALGOLIA_APPID,
     apikey: process.env.VUE_APP_ALGOLIA_KEY
