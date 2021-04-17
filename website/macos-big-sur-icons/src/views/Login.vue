@@ -1,15 +1,8 @@
 <template>
   <div>
-        <div @click="twitterLogin" style="height: 40px; width: 100px; background: black;" ></div>
+        <div @click="testAPI" style="height: 40px; width: 100px; background: black;" ></div>
+        <!-- <div @click="twitterLogin" style="height: 40px; width: 100px; background: black;" ></div> -->
         <!-- <div @click="appleLogin" style="height: 40px; width: 100px; background: black;" ></div> -->
-
-    <!-- <vue-apple-signin></vue-apple-signin> -->
-    <!-- <vue-apple-signin
-      style="cursor: pointer"
-      color="black"
-      :border="true"
-      type="sign in"
-    ></vue-apple-signin> -->
 
   </div>
 </template>
@@ -30,13 +23,47 @@ export default {
   },
   
   methods: {
+    
+    async testAPI(){
+      let obj = {
+            "appName": "Luminar AI",
+            "email": "antonbulzomi@icloud.com",
+            "credit": "https://twitter.com/bulzomianton",
+            "usersName": "Anton Bulzomi",
+            "uploadedBy": "Anton Bulzomi",
+            "fileName": "1618559771420",
+            "highResPngFile": {
+                "__type": "File",
+                "name": "45ab46b8afc4f00814f6951152afb7a2_1618559771420.png",
+                "url": "http://media.macosicons.com/parse/files/macOSicons/45ab46b8afc4f00814f6951152afb7a2_1618559771420.png"
+            },
+            "highResPngUrl": "https://media.macosicons.com/parse/files/macOSicons/45ab46b8afc4f00814f6951152afb7a2_1618559771420.png",
+            "isReupload": false,
+            "isAuthor": true,
+            "timeStamp": 1618559783389,
+            "approved": false,
+            "createdAt": "2021-04-16T07:56:25.903Z",
+            "updatedAt": "2021-04-16T07:56:27.879Z",
+            "alogliaID": "EfXvT6mqvD",
+            "id": "EfXvT6mqvD",
+            "imgUrl": "https://media.macosicons.com/parse/files/macOSicons/45ab46b8afc4f00814f6951152afb7a2_1618559771420.png"
+      }
+
+      Parse.Cloud.run("testJob", obj).then((result)=>{
+        console.log(result);
+        parent.showToast({id:"iconApproved"})
+      }).catch((e)=>{
+        console.log(e);
+        parent.showToast({id:"approveError"})
+      });
+    
+      // console.log(JSON.stringify(obj));
+      // console.log(JSON.parse(obj));
+      // console.log(response);
+
+    },
 
     async twitterLogin(){
-     
-
-
-
-
     },
 
     async appleLogin(){
