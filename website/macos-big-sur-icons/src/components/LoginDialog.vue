@@ -50,9 +50,9 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import { mapActions } from 'vuex';
 import Parse from 'parse'
+import jwt_decode from 'jwt-decode';
 
 Parse.initialize("macOSicons");
 Parse.serverURL = 'https://media.macosicons.com/parse'
@@ -123,14 +123,17 @@ export default {
   },
 
   mounted: function(){
-        AppleID.auth.init({
-      clientId : process.env.VUE_APP_APPLE_CLIENTID,
-      scope : 'email',
-      redirectURI : process.env.VUE_APP_APPLE_REDIRECT,
-      state : process.env.VUE_APP_APPLE_STATE,
-      usePopup : true //or false defaults to false
-    });
+        // AppleID.auth.init({
+    //   clientId : process.env.VUE_APP_APPLE_CLIENTID,
+    //   scope : 'email',
+    //   redirectURI : process.env.VUE_APP_APPLE_REDIRECT,
+    //   state : process.env.VUE_APP_APPLE_STATE,
+    //   usePopup : true //or false defaults to false
+    // });
     
+  // TODO: Remove Key
+
+
   }
 }
 </script>
