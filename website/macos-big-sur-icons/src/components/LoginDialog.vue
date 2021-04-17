@@ -81,38 +81,36 @@ export default {
     },
     
     methods:{
-      ...mapActions(['showToast', 'errorToast']),
+      ...mapActions(['showToast', 'errorToast', 'setUser']),
       
       async appleLogin(){
-      const response = await window.AppleID.auth.signIn();
-      console.log("response: ", response);
-      const userToLogin = new Parse.User();
+        let parent = this;
 
-      const decodedIdToken = jwt_decode(response.authorization.id_token);
-      console.log("decodedIdToken: ", decodedIdToken);
-      
-      let appleEmail = decodedIdToken.email
-      let appleId = decodedIdToken.sub
-      let token = response.authorization.id_token
+        const response = await window.AppleID.auth.signIn();
+        console.log("response: ", response);
+        const userToLogin = new Parse.User();
 
-      let authData = {
-        id:  appleId,
-        username:  appleEmail,
-        token: token
-      }
+        const decodedIdToken = jwt_decode(response.authorization.id_token);
+        console.log("decodedIdToken: ", decodedIdToken);
+        
+        let appleEmail = decodedIdToken.email
+        let appleId = decodedIdToken.sub
+        let token = response.authorization.id_token
 
-      console.log("authData: ", authData);
+        let authData = {
+          id:  appleId,
+          email:  appleEmail,
+          token: token
+        }
 
-      await userToLogin.linkWith('apple', {
-          authData: authData
+        await userToLogin.linkWith('apple', {
+            authData: authData
+          })
+          .then(async (loggedInUser) =>{
+            parent.setUser(JSON.parse(loggedInUser))
+          }).catch((error) => {
+            console.log(error);
         })
-        .then(async (loggedInUser) =>{
-          // login user to parse
-          console.log("userToLogin: ", userToLogin);
-          console.log("loggedInUser: ", loggedInUser);
-      }).catch((error) => {
-        console.log(error);
-      })
       
     },
 
@@ -123,6 +121,8 @@ export default {
   },
 
   mounted: function(){
+    
+    // TODO: Remove Key
     AppleID.auth.init({
       clientId : process.env.VUE_APP_APPLE_CLIENTID,
       scope : 'email',
@@ -131,9 +131,8 @@ export default {
       usePopup : true //or false defaults to false
     });
     
-  // TODO: Remove Key
 
-
+    
   }
 }
 </script>
