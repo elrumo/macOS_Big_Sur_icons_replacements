@@ -367,11 +367,12 @@ export default {
 
     async approveIcon(icon){  
       let parent = this
-      console.log(icon);
+      // console.log(icon);
 
       let parentIcon = parent.icons[icon.usersName].icons[icon.appName]
 
-      Parse.Cloud.run("approve", icon).then((result)=>{
+      // Parse.Cloud.run("approve", icon).then((result)=>{
+      Parse.Cloud.run("testJob", icon).then((result)=>{
         console.log(result);
         Vue.set(parentIcon, 'isReview', true)
         parent.showToast({id:"iconApproved"})

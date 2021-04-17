@@ -5,6 +5,7 @@
     >
 
         <Dialog/>
+        <LoginDialog/>
 
         <div class="header-wrapper">
             
@@ -199,7 +200,8 @@
                     
                     <!-- Submit icons -->
                     <div class="p-l-10">
-                        <button is="coral-button" variant="cta" @click="showDialog('submitIcon')">
+                        <button is="coral-button" variant="cta" @click="showDialog('loginDialog')">
+                        <!-- <button is="coral-button" variant="cta" @click="showDialog('submitIcon')"> -->
                             <span>Submit icons</span>
                         </button>
                     </div>
@@ -214,6 +216,7 @@
 
 <script>
 import Dialog from './Dialog.vue'
+import LoginDialog from './LoginDialog.vue'
 import vClickOutside from 'v-click-outside'
 
 export default {
@@ -225,6 +228,7 @@ export default {
 
     components:{
         Dialog,
+        LoginDialog
     },
     
     data(){
