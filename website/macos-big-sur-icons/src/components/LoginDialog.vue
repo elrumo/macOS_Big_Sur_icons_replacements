@@ -11,10 +11,10 @@
         
         <img style="width: 48px" :src="imgs.macOSiconsLogo" alt="">
 
-        <h3 class="coral-Heading--M">
+        <h3 class="coral-Heading--M m-t-10">
           Create an account
         </h3>
-        <p class="coral-Body--M">
+        <p class="coral-Body--M" style="font-weight: lighter">
           With an account you’ll be able to manage all your submissions and see their approval status.
         </p>
       </div>
@@ -107,7 +107,7 @@ export default {
             authData: authData
           })
           .then(async (loggedInUser) =>{
-            parent.setUser(JSON.parse(loggedInUser))
+            parent.setUser(JSON.parse(JSON.stringify(loggedInUser)))
           }).catch((error) => {
             console.log(error);
         })
@@ -121,8 +121,10 @@ export default {
   },
 
   mounted: function(){
-    
+
     // TODO: Remove Key
+
+
     AppleID.auth.init({
       clientId : process.env.VUE_APP_APPLE_CLIENTID,
       scope : 'email',
