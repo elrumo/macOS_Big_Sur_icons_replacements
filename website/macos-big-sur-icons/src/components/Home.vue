@@ -306,7 +306,7 @@ let algolia = {
     apikey: process.env.VUE_APP_ALGOLIA_KEY
 }
 
-// TODO: remove credentiaks
+// TODO: remove credentials
 let parseUser = process.env.VUE_APP_PARSE_USER_EMAIL
 let parsePass = process.env.VUE_APP_PARSE_USER_PASS
 

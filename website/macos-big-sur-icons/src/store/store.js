@@ -21,7 +21,9 @@ export default new Vuex.Store({
 
     resourcesData: getPages(10),
     singleResourceData: {},
-    moreResources: getPages(10)
+    moreResources: getPages(10),
+
+    user: {}
   },
 
   mutations: {   
@@ -51,6 +53,8 @@ export default new Vuex.Store({
     pushBlogs(store, blogData){
       store.blogPosts = blogData;
     },
+
+
 
     getSinglePageMutation(store, pageData){
       store.singleResourceData = pageData;
@@ -97,8 +101,12 @@ export default new Vuex.Store({
       let toast = document.getElementById("successMessage")
 
       toast.show();
-    }
+    },
 
+    setUser(store, data){
+      console.log(data);
+      // store.commit('pushDataToArr', iconData)
+    }
 
   },  
 
