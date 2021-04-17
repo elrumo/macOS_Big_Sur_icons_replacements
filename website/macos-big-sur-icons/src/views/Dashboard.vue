@@ -371,18 +371,7 @@ export default {
 
       let parentIcon = parent.icons[icon.usersName].icons[icon.appName]
 
-      // await fetch('https://media.macosicons.com/parse/jobs/approveJob', {
-      //   method: 'POST',
-      //   body: JSON.stringify(icon), // string or object
-      //   headers: {
-        // TODO: Remove key
-      //     'Content-Type': 'application/json',
-      //     'X-Parse-Application-Id': 'macOSicons',
-      //     'X-Parse-Master-Key': 'Espigot1154'
-      //   }
-      // }).then((response) =>{
-      //   console.log(response);
-      // });
+
 
       // Parse.Cloud.run("approve", icon).then((result)=>{
       Parse.Cloud.run("testJob", icon).then((result)=>{
@@ -393,7 +382,7 @@ export default {
         console.log(e);
         parent.showToast({id:"approveError"})
       });
-      
+
     },
 
     async sendEmail(icon){  
