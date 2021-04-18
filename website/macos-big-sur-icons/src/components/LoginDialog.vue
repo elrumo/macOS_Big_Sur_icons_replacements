@@ -1,9 +1,9 @@
 <template>
   <coral-dialog id="loginDialog">
 
-    <coral-dialog-header>
+    <!-- <coral-dialog-header>
       Join macOSicons.com
-    </coral-dialog-header>
+    </coral-dialog-header> -->
     
     <coral-dialog-content>
       
@@ -17,7 +17,6 @@
         <p class="coral-Body--M" style="font-weight: lighter">
           With an account you’ll be able to manage all your submissions and see their approval status.
         </p>
-      </div>
 
       <div v-if="isLoading" class="loading-overlay">
         <div class="loading-popup">
@@ -28,6 +27,28 @@
       <div @click="appleLogin" class="apple-signin-banner">
         <img :src="coralIcons.apple" alt="">
          <p> Continue with Apple </p>
+      </div>
+      
+      <p class="coral-Body--XS p-l-5 p-t-5 p-r-5 m-0 opacity-60">
+        By continuing, you agree with macOSicons's
+        <a
+          rel="noopener"
+          class="coral-Link"
+          href=""
+          target="_blank"
+        >
+          Terms of Use
+        </a>
+        and
+        <a
+          rel="noopener"
+          class="coral-Link"
+          href=""
+          target="_blank"
+        >
+          Privacy Policy.
+        </a>
+      </p>
       </div>
 
       <!-- CHECKBOX -->
@@ -42,9 +63,9 @@
   
     </coral-dialog-content>
     
-    <coral-dialog-footer>
-      <button is="coral-button" coral-close="">Cancel</button>
-    </coral-dialog-footer>
+    <!-- <coral-dialog-footer>
+      <button is="coral-button" variant="quiet" coral-close="">Cancel</button>
+    </coral-dialog-footer> -->
 
   </coral-dialog>
 </template>
@@ -107,6 +128,7 @@ export default {
             authData: authData
           })
           .then(async (loggedInUser) =>{
+            console.log("loggedInUser: ", loggedInUser);
             parent.setUser(JSON.parse(JSON.stringify(loggedInUser)))
           }).catch((error) => {
             console.log(error);
@@ -123,8 +145,6 @@ export default {
   mounted: function(){
 
     // TODO: Remove Key
-
-
     AppleID.auth.init({
       clientId : process.env.VUE_APP_APPLE_CLIENTID,
       scope : 'email',
@@ -132,9 +152,7 @@ export default {
       state : process.env.VUE_APP_APPLE_STATE,
       usePopup : true //or false defaults to false
     });
-    
 
-    
   }
 }
 </script>
