@@ -1,15 +1,7 @@
 <template>
   <div>
-    <coral-toast id="iconUpdated" variant="success">
+    <coral-toast id="toastMessage" variant="success">
       All icons have been updated
-    </coral-toast>
-
-    <coral-toast id="iconApproved" variant="success">
-      Icon has been approved
-    </coral-toast>
-
-    <coral-toast id="approveError" variant="error">
-      There has been an error, please Approve again
     </coral-toast>
 
     <coral-toast id="error" variant="error">
@@ -377,24 +369,39 @@ export default {
       Parse.Cloud.run("testJob", icon).then((result)=>{
         console.log(result);
         Vue.set(parentIcon, 'isReview', true)
-        parent.showToast({id:"iconApproved"})
+        parent.showToast({
+          id: "toastMessage",
+          message: "Icon has been approved",
+          variant: "success"
+        })
       }).catch((e)=>{
         console.log(e);
-        parent.showToast({id:"approveError"})
+        parent.showToast({
+          id: "toastMessage",
+          message: e,
+          variant: "error"
+        })
       });
 
     },
 
-    async sendEmail(icon){  
+    sendEmail(icon){  
       let parent = this
       console.log(icon);
 
       Parse.Cloud.run("sendEmail", icon).then((result)=>{
-        console.log(result);
-        parent.showToast({id:"iconApproved"})
+        parent.showToast({
+          id: "toastMessage",
+          message: "Email has been sent",
+          variant: "success"
+        })
       }).catch((e)=>{
         console.log(e);
-        parent.showToast({id:"approveError"})
+        parent.showToast({
+          id: "toastMessage",
+          message: e,
+          variant: "error"
+        })
       });
     },    
 
@@ -478,13 +485,6 @@ export default {
   mounted: function(){  
 
     let parent = this
-
-    function showEl(id){
-      document.getElementById(id).style.display = "block"
-    }
-    function hideEl(id){
-      document.getElementById(id).style.display = "none"
-    }
 
     function handleParseError(err){
       switch (err.code) {

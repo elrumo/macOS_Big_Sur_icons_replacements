@@ -3,7 +3,9 @@
     
     <!-- <Dialog/> -->
     <deleteDialog :icon="activeIcon" :Icons="Icons" :Parse="Parse"/>
-
+    <div v-if="overflow">
+      {{ toggleOverflow() }}
+    </div>
     <!-- <coral-dialog id="newDialog" open style="text-align: left;">
       <coral-dialog-header>Pay to view</coral-dialog-header>
       
@@ -43,31 +45,6 @@
       :iconsEmpty="!loadingError"
       :parseObj="getParseObj"
     />
-
-    <coral-toast id="errorToast" variant="error">
-      {{ toastMsg }}
-    </coral-toast>
-
-    <coral-toast id="successToast" variant="success">
-      😄 All icons have been uploaded.
-    </coral-toast>
-
-    <coral-toast id="successMessage" variant="success">
-      {{ message }}
-    </coral-toast>
-
-    <coral-toast id="iconUpdated" variant="success">
-      All icons have been updated
-    </coral-toast>
-
-    <coral-toast id="iconApproved" variant="success">
-      Icon has been approved
-    </coral-toast>
-
-    <coral-toast id="approveError" variant="error">
-      There has been an error, please Approve again
-    </coral-toast>
-
 
     <!-- <div style="display: none"> {{search}} </div> -->
     <!-- Icon Section -->
@@ -215,8 +192,7 @@
         <div v-if="!isAuth & !loadingError" id="iconListArea" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular">
 
           <!-- Carbon ads -->
-            <!-- <div id="native-grid-js" class="native-js"></div> -->
-            <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+          <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
 
           <a
             rel="noopener"
@@ -227,22 +203,12 @@
             target="_blank"
             download
           >
-          <!-- @click="addClickCount(icon)" -->
           
             <div class="card-img-wrapper">
               
               <div v-lazy-container="{ selector: 'img', loading: icons.loading }" >
                 <img  :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
               </div>
-
-              <!-- <div class="quick-actions-wrapper">
-                <div class="quick-action-el">
-                  <coral-icon @click="showDialog('deleteDialog', icon)" class="quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
-                </div>
-                <div class="quick-action-el">
-                  <coral-icon @click="showDialog('deleteDialog', icon)" class="quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
-                </div>
-              </div> -->
               
             </div>
             
@@ -276,6 +242,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import Header from './Header.vue';
 import Hero from './Hero.vue';
 import iconCard from './iconCard.vue';
@@ -292,8 +259,10 @@ import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config()
 
 // TODO: remove credentials
-const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
-const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
+const VUE_APP_PARSE_APP_ID = "macOSicons"
+const VUE_APP_PARSE_JAVASCRIPT_KEY = "macOSicons"
+// const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
+// const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
 Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://media.macosicons.com/parse'
@@ -301,8 +270,10 @@ Parse.serverURL = 'https://media.macosicons.com/parse'
 var Icons = Parse.Object.extend("Icons2");
 
 let algolia = {
-    appid: process.env.VUE_APP_ALGOLIA_APPID,
-    apikey: process.env.VUE_APP_ALGOLIA_KEY
+    appid: "P1TXH7ZFB3",
+    apikey: "0ba04276e457028f3e11e38696eab32c"
+    // appid: process.env.VUE_APP_ALGOLIA_APPID,
+    // apikey: process.env.VUE_APP_ALGOLIA_KEY
 }
 
 // TODO: remove credentials
@@ -393,13 +364,15 @@ export default {
       searchString: "",
       iconsToShow: [],
       list: [],
+      
+      overflow: true,
 
       scrolledToBottom: true,
       sortByName: true,
       sortBy: "createdAt",
       isSearch: false,
       noIcons: true,
-      isAuth: false,
+      isAuth: true,
       loadingError: false,
       
       howManyRecords: 0,
@@ -435,10 +408,9 @@ export default {
 
   mounted: function(){
     let parent = this;
+    const { getters } = parent.$store; 
 
     window.addEventListener('scroll', this.handleScroll);
-
-    console.log(Parse.Analytics.track("test", "test2"));
     
     // Get today's date
     ////////////////////////////////////////////////////////////////
@@ -469,29 +441,26 @@ export default {
       }
     }
 
-    function loginParse(){
-      if(Parse.User.current()){
-        if (Parse.User.current().attributes.isAdmin) {
-          parent.isAuth = true
-        }
-        parent.getIconsArray();
-      } else{
-        Parse.User.logIn(parseUser, parsePass).then(()=>{
-          console.log("Signed Insss");
-          parent.getIconsArray();
-        }).catch((e)=>{
-          console.log("login: ", e);
-          Parse.User.logOut();
-          handleParseError(e)
-        })
-      }
+    if (getters.getUser.parseUserObj) {
+      let curerntUser = JSON.parse(JSON.stringify(Parse.User.current()))
+      parent.isAuth = curerntUser.isAdmin;
     }
-    
-    loginParse()
+
+    parent.getIconsArray();
 
   },
 
   methods:{ 
+    ...mapActions(['showToast']),
+
+    isDialog(){
+      console.log(document.getElementByTagName("coral-dialog").open);
+      return true;
+    },
+
+    toggleOverflow(){
+      document.documentElement.style.overflow = '';
+    },
 
     logDonation(location){
       window.plausible("logDonation", {props: {
@@ -504,9 +473,12 @@ export default {
       let toCopy = "https://macosicons.com/" + parent.searchString
       
       await navigator.clipboard.writeText(toCopy);
-
-      parent.message = "✅ Link copied to your clipboard"
-      parent.$store.dispatch('successMessage', {id: "successMessage"})
+      
+      parent.showToast({
+        id: "toastMessage",
+        message: "✅ Link copied to your clipboard",
+        variant: "success"
+      })
 
       window.plausible("PageShared", {props: {
         sharedTerm: parent.searchString,

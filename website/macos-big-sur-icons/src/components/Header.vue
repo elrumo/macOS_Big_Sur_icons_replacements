@@ -5,7 +5,9 @@
     >
 
         <Dialog/>
+        <SubmissionDialog/>
         <LoginDialog/>
+        <AccountDialog/>
 
         <div class="header-wrapper">
             
@@ -43,7 +45,7 @@
                     target="#target_1"
                     interaction="on"
                 >
-                    <div v-click-outside="away"
+                    <div 
                         class="header-grid-btns mobile-nav-options"
                     >
 
@@ -181,7 +183,7 @@
                     </div>
                     
                     <!-- Buy me a coffee -->
-                    <div class="p-l-10 hide-on-shrink">
+                    <div class="hide-on-shrink">
                         <a
                             rel="noopener"
                             class=""
@@ -198,10 +200,24 @@
                         </a>
                     </div>
                     
+                    <!-- Account Profile -->
+                    <div v-if="getUser.isAuth" class="profile-nav">
+                        <button is="coral-button" variant="quiet" @click="showDialog('submissionDialog')">
+                            <span>Submit</span>
+                        </button>
+
+                        <img 
+                            id="profilePicNav" 
+                            @click="showElement('profileNavPopover')" 
+                            class="profile-pic-nav m-l-5" 
+                            :src="icons.profilePic" alt=""
+                        >
+                        <OptionsMenu :optionsList="optionsList"/>
+                    </div>
+
                     <!-- Submit icons -->
-                    <div class="p-l-10">
+                    <div v-if="!getUser.isAuth" class="p-l-10">
                         <button is="coral-button" variant="cta" @click="showDialog('loginDialog')">
-                        <!-- <button is="coral-button" variant="cta" @click="showDialog('submitIcon')"> -->
                             <span>Submit icons</span>
                         </button>
                     </div>
@@ -216,19 +232,27 @@
 
 <script>
 import Dialog from './Dialog.vue'
+import SubmissionDialog from './SubmissionDialog.vue'
 import LoginDialog from './LoginDialog.vue'
-import vClickOutside from 'v-click-outside'
+import AccountDialog from './AccountDialog.vue'
+import OptionsMenu from './OptionsMenu.vue'
+
+import { mapGetters, mapActions } from 'vuex'
+
+import Parse from 'parse'
 
 export default {
     name:"Header",
 
     directives:{
-      clickOutside: vClickOutside.directive
     },
 
     components:{
         Dialog,
-        LoginDialog
+        LoginDialog,
+        OptionsMenu,
+        AccountDialog,
+        SubmissionDialog
     },
     
     data(){
@@ -238,9 +262,40 @@ export default {
                 twitter: require("../assets/icons/twitter.svg"),
                 discord: require("../assets/icons/Discord.svg"),
                 burgerMenu: require("../assets/icons/burgerMenu.svg"),
+                settings: require("../assets/icons/Settings.svg"),
+
+                profilePic: require("../assets/Resources/accounts/profilePic.png"),
             },
             isMenu: false,
             scrolled: false,
+            
+            currentUser: Parse.User.current(),
+
+            optionsList: [
+                {
+                    name: "Account Settings",
+                    img: require("../assets/icons/Settings.svg"),
+                    onClick: {
+                        method: this.showDialog,
+                        data: "accountDialog"
+                    }
+                },
+                // {
+                //     name: "Profile",
+                //     img: require("../assets/icons/User.svg"),
+                //     onClick:{
+                //         method: this.changePath,
+                //         data: "/user/"+Parse.User.current().attributes.username
+                //     }
+                // },
+                {
+                    name: "Logout",
+                    img: require("../assets/icons/LogOut.svg"),
+                    onClick: {
+                        method: this.logOut
+                    }
+                }
+            ]
         }
     },
 
@@ -250,7 +305,8 @@ export default {
     },
 
     methods:{
-        
+        ...mapActions(['showEl', "logOut", "changePath"]),
+
         away(e) {
             let parent = this
             let popover = document.getElementById("popover")
@@ -263,6 +319,15 @@ export default {
             }
             
         },
+        
+        showElement(id){
+            let parent = this
+            parent.showEl(id)
+        },
+        
+        // changePath(user){
+        //     this.$router.push(user)
+        // },
 
         openOverlay(){
             let parent = this
@@ -292,10 +357,18 @@ export default {
         toggleDarkMode(){
             let parent = this
             let body = document.getElementById("body")
+            let isDarkModeOn = parent.darkMode
             
-            body.classList.remove('coral--light')
-            body.classList.add('coral--dark')
-            parent.darkMode = true
+            if (!isDarkModeOn) {
+                body.classList.remove('coral--light')
+                body.classList.add('coral--dark')
+                parent.darkMode = true
+            } else{
+                body.classList.remove('coral--dark')
+                body.classList.add('coral--light')
+                parent.darkMode = false
+            }
+
         },
 
         showDialog(dialog) {
@@ -303,25 +376,64 @@ export default {
             dialogEl.show();
         },
 
+        onDialogOpen(){
+            // Set all the dialog compoents as targets
+            const targetNode = document.getElementsByTagName("coral-dialog");
+            
+            // Function to make body overflow when dialog is open, so it doesn't scroll when interacting with the dialog
+            function callback(mutationList, observer) {
+                mutationList.forEach( (mutation) => {
+                    if(mutation.attributeName == "open" && mutation.target.open){
+                    document.documentElement.style.overflow = 'hidden';
+                    } else if(mutation.attributeName == "open" && !mutation.target.open){
+                    document.documentElement.style.overflow = '';
+                }
+                });
+            }
+            const observerOptions = { childList: true, attributes: true}
+            
+            // Add an observer for each dialog target elemnt
+            targetNode.forEach((node) => {
+                const observer = new MutationObserver(callback);
+                observer.observe(node, observerOptions);
+            })
+        }
+
     },
 
     mounted: function(){
         let parent = this
 
-        // Check user's colour theme
-        let isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-        // if (isDark) {
-        //     window.plausible("colourTheme", {props: { Theme: "Dark" }})
-        // }else{
-        //     window.plausible("colourTheme", {props: { Theme: "Light" }})
-        // }
-
+        // Scroll listener to add/remove nav meny shadow
         window.addEventListener('scroll', this.handleScroll);
+        
+        // Obvserve everytime the dialog is opened
+        parent.onDialogOpen()
 
+        // Sets light/dark mode based on browser
+        let useDark = window.matchMedia('(prefers-color-scheme: dark)');
+        // Sets light/dark mode based on browser on first load
         if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-
             parent.toggleDarkMode()
         }
+        useDark.addListener((evt) => parent.toggleDarkMode());
+    },
+
+    computed: {
+        ...mapGetters(['getUser']),
+
+        // isAuth(){
+        //     let parent = this
+        //     console.log(parent.getUser);
+        //     return parent.getUser.isAuth
+        // }
+
+        doUser(){
+            // return this.getUser
+            // console.log(this.getUser);
+            return Parse.User.current().id
+        }
+    
     },
 
     destroyed () {

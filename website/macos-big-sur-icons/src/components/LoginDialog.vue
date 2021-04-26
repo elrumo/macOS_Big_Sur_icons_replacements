@@ -1,5 +1,5 @@
 <template>
-  <coral-dialog id="loginDialog">
+  <coral-dialog v-if="!getUser.isAuth" id="loginDialog">
 
     <!-- <coral-dialog-header>
       Join macOSicons.com
@@ -50,28 +50,18 @@
         </a>
       </p>
       </div>
-
-      <!-- CHECKBOX -->
-      <!-- <section class="p-t-5">
-        <div>
-          <coral-checkbox id="isReupload">
-            I'm re-uploading an icon that was previously on the site
-          </coral-checkbox>
-        </div>
-      </section> -->
-
   
     </coral-dialog-content>
     
-    <!-- <coral-dialog-footer>
+    <coral-dialog-footer>
       <button is="coral-button" variant="quiet" coral-close="">Cancel</button>
-    </coral-dialog-footer> -->
+    </coral-dialog-footer>
 
   </coral-dialog>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import Parse from 'parse'
 import jwt_decode from 'jwt-decode';
 
@@ -79,61 +69,80 @@ Parse.initialize("macOSicons");
 Parse.serverURL = 'https://media.macosicons.com/parse'
 
 export default {
-    name:"LoginDialog",
+  name:"LoginDialog",
+  
+  props:{
+  },
+  
+  data(){
+    return{
+      coralIcons:{
+        addIcon: require("../assets/icons/add.svg"),
+        delete: require("../assets/icons/delete.svg"),
+        newItem: require("../assets/icons/newItem.svg"),
+        apple: require("../assets/icons/Apple.svg"),
+      },
+      imgs:{
+        macOSiconsLogo: require("../assets/Resources/logo_lowres.png")
+      },
+      email: "",
+      yourName: "",
+      isLoading: false
+    }
+  },
+  
+  methods:{
+    ...mapActions(['showToast', 'setUser']),
     
-    props:{
-    },
-    
-    data(){
-      return{
-        coralIcons:{
-          addIcon: require("../assets/icons/add.svg"),
-          delete: require("../assets/icons/delete.svg"),
-          newItem: require("../assets/icons/newItem.svg"),
-          apple: require("../assets/icons/Apple.svg"),
-        },
-        imgs:{
-          macOSiconsLogo: require("../assets/Resources/logo_lowres.png")
-        },
-        email: "",
-        yourName: "",
-        isLoading: false
+    async appleLogin(){
+      let parent = this;
+
+      const userToLogin = new Parse.User();
+      
+      console.log("decodedIdToken: ", decodedIdToken);
+      const decodedIdToken = {
+        "iss": "https://appleid.apple.com",
+        "aud": "com.macOSicons.client",
+        "exp": 1618835311,
+        "iat": 1618748911,
+        "sub": "001514.0685fcddf96a4871a7dcf841d95a7e54.2233",
+        "c_hash": "Fzvm6llyF4nHw5eGGQI0TA",
+        "email": "elrumo_97@hotmail.com",
+        "email_verified": "true",
+        "auth_time": 1618748911,
+        "nonce_supported": true,
+        "token": "eyJraWQiOiJZdXlYb1kiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FwcGxlaWQuYXBwbGUuY29tIiwiYXVkIjoiY29tLm1hY09TaWNvbnMuY2xpZW50IiwiZXhwIjoxNjE4ODM0NTk2LCJpYXQiOjE2MTg3NDgxOTYsInN1YiI6IjAwMTUxNC4wNjg1ZmNkZGY5NmE0ODcxYTdkY2Y4NDFkOTVhN2U1NC4yMjMzIiwiY19oYXNoIjoidl9PUWVSQ1pUWGNidGIzQWdoeFZTQSIsImVtYWlsIjoiZWxydW1vXzk3QGhvdG1haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOiJ0cnVlIiwiYXV0aF90aW1lIjoxNjE4NzQ4MTk2LCJub25jZV9zdXBwb3J0ZWQiOnRydWV9.xBJfQ8vTedxmb9cQKlnwc5KL8wHADaP10dRJEzg3A5oGpPxJmS_g_NR8pXRKevO1-XqzEa6ORuF6rWDpgJ7w60mme7X-bat4BIjhWduTXmxrOG3l4eQ6fiMmdgOtPuMFgNBkmiXQd1jLOWx3LMVfJbBpWO8Q9cijrHJl019v9SjG6CWIQWxAgxDy0ACYAgKU1lS6TT0WKrKnb4BVuESrpDWPTBta0Ud4-DjjhvIskfz_RsYdDT4GnZHJebFnzxUSkekXUvLbgY4aYfwp4269GXVjZ4dlPHzSPeztI-szSfZlsNILde410JEzFgepXL0Zx2TWPSd4EIuRk5Bi87vYHA"
       }
-    },
-    
-    methods:{
-      ...mapActions(['showToast', 'errorToast', 'setUser']),
-      
-      async appleLogin(){
-        let parent = this;
+      let appleEmail = decodedIdToken.email
+      let appleId = decodedIdToken.sub
+      let token = decodedIdToken.token
+      // const response = await window.AppleID.auth.signIn();
+      // const decodedIdToken = jwt_decode(response.authorization.id_token);
+      // let appleEmail = decodedIdToken.email
+      // let appleId = decodedIdToken.sub
+      // let token = response.authorization.id_token
 
-        const response = await window.AppleID.auth.signIn();
-        console.log("response: ", response);
-        const userToLogin = new Parse.User();
-
-        const decodedIdToken = jwt_decode(response.authorization.id_token);
-        console.log("decodedIdToken: ", decodedIdToken);
-        
-        let appleEmail = decodedIdToken.email
-        let appleId = decodedIdToken.sub
-        let token = response.authorization.id_token
-
-        let authData = {
-          id:  appleId,
-          email:  appleEmail,
-          token: token
-        }
-
-        await userToLogin.linkWith('apple', {
-            authData: authData
-          })
-          .then(async (loggedInUser) =>{
-            console.log("loggedInUser: ", loggedInUser);
-            parent.setUser(JSON.parse(JSON.stringify(loggedInUser)))
-          }).catch((error) => {
-            console.log(error);
+      let authData = {
+        id:  appleId,
+        email:  appleEmail,
+        token: token
+      }
+      await userToLogin.linkWith('apple', {
+        authData: authData
         })
-      
+        .then(async (loggedInUser) =>{
+          parent.setUser(JSON.parse(JSON.stringify(loggedInUser)))
+          userToLogin.set("email", authData.email)
+          userToLogin.save()
+        }).catch((error) => {
+          console.log(error);
+      })
+    
+    },
+
+    setUserFunc(user){
+      let parent = this
+      parent.setUser(user)
     },
 
     setYourName(e){
@@ -142,7 +151,28 @@ export default {
     },
   },
 
-  mounted: function(){
+  computed:{
+    ...mapGetters(['getUser']),
+
+  },
+
+  mounted: async function(){
+    let parent = this; 
+    const store = parent.$store; 
+    
+    let curerntUser = Parse.User.current()
+    
+    if (!curerntUser) {
+    }else{
+      const query = new Parse.Query(Parse.User);
+
+      query.get(curerntUser.id).then((user)=>{
+        parent.setUserFunc(user)
+      }).catch((error) => {
+        console.log("Cached user: ", error);
+        parent.setUserFunc(curerntUser)
+      })
+    }
 
     // TODO: Remove Key
     AppleID.auth.init({
@@ -154,6 +184,8 @@ export default {
     });
 
   }
+
+
 }
 </script>
 

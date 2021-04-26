@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import Parse from 'parse'
 
 Vue.use(Vuex)
 
@@ -54,16 +54,20 @@ export default new Vuex.Store({
       store.blogPosts = blogData;
     },
 
-
-
     getSinglePageMutation(store, pageData){
       store.singleResourceData = pageData;
+    },
+
+    setUser(store, user){
+      store.user = user;
     }
 
   },
   
   actions: {
     showToast(store, dialogId){
+      document.getElementById(dialogId.id).content.innerHTML = dialogId.message;
+      document.getElementById(dialogId.id).variants = dialogId.variant;
       document.getElementById(dialogId.id).show();
     },
     
@@ -95,17 +99,27 @@ export default new Vuex.Store({
 
       return getSinglePage(slug)
     },
-  
-    successMessage(data){
-      let id = data.id
-      let toast = document.getElementById("successMessage")
 
-      toast.show();
+    showEl(store, id){
+      document.getElementById(id).show()
     },
 
-    setUser(store, data){
-      console.log(data);
-      // store.commit('pushDataToArr', iconData)
+    setUser(store, user){
+      let curerntUser = Parse.User.current()
+      if (curerntUser) {
+        store.commit('setUser', curerntUser)
+      }
+    },
+
+    logOut(store){
+      Parse.User.logOut().then(() => {
+        console.log("logged out");
+        store.commit('setUser', {})  // this will now be null
+      });
+    },
+
+    changePath(store, path){
+      globalThis.router.push(path)
     }
 
   },  
@@ -114,6 +128,15 @@ export default new Vuex.Store({
   getters: {
     getBlogPost(store, blogData){
       return store.blogPosts
+    },
+
+    getUser(store){
+      let parseUserObj = Parse.User.current()
+      // let parseUserObj = store.user
+      console.log(Parse.User.current());
+      let user = JSON.parse(JSON.stringify(parseUserObj))
+      let isAuth = Object.keys(user).length != 0
+      return { user, parseUserObj, isAuth}
     }
   }
 
