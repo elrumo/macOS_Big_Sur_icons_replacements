@@ -59,7 +59,7 @@ export default {
       getAd(el)
 
       if (!parent.isAd) {
-        console.log(parent.isAd);
+        // console.log(parent.isAd);
         setTimeout(() =>{
           if (!_bsa.exists(el)) {
             getAd(el)

@@ -70,21 +70,6 @@
         <!-- <form class="coral-Form coral-Form--vertical" > -->
         <!-- </form> -->
 
-        <form class="coral-Form coral-Form--vertical" >
-          <label id="email-label" class="coral-FieldLabel">Your email</label>
-          <input id="email-contributor" is="coral-textfield" labelledby="email-label" class="coral-Form-field" type="email"  v-on:change="setEmail">
-        </form>
-
-        <form class="coral-Form coral-Form--vertical" >
-          <label id="yourName-label" class="coral-FieldLabel">Your name</label>
-          <input id="yourName-contributor" is="coral-textfield" labelledby="email-label" class="coral-Form-field" @change="setYourName">
-        </form>
-        
-        <form class="coral-Form coral-Form--vertical" >
-          <label id="credit-label" class="coral-FieldLabel">How should we credit you?</label>
-          <input id="credit" is="coral-textfield" type="url" placeholder="MAKE SURE IT'S A FULL URL: GitHub, Twitter, portfolio site... " labelledby="email-label" class="coral-Form-field" @change="saveCredit">
-        </form>
-
         <section class="p-t-5">
           <div>
             <coral-checkbox id="isReupload">
@@ -146,7 +131,8 @@ export default {
       }
     },
     methods:{
-      ...mapActions(['showToast', 'errorToast']),
+      ...mapActions(['showToast']),
+      
       removeFile(e){
         let parent = this
         let iconName = e.target.id;
@@ -219,6 +205,8 @@ export default {
           parseFile.save().then((uploaded) => {
             console.log("Success: ", uploaded._url);
             let iconUrl = uploaded._url.replace('http:', "https:")
+            let currentUser = Parse.User.current()
+          
             let dataToStore = {
               appName: appName,
               email: parent.email,
@@ -232,10 +220,16 @@ export default {
               isAuthor: isAuthor,
               timeStamp: Date.now(),
               approved: false,
+              user: currentUser
             }
 
             icons.set(dataToStore);
             icons.save().then((icon) => { // Reset input boxes
+              
+              // Add icon relationship to user
+              let userRelation = currentUser.relation("icons")
+              userRelation.add(icons)
+              currentUser.save()
 
               icon.set("alogliaID", icons.id);
               icon.save();
@@ -262,7 +256,11 @@ export default {
                     clearInput(inputs[i])  
                   }
 
-                  parent.showToast({id:"successToast"})
+                  parent.showToast({
+                    id: "toastMessage",
+                    message: "✅ 😄 All icons have been uploaded.",
+                    variant: "success"
+                  })
                   dialog.hide()
                 }
             },(error)=>{
@@ -271,7 +269,11 @@ export default {
           }, function(error) {
             console.log(error);
             parent.isLoading = false
-            parent.errorToast({msg:"There was an error, get in touch @elrumo on Twitter"})
+            parent.showToast({
+              id: "toastMessage",
+              message: "There was an error, get in touch @elrumo on Twitter",
+              variant: "error"
+            })
             // The file either could not be read, or could not be saved to Parse.
           });
         }

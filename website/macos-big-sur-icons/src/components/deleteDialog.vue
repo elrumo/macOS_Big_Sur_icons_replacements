@@ -31,6 +31,8 @@ export default {
         async deleteIcon(icon){
             let parent = this
             let Parse = parent.Parse
+            
+            console.log("icon: ", icon);
 
             let query = new Parse.Query(parent.Icons)
             let docToDelete = await query.get(icon.objectID);

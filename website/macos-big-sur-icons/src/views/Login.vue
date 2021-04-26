@@ -1,8 +1,8 @@
 <template>
   <div>
-        <div @click="testAPI" style="height: 40px; width: 100px; background: black;" ></div>
+        <!-- <div @click="testAPI" style="height: 40px; width: 100px; background: black;" ></div> -->
         <!-- <div @click="twitterLogin" style="height: 40px; width: 100px; background: black;" ></div> -->
-        <!-- <div @click="appleLogin" style="height: 40px; width: 100px; background: black;" ></div> -->
+        <div @click="appleLogin" style="height: 40px; width: 100px; background: black;" ></div>
 
   </div>
 </template>
@@ -51,10 +51,18 @@ export default {
 
       Parse.Cloud.run("testJob", obj).then((result)=>{
         console.log(result);
-        parent.showToast({id:"iconApproved"})
+        parent.showToast({
+          id: "toastMessage",
+          message: "Icon has been approved",
+          variant: "success"
+        })
       }).catch((e)=>{
         console.log(e);
-        parent.showToast({id:"approveError"})
+        parent.showToast({
+          id: "toastMessage",
+          message: e,
+          variant: "error"
+        })
       });
     
       // console.log(JSON.stringify(obj));

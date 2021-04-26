@@ -185,10 +185,62 @@ main{
     border-radius: 8px;
 }
 
+._coral-Dialog-content{
+    height: 100%;
+}
+
+.coral-dialog-content::-webkit-scrollbar-thumb {
+    background: #6E6C6E;
+    border-radius: 20px;
+    border: solid 4px #323232;
+}
+
+.coral-dialog-content::-webkit-scrollbar{
+    background: var(--page-background)
+}
+
 .icon-upload-grid{
     display: grid !important;
-    grid-template-columns: 1fr;
-    row-gap: 13px;
+    grid-template-rows: auto;
+    // grid-template-rows: minmax(90px, 100%) fit-content(20px);
+    min-height: calc(100% - 41px);
+    // row-gap: 13px;
+}
+
+.twitter-handle-wrapper{
+    display: grid;
+    grid-template-columns: 25px auto;
+}
+
+.twitter-handle-wrapper span{
+    height: fit-content;
+    margin: auto
+}
+
+.dropdown-select{
+    width: 100%;
+    padding: 5px 11px;
+    border-radius: 4px;
+}
+
+.dropdown-select:focus{
+    border-color: rgb(55, 142, 240) !important;
+    outline: rgb(55, 142, 240);
+}
+
+.coral--dark .dropdown-select:hover{
+    background-color: rgb(47, 47, 47);
+}
+
+.coral--dark .dropdown-select{
+    background-color: rgb(37, 37, 37);
+    border-color: rgb(74, 74, 74);
+    color: rgb(227, 227, 227);
+}
+.coral--light .dropdown-select{
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(225, 225, 225);
+    color: rgb(75, 75, 75);
 }
 
 .icons-preview-wrapper{
@@ -782,6 +834,38 @@ main{
     transition: 0.2s;
 }
 
+.fileupload-wrapper{
+    width: 100%;
+    height: 100%;
+    padding-bottom: 3px;
+    min-height: 284px;
+}
+
+.upload-card-wrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    height: fit-content;
+    // padding-top: 25px;
+}
+
+.upload-card{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 15px;
+}
+
+.upload-card-options{
+    display: grid;
+    grid-template-rows: auto;
+    gap: 10px;
+}
+
+#submissionDialog [coral-dialog-size]{
+    height: 100%;
+    width: 100%;
+}
+
 .drop-zone-wrapper{
     display: grid;
     grid-template-columns: 1fr;
@@ -794,11 +878,10 @@ main{
 
 .drop-zone{
     cursor: pointer;
-}
-
-.drop-zone{
-    height: var(--icon-preview-dimensions);
-    width: var(--icon-preview-dimensions);
+    width: calc(100% - 10px);
+    width: 100%;
+    // height: var(--icon-preview-dimensions);
+    // width: var(--icon-preview-dimensions);
     border: dashed 2px rgba(256, 256, 256, 0.35);
     border-radius: 7px;
 }
@@ -1056,6 +1139,65 @@ main{
     max-width: 260px;
 }
 
+.profile-pic-nav{
+    height: 32px !important;
+    width: 32px !important;
+    cursor: pointer;
+    border-radius: 50px;
+}
+
+.options-popover{
+    padding: 5px;
+    margin-top: 7px;
+    width: fit-content;
+}
+
+.options-popover ._coral-Popover-tip {
+    display: block !important;
+}
+
+.options-list{
+    display: grid;
+    grid-column: auto;
+    gap: 2px;
+}
+
+.options-item{
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 18px auto;
+    height: fit-content;
+    gap: 7px;
+    padding: 8px 13px 8px 10px;
+    margin: 0px;
+    border-radius: 4px;
+    transition: 0.2s;
+}
+
+.coral--dark .options-item:hover{
+    background-color: var(--coral-dark-bg)
+}
+
+.options-item img{
+    margin: auto;
+    width: 100%;
+}
+.options-item p{
+    margin: auto auto auto 0;
+    font-size: 14px;
+    font-weight: 400;
+    font-style: normal;
+    height: fit-content;
+    line-height: 99%;
+}
+
+.coral--light .icon-UI{
+    filter: brightness(0.5);
+}
+
+.coral--dark .icon-UI{
+    filter: brightness(1);
+}
 
 .apple-signin-banner{
     grid-template-columns: 16px auto;
@@ -1172,6 +1314,10 @@ main{
 }
 
 
+.coral-FormGroup{
+    border-spacing: 0 10px !important;
+}
+
 
 
 
@@ -1196,10 +1342,10 @@ main{
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
     
-    .header-grid-btns > div > *{
-        width: 100%;
-        justify-content: start;
-    }
+    // .header-grid-btns > div > *{
+    //     width: 100%;
+    //     justify-content: start;
+    // }
 
     .coral-Divider--S{
         margin-top: 15px;
