@@ -26,7 +26,7 @@
             class="coral-Form-field"
             type="text"
             v-on:change="validate($event, 'username')"
-            :value="getUserData('username')"
+            :value="getUser.userData.username"
           >
         </div>
         
@@ -38,10 +38,12 @@
             aria-label="text input"
             id="user-bio-settings"
             labelledby="user-bio-label"
+            style="height:75px"
             v-on:keyup="validate($event, 'bio')"
-            :value="getUserData('bio')"
-          >
-          </textarea>
+            :value="getUser.userData.bio"
+          >{{getUser.userData.bio}}</textarea>
+          
+          <!-- Character Count -->
           <p class="coral-Detail coral-Detail--S opacity-80 m-b-0">
             <coral-charactercount
               target="#user-bio-settings"
@@ -61,7 +63,7 @@
             labelledby="email-label"
             class="coral-Form-field"
             type="email"
-            :value="getUserData('email')"
+            :value="getUser.userData.email"
             readonly
           >
         </div>
@@ -76,7 +78,7 @@
             class="coral-Form-field"
             type="url"
             v-on:change="validate($event, 'credit')"
-            :value="getUserData('credit')"
+            :value="getUser.userData.credit"
           >
         </div>
 
@@ -93,7 +95,7 @@
               class="coral-Form-field"
               type="text"
               v-on:change="validate($event, 'twitterHandle')"
-              :value="getUserData('twitterHandle')"
+              :value="getUser.userData.twitterHandle"
             >
           </div>
 
@@ -103,7 +105,7 @@
 
         <div class="coral-FormGroup-item p-t-20">
           <coral-switch
-            v-on:change="getSwitchValue"
+            v-on:change="validate($event, 'isSubscribed')"
             :checked="getUserData('isSubscribed')"
           >
             Subscribe to newsletter
@@ -203,25 +205,27 @@ export default {
         parent.toUpdate.isSubscribed = switchValue
       },
 
-      validate(e, id){
+      validate(e, field){
         let parent = this
         try {
           let isInvalid = e.target.classList.contains("is-invalid")
-          console.log(isInvalid);
-          if (isInvalid) {
-            parent.isValidated = false
-          }
-          else{
-            parent.isValidated = true
-          }
-        } catch (error) {
-        }
-        parent.getTextFieldValue(e, id)
+
+          if (isInvalid) { parent.isValidated = false }
+          else{ parent.isValidated = true }
+
+        }catch(error){ }
+        parent.getTextFieldValue(e, field)
       },
 
       getTextFieldValue(e, field){
         let parent = this
-        let fieldValue = e.target.value
+        let fieldValue
+        
+        if (e.target.nodeName == "CORAL-SWITCH") {
+          fieldValue = e.target.checked
+        } else{
+          fieldValue = e.target.value
+        }
         parent.hasChanged = true
         parent.toUpdate[field] = fieldValue
       },

@@ -13,7 +13,9 @@
         </div>
       </div>
 
-      <div class="icon-upload-grid coral-Well coral-card">
+      <div class="icon-upload-grid ">
+        
+        <!-- Initial Drag to upload -->
         <coral-fileupload
           v-if="!imageData"
           name="file"
@@ -21,7 +23,10 @@
           class="m-auto fileupload-wrapper"
           accept="image/png" multiple
         >
-          <div coral-fileupload-select="" coral-fileupload-dropzone="" class=""> 
+          <div
+            coral-fileupload-select=""
+            coral-fileupload-dropzone=""
+          >
             <div class="fileUpload-dropZone drop-zone"> 
               <div class="h-full">
                 <div class="drop-zone-wrapper">
@@ -33,109 +38,169 @@
           </div>
         </coral-fileupload>
         
-
-        <div v-if="imageData" class="upload-card-wrapper">
+        <coral-fileupload
+          v-if="imageData"
+          name="file"
+          @change="selectIcon"
+          class="m-auto fileupload-wrapper hidden-fileuploader"
+          accept="image/png" multiple
+        >
           
-          <div v-for="icon in filesToShow" :key="icon.randId" class="upload-card coral-Well">
+          <div
+            coral-fileupload-dropzone=""
+          >
+            <div class="fileUpload-dropZone drop-zone drop-zone-hidden"> 
+              <div class="h-full">
+                
+                <div v-if="imageData" class="upload-card-wrapper">
+                
+                  <div v-for="icon in filesToShow" :key="icon.randId" class="upload-card coral-dark-bg coral-Well">
 
-            <div class="icon-preview">
-              <img :src="icon.img" :alt="icon.name+' preview'">
-              <coral-quickactions placement="center" target="_prev">
-                <coral-quickactions-item
-                  type="button" 
-                  @click="removeFile($event, icon.randId)" 
-                  :id="icon.name" 
-                  :icon="coralIcons.delete"
-                >
-                  Remove file
-                </coral-quickactions-item>
-              </coral-quickactions>
-            </div>
+                    <div class="icon-preview">
+                      <img :src="icon.img" :alt="icon.name+' preview'">
+                      <coral-quickactions placement="center" target="_prev">
+                        <coral-quickactions-item
+                          type="button" 
+                          @click="removeFile($event, icon.randId)" 
+                          :id="icon.name" 
+                          :icon="coralIcons.delete"
+                        >
+                          Remove file
+                        </coral-quickactions-item>
+                      </coral-quickactions>
+                    </div>
 
-            <form class="coral-FormGroup m-0 p-l-5" style="width: calc(100% - 5px)">
-              
-              <div class="coral-FormGroup-item">
-                <label :id="'appNameLabel'+icon.randId" class="coral-FieldLabel">
-                  App name
-                </label>
-                <input
-                  :id="'appNameUploadField'+icon.randId"
-                  is="coral-textfield"
-                  :labelledby="'appNameLabel'+icon.randId"
-                  class="coral-Form-field"
-                  type="text"
-                  :value="icon.name"
-                  v-on:change="getTextFieldValue($event, icon.randId, 'name')"
-                >
-              </div>
+                    <form class="coral-FormGroup m-0 p-l-5" style="width: calc(100% - 5px)">
+                      
+                      <div class="coral-FormGroup-item">
+                        <label :id="'appNameLabel'+icon.randId" class="coral-FieldLabel">
+                          App name
+                        </label>
+                        <input
+                          is="coral-textfield"
+                          class="coral-Form-field"
+                          type="text"
+                          required=""
+                          :id="'appNameUploadField'+icon.randId"
+                          :labelledby="'appNameLabel'+icon.randId"
+                          :value="icon.name"
+                          v-on:change="getValue($event, icon.randId, 'name')"
+                        >
+                      </div>
 
-              <div class="coral-FormGroup-item">
-                <label :id="'categoryUploadLabel'+icon.randId" class="coral-FieldLabel">
-                  App category
-                </label>
-                <select
-                  name="categoryUploadField"
-                  :id="'categoryUploadField'+icon.randId"
-                  placeholder="Select category"
-                  class="dropdown-select"
-                  v-on:change="getSelectValue($event, icon.randId, 'category')"
-                >
-                  <option
-                    v-for="category in categoriesList"
-                    :key="category.CategoryName+icon.randId+Math.floor(Math.random() * 10000000 + 1)"
-                    :value="category.objectId"
+                      <div class="coral-FormGroup-item">
+                        <label :id="'categoryUploadLabel'+icon.randId" class="coral-FieldLabel">
+                          App category
+                        </label>
+                        <select
+                          name="categoryUploadField"
+                          :id="'categoryUploadField'+icon.randId"
+                          placeholder="Select category"
+                          class="dropdown-select"
+                          v-on:change="getValue($event, icon.randId, 'category')"
+                        >
+                          <option
+                            value=""
+                            disabled selected
+                          >
+                            Select category (required)
+                          </option>
+                          <option
+                            v-for="category in getAppCategories"
+                            :key="category.name+icon.randId+Math.floor(Math.random() * 10000000 + 1)"
+                            :value="category.id"
+                          >
+                            {{ category.name }}
+                          </option>
+                        </select>
+                      </div>
+
+                      <div class="coral-FormGroup-item">
+                        <label :id="'TypeUploadLabel'+icon.randId" class="coral-FieldLabel">
+                          Type
+                        </label>
+                        <select
+                          name="TypeUploadField"
+                          :id="'TypeUploadField'+icon.randId"
+                          placeholder="Select Type"
+                          class="dropdown-select"
+                          v-on:change="getValue($event, icon.randId, 'type')"
+                        >
+                          <!-- <option
+                            value=""
+                            disabled
+                            selected
+                          >
+                            Select type of icon (required)
+                          </option> -->
+                          <option
+                            v-for="type in getIconType"
+                            :key="type.name+icon.randId+Math.floor(Math.random() * 10000000 + 1)"
+                            :selected="selectedOption(type.name, 'App')"
+                            :value="type.id"
+                          >
+                            {{ type.name }}
+                          </option>
+                        </select>
+                      </div>
+
+                      <div class="coral-FormGroup-item">
+                        <label :id="'appWebsiteUploadLabel'+icon.randId" class="coral-FieldLabel">
+                          App website (optional)
+                        </label>
+                        <input
+                          :id="'appWebsiteUploadField'+icon.randId"
+                          is="coral-textfield"
+                          :labelledby="'appWebsiteUploadLabel'+icon.randId"
+                          class="coral-Form-field"
+                          type="url"
+                          placeholder="The app's developer website"
+                          v-on:change="getValue($event, icon.randId, 'appWebsite')"
+                        >
+                      </div>
+                      
+                      <div class="coral-FormGroup-item">
+                        <coral-checkbox
+                          id="isDarkUpload"
+                          v-on:change="getCheckedValue($event, icon.randId, 'isDarkMode')"
+                        >
+                          Is dark mode
+                        </coral-checkbox>
+                      </div>
+
+                    </form>
+                  </div>
+                  
+                  <!-- Drag to upload -->
+                  <div
+                  class="m-auto fileupload-wrapper"
+                    coral-fileupload-select=""
                   >
-                    {{ category.CategoryName }}
-                  </option>
-                </select>
-              </div>
+                    <div class="fileUpload-dropZone drop-zone">
+                      <div class="h-full">
+                        <div class="drop-zone-wrapper">
+                          <coral-icon class="m-auto" :icon="coralIcons.addIcon" size="XL" alt="Larger" title="XL"></coral-icon>
+                          <span class="m-auto"> Add/drop files </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-              <div class="coral-FormGroup-item">
-                <label :id="'appWebsiteUploadLabel'+icon.randId" class="coral-FieldLabel">
-                  App website
-                </label>
-                <input
-                  :id="'appWebsiteUploadField'+icon.randId"
-                  is="coral-textfield"
-                  :labelledby="'appWebsiteUploadLabel'+icon.randId"
-                  class="coral-Form-field"
-                  type="url"
-                  v-on:change="getTextFieldValue($event, icon.randId, 'appWebsite')"
-                >
-              </div>
-              
-              <div>
-                <coral-checkbox
-                  id="isDarkUpload"
-                  v-on:change="getCheckedValue($event, icon.randId, 'isDarkMode')"
-                >
-                  Is dark mode
-                </coral-checkbox>
-              </div>
+                </div>
 
-            </form>
+              </div>
+            </div>
           </div>
 
-          <coral-fileupload name="file" @change="selectIcon" id="uploadFileGrid" class="m-auto fileupload-wrapper" accept="image/png" multiple>
-            <div coral-fileupload-dropzone="" class=""> 
-              <div class="fileUpload-dropZone drop-zone">
-                <div class="h-full">
-                  <div class="drop-zone-wrapper">
-                    <coral-icon class="m-auto" :icon="coralIcons.addIcon" size="XL" alt="Larger" title="XL"></coral-icon>
-                    <span class="m-auto"> Add/drop files </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </coral-fileupload>
-
-        </div>
+        </coral-fileupload>
+        
       </div>
     </coral-dialog-content>
     
     <coral-dialog-footer>
       <button is="coral-button" coral-close="">Cancel</button>
-      <button is="coral-button" variant="cta" @click="onUpload">Upload</button>
+      <button is="coral-button" variant="cta" v-if="validateForm" @click="onUpload">Upload</button>
+      <button is="coral-button" variant="cta" v-else disabled="" >Upload</button>
       <!-- <button v-if="imageData && email != '' " is="coral-button" variant="cta" @click="onUpload">Upload</button> -->
       <!-- <button v-if="!imageData || email == '' " is="coral-button" disabled>Upload</button> -->
     </coral-dialog-footer>
@@ -145,7 +210,7 @@
 
 <script>
 import Vue from 'vue'
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import Parse from 'parse'
 
 Parse.initialize("macOSicons");
@@ -159,12 +224,14 @@ export default {
     data(){
       return{
         imageData: false,
+        validUpload: false,
         filesToShow: {},
         filesToUpload: {},
         coralIcons:{
           addIcon: require("../assets/icons/add.svg"),
           delete: require("../assets/icons/delete.svg"),
           newItem: require("../assets/icons/newItem.svg"),
+          chevron: require("../assets/icons/ChevronDown.svg"),
         },
         uploadProgress: 0,
         totalNumFiles: 0,
@@ -179,16 +246,7 @@ export default {
     },
 
     methods:{
-      ...mapActions(['showToast']),
-
-      getSelectValue(e, appName, field){
-        let parent = this
-        let selectedValue = e.target.value
-        let category = parent.categoriesList.find(elemnt => elemnt.objectId == selectedValue)
-        console.log("category: ", category);
-
-        parent.filesToShow[appName][field] = category
-      },
+      ...mapActions(['showToast', 'fetchAppCategories', 'fetchIconType']),
 
       getCheckedValue(e, appName, field){
         let parent = this
@@ -197,11 +255,19 @@ export default {
         parent.filesToShow[appName][field] = fieldValue
       },
 
-      getTextFieldValue(e, appName, field){
+      getValue(e, appName, field){
         let parent = this
-        let fieldValue = e.target.value
-        console.log(fieldValue);
-        parent.filesToShow[appName][field] = fieldValue
+        let target = e.target
+        let fieldValue = target.value
+        parent.filesToShow[appName][field] = fieldValue;
+      },
+
+      selectedOption(option, value){
+        if (option == value) {
+          return true
+        } else {
+          return false
+        }
       },
 
       removeFile(e, randId){
@@ -219,6 +285,7 @@ export default {
         let parent = this
         let files = event.target.uploadQueue
         
+        console.log(event.target);
         // Go through all the files that have been selected
         for(let fileNum in files){
           let file = files[fileNum].file
@@ -234,7 +301,8 @@ export default {
             isDarkMode: false,
             category: "",
             appWebsite: "",
-            randId: randId
+            type: "Zz9QX1BBIZ",
+            randId: randId,
           }
           parent.$set(parent.filesToShow, randId, value)
         }
@@ -264,7 +332,9 @@ export default {
           let file =  parent.filesToShow[fileNum].file;
           let appName = parent.filesToShow[fileNum].name;
           let randId = parent.filesToShow[fileNum].randId;
-          let category = parent.filesToShow[fileNum].category.categoryObj;
+          let category = parent.filesToShow[fileNum].category.id;
+          // let category = parent.filesToShow[fileNum].category.categoryObj;
+          let type = parent.filesToShow[fileNum].type.id;
           let fileName;
           
           if (/^[A-Za-z][A-Za-z0-9]*$/.test(appName)) {
@@ -293,7 +363,8 @@ export default {
               timeStamp: Date.now(),
               approved: false,
               user: currentUser,
-              category: category
+              category: category,
+              type: type
             }
 
             icons.set(dataToStore);
@@ -318,7 +389,7 @@ export default {
                 
                 Vue.delete(parent.filesToShow, randId)
                 Vue.delete(parent.filesToUpload, randId)
-               if (Object.keys(parent.filesToUpload).length === 0) {
+              if (Object.keys(parent.filesToUpload).length === 0) {
                   parent.isLoading = false
                   parent.imageData = false
                   parent.uploadProgress = 0
@@ -346,47 +417,43 @@ export default {
         }
       },
 
-      setEmail(e){
-        console.log(e.target.value);
-        this.email = e.target.value
-      },
-
-      saveCredit(e){
-        console.log(e.target.value);
-        this.credit = e.target.value
-      },
-      
-      setYourName(e){
-        console.log(e.target.value);
-        this.yourName = e.target.value
-      },
     },
 
     mounted: function(){ 
       let parent = this
+      this.fetchAppCategories()
+      this.fetchIconType()
 
-      let Categories = Parse.Object.extend("Categories");
-      let categories = new Parse.Query(Categories)
-      
+    },
 
-      categories.find().then((results)=>{
-        for(let result in results){
-          let parseResult = JSON.parse(JSON.stringify(results[result]));
-          
-          let categoryObj = {
-            objectId: parseResult.objectId,
-            CategoryName: parseResult.CategoryName,
-            categoryObj: results[result]
+    computed:{
+      ...mapGetters(["getAppCategories", "getIconType"]),
+
+      validateForm(){
+        let parent = this;
+        let filesToShow = parent.filesToShow
+        var isValid = []
+        
+        if (parent.imageData) {
+          for (let item in filesToShow){
+            for (let field in filesToShow[item]){
+              let submission = filesToShow[item][field]
+              if (submission != "" && submission != undefined && field != "appWebsite") {
+                isValid.push(true)
+              } else if (field != "appWebsite" && field != "isDarkMode") {
+                isValid.push(false)
+              }
+            }
           }
-
-          parent.categoriesList.push(categoryObj)
-          // parent.categoriesList.categories[objectId] = results[result]
+        } else {
+          isValid.push(false)
         }
-      }).catch((error)=>{
-        console.log("error: ", error);
-      })
 
+        console.log(isValid);
+        return !isValid.some((el) => { return el == false })
+      }
     }
+
 }
 </script>
 

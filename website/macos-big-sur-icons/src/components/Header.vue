@@ -35,7 +35,7 @@
             
             <!-- Mobile -->
             <div class="desktop-hidden coral--large">
-                <div class="burger-btn" @click="openOverlay">
+                <div class="burger-btn" @click="toggleOverlay">
                     <coral-icon class="m-auto" id="mobile-menu-icon" :icon="icons.burgerMenu" size="XL" alt="Larger" title="XL">
                     </coral-icon>
                 </div>
@@ -50,14 +50,14 @@
                     >
 
                         <!-- Back to all icons -->
-                        <div @click="away" v-if="this.$route.name != 'Home'">
+                        <div @click="toggleOverlay" v-if="this.$route.name != 'Home'">
                             <router-link to="/" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
                                 Back to all Icons
                             </router-link>
                         </div>
 
                         <!-- Forum -->
-                        <div @click="away" >
+                        <div @click="toggleOverlay" >
                             <a
                                 href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/discussions"
                                 rel="noopener" target="_blank"
@@ -70,7 +70,7 @@
                         </div>
                         
                         <!-- blog -->
-                        <div @click="away" v-if="this.$route.name != 'BlogHome'">
+                        <div @click="toggleOverlay" v-if="this.$route.name != 'BlogHome'">
                             <router-link to="/blog" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
                                 <span>
                                     Blog
@@ -79,7 +79,7 @@
                         </div>
                         
                         <!-- Resources -->
-                        <div @click="away">
+                        <div @click="toggleOverlay">
                             <router-link to="/resources" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
                                 <span>
                                     Resources
@@ -202,13 +202,13 @@
                     
                     <!-- Account Profile -->
                     <div v-if="getUser.isAuth" class="profile-nav">
-                        <button is="coral-button" variant="quiet" @click="showDialog('submissionDialog')">
+                        <button is="coral-button" variant="quiet" @click="showEl('submissionDialog')">
                             <span>Submit</span>
                         </button>
 
                         <img 
                             id="profilePicNav" 
-                            @click="showElement('profileNavPopover')" 
+                            @click="showEl('profileNavPopover')" 
                             class="profile-pic-nav m-l-5" 
                             :src="icons.profilePic" alt=""
                         >
@@ -217,7 +217,7 @@
 
                     <!-- Submit icons -->
                     <div v-if="!getUser.isAuth" class="p-l-10">
-                        <button is="coral-button" variant="cta" @click="showDialog('loginDialog')">
+                        <button is="coral-button" variant="cta" @click="showEl('loginDialog')">
                             <span>Submit icons</span>
                         </button>
                     </div>
@@ -276,7 +276,7 @@ export default {
                     name: "Account Settings",
                     img: require("../assets/icons/Settings.svg"),
                     onClick: {
-                        method: this.showDialog,
+                        method: this.showEl,
                         data: "accountDialog"
                     }
                 },
@@ -285,7 +285,7 @@ export default {
                 //     img: require("../assets/icons/User.svg"),
                 //     onClick:{
                 //         method: this.changePath,
-                //         data: "/user/"+Parse.User.current().attributes.username
+                //         data: "/user/"
                 //     }
                 // },
                 {
@@ -307,29 +307,7 @@ export default {
     methods:{
         ...mapActions(['showEl', "logOut", "changePath"]),
 
-        away(e) {
-            let parent = this
-            let popover = document.getElementById("popover")
-            
-            let menuIsClicked = e.target.id == "mobile-menu-icon"
-
-            if (parent.isMenu && !menuIsClicked) {
-                parent.isMenu = false
-                popover.hide();
-            }
-            
-        },
-        
-        showElement(id){
-            let parent = this
-            parent.showEl(id)
-        },
-        
-        // changePath(user){
-        //     this.$router.push(user)
-        // },
-
-        openOverlay(){
+        toggleOverlay(){
             let parent = this
             let popover = document.getElementById("popover")
             
@@ -371,11 +349,6 @@ export default {
 
         },
 
-        showDialog(dialog) {
-            let dialogEl = document.getElementById(dialog);
-            dialogEl.show();
-        },
-
         onDialogOpen(){
             // Set all the dialog compoents as targets
             const targetNode = document.getElementsByTagName("coral-dialog");
@@ -397,7 +370,7 @@ export default {
                 const observer = new MutationObserver(callback);
                 observer.observe(node, observerOptions);
             })
-        }
+        },
 
     },
 
@@ -406,9 +379,14 @@ export default {
 
         // Scroll listener to add/remove nav meny shadow
         window.addEventListener('scroll', this.handleScroll);
-        
+
         // Obvserve everytime the dialog is opened
         parent.onDialogOpen()
+        
+        if (this.getUser.isAuth) {
+            // Set the "Go to profile" button to go to the user that has logged in
+            parent.optionsList[1].onClick.data = "/user/" + this.getUser.userData.username
+        }
 
         // Sets light/dark mode based on browser
         let useDark = window.matchMedia('(prefers-color-scheme: dark)');
@@ -422,18 +400,6 @@ export default {
     computed: {
         ...mapGetters(['getUser']),
 
-        // isAuth(){
-        //     let parent = this
-        //     console.log(parent.getUser);
-        //     return parent.getUser.isAuth
-        // }
-
-        doUser(){
-            // return this.getUser
-            // console.log(this.getUser);
-            return Parse.User.current().id
-        }
-    
     },
 
     destroyed () {
