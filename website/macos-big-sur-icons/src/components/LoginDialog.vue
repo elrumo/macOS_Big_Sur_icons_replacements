@@ -206,19 +206,7 @@ export default {
       const userToLogin = new Parse.User();
       
       console.log("decodedIdToken: ", decodedIdToken);
-      const decodedIdToken = {
-        "iss": "https://appleid.apple.com",
-        "aud": "com.macOSicons.client",
-        "exp": 1618835311,
-        "iat": 1618748911,
-        "sub": "001514.0685fcddf96a4871a7dcf841d95a7e54.2233",
-        "c_hash": "Fzvm6llyF4nHw5eGGQI0TA",
-        "email": "elrumo_97@hotmail.com",
-        "email_verified": "true",
-        "auth_time": 1618748911,
-        "nonce_supported": true,
-        "token": "eyJraWQiOiJlWGF1bm1MIiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJodHRwczovL2FwcGxlaWQuYXBwbGUuY29tIiwiYXVkIjoiY29tLm1hY09TaWNvbnMuY2xpZW50IiwiZXhwIjoxNjE5NzI0MDI3LCJpYXQiOjE2MTk2Mzc2MjcsInN1YiI6IjAwMTUxNC4wNjg1ZmNkZGY5NmE0ODcxYTdkY2Y4NDFkOTVhN2U1NC4yMjMzIiwiY19oYXNoIjoiMERwOVRkQTVqcGRoNzMxeG5XZkFmUSIsImVtYWlsIjoiZWxydW1vXzk3QGhvdG1haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOiJ0cnVlIiwiYXV0aF90aW1lIjoxNjE5NjM3NjI3LCJub25jZV9zdXBwb3J0ZWQiOnRydWV9.wsKXIp--0oxra-w4l72OFyxFOKzI32H_YZc1SBHyBCYuVIJsIQBnoOBh1nzQidkmDRIUqbs4VGwDg6Agy9xCe191Z_LAQ0p9iWg0sJ8_B1hqnU4Z7irsPzTUM2gFL-XJn6qV9WEBL_V-B0hP3VotSF4zEq_ZOoG6beBY-82uQ2wmydbiQvhaa78UJ6b-oManWwNGeRpzRzgqpfgdS3pKpy-sO0vxCDSI1uEnB8BJpOBNsprNs_O3Y45ehLEronCjDoCONj86wfAYmacXWZOF2rQPTIjmkQq9MZ5kOk6aqZKMGHrPshPPfIuPB9d6gkP8UmNrdvOkW63Snl4LuF1dkg"
-      }
+     
       let appleEmail = decodedIdToken.email
       let appleId = decodedIdToken.sub
       let token = decodedIdToken.token
