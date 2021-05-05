@@ -449,6 +449,4 @@ global.router = new VueRouter({
   }
 })
 
-console.log(global);
-
 export default router
