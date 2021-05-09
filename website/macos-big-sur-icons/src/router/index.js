@@ -380,6 +380,12 @@ const routes = [
     component: () => import('../views/ResourceView.vue')
   },
   {
+    // path: '/user',
+    path: '/user/:user',
+    name: 'UserProfile',
+    component: () => import('../views/UserProfile.vue')
+  },
+  {
     path: '/:search',
     name: 'Search',
     component: Home
@@ -434,7 +440,7 @@ const routes = [
 
 ]
 
-const router = new VueRouter({
+global.router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,

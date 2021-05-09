@@ -113,7 +113,8 @@ export default {
   mounted: async function(){
     const parent = this;
     let storeResourcesData = parent.$store.state.resourcesData
-    parent.getPages()
+    parent.getPageData
+    // parent.getPages()
     parent.resourcesData = await storeResourcesData;
   },
 
@@ -123,7 +124,7 @@ export default {
     ]),
 
     async getPages(){
-      console.log(getPageData);
+      console.log(this.getPageData);
     }
   }
 
