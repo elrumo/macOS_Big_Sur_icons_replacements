@@ -42,7 +42,7 @@
             </router-link>
         </p> -->
         <p class="coral-Body--L w-100 body-text">
-          To contribute, download our free icon templates from the
+          To contribute, download one of our free icon templates from the
             <router-link to="/resources">
             <span class="underline"> resources page. </span>
             </router-link>
