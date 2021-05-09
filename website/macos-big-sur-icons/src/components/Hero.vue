@@ -132,6 +132,8 @@ import Sponsor from "./Sponsor.vue";
 import NativeAd from "./NativeAd.vue";
 import { mapGetters } from "vuex";
 
+import Parse from 'parse'
+
 export default {
   name: "Hero",
 
@@ -158,7 +160,7 @@ export default {
   },
 
   methods: {
-    
+
     logDonation(location){
       window.plausible("logDonation", {props: {
           location: location, 

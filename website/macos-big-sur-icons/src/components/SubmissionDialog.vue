@@ -3,13 +3,27 @@
 
     <coral-dialog-header>
       Submit an icon
+      
+      <p class="coral-Body--M p-t-10 m-b-5">
+        Visit the <router-link coral-close="" to="/resources" class="coral-Link">resources page </router-link> for icon templates.
+      </p>
+
+      <p class="coral-Body--M p-t-5 p-b-5 m-b-0">
+          All icons must be .png images and have a resolution of 1024px x 1024px.
+        <br>
+        <span class="coral-Body--S m-b-0 p-t-0 opacity-50">
+          Support for .icns is on my (long) todo list.
+        </span>
+      </p>
+
+
     </coral-dialog-header>
     
     <coral-dialog-content class="coral-dialog-content" style="height: 100%">
 
       <div v-if="isLoading" class="loading-overlay">
         <div class="loading-popup">
-          <coral-progress indeterminate>{{ uploadProgress }}/{{ totalNumFiles }} icons uploaded</coral-progress>
+          <coral-progress indeterminate>{{ uploadProgress }}/{{ totalNumFiles+1 }} icons uploaded</coral-progress>
         </div>
       </div>
 
@@ -58,6 +72,7 @@
 
                     <div class="icon-preview">
                       <img :src="icon.img" :alt="icon.name+' preview'">
+                      
                       <coral-quickactions placement="center" target="_prev">
                         <coral-quickactions-item
                           type="button" 
@@ -108,8 +123,11 @@
                           <option
                             v-for="category in getAppCategories"
                             :key="category.name+icon.randId+Math.floor(Math.random() * 10000000 + 1)"
+                            :id="icon.randId+category.id"
                             :value="category.id"
+                            :selected="icon.category.includes(category.id)"
                           >
+
                             {{ category.name }}
                           </option>
                         </select>
@@ -117,7 +135,7 @@
 
                       <div class="coral-FormGroup-item">
                         <label :id="'TypeUploadLabel'+icon.randId" class="coral-FieldLabel">
-                          Type
+                          Type of icon
                         </label>
                         <select
                           name="TypeUploadField"
@@ -136,9 +154,10 @@
                           <option
                             v-for="type in getIconType"
                             :key="type.name+icon.randId+Math.floor(Math.random() * 10000000 + 1)"
-                            :selected="selectedOption(type.name, 'App')"
                             :value="type.id"
+                            :selected="selectedOption(type.id, icon.type)"
                           >
+                            <!-- :selected="icon.category.includes(category.id)" -->
                             {{ type.name }}
                           </option>
                         </select>
@@ -161,10 +180,16 @@
                       
                       <div class="coral-FormGroup-item">
                         <coral-checkbox
-                          id="isDarkUpload"
+                          :id="'isDarkUpload'+icon.randId"
                           v-on:change="getCheckedValue($event, icon.randId, 'isDarkMode')"
                         >
                           Is dark mode
+                        </coral-checkbox>
+                        <coral-checkbox
+                          :id="'isAuthorUpload'+icon.randId"
+                          v-on:change="getCheckedValue($event, icon.randId, 'isAuthor')"
+                        >
+                          I'm the author this icon
                         </coral-checkbox>
                       </div>
 
@@ -251,7 +276,6 @@ export default {
       getCheckedValue(e, appName, field){
         let parent = this
         let fieldValue = e.target.checked
-        console.log(appName);
         parent.filesToShow[appName][field] = fieldValue
       },
 
@@ -285,34 +309,63 @@ export default {
         let parent = this
         let files = event.target.uploadQueue
         
-        console.log(event.target);
-        // Go through all the files that have been selected
-        for(let fileNum in files){
-          let file = files[fileNum].file
-          let fileName = file.name.replace('.png', '')
-          let randId = Math.floor(Math.random() * 10000000 + 1)+"-"+fileName+Object.keys(parent.filesToShow).length
-          parent.filesToUpload[randId] = file
-          // Create URL of file to dislay back the image
-          const objectURL = window.URL.createObjectURL(file);
-          let value = {
-            img: objectURL,
-            name: fileName,
-            file: file,
-            isDarkMode: false,
-            category: "",
-            appWebsite: "",
-            type: "Zz9QX1BBIZ",
-            randId: randId,
+        // Only run if what has triggered the change is the upload wrapper
+        if (!event.target.classList.contains("fileupload-wrapper")) {
+          return
+        } else{
+        // // Go through all the files that have been selected
+          for(let fileNum in files){
+            let file = files[fileNum].file
+            const objectURL = window.URL.createObjectURL(file);
+
+            // Set image to new Image to get width and height
+            var img = new Image();
+            img.onload = function() {
+              let width = this.width
+              let height = this.height
+              if (width, height != 1024 ) {
+                window.URL.revokeObjectURL(this.src);
+                parent.showToast({
+                  id: "toastMessage",
+                  message: "Icon needs to be 1024px, yours is "+height+"px x "+width+"px",
+                  variant: "error"
+                })
+              } else{
+                  let fileName = file.name.replace('.png', '')
+                  let randId = Math.floor(Math.random() * 10000000 + 1)+"-"+fileName+Object.keys(parent.filesToShow).length
+                  parent.filesToUpload[randId] = file
+                  
+                  let value = {
+                    img: objectURL,
+                    name: fileName,
+                    file: file,
+                    isDarkMode: false,
+                    category: "",
+                    appWebsite: "",
+                    type: "Zz9QX1BBIZ",
+                    randId: randId,
+                  }
+                  parent.imageData = true
+                  parent.$set(parent.filesToShow, randId, value)
+              }
+
+            }
+            // Create URL of file to dislay back the image
+            img.src = objectURL;
           }
-          parent.$set(parent.filesToShow, randId, value)
+
+          parent.totalNumFiles = Object.keys(parent.filesToShow).length
+          event.target.clear()
         }
-        parent.totalNumFiles = Object.keys(parent.filesToShow).length
-        parent.imageData = true
+
       },
 
       async onUpload(){
         let parent = this
-        
+        let DownloadCount = Parse.Object.extend("DownloadCount")
+        let IconType = Parse.Object.extend("IconType")
+        let typQuery = new Parse.Query(IconType)
+
         // Get today's date
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
@@ -327,16 +380,24 @@ export default {
         let dialog = document.getElementById('submissionDialog')
 
         for(let fileNum in parent.filesToShow){
-          console.log("filesToShow[fileNum]: ", parent.filesToShow[fileNum]);
-          console.log("fileNum: ", fileNum);
           let file =  parent.filesToShow[fileNum].file;
           let appName = parent.filesToShow[fileNum].name;
           let randId = parent.filesToShow[fileNum].randId;
           let category = parent.filesToShow[fileNum].category.id;
-          // let category = parent.filesToShow[fileNum].category.categoryObj;
-          let type = parent.filesToShow[fileNum].type.id;
-          let fileName;
+          let typeId = parent.filesToShow[fileNum].type;
+          let isDarkMode = parent.filesToShow[fileNum].isDarkMode;
+          let isAuthor = parent.filesToShow[fileNum].isAuthor;
+          var type 
           
+          // Retrieve IconType Parse object
+          for(let item in parent.getIconType){
+            if (parent.getIconType[item].id == typeId) {
+              type = parent.getIconType[item].parseObj
+            }
+          }
+
+          let fileName;
+
           if (/^[A-Za-z][A-Za-z0-9]*$/.test(appName)) {
             fileName = appName
           } else {
@@ -344,7 +405,6 @@ export default {
             fileName = Math.round(Math.random()*10000 + d.getTime() )
             fileName = fileName.toString()
           }
-          console.log(fileName, file.name);
           
           const Icons = Parse.Object.extend("Icons2");
           const icons = new Icons()
@@ -363,8 +423,14 @@ export default {
               timeStamp: Date.now(),
               approved: false,
               user: currentUser,
+              email: Parse.User.current().getUsername(),
+              usersName: Parse.User.current().getUsername(),
+              credit: Parse.User.current().get("credit"),
               category: category,
-              type: type
+              type: type,
+              DownloadCount: new DownloadCount(),
+              isDarkMode: isDarkMode,
+              isAuthor: isAuthor
             }
 
             icons.set(dataToStore);
@@ -385,7 +451,7 @@ export default {
                 parent.imageData = {}
                 parent.picture= null
                 parent.uploadProgress++
-                console.log("Document successfully written!");
+                // console.log("Document successfully written!");
                 
                 Vue.delete(parent.filesToShow, randId)
                 Vue.delete(parent.filesToUpload, randId)
@@ -421,9 +487,8 @@ export default {
 
     mounted: function(){ 
       let parent = this
-      this.fetchAppCategories()
-      this.fetchIconType()
-
+      parent.fetchAppCategories()
+      parent.fetchIconType()
     },
 
     computed:{
@@ -448,8 +513,7 @@ export default {
         } else {
           isValid.push(false)
         }
-
-        console.log(isValid);
+        
         return !isValid.some((el) => { return el == false })
       }
     }

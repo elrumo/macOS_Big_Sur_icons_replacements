@@ -363,8 +363,16 @@ export default {
 
       let parentIcon = parent.icons[icon.usersName].icons[icon.appName]
 
+      console.log("icon: ", icon);
+      console.log("parentIcon: ", parentIcon);
+      console.log("parent.icons[icon.usersName].icons[icon.appName]: ", parent.icons[icon.usersName].icons[icon.appName]);
 
-
+      // let iconToApprove = {
+      //   id: icon.id,
+      //   fileNm: icon.id
+      // }
+      delete icon.DownloadCount
+      delete icon.user
       // Parse.Cloud.run("approve", icon).then((result)=>{
       Parse.Cloud.run("testJob", icon).then((result)=>{
         console.log(result);
@@ -375,7 +383,7 @@ export default {
           variant: "success"
         })
       }).catch((e)=>{
-        console.log(e);
+        console.log("e: ", e);
         parent.showToast({
           id: "toastMessage",
           message: e,
@@ -388,6 +396,9 @@ export default {
     sendEmail(icon){  
       let parent = this
       console.log(icon);
+      
+      delete icon.DownloadCount
+      delete icon.user
 
       Parse.Cloud.run("sendEmail", icon).then((result)=>{
         parent.showToast({

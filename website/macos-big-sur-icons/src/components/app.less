@@ -110,11 +110,11 @@ main{
 }
 
 .coral--dark .instructions-img-wrapper::after{
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 50%, #353535 100%);
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 50%, var(--coral-dark-card) 100%);
 }
 
 .coral--light .instructions-img-wrapper::after{
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 50%, #f1f1f1 100%)
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 50%, var(--coral-light-card) 100%)
 }
 
 
@@ -132,6 +132,14 @@ main{
 
 .instructions-item{
     padding: 0px 0px 0px 0px;
+    overflow: hidden;
+}
+.coral--dark .instructions-item{
+    background-color: var(--coral-dark-card) !important;
+}
+.coral--light .instructions-item{
+    background-color: var(--coral-light-card) !important;
+
 }
 
 .marked h2{
@@ -211,15 +219,17 @@ main{
     height: 100%;
 }
 
+.coral-dialog-content::-webkit-scrollbar{
+    background: var(--page-background);
+    width: 7px;
+}
+
 .coral-dialog-content::-webkit-scrollbar-thumb {
     background: #6E6C6E;
     border-radius: 20px;
-    border: solid 4px #323232;
+    // border: solid 4px #323232;
 }
 
-.coral-dialog-content::-webkit-scrollbar{
-    background: var(--page-background)
-}
 
 .margin-auto{
     margin: auto !important;
@@ -664,6 +674,10 @@ option[value=""][disabled] {
 }
 
 .opacity-30{
+    opacity: 0.2;
+}
+
+.opacity-30{
     opacity: 0.3;
 }
 
@@ -794,7 +808,7 @@ option[value=""][disabled] {
     background: rgba(0,0,0,0.5);
     backdrop-filter: blur(1px);
     left: 50%;
-    z-index: 10;
+    z-index: 1000;
     top: 50%;
     transform: translate(-50%, -49%);
 }
@@ -987,6 +1001,10 @@ option[value=""][disabled] {
 }
 
 
+._coral-Alert{
+    min-width: 50px;
+    width: 100%;
+}
 
 .coral--light .coral-card{
     background: var(--coral-light-card);
@@ -1000,6 +1018,10 @@ option[value=""][disabled] {
 
 .coral--light ._coral-Icon:hover{
     filter: brightness(0.7);
+}
+
+.coral-link{
+    cursor: pointer;
 }
 
 .coral--light .coral-button .coral-Link{
@@ -1230,8 +1252,20 @@ option[value=""][disabled] {
 .signin-dialog-content{
     text-align: center;
     margin: auto;
-    max-width: 260px;
+    max-width: 280px;
 }
+
+// .scrollbarVisible{
+// ._coral-Dialog-content:after{
+//     color: #252525;
+//     width: 80%;
+//     content: ".";
+//     box-shadow: inset 0px -7px 18px 0 #252525;
+//     height: 40px;
+//     position: absolute;
+//     background: #25252500;
+//     bottom: 100px;
+// }
 
 .profile-pic-nav{
     height: 32px !important;
@@ -1486,6 +1520,14 @@ option[value=""][disabled] {
 
     .mobile-hidden{
         display: none !important;
+    }
+
+    .upload-card-wrapper{
+        grid-template-columns: auto;
+    }
+    
+    .upload-card{
+        grid-template-columns: auto;
     }
 
     .hero-wrapper{

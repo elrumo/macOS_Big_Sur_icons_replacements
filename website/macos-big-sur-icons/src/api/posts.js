@@ -1,7 +1,6 @@
 import GhostContentAPI from "@tryghost/content-api"
 
 // TODO: Remove API Key
-
 const VUE_APP_GHOST_KEY = process.env.VUE_APP_GHOST_KEY
 
 const api = new GhostContentAPI({
