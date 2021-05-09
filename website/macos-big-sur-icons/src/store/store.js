@@ -87,7 +87,7 @@ export default new Vuex.Store({
   actions: {
     showToast(store, dialogId){
       document.getElementById(dialogId.id).content.innerHTML = dialogId.message;
-      document.getElementById(dialogId.id).variants = dialogId.variant;
+      document.getElementById(dialogId.id).variant = dialogId.variant;
       document.getElementById(dialogId.id).show();
     },
     
@@ -200,7 +200,7 @@ export default new Vuex.Store({
           let typeObj = {
             id: item.id,
             name: item.get("type"),
-            tpyeObj: item
+            parseObj: item
           }
 
           store.commit("pushAppCategories", {state: "iconType", storeObj: typeObj})

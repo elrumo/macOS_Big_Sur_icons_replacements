@@ -240,7 +240,6 @@ import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config()
 
 // TODO: remove credentials
-
 const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
 const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
@@ -249,8 +248,8 @@ Parse.serverURL = 'https://media.macosicons.com/parse'
 
 var Icons = Parse.Object.extend("Icons2");
 
-// TODO: remove credentials
 let algolia = {
+    // TODO: remove credentials
     appid: process.env.VUE_APP_ALGOLIA_APPID,
     apikey: process.env.VUE_APP_ALGOLIA_KEY
 }
@@ -387,10 +386,17 @@ export default {
 
   mounted: function(){
     let parent = this;
-    const { getters } = parent.$store; 
+    const { getters } = parent.$store;
+    let fullPath = parent.$route.fullPath
+    let currentUser = Parse.User.current()
 
-    window.addEventListener('scroll', this.handleScroll);
+    if (fullPath.includes("/?username=") && !currentUser) {
+      // let userName = fullPath.replace("/?username=", "")
+      parent.showEl("loginDialog")
+    }
     
+    window.addEventListener('scroll', this.handleScroll);
+
     // Get today's date
     ////////////////////////////////////////////////////////////////
     var today = new Date();
@@ -425,7 +431,7 @@ export default {
   },
 
   methods:{ 
-    ...mapActions(['showToast']),
+    ...mapActions(['showToast', 'showEl']),
 
     isDialog(){
       console.log(document.getElementByTagName("coral-dialog").open);
