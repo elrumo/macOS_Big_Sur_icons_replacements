@@ -3,6 +3,9 @@
     
     <!-- <Dialog/> -->
     <deleteDialog :icon="activeIcon" :Icons="Icons" :Parse="Parse"/>
+    <div v-if="overflow">
+      {{ toggleOverflow() }}
+    </div>
 
     <!-- <coral-dialog id="newDialog" open style="text-align: left;">
       <coral-dialog-header>Pay to view</coral-dialog-header>
@@ -38,36 +41,11 @@
     <!-- Hero -->
     <Hero
       v-bind:list="list"
-      :submitIconDialog="'submitIcon'"
+      :submitIconDialog="'submissionDialog'"
       :iconListLen="iconListLen"
       :iconsEmpty="!loadingError"
       :parseObj="getParseObj"
     />
-
-    <coral-toast id="errorToast" variant="error">
-      {{ toastMsg }}
-    </coral-toast>
-
-    <coral-toast id="successToast" variant="success">
-      😄 All icons have been uploaded.
-    </coral-toast>
-
-    <coral-toast id="successMessage" variant="success">
-      {{ message }}
-    </coral-toast>
-
-    <coral-toast id="iconUpdated" variant="success">
-      All icons have been updated
-    </coral-toast>
-
-    <coral-toast id="iconApproved" variant="success">
-      Icon has been approved
-    </coral-toast>
-
-    <coral-toast id="approveError" variant="error">
-      There has been an error, please Approve again
-    </coral-toast>
-
 
     <!-- <div style="display: none"> {{search}} </div> -->
     <!-- Icon Section -->
@@ -95,32 +73,38 @@
               <!-- Cross icon -->
               <transition name="fade">
                 <div v-if="searchString" class="searchBar-right">
-                    <svg @click="clearSearch" class="icon " xmlns="http://www.w3.org/2000/svg" height="12" viewBox="0 0 12 12" width="12">
+                    <svg @click="clearSearch" class="icon p-t-20 p-b-20 p-r-10 p-l-10" xmlns="http://www.w3.org/2000/svg" height="12" viewBox="0 0 12 12" width="12">
                       <title>CrossLarge</title>
                       <rect id="ToDelete" fill="#ff13dc" opacity="0" width="12" height="12" /><path d="M11.69673,10.28266,7.41406,6l4.28267-4.28266A.9999.9999,0,1,0,10.28266.30327L6,4.58594,1.71734.30327A.9999.9999,0,1,0,.30327,1.71734L4.58594,6,.30327,10.28266a.9999.9999,0,1,0,1.41407,1.41407L6,7.41406l4.28266,4.28267a.9999.9999,0,1,0,1.41407-1.41407Z" />
                     </svg>
 
-                    <!-- <div class="mobile-hidden"> -->
-                      <button class="mobile-hidden" @click="copySearch" is="coral-button">
+                    <div class="mobile-hidden" style="top: -25px;">
+                      <button @click="copySearch" variant="quiet" is="coral-button">
                         Share search
                       </button>
-                    <!-- </div> -->
+                    </div>
 
                 </div>
               </transition>
+              
+              <hr class="coral-Divider--s coral-Divider--vertical searchBar-divider m-0">
+
+              <select
+              id="selectOS"
+              class="dropdown-select searchbar-select"
+              v-on:change="changeOS"
+            >
+              <option value="macOS" selected="">
+                macOS
+              </option>
+              <option value="iOS">
+                iOS
+              </option>
+            </select>
 
             </div>
           </div>
 
-          <div @click="changeOS" class="switch-wrapper coral-card shadow main-border-radius">
-            <div id="macOStext" class="switch-text">
-              macOS
-            </div>
-            <div id="iOStext" class="switch-text text-not-selected">
-              iOS
-            </div>
-            <div id="osSwitcher" class="switch-btn"></div>
-          </div>
         </div>
       </div>
       
@@ -156,30 +140,32 @@
         </p>
       </div>
 
-      <button v-if="isAuth" @click="logout" is="coral-button" variant="quiet">
-        Logout
-      </button>
-
-    <!-- Icon list when Auth-->
-        <div v-if="isAuth & !loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular">
+    <!-- Icon list when no loading error-->
+        <div v-if="!loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular">
+          <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
           
           <!-- Icons -->
-          <div  v-for="icon in search" :key="icon.icnsUrl" class="card-wrapper coral-card">
+          <div @click="addClickCount(icon)" v-for="icon in search" :key="icon.icnsUrl" class="card-wrapper coral-card">
+            <div class="">
+              <!-- Icon image -->
               <div class="card-img-wrapper" style="max-width: 120px;">
-                
+              
+                <!-- macOS icon download -->
                 <a rel="noopener" v-if="isMacOs" :href="icon.icnsUrl">
                   <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                    <img  :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
+                    <img :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
                   </div>
                 </a>
 
+                <!-- iOS icon download -->
                 <a rel="noopener" v-else :href="icon.iOSUrl">
                   <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                    <img  :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
+                    <img :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
                   </div>
                 </a>
 
-                <div class="quick-actions-wrapper">
+                <!-- Quick action menu icon download -->
+                <div v-if="isAdmin" class="quick-actions-wrapper">
                   <div class="quick-action-el">
                     <coral-icon @click="showDialog('deleteDialog', icon)" class="quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
                   </div>
@@ -187,88 +173,49 @@
                   
               </div>
 
+              <!-- Icon meta -->
               <div class="card-text-wrapper p-l-15 p-r-15 p-b-15">
 
-                  <p class="coral-Body--XS opacity-60 m-b-0">
+                  <!-- Timestamp -->
+                  <p v-if="isAdmin" class="coral-Body--XS opacity-60 m-b-0">
                     <input class="editable-input coral-Body--XS opacity-50 m-b-0" @change="changeDate(icon, $event)" type="text" variant="quiet" :value="getDate(icon.timeStamp)" is="coral-textfield" aria-label="text input">
                   </p>
+
+                  <!-- App name -->
                   <h3 class="coral-font-color m-b-0">
                     <input class="editable-input f-w-800 m-b-0" @change="editDoc(icon, $event, 'appName')" type="text" variant="quiet" :value="prettifyName(icon.appName)" is="coral-textfield" aria-label="text input">
                   </h3>
 
-                  <p class="coral-Body--XS p-b-0 opacity-80 m-b-0"><input class="editable-input" @change="editDoc(icon, $event, 'usersName')" type="text" variant="quiet" :value="icon.usersName" is="coral-textfield" aria-label="text input"></p>
+                  <!-- User's name -->
+                  <p v-if="isAdmin" class="coral-Body--XS p-b-0 opacity-80 m-b-0"><input class="editable-input" @change="editDoc(icon, $event, 'usersName')" type="text" variant="quiet" :value="icon.usersName" is="coral-textfield" aria-label="text input"></p>
                   
-                  <p class="coral-Body--XS p-b-0 opacity-50 m-b-0">
+                  <!-- Credit -->
+                  <p v-if="isAdmin" class="coral-Body--XS p-b-0 opacity-50 m-b-0">
                     <input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="icon.credit" is="coral-textfield" aria-label="text input">
                   </p>
+
+                  <p v-else class="coral-Body--XS opacity-60 m-b-10">
+                    <a v-if="icon.credit" rel="noopener" class="coral-Link" :href="icon.credit" target="_blank">
+                      {{icon.usersName}}
+                    </a>
+                    <b v-else >
+                      {{icon.usersName}}
+                    </b>
+                    on
+                    <span class="coral-Body--XS opacity-80">
+                      {{ getDate(icon.timeStamp) }}
+                    </span>
+                  </p>
                   
-                  <div v-if="icon.email != 'user@email.com' && icon.email " class="p-t-10"> 
+                  <!-- Email -->
+                  <div v-if="icon.email != 'user@email.com' && icon.email && isAdmin " class="p-t-10"> 
                     <a rel="noopener" class="coral-Link" :href="'mailto:'+icon.email+'?subject=macOS icons submission&body='+icon.usersName">
                           email
                     </a>
                   </div>
               </div>
+            </div>
           </div>
-        </div>
-
-    <!-- Seen when no auth  -->
-        <div v-if="!isAuth & !loadingError" id="iconListArea" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular">
-
-          <!-- Carbon ads -->
-            <!-- <div id="native-grid-js" class="native-js"></div> -->
-            <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
-
-          <a
-            rel="noopener"
-            v-for="icon in search"
-            :key="icon.lowResPngUrl"
-            class="card-wrapper shadow coral-card"
-            :href="downladUrl(icon)"
-            target="_blank"
-            download
-          >
-          <!-- @click="addClickCount(icon)" -->
-          
-            <div class="card-img-wrapper">
-              
-              <div v-lazy-container="{ selector: 'img', loading: icons.loading }" >
-                <img  :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
-              </div>
-
-              <!-- <div class="quick-actions-wrapper">
-                <div class="quick-action-el">
-                  <coral-icon @click="showDialog('deleteDialog', icon)" class="quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
-                </div>
-                <div class="quick-action-el">
-                  <coral-icon @click="showDialog('deleteDialog', icon)" class="quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
-                </div>
-              </div> -->
-              
-            </div>
-            
-            <div class="card-text-wrapper">
-              
-              <h3 class="coral-font-color">
-                {{ prettifyName(icon.appName) }}
-              </h3>
-              
-              <p class="coral-Body--XS opacity-60 m-b-20">
-                <a v-if="icon.credit" rel="noopener" class="coral-Link" :href="icon.credit" target="_blank">
-                  {{icon.usersName}}
-                </a>
-                <b v-else >
-                  {{icon.usersName}}
-                </b>
-                on
-                <span class="coral-Body--XS opacity-80">
-                  {{ getDate(icon.timeStamp) }}
-                </span>
-              </p>
-
-            </div>
-          </a>
-          
-
         </div>
 
     </section>
@@ -276,6 +223,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import Header from './Header.vue';
 import Hero from './Hero.vue';
 import iconCard from './iconCard.vue';
@@ -302,11 +250,12 @@ var Icons = Parse.Object.extend("Icons2");
 
   // TODO: remove credentiaks
 let algolia = {
+    // TODO: remove credentials
     appid: process.env.VUE_APP_ALGOLIA_APPID,
     apikey: process.env.VUE_APP_ALGOLIA_KEY
 }
 
-// TODO: remove credentiaks
+// TODO: remove credentials
 let parseUser = process.env.VUE_APP_PARSE_USER_EMAIL
 let parsePass = process.env.VUE_APP_PARSE_USER_PASS
 
@@ -394,6 +343,8 @@ export default {
       searchString: "",
       iconsToShow: [],
       list: [],
+      
+      overflow: true,
 
       scrolledToBottom: true,
       sortByName: true,
@@ -436,9 +387,17 @@ export default {
 
   mounted: function(){
     let parent = this;
+    const { getters } = parent.$store;
+    let fullPath = parent.$route.fullPath
+    let currentUser = Parse.User.current()
 
-    window.addEventListener('scroll', this.handleScroll);
+    if (fullPath.includes("/?username=") && !currentUser) {
+      // let userName = fullPath.replace("/?username=", "")
+      parent.showEl("loginDialog")
+    }
     
+    window.addEventListener('scroll', this.handleScroll);
+
     // Get today's date
     ////////////////////////////////////////////////////////////////
     var today = new Date();
@@ -468,29 +427,21 @@ export default {
       }
     }
 
-    function loginParse(){
-      if(Parse.User.current()){
-        if (Parse.User.current().attributes.isAdmin) {
-          parent.isAuth = true
-        }
-        parent.getIconsArray();
-      } else{
-        Parse.User.logIn(parseUser, parsePass).then(()=>{
-          console.log("Signed Insss");
-          parent.getIconsArray();
-        }).catch((e)=>{
-          console.log("login: ", e);
-          Parse.User.logOut();
-          handleParseError(e)
-        })
-      }
-    }
-    
-    loginParse()
+    parent.getIconsArray();
 
   },
 
   methods:{ 
+    ...mapActions(['showToast', 'showEl']),
+
+    isDialog(){
+      console.log(document.getElementByTagName("coral-dialog").open);
+      return true;
+    },
+
+    toggleOverflow(){
+      document.documentElement.style.overflow = '';
+    },
 
     logDonation(location){
       window.plausible("logDonation", {props: {
@@ -503,9 +454,12 @@ export default {
       let toCopy = "https://macosicons.com/" + parent.searchString
       
       await navigator.clipboard.writeText(toCopy);
-
-      parent.message = "✅ Link copied to your clipboard"
-      parent.$store.dispatch('successMessage', {id: "successMessage"})
+      
+      parent.showToast({
+        id: "toastMessage",
+        message: "✅ Link copied to your clipboard",
+        variant: "success"
+      })
 
       window.plausible("PageShared", {props: {
         sharedTerm: parent.searchString,
@@ -521,18 +475,13 @@ export default {
       this.distanceFromTop =  document.getElementById("searchBar").getBoundingClientRect().y > 65
     },
 
-    changeOS(){
+    changeOS(e){
       let parent = this;
-
-      function toggleClass(id, cssClass){
-        document.getElementById(id).classList.toggle(cssClass)
+      if (e.target.value == "macOS") {
+        parent.isMacOs = true
+      } else{
+        parent.isMacOs = false
       }
-
-      toggleClass("osSwitcher", "switchRight")
-      toggleClass("iOStext", "text-not-selected")
-      toggleClass("macOStext", "text-not-selected")
-
-      parent.isMacOs = !parent.isMacOs
     },
 
     downladUrl(icon){
@@ -547,43 +496,49 @@ export default {
 
     async addClickCount(icon){
       let parent = this
+      let DownloadCount = Parse.Object.extend("DownloadCount")
+      // let downloadCount = new DownloadCount()
 
       if (icon.id) {
         var id = icon.id
       } else {
         var id = icon.objectID
       }
+      
+      let queryDownloads = new Parse.Query(DownloadCount)
+      
+      let downlaods = await queryDownloads.get(icon.DownloadCount.id)
+      downlaods.increment("downloads")
+      downlaods.save()
 
-      let today = parent.today;
+      // var downloadId = icon.DownloadCount.id
+      // var downlaods = await queryDownloads.get(downloadId)
+      // console.log(downlaods);
 
-      if (parent.isMacOs) {
-        var platform = "macOS"
-        window.plausible("downloadedIcons", {props: {
-          platform: platform, 
-          icon: icon.appName + ' - '+id,
-          macOS:icon.appName + ' - '+id,
-          date: today,
-          users: icon.usersName
-        }})
-      } else {
-        var platform = "iOS"
-        window.plausible("downloadedIcons", {props: {
-          platform: platform, 
-          icon: icon.appName + ' - '+id, 
-          iOS: icon.appName + ' - '+id,
-          date: today,
-          users: icon.usersName
-        }})
-      }
+
+      // if (icon.DownloadCount == undefined) {
+      //   let iconQuery = new Parse.Query(Icons)
+      //   let icons = await iconQuery.get(id)
+      //   let result = await iconQuery.find()
+      //   downloadCount.set("iconRef", result[0]);
+      //   downloadCount.set("iconRef", result[0]);
+      //   downloadCount.save().then((saved)=>{
+      //     icons.set("DownloadCount", saved)
+      //     icons.save()
+      //   })
+
+      //   return
+      // } else {
+      //   var downloadId = icon.DownloadCount.id
+      //   var downlaods = await queryDownloads.get(downloadId)
+      //   downlaods.increment("downloadCount")
+      //   downlaods.save()
+      // }
+
+
+
     },
 
-    logout(){
-      console.log("HI");
-      parent.isAuth = false
-      Parse.User.logOut().then(() => {
-        const currentUser = Parse.User.current();  // this will now be null
-      });
-    },
 
     prettifyName(name){
       name = name.replaceAll("_", " ")
@@ -797,16 +752,26 @@ export default {
   },
 
   computed:{
+    ...mapGetters(['getUser']),
+
+    isAdmin(){
+      let parent = this
+      if (parent.getUser.isAuth) {
+        
+        if (parent.getUser.userData.Role.objectId == "OoxWjSJuQi") {
+          return true
+        } else { return false }
+
+      } else{
+         return false
+      }
+    },
 
     async getTotalRestore(){
-      const query = new Parse.Query(Icons)
-      // query.exists("highResPngFile")
-      // query.doesNotExist("highResPngFile")
-      query.exists("icnsFile")
-      let numIcons = await query.count()
-      console.log(numIcons);
-      
-      // return numIcons
+      // let numIcons = await query.count()
+      // const query = new Parse.Query(Icons)
+      // query.exists("icnsFile")
+      // console.log(numIcons);
     },
 
     getParseObj(){

@@ -1,15 +1,7 @@
 <template>
   <div>
-    <coral-toast id="iconUpdated" variant="success">
+    <coral-toast id="toastMessage" variant="success">
       All icons have been updated
-    </coral-toast>
-
-    <coral-toast id="iconApproved" variant="success">
-      Icon has been approved
-    </coral-toast>
-
-    <coral-toast id="approveError" variant="error">
-      There has been an error, please Approve again
     </coral-toast>
 
     <coral-toast id="error" variant="error">
@@ -165,9 +157,7 @@ import { mapActions } from 'vuex';
 
 import Parse from 'parse'
 
-const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
-const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
-Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY);
+Parse.initialize("macOSicons");
 Parse.serverURL = 'https://media.macosicons.com/parse'
 
 const Icons = Parse.Object.extend("Icons2");
@@ -369,30 +359,60 @@ export default {
 
     async approveIcon(icon){  
       let parent = this
-      console.log(icon);
+      // console.log(icon);
 
       let parentIcon = parent.icons[icon.usersName].icons[icon.appName]
 
-      Parse.Cloud.run("approve", icon).then((result)=>{
+      console.log("icon: ", icon);
+      console.log("parentIcon: ", parentIcon);
+      console.log("parent.icons[icon.usersName].icons[icon.appName]: ", parent.icons[icon.usersName].icons[icon.appName]);
+
+      // let iconToApprove = {
+      //   id: icon.id,
+      //   fileNm: icon.id
+      // }
+      delete icon.DownloadCount
+      delete icon.user
+      // Parse.Cloud.run("approve", icon).then((result)=>{
+      Parse.Cloud.run("testJob", icon).then((result)=>{
         console.log(result);
         Vue.set(parentIcon, 'isReview', true)
-        parent.showToast({id:"iconApproved"})
+        parent.showToast({
+          id: "toastMessage",
+          message: "Icon has been approved",
+          variant: "success"
+        })
       }).catch((e)=>{
-        console.log("error: ", e);
-        parent.showToast({id:"approveError"})
+        console.log("e: ", e);
+        parent.showToast({
+          id: "toastMessage",
+          message: e,
+          variant: "error"
+        })
       });
+
     },
 
-    async sendEmail(icon){  
+    sendEmail(icon){  
       let parent = this
       console.log(icon);
+      
+      delete icon.DownloadCount
+      delete icon.user
 
       Parse.Cloud.run("sendEmail", icon).then((result)=>{
-        console.log(result);
-        parent.showToast({id:"iconApproved"})
+        parent.showToast({
+          id: "toastMessage",
+          message: "Email has been sent",
+          variant: "success"
+        })
       }).catch((e)=>{
         console.log(e);
-        parent.showToast({id:"approveError"})
+        parent.showToast({
+          id: "toastMessage",
+          message: e,
+          variant: "error"
+        })
       });
     },    
 
@@ -476,13 +496,6 @@ export default {
   mounted: function(){  
 
     let parent = this
-
-    function showEl(id){
-      document.getElementById(id).style.display = "block"
-    }
-    function hideEl(id){
-      document.getElementById(id).style.display = "none"
-    }
 
     function handleParseError(err){
       switch (err.code) {

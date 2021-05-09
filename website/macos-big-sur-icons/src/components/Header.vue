@@ -5,6 +5,9 @@
     >
 
         <Dialog/>
+        <SubmissionDialog/>
+        <LoginDialog/>
+        <AccountDialog/>
 
         <div class="header-wrapper">
             
@@ -32,7 +35,7 @@
             
             <!-- Mobile -->
             <div class="desktop-hidden coral--large">
-                <div class="burger-btn" @click="openOverlay">
+                <div class="burger-btn" @click="toggleOverlay">
                     <coral-icon class="m-auto" id="mobile-menu-icon" :icon="icons.burgerMenu" size="XL" alt="Larger" title="XL">
                     </coral-icon>
                 </div>
@@ -42,19 +45,19 @@
                     target="#target_1"
                     interaction="on"
                 >
-                    <div v-click-outside="away"
+                    <div 
                         class="header-grid-btns mobile-nav-options"
                     >
 
                         <!-- Back to all icons -->
-                        <div @click="away" v-if="this.$route.name != 'Home'">
+                        <div @click="toggleOverlay" v-if="this.$route.name != 'Home'">
                             <router-link to="/" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
                                 Back to all Icons
                             </router-link>
                         </div>
 
                         <!-- Forum -->
-                        <div @click="away" >
+                        <div @click="toggleOverlay" >
                             <a
                                 href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/discussions"
                                 rel="noopener" target="_blank"
@@ -67,7 +70,7 @@
                         </div>
                         
                         <!-- blog -->
-                        <div @click="away" v-if="this.$route.name != 'BlogHome'">
+                        <div @click="toggleOverlay" v-if="this.$route.name != 'BlogHome'">
                             <router-link to="/blog" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
                                 <span>
                                     Blog
@@ -76,7 +79,7 @@
                         </div>
                         
                         <!-- Resources -->
-                        <div @click="away">
+                        <div @click="toggleOverlay">
                             <router-link to="/resources" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
                                 <span>
                                     Resources
@@ -180,7 +183,7 @@
                     </div>
                     
                     <!-- Buy me a coffee -->
-                    <div class="p-l-10 hide-on-shrink">
+                    <div class="hide-on-shrink">
                         <a
                             rel="noopener"
                             class=""
@@ -197,9 +200,24 @@
                         </a>
                     </div>
                     
+                    <!-- Account Profile -->
+                    <div v-if="getUser.isAuth" class="profile-nav">
+                        <button is="coral-button" variant="quiet" @click="showEl('submissionDialog')">
+                            <span>Submit</span>
+                        </button>
+
+                        <img 
+                            id="profilePicNav" 
+                            @click="showEl('profileNavPopover')" 
+                            class="profile-pic-nav m-l-5" 
+                            :src="icons.profilePic" alt=""
+                        >
+                        <OptionsMenu :optionsList="optionsList"/>
+                    </div>
+
                     <!-- Submit icons -->
-                    <div class="p-l-10">
-                        <button is="coral-button" variant="cta" @click="showDialog('submitIcon')">
+                    <div v-if="!getUser.isAuth" class="p-l-10">
+                        <button is="coral-button" variant="cta" @click="showEl('loginDialog')">
                             <span>Submit icons</span>
                         </button>
                     </div>
@@ -214,17 +232,27 @@
 
 <script>
 import Dialog from './Dialog.vue'
-import vClickOutside from 'v-click-outside'
+import SubmissionDialog from './SubmissionDialog.vue'
+import LoginDialog from './LoginDialog.vue'
+import AccountDialog from './AccountDialog.vue'
+import OptionsMenu from './OptionsMenu.vue'
+
+import { mapGetters, mapActions } from 'vuex'
+
+import Parse from 'parse'
 
 export default {
     name:"Header",
 
     directives:{
-      clickOutside: vClickOutside.directive
     },
 
     components:{
         Dialog,
+        LoginDialog,
+        OptionsMenu,
+        AccountDialog,
+        SubmissionDialog
     },
     
     data(){
@@ -234,9 +262,40 @@ export default {
                 twitter: require("../assets/icons/twitter.svg"),
                 discord: require("../assets/icons/Discord.svg"),
                 burgerMenu: require("../assets/icons/burgerMenu.svg"),
+                settings: require("../assets/icons/Settings.svg"),
+
+                profilePic: require("../assets/Resources/accounts/profilePic.png"),
             },
             isMenu: false,
             scrolled: false,
+            
+            currentUser: Parse.User.current(),
+
+            optionsList: [
+                {
+                    name: "Account Settings",
+                    img: require("../assets/icons/Settings.svg"),
+                    onClick: {
+                        method: this.showEl,
+                        data: "accountDialog"
+                    }
+                },
+                // {
+                //     name: "Profile",
+                //     img: require("../assets/icons/User.svg"),
+                //     onClick:{
+                //         method: this.changePath,
+                //         data: "/user/"
+                //     }
+                // },
+                {
+                    name: "Logout",
+                    img: require("../assets/icons/LogOut.svg"),
+                    onClick: {
+                        method: this.logOut
+                    }
+                }
+            ]
         }
     },
 
@@ -246,21 +305,9 @@ export default {
     },
 
     methods:{
-        
-        away(e) {
-            let parent = this
-            let popover = document.getElementById("popover")
-            
-            let menuIsClicked = e.target.id == "mobile-menu-icon"
+        ...mapActions(['showEl', "logOut", "changePath"]),
 
-            if (parent.isMenu && !menuIsClicked) {
-                parent.isMenu = false
-                popover.hide();
-            }
-            
-        },
-
-        openOverlay(){
+        toggleOverlay(){
             let parent = this
             let popover = document.getElementById("popover")
             
@@ -288,15 +335,41 @@ export default {
         toggleDarkMode(){
             let parent = this
             let body = document.getElementById("body")
+            let isDarkModeOn = parent.darkMode
             
-            body.classList.remove('coral--light')
-            body.classList.add('coral--dark')
-            parent.darkMode = true
+            if (!isDarkModeOn) {
+                body.classList.remove('coral--light')
+                body.classList.add('coral--dark')
+                parent.darkMode = true
+            } else{
+                body.classList.remove('coral--dark')
+                body.classList.add('coral--light')
+                parent.darkMode = false
+            }
+
         },
 
-        showDialog(dialog) {
-            let dialogEl = document.getElementById(dialog);
-            dialogEl.show();
+        onDialogOpen(){
+            // Set all the dialog compoents as targets
+            const targetNode = document.getElementsByTagName("coral-dialog");
+            
+            // Function to make body overflow when dialog is open, so it doesn't scroll when interacting with the dialog
+            function callback(mutationList, observer) {
+                mutationList.forEach( (mutation) => {
+                    if(mutation.attributeName == "open" && mutation.target.open){
+                    document.documentElement.style.overflow = 'hidden';
+                    } else if(mutation.attributeName == "open" && !mutation.target.open){
+                    document.documentElement.style.overflow = '';
+                }
+                });
+            }
+            const observerOptions = { childList: true, attributes: true}
+            
+            // Add an observer for each dialog target elemnt
+            targetNode.forEach((node) => {
+                const observer = new MutationObserver(callback);
+                observer.observe(node, observerOptions);
+            })
         },
 
     },
@@ -304,20 +377,29 @@ export default {
     mounted: function(){
         let parent = this
 
-        // Check user's colour theme
-        let isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-        // if (isDark) {
-        //     window.plausible("colourTheme", {props: { Theme: "Dark" }})
-        // }else{
-        //     window.plausible("colourTheme", {props: { Theme: "Light" }})
-        // }
-
+        // Scroll listener to add/remove nav meny shadow
         window.addEventListener('scroll', this.handleScroll);
 
-        if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+        // Obvserve everytime the dialog is opened
+        parent.onDialogOpen()
+        
+        if (this.getUser.isAuth) {
+            // Set the "Go to profile" button to go to the user that has logged in
+            parent.optionsList[1].onClick.data = "/user/" + this.getUser.userData.username
+        }
 
+        // Sets light/dark mode based on browser
+        let useDark = window.matchMedia('(prefers-color-scheme: dark)');
+        // Sets light/dark mode based on browser on first load
+        if(window.matchMedia('(prefers-color-scheme: dark)').matches){
             parent.toggleDarkMode()
         }
+        useDark.addListener((evt) => parent.toggleDarkMode());
+    },
+
+    computed: {
+        ...mapGetters(['getUser']),
+
     },
 
     destroyed () {

@@ -33,20 +33,20 @@
            Replacement app icons
         </h1>
 
-        <p class="coral-Body--L w-100 body-text coral-Well m-t-10">
+        <!-- <p class="coral-Body--L w-100 body-text coral-Well m-t-10">
           Icon submissions back to normal, I'm working hard on getting as may icons as I can back. More info soon.
           <br>
           <br>
             <router-link to="/blog/hacked">
               <span class="underline"> Read more about the hack. </span>
             </router-link>
-        </p>
-        <!-- <p class="coral-Body--L w-100 body-text">
+        </p> -->
+        <p class="coral-Body--L w-100 body-text">
           To contribute, download our free icon templates from the
             <router-link to="/resources">
             <span class="underline"> resources page. </span>
             </router-link>
-        </p> -->
+        </p>
         
 
         <div class="m-auto m-t-35">
@@ -54,6 +54,16 @@
           <!-- Desktop Buttons -->
           <div class="d-inline-block mobile-hidden">
             <button
+              v-if="!getUser.isAuth"
+              is="coral-button"
+              variant="cta"
+              @click="showDialog('loginDialog')"
+            >
+              <span>Sign up/in</span>
+            </button>
+
+            <button
+              v-else
               is="coral-button"
               variant="cta"
               @click="showDialog(submitIconDialog)"
@@ -85,7 +95,7 @@
               variant="cta"
               @click="showDialog(submitIconDialog)"
             >
-              <span>Submit icons</span>
+              <span>Sign in/up</span>
             </button>
 
             <a
@@ -120,6 +130,9 @@
 <script>
 import Sponsor from "./Sponsor.vue";
 import NativeAd from "./NativeAd.vue";
+import { mapGetters } from "vuex";
+
+import Parse from 'parse'
 
 export default {
   name: "Hero",
@@ -147,7 +160,7 @@ export default {
   },
 
   methods: {
-    
+
     logDonation(location){
       window.plausible("logDonation", {props: {
           location: location, 
@@ -175,7 +188,8 @@ export default {
   },
 
   computed: {
-  }
+    ...mapGetters(["getUser"])
+  } 
 
 };
 </script>
@@ -235,7 +249,7 @@ export default {
 
 .bsa-desc {
   padding: 10px 14px;
-  color: #fff;
+  /* color: #fff; */
   text-decoration: none;
   letter-spacing: .2px;
   font-size: 14px;

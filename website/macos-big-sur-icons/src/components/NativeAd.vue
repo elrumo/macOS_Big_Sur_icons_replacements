@@ -36,7 +36,7 @@ export default {
           {
             target: '#iconbar-js',
             template: `
-                <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link">
+                <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link coral-card">
                 <div class="bsa-icon" style="background-image: url(##image##); background-color: ##backgroundColor##;"></div>
                 <div class="bsa-desc">##company## - ##tagline##</div>
                 </a>
@@ -59,7 +59,7 @@ export default {
       getAd(el)
 
       if (!parent.isAd) {
-        console.log(parent.isAd);
+        // console.log(parent.isAd);
         setTimeout(() =>{
           if (!_bsa.exists(el)) {
             getAd(el)

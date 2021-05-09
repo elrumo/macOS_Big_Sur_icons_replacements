@@ -1,6 +1,9 @@
 <template>
   <div id="app">
             <!-- <div id="logobar"></div> -->
+    <coral-toast id="toastMessage" variant="success">
+      😄 All icons have been uploaded.
+    </coral-toast>
 
     <Header
       :distanceFromTop="distanceFromTop"
@@ -34,6 +37,14 @@ import '@adobe/coral-spectrum/coral-component-textfield'
 import '@adobe/coral-spectrum/coral-component-textfield'
 import '@adobe/coral-spectrum/coral-component-search'
 import '@adobe/coral-spectrum/coral-component-overlay'
+import '@adobe/coral-spectrum/coral-component-popover'
+import '@adobe/coral-spectrum/coral-component-switch'
+import '@adobe/coral-spectrum/coral-component-tooltip'
+import '@adobe/coral-spectrum/coral-component-alert'
+import '@adobe/coral-spectrum/coral-component-charactercount'
+import '@adobe/coral-spectrum/coral-component-tablist'
+import '@adobe/coral-spectrum/coral-component-panelstack'
+import '@adobe/coral-spectrum/coral-component-wizardview'
 
 import '@adobe/coral-spectrum/coral-css-link'
 import '@adobe/coral-spectrum/coral-css-formgroup'
