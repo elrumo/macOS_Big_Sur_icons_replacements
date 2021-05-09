@@ -169,19 +169,19 @@
             <!-- Terms & Conditions -->
             <p class="coral-Body--XS p-l-5 p-t-5 p-r-5 m-0 opacity-60">
               By continuing, you agree with macOSicons's
-              <a
+              <!-- <a
                 rel="noopener"
                 class="coral-Link"
-                href=""
+                href="https://blog.macosicons.com/blog/p/e616d7d6-5462-44e4-a5a1-0b00e6ca41a1/"
                 target="_blank"
               >
                 Terms of Use
               </a>
-              and
+              and -->
               <a
                 rel="noopener"
                 class="coral-Link"
-                href=""
+                href="https://blog.macosicons.com/blog/p/e616d7d6-5462-44e4-a5a1-0b00e6ca41a1/"
                 target="_blank"
               >
                 Privacy Policy.
