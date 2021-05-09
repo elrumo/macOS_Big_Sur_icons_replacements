@@ -513,7 +513,7 @@ export default {
         } else {
           isValid.push(false)
         }
-        
+
         return !isValid.some((el) => { return el == false })
       }
     }
