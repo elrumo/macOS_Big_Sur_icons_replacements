@@ -144,8 +144,9 @@
         <div v-if="!loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular">
           <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
           
-          <!-- Icons -->
           <div v-for="icon in search" :key="icon.icnsUrl" class="card-wrapper coral-card">
+          
+          <!-- Icons -->
             <div class="">
               <!-- Icon image -->
               <div @click="addClickCount(icon)" class="card-img-wrapper" style="max-width: 120px;">
@@ -240,7 +241,6 @@ import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config()
 
 // TODO: remove credentials
-
 const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
 const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
@@ -256,7 +256,7 @@ let algolia = {
 }
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
-const index = client.initIndex('macOS_parse')
+const index = client.initIndex('macOSicons')
 
 const docLimit = 20
 
