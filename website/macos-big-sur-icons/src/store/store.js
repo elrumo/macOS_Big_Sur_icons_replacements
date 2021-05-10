@@ -161,7 +161,7 @@ export default new Vuex.Store({
       let userIcons = []
 
       results.forEach((result)=>{
-        userIcons.push(JSON.parse(JSON.stringify(result)))
+        userIcons.push(result)
       })
       
       console.log(userIcons);
@@ -220,11 +220,11 @@ export default new Vuex.Store({
     },
 
     notApproved(store){
-      return store.userIcons.filter(icon => !icon.approved)
+      return store.userIcons.filter(icon => !icon.get('approved'))
     },
 
     approvedIcons(store){
-      return store.userIcons.filter(icon => icon.approved)
+      return store.userIcons.filter(icon => icon.get('approved'))
     },
 
     getUserIcons(store){

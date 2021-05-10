@@ -2,14 +2,15 @@
   <div>
 
     <section class="icon-list-area p-t-40 p-b-50">
-      <div v-for="icon in userIcons" class="icon-card-wrapper user-icon-card card-wrapper coral-card" :key="icon.objectId">  
-        <coral-status v-if="icon.approved" variant="success"/>
+      <div v-for="icon in userIcons" class="icon-card-wrapper user-icon-card card-wrapper coral-card" :key="icon.id">  
+
+        <coral-status v-if="icon.get('approved')" variant="success"/>
         <coral-status v-else variant="error"/>
 
         <div class="card-img-wrapper" style="max-width: 120px;">
-          <a rel="noopener" :href="icon.highResPngUrl">
+          <a rel="noopener" :href="icon.get('highResPngUrl')">
             <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-              <img :alt="icon.appName +' icon'" :data-src="icon.highResPngUrl">
+              <img :alt="icon.get('appName') +' icon'" :data-src="icon.get('highResPngUrl')">
             </div>
           </a>
           
@@ -26,27 +27,27 @@
           
           <div class="coral-FormGroup-item">
             <p class="coral-Body--XS"></p>
-            <label :id="'icon-appName-label'+icon.objectId" class="coral-FieldLabel">
+            <label :id="'icon-appName-label'+icon.id" class="coral-FieldLabel">
               AppName
             </label>
             <input
-              :id="'icon-appName-field'+icon.objectId"
+              :id="'icon-appName-field'+icon.id"
               is="coral-textfield"
               labelledby="icon-appName-label"
               class="coral-Form-field"
               type="text"
               v-on:change="validate($event, 'appName')"
-              :value="icon.appName"
+              :value="icon.id"
             >
           </div>
 
           <div class="coral-FormGroup-item">
             <p class="coral-Body--XS"></p>
-            <label :id="'icon-appCategory-label'+icon.objectId" class="coral-FieldLabel">
+            <label :id="'icon-appCategory-label'+icon.id" class="coral-FieldLabel">
               App category
             </label>
             <select
-              :id="'icon-appCategory-field'+icon.objectId"
+              :id="'icon-appCategory-field'+icon.id"
               labelledby="icon-appCategory-label"
               placeholder="Select category"
               class="dropdown-select"
@@ -54,28 +55,28 @@
             >
               <option
                 v-for="category in getAppCategories"
-                :key="category.CategoryName+icon.randId+Math.floor(Math.random() * 10000000 + 1)"
-                :value="category.objectId"
-                :selected="isSelected(icon.category, category.CategoryName)"
+                :key="category.name+icon.id"
+                :value="category.id"
+                :selected="isSelected(icon.get('category'), category.name)"
               >
-                {{ category.CategoryName }}
+                {{ category.name }}
               </option>
-              <option
+              <!-- <option
                 value="-"
-                :selected="isSelected(icon.category)"
+                :selected="isSelected(icon.get('category'))"
               >
                 -
-              </option>
+              </option> -->
             </select>
           </div>
 
           <div class="coral-FormGroup-item">
             <p class="coral-Body--XS"></p>
-            <label :id="'icon-appWebsite-label'+icon.objectId" class="coral-FieldLabel">
+            <label :id="'icon-appWebsite-label'+icon.id" class="coral-FieldLabel">
               App Website
             </label>
             <input
-              :id="'icon-appWebsite-field'+icon.objectId"
+              :id="'icon-appWebsite-field'+icon.id"
               is="coral-textfield"
               labelledby="icon-appWebsite-label"
               class="coral-Form-field"
@@ -84,14 +85,15 @@
               :value="icon.appWebsite"
             >
           </div>
-
-          <div class="coral-FormGroup-item">
+          
+          <!-- App Icon Designer -->
+          <!-- <div class="coral-FormGroup-item">
             <p class="coral-Body--XS"></p>
-            <label :id="'icon-iconDesigner-label'+icon.objectId" class="coral-FieldLabel">
+            <label :id="'icon-iconDesigner-label'+icon.id" class="coral-FieldLabel">
               App Icon Designer
             </label>
             <input
-              :id="'icon-iconDesigner-field'+icon.objectId"
+              :id="'icon-iconDesigner-field'+icon.id"
               is="coral-textfield"
               labelledby="icon-iconDesigner-label"
               class="coral-Form-field"
@@ -99,7 +101,7 @@
               v-on:change="validate($event, 'iconDesigner')"
               :value="icon.iconDesigner"
             >
-          </div>
+          </div> -->
 
         </form>
       </div>
@@ -139,7 +141,7 @@ export default {
     methods:{
       isSelected(selected, option){
         try {
-          if (selected.CategoryName == option) {
+          if (selected.name == option) {
             return true;
           } else {
             return false;
