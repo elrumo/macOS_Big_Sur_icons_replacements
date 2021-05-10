@@ -1,4 +1,0 @@
-This is a Brave Rewards publisher verification file.
-
-Domain: macosicons.com
-Token: e2d9b2314753b16b6e327ac013d07e668d6b638bba1977cc4122265931075f2a
