@@ -145,10 +145,10 @@
           <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
           
           <!-- Icons -->
-          <div @click="addClickCount(icon)" v-for="icon in search" :key="icon.icnsUrl" class="card-wrapper coral-card">
+          <div v-for="icon in search" :key="icon.icnsUrl" class="card-wrapper coral-card">
             <div class="">
               <!-- Icon image -->
-              <div class="card-img-wrapper" style="max-width: 120px;">
+              <div @click="addClickCount(icon)" class="card-img-wrapper" style="max-width: 120px;">
               
                 <!-- macOS icon download -->
                 <a rel="noopener" v-if="isMacOs" :href="icon.icnsUrl">
@@ -253,11 +253,6 @@ let algolia = {
     appid: process.env.VUE_APP_ALGOLIA_APPID,
     apikey: process.env.VUE_APP_ALGOLIA_KEY
 }
-
-// TODO: remove credentials
-let parseUser = process.env.VUE_APP_PARSE_USER_EMAIL
-let parsePass = process.env.VUE_APP_PARSE_USER_PASS
-
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
 const index = client.initIndex('macOS_parse')
@@ -494,50 +489,16 @@ export default {
     },
 
     async addClickCount(icon){
-      let parent = this
-      let DownloadCount = Parse.Object.extend("DownloadCount")
-      // let downloadCount = new DownloadCount()
-
+      console.log(icon);
+      var id
       if (icon.id) {
-        var id = icon.id
-      } else {
-        var id = icon.objectID
+        id = icon.id
+      } else{
+        id = icon.objectID
       }
-      
-      let queryDownloads = new Parse.Query(DownloadCount)
-      
-      let downlaods = await queryDownloads.get(icon.DownloadCount.id)
-      downlaods.increment("downloads")
-      downlaods.save()
-
-      // var downloadId = icon.DownloadCount.id
-      // var downlaods = await queryDownloads.get(downloadId)
-      // console.log(downlaods);
-
-
-      // if (icon.DownloadCount == undefined) {
-      //   let iconQuery = new Parse.Query(Icons)
-      //   let icons = await iconQuery.get(id)
-      //   let result = await iconQuery.find()
-      //   downloadCount.set("iconRef", result[0]);
-      //   downloadCount.set("iconRef", result[0]);
-      //   downloadCount.save().then((saved)=>{
-      //     icons.set("DownloadCount", saved)
-      //     icons.save()
-      //   })
-
-      //   return
-      // } else {
-      //   var downloadId = icon.DownloadCount.id
-      //   var downlaods = await queryDownloads.get(downloadId)
-      //   downlaods.increment("downloadCount")
-      //   downlaods.save()
-      // }
-
-
-
+      icon = { appName: icon.appName, id: id }
+      await Parse.Cloud.run("addClickCount", {icon: icon})
     },
-
 
     prettifyName(name){
       name = name.replaceAll("_", " ")
