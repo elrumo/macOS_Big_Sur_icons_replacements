@@ -373,6 +373,8 @@ export default {
       // }
       delete icon.DownloadCount
       delete icon.user
+      delete icon.category
+      delete icon.type
       // Parse.Cloud.run("approve", icon).then((result)=>{
       Parse.Cloud.run("testJob", icon).then((result)=>{
         console.log(result);
