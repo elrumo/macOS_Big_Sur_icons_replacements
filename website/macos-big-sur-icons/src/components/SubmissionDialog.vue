@@ -364,7 +364,9 @@ export default {
         let parent = this
         let DownloadCount = Parse.Object.extend("DownloadCount")
         let IconType = Parse.Object.extend("IconType")
+        let Categories = Parse.Object.extend("Categories")
         let typQuery = new Parse.Query(IconType)
+        let categoryQuery = new Parse.Query(Categories)
 
         // Get today's date
         var today = new Date();
@@ -383,12 +385,17 @@ export default {
           let file =  parent.filesToShow[fileNum].file;
           let appName = parent.filesToShow[fileNum].name;
           let randId = parent.filesToShow[fileNum].randId;
-          let category = parent.filesToShow[fileNum].category.id;
           let typeId = parent.filesToShow[fileNum].type;
           let isDarkMode = parent.filesToShow[fileNum].isDarkMode;
           let isAuthor = parent.filesToShow[fileNum].isAuthor;
-          var type 
           
+          // Retrieve Category Parse object
+          let category = parent.filesToShow[fileNum].category;
+          categoryQuery.get(category)
+          category = await categoryQuery.find();
+          category = category[0];
+          
+          var type 
           // Retrieve IconType Parse object
           for(let item in parent.getIconType){
             if (parent.getIconType[item].id == typeId) {
