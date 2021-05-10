@@ -423,7 +423,7 @@ export default {
               timeStamp: Date.now(),
               approved: false,
               user: currentUser,
-              email: Parse.User.current().getUsername(),
+              email: Parse.User.current().getEmail(),
               usersName: Parse.User.current().getUsername(),
               credit: Parse.User.current().get("credit"),
               category: category,
