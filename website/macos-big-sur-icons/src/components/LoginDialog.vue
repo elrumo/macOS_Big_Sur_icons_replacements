@@ -33,7 +33,7 @@
 
           <div v-if="isLoading" class="loading-overlay">
             <div class="loading-popup">
-              <coral-progress indeterminate>Icons uploaded</coral-progress>
+              <coral-progress indeterminate>Loading</coral-progress>
             </div>
           </div>
 

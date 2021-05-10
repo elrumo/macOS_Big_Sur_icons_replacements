@@ -1,77 +1,77 @@
 <template>
-<div>
+  <div>
 
-  <section class="profile-page-head-wrapper">
-    <img class="profile-img-wrapper" :src="sources.profilePic" alt="">
+    <section class="profile-page-head-wrapper">
+      <img class="profile-img-wrapper" :src="sources.profilePic" alt="">
 
-    <div class="profile-info-wrapper">
-      <div class="profile-header-wrapper">
-        <div class="profile-name-social">
-          <h3 class="coral-Heading--L m-0">
-            {{ getUser.userData.username }}
-          </h3>
-          <a href="" class="margin-auto">
-            <IconUI class="" width="22px" :img="sources.twitter" alt="Twitter Logo"/>
-          </a>
+      <div class="profile-info-wrapper">
+        <div class="profile-header-wrapper">
+          <div class="profile-name-social">
+            <h3 class="coral-Heading--L m-0">
+              {{ getUser.userData.username }}
+            </h3>
+            <a href="" class="margin-auto">
+              <IconUI class="" width="22px" :img="sources.twitter" alt="Twitter Logo"/>
+            </a>
+          </div>
+          <div class="profile-edit-btn opacity-80">
+            <button
+              is="coral-button"
+              variant="quiet"
+              @click="showDialog('accountDialog')"
+            >
+              Edit Profile
+            </button>
+          </div>
         </div>
-        <div class="profile-edit-btn opacity-80">
-          <button
-            is="coral-button"
-            variant="quiet"
-            @click="showDialog('accountDialog')"
+
+        <div class="profile-descrption-box">
+          <p class="coral-Body--L">
+            {{ getUser.userData.bio }}
+            <!-- I design products by day at the British Heart Foundation and take photos of bands by night. Creator of macOSicons.com. -->
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- <hr width="90%" class="coral-Divider--S"> -->
+
+    
+    <section class="m-auto user-profile-icons">
+      <coral-tablist>
+        <coral-tab aria-label="All Icons" @click="changeIconStatus('all')">All</coral-tab>
+        <coral-tab aria-label="Approved Icons" selected="" @click="changeIconStatus('approved')">Approved</coral-tab>
+        <coral-tab aria-label="Waiting Icons" @click="changeIconStatus('notApproved')">Waiting</coral-tab>
+        
+        <select
+          id="order-selector"
+          class="dropdown-select right-align-tablist dropdown-select-quiet"
+          v-on:change="validate($event, 'category')"
+        >
+          <option
+            value="Recent Uploads"
+            selected=""
           >
-            Edit Profile
-          </button>
-        </div>
-      </div>
+            Recent Uploads
+          </option>
 
-      <div class="profile-descrption-box">
-        <p class="coral-Body--L">
-          {{ getUser.userData.bio }}
-          <!-- I design products by day at the British Heart Foundation and take photos of bands by night. Creator of macOSicons.com. -->
-        </p>
-      </div>
+          <option
+            value="Recent Uploads"
+            selected=""
+          >
+            Popular Uploads
+          </option>
+        </select>
+      </coral-tablist>
 
-    </div>
-  </section>
-
-  <!-- <hr width="90%" class="coral-Divider--S"> -->
-
-  
-  <section class="m-auto user-profile-icons">
-    <coral-tablist>
-      <coral-tab aria-label="All Icons" @click="changeIconStatus('all')">All</coral-tab>
-      <coral-tab aria-label="Approved Icons" selected="" @click="changeIconStatus('approved')">Approved</coral-tab>
-      <coral-tab aria-label="Waiting Icons" @click="changeIconStatus('notApproved')">Waiting</coral-tab>
-      
-      <select
-        id="order-selector"
-        class="dropdown-select right-align-tablist dropdown-select-quiet"
-        v-on:change="validate($event, 'category')"
-      >
-        <option
-          value="Recent Uploads"
-          selected=""
-        >
-          Recent Uploads
-        </option>
-
-        <option
-          value="Recent Uploads"
-          selected=""
-        >
-          Popular Uploads
-        </option>
-      </select>
-    </coral-tablist>
-
-    <UserIconGrid :userIcons="userIcons"/>
-  </section>    
+      <UserIconGrid :userIcons="userIcons"/>
+    </section>    
 
 
-  
+    
 
-</div>
+  </div>
 </template>
 
 <script>
@@ -127,7 +127,7 @@ export default {
   mounted: function(){
     // Get all user iconsOrder
     this.fetchUserIcons()
-    this.fetchAppCategories()
+    // this.fetchAppCategories()
   },
 
   computed:{
