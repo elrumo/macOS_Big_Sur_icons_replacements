@@ -277,9 +277,9 @@ export default {
   metaInfo: {
       // if no subcomponents specify a metaInfo.title, this title will be used
       // title: 'How to change app icons in macOS Big Sur',
-      title: 'macOS app icon pack - 5000+ free and open source icons for Big Sur & iOS',
+      title: 'macOS app icon pack - 7000+ ready icons for Big Sur & iOS',
       // description:"Instructions on how to donlwoad and change app icons in macOS Big Sur using Finder and a website with over 5000+ free app icons.",
-      description:"Free 5000+ App icons for macOS in the style of macOS Big Sur. Fully open source and community led. How to install custom icons on macOS Big Sur.",
+      description:"7000+ App icons for macOS in the style of macOS Big Sur. Fully open source and community led. How to install custom icons on macOS Big Sur.",
       // all titles will be injected into this template
       titleTemplate: '%s | macOSicons',
       meta:[
