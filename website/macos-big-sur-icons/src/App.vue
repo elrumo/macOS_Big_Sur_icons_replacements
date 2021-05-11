@@ -23,10 +23,10 @@
 // import '@adobe/coral-spectrum/coral-component-icon/src/resources/spectrum-icons-color.svg';
 // import '@adobe/coral-spectrum/coral-component-icon/src/resources/spectrum-css-icons.svg';
 
-
 // import '@adobe/coral-spectrum/coral-component-button'
 // import '@adobe/coral-spectrum/coral-component-toast'
 // import '@adobe/coral-spectrum/coral-component-icon'
+
 
 // import '@adobe/coral-spectrum/coral-component-status'
 // import '@adobe/coral-spectrum/coral-component-checkbox'
@@ -52,11 +52,11 @@
 // import '@adobe/coral-spectrum/coral-css-well'
 // import '@adobe/coral-spectrum/coral-css-divider'
 
-// import '@adobe/spectrum-css/dist/icons/spectrum-css-icons.svg' 
-// import '@adobe/spectrum-css/dist/icons/loadIcons.js' 
-
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
+
+// import '@adobe/spectrum-css/dist/icons/spectrum-css-icons.svg' 
+// import '@adobe/spectrum-css/dist/icons/loadIcons.js' 
 
 export default {
   name: 'App',
