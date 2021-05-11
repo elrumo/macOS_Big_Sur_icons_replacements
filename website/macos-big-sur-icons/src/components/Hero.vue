@@ -198,6 +198,7 @@ export default {
 
 .ad-hero{
   padding-bottom: 30px;
+  height: 40px;
 }
 
 @media only screen and (max-width: 820px){
