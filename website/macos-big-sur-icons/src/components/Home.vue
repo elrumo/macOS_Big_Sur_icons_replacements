@@ -143,11 +143,21 @@
     <!-- Icon list when no loading error-->
         <div v-if="!loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular">
           
-          <div>
-            <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+          <div class="card-hover relative coral-card">
+            
+            <div style="z-index: 99; height: 100%" class="absolute">
+              <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+            </div>
+            
+            <div v-if="isAdOn" class="card-no-ad">
+              <p class="coral-Body--M">
+                Support for .icns is on my (long) todo list.
+              </p>
+            </div>
+
           </div>
           
-          <div v-for="icon in search" :key="icon.icnsUrl" class="card-wrapper coral-card">
+          <div v-for="icon in search" :key="icon.icnsUrl" class="card-wrapper card-hover coral-card">
           
           <!-- Icons -->
             <div class="">
@@ -356,6 +366,7 @@ export default {
       howManyRecords: 0,
 
       isMacOs: true,
+      isAdOn: false,
 
       scrolled: false,
       distanceFromTop: true ,
@@ -630,10 +641,23 @@ export default {
           parent.$store.commit('pushDataToArr', {arr: "list", data: iconData, func: "getIconsArray"})
         }
 
-        setTimeout(() => {
-          let carbon = document.getElementById("carbonads")
-          carbon.classList.add("coral-card")
-        }, 800);
+        var attempts = 0;
+        // let getAd = setTimeout(() => {
+        function getAd (){
+          setTimeout(() => {
+            let carbon = document.getElementById("carbonads")
+            if (attempts >= 4) return;
+            try {
+              carbon.classList.add("")
+            } catch (error) {
+              attempts++
+              getAd()
+              parent.isAdOn = true
+            }
+          }, 80);
+        }
+
+        getAd()
 
         parent.scroll()
 
@@ -712,11 +736,34 @@ export default {
       index.search(search, {filters: `approved:true`, hitsPerPage: 150 }).then(function(responses) {
         parent.$store.dispatch("pushDataToArr", {arr: "dataToShow", data: responses.hits, func: "searchAlgolia"})
       });
+    },
+    content() {
+      this.$nextTick(()=>{
+        let parent = this
+        let ad = document.getElementById("carbonads")
+        if(!ad) {
+          console.log("yooo");
+          parent.isAdOn = false
+        } else {
+          parent.isAdOn = false
+        }
+      })
     }
   },
 
   computed:{
     ...mapGetters(['getUser']),
+    
+    adIsOn(){
+      let ad = document.getElementById("carbonads")
+      if(!ad) {
+        // console.log("yooo");
+        return true
+      } else {
+        // console.log(ad);
+       return false
+      }
+    },
 
     isAdmin(){
       let parent = this

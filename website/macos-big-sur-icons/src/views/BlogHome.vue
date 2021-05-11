@@ -4,12 +4,13 @@
         
         <!-- <iframe class="subscribe-blog-wrapper" src="https://blog.macosicons.com/blog/#subscribe" frameborder="0"></iframe> -->
 
-        <section class="p-t-50 p-b-20">
+        <section class="p-t-30 p-b-10">
+
+          <NativeAd class="width-fit m-auto" :sponsored="true" :key="$route.fullPath + 'ad'"/>
+
           <H3-Description :text="subscribe"/>
           
-          <div class="p-t-20">
-            <hr class="coral-Divider--S m-t-50">
-          </div>
+          <hr class="coral-Divider--S m-t-50">
 
         </section>
 
@@ -35,7 +36,7 @@
           </router-link>
         </div>
 
-        <div class="single-ad p-b-20 p-t-30">
+        <div class="single-ad m-b-20 p-b-50 p-t-30">
           <script async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
         </div>
         
@@ -49,6 +50,7 @@
 // @ is an alias to /src
 import { getPosts } from '@/api/posts';
 import H3Description from '@/components/H3_Description.vue'
+import NativeAd from "@/components/NativeAd.vue";
 
 import localPosts from '@/api/posts.json';
 
@@ -56,7 +58,8 @@ export default {
   name: 'BlogHome',
 
   components: {
-    H3Description
+    H3Description,
+    NativeAd
   },
 
   data: function(){

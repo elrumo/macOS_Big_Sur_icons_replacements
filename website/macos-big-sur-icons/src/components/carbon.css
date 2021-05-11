@@ -26,15 +26,17 @@
 }
 
 .single-ad #carbonads{
-    /* max-width: 225px; */
     height: fit-content;
     margin: auto;
-    /* margin: 0 0 0 auto; */
-    opacity: 0.8;
 }
 
 .single-ad #carbonads:hover{
     opacity: 1;
+    transform: translatey(-3px);
+}
+
+.single-ad #carbonads:hover .carbon-img{
+    transform: translateY(-10px);
 }
 
 .single-ad #carbonads * {
@@ -65,30 +67,54 @@
     color: inherit;
   }
   
+.single-ad #carbonads{
+    overflow: visible;
+}
+
+.single-ad #carbonads > span {
+    
+}
+
 .single-ad #carbonads span {
     position: relative;
     display: block;
-    overflow: hidden;
-  }
+    overflow: visible;
+}
   
 .single-ad #carbonads .carbon-wrap {
-    display: flex;
+    /* display: flex; */
+    display: grid;
+    grid-template-columns: 22% 78%;
+    grid-template-rows: auto;
+    padding: 15px 20px 15px 0px;
   }
   
 .single-ad #carbonads .carbon-img {
     display: block;
     margin: 0;
     line-height: 1;
-  }
-  
+    position: relative;
+    width: 100%;
+    transition: 0.3s;
+    /* transform: translatey(-50%) */
+}
+
 .single-ad #carbonads .carbon-img img {
+    position: absolute;
+    top: 30%;
+    width: 160%;
+    height: auto;
+    max-width: 150px !important;
+    right: 0px;
+    transform: translatey(-50%);
     display: block;
+    opacity: 1;
   }
   
 .single-ad #carbonads .carbon-text {
     font-size: 13px;
     margin: auto;
-    padding: 0px 0px 20px 10px;
+    padding: 0px 10px 30px 10px;
     line-height: 1.5;
     text-align: left;
   }
@@ -104,9 +130,8 @@
     line-height: 1;
     position: absolute;
     bottom: 0;
-    right: 10px;
-    width: calc(100% - 174px);
-    margin-bottom: 10px !important;
+    right: 15px;
+    width: calc(100% - 120px);
 }
 
 /* background: #f1f1f2; */
@@ -143,12 +168,35 @@
 }
 
 .resources-card-ad #carbonads{
-    padding: 15px 15px 15px 15px;
+    padding-left: 15px;
+    padding-right: 15px;
     max-width: none;
+    position: absolute;
+    z-index: 99;
+    cursor: pointer;
+    overflow: visible;
+}
+
+.resources-card-ad #carbonads:hover img{
+    transform: translateY(-10px);
+}
+
+.resources-card-ad #carbonads .carbon-poweredby{
+    padding: 10px;
+}
+
+.resources-card-ad #carbonads .carbon-text{
+    font-size: 15px;
+}
+
+.resources-card-ad #carbonads span{
+    overflow: visible;
 }
 
 .resources-card-ad #carbonads > span{
-    gap: 10px;
+    width: fit-content;
+    margin: auto;
+    gap: 15px;
 }
 
 .resources-card-ad #carbonads > span > a{
@@ -210,11 +258,10 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
     transition: 0.2s;
 }
-
+/* 
 #carbonads:hover {
     transform: translateY(-4px);
-}
-
+} */
 
 .coral--dark #carbonads{
     background: var(--coral-dark-card);
@@ -237,6 +284,8 @@
 
 #carbonads:hover .carbon-img img {
     opacity: 1;
+    /* width: 100%; */
+    /* height: auto; */
 }
 
 #carbonads span {
@@ -245,17 +294,46 @@
     overflow: hidden;
 }
 
+.icon-list-area .carbon-img img {
+    width: auto;
+    height: 100%;
+    max-height: 85px;
+}
+
+.icon-list-area #carbonads{
+    overflow: visible;
+    cursor: pointer;
+}
+
+.icon-list-area #carbonads:hover img {
+    transform: translateY(-3px);
+}
+
+.icon-list-area #carbonads > span {
+    height: calc(100% - 20px) !important;
+    padding: 7px 7px 5px 7px;
+    grid-template-rows: auto 19px;
+    gap: 5px;
+    margin: auto;
+}
+
 .icon-list-area #carbonads span {
-    position: relative;
     display: grid;
-    overflow: hidden;
-    padding-bottom: 10px;
+    overflow: visible;
+    position: relative;
+    /* height: 100%; */
+    height: fit-content;
+}
+
+.icon-list-area #carbonads .carbon-wrap{
+    grid-template-rows: auto auto;
+    /* grid-template-rows: 65px auto; */
 }
 
 #carbonads .carbon-wrap {
     display: grid;
-    padding: 8px 7px 10px 7px;
-    grid-template-rows: auto;
+    grid-template-rows: auto auto;
+    gap: 10px;
 }
 
 #_carbonads_js:after{
@@ -278,22 +356,23 @@
 }
 
 .carbon-text {
-    font-size: 13px;
-    padding: 2px 5px 0px 5px;
+    font-size: 12px;
+    /* padding: 2px 5px 0px 5px; */
     line-height: 1.4;
     text-align: center;
     margin: 10px 0px 0px 0px;
 }
 
 .carbon-poweredby {
-    /* display: none; */
     display: block;
-    padding: 8px 10px;
+    padding: 5px 10px;
     
     opacity: 0.5;
     margin-bottom: 13px;
     width: 70%;
-    border-radius: 7px;
+    height: fit-content;
+    border-radius: 4px;
+    /* border-radius: 7px; */
     
     background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, 0.025) 5px, hsla(0, 0%, 0%, 0.025) 10px) hsla(203, 11%, 95%, 0.2);
     text-align: center;
