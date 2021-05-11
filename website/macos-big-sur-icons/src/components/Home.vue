@@ -142,7 +142,10 @@
 
     <!-- Icon list when no loading error-->
         <div v-if="!loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular">
-          <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+          
+          <div>
+            <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+          </div>
           
           <div v-for="icon in search" :key="icon.icnsUrl" class="card-wrapper coral-card">
           
@@ -241,8 +244,10 @@ import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config()
 
 // TODO: remove credentials
-const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
-const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
+const VUE_APP_PARSE_APP_ID = "macOSicons"
+const VUE_APP_PARSE_JAVASCRIPT_KEY = "macOSicons"
+// const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
+// const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
 Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://media.macosicons.com/parse'
