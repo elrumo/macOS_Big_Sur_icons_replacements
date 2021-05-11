@@ -196,7 +196,7 @@
                 <!-- iOS icon download -->
                 <a rel="noopener" v-else :href="icon.iOSUrl">
                   <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                    <img :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
+                    <img width="100px" height="100px" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
                   </div>
                 </a>
 
