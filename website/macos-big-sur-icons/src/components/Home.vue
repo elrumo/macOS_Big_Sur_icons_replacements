@@ -145,13 +145,13 @@
           
           <div class="card-hover relative coral-card">
             
-            <div style="z-index: 2; height: 100%" class="absolute">
+            <div style="z-index: 2; height: 100%" class="relative">
               <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
             </div>
             
             <a
               v-if="isAdOn"
-              class="card-no-ad"
+              class="card-no-ad relative"
               href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
               rel="noopener"
               target="_blank"
@@ -159,11 +159,11 @@
               @click="logDonation('support-message')"
             >
               <div class="support-page">
-                <h3 class="coral-Heading--S">
+                <h3 class="coral-Heading--S m-0">
                   Support this page
                 </h3>
-                <p class="coral-Body--S">
-                  Disabling your ad blocker, sharing with others or making a
+                <p class="coral-Body--S m-0">
+                  Please consider disabling your ad blocker or making a
                   <a  
                     rel="noopener"
                     class="coral-Link"
@@ -172,7 +172,7 @@
                   >
                     donation 
                   </a>
-                  are the best ways to support this page.
+                 to support this project.
                 </p>
               </div>
             </a>
