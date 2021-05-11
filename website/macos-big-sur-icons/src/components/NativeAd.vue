@@ -27,23 +27,48 @@ export default {
     },
     
     mounted: function(){
-
       let parent = this
 
       function getAd(el){
-        if (typeof _bsa !== 'undefined' && !parent.isAd) {
-          _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
-          {
-            target: '#iconbar-js',
-            template: `
-                <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link coral-card">
-                <div class="bsa-icon" style="background-image: url(##image##); background-color: ##backgroundColor##;"></div>
-                <div class="bsa-desc">##company## - ##tagline##</div>
-                </a>
-              `
-            }
-          );
+        try {
+          if (typeof _bsa !== 'undefined' && !parent.isAd) {
+            _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
+            {
+              target: '#iconbar-js',
+              template: `
+                  <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link coral-card">
+                  <div class="bsa-icon" style="background-image: url(##image##); background-color: ##backgroundColor##;"></div>
+                  <div class="bsa-desc">##company## - ##tagline##</div>
+                  </a>
+                `
+              }
+            );
+          }
+        } catch (error) {
         }
+      }
+      
+      var attempts = 0       
+      function adExist(){
+        var adExists = document.getElementById("iconbar-js").children.length
+        console.log();
+        setTimeout(() => {
+          if (attempts >= 4) return;
+          if (adExists == 0) {
+            try {
+              getAd()
+              console.log("attempts: ", attempts);
+              attempts++
+              adExist()
+            } catch (error) {
+              getAd()
+              attempts++
+              adExist()
+              parent.isAd = false
+            }
+          } else return
+
+        }, 800);
       }
 
       let el = document.getElementById("customAd")
@@ -56,15 +81,16 @@ export default {
         }
       }
 
-      getAd(el)
+      // getAd(el)
 
       if (!parent.isAd) {
-        // console.log(parent.isAd);
-        setTimeout(() =>{
-          if (!_bsa.exists(el)) {
-            getAd(el)
-          }
-        }, 800)
+          // // console.log(parent.isAd);
+          // setTimeout(() =>{
+          //   if (!_bsa.exists(el)) {
+          //     getAd(el)
+          //   }
+          // }, 500)
+        adExist()
       }
 
     },
