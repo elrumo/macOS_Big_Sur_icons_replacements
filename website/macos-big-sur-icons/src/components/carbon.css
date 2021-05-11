@@ -310,9 +310,9 @@
 }
 
 .icon-list-area #carbonads > span {
-    height: fit-content;
-    /* height: calc(100% - 20px) !important; */
-    padding: 5px 7px 5px 7px;
+    /* height: fit-content; */
+    height: calc(100% - 20px) !important;
+    padding: 10px 7px 10px 7px;
     grid-template-rows: auto 19px;
     gap: 5px;
     margin: auto;

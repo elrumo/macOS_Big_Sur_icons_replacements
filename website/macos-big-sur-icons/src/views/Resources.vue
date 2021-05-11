@@ -20,12 +20,32 @@
 
         <div class="card-hover relative coral-card resources-card-ad">            
             <script async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
-          <div class="card-no-ad">
-            <p class="coral-Body--M">
-              Support for .icns is on my (long) todo list.
-            </p>
-          </div>
-
+          <a
+              class="card-no-ad relative"
+              href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+              rel="noopener"
+              target="_blank"
+              style="width: 100%; left: 0;"
+              @click="logDonation('support-message')"
+            >
+              <div class="support-page">
+                <h3 class="coral-Heading--S m-0">
+                  Support this page
+                </h3>
+                <p class="coral-Body--S m-0">
+                  Please consider disabling your ad blocker or making a
+                  <a  
+                    rel="noopener"
+                    class="coral-Link"
+                    target="_blank"
+                    href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+                  >
+                    donation 
+                  </a>
+                 to support this project.
+                </p>
+              </div>
+            </a>
         </div>
 
       </div>
