@@ -14,7 +14,7 @@
         
         <hr class="coral-Divider--S m-t-20 m-b-10">
 
-        <p class="coral-Detail coral-Detail--L opacity-80 m-b-50 m-l-10">
+        <p class="coral-Detail coral-Detail--L opacity-80 m-b-30 m-l-10">
           <span class="coral-Detail--light">
             {{ getDate(blogPost.published_at) }}
           </span>
@@ -24,17 +24,17 @@
           </span>
         </p>
         
-        <figure class="post-full-image">
-          <img :src="blogPost.feature_image"/>
-        </figure>
-
-        <div class="single-ad mobile-ad m-t-50 p-b-10">
+        <div class="single-ad mobile-ad p-b-10">
           <NativeAd
             :sponsored="true"
-            :fullWidth="true"
+            :fullWidth="false"
             :key="$route.fullPath + 'ad'"
           />
         </div>
+
+        <figure class="post-full-image">
+          <img :src="blogPost.feature_image"/>
+        </figure>
 
       </div>
 

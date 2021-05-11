@@ -133,6 +133,7 @@ main{
 .instructions-item{
     padding: 0px 0px 0px 0px;
     overflow: hidden;
+    height: 100%;
 }
 .coral--dark .instructions-item{
     background-color: var(--coral-dark-card) !important;
@@ -651,7 +652,17 @@ option[value=""][disabled] {
     color: var( --coral-dark-border);
 }
 
-.card-wrapper:hover{
+.card-no-ad{
+    position: absolute;
+    top: 0px;
+    height: 100%
+}
+
+.card-hover{
+    transition: 0.2s;
+}
+
+.card-hover:hover{
     transform: translateY(-4px);
 }
 
@@ -734,7 +745,7 @@ option[value=""][disabled] {
 .icon-list-area a{
     text-decoration: none;
     color: black;
-    margin: auto;
+    margin: 0px auto;
 }
 
 .card-img-wrapper{
@@ -821,6 +832,10 @@ option[value=""][disabled] {
     z-index: 1000;
     top: 50%;
     transform: translate(-50%, -49%);
+}
+
+.width-fit{
+    width: fit-content
 }
 
 .loading-popup{
@@ -924,6 +939,8 @@ option[value=""][disabled] {
 .coral-card{
     border: 1px solid;
     transition: 0.2s;
+    overflow: hidden;
+    border-radius: var(--main-border-radius);
 }
 
 .fileupload-wrapper{
