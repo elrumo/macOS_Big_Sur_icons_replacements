@@ -56,9 +56,8 @@ export default {
           if (attempts >= 4) return;
           if (adExists == 0) {
             try {
-              getAd()
-              console.log("attempts: ", attempts);
               attempts++
+              getAd()
               adExist()
             } catch (error) {
               getAd()

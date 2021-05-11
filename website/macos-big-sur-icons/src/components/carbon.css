@@ -306,11 +306,12 @@
 }
 
 .icon-list-area #carbonads:hover img {
-    transform: translateY(-3px);
+    transform: translateY(-5px);
 }
 
 .icon-list-area #carbonads > span {
-    height: calc(100% - 20px) !important;
+    height: fit-content;
+    /* height: calc(100% - 20px) !important; */
     padding: 7px 7px 5px 7px;
     grid-template-rows: auto 19px;
     gap: 5px;
