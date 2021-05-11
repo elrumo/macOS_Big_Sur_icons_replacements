@@ -676,7 +676,7 @@ export default {
               getAd()
               parent.isAdOn = true
             }
-          }, 80);
+          }, 500);
         }
 
         getAd()
