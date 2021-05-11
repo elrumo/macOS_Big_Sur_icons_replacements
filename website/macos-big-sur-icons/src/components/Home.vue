@@ -78,7 +78,7 @@
                       <rect id="ToDelete" fill="#ff13dc" opacity="0" width="12" height="12" /><path d="M11.69673,10.28266,7.41406,6l4.28267-4.28266A.9999.9999,0,1,0,10.28266.30327L6,4.58594,1.71734.30327A.9999.9999,0,1,0,.30327,1.71734L4.58594,6,.30327,10.28266a.9999.9999,0,1,0,1.41407,1.41407L6,7.41406l4.28266,4.28267a.9999.9999,0,1,0,1.41407-1.41407Z" />
                     </svg>
 
-                    <div class="mobile-hidden" style="top: -25px;">
+                    <div class="mobile-hidden" style="top: -26px;">
                       <button @click="copySearch" variant="quiet" is="coral-button">
                         Share search
                       </button>
@@ -144,14 +144,15 @@
         <div v-if="!loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular">
           <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
           
-          <!-- Icons -->
           <div v-for="icon in search" :key="icon.icnsUrl" class="card-wrapper coral-card">
+          
+          <!-- Icons -->
             <div class="">
               <!-- Icon image -->
-              <div @click="addClickCount(icon)" class="card-img-wrapper" style="max-width: 120px;">
+              <div class="card-img-wrapper" style="max-width: 120px;">
               
                 <!-- macOS icon download -->
-                <a rel="noopener" v-if="isMacOs" :href="icon.icnsUrl">
+                <a @click="addClickCount(icon)" rel="noopener" v-if="isMacOs" :href="icon.icnsUrl">
                   <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
                     <img :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
                   </div>
@@ -240,7 +241,6 @@ import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config()
 
 // TODO: remove credentials
-
 const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
 const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
@@ -257,7 +257,7 @@ let algolia = {
 }
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
-const index = client.initIndex('macOS_parse')
+const index = client.initIndex('macOSicons')
 
 const docLimit = 20
 
