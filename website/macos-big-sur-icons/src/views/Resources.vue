@@ -18,15 +18,8 @@
           :step='resource'
         />
 
-        <!-- <div class="resources-card-ad">
-          <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
-        </div> -->
-        <div class="card-hover relative coral-card resources-card-ad">
-            
-          <!-- <div style="z-index: 99" class="absolute"> -->
+        <div class="card-hover relative coral-card resources-card-ad">            
             <script async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
-          <!-- </div> -->
-          
           <div class="card-no-ad">
             <p class="coral-Body--M">
               Support for .icns is on my (long) todo list.
