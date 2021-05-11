@@ -7,6 +7,8 @@
       {{ toggleOverflow() }}
     </div>
 
+    <coral-icon icon="add" title="Add"></coral-icon>
+    
     <!-- <coral-dialog id="newDialog" open style="text-align: left;">
       <coral-dialog-header>Pay to view</coral-dialog-header>
       

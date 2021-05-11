@@ -19,7 +19,7 @@
     "vue-meta": "^2.4.0"
   },
   "devDependencies": {
-    "@adobe/coral-spectrum": "^4.10.12",
+    "@adobe/coral-spectrum": "^4.10.21",
     "@tryghost/content-api": "^1.4.13",
     "@vue/cli-plugin-babel": "~4.4.0",
     "@vue/cli-plugin-router": "^4.5.8",
