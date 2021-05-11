@@ -135,6 +135,18 @@ main{
     overflow: hidden;
     height: 100%;
 }
+
+.support-page{
+    margin: auto;
+    position: relative;
+    padding: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    gap: 10px;
+}
+
 .coral--dark .instructions-item{
     background-color: var(--coral-dark-card) !important;
 }
@@ -376,7 +388,7 @@ option[value=""][disabled] {
     width: 100%;
     position: sticky;
     top: 0;
-    z-index: 2;
+    z-index: 99;
     transition: 0.3s;
 }
 
@@ -462,7 +474,7 @@ option[value=""][disabled] {
     padding-top: 10px;
     padding-bottom: 30px;
     top: 60px;
-    z-index: 1;
+    z-index: 5;
     width: 100%;
     margin: auto;
     transition: 0.2s;

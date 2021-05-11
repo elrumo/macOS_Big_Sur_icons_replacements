@@ -145,15 +145,37 @@
           
           <div class="card-hover relative coral-card">
             
-            <div style="z-index: 99; height: 100%" class="absolute">
+            <div style="z-index: 2; height: 100%" class="absolute">
               <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
             </div>
             
-            <div v-if="isAdOn" class="card-no-ad">
-              <p class="coral-Body--M">
-                Support for .icns is on my (long) todo list.
-              </p>
-            </div>
+            <a
+              v-if="isAdOn"
+              class="card-no-ad"
+              href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+              rel="noopener"
+              target="_blank"
+              style="width: 100%; left: 0;"
+              @click="logDonation"
+            >
+              <div class="support-page">
+                <h3 class="coral-Heading--S">
+                  Support this page
+                </h3>
+                <p class="coral-Body--S">
+                  Disabling your ad blocker, sharing with others or making a
+                  <a  
+                    rel="noopener"
+                    class="coral-Link"
+                    target="_blank"
+                    href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+                  >
+                    donation 
+                  </a>
+                  are the best ways to support this page.
+                </p>
+              </div>
+            </a>
 
           </div>
           
