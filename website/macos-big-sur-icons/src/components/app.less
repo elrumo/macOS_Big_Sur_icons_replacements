@@ -263,6 +263,7 @@ option[value=""][disabled] {
     border-radius: 4px;
     border: 1px solid;
     appearance: none;
+    cursor: pointer;
 }
 
 .dropdown-select-quiet{
@@ -558,6 +559,15 @@ option[value=""][disabled] {
     position: absolute;
     right: 110px;
     transform: translateY(-50%);
+    border: 1px solid;
+}
+
+.coral--dark .searchBar-divider{
+    background-color: var(--coral-dark-border)
+}
+
+.coral--light .searchBar-divider{
+    background-color: var(--coral-light-border)
 }
 
 .main-search{
@@ -864,8 +874,8 @@ option[value=""][disabled] {
 .searchBar-right > *{
     display: inline-block;
     position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+    // top: 50%;
+    // transform: translateY(-50%);
 }
 
 .searchBar-right > svg{
@@ -925,6 +935,10 @@ option[value=""][disabled] {
     z-index: 999;
 }
 
+.fileupload-wrapper > div{
+    height: 100%
+}
+
 .fileupload-wrapper input{
     top: 0px !important;
     left: 0px !important;
@@ -982,7 +996,7 @@ option[value=""][disabled] {
 .drop-zone{
     cursor: pointer;
     width: calc(100% - 4px);
-    // width: 100%;
+    height: 100%;
     border-radius: 7px;
 }
 
