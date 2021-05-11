@@ -189,7 +189,7 @@
                           :id="'isAuthorUpload'+icon.randId"
                           v-on:change="getCheckedValue($event, icon.randId, 'isAuthor')"
                         >
-                          I'm the author this icon
+                          I'm the author of this icon
                         </coral-checkbox>
                       </div>
 

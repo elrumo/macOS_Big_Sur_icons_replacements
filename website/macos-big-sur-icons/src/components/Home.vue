@@ -149,10 +149,10 @@
           <!-- Icons -->
             <div class="">
               <!-- Icon image -->
-              <div @click="addClickCount(icon)" class="card-img-wrapper" style="max-width: 120px;">
+              <div class="card-img-wrapper" style="max-width: 120px;">
               
                 <!-- macOS icon download -->
-                <a rel="noopener" v-if="isMacOs" :href="icon.icnsUrl">
+                <a @click="addClickCount(icon)" rel="noopener" v-if="isMacOs" :href="icon.icnsUrl">
                   <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
                     <img :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
                   </div>
