@@ -316,6 +316,7 @@
     grid-template-rows: auto 19px;
     gap: 5px;
     margin: auto;
+    max-height: 180px;
 }
 
 .icon-list-area #carbonads span {
