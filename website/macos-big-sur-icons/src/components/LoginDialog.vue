@@ -127,14 +127,26 @@
                 name="password"
                 autocomplete="current-password"
                 v-on:keyup="getTextFieldValue($event, 'password', false)"
-                v-on:change="getTextFieldValue($event, 'password', false)"
               >
-              <p class="coral-Body--XS opacity-60 f-w-400 p-t-10">
-                Password must contain a number, a capital letter and be more than 6 characters long.
-              </p>
-              <p v-if="userInfo.step == 2 && userInfo.hasLoggedIn" class="coral-Body--XS opacity-60 f-w-400 p-t-10">
-                Problems signing in? <span @click="resetPassword" class="coral-link">Reset password</span> 
-              </p>
+              <div v-if="!userInfo.problems.passNotSecure">
+                <p class="coral-Body--XS opacity-60 f-w-400 p-t-10">
+                  Password must contain a number, a capital letter and be more than 6 characters long.
+                </p>
+                <p v-if="userInfo.step == 2 && userInfo.hasLoggedIn" class="coral-Body--XS opacity-60 f-w-400 p-t-10">
+                  Problems signing in? <a @click="resetPassword" class="coral-link">Reset password</a> 
+                </p>
+              </div>   
+
+              <coral-alert
+                v-if="userInfo.problems.passNotSecure"
+                style="padding: 10px; margin-top: 15px"
+                variant="warning"
+              >
+                <coral-alert-header>Password not secure enough</coral-alert-header>
+                <coral-alert-content>
+                  Password must contain a number, a capital letter and be more than 6 characters long.
+                </coral-alert-content>
+              </coral-alert>
               <!-- <coral-alert
                 style="padding: 10px; margin-top: 15px"
               >
@@ -276,7 +288,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import Parse from 'parse'
-import jwt_decode from 'jwt-decode';
+// import jwt_decode from 'jwt-decode';
 
 Parse.initialize("macOSicons");
 Parse.serverURL = 'https://media.macosicons.com/parse'
@@ -310,7 +322,8 @@ export default {
         isValid: false,
         step: 1,
         problems:{
-          usernameExists: false
+          usernameExists: false,
+          passNotSecure: false
         },
 
         passwordResetSent: false,
@@ -330,40 +343,40 @@ export default {
       this.userInfo.step = step
     },
 
-    async appleLogin(){
-      let parent = this;
+    // async appleLogin(){
+    //   let parent = this;
 
-      const userToLogin = new Parse.User();
+    //   const userToLogin = new Parse.User();
       
-      console.log("decodedIdToken: ", decodedIdToken);
+    //   console.log("decodedIdToken: ", decodedIdToken);
      
-      let appleEmail = decodedIdToken.email
-      let appleId = decodedIdToken.sub
-      let token = decodedIdToken.token
+    //   let appleEmail = decodedIdToken.email
+    //   let appleId = decodedIdToken.sub
+    //   let token = decodedIdToken.token
       
-      // const response = await window.AppleID.auth.signIn();
-      // const decodedIdToken = jwt_decode(response.authorization.id_token);
-      // let appleEmail = decodedIdToken.email
-      // let appleId = decodedIdToken.sub
-      // let token = response.authorization.id_token
+    //   // const response = await window.AppleID.auth.signIn();
+    //   // const decodedIdToken = jwt_decode(response.authorization.id_token);
+    //   // let appleEmail = decodedIdToken.email
+    //   // let appleId = decodedIdToken.sub
+    //   // let token = response.authorization.id_token
 
-      let authData = {
-        id:  appleId,
-        email:  appleEmail,
-        token: token
-      }
-      await userToLogin.linkWith('apple', {
-        authData: authData
-        })
-        .then(async (loggedInUser) =>{
-          parent.setUser(JSON.parse(JSON.stringify(loggedInUser)))
-          userToLogin.set("email", authData.email)
-          userToLogin.save()
-        }).catch((error) => {
-          console.log(error);
-      })
+    //   let authData = {
+    //     id:  appleId,
+    //     email:  appleEmail,
+    //     token: token
+    //   }
+    //   await userToLogin.linkWith('apple', {
+    //     authData: authData
+    //     })
+    //     .then(async (loggedInUser) =>{
+    //       parent.setUser(JSON.parse(JSON.stringify(loggedInUser)))
+    //       userToLogin.set("email", authData.email)
+    //       userToLogin.save()
+    //     }).catch((error) => {
+    //       console.log(error);
+    //   })
     
-    },
+    // },
 
     closeDialog(id){
       document.getElementById(id).hide()
@@ -381,6 +394,7 @@ export default {
 
     getTextFieldValue(e, field, isEmail){
         let parent = this
+        let target = e.target
         let fieldValue = e.target.value
         var isValid = e.target.checkValidity()
 
@@ -388,9 +402,15 @@ export default {
         if (!fieldValue.includes(".") && isEmail) {
           isValid = false
         }
-
+        
         parent.userInfo[field] = fieldValue
         parent.userInfo.isValid = isValid
+
+        if (target.type == "password") {
+          let passIsValid = !parent.validatePassword
+          console.log(passIsValid, ": ", parent.userInfo.password);
+          if(passIsValid) parent.userInfo.problems.passNotSecure = false;
+        }
       },
 
     toArray(obj){
@@ -480,6 +500,15 @@ export default {
       }).catch((error)=>{
         parent.isLoading = false
         if (error.code == 202) {
+          parent.showToast({
+            id: "toastMessage",
+            message: "Username already in use",
+            variant: "error"
+          })
+        }
+
+        if (error.code == 142) {
+          parent.userInfo.problems.passNotSecure = true
           parent.showToast({
             id: "toastMessage",
             message: "Password must be more secure, see above for details",
