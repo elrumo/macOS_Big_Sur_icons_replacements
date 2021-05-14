@@ -105,8 +105,8 @@ export default new Vuex.Store({
     },
 
     deleteItem(store, item){
-      console.log(item);
-      console.log(store.state.dataToShow);
+      // console.log(item);
+      // console.log(store.state.dataToShow);
       let indexOf = store.state.dataToShow.indexOf(item)
       store.state.dataToShow.splice(indexOf, 1);
     },
