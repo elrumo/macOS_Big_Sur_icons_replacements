@@ -32,8 +32,8 @@ export default {
             let parent = this
             let Parse = parent.Parse
             
-            console.log("icon: ", icon);
-
+            console.log("icon: ", icon.objectID)
+            console.log("appName: ", icon.appName);
             let query = new Parse.Query(parent.Icons)
             let docToDelete = await query.get(icon.objectID);
 
@@ -41,26 +41,9 @@ export default {
                 parent.$store.dispatch('deleteItem', icon)
                 // Vue.delete(parent.icons[icon.usersName].icons, icon.appName) // Delete object locally
             }).catch((e) =>{
-            console.log(e);
+                console.log("e: ", e);
             })
             
-            // let fileRefIcns = storage.ref().child("icons_approved/"+icon.icnsFileName)
-            
-            // fileRefIcns.delete().then(function() {
-            //         console.log(icon.appName, " deleted successfully.");
-            //     })
-            // .catch((error)=>{
-            //     console.log("Uh-oh, an error occurred with: ", icon.appName, " with ID: ", icon.id);
-            //     console.log(error);
-            // })
-
-            // // Delete object from Firestore
-            // db.collection("submissions").doc(icon.objectID).delete().then(function() {
-            //     console.log("Document successfully deleted!");
-            //     parent.$store.dispatch('deleteItem', icon)
-            // }).catch(function(error) {
-            //     console.error("Error removing document: ", error);
-            // });
         },
     }
     

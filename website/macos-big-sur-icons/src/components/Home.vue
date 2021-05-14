@@ -286,7 +286,6 @@ var Icons = Parse.Object.extend("Icons2");
 
 let algolia = {
     // TODO: remove credentials
-
     appid: process.env.VUE_APP_ALGOLIA_APPID,
     apikey: process.env.VUE_APP_ALGOLIA_KEY
 }
