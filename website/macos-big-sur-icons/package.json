@@ -11,6 +11,7 @@
   "dependencies": {},
   "devDependencies": {
     "@adobe/coral-spectrum": "^4.10.21",
+    "@fullhuman/postcss-purgecss": "^3.0.0",
     "@spectrum-web-components/bundle": "^0.18.0",
     "@spectrum-web-components/overlay": "^0.9.0",
     "@tryghost/content-api": "^1.5.6",
