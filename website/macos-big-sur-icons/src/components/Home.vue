@@ -649,15 +649,48 @@ export default {
         })
         
         parent.$store.state.list = []
+        
+        var userInfo = {}
+
+        function setUserInfo(user){
+          userInfo.username = user.get("username")
+          userInfo.credit = user.get("credit")
+        }
 
         for(let result in results){
-          let objData = results[result].attributes
-          let iconData = {}
+
+          let iconItem = results[result]
+          let user = iconItem.get("user")
           
+          // Fetch user data from Parse User object
+          if (user) {
+            if (result == 0) {
+              await user.fetch()
+              setUserInfo(user)
+            }
+
+            if (result != 0) {
+              let previousItem = results[result-1]
+              if (user.id != previousItem.get("user").id) {
+                await user.fetch()
+                setUserInfo(user)
+              }
+            }
+          } else {
+            setUserInfo(iconItem)
+          }
+          
+          let objData = iconItem.attributes
+          let iconData = {}
+
           for(let data in objData){
             iconData[data] = objData[data]
           }
           iconData.id = results[result].id
+          
+          // Set fetched user info from parse User object
+          iconData.usersName = userInfo.username
+          iconData.credit = userInfo.credit
 
           parent.$store.commit('pushDataToArr', {arr: "list", data: iconData, func: "getIconsArray"})
         }

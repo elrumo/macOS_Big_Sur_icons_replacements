@@ -7,13 +7,15 @@
       <div class="profile-info-wrapper">
         <div class="profile-header-wrapper">
           <div class="profile-name-social">
-            <h3 class="coral-Heading--L m-0">
-              {{ getUser.userData.username }}
+            <div v-if="!user.username" class="loading-placeholder"></div>
+            <h3 v-else class="coral-Heading--L m-0">
+              {{ user.username }}
             </h3>
-            <a href="" class="margin-auto">
+            <a v-if="user.twitterHandle" target="_blank" :href="user.twitterHandle" class="margin-auto">
               <IconUI class="" width="22px" :img="sources.twitter" alt="Twitter Logo"/>
             </a>
           </div>
+
           <div class="profile-edit-btn opacity-80">
             <button
               is="coral-button"
@@ -23,11 +25,14 @@
               Edit Profile
             </button>
           </div>
+
         </div>
 
         <div class="profile-descrption-box">
-          <p class="coral-Body--L">
-            {{ getUser.userData.bio }}
+          <div v-if="!user.bio" class="loading-placeholder"></div>
+          <p v-if="user.bio" class="coral-Body--L">
+            {{ user.bio }}
+            <!-- {{ user.userData.bio }} -->
             <!-- I design products by day at the British Heart Foundation and take photos of bands by night. Creator of macOSicons.com. -->
           </p>
         </div>
@@ -99,6 +104,8 @@ export default {
 
       iconsToShow: "approved",
 
+      user:{},
+
       coralIcons:{
         addIcon: require("../assets/icons/add.svg"),
         delete: require("../assets/icons/delete.svg"),
@@ -111,6 +118,30 @@ export default {
 
   methods: {
     ...mapActions(["fetchUserIcons", "fetchAppCategories"]),
+
+    async queryUser(){
+      let parent = this
+      let user = parent.user
+      user.username = this.$route.params.user // Set username same as the url user
+
+      const queryUser = new Parse.Query(Parse.User);
+      queryUser.equalTo("username", user.username)
+      let userInfo = await queryUser.find()
+      userInfo = userInfo[0]
+      
+      user.credit = userInfo.get("credit")
+      user.bio = userInfo.get("bio")
+
+      let twitterHandle = userInfo.get("twitterHandle") // Check if twitterHandle is a URL or not
+      if (twitterHandle.includes("twitter.com")) {
+        user.twitterHandle = twitterHandle
+      } else{
+        user.twitterHandle = "https://twitter.com/"+userInfo.get("twitterHandle")
+      }
+
+
+      console.log(userInfo);
+    },
 
     showDialog(dialog) {
       let dialogEl = document.getElementById(dialog);
@@ -125,8 +156,10 @@ export default {
   },
 
   mounted: function(){
+    let parent = this
+    parent.queryUser()
     // Get all user iconsOrder
-    this.fetchUserIcons()
+    parent.fetchUserIcons()
     // this.fetchAppCategories()
   },
 
@@ -201,6 +234,10 @@ export default {
     width: 100%;
     height: auto;
   }
+  
+  .profile-descrption-box{
+    min-height: calc(27px + 13px);
+  }
 
   .profile-header-wrapper{
     display: grid;
@@ -225,9 +262,51 @@ export default {
     grid-template-columns: auto auto;
     width: fit-content;
     height: fit-content;
+    min-height: 36px;
     gap: 15px;
     margin: auto auto auto 0;
   }
+  
+  .profile-name-social .loading-placeholder {
+    height: 70%
+  }
 
+  .profile-descrption-box .loading-placeholder {
+    height: 70%
+  }
+
+  .loading-placeholder{
+    margin: auto;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    min-width: 100px;
+    min-height: 20px;
+    border-radius: 2px;
+    background: rgb(90 90 90);
+    overflow: hidden;
+  }
+
+  .loading-placeholder::after{
+    height: 100%;
+    width: 50%;
+    content: " ";
+    position: absolute;
+    animation: placeholder 1.5s ease-out infinite;
+    background: linear-gradient( 90deg , rgb(90 90 90 / 0%) 0%, rgb(109 109 109) 50%, rgb(90 90 90 / 0%) 100%);
+  }
+
+  @keyframes placeholder {
+    0% {
+      left: -25%;
+    }
+    50% {
+      left: 75%;
+    }
+    100% {
+      opacity: 0;
+      /* left: -25%; */
+    }
+  }
 
 </style>
