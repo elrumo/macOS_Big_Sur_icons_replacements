@@ -1,4 +1,5 @@
 const path = require('path')
+const purgecss = require("@fullhuman/purgecss");
 // const PrerenderSPAPlugin = require('prerender-spa-plugin')
 // const Renderer = PrerenderSPAPlugin.PuppeteerRenderer
 
