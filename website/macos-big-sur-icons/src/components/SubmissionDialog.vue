@@ -78,7 +78,7 @@
                           type="button" 
                           @click="removeFile($event, icon.randId)" 
                           :id="icon.name" 
-                          :icon="coralIcons.delete"
+                          icon="delete"
                         >
                           Remove file
                         </coral-quickactions-item>
@@ -254,9 +254,9 @@ export default {
         filesToUpload: {},
         coralIcons:{
           addIcon: require("../assets/icons/add.svg"),
-          delete: require("../assets/icons/delete.svg"),
-          newItem: require("../assets/icons/newItem.svg"),
-          chevron: require("../assets/icons/ChevronDown.svg"),
+          // delete: require("../assets/icons/delete.svg"),
+          // newItem: require("../assets/icons/newItem.svg"),
+          // chevron: require("../assets/icons/ChevronDown.svg"),
         },
         uploadProgress: 0,
         totalNumFiles: 0,
