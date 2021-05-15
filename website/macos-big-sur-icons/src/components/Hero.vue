@@ -55,11 +55,11 @@
           <div class="d-inline-block mobile-hidden">
             <button
               v-if="!getUser.isAuth"
+              @click="showDialog('loginDialog')"
               is="coral-button"
               variant="cta"
-              @click="showDialog('loginDialog')"
             >
-              <span>Sign up/in</span>
+              <span>Sign in/up</span>
             </button>
 
             <button
@@ -91,11 +91,21 @@
           <!-- Mobile Buttons -->
           <div class="d-inline-block desktop-hidden">
             <button
+              v-if="!getUser.isAuth"
+              @click="showDialog('loginDialog')"
               is="coral-button"
               variant="cta"
-              @click="showDialog(submitIconDialog)"
             >
               <span>Sign in/up</span>
+            </button>
+
+            <button
+              v-else
+              @click="showDialog(submitIconDialog)"
+              is="coral-button"
+              variant="cta"
+            >
+              <span>Submit icons</span>
             </button>
 
             <a
@@ -105,12 +115,12 @@
               href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
               @click="logDonation('header')"
             >
-                <button
-                    is="coral-button"
-                    variant="quiet"
-                >
-                    <span>Buy me a coffee</span>
-                </button>
+              <button
+                  is="coral-button"
+                  variant="quiet"
+              >
+                <span>Donate</span>
+              </button>
             </a>
           </div>
 
