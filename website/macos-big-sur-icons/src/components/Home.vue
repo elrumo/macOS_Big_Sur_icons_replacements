@@ -179,79 +179,8 @@
 
           </div>
           
-          <div v-for="icon in search" :key="icon.icnsUrl" class="card-wrapper card-hover coral-card">
-          
-          <!-- Icons -->
-            <div class="">
-              <!-- Icon image -->
-              <div class="card-img-wrapper" style="max-width: 120px;">
-              
-                <!-- macOS icon download -->
-                <a @click="addClickCount(icon)" rel="noopener" v-if="isMacOs" :href="icon.icnsUrl">
-                  <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                    <img :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
-                  </div>
-                </a>
+          <UserIconCard v-for="icon in search" :key="icon.icnsUrl" :icon="icon" :isAdmin="isAdmin" :isMacOs="isMacOs"/>
 
-                <!-- iOS icon download -->
-                <a rel="noopener" v-else :href="icon.iOSUrl">
-                  <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                    <img width="100px" height="100px" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
-                  </div>
-                </a>
-
-                <!-- Quick action menu icon download -->
-                <div v-if="isAdmin" class="quick-actions-wrapper">
-                  <div class="quick-action-el">
-                    <coral-icon @click="showDialog('deleteDialog', icon)" class="quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
-                  </div>
-                </div>
-                  
-              </div>
-
-              <!-- Icon meta -->
-              <div class="card-text-wrapper p-l-15 p-r-15 p-b-15">
-
-                  <!-- Timestamp -->
-                  <p v-if="isAdmin" class="coral-Body--XS opacity-60 m-b-0">
-                    <input class="editable-input coral-Body--XS opacity-50 m-b-0" @change="changeDate(icon, $event)" type="text" variant="quiet" :value="getDate(icon.timeStamp)" is="coral-textfield" aria-label="text input">
-                  </p>
-
-                  <!-- App name -->
-                  <h3 class="coral-font-color m-b-0">
-                    <input class="editable-input f-w-800 m-b-0" @change="editDoc(icon, $event, 'appName')" type="text" variant="quiet" :value="prettifyName(icon.appName)" is="coral-textfield" aria-label="text input">
-                  </h3>
-
-                  <!-- User's name -->
-                  <p v-if="isAdmin" class="coral-Body--XS p-b-0 opacity-80 m-b-0"><input class="editable-input" @change="editDoc(icon, $event, 'usersName')" type="text" variant="quiet" :value="icon.usersName" is="coral-textfield" aria-label="text input"></p>
-                  
-                  <!-- Credit -->
-                  <p v-if="isAdmin" class="coral-Body--XS p-b-0 opacity-50 m-b-0">
-                    <input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="icon.credit" is="coral-textfield" aria-label="text input">
-                  </p>
-
-                  <p v-else class="coral-Body--XS opacity-60 m-b-10">
-                    <a v-if="icon.credit" rel="noopener" class="coral-Link" :href="icon.credit" target="_blank">
-                      {{icon.usersName}}
-                    </a>
-                    <b v-else >
-                      {{icon.usersName}}
-                    </b>
-                    on
-                    <span class="coral-Body--XS opacity-80">
-                      {{ getDate(icon.timeStamp) }}
-                    </span>
-                  </p>
-                  
-                  <!-- Email -->
-                  <div v-if="icon.email != 'user@email.com' && icon.email && isAdmin " class="p-t-10"> 
-                    <a rel="noopener" class="coral-Link" :href="'mailto:'+icon.email+'?subject=macOS icons submission&body='+icon.usersName">
-                          email
-                    </a>
-                  </div>
-              </div>
-            </div>
-          </div>
         </div>
 
     </section>
@@ -262,7 +191,8 @@
 import { mapActions, mapGetters } from 'vuex';
 import Header from './Header.vue';
 import Hero from './Hero.vue';
-import iconCard from './iconCard.vue';
+import IconCard from './IconCard.vue';
+import UserIconCard from './UserIconCard.vue';
 import Dialog from './Dialog.vue';
 import deleteDialog from './deleteDialog.vue';
 import NativeAd from './NativeAd.vue';
@@ -276,6 +206,7 @@ import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config()
 
 // TODO: remove credentials
+
 const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
 const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
@@ -301,11 +232,12 @@ export default {
   components: {
     Header,
     Hero,
-    iconCard,
+    IconCard,
     Dialog,
     deleteDialog,
+    NativeAd,
+    UserIconCard,
     'vue-load-image': VueLoadImage,
-    NativeAd
   },
 
   metaInfo: {
@@ -463,7 +395,7 @@ export default {
   },
 
   methods:{ 
-    ...mapActions(['showToast', 'showEl']),
+    ...mapActions(['showToast', 'showEl', 'fetchIconUser']),
 
     isDialog(){
       console.log(document.getElementByTagName("coral-dialog").open);
@@ -579,6 +511,11 @@ export default {
 
     async loadMore(){
       let parent = this
+      
+      if (parent.$route.path != "/") {
+        return
+      }
+
       let howManyRecords = parent.howManyRecords
       
       parent.howManyRecords = howManyRecords + docLimit
@@ -603,8 +540,18 @@ export default {
         }
         iconData.id = results[result].id  
         
-        parent.$store.dispatch("pushDataToArr", {arr: "list", data: iconData, func: "loadMore"})
+        console.log("TESSSSSS");
+
+        parent.$store.dispatch("pushDataToArr", {data: iconData, arr: "list", func: "loadMore"})
       }
+      
+      // Gets up to date info about the user
+      let data = {
+        howManyRecords: howManyRecords,
+        results: results
+      }
+      
+      parent.fetchIconUser(data)
 
     },
 
@@ -636,7 +583,6 @@ export default {
       }
 
       try {
-
         const query = new Parse.Query(Icons);
         query.equalTo("approved", true)
         query.descending("timeStamp");
@@ -652,34 +598,10 @@ export default {
         
         var userInfo = {}
 
-        function setUserInfo(user){
-          userInfo.username = user.get("username")
-          userInfo.credit = user.get("credit")
-        }
-
         for(let result in results){
 
           let iconItem = results[result]
-          let user = iconItem.get("user")
-          
-          // Fetch user data from Parse User object
-          if (user) {
-            if (result == 0) {
-              await user.fetch()
-              setUserInfo(user)
-            }
 
-            if (result != 0) {
-              let previousItem = results[result-1]
-              if (user.id != previousItem.get("user").id) {
-                await user.fetch()
-                setUserInfo(user)
-              }
-            }
-          } else {
-            setUserInfo(iconItem)
-          }
-          
           let objData = iconItem.attributes
           let iconData = {}
 
@@ -694,6 +616,13 @@ export default {
 
           parent.$store.commit('pushDataToArr', {arr: "list", data: iconData, func: "getIconsArray"})
         }
+        
+        // Gets up to date info about the user
+        let data = {
+          howManyRecords: 0,
+          results: results
+        }
+        parent.fetchIconUser(data)
 
         var attempts = 0;
         // let getAd = setTimeout(() => {
@@ -791,12 +720,12 @@ export default {
         parent.$store.dispatch("pushDataToArr", {arr: "dataToShow", data: responses.hits, func: "searchAlgolia"})
       });
     },
+
     content() {
       this.$nextTick(()=>{
         let parent = this
         let ad = document.getElementById("carbonads")
         if(!ad) {
-          console.log("yooo");
           parent.isAdOn = false
         } else {
           parent.isAdOn = false
@@ -884,6 +813,7 @@ export default {
 </script>
 
 <style lang="less">
+  @import url(coral.css);
   @import url(app.less);
   @import url(snack-helper.min.css);
   @import url(carbon.css);
