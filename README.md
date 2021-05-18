@@ -11,7 +11,7 @@ You just need to download the icon you want, find the app to update on Finder, s
 <img style="text-align: left" src="https://i.imgur.com/0Vj6sFS.png" width="300">
 
 ## I'd like to contribute
-Download the template for Sketch, Figma, Pixelmator, Photoshop, Pixelmator Illustrator from the [Resources](https://macosicons.com/resources) page.
+Download the template for Sketch, Figma, Pixelmator, Photoshop, Pixelmator or Illustrator from the [Resources](https://macosicons.com/resources) page. <br>
 Here's what you need to know know:
 
 - When using the template, export in 1x (1024x1024px).
