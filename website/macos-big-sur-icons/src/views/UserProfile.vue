@@ -2,39 +2,21 @@
   <div>
 
     <section class="profile-page-head-wrapper">
-      <div class="profile-page-img-wrapper">
-        <img class="profile-img" :src="resources.profilePic" alt="">
+      <img class="profile-img-wrapper" :src="sources.profilePic" alt="">
 
-        <div class="profile-edit-btn desktop-hidden opacity-80">
-            <button
-              is="coral-button"
-              variant="quiet"
-              @click="showDialog('accountDialog')"
-            >
-              Edit Profile
-            </button>
-          </div>
-
-      </div>
-      
-      <!-- User info -->
       <div class="profile-info-wrapper">
         <div class="profile-header-wrapper">
-          
           <div class="profile-name-social">
-            <h3 class="coral-Heading--L m-0">
+            <div v-if="!user.username" class="loading-placeholder"></div>
+            <h3 v-else class="coral-Heading--L m-0">
               {{ user.username }}
             </h3>
-            
-            <a v-if="user.twitterHandle" target="_blank" :href="user.twitterHandle" class="margin-auto relative">
-              <IconUI class="absolute-center-vertical" width="22px" :img="resources.twitter" alt="Twitter Logo"/>
-            </a>
-            <a v-if="user.twitterHandle" target="_blank" :href="user.twitterHandle" class="margin-auto relative">
-              <IconUI class="absolute-center-vertical" width="22px" :img="resources.share" alt="Twitter Logo"/>
+            <a v-if="user.twitterHandle" target="_blank" :href="user.twitterHandle" class="margin-auto">
+              <IconUI class="" width="22px" :img="sources.twitter" alt="Twitter Logo"/>
             </a>
           </div>
 
-          <div class="profile-edit-btn mobile-hidden opacity-80">
+          <div class="profile-edit-btn opacity-80">
             <button
               is="coral-button"
               variant="quiet"
@@ -47,7 +29,7 @@
         </div>
 
         <div class="profile-descrption-box">
-          <div v-if="user.loading" class="loading-placeholder"></div>
+          <div v-if="!user.bio" class="loading-placeholder"></div>
           <p v-if="user.bio" class="coral-Body--L">
             {{ user.bio }}
             <!-- {{ user.userData.bio }} -->
@@ -57,6 +39,9 @@
 
       </div>
     </section>
+
+    <!-- <hr width="90%" class="coral-Divider--S"> -->
+
     
     <section class="m-auto user-profile-icons">
       <coral-tablist>
@@ -64,7 +49,7 @@
         <coral-tab aria-label="Approved Icons" selected="" @click="changeIconStatus('approved')">Approved</coral-tab>
         <coral-tab aria-label="Waiting Icons" @click="changeIconStatus('notApproved')">Waiting</coral-tab>
         
-        <!-- <select
+        <select
           id="order-selector"
           class="dropdown-select right-align-tablist dropdown-select-quiet"
           v-on:change="validate($event, 'category')"
@@ -82,17 +67,10 @@
           >
             Popular Uploads
           </option>
-        </select> -->
+        </select>
       </coral-tablist>
 
-      <UserIconGrid v-if="userIcons.length != 0" :userIcons="userIcons"/>
-      <div v-else class="waiting-wrapper">
-        <p class="coral-Body--M">
-          {{ errorMessage }}
-          <!-- {{ user.username }} hasn't submitted any icons yet. -->
-        </p>
-      </div>
-
+      <UserIconGrid :userIcons="userIcons"/>
     </section>    
 
 
@@ -119,19 +97,14 @@ export default {
 
   data(){
     return {
-      resources:{
+      sources:{
         twitter: require("../assets/icons/twitter.svg"),
-        share: require("../assets/icons/share.svg"),
         profilePic: require("../assets/Resources/accounts/profilePic.png"),
       },
 
       iconsToShow: "approved",
 
-      errorMessage: "",
-
-      user:{
-        loading: true
-      },
+      user:{},
 
       coralIcons:{
         addIcon: require("../assets/icons/add.svg"),
@@ -144,7 +117,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["fetchUserIcons", "fetchAppCategories", "emptyArr"]),
+    ...mapActions(["fetchUserIcons", "fetchAppCategories"]),
 
     async queryUser(){
       let parent = this
@@ -152,33 +125,22 @@ export default {
       user.username = this.$route.params.user // Set username same as the url user
 
       const queryUser = new Parse.Query(Parse.User);
-      queryUser.matches("username", user.username, "i")
+      queryUser.equalTo("username", user.username)
       let userInfo = await queryUser.find()
-
       userInfo = userInfo[0]
-      if (userInfo) {
-          // parent.fetchUserIcons("userInfo")  
-        parent.$store.dispatch('fetchUserIcons', userInfo)
-        
-        user.credit = userInfo.get("credit")
-        user.bio = userInfo.get("bio")
-        user.loading = false
-
-        let twitterHandle = userInfo.get("twitterHandle") // Check if twitterHandle is a URL or not
-        if (twitterHandle.includes("twitter.com")) {
-          user.twitterHandle = twitterHandle
-        } else{
-          user.twitterHandle = "https://twitter.com/"+userInfo.get("twitterHandle")
-        }
-
-        console.log(userInfo);
-      } else{
-        user.loading = false
-        parent.errorMessage = "This account doesn’t exist"
-        console.log("This account doesn’t exist");
-      }
       
+      user.credit = userInfo.get("credit")
+      user.bio = userInfo.get("bio")
 
+      let twitterHandle = userInfo.get("twitterHandle") // Check if twitterHandle is a URL or not
+      if (twitterHandle.includes("twitter.com")) {
+        user.twitterHandle = twitterHandle
+      } else{
+        user.twitterHandle = "https://twitter.com/"+userInfo.get("twitterHandle")
+      }
+
+
+      console.log(userInfo);
     },
 
     showDialog(dialog) {
@@ -195,16 +157,10 @@ export default {
 
   mounted: function(){
     let parent = this
-    parent.$store.state.list = []
-    console.log("parent.$store.state.list: ", parent.emptyArr());
-    parent.user.username = parent.$route.params.user
     parent.queryUser()
     // Get all user iconsOrder
-    // parent.fetchUserIcons()
-    // parent.$store.dispatch('fetchUserIcons', {userInfo: "userInfo"})
-
-    this.fetchAppCategories()
-
+    parent.fetchUserIcons()
+    // this.fetchAppCategories()
   },
 
   computed:{
@@ -216,10 +172,6 @@ export default {
 
     userIcons(){
       let parent = this
-
-      if (parent.getUserIcons.length == 0) {
-        parent.errorMessage = "No icons to show"
-      }
 
       switch (parent.iconsToShow) {
         case "all":
@@ -272,31 +224,15 @@ export default {
     grid-template-columns: 64px auto;
     margin: auto;
     gap: 25px;
-    width: 80%;
     max-width: 480px;
     padding-top: 80px;
     padding-bottom: 20px;
     text-align: left;
   }
-
-  @media(max-width:544px) {
-    .profile-page-head-wrapper{
-      grid-template-columns: auto;
-      padding-top: 30px;
-    }
-
-  }
   
-  .profile-page-img-wrapper{
-    display: grid;
-    grid-template-columns: auto auto;
-    width: 100%;
-  }
-
-  .profile-img{
+  .profile-img-wrapper{
     width: 100%;
     height: auto;
-    max-width: 60px;
   }
   
   .profile-descrption-box{
@@ -322,12 +258,12 @@ export default {
   }
 
   .profile-name-social{
-    display: flex;
+    display: grid;
     grid-template-columns: auto auto;
     width: fit-content;
     height: fit-content;
     min-height: 36px;
-    gap: 35px;
+    gap: 15px;
     margin: auto auto auto 0;
   }
   
