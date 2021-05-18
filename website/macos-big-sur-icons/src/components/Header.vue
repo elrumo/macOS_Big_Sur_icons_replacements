@@ -280,14 +280,14 @@ export default {
                         data: "accountDialog"
                     }
                 },
-                {
-                    name: "Profile",
-                    img: require("../assets/icons/User.svg"),
-                    onClick:{
-                        method: this.changePath,
-                        data: "/user/"
-                    }
-                },
+                // {
+                //     name: "Profile",
+                //     img: require("../assets/icons/User.svg"),
+                //     onClick:{
+                //         method: this.changePath,
+                //         data: "/user/"
+                //     }
+                // },
                 {
                     name: "Logout",
                     img: require("../assets/icons/LogOut.svg"),

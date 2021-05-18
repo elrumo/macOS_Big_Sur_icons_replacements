@@ -494,8 +494,8 @@ export default {
 
     mounted: function(){ 
       let parent = this
-      // parent.fetchAppCategories()
-      // parent.fetchIconType()
+      parent.fetchAppCategories()
+      parent.fetchIconType()
     },
 
     computed:{
