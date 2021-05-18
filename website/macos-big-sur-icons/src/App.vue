@@ -85,7 +85,6 @@ export default {
 </script>
 
 <style>
-@import url(./CSS/coral.min.css);
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -2,28 +2,31 @@
   <div>
 
     <section class="icon-list-area p-t-40 p-b-50">
-      <div v-for="icon in userIcons" class="icon-card-wrapper user-icon-card card-wrapper coral-card" :key="icon.id">  
+        <UserIconCard v-for="icon in userIcons" :key="icon.id" :icon="icon" :isAdmin="false" :isMacOs="true"/>
+      <!-- <div  class="icon-card-wrapper user-icon-card card-wrapper coral-card" :key="icon.id">   -->
+        
 
-        <coral-status v-if="icon.get('approved')" variant="success"/>
+        <!-- <coral-status v-if="icon.get('approved')" variant="success"/>
         <coral-status v-else variant="error"/>
 
         <div class="card-img-wrapper" style="max-width: 120px;">
           <a rel="noopener" :href="icon.get('highResPngUrl')">
             <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-              <img :alt="icon.get('appName') +' icon'" :data-src="icon.get('highResPngUrl')">
+              <img :alt="icon.get('appName') +' icon'" :data-src="icon.get('lowResPngUrl')">
             </div>
-          </a>
+          </a> -->
           
-          <div class="quick-actions-wrapper">
+          <!-- Quick Actions -->
+          <!-- <div class="quick-actions-wrapper">
             <div class="quick-action-el">
               <coral-icon icon="/img/delete.4f641200.svg" role="presentation" title="Delete" class="quick-action-icon _coral-Icon _coral-Icon--sizeS" size="S">
                 <img class="_coral-Icon _coral-Icon--image" src="/img/delete.4f641200.svg" alt="Delete">
               </coral-icon>
             </div>
           </div>
-        </div>
+        </div> -->
 
-        <form class="coral-FormGroup card-text-wrapper p-l-15 p-r-15 p-b-15">
+        <!-- <form v-if="isOwner" class="coral-FormGroup card-text-wrapper p-l-15 p-r-15 p-b-15">
           
           <div class="coral-FormGroup-item">
             <p class="coral-Body--XS"></p>
@@ -37,7 +40,7 @@
               class="coral-Form-field"
               type="text"
               v-on:change="validate($event, 'appName')"
-              :value="icon.id"
+              :value="icon.get('appName')"
             >
           </div>
 
@@ -61,12 +64,6 @@
               >
                 {{ category.name }}
               </option>
-              <!-- <option
-                value="-"
-                :selected="isSelected(icon.get('category'))"
-              >
-                -
-              </option> -->
             </select>
           </div>
 
@@ -85,7 +82,8 @@
               :value="icon.appWebsite"
             >
           </div>
-          
+        </form> -->
+
           <!-- App Icon Designer -->
           <!-- <div class="coral-FormGroup-item">
             <p class="coral-Body--XS"></p>
@@ -103,15 +101,16 @@
             >
           </div> -->
 
-        </form>
-      </div>
+      <!-- </div> -->
     </section>  
 
   </div>
 </template>
 
 <script>
+import UserIconCard from './UserIconCard.vue';
 import { mapGetters, mapActions } from 'vuex'
+import Parse from 'parse'
 
 export default {
     name:"UserIconGrid",
@@ -120,7 +119,9 @@ export default {
       userIcons:'',
     },
 
-    components:{},
+    components:{
+      UserIconCard,
+    },
     
     data(){
         return{
@@ -130,11 +131,22 @@ export default {
             newItem: require("../assets/icons/newItem.svg"),
             edit: require("../assets/icons/edit.svg"),
             loading: require("../assets/no-app-icon.png"),
-          }
+          },
+
+          isOwner: false,
         }
     },
     
     mounted: function(){
+      let parent = this
+
+      let currentUser = Parse.User.current();
+      let requestedUser = this.$route.params.user;
+      
+      if (currentUser) {
+        let userMatches = currentUser.get("username") == requestedUser;
+        parent.isOwner = userMatches
+      }
 
     },
 

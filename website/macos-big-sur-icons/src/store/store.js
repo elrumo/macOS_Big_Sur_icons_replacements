@@ -43,11 +43,10 @@ export default new Vuex.Store({
     },
 
     pushDataToArr(store, iconData){
-      // console.log("func: ", iconData.func);
+      // console.log(iconData.data);
       if (Array.isArray(iconData.data)) {
-        store[iconData.arr] = iconData.data
+        store[iconData.arr] = iconData.data        
       } else{
-        // console.log("data is object: ", iconData.data);
         store[iconData.arr].push(iconData.data)
       }
     },
@@ -96,8 +95,47 @@ export default new Vuex.Store({
       return "Hi"
     },
 
+    emptyArr(store){
+      console.log("Hiiii");
+      store.list = [];
+    },
+
     pushDataToArr(store, iconData){
       store.commit('pushDataToArr', iconData)
+    },
+
+    async fetchIconUser(store, data){
+      
+      let results = data.results
+      var howManyRecords = data.howManyRecords
+      console.log(howManyRecords);
+      
+      function setUserInfo(index, user, username){
+        index = parseInt(index)+howManyRecords
+        store.state.list[index].usersName = user.get(username);
+        store.state.list[index].credit = user.get("credit");
+      }
+      
+      for(let result in results){
+        let user = results[result].user
+
+        if (user) {
+          if (result == 0) {
+            await user.fetch()
+            setUserInfo(result, user, "username")
+          }
+          if (result != 0) {
+            let previousItem = results[result-1]
+            if (user.id != previousItem.get("user").id) {
+              await user.fetch()
+              setUserInfo(result, user, "username")
+            }
+          }
+        } else {
+          setUserInfo(result, results[result], "usersName")
+        }
+      }
+
     },
 
     setDataToArr(store, iconData){
@@ -139,6 +177,7 @@ export default new Vuex.Store({
     },
 
     changePath(store, path){
+      console.log(path);
       try {
         globalThis.router.push(path)
       } catch (error) {
@@ -150,22 +189,42 @@ export default new Vuex.Store({
       store.commit('pushUserData',  userProps)
     },
 
-    async fetchUserIcons(store){
+    async fetchUserIcons(store, userObj){
       let query = new Parse.Query("Icons2");
-      query.equalTo("user", Parse.User.current())
-      query.limit(10)
-      let totalQuery = await query.count()
-      console.log(totalQuery);
-      const results = await query.find()
+      let userQuery = new Parse.Query(Parse.User);
+      let getUser = await userQuery.get(userObj.id);
+      let iconsRelation = getUser.get("icons").query();
+      iconsRelation.limit(40)
+      iconsRelation.exists("icnsFile")
 
-      let userIcons = []
+      let iconResults = await iconsRelation.find()
+      // console.log("results: ", iconResults);
 
-      results.forEach((result)=>{
-        userIcons.push(result)
+      // query.equalTo("user", userObj)
+      // query.exists("icnsFile")
+      // query.limit(10)
+      // let totalQuery = await query.count()
+      // const results = await query.find()
+      // console.log("totalQuery: ", totalQuery);
+      
+      // console.log(results);
+
+      iconResults.forEach((result)=>{
+        // userIcons.push(result)
+        let objData = result.attributes
+        let iconData = {}
+
+        for(let data in objData){
+          iconData[data] = objData[data]
+        }
+        iconData.id = result.id
+        
+        // parent.$store.dispatch("pushDataToArr", {data: iconData, arr: "list"})
+        store.commit('pushDataToArr',  {data: iconData, arr: "userIcons"});
       })
       
-      console.log(userIcons);
-      store.commit('pushUserIcons',  userIcons);
+      // console.log(userIcons);
+      // store.commit('pushUserIcons',  results);
     },
 
     async fetchAppCategories(store) {
@@ -220,15 +279,19 @@ export default new Vuex.Store({
     },
 
     notApproved(store){
-      return store.userIcons.filter(icon => !icon.get('approved'))
+      return store.userIcons.filter(icon => !icon.approved)
+      // return store.userIcons.filter(icon => !icon.get('approved'))
     },
 
     approvedIcons(store){
-      return store.userIcons.filter(icon => icon.get('approved'))
+      // return store.userIcons.filter((icon) => {
+      //   console.log(icon.approved);
+      //   return icon.approved
+      // });
+      return store.userIcons.filter(icon => icon.approved)
     },
 
     getUserIcons(store){
-      console.log(store.userIcons);
       return store.userIcons
     },
 
