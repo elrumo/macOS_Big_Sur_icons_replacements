@@ -1,0 +1,165 @@
+<template>
+    <div class="card-wrapper card-hover coral-card">
+        
+        <!-- Icon image -->
+        <div class="card-img-wrapper" style="max-width: 120px;">        
+            <!-- macOS icon download -->
+            <a v-if="isMacOs" @click="addClickCount(icon)" rel="noopener" :href="icon.icnsUrl">
+                <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
+                <img width="100px" height="100px" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
+                </div>
+            </a>
+
+            <!-- iOS icon download -->
+            <a v-else @click="addClickCount(icon)" target="_blank" rel="noopener" :href="icon.iOSUrl">
+                <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
+                <img width="100px" height="100px" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
+                </div>
+            </a>
+
+            <!-- Quick action menu icon download -->
+            <!-- <div class="quick-actions-wrapper">
+                <div class="quick-action-el">
+                <coral-icon @click="showDialog('deleteDialog', icon)" class="quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
+                </div>
+            </div> -->
+        </div>
+
+        <!-- Icon meta -->
+        <div class="card-text-wrapper p-l-15 p-r-15 p-b-15">
+
+            <!-- App name -->
+            <h3 class="coral-font-color m-b-0">
+                <input v-if="isAdmin" class="editable-input m-b-0" @change="editDoc(icon, $event, 'appName')" type="text" variant="quiet" :value="prettifyName(icon.appName)" is="coral-textfield" aria-label="text input">
+
+                <span v-else>
+                    {{icon.appName}}
+                </span>
+            </h3>
+
+            <!-- User's name -->
+            <p v-if="isAdmin" class="coral-Body--XS p-b-0 opacity-80 m-b-0"><input class="editable-input" @change="editDoc(icon, $event, 'usersName')" type="text" variant="quiet" :value="icon.usersName" is="coral-textfield" aria-label="text input"></p>
+            
+            <!-- Credit -->
+            <p v-if="isAdmin" class="coral-Body--XS p-b-0 opacity-50 m-b-0">
+            <input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="icon.credit" is="coral-textfield" aria-label="text input">
+            </p>
+
+            <p v-else class="coral-Body--XS opacity-60 m-b-10">
+            <a v-if="icon.credit" rel="noopener" class="coral-Link" :href="icon.credit" target="_blank">
+                {{icon.usersName}}
+            </a>
+            <b v-else >
+                {{icon.usersName}}
+            </b>
+            on
+            <span class="coral-Body--XS opacity-80">
+                {{ getDate(icon.timeStamp) }}
+            </span>
+            </p>
+            
+            <!-- Email -->
+            <!-- <div v-if="icon.email != 'user@email.com' && icon.email && !isAdmin " class="p-t-10"> 
+                <a rel="noopener" class="coral-Link" :href="'mailto:'+icon.email+'?subject=macOS icons submission&body='+icon.usersName">
+                    email
+                </a>
+            </div> -->
+
+        </div>
+
+    </div>
+</template>
+
+<script>
+import Parse from 'parse'
+
+export default {
+    name: "IconCard",
+    
+    props:{
+        icon:{},
+        isAdmin: false,
+        isMacOs: true,
+    },
+
+    data: function(){
+        return{
+            coralIcons:{
+                addIcon: require("../assets/icons/add.svg"),
+                delete: require("../assets/icons/delete.svg"),
+                newItem: require("../assets/icons/newItem.svg"),
+                edit: require("../assets/icons/edit.svg"),
+                loading: require("../assets/loading.gif"),
+            }
+        }
+    },
+    
+    methods:{
+
+        prettifyName(name){
+            name = name.replaceAll("_", " ")
+            return name
+        },
+
+        async addClickCount(icon){
+            console.log(icon);
+            var id
+            if (icon.id) {
+                id = icon.id
+            } else{
+                id = icon.objectID
+            }
+            icon = { appName: icon.appName, id: id }
+            await Parse.Cloud.run("addClickCount", {icon: icon})
+        },
+
+        getDate(timeStamp){
+            let newDate = new Date(timeStamp)
+            
+            let day = newDate.getUTCDate()
+                if (day < 10) {
+                day = "0"+day
+                }
+            let month = newDate.getUTCMonth() + 1
+                if (month < 10) {
+                month = "0"+month
+                }
+            let year = newDate.getFullYear()
+            let date = day + "/" + month + "/" + year
+
+            return date
+        },
+
+        async editDoc(icon, e, field){
+            let newName = e.target.value
+            
+            let id
+            if (icon.algoliaID == undefined) {
+                id = icon.id
+            } else {
+                id = icon.algoliaID
+            }
+
+            console.log(icon);
+            console.log(id);
+
+            const IconsBase = Parse.Object.extend("Icons2");
+            const query = new Parse.Query(IconsBase);
+            const docToEdit = await query.get(id)
+
+
+            docToEdit.set({ [field]: newName }) // Save icnsToStore obj with .icns file and its url to Parse server
+            docToEdit.save().then(() =>{
+                console.log(field, "updated.");
+            }).catch((e) =>{
+                document.getElementById("error").show()
+            })
+        },
+
+    }
+}
+</script>
+
+<style>
+
+</style>

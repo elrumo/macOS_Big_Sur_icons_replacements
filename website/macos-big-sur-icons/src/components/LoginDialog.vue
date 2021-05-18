@@ -653,7 +653,6 @@ export default {
 
       query.get(curerntUser.id).then((user)=>{
         parent.setUserFunc(user)
-        console.log(user);
       }).catch((error) => {
         console.log("Cached user: ", error);
         parent.setUserFunc(curerntUser)
