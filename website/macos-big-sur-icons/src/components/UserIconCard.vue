@@ -102,7 +102,6 @@ export default {
         },
 
         async addClickCount(icon){
-            console.log(icon);
             var id
             if (icon.id) {
                 id = icon.id

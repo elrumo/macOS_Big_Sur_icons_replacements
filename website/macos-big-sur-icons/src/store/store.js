@@ -26,7 +26,13 @@ export default new Vuex.Store({
     user: {},
     userData: Parse.User.current(),
 
-    userIcons: [],
+    // userIcons: [],
+    userIcons: {
+      approved: [],
+      notApproved: [],
+      hacked: [],
+      toSkip: 10
+    },
 
     appCategories: [],
     iconType: []
@@ -43,7 +49,7 @@ export default new Vuex.Store({
     },
 
     pushDataToArr(store, iconData){
-      // console.log(iconData.data);
+      // console.log("iconData:", store[iconData.arr]);
       if (Array.isArray(iconData.data)) {
         store[iconData.arr] = iconData.data        
       } else{
@@ -73,13 +79,15 @@ export default new Vuex.Store({
       store.userData = userData;
     },
 
-    pushUserIcons(store, userIcons){
-      store.userIcons = userIcons;
+    pushUserIcons(store, data){
+      let iconData = data.iconData
+      let status = data.status
+      store.userIcons[status].push(iconData);
     },
 
     pushAppCategories(store, data){
       store[data.state].push(data.storeObj);
-    }
+    },
 
   },
   
@@ -96,19 +104,23 @@ export default new Vuex.Store({
     },
 
     emptyArr(store){
-      console.log("Hiiii");
-      store.list = [];
+      // store.state.userIcons = [];
+      store.state.userIcons.approved = [];
+      store.state.userIcons.notApproved = [];
+      store.state.userIcons.hacked = [];
+      store.state.userIcons.toSkip = 0;
     },
 
     pushDataToArr(store, iconData){
       store.commit('pushDataToArr', iconData)
     },
 
-    async fetchIconUser(store, data){
+    // Gets most up to date info for each icon
+    async fetchIconUserInfo(store, data){
       
       let results = data.results
       var howManyRecords = data.howManyRecords
-      console.log(howManyRecords);
+      console.log("data: ", data);
       
       function setUserInfo(index, user, username){
         index = parseInt(index)+howManyRecords
@@ -177,7 +189,6 @@ export default new Vuex.Store({
     },
 
     changePath(store, path){
-      console.log(path);
       try {
         globalThis.router.push(path)
       } catch (error) {
@@ -190,41 +201,55 @@ export default new Vuex.Store({
     },
 
     async fetchUserIcons(store, userObj){
-      let query = new Parse.Query("Icons2");
-      let userQuery = new Parse.Query(Parse.User);
-      let getUser = await userQuery.get(userObj.id);
-      let iconsRelation = getUser.get("icons").query();
-      iconsRelation.limit(40)
-      iconsRelation.exists("icnsFile")
-
-      let iconResults = await iconsRelation.find()
-      // console.log("results: ", iconResults);
-
-      // query.equalTo("user", userObj)
-      // query.exists("icnsFile")
-      // query.limit(10)
-      // let totalQuery = await query.count()
-      // const results = await query.find()
-      // console.log("totalQuery: ", totalQuery);
+      let IconsBase = Parse.Object.extend("Icons2");
+      let iconQuery = new Parse.Query(IconsBase);
       
-      // console.log(results);
+      iconQuery.equalTo("user", userObj);
+      iconQuery.limit(50)
+      iconQuery.skip(store.state.userIcons.toSkip)
+      store.state.userIcons.toSkip += 50;
+
+      let iconResults = await iconQuery.find();
+
+      function returnIconData(result, status){
+        let icon = result.attributes
+        let dataToPush = {
+            status: status,
+            iconData: {}
+        }
+        // Set icon ID to icon properties
+        dataToPush.iconData.id = result.id
+        
+        // Pass high res png url if lor res png is not present
+        if (!icon.lowResPngFile) {
+          dataToPush.iconData.lowResPngUrl = icon.highResPngUrl
+        }
+        for(let data in icon){
+          dataToPush.iconData[data] = icon[data]
+        }
+        store.commit('pushUserIcons',  dataToPush);
+      }
 
       iconResults.forEach((result)=>{
-        // userIcons.push(result)
         let objData = result.attributes
-        let iconData = {}
 
-        for(let data in objData){
-          iconData[data] = objData[data]
+        // If icon has not been approved yet
+        if (objData.highResPngFile && !objData.approved ) {
+            returnIconData(result, "notApproved");
         }
-        iconData.id = result.id
-        
-        // parent.$store.dispatch("pushDataToArr", {data: iconData, arr: "list"})
-        store.commit('pushDataToArr',  {data: iconData, arr: "userIcons"});
+
+        // If icon has been hacked (it doesn't have an icns file and has been approved)
+        if (!objData.icnsFile && objData.approved ) {
+            returnIconData(result, "hacked");
+        }
+
+        // If icon has icns file and been been approved
+        if (objData.icnsFile && objData.approved ) {
+          returnIconData(result, "approved");
+        }
+
       })
-      
-      // console.log(userIcons);
-      // store.commit('pushUserIcons',  results);
+
     },
 
     async fetchAppCategories(store) {
@@ -279,23 +304,19 @@ export default new Vuex.Store({
     },
 
     notApproved(store){
-      return store.userIcons.filter(icon => !icon.approved)
-      // return store.userIcons.filter(icon => !icon.get('approved'))
+      // return store.userIcons.filter(icon => !icon.approved)
+      return store.userIcons.notApproved
     },
 
     approvedIcons(store){
-      // return store.userIcons.filter((icon) => {
-      //   console.log(icon.approved);
-      //   return icon.approved
-      // });
-      return store.userIcons.filter(icon => icon.approved)
+      return store.userIcons.approved
     },
 
-    getUserIcons(store){
-      return store.userIcons
+    allIcons(store){
+      let allIcons = [].concat(store.userIcons.approved, store.userIcons.notApproved)
+      return allIcons;
     },
 
-    // const getAppCategories = (store) => (stateToGet) => {
     getAppCategories(state){
       let ordered = state.appCategories.sort(function (a, b) {
         if (a.name < b.name) {
