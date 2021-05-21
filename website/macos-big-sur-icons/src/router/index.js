@@ -386,6 +386,12 @@ const routes = [
     component: () => import('../views/UserProfile.vue')
   },
   {
+    // path: '/user',
+    path: '/user/',
+    name: 'UserProfile',
+    component: () => import('../views/UserProfile.vue')
+  },
+  {
     path: '/:search',
     name: 'Search',
     component: Home

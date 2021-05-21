@@ -548,7 +548,7 @@ export default {
         results: results
       }
       
-      parent.fetchIconUserInfo(data)
+      // parent.fetchIconUserInfo(data)
 
     },
 
@@ -608,8 +608,8 @@ export default {
           iconData.id = results[result].id
           
           // Set fetched user info from parse User object
-          iconData.usersName = userInfo.username
-          iconData.credit = userInfo.credit
+          // iconData.usersName = userInfo.username
+          // iconData.credit = userInfo.credit
 
           parent.$store.commit('pushDataToArr', {arr: "list", data: iconData, func: "getIconsArray"})
         }
@@ -619,7 +619,7 @@ export default {
           howManyRecords: 0,
           results: results
         }
-        parent.fetchIconUserInfo(data)
+        // parent.fetchIconUserInfo(data)
 
         var attempts = 0;
         // let getAd = setTimeout(() => {
@@ -712,6 +712,11 @@ export default {
   watch:{
     searchString: function (search) {
       let parent = this
+
+      console.log(parent.$route);
+      if (parent.$route.name != "Home" && parent.$route.name != "Search") {
+        return
+      }
       
       index.search(search, {filters: `approved:true`, hitsPerPage: 150 }).then(function(responses) {
         parent.$store.dispatch("pushDataToArr", {arr: "dataToShow", data: responses.hits, func: "searchAlgolia"})
@@ -810,7 +815,7 @@ export default {
 </script>
 
 <style lang="less">
-  @import url(coral.css);
+  // @import url(coral.css);
   @import url(app.less);
   @import url(snack-helper.min.css);
   @import url(carbon.css);
