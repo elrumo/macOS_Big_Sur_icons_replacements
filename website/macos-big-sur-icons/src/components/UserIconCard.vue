@@ -33,7 +33,7 @@
                 <input v-if="isAdmin" class="editable-input m-b-0" @change="editDoc(icon, $event, 'appName')" type="text" variant="quiet" :value="prettifyName(icon.appName)" is="coral-textfield" aria-label="text input">
 
                 <span v-else>
-                    {{icon.appName}}
+                    {{icon.appName.replaceAll("_", " ")}}
                 </span>
             </h3>
 
@@ -42,20 +42,15 @@
             
             <!-- Credit -->
             <p v-if="isAdmin" class="coral-Body--XS p-b-0 opacity-50 m-b-0">
-            <input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="icon.credit" is="coral-textfield" aria-label="text input">
+                <input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="icon.credit" is="coral-textfield" aria-label="text input">
             </p>
 
             <p v-else class="coral-Body--XS opacity-60 m-b-10">
-            <a v-if="icon.credit" rel="noopener" class="coral-Link" :href="icon.credit" target="_blank">
-                {{icon.usersName}}
-            </a>
-            <b v-else >
-                {{icon.usersName}}
-            </b>
-            on
-            <span class="coral-Body--XS opacity-80">
-                {{ getDate(icon.timeStamp) }}
-            </span>
+                 <router-link :to="'/user/'+icon.usersName" class="coral-Link">{{icon.usersName}}</router-link>
+                on
+                <span class="coral-Body--XS opacity-80">
+                    {{ getDate(icon.timeStamp) }}
+                </span>
             </p>
             
             <!-- Email -->

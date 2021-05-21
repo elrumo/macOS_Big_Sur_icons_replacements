@@ -120,26 +120,31 @@ export default new Vuex.Store({
       
       let results = data.results
       var howManyRecords = data.howManyRecords
-      console.log("data: ", data);
-      
-      function setUserInfo(index, user, username){
+
+      async function setUserInfo(index, user, username){
         index = parseInt(index)+howManyRecords
-        store.state.list[index].usersName = user.get(username);
-        store.state.list[index].credit = user.get("credit");
+        try {
+          
+          let newUser = user.get("user")
+          await newUser.fetch()
+          store.state.list[index].usersName = newUser.getUsername();
+          // store.state.list[index].usersName = user.get("usersName");
+          store.state.list[index].credit = user.get("credit");
+        } catch (error) {
+          console.log(error);
+        }
       }
       
       for(let result in results){
-        let user = results[result].user
+        let user = results[result]
 
-        if (user) {
+        if (user.get("user")) {
           if (result == 0) {
-            await user.fetch()
             setUserInfo(result, user, "username")
           }
           if (result != 0) {
             let previousItem = results[result-1]
             if (user.id != previousItem.get("user").id) {
-              await user.fetch()
               setUserInfo(result, user, "username")
             }
           }
@@ -189,6 +194,10 @@ export default new Vuex.Store({
     },
 
     changePath(store, path){
+      if (path == "/user/") {
+        path = path + Parse.User.current().getUsername()
+      }
+
       try {
         globalThis.router.push(path)
       } catch (error) {
@@ -205,9 +214,9 @@ export default new Vuex.Store({
       let iconQuery = new Parse.Query(IconsBase);
       
       iconQuery.equalTo("user", userObj);
-      iconQuery.limit(50)
+      iconQuery.limit(20)
       iconQuery.skip(store.state.userIcons.toSkip)
-      store.state.userIcons.toSkip += 50;
+      store.state.userIcons.toSkip += 20;
 
       let iconResults = await iconQuery.find();
 

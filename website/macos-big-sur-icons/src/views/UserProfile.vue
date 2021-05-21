@@ -27,10 +27,10 @@
             </h3>
             
             <a v-if="user.twitterHandle" target="_blank" :href="user.twitterHandle" class="margin-auto relative">
-              <IconUI class="absolute-center-vertical" width="22px" :img="resources.twitter" alt="Twitter Logo"/>
+              <IconUI class="absolute-center-vertical" width="18px" :img="resources.twitter" alt="Twitter Logo"/>
             </a>
             <div v-if="user.twitterHandle" target="_blank" @click="copyUserUrl" class="margin-auto relative pointer">
-              <IconUI class="absolute-center-vertical" width="22px" :img="resources.share" alt="Twitter Logo"/>
+              <IconUI class="absolute-center-vertical" width="18px" :img="resources.share" alt="Twitter Logo"/>
             </div>
           </div>
 
@@ -48,11 +48,19 @@
 
         <div class="profile-descrption-box">
           <div v-if="user.loading" class="loading-placeholder"></div>
-          <p v-if="user.bio" class="coral-Body--L">
+          <p v-if="user.bio" class="coral-Body--L m-b-5">
             {{ user.bio }}
-            <!-- {{ user.userData.bio }} -->
-            <!-- I design products by day at the British Heart Foundation and take photos of bands by night. Creator of macOSicons.com. -->
           </p>
+
+          <a v-if="user.credit" target="_blank" :href="user.credit" class="margin-auto relative">
+            <!-- <p class="coral-Body--XS"> -->
+              <IconUI class="absolute-center-vertical" width="14px" :img="resources.link" alt="Twitter Logo"/>
+              <span class="p-l-20">
+                {{ user.credit.replace("https://", "") }}
+              </span>
+            <!-- </p> -->
+          </a>
+
         </div>
 
       </div>
@@ -86,11 +94,16 @@
       </coral-tablist>
 
       <UserIconGrid v-if="userIcons.length != 0" :userIcons="userIcons"/>
-      <div v-else class="waiting-wrapper">
+      <div v-if="!user.loading && userIcons.length == 0" class="waiting-wrapper">
         <p class="coral-Body--M">
           {{ errorMessage }}
           <!-- {{ user.username }} hasn't submitted any icons yet. -->
         </p>
+      </div>
+
+      <!-- Loading spinning circle -->
+      <div v-if="user.loading" class="waiting-wrapper">
+        <coral-wait size="L" indeterminate=""></coral-wait>
       </div>
 
     </section>    
@@ -122,6 +135,7 @@ export default {
       resources:{
         twitter: require("../assets/icons/twitter.svg"),
         share: require("../assets/icons/share.svg"),
+        link: require("../assets/icons/Link.svg"),
         profilePic: require("../assets/Resources/accounts/profilePic.png"),
       },
 
@@ -166,7 +180,7 @@ export default {
     async queryUser(){
       let parent = this
       let user = parent.user
-      user.username = this.$route.params.user // Set username same as the url user
+      // user.username = this.$route.params.user // Set username same as the url user
       
       const queryUser = new Parse.Query(Parse.User);
       let regular = new RegExp("\\b" + user.username + "\\b")
@@ -183,7 +197,7 @@ export default {
         user.bio = userInfo.get("bio")
         user.loading = false
         
-        if (user.username == Parse.User.current().getUsername()) {
+        if (Parse.User.current() && user.username == Parse.User.current().getUsername()) {
           user.isOwner = true
         }
 
@@ -194,7 +208,6 @@ export default {
           user.twitterHandle = "https://twitter.com/"+userInfo.get("twitterHandle")
         }
 
-        console.log(userInfo);
       } else{
         user.loading = false
         parent.errorMessage = "This account doesn’t exist"
@@ -214,8 +227,9 @@ export default {
     },
     
     scrolled() {
+      let parent = this
       window.onscroll = () => {
-      let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000
+        let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000
 
         if (bottomOfWindow && parent.scrolledToBottom) {
           parent.scrolledToBottom = false
@@ -231,11 +245,12 @@ export default {
 
   mounted: function(){
     let parent = this
+
     parent.user.username = parent.$route.params.user
+
     parent.emptyArr();
     parent.queryUser()
 
-    this.fetchAppCategories()
     parent.scrolled()
   },
 
@@ -359,7 +374,7 @@ export default {
     width: fit-content;
     height: fit-content;
     min-height: 36px;
-    gap: 35px;
+    gap: 25px;
     margin: auto auto auto 0;
   }
   
