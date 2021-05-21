@@ -184,7 +184,7 @@ export default {
     },
 
     computed:{
-      ...mapGetters(['getUser', 'getUserIcons', 'notApproved', 'getAppCategories']),
+      ...mapGetters(['getUser', 'allIcons', 'notApproved', 'getAppCategories']),
 
     }
 }

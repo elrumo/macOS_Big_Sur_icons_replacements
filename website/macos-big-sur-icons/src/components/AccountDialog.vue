@@ -193,7 +193,6 @@ export default {
           return
         } else {
           ParseUser = JSON.parse(JSON.stringify(ParseUser))
-          console.log(ParseUser.hasOwnProperty(prop));
           return ParseUser[prop]
         }
       },

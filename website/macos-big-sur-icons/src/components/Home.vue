@@ -191,7 +191,7 @@
 import { mapActions, mapGetters } from 'vuex';
 import Header from './Header.vue';
 import Hero from './Hero.vue';
-import IconCard from './IconCard.vue';
+// import IconCard from './IconCard.vue';
 import UserIconCard from './UserIconCard.vue';
 import Dialog from './Dialog.vue';
 import deleteDialog from './deleteDialog.vue';
@@ -206,7 +206,6 @@ import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config()
 
 // TODO: remove credentials
-
 const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
 const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
@@ -232,7 +231,7 @@ export default {
   components: {
     Header,
     Hero,
-    IconCard,
+    // IconCard,
     Dialog,
     deleteDialog,
     NativeAd,
@@ -395,7 +394,7 @@ export default {
   },
 
   methods:{ 
-    ...mapActions(['showToast', 'showEl', 'fetchIconUser']),
+    ...mapActions(['showToast', 'showEl', 'fetchIconUserInfo']),
 
     isDialog(){
       console.log(document.getElementByTagName("coral-dialog").open);
@@ -538,9 +537,7 @@ export default {
         for(let data in objData){
           iconData[data] = objData[data]
         }
-        iconData.id = results[result].id  
-        
-        console.log("TESSSSSS");
+        iconData.id = results[result].id;
 
         parent.$store.dispatch("pushDataToArr", {data: iconData, arr: "list", func: "loadMore"})
       }
@@ -551,7 +548,7 @@ export default {
         results: results
       }
       
-      parent.fetchIconUser(data)
+      parent.fetchIconUserInfo(data)
 
     },
 
@@ -622,7 +619,7 @@ export default {
           howManyRecords: 0,
           results: results
         }
-        parent.fetchIconUser(data)
+        parent.fetchIconUserInfo(data)
 
         var attempts = 0;
         // let getAd = setTimeout(() => {

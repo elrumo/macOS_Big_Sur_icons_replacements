@@ -704,6 +704,10 @@ option[value=""][disabled] {
     grid-template-columns: 1fr;
 }
 
+.pointer{
+    cursor: pointer;
+}
+
 .card-wrapper h3{
     margin: 2px 0px 2px 0px;
     text-decoration: none;
@@ -1391,12 +1395,27 @@ option[value=""][disabled] {
     line-height: 99%;
 }
 
+
+.icon-UI{
+    transition: 0.3s;
+}
+
+.icon-UI:hover{
+    transform: translatey(calc(-50% - 2px));
+}
+
 .coral--light .icon-UI{
     filter: brightness(0.5);
+}
+.coral--light .icon-UI:hover{
+    filter: brightness(0.3);
 }
 
 .coral--dark .icon-UI{
     filter: brightness(1);
+}
+.coral--dark .icon-UI:hover{
+    filter: brightness(1.2);
 }
 
 .apple-signin-banner{

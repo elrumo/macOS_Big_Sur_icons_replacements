@@ -29,12 +29,12 @@
             <a v-if="user.twitterHandle" target="_blank" :href="user.twitterHandle" class="margin-auto relative">
               <IconUI class="absolute-center-vertical" width="22px" :img="resources.twitter" alt="Twitter Logo"/>
             </a>
-            <a v-if="user.twitterHandle" target="_blank" :href="user.twitterHandle" class="margin-auto relative">
+            <div v-if="user.twitterHandle" target="_blank" @click="copyUserUrl" class="margin-auto relative pointer">
               <IconUI class="absolute-center-vertical" width="22px" :img="resources.share" alt="Twitter Logo"/>
-            </a>
+            </div>
           </div>
 
-          <div class="profile-edit-btn mobile-hidden opacity-80">
+          <div v-if="user.isOwner" class="profile-edit-btn mobile-hidden opacity-80">
             <button
               is="coral-button"
               variant="quiet"
@@ -130,8 +130,12 @@ export default {
       errorMessage: "",
 
       user:{
-        loading: true
+        loading: true,
+        isOwner: false,
       },
+      
+      userInfo: {},
+      scrolledToBottom: true,
 
       coralIcons:{
         addIcon: require("../assets/icons/add.svg"),
@@ -144,25 +148,44 @@ export default {
   },
 
   methods: {
-    ...mapActions(["fetchUserIcons", "fetchAppCategories", "emptyArr"]),
+    ...mapActions(["fetchUserIcons", "fetchAppCategories", "emptyArr", "showToast"]),
+
+    async copyUserUrl(){
+      let parent = this;
+      let toCopy = "https://macosicons.com/user/" + parent.$route.params.user
+      
+      await navigator.clipboard.writeText(toCopy);
+      
+      parent.showToast({
+        id: "toastMessage",
+        message: "✅ User profile URL copied to your clipboard",
+        variant: "success"
+      })
+    },
 
     async queryUser(){
       let parent = this
       let user = parent.user
       user.username = this.$route.params.user // Set username same as the url user
-
+      
       const queryUser = new Parse.Query(Parse.User);
-      queryUser.matches("username", user.username, "i")
+      let regular = new RegExp("\\b" + user.username + "\\b")
+      queryUser.matches("username", regular, "i")
       let userInfo = await queryUser.find()
 
-      userInfo = userInfo[0]
+      userInfo = userInfo[0];
+      parent.userInfo = userInfo;
       if (userInfo) {
-          // parent.fetchUserIcons("userInfo")  
-        parent.$store.dispatch('fetchUserIcons', userInfo)
         
+        parent.$store.dispatch('fetchUserIcons', userInfo)
         user.credit = userInfo.get("credit")
+        user.username = userInfo.get("username")
         user.bio = userInfo.get("bio")
         user.loading = false
+        
+        if (user.username == Parse.User.current().getUsername()) {
+          user.isOwner = true
+        }
 
         let twitterHandle = userInfo.get("twitterHandle") // Check if twitterHandle is a URL or not
         if (twitterHandle.includes("twitter.com")) {
@@ -175,7 +198,6 @@ export default {
       } else{
         user.loading = false
         parent.errorMessage = "This account doesn’t exist"
-        console.log("This account doesn’t exist");
       }
       
 
@@ -189,46 +211,56 @@ export default {
     changeIconStatus(status) {
       let parent = this
       parent.iconsToShow = status
-    }
+    },
+    
+    scrolled() {
+      window.onscroll = () => {
+      let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000
+
+        if (bottomOfWindow && parent.scrolledToBottom) {
+          parent.scrolledToBottom = false
+          setTimeout(() => {
+              parent.scrolledToBottom = true
+          }, 800);
+          parent.$store.dispatch('fetchUserIcons', parent.userInfo)
+        }
+      }
+    },
 
   },
 
   mounted: function(){
     let parent = this
-    parent.$store.state.list = []
-    console.log("parent.$store.state.list: ", parent.emptyArr());
     parent.user.username = parent.$route.params.user
+    parent.emptyArr();
     parent.queryUser()
-    // Get all user iconsOrder
-    // parent.fetchUserIcons()
-    // parent.$store.dispatch('fetchUserIcons', {userInfo: "userInfo"})
 
     this.fetchAppCategories()
-
+    parent.scrolled()
   },
 
   computed:{
-    ...mapGetters(['getUser', 'getUserIcons', 'notApproved', 'approvedIcons', 'getAppCategories']),
+    ...mapGetters(['getUser', 'allIcons', 'notApproved', 'approvedIcons', 'getAppCategories']),
 
-    // userIcons(){
-    //   return this.$store.getters.notApproved
-    // }
 
     userIcons(){
       let parent = this
-
-      if (parent.getUserIcons.length == 0) {
+      
+      if (parent.allIcons.length == 0) {
         parent.errorMessage = "No icons to show"
       }
 
       switch (parent.iconsToShow) {
         case "all":
-          return parent.getUserIcons
+          parent.errorMessage = parent.user.username + " hasn't submited any icons yet."
+          return parent.allIcons
 
         case "approved":
+          parent.errorMessage = parent.user.username + " doesn't have any approved icons yet."
           return parent.approvedIcons
 
         case "notApproved":
+          parent.errorMessage = parent.user.username + " doesn't have any icons awaiting aproval."
           return parent.notApproved
     
         default:
