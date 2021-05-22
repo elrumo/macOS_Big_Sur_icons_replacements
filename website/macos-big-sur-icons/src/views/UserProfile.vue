@@ -92,7 +92,12 @@
           </option>
         </select> -->
       </coral-tablist>
-
+      
+      <p class="coral-Body--M">
+        {{iconsCount}}
+        <!-- {{userIcons.length}} -->
+      </p>
+      
       <UserIconGrid v-if="userIcons.length != 0" :userIcons="userIcons"/>
       <div v-if="!user.loading && userIcons.length == 0" class="waiting-wrapper">
         <p class="coral-Body--M">
@@ -105,6 +110,14 @@
       <div v-if="user.loading" class="waiting-wrapper">
         <coral-wait size="L" indeterminate=""></coral-wait>
       </div>
+
+      <button
+        is="coral-button"
+        v-if="userIcons.length < iconsCount && !user.loading"
+        @click="fetchUserIcons(userInfo)"
+      >
+        Load more
+      </button> 
 
     </section>    
 
@@ -148,6 +161,7 @@ export default {
         isOwner: false,
       },
       
+      totalIconsApproved: 0,
       userInfo: {},
       scrolledToBottom: true,
 
@@ -250,13 +264,15 @@ export default {
 
     parent.emptyArr();
     parent.queryUser()
-
     parent.scrolled()
   },
 
   computed:{
-    ...mapGetters(['getUser', 'allIcons', 'notApproved', 'approvedIcons', 'getAppCategories']),
+    ...mapGetters(['getUser', 'allIcons', 'notApproved', 'approvedIcons', 'getAppCategories', 'approvedIconsCount']),
 
+    iconsCount(){
+      return this.approvedIconsCount
+    },
 
     userIcons(){
       let parent = this

@@ -31,7 +31,10 @@ export default new Vuex.Store({
       approved: [],
       notApproved: [],
       hacked: [],
-      toSkip: 10
+      toSkip: 0,
+      count: {
+        approved: 0,
+      }
     },
 
     appCategories: [],
@@ -211,14 +214,63 @@ export default new Vuex.Store({
 
     async fetchUserIcons(store, userObj){
       let IconsBase = Parse.Object.extend("Icons2");
-      let iconQuery = new Parse.Query(IconsBase);
+      let approvedQuery = new Parse.Query(IconsBase);
+      let numToLoad = 10
       
-      iconQuery.equalTo("user", userObj);
-      iconQuery.limit(20)
-      iconQuery.skip(store.state.userIcons.toSkip)
-      store.state.userIcons.toSkip += 20;
+      // Approved Count
+      /////////////////////////////////////////////
+      let approvedIconsCount = new Parse.Query(IconsBase);
+      approvedIconsCount.equalTo("user", userObj);
+      approvedIconsCount.equalTo("approved", true);
+      approvedIconsCount.exists("icnsFile");
+      let totalApproved = await approvedIconsCount.count()
+      store.state.userIcons.count.approved = totalApproved
+      /////////////////////////////////////////////
+      
+      // Not Approved Count
+      /////////////////////////////////////////////
+      let notApprovedQueryCount = new Parse.Query(IconsBase);
+      notApprovedQueryCount.equalTo("user", userObj);
+      notApprovedQueryCount.equalTo("approved", false);
+      notApprovedQueryCount.exists("highResPngFile");
+      let totalNotApproved = await notApprovedQueryCount.count()
+      store.state.userIcons.count.notApproved = totalNotApproved
+      /////////////////////////////////////////////
 
-      let iconResults = await iconQuery.find();
+      // Hacked Count
+      /////////////////////////////////////////////
+      let hackedCount = new Parse.Query(IconsBase);
+      hackedCount.equalTo("user", userObj);
+      hackedCount.equalTo("approved", true);
+      hackedCount.doesNotExist("icnsFile");
+      let hacked = await hackedCount.count()
+      store.state.userIcons.count.hacked = hacked
+      /////////////////////////////////////////////
+      
+
+      approvedQuery.limit(numToLoad)
+      approvedQuery.equalTo("user", userObj);
+      approvedQuery.equalTo("approved", true);
+      approvedQuery.exists("icnsFile");
+      approvedQuery.skip(store.state.userIcons.toSkip)
+      approvedQuery.descending("createdAt");
+      store.state.userIcons.toSkip += numToLoad;
+      let iconResults = await approvedQuery.find();
+      
+      iconResults.forEach((result)=>{
+        returnIconData(result, "approved");
+      })
+
+      approvedQuery.equalTo("approved", false);
+      approvedQuery.doesNotExist("icnsFile");
+      let notApproved = await approvedQuery.find();
+
+      notApproved.forEach((result)=>{
+        returnIconData(result, "notApproved");
+      })
+
+      // approvedQuery.equalTo("approved", true);
+      // let hacked = await approvedQuery.find();
 
       function returnIconData(result, status){
         let icon = result.attributes
@@ -238,26 +290,6 @@ export default new Vuex.Store({
         }
         store.commit('pushUserIcons',  dataToPush);
       }
-
-      iconResults.forEach((result)=>{
-        let objData = result.attributes
-
-        // If icon has not been approved yet
-        if (objData.highResPngFile && !objData.approved ) {
-            returnIconData(result, "notApproved");
-        }
-
-        // If icon has been hacked (it doesn't have an icns file and has been approved)
-        if (!objData.icnsFile && objData.approved ) {
-            returnIconData(result, "hacked");
-        }
-
-        // If icon has icns file and been been approved
-        if (objData.icnsFile && objData.approved ) {
-          returnIconData(result, "approved");
-        }
-
-      })
 
     },
 
@@ -318,7 +350,13 @@ export default new Vuex.Store({
     },
 
     approvedIcons(store){
-      return store.userIcons.approved
+      let approved =  [...store.userIcons.approved].sort((a, b) => (a.createdAt - b.createdAt) ? 1 : -1 );
+      // return  approved
+      return  approved
+    },
+
+    approvedIconsCount(store){
+      return store.userIcons.count
     },
 
     allIcons(store){
