@@ -25,6 +25,7 @@
             <img :src="resourceItem.feature_image"/>
           </figure>
           <NativeAd
+            :adId="'iconbar-js-resourceItem'"
             class="m-t-20"
             sponsored="true"
             :key="$route.fullPath + 'ad'"
