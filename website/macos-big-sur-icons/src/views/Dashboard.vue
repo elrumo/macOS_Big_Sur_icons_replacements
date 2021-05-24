@@ -197,7 +197,7 @@ export default {
         delete: require("../assets/icons/delete.svg"),
         newItem: require("../assets/icons/newItem.svg"),
         edit: require("../assets/icons/edit.svg"),
-        loading: require("../assets/no-app-icon.png"),
+        loading: require("../assets/placeholder-icon.png"),
         email: require("../assets/icons/email.svg"),
       },
     }

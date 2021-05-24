@@ -899,6 +899,22 @@ option[value=""][disabled] {
     transform: translateX(-50%);
 }
 
+.placeholder-icon{
+    animation: placeholder-icon 1.5s ease-in-out infinite;
+}
+
+@keyframes placeholder-icon {
+    0% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(0.75);
+    }
+    100% {
+        filter: brightness(1);
+    }
+  }
+
 .icon{
     padding: 17px 20px;
     transition: 0.2s;
