@@ -50,7 +50,6 @@
         <div class="profile-descrption-box">
           <div v-if="loading.user" class="loading-placeholder m-b-10"></div>
           <div v-if="loading.user" class="loading-placeholder m-b-10"></div>
-          <div v-if="loading.user" class="loading-placeholder m-b-10"></div>
           <p v-if="user.bio" class="coral-Body--L m-b-5">
             {{ user.bio }}
           </p>
@@ -68,13 +67,32 @@
 
       </div>
     </section>
-    
+
     <!-- Icons section -->
     <section class="m-auto user-profile-icons">
+      
+      <!-- Tabs -->
       <coral-tablist>
-        <coral-tab aria-label="All Icons" @click="changeIconStatus('all')">All</coral-tab>
-        <coral-tab aria-label="Approved Icons" selected="" @click="changeIconStatus('approved')">Approved</coral-tab>
-        <coral-tab aria-label="Waiting Icons" @click="changeIconStatus('notApproved')">Waiting</coral-tab>
+        <coral-tab aria-label="All Icons" @click="changeIconStatus('all')">
+          All
+          <span class="coral-Detail coral-Detail--M f-w-400 opacity-80">
+            ({{approvedIconsCount.approved + approvedIconsCount.notApproved}})
+          </span>
+        </coral-tab>
+        
+        <coral-tab aria-label="Approved Icons" selected="" @click="changeIconStatus('approved')">
+          Approved
+          <span class="coral-Detail coral-Detail--M f-w-400 opacity-80">
+            ({{approvedIconsCount.approved}})
+          </span>
+        </coral-tab>
+        
+        <coral-tab aria-label="Waiting Icons" @click="changeIconStatus('notApproved')">
+          Waiting
+          <span class="coral-Detail coral-Detail--M f-w-400 opacity-80">
+            ({{approvedIconsCount.notApproved}})
+          </span>
+        </coral-tab>
         <!-- <select
           id="order-selector"
           class="dropdown-select right-align-tablist dropdown-select-quiet"
@@ -96,27 +114,22 @@
         </select> -->
       </coral-tablist>
       
-      <p class="coral-Body--M">
-        <!-- {{iconsCount}}
-        {{isLoading}} -->
-      </p>
-      
+      <div v-if="!loading.user && iconsCount == 0" class="waiting-wrapper">
+        <p class="coral-Body--M">
+          {{ errorMessage }}
+        </p>
+      </div>
+
       <UserIconGrid v-if="userIcons.length != 0" :userIcons="userIcons"/>
       
       <div
         class="icon-list-area p-t-40 p-b-50"
         v-else
       >
-        <div style="z-index: 2; height: 100%" class="card-wrapper card-hover coral-card">
+        <div style="z-index: 2; height: 100%; min-heigh: 210px" class="card-wrapper card-hover coral-card">
           <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js2"></script>
         </div>
         <UserIconCardLoading v-for="num in placeholderCount" :key="num+Math.floor(Math.random() * 10000000 + 1)" :icon="iconsCount"/>
-      </div>
-      
-      <div v-if="!isLoading && iconsCount == 0" class="waiting-wrapper">
-        <p class="coral-Body--M">
-          {{ errorMessage }}
-        </p>
       </div>
 
       <button
@@ -247,6 +260,11 @@ export default {
         
         parent.loading.user = false
       } else{
+        let isLoading = {
+          arr: "loading",
+          data: false
+        }
+        parent.setDataToArr(isLoading)
         parent.loading.user = false
         parent.errorMessage = "This account doesn’t exist"
       }
@@ -320,7 +338,6 @@ export default {
 
       switch (parent.iconsToShow) {
         case "all":
-          console.log(allIcons);
           return allIcons
 
         case "approved":

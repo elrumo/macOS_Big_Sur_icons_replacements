@@ -226,7 +226,7 @@ export default new Vuex.Store({
       let IconsBase = Parse.Object.extend("Icons2");
       let approvedQuery = new Parse.Query(IconsBase);
       let numToLoad = 15
-      
+
       // Approved Count
       /////////////////////////////////////////////
       let approvedIconsCount = new Parse.Query(IconsBase);
@@ -271,7 +271,6 @@ export default new Vuex.Store({
       })
 
       approvedQuery.equalTo("approved", false);
-      approvedQuery.doesNotExist("icnsFile");
       let notApproved = await approvedQuery.find();
 
       notApproved.forEach((result)=>{
