@@ -97,7 +97,7 @@ export default {
 } 
 
 .min-height{
-  min-height: calc(100vh - 155px);
+  min-height: calc(100vh - 125px);
   margin: auto;
 }
 

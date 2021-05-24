@@ -134,7 +134,7 @@
             <div class="mobile-hidden">
                 <div class="header-grid-btns">
                     
-                    <!-- Twitter -->
+                    <!-- Twitter + Discord -->
                     <div class="header-icon-wrapper">
                         <a href="https://twitter.com/elrumo" class="" target="_blank" rel="noopener">
                             <img :src="icons.twitter" class="header-item header-icon" alt="Twitter logo">
@@ -144,10 +144,10 @@
                         </a>
                     </div>
                     <!-- Back to all icons -->
-                    <div class="opacity-50" v-if="this.$route.name != 'Home'">
+                    <div class="opacity-70" v-if="this.$route.name != 'Home'">
                         <router-link to="/">
                             <button is="coral-button" variant="quiet">
-                                <span>Back to Icons</span>
+                                <span>All Icons</span>
                             </button>
                         </router-link>
                     </div>

@@ -418,6 +418,8 @@ option[value=""][disabled] {
 
 .header-grid-btns > div{
     // padding-left: 15px;
+    height: fit-content;
+    margin: auto;
 }
 
 .header-item{
@@ -436,10 +438,14 @@ option[value=""][disabled] {
 }
 
 .header-icon{
-    height: 22px;
+    height: 18px;
     padding: 4px 0px 0px 0px;
     cursor: pointer;
     transition: 0.2s;
+}
+
+.profile-nav{
+    max-height: 30px;
 }
 
 .coral--dark .header-icon:hover{
@@ -651,7 +657,7 @@ option[value=""][disabled] {
     border-color: rgb(225, 225, 225);
     border-radius: var(--main-border-radius);
     margin: auto;
-    // padding: 0px 10px;
+    min-height: 200px;
 }
 
 .card-text-wrapper{
@@ -983,6 +989,7 @@ option[value=""][disabled] {
     top: 50%;
     width: 80%;
     height: 80%;
+    z-index: 9;
     /* backdrop-filter: blur(5px) saturate(0.5); */
     backdrop-filter: blur(3px);
 }

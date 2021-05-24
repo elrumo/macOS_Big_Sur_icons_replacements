@@ -387,7 +387,19 @@ const routes = [
   },
   {
     // path: '/user',
+    path: '/u/:user',
+    name: 'UserProfile',
+    component: () => import('../views/UserProfile.vue')
+  },
+  {
+    // path: '/user',
     path: '/user/',
+    name: 'UserProfile',
+    component: () => import('../views/UserProfile.vue')
+  },
+  {
+    // path: '/user',
+    path: '/u/',
     name: 'UserProfile',
     component: () => import('../views/UserProfile.vue')
   },
