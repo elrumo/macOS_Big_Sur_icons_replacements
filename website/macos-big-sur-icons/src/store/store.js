@@ -225,6 +225,7 @@ export default new Vuex.Store({
 
       let IconsBase = Parse.Object.extend("Icons2");
       let approvedQuery = new Parse.Query(IconsBase);
+      let notApprovedQuery = new Parse.Query(IconsBase);
       let numToLoad = 15
 
       // Approved Count
@@ -269,9 +270,14 @@ export default new Vuex.Store({
       iconResults.forEach((result)=>{
         returnIconData(result, "approved");
       })
-
-      approvedQuery.equalTo("approved", false);
-      let notApproved = await approvedQuery.find();
+      
+      notApprovedQuery.limit(numToLoad)
+      notApprovedQuery.equalTo("user", userObj);
+      notApprovedQuery.skip(store.state.userIcons.toSkip)
+      notApprovedQuery.descending("createdAt");
+      approvedQuery.exists("highResPngFile");
+      notApprovedQuery.equalTo("approved", false);
+      let notApproved = await notApprovedQuery.find();
 
       notApproved.forEach((result)=>{
         returnIconData(result, "notApproved");
@@ -345,7 +351,7 @@ export default new Vuex.Store({
         console.log("error: ", error);
       })
     }
-    
+
   },  
   
   

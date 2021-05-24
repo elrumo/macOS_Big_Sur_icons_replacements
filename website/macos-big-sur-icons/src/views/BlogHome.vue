@@ -37,7 +37,7 @@
         </div>
 
         <div class="single-ad m-b-20 p-b-50 p-t-30">
-          <script async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
+          <script @click="adClick" async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
         </div>
         
       </div>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-// @ is an alias to /src
+import { mapActions, mapGetters } from 'vuex';
 import { getPosts } from '@/api/posts';
 import H3Description from '@/components/H3_Description.vue'
 import NativeAd from "@/components/NativeAd.vue";
@@ -91,6 +91,8 @@ export default {
   },
 
   methods:{
+    ...mapActions(['adClick']),
+
     getDate(dateString){
       // var date = dateString;
       let date = new Date(dateString);

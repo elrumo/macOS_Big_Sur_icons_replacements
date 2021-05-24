@@ -146,7 +146,7 @@
           <div class="card-hover relative coral-card">
             
             <div style="z-index: 1; height: 100%; width: 100%" class="absolute carbon-card-ad">
-              <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+              <script @click="adClick" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
             </div>
 
             <div style="z-index: 2" class="absolute card-grid-nativeAd">
@@ -596,13 +596,18 @@ export default {
       let parent = this
 
       function handleParseError(err){
+        console.log(err.code);
         switch (err.code) {
           case Parse.Error.INVALID_SESSION_TOKEN:
             Parse.User.logOut();
             window.location.reload()
             break;
+          
+          case 100:
+            break;
         
           default:
+            parent.loadingError = "true"
             break;
         }
       }
@@ -670,7 +675,6 @@ export default {
         parent.scroll()
 
       } catch (error) {
-        parent.loadingError = "true"
         handleParseError(error)
         console.log("loadingError: ", error);
       }

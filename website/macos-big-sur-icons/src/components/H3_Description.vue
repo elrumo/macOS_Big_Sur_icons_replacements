@@ -1,7 +1,5 @@
 <template>
     <div>
-        
-
 
         <div class="h3-description m-t-20" v-if="!text.isCenter">
             <h1 class="coral-Heading--XL resource-heading">
@@ -17,17 +15,9 @@
                 <p class="coral-Body--XS">
                     Sponsored by
                 </p>
-                
                 <NativeAd :adId="'iconbar-js-h3'" :key="$route.fullPath + 'ad'"/>
-                <!-- <div class="" id="iconbar-js"></div> -->
             </div>
-            <!-- <div class="text-and-ad-wrapper">
-                <p class="coral-Body--L f-w-500 " v-html="markItDown">
-                </p>
-                <div class="single-ad mobile-ad">
-                    <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
-                </div>
-            </div> -->
+
         </div>
 
         <div v-else class="h3-description h3-description-center">
@@ -44,7 +34,7 @@
                 <div v-else class="text-and-ad-wrapper">
                     <p class="coral-Body--XL" v-html="markItDown">
                     </p>
-                    <div class="single-ad mobile-ad">
+                    <div @click="adClick" class="single-ad mobile-ad">
                         <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
                     </div>
                 </div>
@@ -67,6 +57,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import Marked from 'marked';
 import NativeAd from "./NativeAd.vue";
 
@@ -91,6 +82,8 @@ export default {
     },
     
     methods:{
+        ...mapActions(['adClick',]),
+
         logSubscription(){
             let parent = this
             let currentPath = parent.$router.currentRoute.name;
