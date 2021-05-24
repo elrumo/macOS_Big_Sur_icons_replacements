@@ -1,9 +1,10 @@
 <template>
-  <div :class="{fullWidth: fullWidth, 'mobile-hidden': true}">
+  <div :class="{fullWidth: fullWidth, 'mobile-hidden': true,}">
     <p v-if="sponsored" class="coral-Detail coral-Detail--S coral-Detail--light opacity-50">
       Sponsored
     </p>
-    <div @click="adClick" class="native-ad-wrapper" :id="adId"> </div>
+    <div @click="adClick" class="" id="iconbar-js">
+    </div>
   </div>
 </template>
 
@@ -14,8 +15,7 @@ export default {
 
     props:{
       sponsored:'',
-      fullWidth:'',
-      adId: '',
+      fullWidth:''
     },
 
     components:{},
@@ -28,16 +28,15 @@ export default {
     
     mounted: function(){
       let parent = this
-      var adId = parent.adId
 
       function getAd(el){
         try {
           if (typeof _bsa !== 'undefined' && !parent.isAd) {
             _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
             {
-              target: '#'+adId,
+              target: '#iconbar-js',
               template: `
-                  <a href="##statlink##" target="_blank" rel="noopener sponsored" id="`+adId+`customAd" class="bsa-link coral-card">
+                  <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link coral-card">
                   <div class="bsa-icon" style="background-image: url(##image##); background-color: ##backgroundColor##;"></div>
                   <div class="bsa-desc">##company## - ##tagline##</div>
                   </a>
@@ -49,14 +48,12 @@ export default {
         }
       }
       
-      getAd()
-
       var attempts = 0       
       function adExist(){
-        var adExists = document.getElementById(adId).children.length
+        var adExists = document.getElementById("iconbar-js").children.length
         console.log();
         setTimeout(() => {
-          if (attempts >= 15) return;
+          if (attempts >= 4) return;
           if (adExists == 0) {
             try {
               attempts++
@@ -70,10 +67,10 @@ export default {
             }
           } else return
 
-        }, 1500);
+        }, 800);
       }
 
-      let el = document.getElementById(adId+"customAd")
+      let el = document.getElementById("customAd")
 
       window.BSANativeCallback = (a) => {
         const total = a.ads.length;
@@ -82,6 +79,8 @@ export default {
           parent.isAd = true
         }
       }
+
+      // getAd(el)
 
       if (!parent.isAd) {
           // // console.log(parent.isAd);
@@ -92,23 +91,6 @@ export default {
           // }, 500)
         adExist()
       }
-
-      setTimeout(() =>{
-        let nodeList = document.querySelector("#"+adId).children
-
-        nodeList.forEach((el)=> {
-          let newNodeList = document.querySelector("#"+adId).children
-
-          if(newNodeList.length > 1){
-            console.log(newNodeList.length);
-            el.parentNode.removeChild(el);
-          } else{
-            console.log(newNodeList.length);
-            return
-          }
-
-        });
-      }, 1200)
 
     },
 

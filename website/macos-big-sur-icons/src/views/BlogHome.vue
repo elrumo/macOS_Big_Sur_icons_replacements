@@ -6,7 +6,7 @@
 
         <section class="p-t-30 p-b-10">
 
-          <NativeAd :adId="'iconbar-js-blogHome'" class="width-fit m-auto" :sponsored="true" :key="$route.fullPath + 'ad'"/>
+          <NativeAd class="width-fit m-auto" :sponsored="true" :key="$route.fullPath + 'ad'"/>
 
           <H3-Description :text="subscribe"/>
           

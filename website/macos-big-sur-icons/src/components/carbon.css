@@ -294,11 +294,6 @@
     overflow: hidden;
 }
 
-.native-ad-wrapper{
-    overflow: hidden;
-    height: 42px;
-}
-
 .icon-list-area .carbon-img img {
     width: auto;
     height: 100%;
@@ -321,7 +316,7 @@
     grid-template-rows: auto 19px;
     gap: 5px;
     margin: auto;
-    max-height: 200px;
+    max-height: 180px;
 }
 
 .icon-list-area #carbonads span {
@@ -347,11 +342,6 @@
     transform: translatey(40px);
 }
 
-
-.carbon-card-ad > div{
-    position: absolute;
-    top: 0px;
-}
 
 /* card-grid-nativeAd START */
 /* //////////////////////////////////// */
