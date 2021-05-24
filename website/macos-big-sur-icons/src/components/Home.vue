@@ -143,7 +143,7 @@
     <!-- Icon list when no loading error-->
         <div v-if="!loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular">
 
-          <div class="card-hover relative coral-card">
+          <div style="min-height: 210px" class="card-hover relative coral-card">
             
             <div style="z-index: 1; height: 100%; width: 100%" class="absolute carbon-card-ad">
               <script @click="adClick" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
