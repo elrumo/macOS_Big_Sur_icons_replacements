@@ -12,7 +12,7 @@
           <!-- <p class="coral-Body--XS">
             Sponsored by
           </p> -->
-          <NativeAd :key="$route.fullPath + 'ad'"/>
+          <NativeAd :adId="'iconbar-js-hero'" :key="$route.fullPath + 'ad'"/>
         </div>
 
         <div class="desktop-hidden m-t-20"></div>
@@ -218,9 +218,11 @@ export default {
 }
 
 #iconbar-js{
+  height: 42px;
+  overflow: hidden;
   transition: 0.3s;
-  height: 40px;
 }
+
 #iconbar-js:hover{
   transform: translateY(-3px);
   opacity: 1;

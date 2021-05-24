@@ -26,6 +26,7 @@
         
         <div class="single-ad mobile-ad p-b-10">
           <NativeAd
+            :adId="'iconbar-js-blogPost'"
             :sponsored="true"
             :fullWidth="false"
             :key="$route.fullPath + 'ad'"

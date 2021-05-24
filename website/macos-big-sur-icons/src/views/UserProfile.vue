@@ -154,7 +154,6 @@
 import IconUI from '@/components/IconUI.vue';
 import UserIconGrid from '@/components/UserIconGrid.vue';
 import UserIconCardLoading from '@/components/UserIconCardLoading.vue';
-import NativeAd from "@/components/NativeAd.vue";
 
 import Parse from 'parse'
 import { mapGetters, mapActions } from 'vuex'
@@ -166,8 +165,7 @@ export default {
   components: {
       IconUI,
       UserIconGrid,
-      UserIconCardLoading,
-      NativeAd
+      UserIconCardLoading
   },
 
   data(){
