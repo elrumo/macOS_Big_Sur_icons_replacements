@@ -26,7 +26,8 @@ export default new Vuex.Store({
     user: {},
     userData: Parse.User.current(),
 
-    // userIcons: [],
+    loading: true,
+    
     userIcons: {
       approved: [],
       notApproved: [],
@@ -34,6 +35,8 @@ export default new Vuex.Store({
       toSkip: 0,
       count: {
         approved: 0,
+        notApproved: 0,
+        hacked: 0
       }
     },
 
@@ -61,7 +64,6 @@ export default new Vuex.Store({
     },
     
     setDataToArr(store, iconData){
-      console.log("func: ", iconData.func)
       store[iconData.arr] = iconData.data
     },
   
@@ -212,10 +214,18 @@ export default new Vuex.Store({
       store.commit('pushUserData',  userProps)
     },
 
+    adClick(store){
+      let parent = this
+      window.plausible("adClick", {props: {
+        path: globalThis.router.currentRoute.name, 
+      }})
+    },
+
     async fetchUserIcons(store, userObj){
+
       let IconsBase = Parse.Object.extend("Icons2");
       let approvedQuery = new Parse.Query(IconsBase);
-      let numToLoad = 10
+      let numToLoad = 15
       
       // Approved Count
       /////////////////////////////////////////////
@@ -247,7 +257,6 @@ export default new Vuex.Store({
       store.state.userIcons.count.hacked = hacked
       /////////////////////////////////////////////
       
-
       approvedQuery.limit(numToLoad)
       approvedQuery.equalTo("user", userObj);
       approvedQuery.equalTo("approved", true);
@@ -269,18 +278,15 @@ export default new Vuex.Store({
         returnIconData(result, "notApproved");
       })
 
-      // approvedQuery.equalTo("approved", true);
-      // let hacked = await approvedQuery.find();
-
       function returnIconData(result, status){
         let icon = result.attributes
         let dataToPush = {
             status: status,
             iconData: {}
         }
+
         // Set icon ID to icon properties
         dataToPush.iconData.id = result.id
-        
         // Pass high res png url if lor res png is not present
         if (!icon.lowResPngFile) {
           dataToPush.iconData.lowResPngUrl = icon.highResPngUrl
@@ -290,6 +296,12 @@ export default new Vuex.Store({
         }
         store.commit('pushUserIcons',  dataToPush);
       }
+
+      let isLoading = {
+        arr: "loading",
+        data: false
+      }
+      store.commit('setDataToArr', isLoading)
 
     },
 
@@ -406,6 +418,10 @@ export default new Vuex.Store({
         return { userData, parseUserObj, isAuth}
       }
 
+    },
+
+    isLoading(store){
+      return store.loading
     }
   }
 

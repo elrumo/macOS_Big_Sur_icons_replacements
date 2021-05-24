@@ -143,14 +143,18 @@
     <!-- Icon list when no loading error-->
         <div v-if="!loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular">
           
-          <div class="card-hover relative coral-card">
+          <div style="overflow: visible" class="card-hover relative coral-card">
             
-            <div style="z-index: 2; height: 100%" class="relative">
+            <div style="z-index: 1; height: 100%" class="absolute">
               <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+            </div>
+
+            <div style="z-index: 2" class="absolute card-grid-nativeAd">
+              <div @click="adClick" id="card-ad">
+              </div>
             </div>
             
             <a
-              v-if="isAdOn"
               class="card-no-ad relative"
               href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
               rel="noopener"
@@ -334,7 +338,7 @@ export default {
         success: require("../assets/icons/delete.svg"),
         namingOrder: require("../assets/icons/namingOrder.svg"),
         date: require("../assets/icons/date.svg"),
-        loading: require("../assets/no-app-icon.png"),
+        loading: require("../assets/placeholder-icon.png"),
         iconsOrder: require("../assets/icons/namingOrder.svg")
       },
       coralIcons:{
@@ -342,13 +346,14 @@ export default {
         delete: require("../assets/icons/delete.svg"),
         newItem: require("../assets/icons/newItem.svg"),
         edit: require("../assets/icons/edit.svg"),
-        loading: require("../assets/no-app-icon.png"),
+        loading: require("../assets/placeholder-icon.png"),
       }
     }
   },
 
   mounted: function(){
     let parent = this;
+    parent.getAd()
     const { getters } = parent.$store;
     let fullPath = parent.$route.fullPath
     let currentUser = Parse.User.current()
@@ -394,7 +399,31 @@ export default {
   },
 
   methods:{ 
-    ...mapActions(['showToast', 'showEl', 'fetchIconUserInfo']),
+    ...mapActions(['showToast', 'showEl', 'fetchIconUserInfo', 'adClick']),
+
+    getAd(el){
+      try {
+        if (typeof _bsa !== 'undefined') {
+          _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
+          {
+            target: '#card-ad',
+            template: `
+                <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link">
+                <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
+                  <div class="bsa-icon" style="background-image: url(##logo##);"></div>
+                </div>
+                <div class="text-ad-wrapper">
+                  <img style="background: ##backgroundColor##" src="##image##">
+                  <div class="bsa-desc">##description##</div>
+                </div>
+                </a>
+              `
+            }
+          );
+        }
+      } catch (error) {
+      }
+    },
 
     isDialog(){
       console.log(document.getElementByTagName("coral-dialog").open);
@@ -634,7 +663,7 @@ export default {
               getAd()
               parent.isAdOn = true
             }
-          }, 500);
+          }, 1000);
         }
 
         getAd()

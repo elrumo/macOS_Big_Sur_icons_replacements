@@ -2,7 +2,54 @@
   <div>
 
     <section class="icon-list-area p-t-40 p-b-50">
-        <UserIconCard v-for="icon in userIcons" :key="icon.id" :icon="icon" :isAdmin="false" :isMacOs="true"/>
+
+      <div class="card-wrapper card-hover coral-card">
+        
+        <div @click="adClick" class="absolute card-grid-nativeAd" style="z-index: 2; height: 100%">
+          <div id="card-ad">
+          </div>
+        </div>
+
+        <div @click="adClick"  class="absolute" style="z-index: 1; height: 100%">
+          <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+        </div>
+
+          <a
+            class="card-no-ad relative"
+            href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+            rel="noopener"
+            target="_blank"
+            style="width: 100%; left: 0;"
+            @click="logDonation('support-message')"
+          >
+            <div class="support-page">
+              <h3 class="coral-Heading--S m-0">
+                Support this page
+              </h3>
+              <p class="coral-Body--S m-0">
+                Please consider disabling your ad blocker or making a
+                <a  
+                  rel="noopener"
+                  class="coral-Link"
+                  target="_blank"
+                  href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+                >
+                  donation 
+                </a>
+                to support this project.
+              </p>
+            </div>
+          </a>
+
+      </div>
+
+      <UserIconCard v-for="icon in userIcons" :key="icon.id" :icon="icon" :isAdmin="false" :isMacOs="true"/>
+      
+      <!-- <div
+        
+      >
+        <UserIconCardLoading v-for="num in placeholderCount" :key="num+Math.floor(Math.random() * 10000000 + 1)" :icon="iconsCount"/>
+      </div> -->
       <!-- <div  class="icon-card-wrapper user-icon-card card-wrapper coral-card" :key="icon.id">   -->
         
 
@@ -130,8 +177,9 @@ export default {
             delete: require("../assets/icons/delete.svg"),
             newItem: require("../assets/icons/newItem.svg"),
             edit: require("../assets/icons/edit.svg"),
-            loading: require("../assets/no-app-icon.png"),
+            loading: require("../assets/placeholder-icon.png"),
           },
+          isAd: false,
 
           isOwner: false,
         }
@@ -139,18 +187,54 @@ export default {
     
     mounted: function(){
       let parent = this
-
       let currentUser = Parse.User.current();
       let requestedUser = this.$route.params.user;
-      
       if (currentUser) {
         let userMatches = currentUser.get("username") == requestedUser;
         parent.isOwner = userMatches
       }
 
+      function getAd(){
+        try {
+          if (typeof _bsa !== 'undefined'  && _bsa) {
+          _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
+            {
+              target: '#card-ad',
+              template: `
+                  <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link">
+                  <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
+                    <div class="bsa-icon" style="background-image: url(##logo##);"></div>
+                  </div>
+                  <div class="text-ad-wrapper">
+                    <img style="background: ##backgroundColor##" src="##image##">
+                    <div class="bsa-desc">##description##</div>
+                  </div>
+                  </a>
+                `
+              }
+            )
+            
+          }
+        } catch (error) {
+        }
+      }
+
+      window.BSANativeCallback = (a) => {
+        const total = a.ads.length;
+        let el = document.getElementById('_carbonads_js').children[0]
+      }
+      getAd()
+
+
+    },
+
+    render (h) {
+      return h('div', { class: 'carbon-ads', attrs: { id: 'native-carbon' }})
     },
 
     methods:{
+      ...mapActions(['adClick']),
+
       isSelected(selected, option){
         try {
           if (selected.name == option) {

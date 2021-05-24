@@ -5,15 +5,15 @@
         <div class="card-img-wrapper" style="max-width: 120px;">        
             <!-- macOS icon download -->
             <a v-if="isMacOs" @click="addClickCount(icon)" rel="noopener" :href="icon.icnsUrl">
-                <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
+                <div v-lazy-container="{ selector: 'img', loading: coralIcons.placeholderIcon }">
                 <img width="100px" height="100px" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
                 </div>
             </a>
 
             <!-- iOS icon download -->
             <a v-else @click="addClickCount(icon)" target="_blank" rel="noopener" :href="icon.iOSUrl">
-                <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                <img width="100px" height="100px" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
+                <div class="placeholder-icon" v-lazy-container="{ selector: 'img', loading: coralIcons.placeholderIcon }">
+                    <img width="100px" height="100px" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
                 </div>
             </a>
 
@@ -52,13 +52,6 @@
                     {{ getDate(icon.timeStamp) }}
                 </span>
             </p>
-            
-            <!-- Email -->
-            <!-- <div v-if="icon.email != 'user@email.com' && icon.email && !isAdmin " class="p-t-10"> 
-                <a rel="noopener" class="coral-Link" :href="'mailto:'+icon.email+'?subject=macOS icons submission&body='+icon.usersName">
-                    email
-                </a>
-            </div> -->
 
         </div>
 
@@ -84,7 +77,7 @@ export default {
                 delete: require("../assets/icons/delete.svg"),
                 newItem: require("../assets/icons/newItem.svg"),
                 edit: require("../assets/icons/edit.svg"),
-                loading: require("../assets/loading.gif"),
+                placeholderIcon: require("../assets/placeholder-icon.png"),
             }
         }
     },

@@ -1,6 +1,7 @@
 <template>
   <div>
 
+    <!-- Intro section -->
     <section class="profile-page-head-wrapper">
       <div class="profile-page-img-wrapper">
         <img class="profile-img" :src="resources.profilePic" alt="">
@@ -29,7 +30,7 @@
             <a v-if="user.twitterHandle" target="_blank" :href="user.twitterHandle" class="margin-auto relative">
               <IconUI class="absolute-center-vertical" width="18px" :img="resources.twitter" alt="Twitter Logo"/>
             </a>
-            <div v-if="user.twitterHandle" target="_blank" @click="copyUserUrl" class="margin-auto relative pointer">
+            <div target="_blank" @click="copyUserUrl" class="margin-auto relative pointer">
               <IconUI class="absolute-center-vertical" width="18px" :img="resources.share" alt="Twitter Logo"/>
             </div>
           </div>
@@ -47,7 +48,9 @@
         </div>
 
         <div class="profile-descrption-box">
-          <div v-if="user.loading" class="loading-placeholder"></div>
+          <div v-if="loading.user" class="loading-placeholder m-b-10"></div>
+          <div v-if="loading.user" class="loading-placeholder m-b-10"></div>
+          <div v-if="loading.user" class="loading-placeholder m-b-10"></div>
           <p v-if="user.bio" class="coral-Body--L m-b-5">
             {{ user.bio }}
           </p>
@@ -66,12 +69,12 @@
       </div>
     </section>
     
+    <!-- Icons section -->
     <section class="m-auto user-profile-icons">
       <coral-tablist>
         <coral-tab aria-label="All Icons" @click="changeIconStatus('all')">All</coral-tab>
         <coral-tab aria-label="Approved Icons" selected="" @click="changeIconStatus('approved')">Approved</coral-tab>
         <coral-tab aria-label="Waiting Icons" @click="changeIconStatus('notApproved')">Waiting</coral-tab>
-        
         <!-- <select
           id="order-selector"
           class="dropdown-select right-align-tablist dropdown-select-quiet"
@@ -94,26 +97,32 @@
       </coral-tablist>
       
       <p class="coral-Body--M">
-        {{iconsCount}}
-        <!-- {{userIcons.length}} -->
+        <!-- {{iconsCount}}
+        {{isLoading}} -->
       </p>
       
       <UserIconGrid v-if="userIcons.length != 0" :userIcons="userIcons"/>
-      <div v-if="!user.loading && userIcons.length == 0" class="waiting-wrapper">
+      
+      <div
+        class="icon-list-area p-t-40 p-b-50"
+        v-else
+      >
+        <div style="z-index: 2; height: 100%" class="card-wrapper card-hover coral-card">
+          <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js2"></script>
+        </div>
+        <UserIconCardLoading v-for="num in placeholderCount" :key="num+Math.floor(Math.random() * 10000000 + 1)" :icon="iconsCount"/>
+      </div>
+      
+      <div v-if="!isLoading && iconsCount == 0" class="waiting-wrapper">
         <p class="coral-Body--M">
           {{ errorMessage }}
-          <!-- {{ user.username }} hasn't submitted any icons yet. -->
         </p>
-      </div>
-
-      <!-- Loading spinning circle -->
-      <div v-if="user.loading" class="waiting-wrapper">
-        <coral-wait size="L" indeterminate=""></coral-wait>
       </div>
 
       <button
         is="coral-button"
-        v-if="userIcons.length < iconsCount && !user.loading"
+        v-if="userIcons.length < iconsCount && userIcons.length > 1 && isLoading"
+        class="m-b-20"
         @click="fetchUserIcons(userInfo)"
       >
         Load more
@@ -131,6 +140,9 @@
 // @ is an alias to /src
 import IconUI from '@/components/IconUI.vue';
 import UserIconGrid from '@/components/UserIconGrid.vue';
+import UserIconCardLoading from '@/components/UserIconCardLoading.vue';
+import NativeAd from "@/components/NativeAd.vue";
+
 import Parse from 'parse'
 import { mapGetters, mapActions } from 'vuex'
 
@@ -140,7 +152,9 @@ export default {
   
   components: {
       IconUI,
-      UserIconGrid
+      UserIconGrid,
+      UserIconCardLoading,
+      NativeAd
   },
 
   data(){
@@ -155,9 +169,13 @@ export default {
       iconsToShow: "approved",
 
       errorMessage: "",
+      
+      loading: {
+       user: true,
+       icons: true 
+      },
 
       user:{
-        loading: true,
         isOwner: false,
       },
       
@@ -170,13 +188,19 @@ export default {
         delete: require("../assets/icons/delete.svg"),
         newItem: require("../assets/icons/newItem.svg"),
         edit: require("../assets/icons/edit.svg"),
-        loading: require("../assets/no-app-icon.png"),
+        loading: require("../assets/placeholder-icon.png"),
       }
     }
   },
 
   methods: {
-    ...mapActions(["fetchUserIcons", "fetchAppCategories", "emptyArr", "showToast"]),
+    ...mapActions([
+      'fetchUserIcons',
+      'fetchAppCategories',
+      'emptyArr', 
+      'showToast',
+      'setDataToArr'
+    ]),
 
     async copyUserUrl(){
       let parent = this;
@@ -192,9 +216,9 @@ export default {
     },
 
     async queryUser(){
-      let parent = this
-      let user = parent.user
-      // user.username = this.$route.params.user // Set username same as the url user
+      let parent = this;
+      let user = parent.user;
+      var loading = parent.loading.user;
       
       const queryUser = new Parse.Query(Parse.User);
       let regular = new RegExp("\\b" + user.username + "\\b")
@@ -203,30 +227,29 @@ export default {
 
       userInfo = userInfo[0];
       parent.userInfo = userInfo;
+
       if (userInfo) {
-        
         parent.$store.dispatch('fetchUserIcons', userInfo)
         user.credit = userInfo.get("credit")
         user.username = userInfo.get("username")
         user.bio = userInfo.get("bio")
-        user.loading = false
         
         if (Parse.User.current() && user.username == Parse.User.current().getUsername()) {
           user.isOwner = true
         }
 
         let twitterHandle = userInfo.get("twitterHandle") // Check if twitterHandle is a URL or not
-        if (twitterHandle.includes("twitter.com")) {
+        if (twitterHandle && twitterHandle.includes("twitter.com")) {
           user.twitterHandle = twitterHandle
         } else{
           user.twitterHandle = "https://twitter.com/"+userInfo.get("twitterHandle")
         }
-
+        
+        parent.loading.user = false
       } else{
-        user.loading = false
+        parent.loading.user = false
         parent.errorMessage = "This account doesn’t exist"
       }
-      
 
     },
 
@@ -245,7 +268,7 @@ export default {
       window.onscroll = () => {
         let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000
 
-        if (bottomOfWindow && parent.scrolledToBottom) {
+        if (bottomOfWindow && parent.scrolledToBottom && parent.userInfo.id) {
           parent.scrolledToBottom = false
           setTimeout(() => {
               parent.scrolledToBottom = true
@@ -259,45 +282,95 @@ export default {
 
   mounted: function(){
     let parent = this
-
     parent.user.username = parent.$route.params.user
 
+    let isLoading = {
+      arr: "loading",
+      data: true
+    }
+    parent.setDataToArr(isLoading)
+    
     parent.emptyArr();
-    parent.queryUser()
-    parent.scrolled()
+    parent.queryUser();
+    parent.scrolled();
+    // window.onscroll = () => {
+    //   let bottomOfWindow = document.documentElement.offsetHeight
+    //   // console.log("pageYOffset: ", window.pageYOffset);
+    // }
   },
 
   computed:{
-    ...mapGetters(['getUser', 'allIcons', 'notApproved', 'approvedIcons', 'getAppCategories', 'approvedIconsCount']),
+    ...mapGetters([
+      'getUser',
+      'allIcons',
+      'notApproved',
+      'approvedIcons',
+      'getAppCategories',
+      'approvedIconsCount',
+      'isLoading'
+    ]),
 
     iconsCount(){
-      return this.approvedIconsCount
+      let parent = this;
+      let iconsCount = parent.approvedIconsCount;
+      let isLoading = parent.isLoading;
+      let allIcons = iconsCount.approved + iconsCount.hacked + iconsCount.notApproved
+      
+      if (allIcons == 0 && isLoading) return 15
+
+      switch (parent.iconsToShow) {
+        case "all":
+          console.log(allIcons);
+          return allIcons
+
+        case "approved":
+          return iconsCount.approved
+
+        case "notApproved":
+          return iconsCount.notApproved
+    
+        default:
+          break;
+      }
+    },
+
+    placeholderCount(){
+      let parent = this
+      if (parent.iconsCount > 15) {
+        return 15
+      } else{
+        return parent.iconsCount
+      }
     },
 
     userIcons(){
       let parent = this
       
-      if (parent.allIcons.length == 0) {
-        parent.errorMessage = "No icons to show"
+      if (!parent.userInfo) {
+        console.log("parent.userInfo");
+        return 0
+      } else{
+        if (parent.allIcons.length == 0) {
+          parent.errorMessage = "No icons to show"
+        }
+
+        switch (parent.iconsToShow) {
+          case "all":
+            parent.errorMessage = parent.user.username + " hasn't submited any icons yet."
+            return parent.allIcons
+
+          case "approved":
+            parent.errorMessage = parent.user.username + " doesn't have any approved icons yet."
+            return parent.approvedIcons
+
+          case "notApproved":
+            parent.errorMessage = parent.user.username + " doesn't have any icons awaiting aproval."
+            return parent.notApproved
+      
+          default:
+            break;
+        }
       }
-
-      switch (parent.iconsToShow) {
-        case "all":
-          parent.errorMessage = parent.user.username + " hasn't submited any icons yet."
-          return parent.allIcons
-
-        case "approved":
-          parent.errorMessage = parent.user.username + " doesn't have any approved icons yet."
-          return parent.approvedIcons
-
-        case "notApproved":
-          parent.errorMessage = parent.user.username + " doesn't have any icons awaiting aproval."
-          return parent.notApproved
-    
-        default:
-          break;
-      }
-
     }
 
   }
@@ -363,7 +436,8 @@ export default {
   }
   
   .profile-descrption-box{
-    min-height: calc(27px + 13px);
+    /* min-height: calc(27px + 13px); */
+    /* min-height: 107px; */
   }
 
   .profile-header-wrapper{
@@ -399,13 +473,13 @@ export default {
   }
 
   .profile-descrption-box .loading-placeholder {
-    height: 70%
+    /* height: 70% */
   }
 
   .loading-placeholder{
     margin: auto;
     position: relative;
-    height: 100%;
+    height: auto;
     width: 100%;
     min-width: 100px;
     min-height: 20px;
@@ -415,11 +489,13 @@ export default {
   }
 
   .loading-placeholder::after{
+    transform: translateY(-50%);
+    top: 50%;
     height: 100%;
     width: 50%;
     content: " ";
     position: absolute;
-    animation: placeholder 1.5s ease-out infinite;
+    animation: placeholder 2s ease-out infinite;
     background: linear-gradient( 90deg , rgb(90 90 90 / 0%) 0%, rgb(109 109 109) 50%, rgb(90 90 90 / 0%) 100%);
   }
 
