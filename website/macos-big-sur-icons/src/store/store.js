@@ -32,7 +32,10 @@ export default new Vuex.Store({
       approved: [],
       notApproved: [],
       hacked: [],
-      toSkip: 0,
+      toSkip: {
+        approved: 0,
+        notApproved: 0
+      },
       count: {
         approved: 0,
         notApproved: 0,
@@ -113,7 +116,8 @@ export default new Vuex.Store({
       store.state.userIcons.approved = [];
       store.state.userIcons.notApproved = [];
       store.state.userIcons.hacked = [];
-      store.state.userIcons.toSkip = 0;
+      store.state.userIcons.toSkip.approved = 0;
+      store.state.userIcons.toSkip.notApproved = 0;
     },
 
     pushDataToArr(store, iconData){
@@ -262,9 +266,9 @@ export default new Vuex.Store({
       approvedQuery.equalTo("user", userObj);
       approvedQuery.equalTo("approved", true);
       approvedQuery.exists("icnsFile");
-      approvedQuery.skip(store.state.userIcons.toSkip)
+      approvedQuery.skip(store.state.userIcons.toSkip.approved)
       approvedQuery.descending("createdAt");
-      store.state.userIcons.toSkip += numToLoad;
+      store.state.userIcons.toSkip.approved += numToLoad;
       let iconResults = await approvedQuery.find();
       
       iconResults.forEach((result)=>{
@@ -273,12 +277,12 @@ export default new Vuex.Store({
       
       notApprovedQuery.limit(numToLoad)
       notApprovedQuery.equalTo("user", userObj);
-      notApprovedQuery.skip(store.state.userIcons.toSkip)
+      notApprovedQuery.skip(store.state.userIcons.toSkip.notApproved)
       notApprovedQuery.descending("createdAt");
-      approvedQuery.exists("highResPngFile");
       notApprovedQuery.equalTo("approved", false);
+      store.state.userIcons.toSkip.notApproved += numToLoad;
       let notApproved = await notApprovedQuery.find();
-
+      console.log(notApproved);
       notApproved.forEach((result)=>{
         returnIconData(result, "notApproved");
       })
