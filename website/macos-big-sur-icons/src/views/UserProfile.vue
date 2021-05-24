@@ -56,7 +56,7 @@
 
           <a v-if="user.credit" target="_blank" :href="user.credit" class="margin-auto relative">
             <!-- <p class="coral-Body--XS"> -->
-              <IconUI class="absolute-center-vertical" width="14px" :img="resources.link" alt="Twitter Logo"/>
+              <IconUI class="absolute-center-vertical" width="14px" :img="resources.link" alt="Credit link"/>
               <span class="p-l-20">
                 {{ user.credit.replace("https://", "") }}
               </span>
@@ -127,7 +127,7 @@
         v-else
       >
         <div style="z-index: 2; height: 100%; min-heigh: 210px" class="card-wrapper card-hover coral-card">
-          <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js2"></script>
+          <script @click="adClick" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js2"></script>
         </div>
         <UserIconCardLoading v-for="num in placeholderCount" :key="num+Math.floor(Math.random() * 10000000 + 1)" :icon="iconsCount"/>
       </div>
@@ -210,18 +210,19 @@ export default {
       'fetchAppCategories',
       'emptyArr', 
       'showToast',
-      'setDataToArr'
+      'setDataToArr',
+      'adClick'
     ]),
 
     async copyUserUrl(){
       let parent = this;
-      let toCopy = "https://macosicons.com/user/" + parent.$route.params.user
+      let toCopy = "https://macosicons.com/u/" + parent.$route.params.user
       
       await navigator.clipboard.writeText(toCopy);
       
       parent.showToast({
         id: "toastMessage",
-        message: "✅ User profile URL copied to your clipboard",
+        message: "User profile URL copied to your clipboard",
         variant: "success"
       })
     },
@@ -425,7 +426,7 @@ export default {
     gap: 25px;
     width: 80%;
     max-width: 480px;
-    padding-top: 80px;
+    padding-top: 50px;
     padding-bottom: 20px;
     text-align: left;
   }
