@@ -46,7 +46,7 @@
             </p>
 
             <p v-else class="coral-Body--XS opacity-60 m-b-10">
-                 <router-link :to="'/user/'+icon.usersName" class="coral-Link">{{icon.usersName}}</router-link>
+                 <router-link :to="'/u/'+icon.usersName" class="coral-Link">{{icon.usersName}}</router-link>
                 on
                 <span class="coral-Body--XS opacity-80">
                     {{ getDate(icon.timeStamp) }}
