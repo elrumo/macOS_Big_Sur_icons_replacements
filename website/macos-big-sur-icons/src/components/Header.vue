@@ -285,7 +285,7 @@ export default {
                     img: require("../assets/icons/User.svg"),
                     onClick:{
                         method: this.changePath,
-                        data: "/user/"
+                        data: "/u/"
                     }
                 },
                 {
