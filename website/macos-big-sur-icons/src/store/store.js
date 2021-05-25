@@ -358,7 +358,6 @@ export default new Vuex.Store({
 
   },  
   
-  
   getters: {
 
     getBlogPost(store, blogData){
