@@ -203,10 +203,10 @@ export default new Vuex.Store({
     },
 
     changePath(store, path){
-      if (path == "/user/") {
+      if (path == "/user/" || path == "/u/") {
         path = path + Parse.User.current().getUsername()
       }
-
+      
       try {
         globalThis.router.push(path)
       } catch (error) {
