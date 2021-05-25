@@ -56,6 +56,7 @@
 
 <script>
 // @ is an alias to /src
+import { mapActions } from 'vuex'
 import Header from '@/components/Header.vue'
 import ResourcesCard from '@/components/ResourcesCard.vue'
 import Footer from '@/components/Footer.vue'
@@ -63,7 +64,6 @@ import H3Description from '@/components/H3_Description.vue'
 
 import pages from '@/api/pages.json';
 
-import { mapActions } from 'vuex'
 
 export default {
   name: 'Resources',

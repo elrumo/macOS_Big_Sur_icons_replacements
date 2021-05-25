@@ -89,9 +89,11 @@
 
 <script>
 // @ is an alias to /src
+import { mapActions } from 'vuex';
 import localPosts from '@/api/posts.json';
 import ResourcesCard from '@/components/ResourcesCard.vue'
 import NativeAd from "@/components/NativeAd.vue";
+
 
 import pages from '@/api/pages.json';
 
@@ -223,7 +225,7 @@ export default {
       for(let post in Object.keys(storeResourcesData)){
         try {
           if (storeResourcesData[post].slug == routerName) {
-            console.log(storeResourcesData[post].title);
+            // console.log(storeResourcesData[post].title);
             parent.resourceItem = storeResourcesData[post];
           }
         } catch (error) {
@@ -235,7 +237,6 @@ export default {
 
       // Check if blog data has already been fetched, if not, fetch only the blog required
       if (moreResources.length == undefined) {
-        console.log( this.$router.currentRoute);
         const resourceItem = await parent.$store.dispatch('getSinglePageAction', routerName);
         
         // If the blog post requested does not exists, redirect user to main blog page

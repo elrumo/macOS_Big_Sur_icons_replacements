@@ -346,7 +346,6 @@ export default {
                 body.classList.add('coral--light')
                 parent.darkMode = false
             }
-
         },
 
         onDialogOpen(){
