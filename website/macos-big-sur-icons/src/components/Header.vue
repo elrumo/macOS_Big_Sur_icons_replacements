@@ -384,7 +384,7 @@ export default {
         
         if (this.getUser.isAuth) {
             // Set the "Go to profile" button to go to the user that has logged in
-            parent.optionsList[1].onClick.data = "/user/" + this.getUser.userData.username
+            parent.optionsList[1].onClick.data = "/u/" + this.getUser.userData.username
         }
 
         // Sets light/dark mode based on browser
