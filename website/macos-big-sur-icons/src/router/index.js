@@ -388,19 +388,19 @@ const routes = [
   {
     // path: '/user',
     path: '/u/:user',
-    name: 'UserProfile',
+    name: 'UserProfile_user',
     component: () => import('../views/UserProfile.vue')
   },
   {
     // path: '/user',
     path: '/user/',
-    name: 'UserProfile',
+    name: 'uProfile',
     component: () => import('../views/UserProfile.vue')
   },
   {
     // path: '/user',
     path: '/u/',
-    name: 'UserProfile',
+    name: 'uProfile_user',
     component: () => import('../views/UserProfile.vue')
   },
   {

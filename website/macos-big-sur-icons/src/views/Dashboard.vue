@@ -363,21 +363,19 @@ export default {
 
       let parentIcon = parent.icons[icon.usersName].icons[icon.appName]
 
-      console.log("icon: ", icon);
-      console.log("parentIcon: ", parentIcon);
-      console.log("parent.icons[icon.usersName].icons[icon.appName]: ", parent.icons[icon.usersName].icons[icon.appName]);
+      // console.log("icon: ", icon);
+      // console.log("parentIcon: ", parentIcon);
+      // console.log("parent.icons[icon.usersName].icons[icon.appName]: ", parent.icons[icon.usersName].icons[icon.appName]);
 
-      // let iconToApprove = {
-      //   id: icon.id,
-      //   fileNm: icon.id
-      // }
       delete icon.DownloadCount
       delete icon.user
       delete icon.category
       delete icon.type
+
+      // console.log(icon);
+
       // Parse.Cloud.run("approve", icon).then((result)=>{
       Parse.Cloud.run("testJob", icon).then((result)=>{
-        console.log(result);
         Vue.set(parentIcon, 'isReview', true)
         parent.showToast({
           id: "toastMessage",
