@@ -43,112 +43,14 @@
 
       </div>
 
-      <UserIconCard v-for="icon in userIcons" :key="icon.id" :icon="icon" :isAdmin="false" :isMacOs="true"/>
-      
-      <!-- <div
-        
-      >
-        <UserIconCardLoading v-for="num in placeholderCount" :key="num+Math.floor(Math.random() * 10000000 + 1)" :icon="iconsCount"/>
-      </div> -->
-      <!-- <div  class="icon-card-wrapper user-icon-card card-wrapper coral-card" :key="icon.id">   -->
-        
-
-        <!-- <coral-status v-if="icon.get('approved')" variant="success"/>
-        <coral-status v-else variant="error"/>
-
-        <div class="card-img-wrapper" style="max-width: 120px;">
-          <a rel="noopener" :href="icon.get('highResPngUrl')">
-            <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-              <img :alt="icon.get('appName') +' icon'" :data-src="icon.get('lowResPngUrl')">
-            </div>
-          </a> -->
-          
-          <!-- Quick Actions -->
-          <!-- <div class="quick-actions-wrapper">
-            <div class="quick-action-el">
-              <coral-icon icon="/img/delete.4f641200.svg" role="presentation" title="Delete" class="quick-action-icon _coral-Icon _coral-Icon--sizeS" size="S">
-                <img class="_coral-Icon _coral-Icon--image" src="/img/delete.4f641200.svg" alt="Delete">
-              </coral-icon>
-            </div>
-          </div>
-        </div> -->
-
-        <!-- <form v-if="isOwner" class="coral-FormGroup card-text-wrapper p-l-15 p-r-15 p-b-15">
-          
-          <div class="coral-FormGroup-item">
-            <p class="coral-Body--XS"></p>
-            <label :id="'icon-appName-label'+icon.id" class="coral-FieldLabel">
-              AppName
-            </label>
-            <input
-              :id="'icon-appName-field'+icon.id"
-              is="coral-textfield"
-              labelledby="icon-appName-label"
-              class="coral-Form-field"
-              type="text"
-              v-on:change="validate($event, 'appName')"
-              :value="icon.get('appName')"
-            >
-          </div>
-
-          <div class="coral-FormGroup-item">
-            <p class="coral-Body--XS"></p>
-            <label :id="'icon-appCategory-label'+icon.id" class="coral-FieldLabel">
-              App category
-            </label>
-            <select
-              :id="'icon-appCategory-field'+icon.id"
-              labelledby="icon-appCategory-label"
-              placeholder="Select category"
-              class="dropdown-select"
-              v-on:change="validate($event, 'category')"
-            >
-              <option
-                v-for="category in getAppCategories"
-                :key="category.name+icon.id"
-                :value="category.id"
-                :selected="isSelected(icon.get('category'), category.name)"
-              >
-                {{ category.name }}
-              </option>
-            </select>
-          </div>
-
-          <div class="coral-FormGroup-item">
-            <p class="coral-Body--XS"></p>
-            <label :id="'icon-appWebsite-label'+icon.id" class="coral-FieldLabel">
-              App Website
-            </label>
-            <input
-              :id="'icon-appWebsite-field'+icon.id"
-              is="coral-textfield"
-              labelledby="icon-appWebsite-label"
-              class="coral-Form-field"
-              type="text"
-              v-on:change="validate($event, 'appWebsite')"
-              :value="icon.appWebsite"
-            >
-          </div>
-        </form> -->
-
-          <!-- App Icon Designer -->
-          <!-- <div class="coral-FormGroup-item">
-            <p class="coral-Body--XS"></p>
-            <label :id="'icon-iconDesigner-label'+icon.id" class="coral-FieldLabel">
-              App Icon Designer
-            </label>
-            <input
-              :id="'icon-iconDesigner-field'+icon.id"
-              is="coral-textfield"
-              labelledby="icon-iconDesigner-label"
-              class="coral-Form-field"
-              type="text"
-              v-on:change="validate($event, 'iconDesigner')"
-              :value="icon.iconDesigner"
-            >
-          </div> -->
-
-      <!-- </div> -->
+      <UserIconCard 
+        v-for="icon in userIcons"
+        :key="icon.id"
+        :icon="icon"
+        :isAdmin="false"
+        :isMacOs="true"
+        :isOwner="isOwner"
+      />
     </section>  
 
   </div>
@@ -156,6 +58,9 @@
 
 <script>
 import UserIconCard from './UserIconCard.vue';
+import EditIconDialog from "./EditIconDialog.vue"
+import deleteDialog from "./deleteDialog.vue"
+
 import { mapGetters, mapActions } from 'vuex'
 import Parse from 'parse'
 
@@ -168,6 +73,8 @@ export default {
 
     components:{
       UserIconCard,
+      EditIconDialog,
+      deleteDialog
     },
     
     data(){
@@ -268,7 +175,14 @@ export default {
     },
 
     computed:{
-      ...mapGetters(['getUser', 'allIcons', 'notApproved', 'getAppCategories']),
+      ...mapGetters([
+        'getUser', 
+        'allIcons', 
+        'notApproved', 
+        'getAppCategories',
+        'getSelectedIcon'
+      ]),
+
 
     }
 }

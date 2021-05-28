@@ -2,7 +2,8 @@
   <div>
     
     <!-- <Dialog/> -->
-    <deleteDialog :icon="activeIcon" :Icons="Icons" :Parse="Parse"/>
+    <deleteDialog :icon="activeIcon"/>
+    
     <div v-if="overflow">
       {{ toggleOverflow() }}
     </div>
@@ -43,17 +44,16 @@
       v-bind:list="list"
       :submitIconDialog="'submissionDialog'"
       :iconListLen="iconListLen"
-      :iconsEmpty="!loadingError"
       :parseObj="getParseObj"
+      :iconsEmpty="true"
     />
+      <!-- :iconsEmpty="!loadingError" -->
 
-    <!-- <div style="display: none"> {{search}} </div> -->
-    <!-- Icon Section -->
-    <section class="">
-    <!-- Search bar -->
     
+    <!-- Search bar -->
+    <section class="">
+      <!-- v-if="!loadingError" -->
       <div
-        v-if="!loadingError"
         @click="isSearch = true"
         id="searchBar"
         class="main-search-wrapper coral-bg p-b-15"
@@ -114,8 +114,8 @@
       </div>
 
     <!-- Loading error -->
-      <div v-if="loadingError" class="waiting-wrapper">
-
+      <div v-if="false" class="waiting-wrapper">
+      <!-- <div v-if="loadingError" class="waiting-wrapper"> -->
         <NativeAd :adId="'iconbar-js-card-grid'" :key="$route.fullPath + 'ad'"/>
         <h3 class="coral-Heading--M">
           The site is temporarily down for maintenance purposes.
@@ -141,7 +141,8 @@
       </div>
 
     <!-- Icon list when no loading error-->
-        <div v-if="!loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular">
+        <div class="icon-list-area p-t-20 p-b-50 content-wrapper-regular">
+        <!-- <div v-if="!loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular"> -->
 
           <div style="min-height: 210px" class="card-hover relative coral-card">
             
@@ -187,6 +188,7 @@
         </div>
 
     </section>
+
   </div>
 </template>
 
@@ -209,8 +211,10 @@ import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config()
 
 // TODO: remove credentials
-const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
-const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
+const VUE_APP_PARSE_APP_ID = "macOSicons"
+const VUE_APP_PARSE_JAVASCRIPT_KEY = "macOSicons"
+// const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
+// const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
 Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://media.macosicons.com/parse'
@@ -556,7 +560,7 @@ export default {
       
       setTimeout(() => {
           parent.scrolledToBottom = true
-      }, 800);
+      }, 0);
 
       for(let result in results){
         let objData = results[result].attributes
@@ -655,7 +659,7 @@ export default {
         // parent.fetchIconUserInfo(data)
 
         var attempts = 0;
-        // let getAd = setTimeout(() => {
+
         function getAd (){
           setTimeout(() => {
             let carbon = document.getElementById("carbonads")
@@ -667,7 +671,7 @@ export default {
               getAd()
               parent.isAdOn = true
             }
-          }, 1000);
+          }, 500);
         }
 
         getAd()

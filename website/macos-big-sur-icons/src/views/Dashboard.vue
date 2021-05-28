@@ -81,7 +81,7 @@
           </h3>
 
           <div class="icon-list-area">
-            <div v-for="icon in user.icons" class="card-wrapper coral-card" :key="icon.fileName">
+            <div v-for="icon in user.icons" class="card-wrapper coral-card" :key="icon.fileName+icon.imgUrl">
               
               <coral-status v-if="icon.isReupload && icon.isAuthor" variant="success"></coral-status>
               <coral-status v-if="icon.isReupload && !icon.isAuthor" variant="warning"></coral-status>
@@ -94,7 +94,7 @@
                 
                 <a :href="icon.imgUrl" target="_blank">
                   <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                    <img class="w-full" :data-src="icon.imgUrl">
+                    <img class="w-full" :data-src="icon.imgUrl.replace('/media/', '/parse/')">
                   </div>
                 </a>
 
@@ -167,7 +167,7 @@ const currentUser = Parse.User.current(); // Check if user is currently logged i
 
 let lastVisible
 
-const docLimit = 20
+const docLimit = 50
 
 export default {
   
@@ -399,6 +399,9 @@ export default {
       
       delete icon.DownloadCount
       delete icon.user
+      delete icon.category
+      delete icon.type
+      delete icon.icons
 
       Parse.Cloud.run("sendEmail", icon).then((result)=>{
         parent.showToast({
@@ -482,7 +485,7 @@ export default {
     scroll() {
       let parent = this
       window.onscroll = () => {
-        let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 1200
+        let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 1600
 
         if (bottomOfWindow && parent.scrolledToBottom && !parent.isSearch) {
           parent.scrolledToBottom = false // replace it with your code

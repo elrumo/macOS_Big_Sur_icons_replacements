@@ -1,8 +1,8 @@
 <template>
     <div class="card-wrapper card-hover coral-card">
-        
+
         <!-- Icon image -->
-        <div class="card-img-wrapper" style="max-width: 120px;">        
+        <div class="card-img-wrapper" style="max-width: 120px;">
             <!-- macOS icon download -->
             <a v-if="isMacOs" @click="addClickCount(icon)" rel="noopener" :href="icon.icnsUrl">
                 <div v-lazy-container="{ selector: 'img', loading: coralIcons.placeholderIcon }">
@@ -16,13 +16,6 @@
                     <img width="100px" height="100px" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
                 </div>
             </a>
-
-            <!-- Quick action menu icon download -->
-            <!-- <div class="quick-actions-wrapper">
-                <div class="quick-action-el">
-                <coral-icon @click="showDialog('deleteDialog', icon)" class="quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
-                </div>
-            </div> -->
         </div>
 
         <!-- Icon meta -->
@@ -37,29 +30,43 @@
                 </span>
             </h3>
 
-            <!-- User's name -->
-            <p v-if="isAdmin" class="coral-Body--XS p-b-0 opacity-80 m-b-0"><input class="editable-input" @change="editDoc(icon, $event, 'usersName')" type="text" variant="quiet" :value="icon.usersName" is="coral-textfield" aria-label="text input"></p>
+            <!-- User's name Admin-->
+            <p v-if="isAdmin" class="coral-Body--XS p-b-0 opacity-80 m-b-0">
+                <input class="editable-input" @change="editDoc(icon, $event, 'usersName')" type="text" variant="quiet" :value="icon.usersName" is="coral-textfield" aria-label="text input">
+            </p>
             
-            <!-- Credit -->
+            <!-- Credit Admin-->
             <p v-if="isAdmin" class="coral-Body--XS p-b-0 opacity-50 m-b-0">
                 <input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="icon.credit" is="coral-textfield" aria-label="text input">
             </p>
-
+            
+            <!-- Credit -->
             <p v-else class="coral-Body--XS opacity-60 m-b-10">
-                 <router-link :to="'/u/'+icon.usersName" class="coral-Link">{{icon.usersName}}</router-link>
+                <router-link :to="'/u/'+icon.usersName" class="coral-Link">{{icon.usersName}}</router-link>
                 on
                 <span class="coral-Body--XS opacity-80">
                     {{ getDate(icon.timeStamp) }}
                 </span>
             </p>
+            
+            <div v-if="isOwner" class="p-t-10 p-b-5">
+                <button @click="showDialog('editIconDialog')" is="coral-button" variant="outline">Edit</button>
+            </div>
 
         </div>
+
 
     </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import Parse from 'parse'
+
+import deleteDialog from './deleteDialog.vue';
+import EditIconDialog from "./EditIconDialog.vue"
+
+var Icons = Parse.Object.extend("Icons2");
 
 export default {
     name: "IconCard",
@@ -68,6 +75,12 @@ export default {
         icon:{},
         isAdmin: false,
         isMacOs: true,
+        isOwner: false
+    },
+
+    components: {
+        EditIconDialog,
+        deleteDialog
     },
 
     data: function(){
@@ -78,15 +91,26 @@ export default {
                 newItem: require("../assets/icons/newItem.svg"),
                 edit: require("../assets/icons/edit.svg"),
                 placeholderIcon: require("../assets/placeholder-icon.png"),
+            },
+            dialog:{
+                editIcon: false,
+                deleteIcon: false
             }
         }
     },
     
     methods:{
+        ...mapActions(['showEl', 'setSelectedIcon']),
 
         prettifyName(name){
             name = name.replaceAll("_", " ")
             return name
+        },
+        
+        showDialog(id){
+            let parent = this
+            parent.setSelectedIcon(parent.icon)
+            parent.showEl(id)
         },
 
         async addClickCount(icon){
@@ -143,6 +167,9 @@ export default {
             })
         },
 
+    },
+
+    computed:{
     }
 }
 </script>

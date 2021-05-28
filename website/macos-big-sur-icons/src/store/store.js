@@ -27,6 +27,8 @@ export default new Vuex.Store({
     userData: Parse.User.current(),
 
     loading: true,
+
+    selectedIcon:{},
     
     userIcons: {
       approved: [],
@@ -111,6 +113,10 @@ export default new Vuex.Store({
       return "Hi"
     },
 
+    setSelectedIcon(store, icon){
+      store.commit('setDataToArr', {arr: 'selectedIcon', data: icon})
+    },
+
     emptyArr(store){
       // store.state.userIcons = [];
       store.state.userIcons.approved = [];
@@ -169,10 +175,27 @@ export default new Vuex.Store({
     },
 
     deleteItem(store, item){
-      // console.log(item);
-      // console.log(store.state.dataToShow);
-      let indexOf = store.state.dataToShow.indexOf(item)
-      store.state.dataToShow.splice(indexOf, 1);
+      let allIcons = store.state.dataToShow.indexOf(item)
+      let approved = store.state.userIcons.approved.indexOf(item)
+      let notApproved = store.state.userIcons.notApproved.indexOf(item)
+
+      if (allIcons != 1) {
+        console.log("allIcons deleted");
+        store.state.dataToShow.splice(allIcons, 1);
+      }
+
+      if (approved != 1) {
+        console.log("approved deleted");
+        store.state.userIcons.approved.splice(approved, 1);
+        store.state.userIcons.count.approved -= 1
+      }
+      
+      if (notApproved != 1) {
+        console.log("notApproved deleted");
+        store.state.userIcons.notApproved.splice(notApproved, 1);
+        store.state.userIcons.count.notApproved -= 1
+      }
+
     },
 
     pushBlogs(store, blogData){
@@ -282,7 +305,7 @@ export default new Vuex.Store({
       notApprovedQuery.equalTo("approved", false);
       store.state.userIcons.toSkip.notApproved += numToLoad;
       let notApproved = await notApprovedQuery.find();
-      console.log(notApproved);
+
       notApproved.forEach((result)=>{
         returnIconData(result, "notApproved");
       })
@@ -300,6 +323,21 @@ export default new Vuex.Store({
         if (!icon.lowResPngFile) {
           dataToPush.iconData.lowResPngUrl = icon.highResPngUrl
         }
+
+        // Set category if empty
+        if (!icon.category) {
+          dataToPush.iconData.category = {id: ""}
+        }
+        
+        if (!result.get('type')) {
+          console.log("icon.type: ", result.get('appName'));
+        }
+
+        // // Set type if empty
+        // if (!icon.category) {
+        //   dataToPush.iconData.category = {id: ""}
+        // }
+
         for(let data in icon){
           dataToPush.iconData[data] = icon[data]
         }
@@ -311,7 +349,7 @@ export default new Vuex.Store({
         data: false
       }
       store.commit('setDataToArr', isLoading)
-
+      return true
     },
 
     async fetchAppCategories(store) {
@@ -359,6 +397,10 @@ export default new Vuex.Store({
   },  
   
   getters: {
+
+    getSelectedIcon(store){
+      return store.selectedIcon
+    },
 
     getBlogPost(store, blogData){
       return store.blogPosts
