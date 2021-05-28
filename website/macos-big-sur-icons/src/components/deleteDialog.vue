@@ -1,6 +1,6 @@
 <template>
     <!-- Delete confirmation -->
-    <coral-dialog :id="'deleteDialog'">
+    <coral-dialog id="deleteDialog">
         <coral-dialog-header>Are you sure you want to delete {{icon.appName}}?</coral-dialog-header>
         
         <coral-dialog-content>  
@@ -15,31 +15,38 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import Vue from 'vue'
-
+import Parse from 'parse'
 
 export default {
     name:"deleteDialog",
 
     props:{
         icon: {},
-        Icons: "",
-        Parse: ""
     },
 
     methods:{
+        ...mapActions(['showToast', 'deleteItem']),
+
         async deleteIcon(icon){
             let parent = this
-            let Parse = parent.Parse
-            
-            console.log("icon: ", icon.objectID)
+            var Icons = Parse.Object.extend("Icons2");
+            let dialogId = document.getElementById('editIconDialog')
+
+            console.log("iconId: ", icon.id)
             console.log("appName: ", icon.appName);
-            let query = new Parse.Query(parent.Icons)
-            let docToDelete = await query.get(icon.objectID);
+            let query = new Parse.Query(Icons)
+            let docToDelete = await query.get(icon.id);
 
             docToDelete.destroy().then(() =>{
                 parent.$store.dispatch('deleteItem', icon)
-                // Vue.delete(parent.icons[icon.usersName].icons, icon.appName) // Delete object locally
+                dialogId.hide()
+                parent.showToast({
+                    id: "toastMessage",
+                    message: icon.appName+" has been deleted.",
+                    variant: "success"
+                })
             }).catch((e) =>{
                 console.log("e: ", e);
             })

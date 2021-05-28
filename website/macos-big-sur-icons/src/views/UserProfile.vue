@@ -113,7 +113,17 @@
           </option>
         </select> -->
       </coral-tablist>
+
+      <EditIconDialog
+        v-if="Object.keys(getSelectedIcon).length != 0"
+        :icon="getSelectedIcon"
+      />
       
+      <deleteDialog
+        v-if="Object.keys(getSelectedIcon).length != 0"
+        :icon="getSelectedIcon"
+      />
+
       <div v-if="!loading.user && iconsCount == 0" class="waiting-wrapper">
         <p class="coral-Body--M">
           {{ errorMessage }}
@@ -141,10 +151,7 @@
         Load more
       </button> 
 
-    </section>    
-
-
-    
+    </section>
 
   </div>
 </template>
@@ -154,6 +161,8 @@
 import IconUI from '@/components/IconUI.vue';
 import UserIconGrid from '@/components/UserIconGrid.vue';
 import UserIconCardLoading from '@/components/UserIconCardLoading.vue';
+import EditIconDialog from "@/components/EditIconDialog.vue"
+import deleteDialog from "@/components/deleteDialog.vue"
 
 import Parse from 'parse'
 import { mapGetters, mapActions } from 'vuex'
@@ -165,7 +174,9 @@ export default {
   components: {
       IconUI,
       UserIconGrid,
-      UserIconCardLoading
+      UserIconCardLoading,
+      EditIconDialog,
+      deleteDialog
   },
 
   data(){
@@ -241,7 +252,16 @@ export default {
       parent.userInfo = userInfo;
 
       if (userInfo) {
-        parent.$store.dispatch('fetchUserIcons', userInfo)
+        
+        // Fetch user icons
+        parent.fetchUserIcons(userInfo).then(()=>{
+          // Wait to fetch icons then set "selectedIcon" to the first icon fetched back
+          parent.setDataToArr({
+            arr: "selectedIcon",
+            data: parent.userIcons[0],
+          })
+        })
+
         user.credit = userInfo.get("credit")
         user.username = userInfo.get("username")
         user.bio = userInfo.get("bio")
@@ -286,11 +306,11 @@ export default {
         let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000
 
         if (bottomOfWindow && parent.scrolledToBottom && parent.userInfo.id) {
-          parent.scrolledToBottom = false
-          setTimeout(() => {
+          // parent.scrolledToBottom = false
+          // setTimeout(() => {
               parent.scrolledToBottom = true
-          }, 800);
-          parent.$store.dispatch('fetchUserIcons', parent.userInfo)
+          // }, 0);
+          parent.fetchUserIcons(parent.userInfo)
         }
       }
     },
@@ -306,14 +326,10 @@ export default {
       data: true
     }
     parent.setDataToArr(isLoading)
-    
+
     parent.emptyArr();
     parent.queryUser();
     parent.scrolled();
-    // window.onscroll = () => {
-    //   let bottomOfWindow = document.documentElement.offsetHeight
-    //   // console.log("pageYOffset: ", window.pageYOffset);
-    // }
   },
 
   computed:{
@@ -324,7 +340,8 @@ export default {
       'approvedIcons',
       'getAppCategories',
       'approvedIconsCount',
-      'isLoading'
+      'isLoading',
+      'getSelectedIcon'
     ]),
 
     iconsCount(){

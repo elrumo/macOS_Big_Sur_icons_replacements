@@ -2,7 +2,7 @@
   <div id="app">
             <!-- <div id="logobar"></div> -->
     <coral-toast id="toastMessage" variant="success">
-      😄 All icons have been uploaded.
+      All icons have been uploaded.
     </coral-toast>
 
     <Header

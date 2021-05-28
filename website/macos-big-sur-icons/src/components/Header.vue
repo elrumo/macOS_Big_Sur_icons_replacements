@@ -3,6 +3,10 @@
         id="header"
         :class="{'scrolled-shadow': distanceFromTop & scrolled, 'scrolled-header': scrolled, header: true, 'coral-bg':true}"
     >
+        
+        <!-- <div v-if="true">
+            {{ toggleOverflow() }}
+        </div> -->
 
         <Dialog/>
         <SubmissionDialog/>
@@ -326,6 +330,10 @@ export default {
             window.plausible("logDonation", {props: {
                 location: location, 
             }})
+        },
+
+        toggleOverflow(){
+            document.documentElement.style.overflow = '';
         },
 
         handleScroll () {
