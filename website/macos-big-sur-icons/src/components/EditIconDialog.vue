@@ -214,6 +214,14 @@ export default {
       }).catch((error) => {
         parent.isLoading = false
         console.log(error);
+
+        document.getElementById("editIconDialog").hide()
+        parent.showToast({
+          id: "toastMessage",
+          message: "Something went wrong, please try again.",
+          variant: "error"
+        })
+
       })
 
     },
