@@ -115,12 +115,12 @@
       </coral-tablist>
 
       <EditIconDialog
-        v-if="Object.keys(getSelectedIcon).length != 0"
+        v-if="objectLenght(getSelectedIcon)"
         :icon="getSelectedIcon"
       />
       
       <deleteDialog
-        v-if="Object.keys(getSelectedIcon).length != 0"
+        v-if="objectLenght(getSelectedIcon)"
         :icon="getSelectedIcon"
       />
 
@@ -236,6 +236,14 @@ export default {
         message: "User profile URL copied to your clipboard",
         variant: "success"
       })
+    },
+
+    objectLenght(object){
+      if (object) {
+        return Object.keys(object).length != 0
+      } else{
+        return false
+      }
     },
 
     async queryUser(){

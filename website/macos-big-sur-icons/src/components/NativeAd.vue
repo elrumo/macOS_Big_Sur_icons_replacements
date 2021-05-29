@@ -103,7 +103,7 @@ export default {
             console.log(newNodeList.length);
             el.parentNode.removeChild(el);
           } else{
-            console.log(newNodeList.length);
+            // console.log(newNodeList.length);
             return
           }
 

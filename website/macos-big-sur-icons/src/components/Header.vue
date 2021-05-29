@@ -124,12 +124,6 @@
                             </a>
                         </div>
 
-                        <!-- Submit icons -->
-                        <!-- <div>
-                            <button class="_coral-Button _coral-Button--primary _coral-Button--quiet" @click="showDialog('submitIcon')">
-                                <span>Submit icons</span>
-                            </button>
-                        </div> -->
                     </div>
                 </coral-overlay>
             </div>
@@ -147,6 +141,7 @@
                             <img :src="icons.discord" class="header-item header-icon" alt="Discord Logo">
                         </a>
                     </div>
+                    
                     <!-- Back to all icons -->
                     <div class="opacity-70" v-if="this.$route.name != 'Home'">
                         <router-link to="/">
