@@ -216,8 +216,8 @@ dotenv.config()
 
 // TODO: remove credentials
 
-// const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
-// const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
+const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
+const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
 Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://media.macosicons.com/parse'
@@ -227,8 +227,8 @@ var Icons = Parse.Object.extend("Icons2");
 let algolia = {
     // TODO: remove credentials
 
-    // appid: process.env.VUE_APP_ALGOLIA_APPID,
-    // apikey: process.env.VUE_APP_ALGOLIA_KEY
+    appid: process.env.VUE_APP_ALGOLIA_APPID,
+    apikey: process.env.VUE_APP_ALGOLIA_KEY
 }
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
