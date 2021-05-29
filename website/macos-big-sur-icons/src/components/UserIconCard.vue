@@ -38,11 +38,11 @@
             </p>
 
             <p v-if="icon.downloads > 1" class="coral-Body--XS opacity-60">
-                {{icon.downloads}} downlads
+                {{icon.downloads}} downloads
             </p>
 
             <p v-if="icon.downloads == 1" class="coral-Body--XS opacity-60">
-                {{icon.downloads}} downlad
+                {{icon.downloads}} download
             </p>
             
             <div v-if="isOwner" class="p-t-10 p-b-5">
