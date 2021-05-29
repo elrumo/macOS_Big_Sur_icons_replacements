@@ -52,6 +52,17 @@
                     <div 
                         class="header-grid-btns mobile-nav-options"
                     >
+                    
+                        <!-- Account Profile -->
+                        <div v-if="getUser.isAuth" class="profile-nav">
+                            <img 
+                                id="profilePicNav" 
+                                @click="showEl('profileNavPopover')" 
+                                class="profile-pic-nav m-l-5" 
+                                :src="icons.profilePic" alt=""
+                            >
+                            <OptionsMenu :optionsList="optionsList"/>
+                        </div>
 
                         <!-- Back to all icons -->
                         <div @click="toggleOverlay" v-if="this.$route.name != 'Home'">
@@ -91,16 +102,10 @@
                             </router-link>
                         </div>
                         
-                        <!-- Instructions -->
-                        <!-- <div @click="away" v-if="this.$route.name != 'HowTo'">
-                            <router-link to="/how-to" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
-                                Instructions
-                            </router-link>
-                        </div> -->
                         <hr class="coral-Divider--S">
                         
-                        <!-- Buy me a coffee -->
-                        <div class="m-b-20">
+                        <!-- Donate -->
+                        <div class="">
                             <a
                                 rel="noopener"
                                 target="_blank"
@@ -112,6 +117,13 @@
                                     <span>Donate</span>
                                 </button>
                             </a>
+                        </div>
+
+                            <!-- Submit icons -->
+                        <div v-if="getUser.isAuth" class="profile-nav m-b-20">
+                            <button is="coral-button" variant="quiet" @click="showEl('submissionDialog')">
+                                <span>Submit</span>
+                            </button>
                         </div>
                         
                         <!-- Twitter -->

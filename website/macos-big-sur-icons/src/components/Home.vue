@@ -215,8 +215,7 @@ import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config()
 
 // TODO: remove credentials
-const VUE_APP_PARSE_APP_ID = "macOSicons"
-const VUE_APP_PARSE_JAVASCRIPT_KEY = "macOSicons"
+
 // const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
 // const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
@@ -227,8 +226,7 @@ var Icons = Parse.Object.extend("Icons2");
 
 let algolia = {
     // TODO: remove credentials
-    appid: "P1TXH7ZFB3",
-    apikey: "0ba04276e457028f3e11e38696eab32c"
+
     // appid: process.env.VUE_APP_ALGOLIA_APPID,
     // apikey: process.env.VUE_APP_ALGOLIA_KEY
 }
