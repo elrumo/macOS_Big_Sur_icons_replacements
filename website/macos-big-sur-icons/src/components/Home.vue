@@ -141,7 +141,7 @@
       </div>
 
     <!-- Icon list when no loading error-->
-        <div class="icon-list-area p-t-20 p-b-50 content-wrapper-regular">
+        <div class="icon-list-area p-t-20 p-b-30 content-wrapper-regular">
         <!-- <div v-if="!loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular"> -->
 
           <div style="min-height: 210px" class="card-hover relative coral-card">
@@ -186,6 +186,10 @@
 
           <UserIconCard v-for="icon in search" :key="icon.icnsUrl" :icon="icon" :isAdmin="isAdmin" :isMacOs="isMacOs"/>
         </div>
+        
+        <div v-if="!scrolledToBottom && !isSearch" class="p-b-50 m-b-50 waiting-wrapper">
+            <coral-wait size="L" indeterminate=""></coral-wait>
+        </div>
 
     </section>
 
@@ -211,8 +215,10 @@ import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config()
 
 // TODO: remove credentials
-const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
-const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
+const VUE_APP_PARSE_APP_ID = "macOSicons"
+const VUE_APP_PARSE_JAVASCRIPT_KEY = "macOSicons"
+// const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
+// const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
 Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://media.macosicons.com/parse'
@@ -221,8 +227,10 @@ var Icons = Parse.Object.extend("Icons2");
 
 let algolia = {
     // TODO: remove credentials
-    appid: process.env.VUE_APP_ALGOLIA_APPID,
-    apikey: process.env.VUE_APP_ALGOLIA_KEY
+    appid: "P1TXH7ZFB3",
+    apikey: "0ba04276e457028f3e11e38696eab32c"
+    // appid: process.env.VUE_APP_ALGOLIA_APPID,
+    // apikey: process.env.VUE_APP_ALGOLIA_KEY
 }
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
@@ -577,7 +585,6 @@ export default {
         howManyRecords: howManyRecords,
         results: results
       }
-      
       // parent.fetchIconUserInfo(data)
 
     },
@@ -747,7 +754,6 @@ export default {
     searchString: function (search) {
       let parent = this
 
-      console.log(parent.$route);
       if (parent.$route.name != "Home" && parent.$route.name != "Search") {
         return
       }

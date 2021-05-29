@@ -67,6 +67,17 @@ main{
     text-align: left;
 }
 
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+select{
+    -webkit-appearance:none;
+}
+
 .coral--dark ._coral-Dialog.is-open, .coral--dark ._coral-Dialog-header, .coral--dark ._coral-Dialog-footer{
     background-color: var(--coral-dark-bg)
 }
@@ -329,6 +340,21 @@ option[value=""][disabled] {
     color: rgb(75, 75, 75);
     background: url('../assets/icons/ChevronDown-dark.svg') no-repeat 97% 50%;
 }
+
+// .profile-pic-nav::after{
+//     content: ".";
+//     font-size: 1px;
+//     width: 22px;
+//     height: 22px;
+//     background: red;
+// }
+
+// .coral--dark .chevron::after{
+//     background: url('../assets/icons/ChevronDown.svg') no-repeat 97% 50%;
+// }
+// .coral--light .chevron::after{
+//     background: url('../assets/icons/ChevronDown-dark.svg') no-repeat 97% 50%;
+// }
 
 .icons-preview-wrapper{
     display: grid;
