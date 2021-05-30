@@ -7,7 +7,7 @@
         <!-- <div v-if="true">
             {{ toggleOverflow() }}
         </div> -->
-
+        <OptionsMenu :optionsList="optionsList"/>
         <Dialog/>
         <SubmissionDialog/>
         <LoginDialog/>
@@ -56,12 +56,15 @@
                         <!-- Account Profile -->
                         <div v-if="getUser.isAuth" class="profile-nav">
                             <img 
-                                id="profilePicNav" 
-                                @click="showEl('profileNavPopover')" 
+                                id="profilePicNav-mobile" 
+                                @click="showEl({
+                                    elId: 'profileNavPopover', 
+                                    targetId: 'profilePicNav-mobile'
+                                })"
                                 class="profile-pic-nav m-l-5" 
                                 :src="icons.profilePic" alt=""
                             >
-                            <OptionsMenu :optionsList="optionsList"/>
+                            <!-- <OptionsMenu :optionsList="optionsList"/> -->
                         </div>
 
                         <!-- Back to all icons -->
@@ -218,12 +221,14 @@
                         </button>
 
                         <img 
-                            id="profilePicNav" 
-                            @click="showEl('profileNavPopover')" 
+                            id="profilePicNav-desktop" 
+                            @click="showEl({
+                                elId: 'profileNavPopover',
+                                targetId: 'profilePicNav-desktop'
+                                })" 
                             class="profile-pic-nav m-l-5" 
                             :src="icons.profilePic" alt=""
                         >
-                        <OptionsMenu :optionsList="optionsList"/>
                     </div>
 
                     <!-- Submit icons -->
