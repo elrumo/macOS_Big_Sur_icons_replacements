@@ -210,10 +210,8 @@ export default new Vuex.Store({
     showEl(store, id){
       console.log(id);
       if(id.elId != undefined){
-        console.log(document.getElementById(id.elId));
         document.getElementById(id.elId).target = "#"+id.targetId
         document.getElementById(id.elId).show()
-        console.log("Hoiii");
       } else{
         document.getElementById(id).show()
       }
