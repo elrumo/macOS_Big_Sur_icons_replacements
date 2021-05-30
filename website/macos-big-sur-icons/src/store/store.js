@@ -208,7 +208,15 @@ export default new Vuex.Store({
     },
 
     showEl(store, id){
-      document.getElementById(id).show()
+      console.log(id);
+      if(id.elId != undefined){
+        console.log(document.getElementById(id.elId));
+        document.getElementById(id.elId).target = "#"+id.targetId
+        document.getElementById(id.elId).show()
+        console.log("Hoiii");
+      } else{
+        document.getElementById(id).show()
+      }
     },
 
     setUser(store, user){

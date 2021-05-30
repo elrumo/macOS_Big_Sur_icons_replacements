@@ -1,5 +1,5 @@
 <template>
-  <coral-dialog id="submissionDialog" focusOnShow="off">
+  <coral-dialog id="submissionDialog">
 
     <coral-dialog-header>
       Submit an icon
