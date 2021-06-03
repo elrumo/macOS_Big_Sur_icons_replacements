@@ -28,6 +28,8 @@ export default new Vuex.Store({
 
     loading: true,
 
+    downloads:[],
+
     selectedIcon:{},
     
     userIcons: {
@@ -108,6 +110,26 @@ export default new Vuex.Store({
       document.getElementById(dialogId.id).show();
     },
     
+    async addClickCount(store, icon){
+      
+      if (store.state.downloads.indexOf(icon.id) == -1) {
+        store.commit('setDataToArr', {arr: 'downloads', data: icon.id})
+        // store.state.downloads.push(icon.id)
+        console.log(store.state.downloads.indexOf(icon.id));
+        var id
+        
+        if (icon.id) {
+          id = icon.id
+        } else{
+          id = icon.objectID
+        }
+        icon = { appName: icon.appName, id: id }
+        await Parse.Cloud.run("addClickCount", {icon: icon})
+      } else{
+        return "No downlaod"
+      }
+    },
+
     getPageData(store){
       console.log(store.resourcesData);
       return "Hi"
@@ -208,7 +230,6 @@ export default new Vuex.Store({
     },
 
     showEl(store, id){
-      console.log(id);
       if(id.elId != undefined){
         document.getElementById(id.elId).target = "#"+id.targetId
         document.getElementById(id.elId).show()
