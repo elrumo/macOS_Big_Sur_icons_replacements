@@ -335,6 +335,8 @@ export default {
       message: "",
       today: "",
 
+      downloads:{},
+
       iconListLen: 5_385,
       lastVisible: {},
       dataToShow: [],
@@ -491,8 +493,10 @@ export default {
     },
 
     async addClickCount(icon){
-      console.log(icon);
+      let parent = this
+
       var id
+
       if (icon.id) {
         id = icon.id
       } else{

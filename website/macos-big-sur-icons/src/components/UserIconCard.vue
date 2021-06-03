@@ -96,7 +96,7 @@ export default {
     },
     
     methods:{
-        ...mapActions(['showEl', 'setSelectedIcon']),
+        ...mapActions(['showEl', 'setSelectedIcon', 'addClickCount']),
 
         prettifyName(name){
             name = name.replaceAll("_", " ")
@@ -108,18 +108,7 @@ export default {
             parent.setSelectedIcon(parent.icon)
             parent.showEl(id)
         },
-
-        async addClickCount(icon){
-            var id
-            if (icon.id) {
-                id = icon.id
-            } else{
-                id = icon.objectID
-            }
-            icon = { appName: icon.appName, id: id }
-            await Parse.Cloud.run("addClickCount", {icon: icon})
-        },
-
+        
         getDate(timeStamp){
             let newDate = new Date(timeStamp)
             

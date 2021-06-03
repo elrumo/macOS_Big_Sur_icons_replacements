@@ -333,19 +333,25 @@ export default {
 
     async deleteSubmission(icon){
         let parent = this
-        console.log(icon);
 
         let query = new Parse.Query(Icons)
         let docToDelete = await query.get(icon.id);
+        console.log("appName: ", docToDelete.get("appName"));
+        // console.log("docToDelete: ", docToDelete.id);
+        let newIcon = {
+          id: icon.id
+        }
+        await Parse.Cloud.run("deleteIcon", newIcon);
 
-        docToDelete.destroy().then(() =>{
+        docToDelete.destroy().then((obj) =>{
+          console.log(obj);
           Vue.delete(parent.icons[icon.usersName].icons, icon.appName) // Delete object locally
           
           if (Object.keys(parent.icons[icon.usersName].icons).length == 0 ) { // Delete user from UI if no icons are left
             Vue.delete(parent.icons, icon.usersName)
           }
         }).catch((e) =>{
-          console.log(e);
+          console.log("error deleting object: ", e);
         })
 
     },
