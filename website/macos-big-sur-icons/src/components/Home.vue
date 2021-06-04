@@ -8,6 +8,8 @@
       {{ toggleOverflow() }}
     </div>
 
+    <StickyBanner/>
+
     <!-- <coral-dialog id="newDialog" open style="text-align: left;">
       <coral-dialog-header>Pay to view</coral-dialog-header>
       
@@ -205,6 +207,7 @@ import UserIconCard from './UserIconCard.vue';
 import Dialog from './Dialog.vue';
 import deleteDialog from './deleteDialog.vue';
 import NativeAd from './NativeAd.vue';
+import StickyBanner from './StickyBanner.vue';
 
 import algoliasearch from 'algoliasearch'
 import Parse from 'parse'
@@ -246,6 +249,7 @@ export default {
     NativeAd,
     UserIconCard,
     'vue-load-image': VueLoadImage,
+    StickyBanner
   },
 
   metaInfo: {
