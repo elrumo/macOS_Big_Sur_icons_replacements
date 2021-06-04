@@ -1,5 +1,7 @@
 <template>
   <div>
+    
+    <StickyBanner/>
 
     <!-- Intro section -->
     <section class="profile-page-head-wrapper">
@@ -163,6 +165,7 @@ import UserIconGrid from '@/components/UserIconGrid.vue';
 import UserIconCardLoading from '@/components/UserIconCardLoading.vue';
 import EditIconDialog from "@/components/EditIconDialog.vue"
 import deleteDialog from "@/components/deleteDialog.vue"
+import StickyBanner from "@/components/StickyBanner.vue"
 
 import Parse from 'parse'
 import { mapGetters, mapActions } from 'vuex'
@@ -176,7 +179,8 @@ export default {
       UserIconGrid,
       UserIconCardLoading,
       EditIconDialog,
-      deleteDialog
+      deleteDialog,
+      StickyBanner
   },
 
   data(){
