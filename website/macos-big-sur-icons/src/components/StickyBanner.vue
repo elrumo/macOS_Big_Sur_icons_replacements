@@ -33,7 +33,7 @@
           target="_blank"
           
         >
-          <button is="coral-button" variant="CTA">
+          <button @click="adClick" is="coral-button" variant="CTA">
               Show your support
           </button>
         </a>
