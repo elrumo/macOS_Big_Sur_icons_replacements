@@ -35,7 +35,7 @@
             
           >
             <button @click="adClick" is="coral-button" variant="CTA">
-                Show your support
+                Donate now
             </button>
           </a>
 
