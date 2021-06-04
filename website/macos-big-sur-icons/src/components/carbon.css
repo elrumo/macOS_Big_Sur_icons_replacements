@@ -27,6 +27,7 @@
 
 .single-ad #carbonads{
     height: fit-content;
+height: -moz-fit-content;
     margin: auto;
 }
 
@@ -315,7 +316,8 @@
 }
 
 .icon-list-area #carbonads > span {
-    /* height: fit-content; */
+    /* height: fit-content;
+height: -moz-fit-content; */
     height: calc(100% - 20px) !important;
     padding: 10px 7px 10px 7px;
     grid-template-rows: auto 19px;
@@ -330,6 +332,7 @@
     position: relative;
     /* height: 100%; */
     height: fit-content;
+height: -moz-fit-content;
 }
 
 .icon-list-area #carbonads .carbon-wrap{
@@ -380,6 +383,8 @@
 .card-grid-nativeAd .bsa-link{
     padding: 10px 0px;
     height: fit-content;
+height: -moz-fit-content;
+    height: -moz-fit-content;
     display: grid;
     grid-template-rows: 88px auto;
     top: 50%;
@@ -457,10 +462,8 @@
     display: grid;
     width: calc(100% + 4px);
     grid-template-columns: auto;
-    /* grid-template-columns: 26px auto; */
     height: fit-content;
-    /* left: -11px; */
-    /* gap: 4px; */
+    height: -moz-fit-content;
 }
 
 .card-grid-nativeAd .text-ad-wrapper img{
@@ -481,7 +484,7 @@
 .card-grid-nativeAd .bsa-desc{
     width: calc(100% - 30px);
     height: fit-content;
-    /* text-align: left; */
+    height: -moz-fit-content;
     top: 5px;
     font-size: 12px !important;
     padding: 0px 15px !important;
@@ -569,6 +572,7 @@
     margin-bottom: 13px;
     width: 70%;
     height: fit-content;
+    height: -moz-fit-content;
     border-radius: 4px;
     /* border-radius: 7px; */
     
