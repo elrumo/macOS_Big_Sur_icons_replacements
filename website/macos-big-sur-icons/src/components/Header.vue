@@ -98,7 +98,8 @@
                         </div>
                         
                         <!-- Resources -->
-                        <div @click="toggleOverlay">
+                        <div class="resourcesLink" @click="toggleOverlay">
+                            <coral-status variant="info" class="_coral-StatusLight--info _coral-StatusLight" color=""></coral-status>
                             <router-link to="/resources" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
                                 <span>
                                     Resources
@@ -189,7 +190,8 @@
                     </div>
 
                     <!-- Resources -->
-                    <div>
+                    <div class="resourcesLink">
+                        <coral-status variant="info"></coral-status>
                         <router-link to="/resources">
                             <button is="coral-button" variant="quiet">
                                 <span>Resources</span>
