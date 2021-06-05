@@ -9,7 +9,7 @@
           <rect id="ToDelete" fill="#ff13dc" opacity="0" width="12" height="12" /><path d="M11.69673,10.28266,7.41406,6l4.28267-4.28266A.9999.9999,0,1,0,10.28266.30327L6,4.58594,1.71734.30327A.9999.9999,0,1,0,.30327,1.71734L4.58594,6,.30327,10.28266a.9999.9999,0,1,0,1.41407,1.41407L6,7.41406l4.28266,4.28267a.9999.9999,0,1,0,1.41407-1.41407Z" />
         </svg>
 
-        <a href="https://media.macosicons.com/parse/files/macOSicons/69812d83d48551a9287933774347fe7a_Pride.icns">
+        <a @click="addClickCount({id:'4KlGUMi162', appName: 'Pride'})" href="https://media.macosicons.com/parse/files/macOSicons/69812d83d48551a9287933774347fe7a_Pride.icns">
           <img class="lgbt-img" :src="imgs.lgbt" alt="">
         </a>
         
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
     name:"StickyBanner",
@@ -75,6 +76,7 @@ export default {
     },
 
     methods:{
+      ...mapActions(['showEl', 'setSelectedIcon', 'addClickCount']),
 
       closeBanner(){
         document.getElementById("stickyBanner").remove()
