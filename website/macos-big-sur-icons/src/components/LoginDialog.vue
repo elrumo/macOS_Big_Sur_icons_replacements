@@ -408,7 +408,6 @@ export default {
 
         if (target.type == "password") {
           let passIsValid = !parent.validatePassword
-          console.log(passIsValid, ": ", parent.userInfo.password);
           if(passIsValid) parent.userInfo.problems.passNotSecure = false;
         }
       },
@@ -423,13 +422,10 @@ export default {
       let email = parent.userInfo.email;
       let queryUsers = new Parse.Query(Parse.User)
       queryUsers.equalTo("email", email);
-      console.log(step);
-      
+
       queryUsers.find().then((response)=>{
 
         if (response.length != 0) {
-
-          console.log(response[0].get("hasLoggedIn"));
           
           if (response[0].get("hasLoggedIn")) {
             parent.userInfo.hasLoggedIn = true
@@ -599,7 +595,7 @@ export default {
       let parent = this
       let userInfo = parent.userInfo
       var passwordRules = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})");
-      console.log("Passes: ", passwordRules.test(userInfo.password));
+      // console.log("Passes: ", passwordRules.test(userInfo.password));
       return !passwordRules.test(userInfo.password)
     },
 
@@ -620,7 +616,7 @@ export default {
           if (userInfo[field] == "" && field != "hasLoggedIn" && field != "newAccount") {
             isValid.push(true)
           }
-          console.log(field, ": ", userInfo[field]);
+          // console.log(field, ": ", userInfo[field]);
       })
 
       if (isValid.length == 0) {
@@ -653,7 +649,6 @@ export default {
 
       query.get(curerntUser.id).then((user)=>{
         parent.setUserFunc(user)
-        console.log(user);
       }).catch((error) => {
         console.log("Cached user: ", error);
         parent.setUserFunc(curerntUser)

@@ -25,6 +25,7 @@
             <img :src="resourceItem.feature_image"/>
           </figure>
           <NativeAd
+            :adId="'iconbar-js-resourceItem'"
             class="m-t-20"
             sponsored="true"
             :key="$route.fullPath + 'ad'"
@@ -70,7 +71,7 @@
           </div>
 
           <div class="card-hover relative coral-card resources-card-ad">            
-              <script async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
+              <script @click="adClick" async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
             <div class="card-no-ad">
               <p class="coral-Body--M">
                 Support for .icns is on my (long) todo list.
@@ -88,9 +89,11 @@
 
 <script>
 // @ is an alias to /src
+import { mapActions } from 'vuex';
 import localPosts from '@/api/posts.json';
 import ResourcesCard from '@/components/ResourcesCard.vue'
 import NativeAd from "@/components/NativeAd.vue";
+
 
 import pages from '@/api/pages.json';
 
@@ -120,6 +123,8 @@ export default {
   },
 
   methods:{
+    ...mapActions(['adClick']),
+
     getDate(dateString){
       // var date = dateString;
       let date = new Date(dateString);
@@ -220,7 +225,7 @@ export default {
       for(let post in Object.keys(storeResourcesData)){
         try {
           if (storeResourcesData[post].slug == routerName) {
-            console.log(storeResourcesData[post].title);
+            // console.log(storeResourcesData[post].title);
             parent.resourceItem = storeResourcesData[post];
           }
         } catch (error) {
@@ -232,7 +237,6 @@ export default {
 
       // Check if blog data has already been fetched, if not, fetch only the blog required
       if (moreResources.length == undefined) {
-        console.log( this.$router.currentRoute);
         const resourceItem = await parent.$store.dispatch('getSinglePageAction', routerName);
         
         // If the blog post requested does not exists, redirect user to main blog page

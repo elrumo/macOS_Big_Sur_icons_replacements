@@ -1,5 +1,5 @@
 <template>
-  <coral-dialog id="submissionDialog" focusOnShow="off">
+  <coral-dialog id="submissionDialog">
 
     <coral-dialog-header>
       Submit an icon
@@ -78,7 +78,7 @@
                           type="button" 
                           @click="removeFile($event, icon.randId)" 
                           :id="icon.name" 
-                          :icon="coralIcons.delete"
+                          icon="delete"
                         >
                           Remove file
                         </coral-quickactions-item>
@@ -87,6 +87,7 @@
 
                     <form class="coral-FormGroup m-0 p-l-5" style="width: calc(100% - 5px)">
                       
+                      <!-- AppName -->
                       <div class="coral-FormGroup-item">
                         <label :id="'appNameLabel'+icon.randId" class="coral-FieldLabel">
                           App name
@@ -102,7 +103,8 @@
                           v-on:change="getValue($event, icon.randId, 'name')"
                         >
                       </div>
-
+                      
+                      <!-- App category -->
                       <div class="coral-FormGroup-item">
                         <label :id="'categoryUploadLabel'+icon.randId" class="coral-FieldLabel">
                           App category
@@ -127,12 +129,12 @@
                             :value="category.id"
                             :selected="icon.category.includes(category.id)"
                           >
-
                             {{ category.name }}
                           </option>
                         </select>
                       </div>
-
+                      
+                      <!-- Type of icon -->
                       <div class="coral-FormGroup-item">
                         <label :id="'TypeUploadLabel'+icon.randId" class="coral-FieldLabel">
                           Type of icon
@@ -144,13 +146,6 @@
                           class="dropdown-select"
                           v-on:change="getValue($event, icon.randId, 'type')"
                         >
-                          <!-- <option
-                            value=""
-                            disabled
-                            selected
-                          >
-                            Select type of icon (required)
-                          </option> -->
                           <option
                             v-for="type in getIconType"
                             :key="type.name+icon.randId+Math.floor(Math.random() * 10000000 + 1)"
@@ -162,7 +157,8 @@
                           </option>
                         </select>
                       </div>
-
+                      
+                      <!-- App website -->
                       <div class="coral-FormGroup-item">
                         <label :id="'appWebsiteUploadLabel'+icon.randId" class="coral-FieldLabel">
                           App website (optional)
@@ -178,6 +174,7 @@
                         >
                       </div>
                       
+                      <!-- Is dark mode -->
                       <div class="coral-FormGroup-item">
                         <coral-checkbox
                           :id="'isDarkUpload'+icon.randId"
@@ -254,9 +251,9 @@ export default {
         filesToUpload: {},
         coralIcons:{
           addIcon: require("../assets/icons/add.svg"),
-          delete: require("../assets/icons/delete.svg"),
-          newItem: require("../assets/icons/newItem.svg"),
-          chevron: require("../assets/icons/ChevronDown.svg"),
+          // delete: require("../assets/icons/delete.svg"),
+          // newItem: require("../assets/icons/newItem.svg"),
+          // chevron: require("../assets/icons/ChevronDown.svg"),
         },
         uploadProgress: 0,
         totalNumFiles: 0,
@@ -441,6 +438,13 @@ export default {
             }
 
             icons.set(dataToStore);
+            
+            const acl = new Parse.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setWriteAccess(Parse.User.current().id, true)
+            acl.setRoleWriteAccess("Admin", true);
+
+            icons.setACL(acl);
             icons.save().then((icon) => { // Reset input boxes
               
               // Add icon relationship to user
@@ -450,10 +454,9 @@ export default {
                 console.log("error: ", error)
               });
 
-              icon.set("alogliaID", icons.id);
-              icon.save().then().catch((error) =>{
-                console.log("error: ", error)
-              });
+              // icon.save().then().catch((error) =>{
+              //   console.log("error: ", error)
+              // });
 
                 parent.imageData = {}
                 parent.picture= null

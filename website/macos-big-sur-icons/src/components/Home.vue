@@ -2,10 +2,13 @@
   <div>
     
     <!-- <Dialog/> -->
-    <deleteDialog :icon="activeIcon" :Icons="Icons" :Parse="Parse"/>
+    <deleteDialog :icon="activeIcon"/>
+    
     <div v-if="overflow">
       {{ toggleOverflow() }}
     </div>
+
+    <StickyBanner/>
 
     <!-- <coral-dialog id="newDialog" open style="text-align: left;">
       <coral-dialog-header>Pay to view</coral-dialog-header>
@@ -43,17 +46,16 @@
       v-bind:list="list"
       :submitIconDialog="'submissionDialog'"
       :iconListLen="iconListLen"
-      :iconsEmpty="!loadingError"
       :parseObj="getParseObj"
+      :iconsEmpty="true"
     />
+      <!-- :iconsEmpty="!loadingError" -->
 
-    <!-- <div style="display: none"> {{search}} </div> -->
-    <!-- Icon Section -->
-    <section class="">
-    <!-- Search bar -->
     
+    <!-- Search bar -->
+    <section class="">
+      <!-- v-if="!loadingError" -->
       <div
-        v-if="!loadingError"
         @click="isSearch = true"
         id="searchBar"
         class="main-search-wrapper coral-bg p-b-15"
@@ -114,9 +116,9 @@
       </div>
 
     <!-- Loading error -->
-      <div v-if="loadingError" class="waiting-wrapper">
-
-        <NativeAd :key="$route.fullPath + 'ad'"/>
+      <div v-if="false" class="waiting-wrapper">
+      <!-- <div v-if="loadingError" class="waiting-wrapper"> -->
+        <NativeAd :adId="'iconbar-js-card-grid'" :key="$route.fullPath + 'ad'"/>
         <h3 class="coral-Heading--M">
           The site is temporarily down for maintenance purposes.
           <br>
@@ -141,16 +143,21 @@
       </div>
 
     <!-- Icon list when no loading error-->
-        <div v-if="!loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular">
-          
-          <div class="card-hover relative coral-card">
+        <div class="icon-list-area p-t-20 p-b-30 content-wrapper-regular">
+        <!-- <div v-if="!loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular"> -->
+
+          <div style="min-height: 210px" class="card-hover relative coral-card">
             
-            <div style="z-index: 2; height: 100%" class="relative">
-              <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+            <div style="z-index: 1; height: 100%; width: 100%" class="absolute carbon-card-ad">
+              <script @click="adClick" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+            </div>
+
+            <div style="z-index: 2" class="absolute card-grid-nativeAd">
+              <div @click="adClick" id="card-ad">
+              </div>
             </div>
             
             <a
-              v-if="isAdOn"
               class="card-no-ad relative"
               href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
               rel="noopener"
@@ -178,83 +185,16 @@
             </a>
 
           </div>
-          
-          <div v-for="icon in search" :key="icon.icnsUrl" class="card-wrapper card-hover coral-card">
-          
-          <!-- Icons -->
-            <div class="">
-              <!-- Icon image -->
-              <div class="card-img-wrapper" style="max-width: 120px;">
-              
-                <!-- macOS icon download -->
-                <a @click="addClickCount(icon)" rel="noopener" v-if="isMacOs" :href="icon.icnsUrl">
-                  <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                    <img :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
-                  </div>
-                </a>
 
-                <!-- iOS icon download -->
-                <a rel="noopener" v-else :href="icon.iOSUrl">
-                  <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                    <img width="100px" height="100px" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
-                  </div>
-                </a>
-
-                <!-- Quick action menu icon download -->
-                <div v-if="isAdmin" class="quick-actions-wrapper">
-                  <div class="quick-action-el">
-                    <coral-icon @click="showDialog('deleteDialog', icon)" class="quick-action-icon" :icon="coralIcons.delete" title="Delete"></coral-icon>
-                  </div>
-                </div>
-                  
-              </div>
-
-              <!-- Icon meta -->
-              <div class="card-text-wrapper p-l-15 p-r-15 p-b-15">
-
-                  <!-- Timestamp -->
-                  <p v-if="isAdmin" class="coral-Body--XS opacity-60 m-b-0">
-                    <input class="editable-input coral-Body--XS opacity-50 m-b-0" @change="changeDate(icon, $event)" type="text" variant="quiet" :value="getDate(icon.timeStamp)" is="coral-textfield" aria-label="text input">
-                  </p>
-
-                  <!-- App name -->
-                  <h3 class="coral-font-color m-b-0">
-                    <input class="editable-input f-w-800 m-b-0" @change="editDoc(icon, $event, 'appName')" type="text" variant="quiet" :value="prettifyName(icon.appName)" is="coral-textfield" aria-label="text input">
-                  </h3>
-
-                  <!-- User's name -->
-                  <p v-if="isAdmin" class="coral-Body--XS p-b-0 opacity-80 m-b-0"><input class="editable-input" @change="editDoc(icon, $event, 'usersName')" type="text" variant="quiet" :value="icon.usersName" is="coral-textfield" aria-label="text input"></p>
-                  
-                  <!-- Credit -->
-                  <p v-if="isAdmin" class="coral-Body--XS p-b-0 opacity-50 m-b-0">
-                    <input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="icon.credit" is="coral-textfield" aria-label="text input">
-                  </p>
-
-                  <p v-else class="coral-Body--XS opacity-60 m-b-10">
-                    <a v-if="icon.credit" rel="noopener" class="coral-Link" :href="icon.credit" target="_blank">
-                      {{icon.usersName}}
-                    </a>
-                    <b v-else >
-                      {{icon.usersName}}
-                    </b>
-                    on
-                    <span class="coral-Body--XS opacity-80">
-                      {{ getDate(icon.timeStamp) }}
-                    </span>
-                  </p>
-                  
-                  <!-- Email -->
-                  <div v-if="icon.email != 'user@email.com' && icon.email && isAdmin " class="p-t-10"> 
-                    <a rel="noopener" class="coral-Link" :href="'mailto:'+icon.email+'?subject=macOS icons submission&body='+icon.usersName">
-                          email
-                    </a>
-                  </div>
-              </div>
-            </div>
-          </div>
+          <UserIconCard v-for="icon in search" :key="icon.icnsUrl" :icon="icon" :isAdmin="isAdmin" :isMacOs="isMacOs"/>
+        </div>
+        
+        <div v-if="!scrolledToBottom && !isSearch" class="p-b-50 m-b-50 waiting-wrapper">
+            <coral-wait size="L" indeterminate=""></coral-wait>
         </div>
 
     </section>
+
   </div>
 </template>
 
@@ -262,10 +202,12 @@
 import { mapActions, mapGetters } from 'vuex';
 import Header from './Header.vue';
 import Hero from './Hero.vue';
-import iconCard from './iconCard.vue';
+// import IconCard from './IconCard.vue';
+import UserIconCard from './UserIconCard.vue';
 import Dialog from './Dialog.vue';
 import deleteDialog from './deleteDialog.vue';
 import NativeAd from './NativeAd.vue';
+import StickyBanner from './StickyBanner.vue';
 
 import algoliasearch from 'algoliasearch'
 import Parse from 'parse'
@@ -301,11 +243,13 @@ export default {
   components: {
     Header,
     Hero,
-    iconCard,
+    // IconCard,
     Dialog,
     deleteDialog,
+    NativeAd,
+    UserIconCard,
     'vue-load-image': VueLoadImage,
-    NativeAd
+    StickyBanner
   },
 
   metaInfo: {
@@ -395,6 +339,8 @@ export default {
       message: "",
       today: "",
 
+      downloads:{},
+
       iconListLen: 5_385,
       lastVisible: {},
       dataToShow: [],
@@ -403,7 +349,7 @@ export default {
         success: require("../assets/icons/delete.svg"),
         namingOrder: require("../assets/icons/namingOrder.svg"),
         date: require("../assets/icons/date.svg"),
-        loading: require("../assets/no-app-icon.png"),
+        loading: require("../assets/placeholder-icon.png"),
         iconsOrder: require("../assets/icons/namingOrder.svg")
       },
       coralIcons:{
@@ -411,13 +357,14 @@ export default {
         delete: require("../assets/icons/delete.svg"),
         newItem: require("../assets/icons/newItem.svg"),
         edit: require("../assets/icons/edit.svg"),
-        loading: require("../assets/no-app-icon.png"),
+        loading: require("../assets/placeholder-icon.png"),
       }
     }
   },
 
   mounted: function(){
     let parent = this;
+    parent.getAd()
     const { getters } = parent.$store;
     let fullPath = parent.$route.fullPath
     let currentUser = Parse.User.current()
@@ -463,7 +410,31 @@ export default {
   },
 
   methods:{ 
-    ...mapActions(['showToast', 'showEl']),
+    ...mapActions(['showToast', 'showEl', 'fetchIconUserInfo', 'adClick']),
+
+    getAd(el){
+      try {
+        if (typeof _bsa !== 'undefined') {
+          _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
+          {
+            target: '#card-ad',
+            template: `
+                <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link">
+                <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
+                  <div class="bsa-icon" style="background-image: url(##logo##);"></div>
+                </div>
+                <div class="text-ad-wrapper">
+                  <img style="background: ##backgroundColor##" src="##image##">
+                  <div class="bsa-desc">##description##</div>
+                </div>
+                </a>
+              `
+            }
+          );
+        }
+      } catch (error) {
+      }
+    },
 
     isDialog(){
       console.log(document.getElementByTagName("coral-dialog").open);
@@ -526,8 +497,10 @@ export default {
     },
 
     async addClickCount(icon){
-      console.log(icon);
+      let parent = this
+
       var id
+
       if (icon.id) {
         id = icon.id
       } else{
@@ -579,6 +552,11 @@ export default {
 
     async loadMore(){
       let parent = this
+      
+      if (parent.$route.path != "/") {
+        return
+      }
+
       let howManyRecords = parent.howManyRecords
       
       parent.howManyRecords = howManyRecords + docLimit
@@ -592,7 +570,7 @@ export default {
       
       setTimeout(() => {
           parent.scrolledToBottom = true
-      }, 800);
+      }, 0);
 
       for(let result in results){
         let objData = results[result].attributes
@@ -601,10 +579,17 @@ export default {
         for(let data in objData){
           iconData[data] = objData[data]
         }
-        iconData.id = results[result].id  
-        
-        parent.$store.dispatch("pushDataToArr", {arr: "list", data: iconData, func: "loadMore"})
+        iconData.id = results[result].id;
+
+        parent.$store.dispatch("pushDataToArr", {data: iconData, arr: "list", func: "loadMore"})
       }
+      
+      // Gets up to date info about the user
+      let data = {
+        howManyRecords: howManyRecords,
+        results: results
+      }
+      // parent.fetchIconUserInfo(data)
 
     },
 
@@ -624,19 +609,23 @@ export default {
       let parent = this
 
       function handleParseError(err){
+        console.log(err.code);
         switch (err.code) {
           case Parse.Error.INVALID_SESSION_TOKEN:
             Parse.User.logOut();
             window.location.reload()
             break;
+          
+          case 100:
+            break;
         
           default:
+            parent.loadingError = "true"
             break;
         }
       }
 
       try {
-
         const query = new Parse.Query(Icons);
         query.equalTo("approved", true)
         query.descending("timeStamp");
@@ -649,21 +638,37 @@ export default {
         })
         
         parent.$store.state.list = []
+        
+        var userInfo = {}
 
         for(let result in results){
-          let objData = results[result].attributes
+
+          let iconItem = results[result]
+
+          let objData = iconItem.attributes
           let iconData = {}
-          
+
           for(let data in objData){
             iconData[data] = objData[data]
           }
           iconData.id = results[result].id
+          
+          // Set fetched user info from parse User object
+          // iconData.usersName = userInfo.username
+          // iconData.credit = userInfo.credit
 
           parent.$store.commit('pushDataToArr', {arr: "list", data: iconData, func: "getIconsArray"})
         }
+        
+        // Gets up to date info about the user
+        let data = {
+          howManyRecords: 0,
+          results: results
+        }
+        // parent.fetchIconUserInfo(data)
 
         var attempts = 0;
-        // let getAd = setTimeout(() => {
+
         function getAd (){
           setTimeout(() => {
             let carbon = document.getElementById("carbonads")
@@ -683,7 +688,6 @@ export default {
         parent.scroll()
 
       } catch (error) {
-        parent.loadingError = "true"
         handleParseError(error)
         console.log("loadingError: ", error);
       }
@@ -753,17 +757,21 @@ export default {
   watch:{
     searchString: function (search) {
       let parent = this
+
+      if (parent.$route.name != "Home" && parent.$route.name != "Search") {
+        return
+      }
       
       index.search(search, {filters: `approved:true`, hitsPerPage: 150 }).then(function(responses) {
         parent.$store.dispatch("pushDataToArr", {arr: "dataToShow", data: responses.hits, func: "searchAlgolia"})
       });
     },
+
     content() {
       this.$nextTick(()=>{
         let parent = this
         let ad = document.getElementById("carbonads")
         if(!ad) {
-          console.log("yooo");
           parent.isAdOn = false
         } else {
           parent.isAdOn = false
@@ -851,6 +859,7 @@ export default {
 </script>
 
 <style lang="less">
+  // @import url(coral.css);
   @import url(app.less);
   @import url(snack-helper.min.css);
   @import url(carbon.css);

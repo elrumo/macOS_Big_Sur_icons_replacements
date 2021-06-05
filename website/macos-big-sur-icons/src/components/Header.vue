@@ -3,7 +3,11 @@
         id="header"
         :class="{'scrolled-shadow': distanceFromTop & scrolled, 'scrolled-header': scrolled, header: true, 'coral-bg':true}"
     >
-
+        
+        <!-- <div v-if="true">
+            {{ toggleOverflow() }}
+        </div> -->
+        <OptionsMenu :optionsList="optionsList"/>
         <Dialog/>
         <SubmissionDialog/>
         <LoginDialog/>
@@ -20,7 +24,8 @@
 
                 <p class="header-item coral-Body--S">
                     By
-                    <a href="https://webbites.io/"
+                    <!-- <a href="https://webbites.io/" -->
+                    <a href="https://eliasruiz.com/"
                         rel="noopener"
                         target="_blank"
                         class="underline"
@@ -48,6 +53,20 @@
                     <div 
                         class="header-grid-btns mobile-nav-options"
                     >
+                    
+                        <!-- Account Profile -->
+                        <div v-if="getUser.isAuth" class="profile-nav">
+                            <img 
+                                id="profilePicNav-mobile" 
+                                @click="showEl({
+                                    elId: 'profileNavPopover', 
+                                    targetId: 'profilePicNav-mobile'
+                                })"
+                                class="profile-pic-nav m-l-5" 
+                                :src="icons.profilePic" alt=""
+                            >
+                            <!-- <OptionsMenu :optionsList="optionsList"/> -->
+                        </div>
 
                         <!-- Back to all icons -->
                         <div @click="toggleOverlay" v-if="this.$route.name != 'Home'">
@@ -79,7 +98,8 @@
                         </div>
                         
                         <!-- Resources -->
-                        <div @click="toggleOverlay">
+                        <div class="resourcesLink" @click="toggleOverlay">
+                            <coral-status variant="info" class="_coral-StatusLight--info _coral-StatusLight" color=""></coral-status>
                             <router-link to="/resources" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
                                 <span>
                                     Resources
@@ -87,16 +107,10 @@
                             </router-link>
                         </div>
                         
-                        <!-- Instructions -->
-                        <!-- <div @click="away" v-if="this.$route.name != 'HowTo'">
-                            <router-link to="/how-to" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
-                                Instructions
-                            </router-link>
-                        </div> -->
                         <hr class="coral-Divider--S">
                         
-                        <!-- Buy me a coffee -->
-                        <div class="m-b-20">
+                        <!-- Donate -->
+                        <div class="">
                             <a
                                 rel="noopener"
                                 target="_blank"
@@ -109,6 +123,13 @@
                                 </button>
                             </a>
                         </div>
+
+                            <!-- Submit icons -->
+                        <div v-if="getUser.isAuth" class="profile-nav m-b-20">
+                            <button is="coral-button" variant="quiet" @click="showEl('submissionDialog')">
+                                <span>Submit</span>
+                            </button>
+                        </div>
                         
                         <!-- Twitter -->
                         <div class="header-icon-wrapper">
@@ -120,12 +141,6 @@
                             </a>
                         </div>
 
-                        <!-- Submit icons -->
-                        <!-- <div>
-                            <button class="_coral-Button _coral-Button--primary _coral-Button--quiet" @click="showDialog('submitIcon')">
-                                <span>Submit icons</span>
-                            </button>
-                        </div> -->
                     </div>
                 </coral-overlay>
             </div>
@@ -134,7 +149,7 @@
             <div class="mobile-hidden">
                 <div class="header-grid-btns">
                     
-                    <!-- Twitter -->
+                    <!-- Twitter + Discord -->
                     <div class="header-icon-wrapper">
                         <a href="https://twitter.com/elrumo" class="" target="_blank" rel="noopener">
                             <img :src="icons.twitter" class="header-item header-icon" alt="Twitter logo">
@@ -143,11 +158,12 @@
                             <img :src="icons.discord" class="header-item header-icon" alt="Discord Logo">
                         </a>
                     </div>
+                    
                     <!-- Back to all icons -->
-                    <div class="opacity-50" v-if="this.$route.name != 'Home'">
+                    <div class="opacity-70" v-if="this.$route.name != 'Home'">
                         <router-link to="/">
                             <button is="coral-button" variant="quiet">
-                                <span>Back to Icons</span>
+                                <span>All Icons</span>
                             </button>
                         </router-link>
                     </div>
@@ -174,7 +190,8 @@
                     </div>
 
                     <!-- Resources -->
-                    <div>
+                    <div class="resourcesLink">
+                        <coral-status variant="info"></coral-status>
                         <router-link to="/resources">
                             <button is="coral-button" variant="quiet">
                                 <span>Resources</span>
@@ -207,12 +224,14 @@
                         </button>
 
                         <img 
-                            id="profilePicNav" 
-                            @click="showEl('profileNavPopover')" 
+                            id="profilePicNav-desktop" 
+                            @click="showEl({
+                                elId: 'profileNavPopover',
+                                targetId: 'profilePicNav-desktop'
+                                })" 
                             class="profile-pic-nav m-l-5" 
                             :src="icons.profilePic" alt=""
                         >
-                        <OptionsMenu :optionsList="optionsList"/>
                     </div>
 
                     <!-- Submit icons -->
@@ -280,14 +299,14 @@ export default {
                         data: "accountDialog"
                     }
                 },
-                // {
-                //     name: "Profile",
-                //     img: require("../assets/icons/User.svg"),
-                //     onClick:{
-                //         method: this.changePath,
-                //         data: "/user/"
-                //     }
-                // },
+                {
+                    name: "Profile",
+                    img: require("../assets/icons/User.svg"),
+                    onClick:{
+                        method: this.changePath,
+                        data: "/u/"
+                    }
+                },
                 {
                     name: "Logout",
                     img: require("../assets/icons/LogOut.svg"),
@@ -328,6 +347,10 @@ export default {
             }})
         },
 
+        toggleOverflow(){
+            document.documentElement.style.overflow = '';
+        },
+
         handleScroll () {
             this.scrolled = window.scrollY > 20;
         },
@@ -346,7 +369,6 @@ export default {
                 body.classList.add('coral--light')
                 parent.darkMode = false
             }
-
         },
 
         onDialogOpen(){
@@ -385,7 +407,7 @@ export default {
         
         if (this.getUser.isAuth) {
             // Set the "Go to profile" button to go to the user that has logged in
-            parent.optionsList[1].onClick.data = "/user/" + this.getUser.userData.username
+            parent.optionsList[1].onClick.data = "/u/" + this.getUser.userData.username
         }
 
         // Sets light/dark mode based on browser

@@ -2,7 +2,7 @@
   <div id="app">
             <!-- <div id="logobar"></div> -->
     <coral-toast id="toastMessage" variant="success">
-      😄 All icons have been uploaded.
+      All icons have been uploaded.
     </coral-toast>
 
     <Header
@@ -85,6 +85,7 @@ export default {
 </script>
 
 <style>
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -96,7 +97,7 @@ export default {
 } 
 
 .min-height{
-  min-height: calc(100vh - 155px);
+  min-height: calc(100vh - 125px);
   margin: auto;
 }
 

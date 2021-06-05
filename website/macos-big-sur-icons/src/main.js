@@ -9,7 +9,7 @@ import './registerServiceWorker'
 
 Vue.config.productionTip = false
 
-const loadimage = require('./assets/no-app-icon.png')
+const loadimage = require('./assets/placeholder-icon.png')
 
 Vue.use(VueLazyload, {
   preLoad: 1.3,

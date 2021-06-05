@@ -81,7 +81,7 @@
           </h3>
 
           <div class="icon-list-area">
-            <div v-for="icon in user.icons" class="card-wrapper coral-card" :key="icon.fileName">
+            <div v-for="icon in user.icons" class="card-wrapper coral-card" :key="icon.fileName+icon.imgUrl">
               
               <coral-status v-if="icon.isReupload && icon.isAuthor" variant="success"></coral-status>
               <coral-status v-if="icon.isReupload && !icon.isAuthor" variant="warning"></coral-status>
@@ -94,7 +94,7 @@
                 
                 <a :href="icon.imgUrl" target="_blank">
                   <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                    <img class="w-full" :data-src="icon.imgUrl">
+                    <img class="w-full" :data-src="icon.imgUrl.replace('/media/', '/parse/')">
                   </div>
                 </a>
 
@@ -167,7 +167,7 @@ const currentUser = Parse.User.current(); // Check if user is currently logged i
 
 let lastVisible
 
-const docLimit = 20
+const docLimit = 50
 
 export default {
   
@@ -197,7 +197,7 @@ export default {
         delete: require("../assets/icons/delete.svg"),
         newItem: require("../assets/icons/newItem.svg"),
         edit: require("../assets/icons/edit.svg"),
-        loading: require("../assets/no-app-icon.png"),
+        loading: require("../assets/placeholder-icon.png"),
         email: require("../assets/icons/email.svg"),
       },
     }
@@ -360,24 +360,23 @@ export default {
     async approveIcon(icon){  
       let parent = this
       // console.log(icon);
+      console.log("icon.id: ", icon.id);
+      let parentIcon = parent.icons[icon.usersName].icons[icon.id]
+      // let parentIcon = parent.icons[icon.usersName].icons[icon.appName]
 
-      let parentIcon = parent.icons[icon.usersName].icons[icon.appName]
+      // console.log("icon: ", icon);
+      // console.log("parentIcon: ", parentIcon);
+      // console.log("parent.icons[icon.usersName].icons[icon.appName]: ", parent.icons[icon.usersName].icons[icon.appName]);
 
-      console.log("icon: ", icon);
-      console.log("parentIcon: ", parentIcon);
-      console.log("parent.icons[icon.usersName].icons[icon.appName]: ", parent.icons[icon.usersName].icons[icon.appName]);
+      let newIcon = {...icon}
+      delete newIcon.DownloadCount
+      delete newIcon.user
+      delete newIcon.category
+      delete newIcon.type
+      // console.log(icon);
 
-      // let iconToApprove = {
-      //   id: icon.id,
-      //   fileNm: icon.id
-      // }
-      delete icon.DownloadCount
-      delete icon.user
-      delete icon.category
-      delete icon.type
       // Parse.Cloud.run("approve", icon).then((result)=>{
-      Parse.Cloud.run("testJob", icon).then((result)=>{
-        console.log(result);
+      Parse.Cloud.run("testJob", newIcon).then((result)=>{
         Vue.set(parentIcon, 'isReview', true)
         parent.showToast({
           id: "toastMessage",
@@ -395,14 +394,23 @@ export default {
 
     },
 
-    sendEmail(icon){  
+    async sendEmail(icon){  
       let parent = this
-      console.log(icon);
-      
-      delete icon.DownloadCount
-      delete icon.user
+      console.log("icon: ", icon);
 
-      Parse.Cloud.run("sendEmail", icon).then((result)=>{
+      // delete icon.DownloadCount
+      // delete icon.user
+      // delete icon.category
+      // delete icon.type
+      // delete icon.icons
+      
+      let payLoad = {
+        email: icon.email,
+        usersName: icon.usersName,
+        id: icon.user.objectId
+      }
+
+      Parse.Cloud.run("sendEmail", payLoad).then((result)=>{
         parent.showToast({
           id: "toastMessage",
           message: "Email has been sent",
@@ -461,6 +469,7 @@ export default {
             let appName = docData.appName
             let email = docData.email
             let creditUrl = docData.credit
+            let user = docData.user
 
             docData.id = results[result].id
 
@@ -469,12 +478,18 @@ export default {
               console.log("docData: ", docData);
             }else{
               if(parent.icons[usersName] == undefined ){
-                Vue.set(parent.icons, usersName, {"usersName": usersName, "email": email, "icons":{}, "creditUrl": creditUrl})
-                Vue.set(parent.icons[usersName].icons, appName, docData)
-                Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  docData.highResPngUrl)        
+                Vue.set(parent.icons, usersName, {
+                  "usersName": usersName, 
+                  "email": email, 
+                  "icons":{}, 
+                  "creditUrl": creditUrl,
+                  "user": user
+                })
+                Vue.set(parent.icons[usersName].icons, docData.id, docData)
+                Vue.set(parent.icons[usersName].icons[docData.id], "imgUrl",  docData.highResPngUrl)        
               } else{
-                Vue.set(parent.icons[usersName].icons, appName, docData)
-                Vue.set(parent.icons[usersName].icons[appName], "imgUrl",  docData.highResPngUrl)
+                Vue.set(parent.icons[usersName].icons, docData.id, docData)
+                Vue.set(parent.icons[usersName].icons[docData.id], "imgUrl",  docData.highResPngUrl)
               }              
             }
       }
@@ -484,7 +499,7 @@ export default {
     scroll() {
       let parent = this
       window.onscroll = () => {
-        let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 1200
+        let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 1600
 
         if (bottomOfWindow && parent.scrolledToBottom && !parent.isSearch) {
           parent.scrolledToBottom = false // replace it with your code
@@ -498,7 +513,7 @@ export default {
   mounted: function(){  
 
     let parent = this
-
+  
     function handleParseError(err){
       switch (err.code) {
         case Parse.Error.INVALID_SESSION_TOKEN:
@@ -547,6 +562,12 @@ export default {
           docData.imgUrl = docData.highResPngUrl
           
           let usersName = docData.usersName
+          let user
+          
+          if (docData.user) {
+            user = docData.user
+          }
+
           let appName = docData.appName
           let email = docData.email
           let creditUrl = docData.credit
@@ -556,24 +577,36 @@ export default {
           if (usersName == "" || usersName == undefined ) {      
 
             if(parent.icons["Undefined"] == undefined ){
-              Vue.set(parent.icons, "Undefined", {"usersName": "Undefined", "email": email, "icons":{}, "creditUrl": creditUrl})
+              Vue.set(parent.icons, "Undefined", {
+                "usersName": "Undefined", 
+                "email": email, 
+                "icons":{}, 
+                "creditUrl": creditUrl
+              })
               Vue.set(parent.icons["Undefined"].icons, appName, docData)
-              Vue.set(parent.icons["Undefined"].icons[appName], "usersName",  "Undefined")
+              Vue.set(parent.icons["Undefined"].icons[docData.id], "usersName",  "Undefined")
               Vue.set(parent.icons["Undefined"], "usersName",  "Undefined")                
             } else{
-              Vue.set(parent.icons["Undefined"].icons, appName, docData)
-              Vue.set(parent.icons["Undefined"].icons[appName], "usersName",  "Undefined")
+              Vue.set(parent.icons["Undefined"].icons, docData.id, docData)
+              Vue.set(parent.icons["Undefined"].icons[docData.id], "usersName",  "Undefined")
               Vue.set(parent.icons["Undefined"], "usersName",  "Undefined")
             }
 
           }else{
 
             if(parent.icons[usersName] == undefined ){
-              Vue.set(parent.icons, usersName, {"usersName": usersName, "email": email, "icons":{}, "creditUrl": creditUrl})
-              Vue.set(parent.icons[usersName].icons, appName, docData)
+              Vue.set(parent.icons, usersName, {
+                "usersName": usersName, 
+                "email": email, 
+                "icons":{}, 
+                "creditUrl": creditUrl,
+                "user": user
+              })
+
+              Vue.set(parent.icons[usersName].icons, docData.id, docData)
               
             } else{
-              Vue.set(parent.icons[usersName].icons, appName, docData)
+              Vue.set(parent.icons[usersName].icons, docData.id, docData)
             }
 
           }

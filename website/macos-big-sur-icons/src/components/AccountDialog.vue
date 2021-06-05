@@ -1,5 +1,6 @@
 <template>
   <coral-dialog id="accountDialog" v-if="getUser.isAuth" focusOnShow="off">
+    
 
     <coral-dialog-header>
       Your Account
@@ -7,6 +8,12 @@
     
     <coral-dialog-content>
       
+      <div v-if="isLoading.requestUserData" class="loading-overlay">
+        <div class="loading-popup">
+          <coral-progress indeterminate> Fetching your data</coral-progress>
+        </div>
+      </div>
+
       <coral-alert style="max-width: 360px; min-width: 260px !important;">
         <coral-alert-header>Info</coral-alert-header>
         <coral-alert-content>
@@ -115,6 +122,17 @@
       </form>
 
         <p class="coral-Body--XS p-l-5 p-t-5 p-r-5 m-0 opacity-60">
+            <!-- :href="'mailto:elias.ruiz.monserrat@gmail.com?subject=Request macOSicons data: '+getUserData('objectId')" -->
+          <a
+            @click="requestUserData"
+            rel="noopener"
+            class="coral-Link">
+              Request
+            </a> 
+            all the data macOSicons has about me.
+        </p>
+
+        <p class="coral-Body--XS p-l-5 p-t-5 p-r-5 m-0 opacity-60">
           <a
             rel="noopener"
             :href="'mailto:elias.ruiz.monserrat@gmail.com?subject=Right to be forgotten: '+getUserData('objectId')"
@@ -125,20 +143,9 @@
             right to be forgotten and delete account.
         </p>
 
-        <p class="coral-Body--XS p-l-5 p-t-5 p-r-5 m-0 opacity-60">
-          <a
-            rel="noopener"
-            :href="'mailto:elias.ruiz.monserrat@gmail.com?subject=Request macOSicons data: '+getUserData('objectId')"
-            target="_blank"
-            class="coral-Link">
-              Request
-            </a> 
-            all the data macOSicons has about me.
-        </p>
-
-      <div v-if="isLoading" class="loading-overlay">
+      <div v-if="isLoading.updatingUser" class="loading-overlay">
         <div class="loading-popup">
-          <coral-progress indeterminate>{{ uploadProgress }}/{{ totalNumFiles }} icons uploaded</coral-progress>
+          <coral-progress indeterminate>Saving changes...</coral-progress>
         </div>
       </div>
 
@@ -171,7 +178,10 @@ export default {
         },
         email: "",
         yourName: "",
-        isLoading: false,
+        isLoading: {
+          requestUserData: false,
+          updatingUser: false
+        },
         
         isValidated: false,
         hasChanged: false,
@@ -182,6 +192,47 @@ export default {
     methods:{
       ...mapActions(['showToast', 'setUser']),
   
+      async requestUserData(){
+        let parent = this;
+        let user = Parse.User.current();
+        await user.fetch()
+        parent.isLoading.requestUserData = true;
+
+        function downloadFile(fileUrl, fileName) {
+          var a = document.createElement("a");
+          a.href = fileUrl;
+          a.setAttribute("download", fileName);
+          a.setAttribute("id", "fileName");
+          a.click();
+          a.remove();
+        }
+        
+        let fileURL
+
+        if (user.get("userInfoFile")) {
+          fileURL = user.get("userInfoFile").url();
+          
+          downloadFile(fileURL, user.get('username')+"_"+user.id+".json");
+          parent.isLoading.requestUserData = false
+          parent.showToast({
+            id: "toastMessage",
+            message: "Data downloaded successfully.",
+            variant: "success"
+          })
+        } else {
+          fileURL = await Parse.Cloud.run("requestUserData", {id: user.id})
+          
+          downloadFile(fileURL, user.get('username')+"_"+user.id+".json");
+          parent.isLoading.requestUserData = false
+          parent.showToast({
+            id: "toastMessage",
+            message: "Data downloaded successfully.",
+            variant: "success"
+          })
+        }
+
+      },
+
       setYourName(e){
         console.log(e.target.value);
         this.yourName = e.target.value
@@ -193,7 +244,6 @@ export default {
           return
         } else {
           ParseUser = JSON.parse(JSON.stringify(ParseUser))
-          console.log(ParseUser.hasOwnProperty(prop));
           return ParseUser[prop]
         }
       },
@@ -234,15 +284,17 @@ export default {
         let parent = this
         let toUpdate = parent.toUpdate
         let ParseUser = Parse.User.current()
+        parent.isLoading.updatingUser = true;
 
         for(let key in toUpdate){
           ParseUser.set(key, toUpdate[key])
         }
 
         ParseUser.save().then((data) =>{
+          parent.isLoading.updatingUser = false;
           parent.showToast({
             id: "toastMessage",
-            message: "✅Updated settings successfully.",
+            message: "Updated settings successfully.",
             variant: "success"
           })
         }).catch((error) => {
@@ -254,7 +306,6 @@ export default {
         let parent = this
         let ParseUser = Parse.User.current()
         let userProps = JSON.parse(JSON.stringify(ParseUser))
-        // console.log(prop, " :", userProps[prop]);
         return userProps[prop]
       }
 

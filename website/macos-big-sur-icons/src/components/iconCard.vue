@@ -56,7 +56,7 @@
 // let storage = firebase.storage();
 
 export default {
-    name: "iconCard",
+    name: "IconCard",
     
     props:{
         icon:{},

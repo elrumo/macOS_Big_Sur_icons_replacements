@@ -19,7 +19,7 @@
         />
 
         <div class="card-hover relative coral-card resources-card-ad">            
-            <script async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
+            <script @click="adClick" async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
           <a
               class="card-no-ad relative"
               href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
@@ -56,6 +56,7 @@
 
 <script>
 // @ is an alias to /src
+import { mapActions } from 'vuex'
 import Header from '@/components/Header.vue'
 import ResourcesCard from '@/components/ResourcesCard.vue'
 import Footer from '@/components/Footer.vue'
@@ -63,7 +64,6 @@ import H3Description from '@/components/H3_Description.vue'
 
 import pages from '@/api/pages.json';
 
-import { mapActions } from 'vuex'
 
 export default {
   name: 'Resources',
@@ -147,7 +147,8 @@ export default {
 
   methods: {
     ...mapActions([
-      'getPageData,'  
+      'getPageData',
+      'adClick'
     ]),
 
     async getPages(){
