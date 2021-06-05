@@ -1,5 +1,5 @@
 <template>
-    <div class="card-wrapper card-hover coral-card">
+    <div class="card-wrapper card-hover coral-card m-0" style="max-height: 226px">
 
         <!-- Icon image -->
         <div class="card-img-wrapper" style="max-width: 120px;">
@@ -24,7 +24,8 @@
             <!-- App name -->
             <h3 class="coral-font-color m-b-0">
                 <span>
-                    {{icon.appName.replaceAll("_", " ")}}
+                    {{icon.appName}}
+                    <!-- {{icon.appName.replaceAll("_", " ")}} -->
                 </span>
             </h3>
             
@@ -99,6 +100,7 @@ export default {
         ...mapActions(['showEl', 'setSelectedIcon', 'addClickCount']),
 
         prettifyName(name){
+            console.log("name: ", name);
             name = name.replaceAll("_", " ")
             return name
         },
