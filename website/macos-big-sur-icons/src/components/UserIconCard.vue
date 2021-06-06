@@ -25,8 +25,7 @@
             <!-- App name -->
             <h3 class="coral-font-color m-b-0">
                 <span>
-                    {{icon.appName}}
-                    <!-- {{icon.appName.replaceAll("_", " ")}} -->
+                    {{icon.appName.replaceAll("_", " ")}}
                 </span>
             </h3>
             
