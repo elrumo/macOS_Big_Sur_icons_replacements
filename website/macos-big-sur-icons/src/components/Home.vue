@@ -51,7 +51,7 @@
     />
 
     
-    <section style="min-height: calc(100vh - 100px);" class="">
+    <section style="min-height: calc(100vh - 120px);" class="">
       
       <!-- Search bar -->
       <div
