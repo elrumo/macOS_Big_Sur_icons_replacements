@@ -1,5 +1,5 @@
 <template>
-    <div class="card-wrapper card-hover coral-card m-0" style="max-height: 226px">
+    <div class="card-wrapper card-hover coral-card m-0">
 
         <!-- Icon image -->
         <div class="card-img-wrapper" style="max-width: 120px;">
