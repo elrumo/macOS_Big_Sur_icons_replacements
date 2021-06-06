@@ -49,12 +49,11 @@
       :parseObj="getParseObj"
       :iconsEmpty="true"
     />
-      <!-- :iconsEmpty="!loadingError" -->
 
     
-    <!-- Search bar -->
-    <section class="">
+    <section style="min-height: calc(100vh - 100px);" class="">
       
+      <!-- Search bar -->
       <div
         @click="isSearch = true"
         id="searchBar"
@@ -276,17 +275,6 @@ Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://media.macosicons.com/parse'
 
 var Icons = Parse.Object.extend("Icons2");
-
-// let algolia = {
-//     // TODO: remove credentials
-//     appid: "P1TXH7ZFB3",
-//     apikey: "0ba04276e457028f3e11e38696eab32c"
-//     // appid: process.env.VUE_APP_ALGOLIA_APPID,
-//     // apikey: process.env.VUE_APP_ALGOLIA_KEY
-// }
-
-// const client = algoliasearch(algolia.appid, algolia.apikey);
-// const index = client.initIndex('macOSicons')
 
 const docLimit = 20
 
