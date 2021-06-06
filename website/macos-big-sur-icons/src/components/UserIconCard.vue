@@ -12,6 +12,7 @@
 
             <!-- iOS icon download -->
             <a v-else @click="addClickCount(icon)" target="_blank" rel="noopener" :href="icon.iOSUrl">
+                <!-- <div class="placeholder-icon" v-lazy-container="{ selector: 'img', loading: coralIcons.placeholderIcon }"> -->
                 <div class="placeholder-icon" v-lazy-container="{ selector: 'img', loading: coralIcons.placeholderIcon }">
                     <img width="100px" height="100px" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
                 </div>
