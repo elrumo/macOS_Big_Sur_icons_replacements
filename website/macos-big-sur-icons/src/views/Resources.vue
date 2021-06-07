@@ -77,7 +77,7 @@ export default {
 
   metaInfo: {
       // if no subcomponents specify a metaInfo.title, this title will be used
-      title: 'Free icon templates resources for macOS Big Sur.',
+      title: 'Free icon templates resources for macOS Monterey, Big Sur.',
       description:"Resources and templates to help you design and showcase icons for macOS.",
       // all titles will be injected into this template
       titleTemplate: '%s | macOSicons',
@@ -89,7 +89,7 @@ export default {
         },
         {
           property: 'og:title',
-          content:  'Free icon templates resources and over 5000+ icons for macOS Big Sur.',
+          content:  'Free icon templates resources and over 5000+ icons for macOS Monterey, Big Sur.',
         },
         {
           property: 'og:description',
@@ -111,7 +111,7 @@ export default {
         },
         {
           property: 'twitter:title',
-          content:  'Free icon templates resources and over 5000+ icons for macOS Big Sur.',
+          content:  'Free icon templates resources and over 5000+ icons for macOS Monterey, Big Sur.',
         },
         {
           property: 'twitter:image',
