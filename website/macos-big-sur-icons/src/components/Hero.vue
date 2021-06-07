@@ -17,7 +17,7 @@
 
         <div class="desktop-hidden m-t-20"></div>
 
-        <p class="coral-Body--S m-b-0">
+        <p class="coral-Body--S m-b-0 p-b-10">
           Hosting by
           <a href="https://fosshost.org/" rel="noopener" target="_blank" class="coral-Link">
               FossHost
@@ -27,24 +27,18 @@
         <h1
           class="main-heading m-t-0 coral-Heading--XL coral-Heading--regular"
         >
-          <span class="f-w-100 f-s-26">macOS Big Sur</span>
+          <span class="f-w-100 f-s-26">
+            macOS Big Sur <span class="coral-Body--XS m-b-0"> &  Monterey </span>
+          </span>
           <br />
           <!-- The Icons Page -->
-           Replacement app icons
+           App icons
         </h1>
 
-        <!-- <p class="coral-Body--L w-100 body-text coral-Well m-t-10">
-          Icon submissions back to normal, I'm working hard on getting as may icons as I can back. More info soon.
-          <br>
-          <br>
-            <router-link to="/blog/hacked">
-              <span class="underline"> Read more about the hack. </span>
-            </router-link>
-        </p> -->
         <p class="coral-Body--L w-100 body-text">
-          To contribute, download one of our free icon templates from the
+          Download one of our free icon templates from the
             <router-link to="/resources">
-            <span class="underline"> resources page. </span>
+            <span class="underline"> resources page.</span>
             </router-link>
         </p>
         
