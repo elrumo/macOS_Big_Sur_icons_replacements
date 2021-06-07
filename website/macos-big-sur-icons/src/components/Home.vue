@@ -295,10 +295,10 @@ export default {
 
   metaInfo: {
       // if no subcomponents specify a metaInfo.title, this title will be used
-      // title: 'How to change app icons in macOS Big Sur',
+      // title: 'How to change app icons in macOS Big Sur & Monterey',
       title: 'macOS app icon pack - 7000+ ready icons for Big Sur & iOS',
-      // description:"Instructions on how to donlwoad and change app icons in macOS Big Sur using Finder and a website with over 5000+ free app icons.",
-      description:"7000+ App icons for macOS in the style of macOS Big Sur. Fully open source and community led. How to install custom icons on macOS Big Sur.",
+      // description:"Instructions on how to donlwoad and change app icons in macOS Big Sur & Monterey using Finder and a website with over 5000+ free app icons.",
+      description:"7000+ App icons for macOS in the style of macOS Big Sur & Monterey. Fully open source and community led. How to install custom icons on macOS Big Sur & Monterey.",
       // all titles will be injected into this template
       titleTemplate: '%s | macOSicons',
       meta:[
@@ -316,7 +316,7 @@ export default {
         {
           property: 'og:description',
           // vmid:     'og:description',
-          content:  'Free 5000+ App icons for macOS in the style of macOS Big Sur. Fully open source and community led. How to install custom icons on macOS Big Sur.',
+          content:  'Free 5000+ App icons for macOS in the style of macOS Big Sur & Monterey. Fully open source and community led. How to install custom icons on macOS Big Sur & Monterey.',
         },
         {
           property: 'og:image',
@@ -333,7 +333,7 @@ export default {
         {
           property: 'twitter:description',
           // vmid:     'twitter:description',
-          content:  'Free 5000+ App icons for macOS in the style of macOS Big Sur. Fully open source and community led. How to install custom icons on macOS Big Sur.',
+          content:  'Free 5000+ App icons for macOS in the style of macOS Big Sur & Monterey. Fully open source and community led. How to install custom icons on macOS Big Sur & Monterey.',
         },
         {
           property: 'twitter:title',
