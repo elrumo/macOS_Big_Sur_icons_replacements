@@ -1,14 +1,25 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Parse from 'parse'
-
-Vue.use(Vuex)
+import algoliasearch from 'algoliasearch'
 
 import localPages from '@/api/pages.json';
 import localPosts from '@/api/posts.json';
 import icons from '@/api/icons.json';
 import { getPages, getSinglePage } from '@/api/posts';
 
+Vue.use(Vuex)
+
+var IconsBase = Parse.Object.extend("Icons2");
+
+let algolia = {
+  // TODO: remove credentials
+  appid: process.env.VUE_APP_ALGOLIA_APPID,
+  apikey: process.env.VUE_APP_ALGOLIA_KEY
+}
+
+const client = algoliasearch(algolia.appid, algolia.apikey);
+const index = client.initIndex('macOSicons')
 
 export default new Vuex.Store({
 
@@ -31,6 +42,8 @@ export default new Vuex.Store({
     downloads:[],
 
     selectedIcon:{},
+    searchString: "",
+    searchData: [],
     
     userIcons: {
       approved: [],
@@ -46,8 +59,14 @@ export default new Vuex.Store({
         hacked: 0
       }
     },
-
-    appCategories: [],
+    
+    selectedCategory: {
+      id: "All",
+    },
+    totalCategory: 0,
+    appCategories: [
+      {"id":"qI4GKWNpum","name":"Browser Extensions","categoryObj":{"className":"Categories","_objCount":16,"id":"qI4GKWNpum"}},{"id":"m2v3VuzZEu","name":"Developer Tools","categoryObj":{"className":"Categories","_objCount":3,"id":"m2v3VuzZEu"}},{"id":"0BnPHRjdrQ","name":"Education","categoryObj":{"className":"Categories","_objCount":4,"id":"0BnPHRjdrQ"}},{"id":"gVBckgE4zl","name":"Entertainment","categoryObj":{"className":"Categories","_objCount":5,"id":"gVBckgE4zl"}},{"id":"rq2vNGoV92","name":"Finance","categoryObj":{"className":"Categories","_objCount":2,"id":"rq2vNGoV92"}},{"id":"6DiDa4yD4m","name":"Games","categoryObj":{"className":"Categories","_objCount":6,"id":"6DiDa4yD4m"}},{"id":"sQCYzXFttB","name":"Graphics & Design","categoryObj":{"className":"Categories","_objCount":7,"id":"sQCYzXFttB"}},{"id":"7SbNrtDxDh","name":"Health & Fitness","categoryObj":{"className":"Categories","_objCount":9,"id":"7SbNrtDxDh"}},{"id":"7KYFn5kd15","name":"Lifestyle","categoryObj":{"className":"Categories","_objCount":8,"id":"7KYFn5kd15"}},{"id":"GgZF9kgRR7","name":"Medical","categoryObj":{"className":"Categories","_objCount":10,"id":"GgZF9kgRR7"}},{"id":"BO0gbTCPUK","name":"Music","categoryObj":{"className":"Categories","_objCount":12,"id":"BO0gbTCPUK"}},{"id":"jQbEVy2jCI","name":"News","categoryObj":{"className":"Categories","_objCount":11,"id":"jQbEVy2jCI"}},{"id":"ghYlSc5rf4","name":"Photo & Video","categoryObj":{"className":"Categories","_objCount":13,"id":"ghYlSc5rf4"}},{"id":"joml1zA4lv","name":"Productivity","categoryObj":{"className":"Categories","_objCount":14,"id":"joml1zA4lv"}},{"id":"StBWAxgpbs","name":"Reference","categoryObj":{"className":"Categories","_objCount":15,"id":"StBWAxgpbs"}},{"id":"dtOc7xXCaR","name":"Social Networking","categoryObj":{"className":"Categories","_objCount":17,"id":"dtOc7xXCaR"}},{"id":"thUmE1CYrl","name":"Sports","categoryObj":{"className":"Categories","_objCount":18,"id":"thUmE1CYrl"}},{"id":"Fhs38OomHD","name":"Travel","categoryObj":{"className":"Categories","_objCount":19,"id":"Fhs38OomHD"}},{"id":"EzBFwmxpNd","name":"Utilities","categoryObj":{"className":"Categories","_objCount":21,"id":"EzBFwmxpNd"}},{"id":"SIMwpAEm4Z","name":"Weather","categoryObj":{"className":"Categories","_objCount":20,"id":"SIMwpAEm4Z"}}
+    ],
     iconType: []
     // userData: JSON.parse(JSON.stringify(Parse.User.current()))
   },
@@ -62,9 +81,15 @@ export default new Vuex.Store({
     },
 
     pushDataToArr(store, iconData){
-      // console.log("iconData:", store[iconData.arr]);
-      if (Array.isArray(iconData.data)) {
-        store[iconData.arr] = iconData.data        
+      
+      let concatArray = iconData.concatArray
+
+      if (concatArray) {
+        // let newItems = [...store[iconData.arr]]
+        // console.log("newItems: ", newItems);
+        store[iconData.arr] = store[iconData.arr].concat(iconData.data)
+      } else if (Array.isArray(iconData.data) && !concatArray) {
+        store[iconData.arr] = iconData.data
       } else{
         store[iconData.arr].push(iconData.data)
       }
@@ -103,7 +128,228 @@ export default new Vuex.Store({
 
   },
   
+
   actions: {
+
+    algoliaSearch(store){
+      let search = store.state.searchString
+      let category = store.state.selectedCategory.id
+
+      if (store.state.selectedCategory.id != "All") {
+        index.search(search, {filters: `approved:true AND category:"`+category+`"`, hitsPerPage: 150 }).then(function(responses) {
+          store.commit('pushDataToArr', {arr: "searchData", data: responses.hits})
+        });
+
+      } else{ 
+        index.search(search, {filters: `approved:true`, hitsPerPage: 150 }).then(function(responses) {
+          store.commit('pushDataToArr', {arr: "searchData", data: responses.hits})
+          // store.commit('pushDataToArr', {arr: "dataToShow", data: responses.hits})
+        });
+      }
+
+    },
+
+    setData(store, data){
+      store.commit('setDataToArr', {arr: data.state, data: data.data})
+    },
+    
+    async loadMoreIcons(store){
+      let totalCategory = store.state.totalCategory
+      let toSkip = store.state.dataToShow.length
+
+      if (totalCategory == toSkip) {
+        return
+      }
+
+      const query = new Parse.Query(IconsBase);
+      
+      let selectedCategory = store.state.selectedCategory
+      let numToLoad = 30
+
+      query.exists("icnsFile");
+      query.equalTo("category", selectedCategory.categoryObj);
+      query.equalTo("approved", true);
+      query.limit(numToLoad)
+      query.skip(toSkip)
+      query.descending("timeStamp");
+
+      const results = await query.find()
+      let allIcons = []
+
+      for(let result in results){
+        let objData = results[result].attributes
+        let iconData = {}
+
+        for(let data in objData){
+          iconData[data] = objData[data]
+        }
+        iconData.id = results[result].id;
+        
+        allIcons.push(iconData)
+      }
+
+      store.commit('pushDataToArr', {arr: "dataToShow", data: allIcons, concatArray: true})
+    },
+
+    async setCategory(store, category){
+      let newCategory = category.id
+      let oldCategory = store.state.selectedCategory.id
+      let sameCategory = newCategory == oldCategory;
+      let search = store.state.searchString
+
+      window.scrollTo(0, 400)
+      
+      // set category
+      store.commit('setDataToArr', {arr: 'selectedCategory', data: category, concatArray: false})
+      
+      if (search.length > 0) {
+        store.dispatch('algoliaSearch')
+      }
+
+      if (category.id != "All" && !sameCategory) {
+        store.commit('setDataToArr', {arr: 'dataToShow', data: [], concatArray: false})
+
+        let toSkip = store.state.dataToShow.filter(icon => icon.category.id == newCategory).length // Checks how many icons with that category have already been fetched
+        
+        let approvedQuery = new Parse.Query(IconsBase);
+        let numToLoad = 25
+        
+        approvedQuery.exists("icnsFile");
+        approvedQuery.equalTo("category", category.categoryObj);
+        approvedQuery.equalTo("approved", true);
+        approvedQuery.limit(numToLoad)
+        approvedQuery.skip(toSkip)
+        approvedQuery.descending("timeStamp");
+        
+        let totalCategory = await approvedQuery.count()
+        store.commit('setDataToArr', {arr: 'totalCategory', data: totalCategory})
+        
+        let results = await approvedQuery.find();        
+        let allIcons = []
+
+        for(let result in results){
+
+          let iconItem = results[result]
+          let objData = iconItem.attributes
+          let iconData = {}
+
+          for(let data in objData){
+            iconData[data] = objData[data]
+          }
+          
+          iconData.id = results[result].id
+          allIcons.push(iconData)
+        }
+        
+        store.commit('pushDataToArr', {arr: "dataToShow", data: allIcons})
+      }
+    },
+
+
+    async fetchUserIcons(store, userObj){
+
+      let IconsBase = Parse.Object.extend("Icons2");
+      let approvedQuery = new Parse.Query(IconsBase);
+      let notApprovedQuery = new Parse.Query(IconsBase);
+      let numToLoad = 15
+
+      // Approved Count
+      /////////////////////////////////////////////
+      let approvedIconsCount = new Parse.Query(IconsBase);
+      approvedIconsCount.equalTo("user", userObj);
+      approvedIconsCount.equalTo("approved", true);
+      approvedIconsCount.exists("icnsFile");
+      let totalApproved = await approvedIconsCount.count()
+      store.state.userIcons.count.approved = totalApproved
+      /////////////////////////////////////////////
+      
+      // Not Approved Count
+      /////////////////////////////////////////////
+      let notApprovedQueryCount = new Parse.Query(IconsBase);
+      notApprovedQueryCount.equalTo("user", userObj);
+      notApprovedQueryCount.equalTo("approved", false);
+      notApprovedQueryCount.exists("highResPngFile");
+      let totalNotApproved = await notApprovedQueryCount.count()
+      store.state.userIcons.count.notApproved = totalNotApproved
+      /////////////////////////////////////////////
+
+      // Hacked Count
+      /////////////////////////////////////////////
+      let hackedCount = new Parse.Query(IconsBase);
+      hackedCount.equalTo("user", userObj);
+      hackedCount.equalTo("approved", true);
+      hackedCount.doesNotExist("icnsFile");
+      let hacked = await hackedCount.count()
+      store.state.userIcons.count.hacked = hacked
+      /////////////////////////////////////////////
+      
+      approvedQuery.limit(numToLoad)
+      approvedQuery.equalTo("user", userObj);
+      approvedQuery.equalTo("approved", true);
+      approvedQuery.exists("icnsFile");
+      approvedQuery.skip(store.state.userIcons.toSkip.approved)
+      approvedQuery.descending("createdAt");
+      store.state.userIcons.toSkip.approved += numToLoad;
+      let iconResults = await approvedQuery.find();
+      
+      iconResults.forEach((result)=>{
+        returnIconData(result, "approved");
+      })
+      
+      notApprovedQuery.limit(numToLoad)
+      notApprovedQuery.equalTo("user", userObj);
+      notApprovedQuery.skip(store.state.userIcons.toSkip.notApproved)
+      notApprovedQuery.descending("createdAt");
+      notApprovedQuery.equalTo("approved", false);
+      store.state.userIcons.toSkip.notApproved += numToLoad;
+      let notApproved = await notApprovedQuery.find();
+
+      notApproved.forEach((result)=>{
+        returnIconData(result, "notApproved");
+      })
+
+      function returnIconData(result, status){
+        let icon = result.attributes
+        let dataToPush = {
+            status: status,
+            iconData: {}
+        }
+
+        // Set icon ID to icon properties
+        dataToPush.iconData.id = result.id
+        // Pass high res png url if lor res png is not present
+        if (!icon.lowResPngFile) {
+          dataToPush.iconData.lowResPngUrl = icon.highResPngUrl
+        }
+
+        // Set category if empty
+        if (!icon.category) {
+          dataToPush.iconData.category = {id: ""}
+        }
+        
+        if (!result.get('type')) {
+          console.log("icon.type: ", result.get('appName'));
+        }
+
+        // // Set type if empty
+        // if (!icon.category) {
+        //   dataToPush.iconData.category = {id: ""}
+        // }
+
+        for(let data in icon){
+          dataToPush.iconData[data] = icon[data]
+        }
+        store.commit('pushUserIcons',  dataToPush);
+      }
+
+      let isLoading = {
+        arr: "loading",
+        data: false
+      }
+      store.commit('setDataToArr', isLoading)
+      return true
+    },
+
     showToast(store, dialogId){
       document.getElementById(dialogId.id).content.innerHTML = dialogId.message;
       document.getElementById(dialogId.id).variant = dialogId.variant;
@@ -112,12 +358,14 @@ export default new Vuex.Store({
     
     async addClickCount(store, icon){
       
+      console.log("store.state.downloads: ", store.state.downloads);
+      console.log("icon: ", icon);
       if (store.state.downloads.indexOf(icon.id) == -1) {
         store.commit('setDataToArr', {arr: 'downloads', data: icon.id})
         // store.state.downloads.push(icon.id)
         console.log(store.state.downloads.indexOf(icon.id));
         var id
-        
+        console.log("icon.appName: ", icon.appName);
         if (icon.id) {
           id = icon.id
         } else{
@@ -126,7 +374,7 @@ export default new Vuex.Store({
         icon = { appName: icon.appName, id: id }
         await Parse.Cloud.run("addClickCount", {icon: icon})
       } else{
-        return "No downlaod"
+        return "No download"
       }
     },
 
@@ -275,124 +523,21 @@ export default new Vuex.Store({
       }})
     },
 
-    async fetchUserIcons(store, userObj){
-
-      let IconsBase = Parse.Object.extend("Icons2");
-      let approvedQuery = new Parse.Query(IconsBase);
-      let notApprovedQuery = new Parse.Query(IconsBase);
-      let numToLoad = 15
-
-      // Approved Count
-      /////////////////////////////////////////////
-      let approvedIconsCount = new Parse.Query(IconsBase);
-      approvedIconsCount.equalTo("user", userObj);
-      approvedIconsCount.equalTo("approved", true);
-      approvedIconsCount.exists("icnsFile");
-      let totalApproved = await approvedIconsCount.count()
-      store.state.userIcons.count.approved = totalApproved
-      /////////////////////////////////////////////
-      
-      // Not Approved Count
-      /////////////////////////////////////////////
-      let notApprovedQueryCount = new Parse.Query(IconsBase);
-      notApprovedQueryCount.equalTo("user", userObj);
-      notApprovedQueryCount.equalTo("approved", false);
-      notApprovedQueryCount.exists("highResPngFile");
-      let totalNotApproved = await notApprovedQueryCount.count()
-      store.state.userIcons.count.notApproved = totalNotApproved
-      /////////////////////////////////////////////
-
-      // Hacked Count
-      /////////////////////////////////////////////
-      let hackedCount = new Parse.Query(IconsBase);
-      hackedCount.equalTo("user", userObj);
-      hackedCount.equalTo("approved", true);
-      hackedCount.doesNotExist("icnsFile");
-      let hacked = await hackedCount.count()
-      store.state.userIcons.count.hacked = hacked
-      /////////////////////////////////////////////
-      
-      approvedQuery.limit(numToLoad)
-      approvedQuery.equalTo("user", userObj);
-      approvedQuery.equalTo("approved", true);
-      approvedQuery.exists("icnsFile");
-      approvedQuery.skip(store.state.userIcons.toSkip.approved)
-      approvedQuery.descending("createdAt");
-      store.state.userIcons.toSkip.approved += numToLoad;
-      let iconResults = await approvedQuery.find();
-      
-      iconResults.forEach((result)=>{
-        returnIconData(result, "approved");
-      })
-      
-      notApprovedQuery.limit(numToLoad)
-      notApprovedQuery.equalTo("user", userObj);
-      notApprovedQuery.skip(store.state.userIcons.toSkip.notApproved)
-      notApprovedQuery.descending("createdAt");
-      notApprovedQuery.equalTo("approved", false);
-      store.state.userIcons.toSkip.notApproved += numToLoad;
-      let notApproved = await notApprovedQuery.find();
-
-      notApproved.forEach((result)=>{
-        returnIconData(result, "notApproved");
-      })
-
-      function returnIconData(result, status){
-        let icon = result.attributes
-        let dataToPush = {
-            status: status,
-            iconData: {}
-        }
-
-        // Set icon ID to icon properties
-        dataToPush.iconData.id = result.id
-        // Pass high res png url if lor res png is not present
-        if (!icon.lowResPngFile) {
-          dataToPush.iconData.lowResPngUrl = icon.highResPngUrl
-        }
-
-        // Set category if empty
-        if (!icon.category) {
-          dataToPush.iconData.category = {id: ""}
-        }
-        
-        if (!result.get('type')) {
-          console.log("icon.type: ", result.get('appName'));
-        }
-
-        // // Set type if empty
-        // if (!icon.category) {
-        //   dataToPush.iconData.category = {id: ""}
-        // }
-
-        for(let data in icon){
-          dataToPush.iconData[data] = icon[data]
-        }
-        store.commit('pushUserIcons',  dataToPush);
-      }
-
-      let isLoading = {
-        arr: "loading",
-        data: false
-      }
-      store.commit('setDataToArr', isLoading)
-      return true
-    },
-
     async fetchAppCategories(store) {
       let Categories = Parse.Object.extend("Categories");
       let categories = new Parse.Query(Categories)
 
       categories.find().then((results)=>{
+        store.state.appCategories = []
         for(let result in results){
           let item = results[result];
           
           let categoryObj = {
             id: item.id,
             name: item.get("CategoryName"),
-            categoryObj: item
+            categoryObj: item,
           }
-
+          
           store.commit("pushAppCategories", {state: "appCategories", storeObj: categoryObj})
         }
       }).catch((error)=>{
@@ -423,7 +568,40 @@ export default new Vuex.Store({
 
   },  
   
+  
   getters: {
+    
+    getSelectedCategory(store){
+      return store.selectedCategory
+    },
+
+    // Return icons based on criteria, like what category has been selected etc...
+    selectedIcons(store){
+      let selectedCategory = store.selectedCategory.id;
+
+      if (selectedCategory == "All" && !store.searchString) {
+        return store.list
+      } else if (selectedCategory != "All" && !store.searchString) {
+        try {
+          return store.dataToShow.filter(icon => icon.category.id == selectedCategory);
+        } catch (error) {
+          console.log("error: ", e)
+          return store.dataToShow; 
+        }
+      }
+
+      if (selectedCategory == "All" && store.searchString !="") {
+        return store.searchData
+      } else if (selectedCategory != "All" && store.searchString !="") {
+        try {
+          return store.searchData;
+        } catch (error) {
+          console.log("error: ", e)
+          return store.searchData; 
+        }
+      }
+
+    },
 
     getSelectedIcon(store){
       return store.selectedIcon

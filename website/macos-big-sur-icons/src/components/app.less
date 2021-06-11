@@ -343,6 +343,44 @@ option[value=""][disabled] {
     background: url('../assets/icons/ChevronDown-dark.svg') no-repeat 97% 50%;
 }
 
+.scroll-right{
+    top: 20%;
+    right: -27px;
+    transform: rotate(-90deg) translateY(-50%);
+}
+
+.scroll-left{
+    top: 20%;
+    left: -27px;
+    transform: rotate(90deg) translateY(-50%);
+}
+
+.click-to-scroll{
+    position: absolute;
+    z-index: 9;
+    opacity: 0.7;
+}
+
+.chevron{
+    cursor: pointer;
+    width: 18px;
+    height: 100%;
+    background-size: 25px 30px !important;
+    transition: 0.2s;
+}
+
+.chevron:hover{
+    opacity: 1;
+}
+
+.coral--dark .chevron{
+    background: url('../assets/icons/ChevronDown.svg') no-repeat 50% 50%;
+}
+
+.coral--light .chevron{
+    background: url('../assets/icons/ChevronDown-dark.svg') no-repeat 50% 50%;
+}
+
 // .profile-pic-nav::after{
 //     content: ".";
 //     font-size: 1px;
@@ -389,6 +427,96 @@ option[value=""][disabled] {
     z-index: 9;
     top: -8px;
     left: -5px;
+}
+
+coral-buttongroup button{
+    border-radius:  100px !important;
+}
+
+.categories-wrapper{
+    position: relative;
+    width: 100%;
+    overflow-x: scroll;
+    padding: 20px 0px 0px 20px;
+    height: 32px;
+    scrollbar-width: none;
+}
+
+.categories-container{
+    position: relative;
+    width: var(--page-width);
+    height: fit-content;
+    margin: auto;
+    max-width: 1300px;
+    overflow: hidden;
+}
+
+.categories-container coral-buttongroup{
+    padding-right: 50px;
+    padding-left: 10px;
+    width: fit-content;
+    width: -moz-fit-content;
+}
+
+.categories-container::after{
+    position: absolute;
+    width: 30px;
+    height: 35px;
+    // background-image: linear-gradient(270deg, #252525 40%, transparent);
+    content: ".";
+    right: 0px;
+    top: 35%;
+}
+
+.categories-container::before{
+    position: absolute;
+    width: 30px;
+    height: 35px;
+    content: " ";
+    left: 0px;
+    top: 35%;
+    z-index: 9;
+}
+
+.coral--dark .categories-container::before{
+    background-image: linear-gradient(90deg, var(--coral-dark-bg) 40%, #25252500)
+}
+
+.coral--light .categories-container::before{
+    background-image: linear-gradient(90deg, var(--coral-light-bg) 40%, #f5f5f500)
+}
+
+.coral--dark .categories-container::after{
+    background-image: linear-gradient(270deg, var(--coral-dark-bg) 40%, #25252500)
+}
+
+.coral--light .categories-container::after{
+    background-image: linear-gradient(270deg, var(--coral-light-bg) 40%, #f5f5f500)
+}
+
+.categories-wrapper::-webkit-scrollbar{
+    display: none;
+    height: 47px;
+}
+
+.categories-wrapper ._coral-ActionButton{
+    background: none;
+}
+
+.categories-wrapper ._coral-ActionButton.is-selected{
+    opacity: 1 !important;
+}
+.coral--dark .categories-wrapper ._coral-ActionButton.is-selected{
+    border-color: #ababab;
+}
+
+.coral--light .categories-wrapper ._coral-ActionButton{
+    opacity: 0.9;
+}
+
+.coral--light .categories-wrapper ._coral-ActionButton.is-selected{
+    border-color: #cccccc;
+    background: white;
 }
 
 .scrolled-shadow{
@@ -1407,6 +1535,14 @@ option[value=""][disabled] {
     padding-top: 30px;
 }
 
+.waiting-absolute{
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+    z-index: 9;
+    padding-top: 120px;
+}
+
 .redBg{
     background: red;
 }
@@ -1796,9 +1932,10 @@ option[value=""][disabled] {
         grid-template-columns: 1fr 1fr;
     }
 
-    // .footer{
-    //     bottom: inherit;
-    // }
+    .waiting-absolute{
+        left: 75%;
+        transform: translatex(-75%);
+    }
     
     .main-heading{
         padding-top: 0px;

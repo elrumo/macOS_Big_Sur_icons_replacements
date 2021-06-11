@@ -49,12 +49,11 @@
       :parseObj="getParseObj"
       :iconsEmpty="true"
     />
-      <!-- :iconsEmpty="!loadingError" -->
 
     
-    <!-- Search bar -->
-    <section class="">
-      <!-- v-if="!loadingError" -->
+    <section style="min-height: calc(100vh - 120px);" class="">
+      
+      <!-- Search bar -->
       <div
         @click="isSearch = true"
         id="searchBar"
@@ -108,10 +107,44 @@
           </div>
 
         </div>
+        
+        <div class="categories-container">
+          <div id="categoriesWrapper" class="categories-wrapper">
+            <coral-buttongroup selectionmode="single">
+                <button
+                  is="coral-button"
+                  selected="true"
+                  value="All"
+                  title="all"
+                  @click="setCategory({id: 'All'})"
+                  aria-label="category.name  "
+                >
+                  All icons
+                </button>
+                <button
+                  v-for="category in getAppCategories"
+                  :key="category.name+'_categoryHome'"
+                  is="coral-button"
+                  selected=""
+                  @click="setCategory(category)"
+                  :value="category.name"
+                  :title="category.name"
+                  :aria-label="category.name  "
+                >
+                  {{category.name}}
+                </button>
+            </coral-buttongroup>
+          </div>
+          <div @click="scrollEl('categoriesWrapper', 0, -300)" class="click-to-scroll scroll-left chevron" :src="coralIcons.chevron" alt=""/>
+          <div @click="scrollEl('categoriesWrapper', 0, 300)" class="click-to-scroll scroll-right chevron" :src="coralIcons.chevron" alt=""/>
+        </div>
+
       </div>
       
+      
+      
     <!-- Loading spinning circle -->
-      <div v-if="this.$store.state.list == 0 & !loadingError" class="waiting-wrapper">
+      <div v-if="search.length == 0 && searchString.length == 0" class="waiting-wrapper waiting-absolute">
         <coral-wait size="L" indeterminate=""></coral-wait>
       </div>
 
@@ -136,62 +169,79 @@
         </h3>
       </div>
 
-      <div v-if="noIcons" class="waiting-wrapper">
+      <div v-if="
+        search.length == 0 && searchString.length > 0 && getSelectedCategory.id == 'All'
+      " class="waiting-wrapper">
         <p class="coral-Body--S">
           No results
         </p>
       </div>
 
+      <div v-if="
+        search.length == 0 && searchString.length > 0 && getSelectedCategory.id != 'All'
+      " class="waiting-wrapper">
+        <p class="coral-Body--S">
+          No results under {{ getSelectedCategory.name }}, try a different category
+        </p>
+      </div>
+
     <!-- Icon list when no loading error-->
-        <div class="icon-list-area p-t-20 p-b-30 content-wrapper-regular">
-        <!-- <div v-if="!loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular"> -->
+      <div class="icon-list-area p-t-20 p-b-30 content-wrapper-regular">
+      <!-- <div v-if="!loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular"> -->
 
-          <div style="min-height: 210px" class="card-hover relative coral-card">
-            
-            <div style="z-index: 1; height: 100%; width: 100%" class="absolute carbon-card-ad">
-              <script @click="adClick" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
-            </div>
-
-            <div style="z-index: 2" class="absolute card-grid-nativeAd">
-              <div @click="adClick" id="card-ad">
-              </div>
-            </div>
-            
-            <a
-              class="card-no-ad relative"
-              href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
-              rel="noopener"
-              target="_blank"
-              style="width: 100%; left: 0;"
-              @click="logDonation('support-message')"
-            >
-              <div class="support-page">
-                <h3 class="coral-Heading--S m-0">
-                  Support this page
-                </h3>
-                <p class="coral-Body--S m-0">
-                  Please consider disabling your ad blocker or making a
-                  <a  
-                    rel="noopener"
-                    class="coral-Link"
-                    target="_blank"
-                    href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
-                  >
-                    donation 
-                  </a>
-                 to support this project.
-                </p>
-              </div>
-            </a>
-
+        <div style="min-height: 226px; max-height:226px" class="card-hover relative coral-card">
+          
+          <div style="z-index: 1; height: 100%; width: 100%" class="absolute carbon-card-ad">
+            <script @click="adClick" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
           </div>
 
-          <UserIconCard v-for="icon in search" :key="icon.icnsUrl" :icon="icon" :isAdmin="isAdmin" :isMacOs="isMacOs"/>
+          <div style="z-index: 2" class="absolute card-grid-nativeAd">
+            <div @click="adClick" id="card-ad">
+            </div>
+          </div>
+          
+          <a
+            class="card-no-ad relative"
+            href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+            rel="noopener"
+            target="_blank"
+            style="width: 100%; left: 0;"
+            @click="logDonation('support-message')"
+          >
+            <div class="support-page">
+              <h3 class="coral-Heading--S m-0">
+                Support this page
+              </h3>
+              <p class="coral-Body--S m-0">
+                Please consider disabling your ad blocker or making a
+                <a  
+                  rel="noopener"
+                  class="coral-Link"
+                  target="_blank"
+                  href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+                >
+                  donation 
+                </a>
+                to support this project.
+              </p>
+            </div>
+          </a>
+
         </div>
-        
-        <div v-if="!scrolledToBottom && !isSearch" class="p-b-50 m-b-50 waiting-wrapper">
-            <coral-wait size="L" indeterminate=""></coral-wait>
-        </div>
+
+        <UserIconCard v-for="icon in search" :key="icon.icnsUrl" :icon="icon" :isAdmin="isAdmin" :isMacOs="isMacOs"/>
+      </div>
+
+      <div v-if="
+        (!scrolledToBottom && getSelectedCategory.id != 'All') ||
+        (!scrolledToBottom && searchString.length == 0 && getSelectedCategory.id == 'All')
+      " class="p-b-50 m-b-50 waiting-wrapper">
+      <!-- <div v-if="
+        (!scrolledToBottom && getSelectedCategory.id != 'All') ||
+        (!scrolledToBottom && searchString.length == 0 && getSelectedCategory.id == 'All')
+      " class="p-b-50 m-b-50 waiting-wrapper"> -->
+          <coral-wait size="L" indeterminate=""></coral-wait>
+      </div>
 
     </section>
 
@@ -209,7 +259,7 @@ import deleteDialog from './deleteDialog.vue';
 import NativeAd from './NativeAd.vue';
 import StickyBanner from './StickyBanner.vue';
 
-import algoliasearch from 'algoliasearch'
+// import algoliasearch from 'algoliasearch'
 import Parse from 'parse'
 
 import VueLoadImage from 'vue-load-image'
@@ -225,15 +275,6 @@ Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://media.macosicons.com/parse'
 
 var Icons = Parse.Object.extend("Icons2");
-
-let algolia = {
-    // TODO: remove credentials
-    appid: process.env.VUE_APP_ALGOLIA_APPID,
-    apikey: process.env.VUE_APP_ALGOLIA_KEY
-}
-
-const client = algoliasearch(algolia.appid, algolia.apikey);
-const index = client.initIndex('macOSicons')
 
 const docLimit = 20
 
@@ -254,10 +295,10 @@ export default {
 
   metaInfo: {
       // if no subcomponents specify a metaInfo.title, this title will be used
-      // title: 'How to change app icons in macOS Big Sur',
+      // title: 'How to change app icons in macOS Big Sur & Monterey',
       title: 'macOS app icon pack - 7000+ ready icons for Big Sur & iOS',
-      // description:"Instructions on how to donlwoad and change app icons in macOS Big Sur using Finder and a website with over 5000+ free app icons.",
-      description:"7000+ App icons for macOS in the style of macOS Big Sur. Fully open source and community led. How to install custom icons on macOS Big Sur.",
+      // description:"Instructions on how to donlwoad and change app icons in macOS Big Sur & Monterey using Finder and a website with over 5000+ free app icons.",
+      description:"7000+ App icons for macOS in the style of macOS Big Sur & Monterey. Fully open source and community led. How to install custom icons on macOS Big Sur & Monterey.",
       // all titles will be injected into this template
       titleTemplate: '%s | macOSicons',
       meta:[
@@ -275,7 +316,7 @@ export default {
         {
           property: 'og:description',
           // vmid:     'og:description',
-          content:  'Free 5000+ App icons for macOS in the style of macOS Big Sur. Fully open source and community led. How to install custom icons on macOS Big Sur.',
+          content:  'Free 5000+ App icons for macOS in the style of macOS Big Sur & Monterey. Fully open source and community led. How to install custom icons on macOS Big Sur & Monterey.',
         },
         {
           property: 'og:image',
@@ -292,7 +333,7 @@ export default {
         {
           property: 'twitter:description',
           // vmid:     'twitter:description',
-          content:  'Free 5000+ App icons for macOS in the style of macOS Big Sur. Fully open source and community led. How to install custom icons on macOS Big Sur.',
+          content:  'Free 5000+ App icons for macOS in the style of macOS Big Sur & Monterey. Fully open source and community led. How to install custom icons on macOS Big Sur & Monterey.',
         },
         {
           property: 'twitter:title',
@@ -358,6 +399,7 @@ export default {
         newItem: require("../assets/icons/newItem.svg"),
         edit: require("../assets/icons/edit.svg"),
         loading: require("../assets/placeholder-icon.png"),
+        chevron: require("../assets/icons/ChevronDown.svg"),
       }
     }
   },
@@ -410,7 +452,27 @@ export default {
   },
 
   methods:{ 
-    ...mapActions(['showToast', 'showEl', 'fetchIconUserInfo', 'adClick']),
+    ...mapActions([
+        'showToast',
+        'showEl',
+        'fetchIconUserInfo',
+        'adClick',
+        'setCategory',
+        'setData',
+        'loadMoreIcons',
+        'algoliaSearch'
+      ]),
+
+    scrollEl(id, top, left){
+      let scrollLeft = document.getElementById(id).scrollLeft
+      let scrollTop = document.getElementById(id).scrollTop
+
+      document.getElementById(id).scroll({
+        top: scrollTop+top,
+        left: scrollLeft+left,
+        behavior: 'smooth'
+      })
+    },
 
     getAd(el){
       try {
@@ -556,6 +618,23 @@ export default {
       if (parent.$route.path != "/") {
         return
       }
+      
+      if (parent.$store.state.selectedCategory.id != "All") {
+
+        if (parent.$store.state.totalCategory == parent.selectedIcons.length) {
+          parent.scrolledToBottom = true
+          return
+          setTimeout(() => {
+          }, 800)
+        } else{
+          setTimeout(() => {
+            parent.loadMoreIcons()
+            parent.scrolledToBottom = true
+          }, 800)
+          return
+        }
+
+      }
 
       let howManyRecords = parent.howManyRecords
       
@@ -568,9 +647,9 @@ export default {
       query.limit(docLimit);
       const results = await query.find()
       
-      setTimeout(() => {
-          parent.scrolledToBottom = true
-      }, 0);
+      parent.scrolledToBottom = true
+      
+      let allIcons = []
 
       for(let result in results){
         let objData = results[result].attributes
@@ -580,25 +659,22 @@ export default {
           iconData[data] = objData[data]
         }
         iconData.id = results[result].id;
-
-        parent.$store.dispatch("pushDataToArr", {data: iconData, arr: "list", func: "loadMore"})
+        
+        allIcons.push(iconData)
       }
-      
-      // Gets up to date info about the user
-      let data = {
-        howManyRecords: howManyRecords,
-        results: results
-      }
-      // parent.fetchIconUserInfo(data)
 
+      parent.$store.dispatch("pushDataToArr", {data:  allIcons, arr: "list", concatArray: true});
     },
 
     scroll() {
       let parent = this
       window.onscroll = () => {
         let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000
+        
+        // console.log(bottomOfWindow && parent.scrolledToBottom);
+        // console.log(bottomOfWindow);
 
-        if (bottomOfWindow && parent.scrolledToBottom && !parent.isSearch) {
+        if (bottomOfWindow && parent.scrolledToBottom) {
           parent.scrolledToBottom = false
           parent.loadMore()
         }
@@ -637,10 +713,12 @@ export default {
           parent.iconListLen = count
         })
         
-        parent.$store.state.list = []
+        // console.log("2");
+        parent.setData({state: 'list', data: []})
         
         var userInfo = {}
-
+        
+        var allIcons = []
         for(let result in results){
 
           let iconItem = results[result]
@@ -656,9 +734,9 @@ export default {
           // Set fetched user info from parse User object
           // iconData.usersName = userInfo.username
           // iconData.credit = userInfo.credit
-
-          parent.$store.commit('pushDataToArr', {arr: "list", data: iconData, func: "getIconsArray"})
+          allIcons.push(iconData)
         }
+        parent.$store.dispatch("pushDataToArr", {data:  allIcons, arr: "list", concatArray: true});
         
         // Gets up to date info about the user
         let data = {
@@ -758,13 +836,12 @@ export default {
     searchString: function (search) {
       let parent = this
 
+      parent.setData({state: "searchString", data: search})
+
       if (parent.$route.name != "Home" && parent.$route.name != "Search") {
         return
       }
-      
-      index.search(search, {filters: `approved:true`, hitsPerPage: 150 }).then(function(responses) {
-        parent.$store.dispatch("pushDataToArr", {arr: "dataToShow", data: responses.hits, func: "searchAlgolia"})
-      });
+      parent.algoliaSearch()
     },
 
     content() {
@@ -781,15 +858,14 @@ export default {
   },
 
   computed:{
-    ...mapGetters(['getUser']),
+    ...mapGetters(['getUser', 'getAppCategories', 'getIconType', 'selectedIcons', 'getSelectedCategory']),
+
     
     adIsOn(){
       let ad = document.getElementById("carbonads")
       if(!ad) {
-        // console.log("yooo");
         return true
       } else {
-        // console.log(ad);
        return false
       }
     },
@@ -825,22 +901,20 @@ export default {
     search(){
       let parent = this
 
-      // If searchString is empty (no search by the user), return the full list of icons
-      if(!parent.searchString){
-        parent.isSearch = false
-        parent.noIcons = false
-        parent.$store.state.dataToShow = parent.$store.state.list
-        return parent.$store.state.dataToShow
-      }
-
-      if(parent.$store.state.dataToShow.length == 0){
+      if(parent.selectedIcons.length == 0){
         parent.noIcons = true
       } else{
         parent.noIcons = false
       }
+      
+      // If searchString is empty (no search by the user), return the full list of icons
+      if(!parent.searchString || parent.searchString.length == 0){
+        parent.isSearch = false 
+        return parent.selectedIcons
+      }
 
-      return parent.$store.state.dataToShow
-      // return  parent.dataToShow
+      return parent.selectedIcons
+      // return parent.$store.state.dataToShow
     },
 
     iconListStore(){

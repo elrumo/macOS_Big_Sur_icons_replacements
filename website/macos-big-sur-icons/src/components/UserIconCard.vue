@@ -1,5 +1,5 @@
 <template>
-    <div class="card-wrapper card-hover coral-card">
+    <div class="card-wrapper card-hover coral-card m-0">
 
         <!-- Icon image -->
         <div class="card-img-wrapper" style="max-width: 120px;">
@@ -12,6 +12,7 @@
 
             <!-- iOS icon download -->
             <a v-else @click="addClickCount(icon)" target="_blank" rel="noopener" :href="icon.iOSUrl">
+                <!-- <div class="placeholder-icon" v-lazy-container="{ selector: 'img', loading: coralIcons.placeholderIcon }"> -->
                 <div class="placeholder-icon" v-lazy-container="{ selector: 'img', loading: coralIcons.placeholderIcon }">
                     <img width="100px" height="100px" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
                 </div>
@@ -99,6 +100,7 @@ export default {
         ...mapActions(['showEl', 'setSelectedIcon', 'addClickCount']),
 
         prettifyName(name){
+            console.log("name: ", name);
             name = name.replaceAll("_", " ")
             return name
         },
