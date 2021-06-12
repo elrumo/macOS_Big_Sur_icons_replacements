@@ -1,12 +1,9 @@
 <template>
   <div>
-    
-    <!-- <Dialog/> -->
+
     <deleteDialog :icon="activeIcon"/>
-    
-    <div v-if="overflow">
-      {{ toggleOverflow() }}
-    </div>
+
+    <div v-if="overflow"> {{ toggleOverflow() }} </div>
 
     <StickyBanner/>
 
@@ -39,8 +36,6 @@
       </coral-dialog-footer>
     </coral-dialog> -->
 
-    <!-- {{ getTotalRestore }} -->
-
     <!-- Hero -->
     <Hero
       v-bind:list="list"
@@ -60,95 +55,77 @@
         class="main-search-wrapper coral-bg p-b-15"
         :class="{'scrolled-shadow': !distanceFromTop}"
       >
-        <div class="content-wrapper-regular search">
-          
-          <div class="m-auto main-search" style="max-width:300px;">
-            <div class="shadow main-border-radius">
-              <input v-model="searchString" :placeholder="'Search ' + iconListLen + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
-              
-              <!-- Search icon -->
-              <svg class="icon searchBar-left" id="coral-css-icon-Magnifier" viewBox="0 0 16 16">
-                <path d="M15.77 14.71l-4.534-4.535a6.014 6.014 0 1 0-1.06 1.06l4.533 4.535a.75.75 0 1 0 1.061-1.06zM6.5 11A4.5 4.5 0 1 1 11 6.5 4.505 4.505 0 0 1 6.5 11z"></path>
-              </svg>
-              
-              <!-- Cross icon -->
-              <transition name="fade">
-                <div v-if="searchString" class="searchBar-right">
-                    <svg @click="clearSearch" class="icon p-t-20 p-b-20 p-r-10 p-l-10" xmlns="http://www.w3.org/2000/svg" height="12" viewBox="0 0 12 12" width="12">
-                      <title>CrossLarge</title>
-                      <rect id="ToDelete" fill="#ff13dc" opacity="0" width="12" height="12" /><path d="M11.69673,10.28266,7.41406,6l4.28267-4.28266A.9999.9999,0,1,0,10.28266.30327L6,4.58594,1.71734.30327A.9999.9999,0,1,0,.30327,1.71734L4.58594,6,.30327,10.28266a.9999.9999,0,1,0,1.41407,1.41407L6,7.41406l4.28266,4.28267a.9999.9999,0,1,0,1.41407-1.41407Z" />
-                    </svg>
 
-                    <div class="mobile-hidden" style="top: -26px;">
-                      <button @click="copySearch" variant="quiet" is="coral-button">
-                        Share search
-                      </button>
-                    </div>
+        <!-- Search box-->
+        <div>
+          <div class="content-wrapper-regular search">
+            <div class="m-auto main-search" style="max-width:300px;">
+              <div class="shadow main-border-radius">
+                <input v-model="searchString" :placeholder="'Search ' + iconListLen + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
+                
+                <!-- Search icon -->
+                <svg class="icon searchBar-left" id="coral-css-icon-Magnifier" viewBox="0 0 16 16">
+                  <path d="M15.77 14.71l-4.534-4.535a6.014 6.014 0 1 0-1.06 1.06l4.533 4.535a.75.75 0 1 0 1.061-1.06zM6.5 11A4.5 4.5 0 1 1 11 6.5 4.505 4.505 0 0 1 6.5 11z"></path>
+                </svg>
+                
+                <!-- Cross icon -->
+                <transition name="fade">
+                  <div v-if="searchString" class="searchBar-right">
+                      <svg @click="clearSearch" class="icon p-t-20 p-b-20 p-r-10 p-l-10" xmlns="http://www.w3.org/2000/svg" height="12" viewBox="0 0 12 12" width="12">
+                        <title>CrossLarge</title>
+                        <rect id="ToDelete" fill="#ff13dc" opacity="0" width="12" height="12" /><path d="M11.69673,10.28266,7.41406,6l4.28267-4.28266A.9999.9999,0,1,0,10.28266.30327L6,4.58594,1.71734.30327A.9999.9999,0,1,0,.30327,1.71734L4.58594,6,.30327,10.28266a.9999.9999,0,1,0,1.41407,1.41407L6,7.41406l4.28266,4.28267a.9999.9999,0,1,0,1.41407-1.41407Z" />
+                      </svg>
 
-                </div>
-              </transition>
-              
-              <hr class="coral-Divider--s coral-Divider--vertical searchBar-divider m-0">
+                      <div class="mobile-hidden" style="top: -26px;">
+                        <button @click="copySearch" variant="quiet" is="coral-button">
+                          Share search
+                        </button>
+                      </div>
 
-              <select
-              id="selectOS"
-              class="dropdown-select searchbar-select"
-              v-on:change="changeOS"
-            >
-              <option value="macOS" selected="">
-                macOS
-              </option>
-              <option value="iOS">
-                iOS
-              </option>
-            </select>
+                  </div>
+                </transition>
+                
+                <hr class="coral-Divider--s coral-Divider--vertical searchBar-divider m-0">
 
+                <select
+                id="selectOS"
+                class="dropdown-select searchbar-select"
+                v-on:change="changeOS"
+                >
+                  <option value="macOS" selected="">
+                    macOS
+                  </option>
+                  <option value="iOS">
+                    iOS
+                  </option>
+                </select>
+
+              </div>
             </div>
           </div>
-
+          
+          <!-- <select
+            id="selectType"
+            class="coral-card dropdown-select searchbar-select"
+            v-on:change="changeOS"
+          >
+            <option value="macOS" selected="">
+              macOS
+            </option>
+            <option value="iOS">
+              iOS
+            </option>
+          </select> -->
         </div>
-        
-        <div class="categories-container">
-          <div id="categoriesWrapper" class="categories-wrapper">
-            <coral-buttongroup selectionmode="single">
-                <button
-                  is="coral-button"
-                  selected="true"
-                  value="All"
-                  title="all"
-                  @click="setCategory({id: 'All'})"
-                  aria-label="category.name  "
-                >
-                  All icons
-                </button>
-                <button
-                  v-for="category in getAppCategories"
-                  :key="category.name+'_categoryHome'"
-                  is="coral-button"
-                  selected=""
-                  @click="setCategory(category)"
-                  :value="category.name"
-                  :title="category.name"
-                  :aria-label="category.name  "
-                >
-                  {{category.name}}
-                </button>
-            </coral-buttongroup>
-          </div>
-          <div @click="scrollEl('categoriesWrapper', 0, -300)" class="click-to-scroll scroll-left chevron" :src="coralIcons.chevron" alt=""/>
-          <div @click="scrollEl('categoriesWrapper', 0, 300)" class="click-to-scroll scroll-right chevron" :src="coralIcons.chevron" alt=""/>
-        </div>
-
       </div>
       
       
-      
-    <!-- Loading spinning circle -->
+      <!-- Loading spinning circle -->
       <div v-if="search.length == 0 && searchString.length == 0" class="waiting-wrapper waiting-absolute">
         <coral-wait size="L" indeterminate=""></coral-wait>
       </div>
 
-    <!-- Loading error -->
+      <!-- Loading error -->
       <div v-if="false" class="waiting-wrapper">
       <!-- <div v-if="loadingError" class="waiting-wrapper"> -->
         <NativeAd :adId="'iconbar-js-card-grid'" :key="$route.fullPath + 'ad'"/>
@@ -185,61 +162,98 @@
         </p>
       </div>
 
-    <!-- Icon list when no loading error-->
-      <div class="icon-list-area p-t-20 p-b-30 content-wrapper-regular">
-      <!-- <div v-if="!loadingError" class="icon-list-area p-t-20 p-b-50 content-wrapper-regular"> -->
-
-        <div style="min-height: 226px; max-height:226px" class="card-hover relative coral-card">
-          
-          <div style="z-index: 1; height: 100%; width: 100%" class="absolute carbon-card-ad">
-            <script @click="adClick" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
-          </div>
-
-          <div style="z-index: 2" class="absolute card-grid-nativeAd">
-            <div @click="adClick" id="card-ad">
-            </div>
-          </div>
-          
-          <a
-            class="card-no-ad relative"
-            href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
-            rel="noopener"
-            target="_blank"
-            style="width: 100%; left: 0;"
-            @click="logDonation('support-message')"
-          >
-            <div class="support-page">
-              <h3 class="coral-Heading--S m-0">
-                Support this page
-              </h3>
-              <p class="coral-Body--S m-0">
-                Please consider disabling your ad blocker or making a
-                <a  
-                  rel="noopener"
-                  class="coral-Link"
-                  target="_blank"
-                  href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+      <div class="main-content-wrapper">
+        <!-- Categories List -->
+        <!-- <div class="categories-container">
+          <div id="categoriesWrapper" class="categories-wrapper">
+            <coral-buttongroup selectionmode="single">
+                <button
+                  is="coral-button"
+                  selected="true"
+                  value="All"
+                  title="all"
+                  @click="setCategory({id: 'All'})"
+                  aria-label="category.name  "
                 >
-                  donation 
-                </a>
-                to support this project.
-              </p>
+                  All icons
+                </button>
+                <button
+                  v-for="category in getAppCategories"
+                  :key="category.name+'_categoryHome'"
+                  is="coral-button"
+                  selected=""
+                  @click="setCategory(category)"
+                  :value="category.name"
+                  :title="category.name"
+                  :aria-label="category.name  "
+                >
+                  {{category.name}}
+                </button>
+            </coral-buttongroup>
+          </div>
+          <div @click="scrollEl('categoriesWrapper', 0, -300)" class="click-to-scroll scroll-left chevron" :src="coralIcons.chevron" alt=""/>
+          <div @click="scrollEl('categoriesWrapper', 0, 300)" class="click-to-scroll scroll-right chevron" :src="coralIcons.chevron" alt=""/>
+        </div> -->
+        
+         <nav is="coral-sidenav" style="width:240px;">
+          <a is="coral-sidenav-item" href="#" icon="Add" selected="">Item 1</a>
+          <a is="coral-sidenav-item" href="#" icon="Remove">Item 2</a>
+          <a is="coral-sidenav-item" href="#" icon="Star">Item 3</a>
+        </nav>
+
+
+        <!-- Icon list when no loading error-->
+        <div class="icon-list-area p-t-20 p-b-30 content-wrapper-regular">
+          
+          <!-- Ad -->
+          <div style="min-height: 226px; max-height:226px" class="card-hover relative coral-card">
+            
+            <div style="z-index: 1; height: 100%; width: 100%" class="absolute carbon-card-ad">
+              <script @click="adClick" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
             </div>
-          </a>
 
+            <div style="z-index: 2" class="absolute card-grid-nativeAd">
+              <div @click="adClick" id="card-ad">
+              </div>
+            </div>
+            
+            <a
+              class="card-no-ad relative"
+              href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+              rel="noopener"
+              target="_blank"
+              style="width: 100%; left: 0;"
+              @click="logDonation('support-message')"
+            >
+              <div class="support-page">
+                <h3 class="coral-Heading--S m-0">
+                  Support this page
+                </h3>
+                <p class="coral-Body--S m-0">
+                  Please consider disabling your ad blocker or making a
+                  <a  
+                    rel="noopener"
+                    class="coral-Link"
+                    target="_blank"
+                    href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+                  >
+                    donation 
+                  </a>
+                  to support this project.
+                </p>
+              </div>
+            </a>
+
+          </div>
+
+          <UserIconCard v-for="icon in search" :key="icon.icnsUrl" :icon="icon" :isAdmin="isAdmin" :isMacOs="isMacOs"/>
         </div>
-
-        <UserIconCard v-for="icon in search" :key="icon.icnsUrl" :icon="icon" :isAdmin="isAdmin" :isMacOs="isMacOs"/>
       </div>
 
       <div v-if="
         (!scrolledToBottom && getSelectedCategory.id != 'All') ||
         (!scrolledToBottom && searchString.length == 0 && getSelectedCategory.id == 'All')
       " class="p-b-50 m-b-50 waiting-wrapper">
-      <!-- <div v-if="
-        (!scrolledToBottom && getSelectedCategory.id != 'All') ||
-        (!scrolledToBottom && searchString.length == 0 && getSelectedCategory.id == 'All')
-      " class="p-b-50 m-b-50 waiting-wrapper"> -->
           <coral-wait size="L" indeterminate=""></coral-wait>
       </div>
 

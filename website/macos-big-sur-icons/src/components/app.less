@@ -334,13 +334,23 @@ option[value=""][disabled] {
     background-color: var(--coral-dark-card) !important;
     border-color: var(--coral-dark-border);
     color: var(--coral-light-border);
-    background: url('../assets/icons/ChevronDown.svg') no-repeat 97% 50%;
+    background: url('../assets/icons/ChevronDown.svg') no-repeat 97% 50% !important;
 }
 .coral--light .dropdown-select{
     background-color: rgb(255, 255, 255) !important;
     border-color: rgb(225, 225, 225);
     color: rgb(75, 75, 75);
-    background: url('../assets/icons/ChevronDown-dark.svg') no-repeat 97% 50%;
+    background: url('../assets/icons/ChevronDown-dark.svg') no-repeat 97% 50% !important;
+}
+
+.searchbar-select{
+    background: transparent;
+    border: none;
+    max-width: 90px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 17px;
 }
 
 .scroll-right{
@@ -757,16 +767,6 @@ coral-buttongroup button{
     cursor: pointer;
 }
 
-.searchbar-select{
-    background: transparent;
-    border: none;
-    max-width: 90px;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 17px;
-}
-
 .searchBar-divider{
     top: 50%;
     height: 55%;
@@ -959,13 +959,19 @@ coral-buttongroup button{
     cursor: pointer;
 }
 
+.main-content-wrapper{
+    display: grid;
+    grid-template-columns: 260px auto;
+    margin: auto;
+}
+
 .icon-list-area{
-    max-width: 1300px;
     margin: auto;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    column-gap: 20px;
-    row-gap: 20px;
+    gap: 20px;
+    width: fit-content;
+    padding: 0px 20px;
 }
 
 .icon-list-area a{
