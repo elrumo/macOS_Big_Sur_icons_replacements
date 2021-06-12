@@ -27,12 +27,11 @@
         <h1
           class="main-heading m-t-0 coral-Heading--XL coral-Heading--regular"
         >
-          <span class="f-w-100 f-s-26">
+          <span style="display: none;" class="f-w-100 f-s-26">
             macOS Big Sur <span class="coral-Body--XS m-b-0"> &  Monterey </span>
           </span>
-          <br />
           <!-- The Icons Page -->
-           App icons
+           macOS App icons
         </h1>
 
         <p class="coral-Body--L w-100 body-text">
