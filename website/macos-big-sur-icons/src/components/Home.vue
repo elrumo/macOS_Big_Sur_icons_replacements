@@ -58,7 +58,7 @@
 
         <!-- Search box-->
         <div>
-          <div class="content-wrapper-regular search">
+          <div @click="scrollTo" class="content-wrapper-regular search">
             <div class="m-auto main-search" style="max-width:300px;">
               <div class="shadow main-border-radius">
                 <input v-model="searchString" :placeholder="'Search ' + iconListLen + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
@@ -103,69 +103,10 @@
               </div>
             </div>
           </div>
-          
-          <!-- <select
-            id="selectType"
-            class="coral-card dropdown-select searchbar-select"
-            v-on:change="changeOS"
-          >
-            <option value="macOS" selected="">
-              macOS
-            </option>
-            <option value="iOS">
-              iOS
-            </option>
-          </select> -->
         </div>
-      </div>
-      
-      
-      <!-- Loading spinning circle -->
-      <div v-if="search.length == 0 && searchString.length == 0" class="waiting-wrapper waiting-absolute">
-        <coral-wait size="L" indeterminate=""></coral-wait>
-      </div>
 
-      <!-- Loading error -->
-      <div v-if="false" class="waiting-wrapper">
-      <!-- <div v-if="loadingError" class="waiting-wrapper"> -->
-        <NativeAd :adId="'iconbar-js-card-grid'" :key="$route.fullPath + 'ad'"/>
-        <h3 class="coral-Heading--M">
-          The site is temporarily down for maintenance purposes.
-          <br>
-        </h3>
-        <h3 class="coral-Heading--S coral-Heading--light">
-          Check again in a few minutes or follow me on
-            <a rel="noopener"
-              class="coral-Link"
-              href="https://twitter.com/elrumo"
-              target="_blank"
-            >
-              Twitter
-            </a>
-          to stay up to date.
-        </h3>
-      </div>
-
-      <div v-if="
-        search.length == 0 && searchString.length > 0 && getSelectedCategory.id == 'All'
-      " class="waiting-wrapper">
-        <p class="coral-Body--S">
-          No results
-        </p>
-      </div>
-
-      <div v-if="
-        search.length == 0 && searchString.length > 0 && getSelectedCategory.id != 'All'
-      " class="waiting-wrapper">
-        <p class="coral-Body--S">
-          No results under {{ getSelectedCategory.name }}, try a different category
-        </p>
-      </div>
-
-      <div class="main-content-wrapper">
-        <!-- Categories List -->
-        <!-- <div class="categories-container">
-          <div id="categoriesWrapper" class="categories-wrapper">
+         <div v-if="isMobile" class="desktop-hidden categories-container">
+          <div id="categoriesWrapper-mobile" class="categories-wrapper">
             <coral-buttongroup selectionmode="single">
                 <button
                   is="coral-button"
@@ -193,20 +134,85 @@
           </div>
           <div @click="scrollEl('categoriesWrapper', 0, -300)" class="click-to-scroll scroll-left chevron" :src="coralIcons.chevron" alt=""/>
           <div @click="scrollEl('categoriesWrapper', 0, 300)" class="click-to-scroll scroll-right chevron" :src="coralIcons.chevron" alt=""/>
-        </div> -->
+        </div>
+
+      </div>
+      
+      
+     
+
+      <!-- Loading error -->
+      <div v-if="false" class="waiting-wrapper">
+        <NativeAd :adId="'iconbar-js-card-grid'" :key="$route.fullPath + 'ad'"/>
+        <h3 class="coral-Heading--M">
+          The site is temporarily down for maintenance purposes.
+          <br>
+        </h3>
+        <h3 class="coral-Heading--S coral-Heading--light">
+          Check again in a few minutes or follow me on
+            <a rel="noopener"
+              class="coral-Link"
+              href="https://twitter.com/elrumo"
+              target="_blank"
+            >
+              Twitter
+            </a>
+          to stay up to date.
+        </h3>
+      </div>
+      
+      <!-- No Results -->
+      <div v-if="
+        search.length == 0 && searchString.length > 0 && getSelectedCategory.id == 'All'
+      " class="waiting-wrapper">
+        <p class="coral-Body--S">
+          No results
+        </p>
+      </div>
+      
+      <!-- No Results for category-->
+      <div v-if="
+        search.length == 0 && searchString.length > 0 && getSelectedCategory.id != 'All'
+      " class="waiting-wrapper">
+        <p class="coral-Body--S">
+          No results under {{ getSelectedCategory.name }}, try a different category
+        </p>
+      </div>
+
+      <div class="main-content-wrapper content-wrapper-regular">
         
-         <nav is="coral-sidenav" style="width:240px;">
-          <a is="coral-sidenav-item" href="#" icon="Add" selected="">Item 1</a>
-          <a is="coral-sidenav-item" href="#" icon="Remove">Item 2</a>
-          <a is="coral-sidenav-item" href="#" icon="Star">Item 3</a>
+        <!-- Categories List -->
+        <nav v-if="!isMobile" id="categoriesWrapper-desktop" class="mobile-hidden categories-sidenav coral-card" is="coral-sidenav">
+          <button
+            is="coral-sidenav-item"
+            :icon="icons.AllIcons"
+            selected=""
+            value="All"
+            title="all"
+            @click="setCategory({id: 'All'})"
+          >
+            All Icons
+          </button>
+
+          <button
+            :icon="icons[category.name.replaceAll(' ', '_').replace('&_', '')]"
+            v-for="category in getAppCategories"
+            :key="category.name+'_categoryHome'"
+            is="coral-sidenav-item"
+            @click="setCategory(category)"
+            :value="category.name"
+            :title="category.name"
+            :aria-label="category.name"
+          >
+            {{category.name}}
+          </button>
         </nav>
 
-
-        <!-- Icon list when no loading error-->
-        <div class="icon-list-area p-t-20 p-b-30 content-wrapper-regular">
+        <!-- Icon list-->
+        <div id="iconList" class="icon-list-area p-b-30 ">
           
           <!-- Ad -->
-          <div style="min-height: 226px; max-height:226px" class="card-hover relative coral-card">
+          <div style="min-height: 205px; max-height:226px" class="card-hover relative coral-card">
             
             <div style="z-index: 1; height: 100%; width: 100%" class="absolute carbon-card-ad">
               <script @click="adClick" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
@@ -246,16 +252,20 @@
 
           </div>
 
-          <UserIconCard v-for="icon in search" :key="icon.icnsUrl" :icon="icon" :isAdmin="isAdmin" :isMacOs="isMacOs"/>
+          <UserIconCard v-for="icon in search" :key="icon.icnsUrl+icon.appName" :icon="icon" :isAdmin="isAdmin" :isMacOs="isMacOs"/>
+
+          <div v-if="
+              (!scrolledToBottom && getSelectedCategory.id != 'All') ||
+              (!scrolledToBottom && searchString.length == 0 && getSelectedCategory.id == 'All')
+            "
+            class="waiting-wrapper"
+          >
+            <coral-wait size="L" indeterminate=""></coral-wait>
+          </div>
+
         </div>
       </div>
 
-      <div v-if="
-        (!scrolledToBottom && getSelectedCategory.id != 'All') ||
-        (!scrolledToBottom && searchString.length == 0 && getSelectedCategory.id == 'All')
-      " class="p-b-50 m-b-50 waiting-wrapper">
-          <coral-wait size="L" indeterminate=""></coral-wait>
-      </div>
 
     </section>
 
@@ -374,7 +384,7 @@ export default {
       list: [],
       
       overflow: true,
-
+      windowWidth: window.innerWidth,
       scrolledToBottom: true,
       sortByName: true,
       sortBy: "createdAt",
@@ -405,7 +415,29 @@ export default {
         namingOrder: require("../assets/icons/namingOrder.svg"),
         date: require("../assets/icons/date.svg"),
         loading: require("../assets/placeholder-icon.png"),
-        iconsOrder: require("../assets/icons/namingOrder.svg")
+        iconsOrder: require("../assets/icons/namingOrder.svg"),
+        Browser_Extensions: require("../assets/icons/Category_Icons/Browser_Extensions.svg"),
+        Browser_Extensions: require("../assets/icons/Category_Icons/Browser_Extensions.svg"),
+        Developer_Tools: require("../assets/icons/Category_Icons/Developer_Tools.svg"),
+        Education: require("../assets/icons/Category_Icons/Education.svg"),
+        Entertainment: require("../assets/icons/Category_Icons/Entertainment.svg"),
+        Finance: require("../assets/icons/Category_Icons/Finance.svg"),
+        Games: require("../assets/icons/Category_Icons/Games.svg"),
+        Graphics_Design: require("../assets/icons/Category_Icons/Graphics_Design.svg"),
+        Health_Fitness: require("../assets/icons/Category_Icons/Health_Fitness.svg"),
+        Lifestyle: require("../assets/icons/Category_Icons/Lifestyle.svg"),
+        Medical: require("../assets/icons/Category_Icons/Medical.svg"),
+        Music: require("../assets/icons/Category_Icons/Music.svg"),
+        News: require("../assets/icons/Category_Icons/News.svg"),
+        Photo_Video: require("../assets/icons/Category_Icons/Photo_Video.svg"),
+        Productivity: require("../assets/icons/Category_Icons/Productivity.svg"),
+        Reference: require("../assets/icons/Category_Icons/Reference.svg"),
+        Social_Networking: require("../assets/icons/Category_Icons/Social_Networking.svg"),
+        Sports: require("../assets/icons/Category_Icons/Sports.svg"),
+        Travel: require("../assets/icons/Category_Icons/Travel.svg"),
+        Utilities: require("../assets/icons/Category_Icons/Utilities.svg"),
+        Weather: require("../assets/icons/Category_Icons/Weather.svg"),
+        AllIcons: require("../assets/icons/Category_Icons/All_Icons.svg"),
       },
       coralIcons:{
         addIcon: require("../assets/icons/add.svg"),
@@ -431,6 +463,10 @@ export default {
     }
     
     window.addEventListener('scroll', this.handleScroll);
+
+    window.addEventListener('resize', () => {
+      parent.windowWidth = window.innerWidth
+    })
 
     // Get today's date
     ////////////////////////////////////////////////////////////////
@@ -474,7 +510,8 @@ export default {
         'setCategory',
         'setData',
         'loadMoreIcons',
-        'algoliaSearch'
+        'algoliaSearch',
+        'scrollTo'
       ]),
 
     scrollEl(id, top, left){
@@ -874,6 +911,11 @@ export default {
   computed:{
     ...mapGetters(['getUser', 'getAppCategories', 'getIconType', 'selectedIcons', 'getSelectedCategory']),
 
+    isMobile(){
+      let parent = this;
+      // console.log("this.windowWidth: ", this.windowWidth);
+      return parent.windowWidth <= 820
+    },
     
     adIsOn(){
       let ad = document.getElementById("carbonads")
