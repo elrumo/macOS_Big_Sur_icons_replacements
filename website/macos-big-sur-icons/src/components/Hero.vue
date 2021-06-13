@@ -229,11 +229,9 @@ export default {
   height: 40px;
   border-radius: 5px;
   background-color: #262729;
-  box-shadow: 0 0 1px hsla(220, 4%, 15%, .5);
   text-decoration: none;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
     Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
-
   align-items: center;
 }
 

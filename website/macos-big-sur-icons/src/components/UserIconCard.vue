@@ -1,58 +1,63 @@
 <template>
-    <div class="card-wrapper card-hover coral-card m-0">
+    <div :label="icon.appName.replaceAll('_', ' ') + 'Icon'" class="card-wrapper card-hover coral-card m-0">
+        <div class="m-auto">
 
-        <!-- Icon image -->
-        <div class="card-img-wrapper" style="max-width: 120px;">
-            <!-- macOS icon download -->
-            <a v-if="isMacOs" @click="addClickCount(icon)" rel="noopener" :href="icon.icnsUrl">
-                <div v-lazy-container="{ selector: 'img', loading: coralIcons.placeholderIcon }">
-                <img width="100px" height="100px" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
-                </div>
-            </a>
-
-            <!-- iOS icon download -->
-            <a v-else @click="addClickCount(icon)" target="_blank" rel="noopener" :href="icon.iOSUrl">
-                <!-- <div class="placeholder-icon" v-lazy-container="{ selector: 'img', loading: coralIcons.placeholderIcon }"> -->
-                <div class="placeholder-icon" v-lazy-container="{ selector: 'img', loading: coralIcons.placeholderIcon }">
+            <!-- Icon image -->
+            <div class="card-img-wrapper" style="max-width: 120px;">
+                
+                <!-- macOS icon download -->
+                <a v-if="isMacOs" @click="addClickCount(icon)" rel="noopener" :href="icon.icnsUrl">
+                    <div v-lazy-container="{ selector: 'img', loading: coralIcons.placeholderIcon }">
                     <img width="100px" height="100px" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
+                    </div>
+                </a>
+
+                <!-- iOS icon download -->
+                <a v-else @click="addClickCount(icon)" target="_blank" rel="noopener" :href="icon.iOSUrl">
+                    <div v-lazy-container="{ selector: 'img', loading: coralIcons.placeholderIcon }">
+                        <img width="100px" height="100px" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
+                    </div>
+                </a>
+            </div>
+
+            <!-- Icon meta -->
+            <div label="Icon info" class="card-text-wrapper p-l-15 p-r-15">
+
+                <!-- App name -->
+                <h3 class="coral-font-color m-0">
+                    <span>
+                        {{icon.appName.replaceAll("_", " ")}}
+                    </span>
+                </h3>
+                
+                <!-- Credit -->
+                <p class="coral-Body--XS opacity-40 m-b-5 p-t-5">
+                    <router-link :to="'/u/'+icon.usersName" class="coral-Link">{{icon.usersName}}</router-link>
+                    on
+                    <span class="coral-Body--XS opacity-80">
+                        {{ getDate(icon.timeStamp) }}
+                    </span>
+                </p>
+                
+                <div v-if="isOwner" class="p-t-10 p-b-5">
+                    <button @click="showDialog('editIconDialog')" is="coral-button" variant="outline">Edit</button>
                 </div>
-            </a>
-        </div>
 
-        <!-- Icon meta -->
-        <div class="card-text-wrapper p-l-15 p-r-15 p-b-15">
-
-            <!-- App name -->
-            <h3 class="coral-font-color m-b-0">
-                <span>
-                    {{icon.appName.replaceAll("_", " ")}}
-                </span>
-            </h3>
-            
-            <!-- Credit -->
-            <p class="coral-Body--XS opacity-60 m-b-5">
-                <router-link :to="'/u/'+icon.usersName" class="coral-Link">{{icon.usersName}}</router-link>
-                on
-                <span class="coral-Body--XS opacity-80">
-                    {{ getDate(icon.timeStamp) }}
-                </span>
-            </p>
-
-            <p v-if="icon.downloads > 1" class="coral-Body--XS opacity-60">
-                {{icon.downloads}} downloads
-            </p>
-
-            <p v-if="icon.downloads == 1" class="coral-Body--XS opacity-60">
-                {{icon.downloads}} download
-            </p>
-            
-            <div v-if="isOwner" class="p-t-10 p-b-5">
-                <button @click="showDialog('editIconDialog')" is="coral-button" variant="outline">Edit</button>
             </div>
 
         </div>
+        <!-- Download Counter -->
+        <div label="Download Counter" class="download-counter-wrapper opacity-50">
+            <p v-if="icon.downloads > 1" class="coral-Body--XS m-0 d-inline">
+                {{icon.downloads}}
+            </p>
 
+            <p v-else class="coral-Body--XS m-0 d-inline">
+                0
+            </p>
 
+            <img height="10px" :src="coralIcons.download" alt="Download counter">
+        </div>
     </div>
 </template>
 
@@ -87,6 +92,7 @@ export default {
                 delete: require("../assets/icons/delete.svg"),
                 newItem: require("../assets/icons/newItem.svg"),
                 edit: require("../assets/icons/edit.svg"),
+                download: require("../assets/icons/Download.svg"),
                 placeholderIcon: require("../assets/placeholder-icon.png"),
             },
             dialog:{

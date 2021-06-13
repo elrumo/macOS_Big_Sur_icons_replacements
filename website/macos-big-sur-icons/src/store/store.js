@@ -14,8 +14,8 @@ var IconsBase = Parse.Object.extend("Icons2");
 
 let algolia = {
   // TODO: remove credentials
-  appid: process.env.VUE_APP_ALGOLIA_APPID,
-  apikey: process.env.VUE_APP_ALGOLIA_KEY
+  // appid: process.env.VUE_APP_ALGOLIA_APPID,
+  // apikey: process.env.VUE_APP_ALGOLIA_KEY
 }
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
@@ -191,14 +191,22 @@ export default new Vuex.Store({
       store.commit('pushDataToArr', {arr: "dataToShow", data: allIcons, concatArray: true})
     },
 
+    scrollTo(){
+      if(window.innerWidth >= 820){
+        window.scrollTo(0, 390)
+      } else{
+        window.scrollTo(0, 320)
+      }
+    },
+
     async setCategory(store, category){
       let newCategory = category.id
       let oldCategory = store.state.selectedCategory.id
       let sameCategory = newCategory == oldCategory;
       let search = store.state.searchString
-
-      window.scrollTo(0, 400)
       
+      store.dispatch('scrollTo')
+
       // set category
       store.commit('setDataToArr', {arr: 'selectedCategory', data: category, concatArray: false})
       
