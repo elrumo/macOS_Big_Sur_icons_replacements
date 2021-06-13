@@ -14,8 +14,8 @@ var IconsBase = Parse.Object.extend("Icons2");
 
 let algolia = {
   // TODO: remove credentials
-  // appid: process.env.VUE_APP_ALGOLIA_APPID,
-  // apikey: process.env.VUE_APP_ALGOLIA_KEY
+  appid: process.env.VUE_APP_ALGOLIA_APPID,
+  apikey: process.env.VUE_APP_ALGOLIA_KEY
 }
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
