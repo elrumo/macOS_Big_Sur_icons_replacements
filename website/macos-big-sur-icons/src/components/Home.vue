@@ -183,6 +183,7 @@
         
         <!-- Categories List -->
         <nav v-if="!isMobile" id="categoriesWrapper-desktop" class="mobile-hidden categories-sidenav coral-card" is="coral-sidenav">
+
           <button
             is="coral-sidenav-item"
             :icon="icons.AllIcons"
@@ -206,6 +207,8 @@
           >
             {{category.name}}
           </button>
+
+          <div class="gradient-categories-navbar" />
         </nav>
 
         <!-- Icon list-->

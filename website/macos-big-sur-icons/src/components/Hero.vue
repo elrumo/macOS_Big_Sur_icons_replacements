@@ -9,9 +9,6 @@
         
 
         <div class="ad-hero mobile-hidden">
-          <!-- <p class="coral-Body--XS">
-            Sponsored by
-          </p> -->
           <NativeAd :adId="'iconbar-js-hero'" :key="$route.fullPath + 'ad'"/>
         </div>
 

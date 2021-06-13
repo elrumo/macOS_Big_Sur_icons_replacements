@@ -454,7 +454,23 @@ coral-buttongroup button{
     overflow-y: scroll !important;
     width: calc(100% - 20px);
     height: fit-content;
-    max-height: calc(100vh - 200px);
+    max-height: calc(96vh - 200px);
+}
+
+.gradient-categories-navbar{
+    height: 20px;
+    width: 100%;
+    margin-top: -10px;
+    position: sticky;
+    bottom: -10px;
+}
+
+.coral--dark .gradient-categories-navbar{
+    background: linear-gradient(360deg, var(--coral-dark-card) 0%, transparent 100%);
+}
+
+.coral--light .gradient-categories-navbar{
+    background: linear-gradient(360deg, var(--coral-light-card) 0%, transparent 100%);
 }
 
 .categories-wrapper{
@@ -548,11 +564,20 @@ coral-buttongroup button{
     transform: translateY(0px);
 }
 
+.coral--dark .scrolled-shadow{
+    box-shadow: 0px 5px 50px 0px rgba(0,0,0,0.3) !important;
+}
+
+.coral--light .scrolled-shadow{
+    box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.15) !important;
+}
+
 .header-wrapper{
     display: grid;
     height: fit-content;
     height: -moz-fit-content;
-    padding: 30px 30px 15px 30px;
+    padding: 30px 0px 15px 0px;
+    // padding: 30px 30px 15px 30px;
     grid-template-columns: auto auto;
     justify-content: space-between;
     align-content: start;
@@ -1041,7 +1066,6 @@ coral-buttongroup button{
     position: relative;
     display: grid;
     grid-template-columns: 1fr;
-    // grid-template-columns: 1.2fr 1fr;
     max-width: 1300px;
     padding: 30px 0px 15px 0px;
     margin: 10px 0px 30px 0px;
