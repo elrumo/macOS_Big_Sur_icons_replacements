@@ -143,7 +143,6 @@ export default new Vuex.Store({
       } else{ 
         index.search(search, {filters: `approved:true`, hitsPerPage: 150 }).then(function(responses) {
           store.commit('pushDataToArr', {arr: "searchData", data: responses.hits})
-          // store.commit('pushDataToArr', {arr: "dataToShow", data: responses.hits})
         });
       }
 
@@ -160,18 +159,25 @@ export default new Vuex.Store({
       if (totalCategory == toSkip) {
         return
       }
+      console.log(store.state.dataToShow[toSkip-1].appName == "App Store");
 
       const query = new Parse.Query(IconsBase);
       
       let selectedCategory = store.state.selectedCategory
       let numToLoad = 30
 
+      if (selectedCategory.id == 'downloads') {
+        query.descending("downloads");
+      } else{
+        query.descending("timeStamp");
+        query.equalTo("category", selectedCategory.categoryObj);
+      }
+
       query.exists("icnsFile");
-      query.equalTo("category", selectedCategory.categoryObj);
       query.equalTo("approved", true);
       query.limit(numToLoad)
       query.skip(toSkip)
-      query.descending("timeStamp");
+
 
       const results = await query.find()
       let allIcons = []
@@ -209,7 +215,7 @@ export default new Vuex.Store({
 
       // set category
       store.commit('setDataToArr', {arr: 'selectedCategory', data: category, concatArray: false})
-      
+
       if (search.length > 0) {
         store.dispatch('algoliaSearch')
       }
@@ -217,17 +223,23 @@ export default new Vuex.Store({
       if (category.id != "All" && !sameCategory) {
         store.commit('setDataToArr', {arr: 'dataToShow', data: [], concatArray: false})
 
-        let toSkip = store.state.dataToShow.filter(icon => icon.category.id == newCategory).length // Checks how many icons with that category have already been fetched
-        
+        let toSkip = store.state.dataToShow.length // Checks how many icons with that category have already been fetched
+        // let toSkip = store.state.dataToShow.filter(icon => icon.category.id == newCategory).length // Checks how many icons with that category have already been fetched
+
         let approvedQuery = new Parse.Query(IconsBase);
         let numToLoad = 25
         
+        if (category.id == "downloads") {
+          approvedQuery.descending("downloads");
+        } else{
+          approvedQuery.descending("timeStamp");
+          approvedQuery.equalTo("category", category.categoryObj);
+        }
+        
         approvedQuery.exists("icnsFile");
-        approvedQuery.equalTo("category", category.categoryObj);
         approvedQuery.equalTo("approved", true);
         approvedQuery.limit(numToLoad)
         approvedQuery.skip(toSkip)
-        approvedQuery.descending("timeStamp");
         
         let totalCategory = await approvedQuery.count()
         store.commit('setDataToArr', {arr: 'totalCategory', data: totalCategory})
@@ -251,6 +263,7 @@ export default new Vuex.Store({
         
         store.commit('pushDataToArr', {arr: "dataToShow", data: allIcons})
       }
+
     },
 
 
@@ -587,17 +600,22 @@ export default new Vuex.Store({
     selectedIcons(store){
       let selectedCategory = store.selectedCategory.id;
 
+      if (selectedCategory == 'downloads' && !store.searchString) {
+        return store.dataToShow
+      }
+
+      // Return icons data if the user has NOT serached for something and has clicked to view a category.
       if (selectedCategory == "All" && !store.searchString) {
         return store.list
       } else if (selectedCategory != "All" && !store.searchString) {
         try {
           return store.dataToShow.filter(icon => icon.category.id == selectedCategory);
         } catch (error) {
-          console.log("error: ", e)
           return store.dataToShow; 
         }
       }
 
+      // Return icons data if the user has serached for something
       if (selectedCategory == "All" && store.searchString !="") {
         return store.searchData
       } else if (selectedCategory != "All" && store.searchString !="") {

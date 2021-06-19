@@ -138,8 +138,6 @@
 
       </div>
       
-      
-     
 
       <!-- Loading error -->
       <div v-if="false" class="waiting-wrapper">
@@ -180,10 +178,11 @@
       </div>
 
       <div class="main-content-wrapper content-wrapper-regular">
-        
+    
         <!-- Categories List -->
         <nav v-if="!isMobile" id="categoriesWrapper-desktop" class="mobile-hidden categories-sidenav coral-card" is="coral-sidenav">
 
+          <!-- All Icons -->
           <button
             is="coral-sidenav-item"
             :icon="icons.AllIcons"
@@ -194,6 +193,41 @@
           >
             All Icons
           </button>
+
+          <!-- Featured Icons -->
+          <!-- <button
+            is="coral-sidenav-item"
+            :icon="icons.Star"
+            value="Featured"
+            title="Featured"
+            @click="setCategory({id: 'downloads'})"
+          >
+            Featured
+          </button> -->
+          
+          <!-- Popular Icons -->
+          <button
+            is="coral-sidenav-item"
+            :icon="icons.Flame"
+            value="Featured"
+            title="Featured"
+            @click="setCategory({id: 'downloads'})"
+          >
+            Popular
+          </button>
+          
+          <!-- Saved Icons -->
+          <!-- <button
+            is="coral-sidenav-item"
+            :icon="icons.Heart"
+            value="Saved"
+            title="Saved"
+            @click="setCategory({id: 'Saved'})"
+          >
+            Saved
+          </button> -->
+
+          <hr class="coral-Divider--S m-t-10 m-t-10">
 
           <button
             :icon="icons[category.name.replaceAll(' ', '_').replace('&_', '')]"
@@ -210,6 +244,8 @@
 
           <div class="gradient-categories-navbar" />
         </nav>
+
+
 
         <!-- Icon list-->
         <div id="iconList" class="icon-list-area p-b-30 ">
@@ -441,6 +477,9 @@ export default {
         Utilities: require("../assets/icons/Category_Icons/Utilities.svg"),
         Weather: require("../assets/icons/Category_Icons/Weather.svg"),
         AllIcons: require("../assets/icons/Category_Icons/All_Icons.svg"),
+        Star: require("../assets/icons/Category_Icons/Star.svg"),
+        Heart: require("../assets/icons/Category_Icons/Heart.svg"),
+        Flame: require("../assets/icons/Category_Icons/Flame.svg"),
       },
       coralIcons:{
         addIcon: require("../assets/icons/add.svg"),
