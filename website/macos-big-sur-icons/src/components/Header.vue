@@ -191,7 +191,7 @@
 
                     <!-- Resources -->
                     <div class="resourcesLink">
-                        <coral-status variant="info"></coral-status>
+                        <!-- <coral-status variant="info"></coral-status> -->
                         <router-link to="/resources">
                             <button is="coral-button" variant="quiet">
                                 <span>Resources</span>
