@@ -2,20 +2,17 @@
     --padding-top-search: 15px;
     --main-border-radius: 7px;
 
-    // --coral-dark-bg: rgb(37 37 37);
     --coral-dark-bg: rgb(26 26 26);
-
-    // --coral-dark-border: rgb(75, 75, 75);
     --coral-dark-border: rgba(75, 75, 75, 0.5);
-
     --coral-dark-border-hover: rgb(95, 95, 95);
-
-    // --coral-dark-card: rgb(50, 50, 50);
     --coral-dark-card: rgb(37, 37, 37);
+    --coral-dark-card-transparent: rgba(37, 37, 37, 0);
+    
     
     --coral-light-bg: rgba(245, 245, 245, 1);
     --coral-light-border: rgb(224, 224, 224);
     --coral-light-card: rgb(255, 255, 255);
+    --coral-light-card-transparent: rgba(255, 255, 255, 0);
 
     --page-width: 95%;
     --page-width-mobile: 85%;
@@ -448,7 +445,7 @@ coral-buttongroup button{
     background: var(--coral-dark-card);
     position: sticky;
     top: 165px;
-    padding: 20px 10px 10px 10px;
+    padding: 10px 10px 10px 10px;
     border-right: 1px solid var(--coral-dark-border);
     transition: 0.2s;
     overflow-y: scroll !important;
@@ -466,11 +463,11 @@ coral-buttongroup button{
 }
 
 .coral--dark .gradient-categories-navbar{
-    background: linear-gradient(360deg, var(--coral-dark-card) 0%, transparent 100%);
+    background: linear-gradient(360deg, var(--coral-dark-card) 0%, var(--coral-dark-card-transparent) 100%)
 }
 
 .coral--light .gradient-categories-navbar{
-    background: linear-gradient(360deg, var(--coral-light-card) 0%, transparent 100%);
+    background: linear-gradient(360deg, var(--coral-light-card) 0%, var(--coral-light-card-transparent) 100%);
 }
 
 .categories-wrapper{
@@ -1374,9 +1371,20 @@ coral-buttongroup button{
     color: var( --coral-dark-border);
 }
 
+._coral-Icon{
+    transform: translate3D(0px, 0px, 0px)
+}
+
+.coral--dark ._coral-Icon{
+    filter: brightness(1.2);
+}
+
+.coral--dark ._coral-Icon:hover{
+    filter: brightness(1.5);
+}
+
 .coral--light ._coral-Icon{
     filter: brightness(0.6);
-    // filter: brightness(1.05);
 }
 
 .coral--light ._coral-Icon:hover{
@@ -1408,14 +1416,6 @@ coral-buttongroup button{
 
 .coral--light .coral-bg{
     background: var(--coral-light-bg);
-}
-
-.coral--dark ._coral-Icon{
-    filter: brightness(1.2);
-}
-
-.coral--dark ._coral-Icon:hover{
-    filter: brightness(1.5);
 }
 
 .coral--dark ._coral-Button .coral-Link{
