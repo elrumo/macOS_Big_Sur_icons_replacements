@@ -21,7 +21,7 @@
       </div>
 
        <div class="card-img-wrapper fit-width">
-          <img :alt="icon.appName +' icon'" :src="icon.lowResPngUrl">
+          <img style="max-width: 140px;" :alt="icon.appName +' icon'" :src="icon.lowResPngUrl">
       </div>
       
       <div class="edit-dialog-acton-btns">
