@@ -6,6 +6,7 @@
     </coral-toast>
 
     <Header
+      coral-dragaction=""
       :distanceFromTop="distanceFromTop"
       :submitIconDialog="'submitIcon'"
     />

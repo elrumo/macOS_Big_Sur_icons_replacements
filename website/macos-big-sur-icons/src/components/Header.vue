@@ -7,13 +7,13 @@
         <!-- <div v-if="true">
             {{ toggleOverflow() }}
         </div> -->
-        <OptionsMenu :optionsList="optionsList"/>
-        <Dialog/>
-        <SubmissionDialog/>
-        <LoginDialog/>
-        <AccountDialog/>
+        <OptionsMenu coral-dragaction="" :optionsList="optionsList"/>
+        <Dialog coral-dragaction="" />
+        <SubmissionDialog coral-dragaction=""/>
+        <LoginDialog coral-dragaction=""/>
+        <AccountDialog coral-dragaction=""/>
 
-        <div class="header-wrapper">
+        <div coral-dragaction="" class="header-wrapper">
             
             <div class="header-logo-name">
                 <router-link to="/">
