@@ -5,7 +5,7 @@
 
     <div v-if="overflow"> {{ toggleOverflow() }} </div>
 
-    <StickyBanner/>
+    <StickyBanner coral-dragaction=""/>
 
     <!-- <coral-dialog id="newDialog" open style="text-align: left;">
       <coral-dialog-header>Pay to view</coral-dialog-header>
@@ -38,6 +38,7 @@
 
     <!-- Hero -->
     <Hero
+      coral-dragaction=""
       v-bind:list="list"
       :submitIconDialog="'submissionDialog'"
       :iconListLen="iconListLen"
@@ -57,8 +58,8 @@
       >
 
         <!-- Search box-->
-        <div>
-          <div @click="scrollTo" class="content-wrapper-regular search">
+        <div coral-dragaction="">
+          <div class="content-wrapper-regular search">
             <div class="m-auto main-search" style="max-width:300px;">
               <div class="shadow main-border-radius">
                 <input v-model="searchString" :placeholder="'Search ' + iconListLen + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
@@ -105,7 +106,7 @@
           </div>
         </div>
 
-         <div v-if="isMobile" class="desktop-hidden categories-container">
+         <div coral-dragaction="" v-if="isMobile" class="desktop-hidden categories-container">
           <div id="categoriesWrapper-mobile" class="categories-wrapper">
             <coral-buttongroup selectionmode="single">
                 <button
@@ -180,7 +181,7 @@
       <div class="main-content-wrapper content-wrapper-regular">
     
         <!-- Categories List -->
-        <nav v-if="!isMobile" id="categoriesWrapper-desktop" class="mobile-hidden categories-sidenav coral-card" is="coral-sidenav">
+        <nav coral-dragaction="" v-if="!isMobile" id="categoriesWrapper-desktop" class="mobile-hidden categories-sidenav coral-card" is="coral-sidenav">
 
           <!-- All Icons -->
           <button
@@ -230,6 +231,7 @@
           <hr class="coral-Divider--S m-t-10 m-t-10">
 
           <button
+            coral-dragaction=""
             :icon="icons[category.name.replaceAll(' ', '_').replace('&_', '')]"
             v-for="category in getAppCategories"
             :key="category.name+'_categoryHome'"
@@ -246,12 +248,11 @@
         </nav>
 
 
-
         <!-- Icon list-->
         <div id="iconList" class="icon-list-area p-b-30 ">
           
           <!-- Ad -->
-          <div style="min-height: 205px; max-height:226px" class="card-hover relative coral-card">
+          <div  coral-dragaction="" style="min-height: 205px; max-height:226px" class="card-hover relative coral-card">
             
             <div style="z-index: 1; height: 100%; width: 100%" class="absolute carbon-card-ad">
               <script @click="adClick" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
@@ -291,7 +292,7 @@
 
           </div>
 
-          <UserIconCard v-for="icon in search" :key="icon.icnsUrl+icon.appName" :icon="icon" :isAdmin="isAdmin" :isMacOs="isMacOs"/>
+          <UserIconCard  coral-dragaction="" v-for="icon in search" :key="icon.icnsUrl+icon.appName" :icon="icon" :isAdmin="isAdmin" :isMacOs="isMacOs"/>
 
           <div v-if="
               (!scrolledToBottom && getSelectedCategory.id != 'All') ||
