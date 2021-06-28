@@ -147,12 +147,6 @@
                   Password must contain a number, a capital letter and be more than 6 characters long.
                 </coral-alert-content>
               </coral-alert>
-              <!-- <coral-alert
-                style="padding: 10px; margin-top: 15px"
-              >
-                <coral-alert-header>Password Requirements</coral-alert-header>
-                <coral-alert-content>The password must.</coral-alert-content>
-              </coral-alert> -->
             </div>
 
               <!-- v-if="userInfo.problems.usernameExists" -->
@@ -405,7 +399,7 @@ export default {
         
         parent.userInfo[field] = fieldValue
         parent.userInfo.isValid = isValid
-
+        
         if (target.type == "password") {
           let passIsValid = !parent.validatePassword
           if(passIsValid) parent.userInfo.problems.passNotSecure = false;
@@ -522,20 +516,41 @@ export default {
       let email = parent.userInfo.email
       let password = parent.userInfo.password
       
+      if (!password) {
+        password = document.getElementById("loginPass-1").value
+        parent.userInfo.password = password
+      }
+
       Parse.User.logIn(email, password).then((user) =>{
         console.log("user: ", user);
         parent.setUser(user)
         console.log(parent.getUser);
         parent.isLoading = false
       }).catch((e) => {
-        if (e.code == 101) {
-          parent.isLoading = false
-          parent.showToast({
-            id: "toastMessage",
-            message: "❌ Invalid password, try again",
-            variant: "error"
-          }) 
+        console.log("error: ", e.code);
+        parent.isLoading = false
+        
+        switch (e.code) {
+          case 101:
+            parent.showToast({
+              id: "toastMessage",
+              message: "Invalid password, try again",
+              variant: "error"
+            }) 
+            break;
+          
+          case 201:
+            parent.showToast({
+              id: "toastMessage",
+              message: "Password cannot be empty",
+              variant: "error"
+            }) 
+            break;
+
+          default:
+            break;
         }
+
       })
 
     },
