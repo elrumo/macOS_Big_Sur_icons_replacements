@@ -133,7 +133,7 @@
                   Password must contain a number, a capital letter and be more than 6 characters long.
                 </p>
                 <p v-if="userInfo.step == 2 && userInfo.hasLoggedIn" class="coral-Body--XS opacity-60 f-w-400 p-t-10">
-                  Problems signing in? <a @click="resetPassword" class="coral-link">Reset password</a> 
+                  Problems signing in? <a @click="resetPassword" class="coral-link pointer">Reset password</a> 
                 </p>
               </div>   
 
@@ -559,19 +559,18 @@ export default {
       let parent = this;
       parent.isLoading = true;
       let email = parent.userInfo.email
-      const user = await Parse.User.requestPasswordReset(email)
-      user
-      
+      Parse.User.requestPasswordReset(email).then(()=>{
+        parent.showToast({
+          id: "toastMessage",
+            message: "Check your email",
+            variant: "success"
+          })
+      })  
+
       Parse.Cloud.run("firstTimeUser", {email: email}).then((result)=>{
         parent.userInfo.passwordResetSent = true
         parent.emailSentAt = new Date().getTime()// Set time the email was sent at
         parent.isLoading = false;
-        
-        parent.showToast({
-          id: "toastMessage",
-          message: "✅ Check your email",
-          variant: "success"
-        })
 
       }).catch((error) => {
         console.log("firstTimeUser error: ", error);
