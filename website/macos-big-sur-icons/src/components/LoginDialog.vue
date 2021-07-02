@@ -1,11 +1,24 @@
 <template>
-  <coral-dialog v-if="!getUser.isAuth" id="loginDialog">
+  <coral-dialog v-on:submit.prevent="nextStep" v-if="!getUser.isAuth" id="loginDialog">
 
     <!-- <coral-dialog-header>
       Join macOSicons.com
     </coral-dialog-header> -->
     <coral-dialog-content>
-      
+
+        <!-- <coral-dialog id="deleteDialog">
+          <coral-dialog-header>Are you sure you want to delete?</coral-dialog-header>
+          
+          <coral-dialog-content>  
+              This action cannot be undone.
+          </coral-dialog-content>
+
+          <coral-dialog-footer>
+              <button is="coral-button" variant="quiet" coral-close="">Cancel</button>
+              <button is="coral-button" variant="warning" coral-close="">Delete</button>
+          </coral-dialog-footer>
+      </coral-dialog> -->
+
         <div class="signin-dialog-content">
           
           <div>
@@ -204,7 +217,7 @@
       <button is="coral-button" v-if="userInfo.step == 1" variant="quiet" @click="closeDialog('loginDialog')">Cancel</button>
       <button is="coral-button" v-if="userInfo.step == 2" @click="toStep(1)" variant="quiet">Back</button>
 
-      <button is="coral-button"
+      <button id="continue-btn" is="coral-button"
         v-if="isValid && userInfo.step == 1"
         @click="checkOldAccount(2)" variant="">
         Continue
@@ -212,7 +225,7 @@
       
       <!-- Sign in -->
       <div v-if="userInfo.step == 2 && !userInfo.newAccount && userInfo.hasLoggedIn">
-        <button is="coral-button"
+        <button id="continue-btn" is="coral-button"
           v-if="isNotEmpty"
           @click="logIn(3)" variant="">
           Log in
@@ -229,14 +242,14 @@
       <div v-if="userInfo.step == 2 && !userInfo.newAccount && !userInfo.hasLoggedIn">
         
         <div v-if="!userInfo.passwordResetSent">
-          <button is="coral-button"
+          <button id="continue-btn" is="coral-button"
             v-if="isNotEmpty"
             @click="resetPassword" variant=""
           >
             Verify account
           </button>
           
-          <button is="coral-button"
+          <button id="continue-btn" is="coral-button"
             v-if="!isNotEmpty"
             disabled=""
           >
@@ -246,6 +259,7 @@
         <button
           is="coral-button"
           v-else
+          id="continue-btn"
           disabled=""
         >
           Resend in <span style="width: 18px; padding: 0px 5px 0px 2px;"> {{ timeLeftForResend }} </span> seconds
@@ -256,20 +270,20 @@
       
       <!-- Sign up -->
       <div v-if="userInfo.step == 2 && userInfo.newAccount">
-        <button is="coral-button" 
+        <button id="continue-btn" is="coral-button" 
           v-if="isNotEmpty"
           @click="signUp(3)">
           Finish sign Up
         </button>
         
-        <button is="coral-button"
+        <button id="continue-btn" is="coral-button"
           v-if="!isNotEmpty"
           disabled="">
           Finish sign Up
         </button>
       </div>
      
-      <button is="coral-button"
+      <button id="continue-btn" is="coral-button"
         v-if="!isValid" disabled="">
         Continue
       </button>
@@ -337,40 +351,11 @@ export default {
       this.userInfo.step = step
     },
 
-    // async appleLogin(){
-    //   let parent = this;
+    nextStep(){
+      let next = document.getElementById("continue-btn")
+      next.click();
+    },
 
-    //   const userToLogin = new Parse.User();
-      
-    //   console.log("decodedIdToken: ", decodedIdToken);
-     
-    //   let appleEmail = decodedIdToken.email
-    //   let appleId = decodedIdToken.sub
-    //   let token = decodedIdToken.token
-      
-    //   // const response = await window.AppleID.auth.signIn();
-    //   // const decodedIdToken = jwt_decode(response.authorization.id_token);
-    //   // let appleEmail = decodedIdToken.email
-    //   // let appleId = decodedIdToken.sub
-    //   // let token = response.authorization.id_token
-
-    //   let authData = {
-    //     id:  appleId,
-    //     email:  appleEmail,
-    //     token: token
-    //   }
-    //   await userToLogin.linkWith('apple', {
-    //     authData: authData
-    //     })
-    //     .then(async (loggedInUser) =>{
-    //       parent.setUser(JSON.parse(JSON.stringify(loggedInUser)))
-    //       userToLogin.set("email", authData.email)
-    //       userToLogin.save()
-    //     }).catch((error) => {
-    //       console.log(error);
-    //   })
-    
-    // },
 
     closeDialog(id){
       document.getElementById(id).hide()
@@ -391,6 +376,10 @@ export default {
         let target = e.target
         let fieldValue = e.target.value
         var isValid = e.target.checkValidity()
+
+        if(e.keyCode == 13){
+          parent.nextStep()
+        }
 
         // Checks if email has a '.'
         if (!fieldValue.includes(".") && isEmail) {
@@ -559,6 +548,7 @@ export default {
       let parent = this;
       parent.isLoading = true;
       let email = parent.userInfo.email
+
       Parse.User.requestPasswordReset(email).then(()=>{
         parent.showToast({
           id: "toastMessage",
