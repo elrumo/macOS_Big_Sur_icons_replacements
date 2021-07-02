@@ -53,30 +53,32 @@
           <label :id="'categoryUpdateLabel'+icon.id" class="coral-FieldLabel">
             App category
           </label>
-          <select
-            name="categoryUpdateField"
-            :id="'categoryUpdateField'+icon.id"
-            placeholder="Select category"
-            class="dropdown-select"
-            v-on:change="getValue($event, 'category')"
-          >
-            <option
-              value=""
-              disabled selected
+          <div class="dropdown-select-chevron">
+            <select
+              name="categoryUpdateField"
+              :id="'categoryUpdateField'+icon.id"
+              placeholder="Select category"
+              class="dropdown-select"
+              v-on:change="getValue($event, 'category')"
             >
-              Select category (required)
-            </option>
-            <option
-              v-for="category in getAppCategories"
-              :key="category.name+icon.id"
-              :id="category.id+icon.id"
-              :value="category.id"
-              :selected="isSameCategory('category', category)"
-            >
+              <option
+                value=""
+                disabled selected
+              >
+                Select category (required)
+              </option>
+              <option
+                v-for="category in getAppCategories"
+                :key="category.name+icon.id"
+                :id="category.id+icon.id"
+                :value="category.id"
+                :selected="isSameCategory('category', category)"
+              >
 
-              {{ category.name }}
-            </option>
-          </select>
+                {{ category.name }}
+              </option>
+            </select>
+          </div>
         </div>
 
         <!-- Type of icon -->

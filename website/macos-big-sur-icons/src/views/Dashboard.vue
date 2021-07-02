@@ -26,12 +26,6 @@
       No icons to aprove
     </h3>
 
-    
-    <div class="m-t-40">
-      <!-- <input type="file" id="profilePhotoFileUpload" @change="uploadFile"> -->
-      <!-- <button is="coral-button" variant="cta" @click="migrateFiles">Migrate Files</button> -->
-    </div>
-
   <!-- Edit user dialog -->
     <coral-dialog id="editUserDialog">
       <coral-dialog-header>{{ selectedUser.usersName }}</coral-dialog-header>
@@ -69,7 +63,7 @@
       <div class="p-t-20 p-b-50 dashboard-wrapper">
         <div v-for="user in icons" :key="user.usersName" class="p-b-30">
           
-          <h3 class="coral-Heading--M p-b-10 text-left">
+          <h3 class="coral-Heading--M p-b-10 text-left d-flex">
             <a
               :href="'mailto:'+user.email+'?subject=macOS icons submission'"
               @click="copyText(user.usersName)"
@@ -78,6 +72,10 @@
             </a>
             <img @click="showDialog('editUserDialog', user)" class="dashboard-edit-user" :src="coralIcons.edit" alt="">
             <img @click="sendEmail(user)" class="dashboard-edit-user p-l-15" :src="coralIcons.email" alt="">
+            
+            <coral-status  v-if="user.emailSent == 'requested'" variant="info"></coral-status>
+            <coral-status  v-if="user.emailSent == 'sent'" variant="success"></coral-status>
+
           </h3>
 
           <div class="icon-list-area">
@@ -87,9 +85,9 @@
               <coral-status v-if="icon.isReupload && !icon.isAuthor" variant="warning"></coral-status>
 
               <div class="card-img-wrapper" style="max-width: 120px;">
+
                 <div v-if="icon.isReview" class="loading-approval-wrapper">
-                  <div class="loading-approval">
-                  </div>
+                  <coral-status v-if="icon.isReview" variant="success"></coral-status>
                 </div>
                 
                 <a :href="icon.imgUrl" target="_blank">
@@ -115,7 +113,7 @@
                 </p>
                   
                 <!-- App name -->
-                <h3 class="coral-font-color m-b-0">
+                <h3 class="coral-font-color m-b-0 m-t-0">
                   <input class="editable-input f-w-800 m-b-0" @change="editDoc(icon, $event, 'appName', false)" type="text" variant="quiet" :value="prettifyName(icon.appName)" is="coral-textfield" aria-label="text input">
                 </h3>
 
@@ -126,15 +124,8 @@
                 <p v-if="icon.credit !='' " class="coral-Body--XS p-b-0 opacity-50 m-b-0"><input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="icon.credit" is="coral-textfield" aria-label="text input"></p>
                 <p v-if="icon.credit =='' " class="coral-Body--XS p-b-0 opacity-50 m-b-0"><input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="'n/a'" is="coral-textfield" aria-label="text input"></p>
 
-                <div class="p-t-15">
+                <div class="p-t-15 p-b-15">
                   <button @click="approveIcon(icon)" class="coral-btn coral-btn-primary">Approve</button>
-
-                  <!-- Contact -->
-                  <div v-if="icon.email != 'user@email.com'" class="p-t-10"> 
-                    <a class="coral-Link" :href="'mailto:'+icon.email+'?subject=macOS icons submission&body='+icon.usersName">
-                          email
-                    </a>
-                  </div>
                 </div>
                 
               </div>
@@ -161,13 +152,14 @@ Parse.initialize("macOSicons");
 Parse.serverURL = 'https://media.macosicons.com/parse'
 
 const Icons = Parse.Object.extend("Icons2");
+const User = Parse.Object.extend("User");
 
 Parse.User.enableUnsafeCurrentUser() // Enable cache for user auth, to avoid having to always login
 const currentUser = Parse.User.current(); // Check if user is currently logged in or not
 
 let lastVisible
 
-const docLimit = 50
+const docLimit = 500
 
 export default {
   
@@ -404,6 +396,8 @@ export default {
       // delete icon.type
       // delete icon.icons
       
+      parent.icons[icon.usersName].emailSent = "requested";
+
       let payLoad = {
         email: icon.email,
         usersName: icon.usersName,
@@ -411,6 +405,8 @@ export default {
       }
 
       Parse.Cloud.run("sendEmail", payLoad).then((result)=>{
+        parent.icons[icon.usersName].emailSent = "sent";
+        console.log(parent.icons[icon.usersName].emailSent);
         parent.showToast({
           id: "toastMessage",
           message: "Email has been sent",
@@ -424,6 +420,7 @@ export default {
           variant: "error"
         })
       });
+
     },    
 
     getIconListLen(query){
@@ -537,8 +534,13 @@ export default {
 
       async function getParseData(){
         const query = new Parse.Query(Icons);
+        
+        // const userQuery = new Parse.Query(User);
+        // userQuery.descending("modifiedAt");
+        
         query.equalTo("approved", false)
-        query.ascending("usersName");
+        query.descending("createdAt");
+        // query.ascending("usersName");
         query.exists("highResPngFile");
         query.limit(docLimit);
           
@@ -572,15 +574,15 @@ export default {
           let email = docData.email
           let creditUrl = docData.credit
 
-          let imgReference
-
           if (usersName == "" || usersName == undefined ) {      
-
+            
+            // Set user if the user is undefined has no icons on the dashboard
             if(parent.icons["Undefined"] == undefined ){
               Vue.set(parent.icons, "Undefined", {
                 "usersName": "Undefined", 
                 "email": email, 
-                "icons":{}, 
+                "icons":{},
+                "emailSent": false,
                 "creditUrl": creditUrl
               })
               Vue.set(parent.icons["Undefined"].icons, appName, docData)
@@ -594,11 +596,13 @@ export default {
 
           }else{
 
+            // Set user if the user has no icons on the dashboard
             if(parent.icons[usersName] == undefined ){
               Vue.set(parent.icons, usersName, {
                 "usersName": usersName, 
                 "email": email, 
                 "icons":{}, 
+                "emailSent": false,
                 "creditUrl": creditUrl,
                 "user": user
               })

@@ -329,15 +329,53 @@ option[value=""][disabled] {
 }
 
 .coral--dark .dropdown-select{
-    background-color: var(--coral-dark-card) !important;
-    border-color: var(--coral-dark-border);
     color: var(--coral-light-border);
+    background-color: var(--coral-dark-card);
+    border-color: var(--coral-dark-border);
+}
+
+.main-search .dropdown-select-chevron{
+    position: inherit;
+}
+
+.dropdown-select-chevron{
+    position: relative;
+}
+
+.dropdown-select-chevron::after{
+    pointer-events: none;
+    content: "";
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+div * {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+    ::-webkit-scrollbar-track {
+      -webkit-box-shadow: none !important;
+      background-color: transparent;
+    }
+    ::-webkit-scrollbar {
+      width: 3px !important;
+      background-color: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: transparent;
+    }
+  }
+
+.coral--dark .dropdown-select-chevron::after{
     background: url('../assets/icons/ChevronDown.svg') no-repeat 97% 50% !important;
 }
-.coral--light .dropdown-select{
-    background-color: rgb(255, 255, 255) !important;
-    border-color: rgb(225, 225, 225);
-    color: rgb(75, 75, 75);
+.coral--light .dropdown-select-chevron::after{
+    // background-color: rgb(255, 255, 255) !important;
+    // border-color: rgb(225, 225, 225);
+    // color: rgb(75, 75, 75);
     background: url('../assets/icons/ChevronDown-dark.svg') no-repeat 97% 50% !important;
 }
 
@@ -1198,6 +1236,11 @@ coral-buttongroup button{
     cursor: pointer !important;
 }
 
+// .coral--dark option{
+//     color: #4b4b4b;
+//     border-radius: 4px;
+// }
+
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
     opacity: 0;
 }
@@ -1246,14 +1289,8 @@ coral-buttongroup button{
 
 .loading-approval-wrapper{
     position: absolute;
-    left: 50%;
-    transform: translate3d(-50%, -50%, 0px);
-    top: 50%;
-    width: 80%;
-    height: 80%;
-    z-index: 9;
-    /* backdrop-filter: blur(5px) saturate(0.5); */
-    backdrop-filter: blur(3px);
+    top: 0%;
+    left: 0%;   
 }
 
 .hide{
