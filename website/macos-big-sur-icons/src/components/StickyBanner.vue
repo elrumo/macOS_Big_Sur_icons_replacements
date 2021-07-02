@@ -107,9 +107,9 @@ export default {
 
       adClick(){
         let parent = this
-        window.plausible("logDonation", {props: {
-          location: parent.$router.currentRoute.name,
-          campaign: "Pride Month",
+        window.plausible("adClick", {props: {
+          path: parent.$router.currentRoute.name,
+          position: "Bottom Sticky Banner"
         }})
       }
     }

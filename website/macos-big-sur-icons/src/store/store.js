@@ -540,7 +540,7 @@ export default new Vuex.Store({
     adClick(store){
       let parent = this
       window.plausible("adClick", {props: {
-        path: globalThis.router.currentRoute.name, 
+        path: globalThis.router.currentRoute.name,
       }})
     },
 
