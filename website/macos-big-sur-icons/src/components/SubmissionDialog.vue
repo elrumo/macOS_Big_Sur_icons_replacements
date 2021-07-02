@@ -109,29 +109,31 @@
                         <label :id="'categoryUploadLabel'+icon.randId" class="coral-FieldLabel">
                           App category
                         </label>
-                        <select
-                          name="categoryUploadField"
-                          :id="'categoryUploadField'+icon.randId"
-                          placeholder="Select category"
-                          class="dropdown-select"
-                          v-on:change="getValue($event, icon.randId, 'category')"
-                        >
-                          <option
-                            value=""
-                            disabled selected
+                        <div class="dropdown-select-chevron relative">
+                          <select
+                            name="categoryUploadField"
+                            :id="'categoryUploadField'+icon.randId"
+                            placeholder="Select category"
+                            class="dropdown-select"
+                            v-on:change="getValue($event, icon.randId, 'category')"
                           >
-                            Select category (required)
-                          </option>
-                          <option
-                            v-for="category in getAppCategories"
-                            :key="category.name+icon.randId+Math.floor(Math.random() * 10000000 + 1)"
-                            :id="icon.randId+category.id"
-                            :value="category.id"
-                            :selected="icon.category.includes(category.id)"
-                          >
-                            {{ category.name }}
-                          </option>
-                        </select>
+                            <option
+                              value=""
+                              disabled selected
+                            >
+                              Select category (required)
+                            </option>
+                            <option
+                              v-for="category in getAppCategories"
+                              :key="category.name+icon.randId+Math.floor(Math.random() * 10000000 + 1)"
+                              :id="icon.randId+category.id"
+                              :value="category.id"
+                              :selected="icon.category.includes(category.id)"
+                            >
+                              {{ category.name }}
+                            </option>
+                          </select>
+                        </div>
                       </div>
                       
                       <!-- Type of icon -->

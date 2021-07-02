@@ -87,18 +87,20 @@
                 
                 <hr class="coral-Divider--s coral-Divider--vertical searchBar-divider m-0">
 
-                <select
-                id="selectOS"
-                class="dropdown-select searchbar-select"
-                v-on:change="changeOS"
-                >
-                  <option value="macOS" selected="">
-                    macOS
-                  </option>
-                  <option value="iOS">
-                    iOS
-                  </option>
-                </select>
+                <div class="dropdown-select-chevron">
+                  <select
+                  id="selectOS"
+                  class="dropdown-select searchbar-select"
+                  v-on:change="changeOS"
+                  >
+                    <option value="macOS" selected="">
+                      macOS
+                    </option>
+                    <option value="iOS">
+                      iOS
+                    </option>
+                  </select>
+                </div>
 
               </div>
             </div>
