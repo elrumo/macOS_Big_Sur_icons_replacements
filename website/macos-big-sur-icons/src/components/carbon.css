@@ -383,7 +383,7 @@ height: -moz-fit-content;
 .card-grid-nativeAd .bsa-link{
     padding: 10px 0px;
     height: fit-content;
-height: -moz-fit-content;
+    height: -moz-fit-content;
     height: -moz-fit-content;
     display: grid;
     grid-template-rows: 88px auto;
@@ -393,6 +393,22 @@ height: -moz-fit-content;
     border: 0px;
     font-size: 13px;
     gap: 10px;
+}
+
+#stickyBanner .card-grid-nativeAd .bsa-link{
+    padding: 10px 20px;
+    height: fit-content;
+    height: -moz-fit-content;
+    height: -moz-fit-content;
+    display: flex;
+    grid-template-rows: 88px auto;
+    background-color: var(--coral-dark-card);
+    border: 0px;
+    font-size: 13px;
+    gap: 10px;
+    position: absolute;
+    width: calc(100% - 60px);
+    /* transform: translateY(0px); */
 }
 
 .coral--dark .card-grid-nativeAd .bsa-link{

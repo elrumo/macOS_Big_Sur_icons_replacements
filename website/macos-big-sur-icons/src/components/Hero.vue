@@ -8,9 +8,9 @@
     <div class="hero-text-area" v-if="iconsEmpty">    
         
 
-        <div class="ad-hero mobile-hidden">
+        <!-- <div class="ad-hero mobile-hidden">
           <NativeAd :adId="'iconbar-js-hero'" :key="$route.fullPath + 'ad'"/>
-        </div>
+        </div> -->
 
         <div class="desktop-hidden m-t-20"></div>
 
