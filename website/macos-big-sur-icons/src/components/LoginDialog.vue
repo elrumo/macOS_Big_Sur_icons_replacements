@@ -6,18 +6,21 @@
     </coral-dialog-header> -->
     <coral-dialog-content>
 
-        <!-- <coral-dialog id="deleteDialog">
-          <coral-dialog-header>Are you sure you want to delete?</coral-dialog-header>
+      <coral-dialog id="resetPasswordDialog">
+          <coral-dialog-header>Reset your password</coral-dialog-header>
           
-          <coral-dialog-content>  
-              This action cannot be undone.
+          <coral-dialog-content style="max-width:412px">  
+              You will recieve an email to reset your password. 
+              <br>
+              <br>
+              Make sure to check your spam folder if you don't recieve it within the next few minutes.
           </coral-dialog-content>
 
           <coral-dialog-footer>
               <button is="coral-button" variant="quiet" coral-close="">Cancel</button>
-              <button is="coral-button" variant="warning" coral-close="">Delete</button>
+              <button is="coral-button" @click="resetPassword" variant="default" coral-close="">Reset password</button>
           </coral-dialog-footer>
-      </coral-dialog> -->
+      </coral-dialog>
 
         <div class="signin-dialog-content">
           
@@ -321,6 +324,7 @@ export default {
       email: "",
       yourName: "",
       isLoading: false,
+      isReset: false,
       
       showResend: false,
       emailSentAt: '',
@@ -439,10 +443,8 @@ export default {
       var userExists
       
       if (resultsUserame.length !=0) {
-        console.log("resultsUserame.length: ", resultsUserame.length);
         userExists = true
       } else {
-        console.log("resultsUserame.length: ", resultsUserame.length);
         userExists = false
       }
       
@@ -513,10 +515,9 @@ export default {
       Parse.User.logIn(email, password).then((user) =>{
         console.log("user: ", user);
         parent.setUser(user)
-        console.log(parent.getUser);
         parent.isLoading = false
       }).catch((e) => {
-        console.log("error: ", e.code);
+        console.log("error logging in, report this to @elrumo: ", e.code);
         parent.isLoading = false
         
         switch (e.code) {
@@ -546,25 +547,32 @@ export default {
 
     async resetPassword(){
       let parent = this;
-      parent.isLoading = true;
       let email = parent.userInfo.email
 
-      Parse.User.requestPasswordReset(email).then(()=>{
-        parent.showToast({
-          id: "toastMessage",
-            message: "Check your email",
-            variant: "success"
-          })
-      })  
+      if (parent.isReset) {
+        parent.isLoading = true;
+        parent.isReset = false; 
 
-      Parse.Cloud.run("firstTimeUser", {email: email}).then((result)=>{
-        parent.userInfo.passwordResetSent = true
-        parent.emailSentAt = new Date().getTime()// Set time the email was sent at
-        parent.isLoading = false;
+        Parse.User.requestPasswordReset(email).then(()=>{
+          parent.showToast({
+            id: "toastMessage",
+              message: "Check your email",
+              variant: "success"
+            })
+        })  
 
-      }).catch((error) => {
-        console.log("firstTimeUser error: ", error);
-      })
+        Parse.Cloud.run("firstTimeUser", {email: email}).then((result)=>{
+          parent.userInfo.passwordResetSent = true
+          parent.emailSentAt = new Date().getTime()// Set time the email was sent at
+          parent.isLoading = false;
+
+        }).catch((error) => {
+          console.log("firstTimeUser error: ", error);
+        })
+      } else{
+        document.getElementById("resetPasswordDialog").show()
+        parent.isReset = true;
+      }
 
     },
 
