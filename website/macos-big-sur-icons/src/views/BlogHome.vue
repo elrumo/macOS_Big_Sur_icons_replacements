@@ -6,7 +6,13 @@
 
         <section class="p-t-30 p-b-10">
 
-          <NativeAd :adId="'iconbar-js-blogHome'" class="width-fit m-auto" :sponsored="true" :key="$route.fullPath + 'ad'"/>
+          <NativeAd
+            :adPosition="'Hero Top'"
+            :adId="'iconbar-js-blogHome'"
+            class="width-fit m-auto"
+            :sponsored="true"
+            :key="$route.fullPath + 'ad'"
+          />
 
           <H3-Description :text="subscribe"/>
           
@@ -36,8 +42,15 @@
           </router-link>
         </div>
 
-        <div class="single-ad m-b-20 p-b-50 p-t-30">
-          <script @click="adClick" async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
+        <div
+          @click="adClick({position: 'Bottom Page', type: 'Carbon'})"
+          class="single-ad m-b-20 p-b-50 p-t-30"
+        >
+          <script
+            async="async"
+            type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom"
+            id="_carbonads_js">
+          </script>
         </div>
         
       </div>

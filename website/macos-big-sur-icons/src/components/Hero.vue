@@ -9,7 +9,7 @@
         
 
         <div class="ad-hero mobile-hidden">
-          <NativeAd :adId="'iconbar-js-hero'" :key="$route.fullPath + 'ad'"/>
+          <NativeAd :adPosition="'Hero Top'" :adId="'iconbar-js-hero'" :key="$route.fullPath + 'ad'"/>
         </div>
 
         <div class="desktop-hidden m-t-20"></div>

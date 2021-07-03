@@ -3,11 +3,16 @@
     <p v-if="sponsored" class="coral-Detail coral-Detail--S coral-Detail--light opacity-50">
       Sponsored
     </p>
-    <div @click="adClick" class="native-ad-wrapper" :id="adId"> </div>
+    <div
+      @click="adClick({position: adPosition, type: 'Native'})"
+      class="native-ad-wrapper"
+      :id="adId">
+    </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 
 export default {
     name:"NativeAd",
@@ -16,6 +21,7 @@ export default {
       sponsored:'',
       fullWidth:'',
       adId: '',
+      adPosition: ''
     },
 
     components:{},
@@ -113,12 +119,7 @@ export default {
     },
 
     methods:{
-      adClick(){
-        let parent = this
-        window.plausible("adClick", {props: {
-          path: parent.$router.currentRoute.name, 
-        }})
-      }
+    ...mapActions(['adClick']),
     }
 }
 </script>

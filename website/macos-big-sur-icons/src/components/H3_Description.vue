@@ -15,7 +15,7 @@
                 <p class="coral-Body--XS">
                     Sponsored by
                 </p>
-                <NativeAd :adId="'iconbar-js-h3'" :key="$route.fullPath + 'ad'"/>
+                <NativeAd :adPosition="'H3 Description Desktop'" :adId="'iconbar-js-h3'" :key="$route.fullPath + 'ad'"/>
             </div>
 
         </div>
@@ -34,7 +34,10 @@
                 <div v-else class="text-and-ad-wrapper">
                     <p class="coral-Body--XL" v-html="markItDown">
                     </p>
-                    <div @click="adClick" class="single-ad mobile-ad">
+                    <div
+                        @click="adClick({position: 'H3 Description Mobile', type: 'Native'})"
+                        class="single-ad mobile-ad"
+                    >
                         <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
                     </div>
                 </div>

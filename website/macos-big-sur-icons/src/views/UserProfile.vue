@@ -139,7 +139,12 @@
         v-else
       >
         <div style="z-index: 2; height: 100%; min-height: 210px" class="card-wrapper card-hover coral-card">
-          <script @click="adClick" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js2"></script>
+          <script
+            @click="adClick({position: 'Icon Grid Top', type: 'Native'})"
+            type="application/javascript"
+            src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom"
+            id="_carbonads_js2">
+          </script>
         </div>
         <UserIconCardLoading v-for="num in placeholderCount" :key="num+Math.floor(Math.random() * 10000000 + 1)" :icon="iconsCount"/>
       </div>

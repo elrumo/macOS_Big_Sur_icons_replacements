@@ -18,8 +18,15 @@
           :step='resource'
         />
 
-        <div class="card-hover relative coral-card resources-card-ad">            
-            <script @click="adClick" async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
+        <div
+          class="card-hover relative coral-card resources-card-ad"
+          @click="adClick({position: 'Icon Grid Bottom', type: 'Carbon'})"
+        >
+            <script
+              async="async"
+              type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom"
+              id="_carbonads_js">
+            </script>
           <a
               class="card-no-ad relative"
               href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"

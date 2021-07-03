@@ -157,7 +157,15 @@ height: -moz-fit-content;
 .resources-card-ad{
     height: 100%;
     min-width: calc(100vw / 3 - 18vw);
+    min-height: 140px;
     /* max-width: 320px; */
+}
+
+.resources-card-ad .card-no-ad{
+        width: 100%;
+    left: 0px;
+    top: 50%;
+    position: absolute;
 }
 
 .resources-card-ad .carbon-text{
