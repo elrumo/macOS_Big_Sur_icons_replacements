@@ -10,7 +10,9 @@
         </svg>
         
           <div style="z-index: 2" class="card-grid-nativeAd">
-            <div @click="adClick" id="card-ad2">
+            <div
+              @click="adClick({position: 'Bottom Sticky Banner', type: 'Native'})"
+              id="card-ad2">
             </div>
           </div>
 
@@ -75,7 +77,7 @@ export default {
     },
 
     methods:{
-      ...mapActions(['showEl', 'setSelectedIcon', 'addClickCount']),
+      ...mapActions(['showEl', 'setSelectedIcon', 'addClickCount', 'adClick']),
 
       getAd(el){
         try {
@@ -105,13 +107,13 @@ export default {
         document.getElementById("stickyBanner").remove()
       },
 
-      adClick(){
-        let parent = this
-        window.plausible("adClick", {props: {
-          path: parent.$router.currentRoute.name,
-          position: "Bottom Sticky Banner"
-        }})
-      }
+      // adClick(){
+      //   let parent = this
+      //   window.plausible("adClick", {props: {
+      //     path: parent.$router.currentRoute.name,
+      //     position: "Bottom Sticky Banner"
+      //   }})
+      // }
     }
 }
 </script>

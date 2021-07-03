@@ -26,6 +26,7 @@
         
         <div class="single-ad mobile-ad p-b-10">
           <NativeAd
+            :adPosition="'Blog post top desktop'"
             :adId="'iconbar-js-blogPost'"
             :sponsored="true"
             :fullWidth="false"
@@ -43,7 +44,12 @@
       
 
         <div class="single-ad p-b-20 p-t-30">
-          <script @click="adClick" async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
+          <script
+            @click="adClick({position: 'Bottom Page', type: 'Carbon'})"
+            async="async"
+            type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom"
+            id="_carbonads_js">
+          </script>
         </div>
 
 

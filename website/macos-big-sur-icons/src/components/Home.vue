@@ -143,7 +143,7 @@
 
       <!-- Loading error -->
       <div v-if="false" class="waiting-wrapper">
-        <NativeAd :adId="'iconbar-js-card-grid'" :key="$route.fullPath + 'ad'"/>
+        <NativeAd :adPosition="'Loading error'" :adId="'iconbar-js-card-grid'" :key="$route.fullPath + 'ad'"/>
         <h3 class="coral-Heading--M">
           The site is temporarily down for maintenance purposes.
           <br>
@@ -256,11 +256,18 @@
           <div style="min-height: 205px; max-height:226px" class="card-hover relative coral-card">
             
             <div style="z-index: 1; height: 100%; width: 100%" class="absolute carbon-card-ad">
-              <script @click="adClick" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+              <script
+              @click="adClick({position: 'Icon Grid Top', type: 'Carbon'})"
+              async
+              type="application/javascript"
+              src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom"
+              id="_carbonads_js"></script>
             </div>
 
             <div style="z-index: 2" class="absolute card-grid-nativeAd">
-              <div @click="adClick" id="card-ad">
+              <div
+                @click="adClick({position: 'Icon Grid Top', type: 'Native'})"
+                id="card-ad">
               </div>
             </div>
             

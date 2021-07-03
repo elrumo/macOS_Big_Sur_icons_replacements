@@ -126,6 +126,18 @@
 
                 <div class="p-t-15 p-b-15">
                   <button @click="approveIcon(icon)" class="coral-btn coral-btn-primary">Approve</button>
+                   
+                   <coral-splitbutton>
+                    <button class="coral-btn coral-btn-primary" is="coral-button" coral-splitbutton-action="">Action</button>
+                    <button id="target1" type="button" is="coral-button" icon="ChevronDown" coral-splitbutton-trigger=""></button>
+                  </coral-splitbutton>
+                  <coral-popover target="#target1" placement="bottom">
+                    <coral-buttonlist>
+                      <button is="coral-buttonlist-item">Second Action</button>
+                      <button is="coral-buttonlist-item">Third Action</button>
+                    </coral-buttonlist>
+                  </coral-popover>
+
                 </div>
                 
               </div>
@@ -159,7 +171,7 @@ const currentUser = Parse.User.current(); // Check if user is currently logged i
 
 let lastVisible
 
-const docLimit = 500
+const docLimit = 200
 
 export default {
   

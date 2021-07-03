@@ -537,10 +537,13 @@ export default new Vuex.Store({
       store.commit('pushUserData',  userProps)
     },
 
-    adClick(store){
+    adClick(store, data){
       let parent = this
+      console.log(data);
       window.plausible("adClick", {props: {
         path: globalThis.router.currentRoute.name,
+        position: data.adPosition,
+        type: data.adType
       }})
     },
 
