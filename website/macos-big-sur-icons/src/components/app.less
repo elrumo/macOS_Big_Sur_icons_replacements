@@ -263,6 +263,30 @@ select{
     border-radius: 8px;
 }
 
+.account-dialog-form{
+    width: calc(100% - 5px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+}
+
+.account-dialog-form > div{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 5px;
+}
+
+#accountDialog ._coral-Dialog{
+    width: 50%;
+    max-width: 720px;
+}
+
+#accountDialog .coral-FormGroup-item{
+    display: inline;
+    width: 100%;
+}
+
 ._coral-Dialog-content{
     height: 100%;
 }
@@ -1948,6 +1972,13 @@ coral-buttongroup button{
 
     .mobile-hidden{
         display: none !important;
+    }
+
+    .account-dialog-form{
+        width: calc(100% - 5px);
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
     }
 
     .gitHub-sponsor{

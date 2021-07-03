@@ -28,9 +28,11 @@
         <!-- <button is="coral-button" variant="quiet" icon="edit">Upload new</button> -->
         <button @click="showEl('deleteDialog')" is="coral-button" variant="quiet" icon="delete">Delete Icon</button>
       </div>
-      
+
       <form class="coral-FormGroup m-0 p-l-5" style="width: calc(100% - 5px)">
         
+
+
         <!-- appName -->
         <div class="coral-FormGroup-item">
           <label :id="'appNameLabel'+icon.id" class="coral-FieldLabel">
