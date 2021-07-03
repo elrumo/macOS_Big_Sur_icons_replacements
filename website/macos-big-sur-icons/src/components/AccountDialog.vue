@@ -1,147 +1,187 @@
 <template>
   <coral-dialog id="accountDialog" v-if="getUser.isAuth" focusOnShow="off">
-    
 
     <coral-dialog-header>
-      Your Account
+      Settings
     </coral-dialog-header>
     
     <coral-dialog-content>
       
+      <coral-dialog id="resetPasswordDialog">
+          <coral-dialog-header>Reset your password</coral-dialog-header>
+          
+          <coral-dialog-content style="max-width:412px">  
+              You will recieve an email to reset your password. 
+              <br>
+              <br>
+              Make sure to check your spam folder if you don't recieve it within the next few minutes.
+          </coral-dialog-content>
+
+          <coral-dialog-footer>
+              <button is="coral-button" variant="quiet" coral-close="">Cancel</button>
+              <button is="coral-button" @click="resetPassword" variant="default" coral-close="">Reset password</button>
+          </coral-dialog-footer>
+      </coral-dialog>
+
       <div v-if="isLoading.requestUserData" class="loading-overlay">
         <div class="loading-popup">
           <coral-progress indeterminate> Fetching your data</coral-progress>
         </div>
       </div>
-
-      <coral-alert style="max-width: 360px; min-width: 260px !important;">
-        <coral-alert-header>Info</coral-alert-header>
-        <coral-alert-content>
-          Your email can't be changed at the moment. A future update will fix this.
-        </coral-alert-content>
-      </coral-alert>
       
-      <form class="coral-FormGroup m-0 p-l-5" style="width: calc(100% - 5px)">
-       
-        <div class="coral-FormGroup-item">
-          <p v-if="propExists('authData')" class="coral-Body--XS"></p>
-          <label id="username-label" class="coral-FieldLabel">Your username</label>
-          <input
-            id="username-settings"
-            is="coral-textfield"
-            labelledby="email-label"
-            class="coral-Form-field"
-            type="text"
-            v-on:change="validate($event, 'username')"
-            :value="getUser.userData.username"
-          >
-        </div>
+      <form class="coral-FormGroup account-dialog-form m-0 p-l-5">
         
-        <div class="coral-FormGroup-item">
-          <p class="coral-Body--XS"></p>
-          <label id="user-bio-label" class="coral-FieldLabel">Bio</label>
-          <textarea
-            is="coral-textarea"
-            aria-label="text input"
-            id="user-bio-settings"
-            labelledby="user-bio-label"
-            style="height:75px"
-            v-on:keyup="validate($event, 'bio')"
-            :value="getUser.userData.bio"
-          >{{getUser.userData.bio}}</textarea>
+        <div>
+          <h3 class="coral-Heading--S coral-Heading--light">Your Profile</h3>
           
-          <!-- Character Count -->
-          <p class="coral-Detail coral-Detail--S opacity-80 m-b-0">
-            <coral-charactercount
-              target="#user-bio-settings"
-              maxlength="160"
-              class="p-r-0 coral-Detail--S opacity-80 m-b-0"
-            ></coral-charactercount>
-            / 160
-          </p>
-        </div>
-
-        <div class="coral-FormGroup-item">
-          <p v-if="propExists('authData')" class="coral-Body--XS"></p>
-          <label id="email-label" class="coral-FieldLabel">Your email</label>
-          <input
-            id="user-email-settings"
-            is="coral-textfield"
-            labelledby="email-label"
-            class="coral-Form-field"
-            type="email"
-            :value="getUser.userData.email"
-            readonly
-          >
-        </div>
-
-        <div class="coral-FormGroup-item">
-          <p class="coral-Body--XS"></p>
-          <label id="user-credit-label" class="coral-FieldLabel">This is how you'll be credited</label>
-          <input
-            id="user-credit-settings"
-            is="coral-textfield"
-            labelledby="user-credit-label"
-            class="coral-Form-field"
-            type="url"
-            v-on:change="validate($event, 'credit')"
-            :value="getUser.userData.credit"
-          >
-        </div>
-
-        <div class="coral-FormGroup-item">
-          <p class="coral-Body--XS"></p>
-          <label id="user-twitter-label" class="coral-FieldLabel">Twitter Handle</label>
-          
-          <div class="twitter-handle-wrapper">
-            <span>@</span>
+          <!-- Username -->
+          <div class="coral-FormGroup-item">
+            <p v-if="propExists('authData')" class="coral-Body--XS"></p>
+            <label id="username-label" class="coral-FieldLabel">Your username</label>
             <input
-              id="user-twitter-settings"
+              id="username-settings"
               is="coral-textfield"
-              labelledby="user-twitter-label"
+              labelledby="email-label"
               class="coral-Form-field"
               type="text"
-              v-on:change="validate($event, 'twitterHandle')"
-              :value="getUser.userData.twitterHandle"
+              v-on:change="validate($event, 'username')"
+              :value="getUser.userData.username"
+            >
+          </div>
+          
+          <!-- User bio -->
+          <div class="coral-FormGroup-item">
+            <p class="coral-Body--XS"></p>
+            <label id="user-bio-label" class="coral-FieldLabel">Bio</label>
+            <textarea
+              is="coral-textarea"
+              aria-label="text input"
+              id="user-bio-settings"
+              labelledby="user-bio-label"
+              style="height:75px"
+              v-on:keyup="validate($event, 'bio')"
+              :value="getUser.userData.bio"
+            >{{getUser.userData.bio}}</textarea>
+            
+            <!-- Character Count -->
+            <p class="coral-Detail coral-Detail--S opacity-80 m-b-0">
+              <coral-charactercount
+                target="#user-bio-settings"
+                maxlength="160"
+                class="p-r-0 coral-Detail--S opacity-80 m-b-0"
+              ></coral-charactercount>
+              / 160
+            </p>
+          </div>
+
+          <!-- Twitter -->
+          <div class="coral-FormGroup-item">
+            <p class="coral-Body--XS"></p>
+            <label id="user-twitter-label" class="coral-FieldLabel">Twitter Handle</label>
+            
+            <div class="twitter-handle-wrapper">
+              <span>@</span>
+              <input
+                id="user-twitter-settings"
+                is="coral-textfield"
+                labelledby="user-twitter-label"
+                class="coral-Form-field"
+                type="text"
+                v-on:change="validate($event, 'twitterHandle')"
+                :value="getUser.userData.twitterHandle"
+              >
+            </div>
+
+          </div>
+        </div>
+
+        
+        <div>
+          <h3 class="coral-Heading--S coral-Heading--light">Account settings</h3>
+
+          <div class="coral-FormGroup-item">
+            <p v-if="propExists('authData')" class="coral-Body--XS"></p>
+            <label id="email-label" class="coral-FieldLabel">Your email</label>
+            <input
+              id="user-email-settings"
+              is="coral-textfield"
+              labelledby="email-label"
+              class="coral-Form-field"
+              type="email"
+              :value="getUser.userData.email"
+              readonly
             >
           </div>
 
-        </div>
+          <div class="coral-FormGroup-item">
+            <p class="coral-Body--XS"></p>
+            <label id="password-label" class="coral-FieldLabel">
+              Password
+            </label>
+            <input
+              id="user-password-settings"
+              is="coral-textfield"
+              labelledby="email-label"
+              class="coral-Form-field"
+              type="password"
+              value="*******"
+              readonly
+            >
+            <p class="coral-Body--XS opacity-60 f-w-400 p-t-10">
+              Problems signing in? <a @click="resetPassword" class="coral-link pointer">Reset password</a> 
+            </p>
+          </div>
 
-        <span class="p-t-10"></span>
+          <div class="coral-FormGroup-item">
+            <p class="coral-Body--XS"></p>
+            <label id="user-credit-label" class="coral-FieldLabel">This is how you'll be credited</label>
+            <input
+              id="user-credit-settings"
+              is="coral-textfield"
+              labelledby="user-credit-label"
+              class="coral-Form-field"
+              type="url"
+              v-on:change="validate($event, 'credit')"
+              :value="getUser.userData.credit"
+            >
+          </div>
 
-        <div class="coral-FormGroup-item p-t-20">
-          <coral-switch
-            v-on:change="validate($event, 'isSubscribed')"
-            :checked="getUserData('isSubscribed')"
-          >
-            Subscribe to newsletter
-          </coral-switch>
+          <span class="p-t-10"></span>
+
+          <div class="coral-FormGroup-item">
+            <coral-switch
+              v-on:change="validate($event, 'isSubscribed')"
+              :checked="getUserData('isSubscribed')"
+            >
+              Subscribe to newsletter
+            </coral-switch>
+          </div>
+
+          <p class="coral-Body--XS p-t-10 p-r-5 m-0 opacity-60">
+            <a
+              @click="requestUserData"
+              rel="noopener"
+              class="coral-Link">
+                Request
+              </a> 
+              all the data macOSicons has about me.
+          </p>
+
+          <p class="coral-Body--XS p-r-5 m-0 opacity-60">
+            <a
+              rel="noopener"
+              :href="'mailto:elias.ruiz.monserrat@gmail.com?subject=Right to be forgotten: '+getUserData('objectId')"
+              target="_blank"
+              class="coral-Link">
+                Exercise
+              </a> 
+              right to be forgotten and delete account.
+          </p>
+
         </div>
 
       </form>
-
-        <p class="coral-Body--XS p-l-5 p-t-5 p-r-5 m-0 opacity-60">
-            <!-- :href="'mailto:elias.ruiz.monserrat@gmail.com?subject=Request macOSicons data: '+getUserData('objectId')" -->
-          <a
-            @click="requestUserData"
-            rel="noopener"
-            class="coral-Link">
-              Request
-            </a> 
-            all the data macOSicons has about me.
-        </p>
-
-        <p class="coral-Body--XS p-l-5 p-t-5 p-r-5 m-0 opacity-60">
-          <a
-            rel="noopener"
-            :href="'mailto:elias.ruiz.monserrat@gmail.com?subject=Right to be forgotten: '+getUserData('objectId')"
-            target="_blank"
-            class="coral-Link">
-              Exercise
-            </a> 
-            right to be forgotten and delete account.
-        </p>
+        
 
       <div v-if="isLoading.updatingUser" class="loading-overlay">
         <div class="loading-popup">
@@ -185,13 +225,39 @@ export default {
         
         isValidated: false,
         hasChanged: false,
-        toUpdate:{}
+        toUpdate:{},
+        isReset: false,
+        isLoading: false
       }
     },
     
     methods:{
       ...mapActions(['showToast', 'setUser']),
-  
+
+      async resetPassword(){
+      let parent = this;
+
+      let email = Parse.User.current().get("email");
+
+      if (parent.isReset) {
+        parent.isLoading = true;
+        parent.isReset = false; 
+
+        Parse.User.requestPasswordReset(email).then(()=>{
+          parent.showToast({
+            id: "toastMessage",
+              message: "Check your email",
+              variant: "success"
+            })
+        })  
+
+      } else{
+        document.getElementById("resetPasswordDialog").show()
+        parent.isReset = true;
+      }
+
+    },
+
       async requestUserData(){
         let parent = this;
         let user = Parse.User.current();
