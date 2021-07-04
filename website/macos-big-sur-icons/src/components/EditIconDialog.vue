@@ -88,24 +88,26 @@
           <label :id="'TypeUploadLabel'+icon.id" class="coral-FieldLabel">
             Type of icon
           </label>
-          <select
-            name="TypeUploadField"
-            :id="'TypeUploadField'+icon.id"
-            placeholder="Select Type"
-            class="dropdown-select"
-            v-on:change="getValue($event, 'type')"
-          >
-            <option
-              v-for="type in getIconType"
-              :key="type.name+icon.id"
-              :value="type.id"
-              :selected="isSameCategory('type', type)"
+          <div class="dropdown-select-chevron relative">
+            <select
+              name="TypeUploadField"
+              :id="'TypeUploadField'+icon.id"
+              placeholder="Select Type"
+              class="dropdown-select"
+              v-on:change="getValue($event, 'type')"
             >
-              <!-- :selected="selectedOption(type.id, icon.type)" -->
-              <!-- :selected="icon.category.includes(category.id)" -->
-              {{ type.name }}
-            </option>
-          </select>
+              <option
+                v-for="type in getIconType"
+                :key="type.name+icon.id"
+                :value="type.id"
+                :selected="isSameCategory('type', type)"
+              >
+                <!-- :selected="selectedOption(type.id, icon.type)" -->
+                <!-- :selected="icon.category.includes(category.id)" -->
+                {{ type.name }}
+              </option>
+            </select>
+          </div>
         </div>
 
       </form>

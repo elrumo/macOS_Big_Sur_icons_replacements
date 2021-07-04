@@ -61,7 +61,14 @@
           <div @click="scrollTo" class="content-wrapper-regular search">
             <div class="m-auto main-search" style="max-width:300px;">
               <div class="shadow main-border-radius">
-                <input v-model="searchString" :placeholder="'Search ' + iconListLen + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
+                <input 
+                  v-model="searchString" 
+                  :placeholder="'Search ' + iconListLen + ' icons'" 
+                  type="text"  
+                  class="_coral-Search-input _coral-Textfield searchBar" 
+                  name="name" 
+                  aria-label="text input"
+                >
                 
                 <!-- Search icon -->
                 <svg class="icon searchBar-left" id="coral-css-icon-Magnifier" viewBox="0 0 16 16">
@@ -805,8 +812,9 @@ export default {
 
       try {
         const query = new Parse.Query(Icons);
-        query.equalTo("approved", true)
+        query.equalTo("approved", true);
         query.descending("timeStamp");
+        query.exists("icnsFile");
         query.limit(docLimit);
         parent.howManyRecords = docLimit
         const results = await query.find()

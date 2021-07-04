@@ -141,23 +141,25 @@
                         <label :id="'TypeUploadLabel'+icon.randId" class="coral-FieldLabel">
                           Type of icon
                         </label>
-                        <select
-                          name="TypeUploadField"
-                          :id="'TypeUploadField'+icon.randId"
-                          placeholder="Select Type"
-                          class="dropdown-select"
-                          v-on:change="getValue($event, icon.randId, 'type')"
-                        >
-                          <option
-                            v-for="type in getIconType"
-                            :key="type.name+icon.randId+Math.floor(Math.random() * 10000000 + 1)"
-                            :value="type.id"
-                            :selected="selectedOption(type.id, icon.type)"
+                        <div class="dropdown-select-chevron relative">
+                          <select
+                            name="TypeUploadField"
+                            :id="'TypeUploadField'+icon.randId"
+                            placeholder="Select Type"
+                            class="dropdown-select"
+                            v-on:change="getValue($event, icon.randId, 'type')"
                           >
-                            <!-- :selected="icon.category.includes(category.id)" -->
-                            {{ type.name }}
-                          </option>
-                        </select>
+                            <option
+                              v-for="type in getIconType"
+                              :key="type.name+icon.randId+Math.floor(Math.random() * 10000000 + 1)"
+                              :value="type.id"
+                              :selected="selectedOption(type.id, icon.type)"
+                            >
+                              <!-- :selected="icon.category.includes(category.id)" -->
+                              {{ type.name }}
+                            </option>
+                          </select>
+                        </div>
                       </div>
                       
                       <!-- App website -->

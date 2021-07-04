@@ -539,12 +539,14 @@ export default new Vuex.Store({
 
     adClick(store, data){
       let parent = this
-      console.log(data);
+      console.log("data: ", data);
       window.plausible("adClick", {props: {
         path: globalThis.router.currentRoute.name,
         position: data.adPosition,
         type: data.adType
-      }})
+      }}).then((res) =>{
+        console.log("res: ", res);
+      })
     },
 
     async fetchAppCategories(store) {
