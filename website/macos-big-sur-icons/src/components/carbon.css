@@ -287,8 +287,12 @@ height: -moz-fit-content;
     text-decoration: none;
 }
 
-#carbonads a:hover {
-    color: inherit;
+.coral--light #carbonads a {
+    color: var(--coral-dark-bg)
+}
+
+.coral--dark #carbonads a {
+    color: var(--coral-light-bg)
 }
 
 #carbonads:hover .carbon-img img {
