@@ -31,10 +31,10 @@
                 </h3>
                 
                 <!-- Credit -->
-                <p class="coral-Body--XS opacity-40 m-b-5 p-t-5">
+                <p class="coral-Body--XS opacity-70 m-b-5 p-t-5">
                     <router-link :to="'/u/'+icon.usersName" class="coral-Link">{{icon.usersName}}</router-link>
                     on
-                    <span class="coral-Body--XS opacity-80">
+                    <span class="coral-Body--XS">
                         {{ getDate(icon.timeStamp) }}
                     </span>
                 </p>
@@ -47,7 +47,7 @@
 
         </div>
         <!-- Download Counter -->
-        <div label="Download Counter" class="download-counter-wrapper opacity-50">
+        <div label="Download Counter" class="download-counter-wrapper opacity-70">
             <p v-if="icon.downloads > 1" class="coral-Body--XS m-0 d-inline">
                 {{icon.downloads}}
             </p>
