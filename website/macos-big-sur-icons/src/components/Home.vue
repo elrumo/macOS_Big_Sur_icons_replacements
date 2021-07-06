@@ -841,9 +841,6 @@ export default {
           }
           iconData.id = results[result].id
           
-          // Set fetched user info from parse User object
-          // iconData.usersName = userInfo.username
-          // iconData.credit = userInfo.credit
           allIcons.push(iconData)
         }
         parent.$store.dispatch("pushDataToArr", {data:  allIcons, arr: "list", concatArray: true});
