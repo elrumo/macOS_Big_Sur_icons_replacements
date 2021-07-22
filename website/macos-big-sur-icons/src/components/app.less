@@ -85,6 +85,7 @@ select{
     display: flex;
     justify-content: space-between;
     width: fit-content;
+    width: -moz-fit-content;
     // width: 85%;
     margin: auto;
     padding: 15px 0px;
@@ -172,9 +173,9 @@ select{
     margin: auto !important;
     position: relative !important;
     padding: 10px !important;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    top: 25px;
+    // left: 50%;
+    // transform: translateY(-50%);
     display: grid;
     gap: 7px;
     text-align: center;
@@ -189,7 +190,8 @@ select{
 }
 
 .lgbt-wrapper .support-page{
-    transform: translate(-50%, 0%);
+    top: 0px;
+    // transform: translateY(0%) !important;
 }
 
 .coral--dark .instructions-item{
@@ -698,6 +700,7 @@ coral-buttongroup button{
 
 .burger-btn{
     width: fit-content;
+    width: -moz-fit-content;
     margin: auto 0px auto auto;
 }
 
@@ -975,6 +978,7 @@ coral-buttongroup button{
     border-color: rgb(225, 225, 225);
     border-radius: var(--main-border-radius);
     margin: auto;
+    max-height: 240px;
     // min-height: 200px;
 }
 
@@ -1098,6 +1102,7 @@ coral-buttongroup button{
     gap: 20px;
     width: 100%;
     height: fit-content;
+    height: -moz-fit-content;
 }
 
 .icon-list-area a{
@@ -1110,7 +1115,9 @@ coral-buttongroup button{
     margin: auto;
     position: relative;
     height: fit-content;
+    height: -moz-fit-content;
     width: fit-content;
+    width: -moz-fit-content;
 }
 
 .card-img-wrapper{
@@ -1204,7 +1211,8 @@ coral-buttongroup button{
 }
 
 .width-fit{
-    width: fit-content
+    width: fit-content;
+    width: -moz-fit-content;
 }
 
 .loading-popup{
@@ -1247,6 +1255,7 @@ coral-buttongroup button{
 
 .download-counter-wrapper{
     height: fit-content;
+    height: -moz-fit-content;
     display: flex;
     margin: auto;
     gap: 7px;
@@ -1633,6 +1642,7 @@ coral-buttongroup button{
     display: grid;
     grid-template-columns: auto auto;
     width: fit-content;
+    width: -moz-fit-content;
     height: 42px;
     border-radius: 5px;
     backdrop-filter: brightness(0.3) blur(50px) grayscale(0.2);
@@ -1677,6 +1687,7 @@ coral-buttongroup button{
 
 .waiting-wrapper{
     width: fit-content;
+    width: -moz-fit-content;
     margin: auto;
     padding-top: 30px;
 }
@@ -1722,6 +1733,7 @@ coral-buttongroup button{
     padding: 5px;
     margin-top: 7px;
     width: fit-content;
+    width: -moz-fit-content;
 }
 
 .options-popover ._coral-Popover-tip {

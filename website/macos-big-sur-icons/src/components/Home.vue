@@ -260,7 +260,7 @@
         <div id="iconList" class="icon-list-area p-b-30 ">
           
           <!-- Ad -->
-          <div style="min-height: 205px; max-height:226px" class="card-hover relative coral-card">
+          <div style="min-height: 205px; max-height:240px" class="card-hover relative coral-card">
             
             <div style="z-index: 1; height: 100%; width: 100%" class="absolute carbon-card-ad">
               <script
@@ -347,8 +347,10 @@ import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config()
 
 // TODO: remove credentials
-const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
-const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
+  const VUE_APP_PARSE_APP_ID = "macOSicons"
+  const VUE_APP_PARSE_JAVASCRIPT_KEY = "macOSicons"
+// const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
+// const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
 Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://media.macosicons.com/parse'
@@ -513,6 +515,7 @@ export default {
     parent.getAd()
     const { getters } = parent.$store;
     let fullPath = parent.$route.fullPath
+    
     let currentUser = Parse.User.current()
 
     if (fullPath.includes("/?username=") && !currentUser) {
