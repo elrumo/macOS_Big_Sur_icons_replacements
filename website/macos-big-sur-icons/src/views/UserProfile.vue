@@ -23,13 +23,12 @@
       <!-- User info -->
       <div class="profile-info-wrapper">
         <div class="profile-header-wrapper">
-          
           <div class="profile-name-social">
             <h3 class="coral-Heading--L m-0">
-              {{ user.username }}
+              {{ getUserInfo.username }}
             </h3>
             
-            <a v-if="user.twitterHandle" target="_blank" :href="user.twitterHandle" class="margin-auto relative">
+            <a v-if="getUserInfo.twitterHandle" target="_blank" :href="getUserInfo.twitterHandle" class="margin-auto relative">
               <IconUI class="absolute-center-vertical" width="18px" :img="resources.twitter" alt="Twitter Logo"/>
             </a>
             <div target="_blank" @click="copyUserUrl" class="margin-auto relative pointer">
@@ -52,15 +51,15 @@
         <div class="profile-descrption-box">
           <div v-if="loading.user" class="loading-placeholder m-b-10"></div>
           <div v-if="loading.user" class="loading-placeholder m-b-10"></div>
-          <p v-if="user.bio" class="coral-Body--L m-b-5">
-            {{ user.bio }}
+          <p v-if="getUserInfo.bio" class="coral-Body--L m-b-5">
+            {{ getUserInfo.bio }}
           </p>
 
-          <a v-if="user.credit" target="_blank" :href="user.credit" class="margin-auto relative">
+          <a v-if="getUserInfo.credit" target="_blank" :href="getUserInfo.credit" class="margin-auto relative">
             <!-- <p class="coral-Body--XS"> -->
               <IconUI class="absolute-center-vertical" width="14px" :img="resources.link" alt="Credit link"/>
               <span class="p-l-20">
-                {{ user.credit.replace("https://", "") }}
+                {{ getUserInfo.credit.replace("https://", "") }}
               </span>
             <!-- </p> -->
           </a>
@@ -231,6 +230,8 @@ export default {
       'emptyArr', 
       'showToast',
       'setDataToArr',
+      'setData',
+      'pushDataToArr',
       'adClick'
     ]),
 
@@ -279,19 +280,18 @@ export default {
           })
         })
 
+        let twitterHandle = userInfo.get("twitterHandle") // Check if twitterHandle is a URL or not
+        if (twitterHandle) user.twitterHandle = twitterHandle 
         user.credit = userInfo.get("credit")
         user.username = userInfo.get("username")
         user.bio = userInfo.get("bio")
-        
+        user.id = userInfo.id
+
+        parent.setData({state: 'user', data: user})
+      
+
         if (Parse.User.current() && user.username == Parse.User.current().getUsername()) {
           user.isOwner = true
-        }
-
-        let twitterHandle = userInfo.get("twitterHandle") // Check if twitterHandle is a URL or not
-        if (twitterHandle && twitterHandle.includes("twitter.com")) {
-          user.twitterHandle = twitterHandle
-        } else{
-          user.twitterHandle = "https://twitter.com/"+userInfo.get("twitterHandle")
         }
         
         parent.loading.user = false
@@ -315,6 +315,12 @@ export default {
     changeIconStatus(status) {
       let parent = this
       parent.iconsToShow = status
+    },
+
+    userData(){
+      let parent = this
+      console.log("parent.user: ", parent.$store.state.user);
+      return parent.$store.state.user
     },
     
     scrolled() {
@@ -358,7 +364,8 @@ export default {
       'getAppCategories',
       'approvedIconsCount',
       'isLoading',
-      'getSelectedIcon'
+      'getSelectedIcon',
+      'getUserInfo'
     ]),
 
     iconsCount(){

@@ -45,6 +45,7 @@
               class="coral-Form-field"
               type="text"
               v-on:change="validate($event, 'username')"
+              v-on:keyup="validate($event, 'username')"
               :value="getUser.userData.username"
             >
           </div>
@@ -60,6 +61,7 @@
               labelledby="user-bio-label"
               style="height:75px"
               v-on:keyup="validate($event, 'bio')"
+              v-on:change="validate($event, 'bio')"
               :value="getUser.userData.bio"
             >{{getUser.userData.bio}}</textarea>
             
@@ -88,6 +90,7 @@
                 class="coral-Form-field"
                 type="text"
                 v-on:change="validate($event, 'twitterHandle')"
+                v-on:keyup="validate($event, 'twitterHandle')"
                 :value="getUser.userData.twitterHandle"
               >
             </div>
@@ -142,6 +145,7 @@
               class="coral-Form-field"
               type="url"
               v-on:change="validate($event, 'credit')"
+              v-on:keyup="validate($event, 'credit')"
               :value="getUser.userData.credit"
             >
           </div>
@@ -227,36 +231,40 @@ export default {
         hasChanged: false,
         toUpdate:{},
         isReset: false,
-        isLoading: false
+        // isLoading: false
       }
     },
     
     methods:{
-      ...mapActions(['showToast', 'setUser']),
+      ...mapActions([
+        'showToast',
+        'setUser',
+        'setData',
+      ]),
 
       async resetPassword(){
-      let parent = this;
+        let parent = this;
 
-      let email = Parse.User.current().get("email");
+        let email = Parse.User.current().get("email");
 
-      if (parent.isReset) {
-        parent.isLoading = true;
-        parent.isReset = false; 
+        if (parent.isReset) {
+          // parent.isLoading = true;
+          parent.isReset = false; 
 
-        Parse.User.requestPasswordReset(email).then(()=>{
-          parent.showToast({
-            id: "toastMessage",
-              message: "Check your email",
-              variant: "success"
-            })
-        })  
+          Parse.User.requestPasswordReset(email).then(()=>{
+            parent.showToast({
+              id: "toastMessage",
+                message: "Check your email",
+                variant: "success"
+              })
+          })  
 
-      } else{
-        document.getElementById("resetPasswordDialog").show()
-        parent.isReset = true;
-      }
+        } else{
+          document.getElementById("resetPasswordDialog").show()
+          parent.isReset = true;
+        }
 
-    },
+      },
 
       async requestUserData(){
         let parent = this;
@@ -354,6 +362,7 @@ export default {
 
         for(let key in toUpdate){
           ParseUser.set(key, toUpdate[key])
+          parent.setData({state: 'user', key: key, data: toUpdate[key]})
         }
 
         ParseUser.save().then((data) =>{
