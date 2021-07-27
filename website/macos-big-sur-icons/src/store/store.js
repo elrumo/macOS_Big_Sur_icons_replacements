@@ -34,7 +34,13 @@ export default new Vuex.Store({
     singleResourceData: {},
     moreResources: getPages(10),
 
-    user: {},
+    user: {
+      bio: "",
+      credit: "",
+      id: "",
+      twitterHandle: "",
+      username: ""
+    },
     userData: Parse.User.current(),
 
     loading: true,
@@ -85,8 +91,6 @@ export default new Vuex.Store({
       let concatArray = iconData.concatArray
 
       if (concatArray) {
-        // let newItems = [...store[iconData.arr]]
-        // console.log("newItems: ", newItems);
         store[iconData.arr] = store[iconData.arr].concat(iconData.data)
       } else if (Array.isArray(iconData.data) && !concatArray) {
         store[iconData.arr] = iconData.data
@@ -96,7 +100,17 @@ export default new Vuex.Store({
     },
     
     setDataToArr(store, iconData){
-      store[iconData.arr] = iconData.data
+      if (iconData.key) {
+        let tempArr = {};
+        // Duplicates object and adds it back to state so that Vuex sees that it has been updated.
+        for(let key in store[iconData.arr]){
+          tempArr[key] = store[iconData.arr][key];
+        }
+        tempArr[iconData.key] = iconData.data;
+        store[iconData.arr] = tempArr;
+      } else{
+        store[iconData.arr] = iconData.data;
+      }
     },
   
     pushBlogs(store, blogData){
@@ -149,7 +163,12 @@ export default new Vuex.Store({
     },
 
     setData(store, data){
-      store.commit('setDataToArr', {arr: data.state, data: data.data})
+      console.log("data.state: ", data);
+      if (data.key) {
+        store.commit('setDataToArr', {arr: data.state, key: data.key, data: data.data})
+      } else{
+        store.commit('setDataToArr', {arr: data.state, data: data.data})
+      }
     },
     
     async loadMoreIcons(store){
@@ -351,11 +370,6 @@ export default new Vuex.Store({
         if (!result.get('type')) {
           console.log("icon.type: ", result.get('appName'));
         }
-
-        // // Set type if empty
-        // if (!icon.category) {
-        //   dataToPush.iconData.category = {id: ""}
-        // }
 
         for(let data in icon){
           dataToPush.iconData[data] = icon[data]
@@ -689,6 +703,10 @@ export default new Vuex.Store({
         // return a.name.length - b.name.length;
       });
       return ordered
+    },
+
+    getUserInfo(store){
+      return store.user
     },
 
     getUser(store){
