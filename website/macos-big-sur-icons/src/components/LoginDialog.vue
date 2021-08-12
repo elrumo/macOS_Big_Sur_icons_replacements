@@ -41,7 +41,7 @@
                 Almost there!
               </h3>
               <p class="coral-Body--M p-t-20" style="font-weight: lighter">
-                Please click on the link we've sent to your email to verify your account and then rerfresh this page.
+                Please click on the link we've sent to your email to verify your account and then refresh this page.
               </p>
             </div>
 
