@@ -37,7 +37,19 @@
             <span class="underline"> resources page.</span>
             </router-link>
         </p>
-        
+
+      <coral-alert
+        style="padding: 10px; margin-top: 15px"
+      >
+        <coral-alert-header>Important</coral-alert-header>
+        <coral-alert-content>
+          There's a technical issue with the server and I'm currently away on holiday until next week. Apologies for any inconvenience caused. <b> (All your icons are safe, don't worry 😊) </b>
+          <br>
+          <br>
+          Check my <a href="https://twitter.com/elrumo">Twitter</a> to stay up to date and this <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/issues/1282"> GitHub issue </a> to help with the problem.
+        </coral-alert-content>
+      </coral-alert>        
+
 
         <div class="m-auto m-t-35">
           
