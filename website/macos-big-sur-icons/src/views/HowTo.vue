@@ -29,8 +29,8 @@ export default {
 
   metaInfo: {
       // if no subcomponents specify a metaInfo.title, this title will be used
-      title: 'How to change app icons in macOS Big Sur & Monterey',
-      description:"Guide to donlwoad and change app icons in macOS Big Sur & Monterey using Finder and a website with over 5000+ free app icons.",
+      title: 'How to change app icons on macOS Big Sur & Monterey',
+      description:"Guide to download and change app icons on macOS Big Sur & Monterey using Finder and a website with over 5000+ free app icons.",
       // all titles will be injected into this template
       titleTemplate: '%s | macOSicons',
       meta:[
@@ -41,11 +41,11 @@ export default {
         },
         {
           property: 'og:title',
-          content:  'How to change app icons in macOS Big Sur & Monterey',
+          content:  'How to change app icons on macOS Big Sur & Monterey',
         },
         {
           property: 'og:description',
-          content:  'Guide to donlwoad and change app icons in macOS Big Sur & Monterey using Finder and a website with over 5000+ free app icons.',
+          content:  'Guide to download and change app icons on macOS Big Sur & Monterey using Finder and a website with over 5000+ free app icons.',
         },
         {
           property: 'og:image',
@@ -59,11 +59,11 @@ export default {
         },
         {
           property: 'twitter:title',
-          content:  'How to change app icons in macOS Big Sur & Monterey'
+          content:  'How to change app icons on macOS Big Sur & Monterey'
         },
         {
           property: 'twitter:description',
-          content:  'Guide to donlwoad and change app icons in macOS Big Sur & Monterey using Finder and a website with over 5000+ free app icons.',
+          content:  'Guide to download and change app icons in macOS Big Sur & Monterey using Finder and a website with over 5000+ free app icons.',
         },
         {
           property: 'twitter:image',
@@ -80,7 +80,7 @@ export default {
       isMobile: this.$isMobile(),
 
       introText:{
-        h3: "How to change app icons in macOS Big Sur & Monterey",
+        h3: "How to change app icons on macOS Big Sur & Monterey",
         description: "Here you'll find all the information you need to chanege the icon of your favorite macOS and iOS app. For help or support ask me on [Twitter](https://twitter.com/elrumo) or ask on our [forum](https://github.com/elrumo/macOS_Big_Sur_icons_replacements/discussions).",
         isAd: true
       },
@@ -94,7 +94,7 @@ export default {
         },
         getInfo:{
           name: "getInfo",
-          text:"### Find the app on Finder, right click on it and select **Get Info**",
+          text:"### Find the app in Finder, right click on it and select **Get Info**",
           img: require("../assets/Instructions/getInfo.png"),
           gradient: true,
         },

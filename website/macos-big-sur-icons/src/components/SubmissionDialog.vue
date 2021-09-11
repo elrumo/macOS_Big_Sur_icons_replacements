@@ -489,7 +489,7 @@ export default {
             parent.isLoading = false
             parent.showToast({
               id: "toastMessage",
-              message: "There was an error, get in touch @elrumo on Twitter",
+              message: "There was an error, get in touch with @elrumo on Twitter",
               variant: "error"
             })
             // The file either could not be read, or could not be saved to Parse.
