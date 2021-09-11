@@ -795,7 +795,7 @@ export default {
       let parent = this
 
       function handleParseError(err){
-        console.log("Error getting icons, report this eror to @elrumo: ", err.code);
+        console.log("Error getting icons, report this error to @elrumo: ", err.code);
         switch (err.code) {
           case Parse.Error.INVALID_SESSION_TOKEN:
             Parse.User.logOut();
@@ -875,7 +875,7 @@ export default {
 
       } catch (error) {
         handleParseError(error)
-        console.log("865 - Error loading icons, this eror this @elrumo: ", error);
+        console.log("865 - Error loading icons, report this error to @elrumo: ", error);
       }
 
     },

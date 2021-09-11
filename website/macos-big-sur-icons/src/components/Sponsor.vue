@@ -26,7 +26,7 @@
             </div>
 
             <div class="mb-2 f-w-400">
-              👋 I'm Elias, the creator of macOSicons. The website has been more successful than I excepted thanks to people like you, but maintaining it, building new features and curating the icons takes a lot of time time. So any donation is much appreciated.
+              👋 I'm Elias, the creator of macOSicons. The website has been more successful than I expected thanks to people like you, but maintaining it, building new features and curating the icons takes a lot of time. So any donation is much appreciated.
             </div>
           </div>
           </a>

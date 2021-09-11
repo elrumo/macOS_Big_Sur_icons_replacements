@@ -10,10 +10,10 @@
           <coral-dialog-header>Reset your password</coral-dialog-header>
           
           <coral-dialog-content style="max-width:412px">  
-              You will recieve an email to reset your password. 
+              You will receive an email to reset your password. 
               <br>
               <br>
-              Make sure to check your spam folder if you don't recieve it within the next few minutes.
+              Make sure to check your spam folder if you don't receive it within the next few minutes.
           </coral-dialog-content>
 
           <coral-dialog-footer>
@@ -41,7 +41,7 @@
                 Almost there!
               </h3>
               <p class="coral-Body--M p-t-20" style="font-weight: lighter">
-                Please click on the link we've sent to your email to verify your account and then rerfresh this page.
+                Please click on the link we've sent to your email to verify your account and then refresh this page.
               </p>
             </div>
 
@@ -85,7 +85,7 @@
               >
                 <coral-alert-header>Verify account</coral-alert-header>
                 <coral-alert-content>
-                  You've previously submited an icon with this email address, you'll need to verify it to set a password.
+                  You've previously submitted an icon with this email address, you'll need to verify it to set a password.
                 </coral-alert-content>
               </coral-alert>
 
@@ -124,7 +124,7 @@
                 variant="warning"
               >
                 <coral-alert-header>Username already in use</coral-alert-header>
-                <coral-alert-content>Please, use a different username and try again</coral-alert-content>
+                <coral-alert-content>Please use a different username and try again</coral-alert-content>
               </coral-alert>
             
             </div>

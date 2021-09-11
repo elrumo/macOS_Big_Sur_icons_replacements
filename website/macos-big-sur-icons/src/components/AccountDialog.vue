@@ -11,10 +11,10 @@
           <coral-dialog-header>Reset your password</coral-dialog-header>
           
           <coral-dialog-content style="max-width:412px">  
-              You will recieve an email to reset your password. 
+              You will receive an email to reset your password. 
               <br>
               <br>
-              Make sure to check your spam folder if you don't recieve it within the next few minutes.
+              Make sure to check your spam folder if you don't receive it within the next few minutes.
           </coral-dialog-content>
 
           <coral-dialog-footer>

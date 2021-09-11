@@ -8,7 +8,7 @@
     <coral-dialog-content>
       
       <div class="dialog-text coral-Well m-b-25">
-        On the 2nd of April, the databse with all the icons was hacked and deleted. Everything has been secured and is now safe to upload icons. Some old icons might still be unavailabe while I work to get as many icons as I can back.
+        On the 2nd of April, the database with all the icons was hacked and deleted. Everything has been secured and is now safe to upload icons. Some old icons might still be unavailabe while I work to get as many icons as I can back.
         <br>
         <br>
         To read more about the incident, <router-link to="/blog/hacked"> read the blog post. </router-link>
@@ -18,7 +18,7 @@
         <b> We'll let you know by email when the icon has been approved. </b>
         <br>
         <ul class="coral-List p-t-10 p-b-10">
-          <li class="coral-List-item">Icon submited must be a .png file</li>
+          <li class="coral-List-item">Icon submitted must be a .png file</li>
           <li class="coral-List-item">
             Download template from the <router-link coral-close="" to="/resources"> <b> resources page. </b></router-link>
           </li>
@@ -271,7 +271,7 @@ export default {
             parent.isLoading = false
             parent.showToast({
               id: "toastMessage",
-              message: "There was an error, get in touch @elrumo on Twitter",
+              message: "There was an error, get in touch with @elrumo on Twitter",
               variant: "error"
             })
             // The file either could not be read, or could not be saved to Parse.
