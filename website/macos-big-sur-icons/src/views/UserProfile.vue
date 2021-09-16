@@ -281,7 +281,12 @@ export default {
         })
 
         let twitterHandle = userInfo.get("twitterHandle") // Check if twitterHandle is a URL or not
-        if (twitterHandle) user.twitterHandle = twitterHandle 
+        if (twitterHandle) {
+          user.twitterHandle = twitterHandle
+          if (!twitterHandle.includes("twitter.com")) user.twitterHandle = "https://twitter.com/"+twitterHandle
+        }
+        
+        
         user.credit = userInfo.get("credit")
         user.username = userInfo.get("username")
         user.bio = userInfo.get("bio")
