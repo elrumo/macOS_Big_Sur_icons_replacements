@@ -163,7 +163,7 @@ export default new Vuex.Store({
     },
 
     setData(store, data){
-      console.log("data.state: ", data);
+      // console.log("data.state: ", data);
       if (data.key) {
         store.commit('setDataToArr', {arr: data.state, key: data.key, data: data.data})
       } else{
@@ -552,15 +552,11 @@ export default new Vuex.Store({
     },
 
     adClick(store, data){
-      let parent = this
-      console.log("data: ", data);
       window.plausible("adClick", {props: {
         path: globalThis.router.currentRoute.name,
         position: data.adPosition,
         type: data.adType
-      }}).then((res) =>{
-        console.log("res: ", res);
-      })
+      }})
     },
 
     async fetchAppCategories(store) {
