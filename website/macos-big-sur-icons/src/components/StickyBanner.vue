@@ -78,16 +78,6 @@ export default {
       })
     },
 
-    watch:{
-      $route (to, from){
-          // console.log(to);
-          // console.log(from);
-          // console.log(_bsa);
-          // _bsa.reload('.card-ad2')
-          // this.getAd()
-      }
-    },
-
     methods:{
       ...mapActions(['showEl', 'setSelectedIcon', 'addClickCount', 'adClick']),
 
