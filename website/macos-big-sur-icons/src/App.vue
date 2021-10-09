@@ -48,6 +48,7 @@ export default {
     $route (to, from){
         // console.log(to);
         // console.log(from);
+        // _bsa.reload('.target-class-name')
     }
   },
 
