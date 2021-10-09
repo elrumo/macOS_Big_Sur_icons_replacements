@@ -34,6 +34,13 @@ export default {
     
     mounted: function(){
       let parent = this
+      
+      this.$nextTick(function () {
+        let parent = this
+        // parent.getAd()
+        getAd()
+      })
+
       var adId = parent.adId
 
       function getAd(el){
@@ -53,68 +60,66 @@ export default {
           }
         } catch (error) {
         }
-      }
-      
-      getAd()
+      }      
 
-      var attempts = 0       
-      function adExist(){
-        var adExists = document.getElementById(adId).children.length
-        console.log();
-        setTimeout(() => {
-          if (attempts >= 15) return;
-          if (adExists == 0) {
-            try {
-              attempts++
-              getAd()
-              adExist()
-            } catch (error) {
-              getAd()
-              attempts++
-              adExist()
-              parent.isAd = false
-            }
-          } else return
+      // var attempts = 0       
+      // function adExist(){
+      //   var adExists = document.getElementById(adId).children.length
+      //   console.log();
+      //   setTimeout(() => {
+      //     if (attempts >= 15) return;
+      //     if (adExists == 0) {
+      //       try {
+      //         attempts++
+      //         getAd()
+      //         adExist()
+      //       } catch (error) {
+      //         getAd()
+      //         attempts++
+      //         adExist()
+      //         parent.isAd = false
+      //       }
+      //     } else return
 
-        }, 1500);
-      }
+      //   }, 1500);
+      // }
 
-      let el = document.getElementById(adId+"customAd")
+      // let el = document.getElementById(adId+"customAd")
 
-      window.BSANativeCallback = (a) => {
-        const total = a.ads.length;
-        if (!total) {
-          getAd(el)
-          parent.isAd = true
-        }
-      }
+      // window.BSANativeCallback = (a) => {
+      //   const total = a.ads.length;
+      //   if (!total) {
+      //     getAd(el)
+      //     parent.isAd = true
+      //   }
+      // }
 
-      if (!parent.isAd) {
-          // // console.log(parent.isAd);
-          // setTimeout(() =>{
-          //   if (!_bsa.exists(el)) {
-          //     getAd(el)
-          //   }
-          // }, 500)
-        adExist()
-      }
+      // if (!parent.isAd) {
+      //     // // console.log(parent.isAd);
+      //     // setTimeout(() =>{
+      //     //   if (!_bsa.exists(el)) {
+      //     //     getAd(el)
+      //     //   }
+      //     // }, 500)
+      //   adExist()
+      // }
 
-      setTimeout(() =>{
-        let nodeList = document.querySelector("#"+adId).children
+      // setTimeout(() =>{
+      //   let nodeList = document.querySelector("#"+adId).children
 
-        nodeList.forEach((el)=> {
-          let newNodeList = document.querySelector("#"+adId).children
+      //   nodeList.forEach((el)=> {
+      //     let newNodeList = document.querySelector("#"+adId).children
 
-          if(newNodeList.length > 1){
-            console.log(newNodeList.length);
-            el.parentNode.removeChild(el);
-          } else{
-            // console.log(newNodeList.length);
-            return
-          }
+      //     if(newNodeList.length > 1){
+      //       console.log(newNodeList.length);
+      //       el.parentNode.removeChild(el);
+      //     } else{
+      //       // console.log(newNodeList.length);
+      //       return
+      //     }
 
-        });
-      }, 1200)
+      //   });
+      // }, 1200)
 
     },
 

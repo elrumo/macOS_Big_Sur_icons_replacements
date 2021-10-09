@@ -476,7 +476,7 @@ export default {
 
                   parent.showToast({
                     id: "toastMessage",
-                    message: "😄 All icons have been uploaded.",
+                    message: "All icons have been uploaded.",
                     variant: "success"
                   })
                   dialog.hide()

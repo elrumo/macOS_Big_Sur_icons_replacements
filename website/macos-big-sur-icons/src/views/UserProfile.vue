@@ -1,7 +1,7 @@
 <template>
   <div>
     
-    <StickyBanner/>
+    <!-- <StickyBanner/> -->
 
     <!-- Intro section -->
     <section class="profile-page-head-wrapper">
@@ -94,6 +94,7 @@
             ({{approvedIconsCount.notApproved}})
           </span>
         </coral-tab>
+
         <!-- <select
           id="order-selector"
           class="dropdown-select right-align-tablist dropdown-select-quiet"
@@ -131,7 +132,10 @@
         </p>
       </div>
 
-      <UserIconGrid v-if="userIcons.length != 0" :userIcons="userIcons"/>
+      <UserIconGrid
+        v-if="userIcons.length != 0"
+        :userIcons="userIcons"
+      />
       
       <div
         class="icon-list-area p-t-40 p-b-50"
@@ -145,7 +149,13 @@
             id="_carbonads_js2">
           </script>
         </div>
-        <UserIconCardLoading v-for="num in placeholderCount" :key="num+Math.floor(Math.random() * 10000000 + 1)" :icon="iconsCount"/>
+
+        <UserIconCardLoading
+          v-for="num in placeholderCount"
+          :key="num+Math.floor(Math.random() * 10000000 + 1)"
+          :icon="iconsCount"
+        />
+
       </div>
 
       <button
@@ -184,7 +194,7 @@ export default {
       UserIconCardLoading,
       EditIconDialog,
       deleteDialog,
-      StickyBanner
+      StickyBanner,
   },
 
   data(){
@@ -334,10 +344,7 @@ export default {
         let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000
 
         if (bottomOfWindow && parent.scrolledToBottom && parent.userInfo.id) {
-          // parent.scrolledToBottom = false
-          // setTimeout(() => {
               parent.scrolledToBottom = true
-          // }, 0);
           parent.fetchUserIcons(parent.userInfo)
         }
       }

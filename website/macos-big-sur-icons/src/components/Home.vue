@@ -5,7 +5,7 @@
 
     <div v-if="overflow"> {{ toggleOverflow() }} </div>
 
-    <StickyBanner/>
+    <!-- <StickyBanner/> -->
 
     <!-- <coral-dialog id="newDialog" open style="text-align: left;">
       <coral-dialog-header>Pay to view</coral-dialog-header>
@@ -257,18 +257,28 @@
 
 
         <!-- Icon list-->
-        <div id="iconList" class="icon-list-area p-b-30 ">
+        <div 
+          id="iconList" 
+          class="icon-list-area p-b-30 "
+        >
           
           <!-- Ad -->
-          <div style="min-height: 205px; max-height:240px" class="card-hover relative coral-card">
+          <div
+            style="min-height: 205px; max-height:240px"
+            class="card-hover relative coral-card"
+          >
             
-            <div style="z-index: 1; height: 100%; width: 100%" class="absolute carbon-card-ad">
+            <div
+              style="z-index: 1; height: 100%; width: 100%"
+              class="absolute carbon-card-ad"
+            >
               <script
-              @click="adClick({position: 'Icon Grid Top', type: 'Carbon'})"
-              async
-              type="application/javascript"
-              src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom"
-              id="_carbonads_js"></script>
+                @click="adClick({position: 'Icon Grid Top', type: 'Carbon'})"
+                async
+                type="application/javascript"
+                src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom"
+                id="_carbonads_js"
+              > </script>
             </div>
 
             <div style="z-index: 2" class="absolute card-grid-nativeAd">
@@ -307,7 +317,13 @@
 
           </div>
 
-          <UserIconCard v-for="icon in search" :key="icon.icnsUrl+icon.appName" :icon="icon" :isAdmin="isAdmin" :isMacOs="isMacOs"/>
+          <UserIconCard
+            v-for="icon in search"
+            :key="icon.icnsUrl+icon.appName"
+            :icon="icon"
+            :isAdmin="isAdmin"
+            :isMacOs="isMacOs"
+          />
 
           <div v-if="
               (!scrolledToBottom && getSelectedCategory.id != 'All') ||
@@ -369,7 +385,7 @@ export default {
     NativeAd,
     UserIconCard,
     'vue-load-image': VueLoadImage,
-    StickyBanner
+    StickyBanner,
   },
 
   metaInfo: {

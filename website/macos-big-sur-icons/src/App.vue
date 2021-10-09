@@ -9,6 +9,9 @@
       :distanceFromTop="distanceFromTop"
       :submitIconDialog="'submitIcon'"
     />
+
+    <StickyBanner/>
+
     <router-view
       :key="$route.fullPath"
       class="min-height"
@@ -18,42 +21,10 @@
 </template>
 
 <script>
-// import '@adobe/coral-spectrum/coral-component-dialog'
-// import '@adobe/coral-spectrum/coral-component-icon/src/resources/spectrum-icons.svg';
-// import '@adobe/coral-spectrum/coral-component-icon/src/resources/spectrum-icons-color.svg';
-// import '@adobe/coral-spectrum/coral-component-icon/src/resources/spectrum-css-icons.svg';
-
-// import '@adobe/coral-spectrum/coral-component-button'
-// import '@adobe/coral-spectrum/coral-component-toast'
-// import '@adobe/coral-spectrum/coral-component-icon'
-
-
-// import '@adobe/coral-spectrum/coral-component-status'
-// import '@adobe/coral-spectrum/coral-component-checkbox'
-// import '@adobe/coral-spectrum/coral-component-wait'
-// import '@adobe/coral-spectrum/coral-component-progress'
-// import '@adobe/coral-spectrum/coral-component-quickactions'
-// import '@adobe/coral-spectrum/coral-component-fileupload'
-// import '@adobe/coral-spectrum/coral-component-textfield'
-// import '@adobe/coral-spectrum/coral-component-textfield'
-// import '@adobe/coral-spectrum/coral-component-search'
-// import '@adobe/coral-spectrum/coral-component-overlay'
-// import '@adobe/coral-spectrum/coral-component-popover'
-// import '@adobe/coral-spectrum/coral-component-switch'
-// import '@adobe/coral-spectrum/coral-component-tooltip'
-// import '@adobe/coral-spectrum/coral-component-alert'
-// import '@adobe/coral-spectrum/coral-component-charactercount'
-// import '@adobe/coral-spectrum/coral-component-tablist'
-// import '@adobe/coral-spectrum/coral-component-panelstack'
-// import '@adobe/coral-spectrum/coral-component-wizardview'
-
-// import '@adobe/coral-spectrum/coral-css-link'
-// import '@adobe/coral-spectrum/coral-css-formgroup'
-// import '@adobe/coral-spectrum/coral-css-well'
-// import '@adobe/coral-spectrum/coral-css-divider'
-
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
+import StickyBanner from '@/components/StickyBanner.vue'
+
 
 // import '@adobe/spectrum-css/dist/icons/spectrum-css-icons.svg' 
 // import '@adobe/spectrum-css/dist/icons/loadIcons.js' 
@@ -62,13 +33,24 @@ export default {
   name: 'App',
   components: {
     Header,
-    Footer
+    Footer,
+    StickyBanner
   },
+
   data(){
     return{
-      distanceFromTop: true
+      distanceFromTop: true,
+      isBanner: true
     }
   },
+
+  watch:{
+    $route (to, from){
+        // console.log(to);
+        // console.log(from);
+    }
+  },
+
   methods:{
     handleScroll () {
       let parent = this
@@ -77,7 +59,33 @@ export default {
         this.distanceFromTop =  document.getElementById("searchBar").getBoundingClientRect().y > 65;
       }
     },
+
+    getAd(el){
+      try {
+        if (typeof _bsa !== 'undefined' && _bsa) {
+        _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
+          {
+            target: '.card-ad2',
+            template: `
+                <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link">
+                <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
+                  <div class="bsa-icon" style="background-image: url(##logo##);"></div>
+                </div>
+                <div class="text-ad-wrapper">
+                  <img style="background: ##backgroundColor##" src="##image##">
+                  <div class="bsa-desc">##description##</div>
+                </div>
+                </a>
+              `
+            }
+          );
+        }
+      } catch (error) {
+      }
+    },
+
   },
+
   mounted: function(){
     window.addEventListener('scroll', this.handleScroll);
   }
@@ -86,19 +94,19 @@ export default {
 
 <style>
 
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  min-height: 100vh;
-  /* position: table; */
-} 
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    min-height: 100vh;
+    /* position: table; */
+  } 
 
-.min-height{
-  min-height: calc(100vh - 125px);
-  margin: auto;
-}
+  .min-height{
+    min-height: calc(100vh - 125px);
+    margin: auto;
+  }
 
 </style>

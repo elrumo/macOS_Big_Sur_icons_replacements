@@ -11,9 +11,9 @@
         
           <div style="z-index: 2" class="card-grid-nativeAd">
             <div
-              @click="adClick({position: 'Bottom Sticky Banner', type: 'Native'})"
-              id="card-ad2">
+              class="card-ad2">
             </div>
+              <!-- id="card-ad2"> -->
           </div>
 
           <a
@@ -62,7 +62,7 @@ export default {
     },
 
     components:{},
-    
+
     data(){
         return{
         imgs:{
@@ -72,19 +72,32 @@ export default {
     },
     
     mounted: function(){
-      let parent = this
-      parent.getAd()
+      this.$nextTick(function () {
+        let parent = this
+        parent.getAd()
+      })
+    },
+
+    watch:{
+      $route (to, from){
+          // console.log(to);
+          // console.log(from);
+          // console.log(_bsa);
+          // _bsa.reload('.card-ad2')
+          // this.getAd()
+      }
     },
 
     methods:{
       ...mapActions(['showEl', 'setSelectedIcon', 'addClickCount', 'adClick']),
 
       getAd(el){
+        console.log('Hi');
         try {
-          if (typeof _bsa !== 'undefined') {
-            _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
+          if (typeof _bsa !== 'undefined' && _bsa) {
+          _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
             {
-              target: '#card-ad2',
+              target: '.card-ad2',
               template: `
                   <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link">
                   <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
@@ -100,6 +113,7 @@ export default {
             );
           }
         } catch (error) {
+          console.log("error: ", error);
         }
       },
 

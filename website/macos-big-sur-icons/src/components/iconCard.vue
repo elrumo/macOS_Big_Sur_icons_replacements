@@ -6,7 +6,7 @@
                 <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
                     <img class="w-full" :data-src="icon.pngUrl">
                 </div>
-
+Hi
                 <coral-quickactions placement="center" target="_prev">
                     <coral-quickactions-item type="button" @click="showDialog('deleteDialog', icon)" :id="icon.fileName" :icon="coralIcons.delete">Remove file</coral-quickactions-item>
                 </coral-quickactions>
