@@ -164,6 +164,7 @@ export default new Vuex.Store({
 
     setData(store, data){
       // console.log("data.state: ", data);
+      // Set data, syntax: Array[objectKey] = data
       if (data.key) {
         store.commit('setDataToArr', {arr: data.state, key: data.key, data: data.data})
       } else{
@@ -357,10 +358,11 @@ export default new Vuex.Store({
 
         // Set icon ID to icon properties
         dataToPush.iconData.id = result.id
+        
         // Pass high res png url if lor res png is not present
-        if (!icon.lowResPngFile) {
-          dataToPush.iconData.lowResPngUrl = icon.highResPngUrl
-        }
+        // if (!icon.lowResPngFile) {
+        //   dataToPush.iconData.lowResPngUrl = icon.highResPngUrl
+        // }
 
         // Set category if empty
         if (!icon.category) {

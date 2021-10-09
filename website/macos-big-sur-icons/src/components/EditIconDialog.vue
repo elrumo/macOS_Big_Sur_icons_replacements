@@ -21,18 +21,33 @@
       </div>
 
        <div class="card-img-wrapper fit-width">
-          <img style="max-width: 140px;" :alt="icon.appName +' icon'" :src="icon.lowResPngUrl">
+          <img v-if="!imageData" style="max-width: 140px;" :alt="icon.appName +' icon'" :src="iconUrl(icon)">
+          <img v-else style="max-width: 140px;" :alt="icon.appName +' icon'" :src="fileToShow.img">
       </div>
       
       <div class="edit-dialog-acton-btns">
         <!-- <button is="coral-button" variant="quiet" icon="edit">Upload new</button> -->
-        <button @click="showEl('deleteDialog')" is="coral-button" variant="quiet" icon="delete">Delete Icon</button>
+        <button @click="showEl('deleteDialog')" is="coral-button" variant="quiet" icon="delete">Delete</button>
+
+        <coral-fileupload
+          @change="selectIcon"
+          name="file"
+          accept="image/png"
+        >
+          <button
+            is="coral-button"
+            variant="quiet"
+            coral-fileupload-select=""
+            icon="UploadToCloud"
+          >
+            Replace
+          </button>
+        </coral-fileupload>
+
       </div>
 
       <form class="coral-FormGroup m-0 p-l-5" style="width: calc(100% - 5px)">
         
-
-
         <!-- appName -->
         <div class="coral-FormGroup-item">
           <label :id="'appNameLabel'+icon.id" class="coral-FieldLabel">
@@ -112,12 +127,11 @@
 
       </form>
 
-
-  
     </coral-dialog-content>
     
+    
     <coral-dialog-footer>
-      <button is="coral-button" variant="quiet" coral-close="">Cancel</button>
+      <button is="coral-button" variant="quiet" @click="resetDialog" coral-close="">Cancel</button>
       <button is="coral-button" v-if="!hasChanged" disabled="" coral-close="">Save</button>
       <button is="coral-button" v-if="hasChanged" @click="saveIconData">Save</button>
     </coral-dialog-footer>
@@ -128,12 +142,20 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import Parse from 'parse'
+import UploadDialog from './UploadDialog.vue'
+
+Parse.initialize("macOSicons");
+Parse.serverURL = 'https://media.macosicons.com/parse'
 
 export default {
   name:"EditIconDialog",
   
   props:{
     icon: {}
+  },
+
+  components:{
+    UploadDialog
   },
   
   data(){
@@ -144,13 +166,23 @@ export default {
       isLoading: false,
       
       isValidated: false,
-      // hasChanged: false,
       toUpdateTemplate: {
         category: "",
         appName: "",
-        type: ""
+        type: "",
+        icon: false,
       },
-      toUpdate: {}
+
+      toUpdate: {},
+
+      uploadDialog: false,
+
+      fileToUpload: {},
+      fileToShow: {
+        img: "",
+        name: ""
+      },
+      imageData: false
     }
   },
   
@@ -164,9 +196,20 @@ export default {
   methods:{
     ...mapActions(['showToast', 'setUser', 'showEl']),
 
+    resetDialog(){
+      let parent  = this;
+      
+      parent.imageData = false;
+      parent.fileToUpload = {},
+      parent.fileToShow = {
+        img: "",
+        name: ""
+      }
+
+    },
+
     async saveIconData(){
       let parent = this
-      // let ParseUser = Parse.User.current()
       
       parent.isLoading = true
 
@@ -209,14 +252,26 @@ export default {
         // ParseUser.set(key, toUpdate[key])
       }
 
+      if(parent.imageData){
+        icon = await parent.onUplaod(icon);
+        parent.icon.highResPngUrl = icon.get('highResPngUrl')
+        parent.icon.lowResPngUrl = icon.get('highResPngUrl')
+      }
+      
       icon.save().then((data) =>{
         parent.isLoading = false
+        console.log("data: ", data);
         document.getElementById("editIconDialog").hide()
+        
+        // Reset edit dialog
+        parent.resetDialog()
+
         parent.showToast({
           id: "toastMessage",
           message: parent.icon.appName+" updated.",
           variant: "success"
         })
+
       }).catch((error) => {
         parent.isLoading = false
         console.log(error);
@@ -230,6 +285,14 @@ export default {
 
       })
 
+    },
+
+    iconUrl(icon){
+        if (!icon.lowResPngUrl) {
+            return icon.highResPngUrl
+        } else{
+            return icon.lowResPngUrl
+        }
     },
 
     isSameCategory(field, category){
@@ -347,7 +410,65 @@ export default {
 
       } catch (error) {}
 
+    },
+    
+    selectIcon(event) {
+      // Get selected image
+      let parent = this
+      let files = event.target.uploadQueue
+      
+      // Go through all the files that have been selected
+      let file = files[0].file
+    
+      let fileName = file.name.replace('.png', '')
+      parent.fileToUpload = file
+      // Create URL of file to dislay back the image
+      const objectURL = window.URL.createObjectURL(file);
+      let value = {
+        img: objectURL,
+        name: fileName
+      }
+      // parent.$set(parent.fileToShow, fileName, value)
+      parent.fileToShow.img = objectURL
+      parent.fileToShow.name = fileName
+
+      parent.imageData = true
+    },
+
+    async onUplaod(icon){
+      let parent = this;
+      let file = parent.fileToUpload;
+      let fileName = file.name.replace('.png', '');
+      let userName = parent.$store.state.user.username;
+
+      if (/^[A-Za-z][A-Za-z0-9]*$/.test(fileName)) {
+        fileName = fileName
+      } else {
+        let d = new Date()
+        fileName = d.getTime()
+        fileName = fileName.toString()
+      }
+      
+      // If the username doesn't haven any invalid characters, then add to the file name
+      if (/^[A-Za-z][A-Za-z0-9]*$/.test(userName)) {
+        fileName = fileName + '_' + userName
+      }
+
+      const Icons = Parse.Object.extend("Icons2"); 
+      const parseFile = new Parse.File(fileName, file); 
+      
+      let savedFile = await parseFile.save()
+
+      await icon.set("highResPngUrl", savedFile._url);
+      await icon.set("isReUpload", true);
+      await icon.set("approved", false);
+      await icon.set("highResPngFile", parseFile);
+
+      return icon
+
+      // console.log(parseFile);
     }
+
 
   },
 
@@ -374,6 +495,7 @@ export default {
       let icon = parent.icon
       let toUpdate = parent.toUpdate
       let isValid = parent.isValid
+      let imageData = parent.imageData
     
       // Check if input is different from original
       try {
@@ -381,7 +503,8 @@ export default {
             icon && (
               (toUpdate.appName != icon.appName && isValid("appName")) ||
               (toUpdate.category != icon.category.id && isValid("category")) ||
-              (toUpdate.type != icon.type.id && isValid("type"))
+              (toUpdate.type != icon.type.id && isValid("type")) ||
+              (imageData)
             )
         ){
           return true
@@ -396,6 +519,7 @@ export default {
     },
 
   }
+
 }
 </script>
 

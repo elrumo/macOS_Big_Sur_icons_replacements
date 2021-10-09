@@ -51,17 +51,37 @@
     <section class="dashBoard">
       
       <!-- Search Bar -->
-      <div v-if="isAuth" @click="isSearch = true" class="main-search-wrapper coral-bg p-b-15">
+      <!-- <div v-if="isAuth" @click="isSearch = true" class="main-search-wrapper coral-bg p-b-15">
         <div class="m-auto main-search">
           <div class="shadow main-border-radius">
             <input v-model="searchString" :placeholder="'(Not working yet) - Icons to approve: ' + iconListLen" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
             <svg class="icon fill-dark searchBar-left" id="coral-css-icon-Magnifier" viewBox="0 0 16 16"><path d="M15.77 14.71l-4.534-4.535a6.014 6.014 0 1 0-1.06 1.06l4.533 4.535a.75.75 0 1 0 1.061-1.06zM6.5 11A4.5 4.5 0 1 1 11 6.5 4.505 4.505 0 0 1 6.5 11z"></path></svg>
           </div>
         </div>
-      </div>
+      </div> -->
+      
+      <!-- Tabs -->
+      <coral-tablist>
+        <coral-tab aria-label="newIcons" selected="" @click="changeIconStatus('newIcons')">
+          New Icons
+          <span class="coral-Detail coral-Detail--M f-w-400 opacity-80">
+            ( {{iconListLen}} )
+          </span>
+        </coral-tab>
+        
+        <coral-tab aria-label="Approved Icons" @click="changeIconStatus('reUploaded')">
+          Re-uploaded
+          <span class="coral-Detail coral-Detail--M f-w-400 opacity-80">
+            ( {{iconListLenReUpload}} )
+          </span>
+        </coral-tab>
+      </coral-tablist>
 
-      <div class="p-t-20 p-b-50 dashboard-wrapper">
-        <div v-for="user in icons" :key="user.usersName" class="p-b-30">
+      <div
+        class="p-t-20 p-b-50 dashboard-wrapper"
+      >
+        <!-- v-if="iconsToShow == 'newIcons'" -->
+        <div v-for="user in iconType" :key="user.usersName" class="p-b-30">
           
           <h3 class="coral-Heading--M p-b-10 text-left d-flex">
             <a
@@ -127,7 +147,7 @@
                 <div class="p-t-15 p-b-15">
                   <button @click="approveIcon(icon)" class="coral-btn coral-btn-primary">Approve</button>
                    
-                   <coral-splitbutton>
+                   <!-- <coral-splitbutton>
                     <button class="coral-btn coral-btn-primary" is="coral-button" coral-splitbutton-action="">Action</button>
                     <button id="target1" type="button" is="coral-button" icon="ChevronDown" coral-splitbutton-trigger=""></button>
                   </coral-splitbutton>
@@ -136,7 +156,7 @@
                       <button is="coral-buttonlist-item">Second Action</button>
                       <button is="coral-buttonlist-item">Third Action</button>
                     </coral-buttonlist>
-                  </coral-popover>
+                  </coral-popover> -->
 
                 </div>
                 
@@ -147,8 +167,8 @@
           
 
         </div>
-
       </div>
+
     </section>
 
   </div>
@@ -156,7 +176,7 @@
 
 <script>
 import Vue from 'vue'
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex'
 
 import Parse from 'parse'
 
@@ -171,7 +191,7 @@ const currentUser = Parse.User.current(); // Check if user is currently logged i
 
 let lastVisible
 
-const docLimit = 200
+const docLimit = 50
 
 export default {
   
@@ -180,21 +200,27 @@ export default {
 
   data: function(){
     return{
-      icons:{},
+      icons:{
+        reUploaded: {}
+      },
       
       // Search
       isSearch: false,
       searchString: "",
       iconListLen: 0,
+      iconListLenReUpload: 0,
 
       howManyRecords: 0,
       sortBy: "usersName",
 
       emailMsg: "Thanks you for your submission to macosicons.com! I'm just getting in touch with you to ask if you could ..., otherwise the icons won't work propperly. You can either email me back or re-submit the icons on macosicons.com. Thanks again, Elias webbites.io",
-      approvedIcons: {},
+      // approvedIcons: {},
       isAuth: false,
       selectedUser: {},
       scrolledToBottom: true,
+
+      iconsToShow: "newIcons",
+      reUploadedIcons: {},
 
       coralIcons:{
         addIcon: require("../assets/icons/add.svg"),
@@ -209,6 +235,15 @@ export default {
 
   methods:{
     ...mapActions(['showToast']),
+    
+    changeIconStatus(status) {
+      let parent = this
+      parent.iconsToShow = status
+      if (status == 'reUploaded') {
+        console.log('reUploaded');
+        parent.getReUploadIcons()
+      }
+    },
 
     async copyText(toCopy){
       await navigator.clipboard.writeText("https://macosicons.com/"+toCopy);
@@ -321,9 +356,9 @@ export default {
         email: email
       });
 
-      await console.log(user);
+      console.log(user);
 
-        Parse.User.logIn(email, password).then((user) => { // Logging in user
+      Parse.User.logIn(email, password).then((user) => { // Logging in user
         parent.isAuth = true;
         console.log(user);
       }).catch((error) =>{
@@ -443,6 +478,14 @@ export default {
       })
     },
 
+    getIconListLenReUpload(query){
+      let parent = this
+      query.count().then((count) =>{
+        console.log(count);
+        parent.iconListLenReUpload = count
+      })
+    },
+
     async loadMore(){
 
       let parent = this
@@ -517,6 +560,157 @@ export default {
       }
     },
 
+    async getParseData(){
+      let parent = this
+      const query = new Parse.Query(Icons);
+      
+      // const userQuery = new Parse.Query(User);
+      // userQuery.descending("modifiedAt");
+      
+      query.equalTo("approved", false)
+      // query.equalTo("isReUpload", false)
+      query.descending("createdAt");
+      // query.ascending("usersName");
+      query.exists("highResPngFile");
+      query.limit(docLimit);
+        
+      
+      try{
+        var results = await query.find()
+      } catch (error) {
+          console.log(error);
+          handleParseError(error)
+      }
+
+      parent.getIconListLen(query); // Get how many icons to approve.
+
+      parent.howManyRecords = docLimit
+      
+      for(let result in results){
+        let docObj = results[result].attributes;
+        let docData = JSON.parse(JSON.stringify(docObj));
+        docData.id = results[result].id
+
+        docData.imgUrl = docData.highResPngUrl
+        
+        let usersName = docData.usersName
+        let user
+        
+        if (docData.user) {
+          user = docData.user
+        }
+
+        let appName = docData.appName
+        let email = docData.email
+        let creditUrl = docData.credit
+
+        if (usersName == "" || usersName == undefined ) {      
+          
+          // Set user if the user is undefined has no icons on the dashboard
+          if(parent.icons["Undefined"] == undefined ){
+            Vue.set(parent.icons, "Undefined", {
+              "usersName": "Undefined", 
+              "email": email, 
+              "icons":{},
+              "emailSent": false,
+              "creditUrl": creditUrl
+            })
+            Vue.set(parent.icons["Undefined"].icons, appName, docData)
+            Vue.set(parent.icons["Undefined"].icons[docData.id], "usersName",  "Undefined")
+            Vue.set(parent.icons["Undefined"], "usersName",  "Undefined")                
+          } else{
+            Vue.set(parent.icons["Undefined"].icons, docData.id, docData)
+            Vue.set(parent.icons["Undefined"].icons[docData.id], "usersName",  "Undefined")
+            Vue.set(parent.icons["Undefined"], "usersName",  "Undefined")
+          }
+
+        }else{
+
+          // Set user if the user has no icons on the dashboard
+          if(parent.icons[usersName] == undefined ){
+            Vue.set(parent.icons, usersName, {
+              "usersName": usersName, 
+              "email": email, 
+              "icons":{}, 
+              "emailSent": false,
+              "creditUrl": creditUrl,
+              "user": user
+            })
+
+            Vue.set(parent.icons[usersName].icons, docData.id, docData)
+            
+          } else{
+            Vue.set(parent.icons[usersName].icons, docData.id, docData)
+          }
+
+        }
+      }
+      
+      parent.scroll()
+    },
+
+    async getReUploadIcons(){
+      let parent = this
+      const query = new Parse.Query(Icons);
+      
+      query.equalTo("approved", false)
+      query.equalTo("isReUpload", true)
+      query.descending("updatedAt");
+      // query.ascending("usersName");
+      query.exists("highResPngFile");
+      query.limit(docLimit);
+      
+      try{
+        var results = await query.find()
+      } catch (error) {
+          console.log(error);
+          handleParseError(error)
+      }
+
+      parent.getIconListLenReUpload(query); // Get how many icons to approve.
+
+      parent.howManyRecords = docLimit
+      
+      for(let result in results){
+        
+        let docObj = results[result].attributes;
+        let docData = JSON.parse(JSON.stringify(docObj));
+        docData.id = results[result].id
+
+        docData.imgUrl = docData.highResPngUrl
+        
+        let usersName = docData.usersName
+        let user
+        
+        if (docData.user) {
+          user = docData.user
+        }
+
+        let appName = docData.appName
+        let email = docData.email
+        let creditUrl = docData.credit
+
+        // Set user if the user has no icons on the dashboard
+        if(parent.icons.reUploaded[usersName] == undefined ){
+          Vue.set(parent.icons.reUploaded, usersName, {
+            "usersName": usersName, 
+            "email": email, 
+            "icons":{}, 
+            "emailSent": false,
+            "creditUrl": creditUrl,
+            "user": user
+          })
+
+          Vue.set(parent.icons.reUploaded[usersName].icons, docData.id, docData)
+          
+        } else{
+          Vue.set(parent.icons.reUploaded[usersName].icons, docData.id, docData)
+        }
+
+      }
+
+    }
+
   },
 
   mounted: function(){  
@@ -544,93 +738,8 @@ export default {
 
       parent.isAuth = true
 
-      async function getParseData(){
-        const query = new Parse.Query(Icons);
-        
-        // const userQuery = new Parse.Query(User);
-        // userQuery.descending("modifiedAt");
-        
-        query.equalTo("approved", false)
-        query.descending("createdAt");
-        // query.ascending("usersName");
-        query.exists("highResPngFile");
-        query.limit(docLimit);
-          
-        
-        try{
-          var results = await query.find()
-        } catch (error) {
-            console.log(error);
-            handleParseError(error)
-        }
-
-        parent.getIconListLen(query); // Get how many icons to approve.
-
-        parent.howManyRecords = docLimit
-        
-        for(let result in results){
-          let docObj = results[result].attributes;
-          let docData = JSON.parse(JSON.stringify(docObj));
-          docData.id = results[result].id
-
-          docData.imgUrl = docData.highResPngUrl
-          
-          let usersName = docData.usersName
-          let user
-          
-          if (docData.user) {
-            user = docData.user
-          }
-
-          let appName = docData.appName
-          let email = docData.email
-          let creditUrl = docData.credit
-
-          if (usersName == "" || usersName == undefined ) {      
-            
-            // Set user if the user is undefined has no icons on the dashboard
-            if(parent.icons["Undefined"] == undefined ){
-              Vue.set(parent.icons, "Undefined", {
-                "usersName": "Undefined", 
-                "email": email, 
-                "icons":{},
-                "emailSent": false,
-                "creditUrl": creditUrl
-              })
-              Vue.set(parent.icons["Undefined"].icons, appName, docData)
-              Vue.set(parent.icons["Undefined"].icons[docData.id], "usersName",  "Undefined")
-              Vue.set(parent.icons["Undefined"], "usersName",  "Undefined")                
-            } else{
-              Vue.set(parent.icons["Undefined"].icons, docData.id, docData)
-              Vue.set(parent.icons["Undefined"].icons[docData.id], "usersName",  "Undefined")
-              Vue.set(parent.icons["Undefined"], "usersName",  "Undefined")
-            }
-
-          }else{
-
-            // Set user if the user has no icons on the dashboard
-            if(parent.icons[usersName] == undefined ){
-              Vue.set(parent.icons, usersName, {
-                "usersName": usersName, 
-                "email": email, 
-                "icons":{}, 
-                "emailSent": false,
-                "creditUrl": creditUrl,
-                "user": user
-              })
-
-              Vue.set(parent.icons[usersName].icons, docData.id, docData)
-              
-            } else{
-              Vue.set(parent.icons[usersName].icons, docData.id, docData)
-            }
-
-          }
-        }
-        parent.scroll()
-      }
-
-      getParseData()
+      parent.getParseData()
+      parent.getReUploadIcons()
 
     } else{
       parent.isAuth = false
@@ -640,6 +749,56 @@ export default {
   },
 
   computed:{
+    ...mapGetters([
+      'getUser',
+      'allIcons',
+      'notApproved',
+      'approvedIcons',
+      'getAppCategories',
+      'approvedIconsCount',
+      'isLoading',
+      'getSelectedIcon',
+      'getUserInfo'
+    ]),
+
+    userIcons(){
+      let parent = this
+      
+      if (!parent.userInfo) {
+        console.log("parent.userInfo");
+        return 0
+      } else{
+        if (parent.allIcons.length == 0) {
+          parent.errorMessage = "No icons to show"
+        }
+
+        switch (parent.iconsToShow) {
+          case "newIcons":
+            parent.errorMessage = parent.user.username + " hasn't submitted any icons yet."
+            console.log(parent.iconsToShow);
+            return parent.allIcons
+
+          case "reUploaded":
+            console.log(parent.iconsToShow);
+            return parent.approvedIcons
+      
+          default:
+            break;
+        }
+      }
+    },
+
+    iconType(){
+      let parent = this
+      let iconsToShow = parent.iconsToShow
+
+      if (iconsToShow == "newIcons") {
+        return parent.icons
+      } else {
+        return parent.icons.reUploaded
+      }
+
+    }
   }
 
 }
