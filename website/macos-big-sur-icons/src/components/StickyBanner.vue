@@ -78,13 +78,22 @@ export default {
       })
     },
 
+    watch:{
+      $route (to, from){
+          // console.log(to);
+          // console.log(from);
+          // console.log(_bsa);
+          _bsa.reload('.card-ad2')
+          // this.getAd()
+      }
+    },
+
     methods:{
       ...mapActions(['showEl', 'setSelectedIcon', 'addClickCount', 'adClick']),
 
       getAd(el){
-        console.log('Hi');
         try {
-          if (typeof _bsa !== 'undefined' && _bsa) {
+          if (typeof _bsa !== 'undefined') {
           _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
             {
               target: '.card-ad2',
@@ -105,6 +114,16 @@ export default {
         } catch (error) {
           console.log("error: ", error);
         }
+
+        setTimeout(() => {
+          let ad = document.querySelector('.bsa-link')
+          if (ad == null) {
+            console.log('no ad');
+             getAd()
+             console.log('no ad');
+          }
+      }, 1500);
+
       },
 
       closeBanner(){
