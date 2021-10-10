@@ -461,6 +461,7 @@ export default {
 
       await icon.set("highResPngUrl", savedFile._url);
       await icon.set("isReUpload", true);
+      await icon.set("isReview", false);
       await icon.set("approved", false);
       await icon.set("highResPngFile", parseFile);
 
