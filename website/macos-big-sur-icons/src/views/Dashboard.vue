@@ -61,7 +61,7 @@
       </div> -->
       
       <!-- Tabs -->
-      <coral-tablist>
+      <coral-tablist v-if="isAuth">
         <coral-tab aria-label="newIcons" selected="" @click="changeIconStatus('newIcons')">
           New Icons
           <span class="coral-Detail coral-Detail--M f-w-400 opacity-80">
@@ -106,8 +106,12 @@
 
               <div class="card-img-wrapper" style="max-width: 120px;">
 
-                <div v-if="icon.isReview" class="loading-approval-wrapper">
+                <div v-if="icon.isReview || icon.isReview && icon.isReUpload" class="loading-approval-wrapper">
                   <coral-status v-if="icon.isReview" variant="success"></coral-status>
+                </div>
+
+                <div v-if="!icon.isReview && icon.isReUpload" class="loading-approval-wrapper">
+                  <coral-status v-if="icon.isReUpload" color="Yellow"></coral-status>
                 </div>
                 
                 <a :href="icon.imgUrl" target="_blank">
@@ -309,7 +313,8 @@ export default {
       let parent = this
       let newName = e.target.value
 
-      console.log(newName);
+      console.log("icon: ", icon);
+      // console.log(newName);
 
       if(isMultipleIcons){
         let listLen = Object.keys(icon.icons).length
@@ -400,23 +405,17 @@ export default {
       let parent = this
       // console.log(icon);
       console.log("icon.id: ", icon.id);
-      let parentIcon = parent.icons[icon.usersName].icons[icon.id]
-      // let parentIcon = parent.icons[icon.usersName].icons[icon.appName]
-
-      // console.log("icon: ", icon);
-      // console.log("parentIcon: ", parentIcon);
-      // console.log("parent.icons[icon.usersName].icons[icon.appName]: ", parent.icons[icon.usersName].icons[icon.appName]);
 
       let newIcon = {...icon}
       delete newIcon.DownloadCount
       delete newIcon.user
       delete newIcon.category
       delete newIcon.type
-      // console.log(icon);
 
       // Parse.Cloud.run("approve", icon).then((result)=>{
       Parse.Cloud.run("testJob", newIcon).then((result)=>{
-        Vue.set(parentIcon, 'isReview', true)
+        icon.isReview = true
+        icon.isReUploadReview = true
         parent.showToast({
           id: "toastMessage",
           message: "Icon has been approved",
@@ -567,10 +566,10 @@ export default {
       // const userQuery = new Parse.Query(User);
       // userQuery.descending("modifiedAt");
       
-      query.equalTo("approved", false)
       // query.equalTo("isReUpload", false)
-      query.descending("createdAt");
       // query.ascending("usersName");
+      query.equalTo("approved", false)
+      query.descending("createdAt");
       query.exists("highResPngFile");
       query.limit(docLimit);
         
