@@ -213,7 +213,7 @@
                     </div>
 
                     <!-- Learning -->
-                    <div class="resourcesLink">
+                    <!-- <div class="resourcesLink">
                         <coral-status variant="info"></coral-status>
                         <router-link to="/learning">
                             <button is="coral-button" variant="quiet">
@@ -222,7 +222,7 @@
                                 </span>
                             </button>
                         </router-link>
-                    </div>
+                    </div> -->
                     
                     <!-- Buy me a coffee -->
                     <div class="hide-on-shrink">
