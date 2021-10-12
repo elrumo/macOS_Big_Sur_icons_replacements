@@ -328,6 +328,53 @@ const routes = [
     }
   },
   {
+    path: '/learning',
+    name: 'Learning',
+    component: () => import('../views/Learning.vue'),
+    meta: { 
+      title: 'Free macOS Big Sur icon templates and tutorials.',
+      description:"Resources, templates and tutorials to help you design icons for macOS.",
+      titleTemplate: '%s | macOSicons',
+      meta:[
+        // Facebook
+        {
+          property: 'og:url',
+          content:  'https://macosicons.com/resources'
+        },
+        {
+          property: 'og:title',
+          content:  'Free macOS Big Sur icon templates and tutorials.',
+        },
+        {
+          property: 'og:description',
+          content:  'Resources, templates and tutorials to help you design icons for macOS.',
+        },
+        {
+          property: 'og:image',
+          content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Resources-thumbnail.jpg'
+        },
+
+        // Twitter
+        {
+          property: 'twitter:url',
+          content:  'https://macosicons.com/resources'
+        },
+        {
+          property: 'twitter:description',
+          content:  'Resources, templates and tutorials to help you design icons for macOS.',
+        },
+        {
+          property: 'twitter:title',
+          content:  'Free macOS Big Sur icon templates and tutorials.',
+        },
+        {
+          property: 'twitter:image',
+          content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Resources-thumbnail.jpg'
+        },
+      ]
+    }
+  },
+  {
     path: '/resources',
     name: 'Resources',
     component: () => import('../views/Resources.vue'),

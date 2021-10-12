@@ -8,7 +8,12 @@
                 <!-- macOS icon download -->
                 <a v-if="isMacOs" @click="addClickCount(icon)" rel="noopener" :href="icon.icnsUrl">
                     <div v-lazy-container="{ selector: 'img', loading: coralIcons.placeholderIcon }">
-                    <img width="100px" height="100px" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
+                        <img
+                            width="100px"
+                            height="100px"
+                            :alt="icon.appName +' icon'"
+                            :data-src="iconUrl(icon)"
+                        >
                     </div>
                 </a>
 
@@ -31,10 +36,10 @@
                 </h3>
                 
                 <!-- Credit -->
-                <p class="coral-Body--XS opacity-40 m-b-5 p-t-5">
+                <p class="coral-Body--XS opacity-70 m-b-5 p-t-5">
                     <router-link :to="'/u/'+icon.usersName" class="coral-Link">{{icon.usersName}}</router-link>
                     on
-                    <span class="coral-Body--XS opacity-80">
+                    <span class="coral-Body--XS">
                         {{ getDate(icon.timeStamp) }}
                     </span>
                 </p>
@@ -47,7 +52,7 @@
 
         </div>
         <!-- Download Counter -->
-        <div label="Download Counter" class="download-counter-wrapper opacity-50">
+        <div label="Download Counter" class="download-counter-wrapper opacity-70">
             <p v-if="icon.downloads > 1" class="coral-Body--XS m-0 d-inline">
                 {{icon.downloads}}
             </p>
@@ -71,7 +76,7 @@ import EditIconDialog from "./EditIconDialog.vue"
 var Icons = Parse.Object.extend("Icons2");
 
 export default {
-    name: "IconCard",
+    name: "UserIconCard",
     
     props:{
         icon:{},
@@ -111,6 +116,14 @@ export default {
             return name
         },
         
+        iconUrl(icon){
+            if (!icon.lowResPngUrl) {
+                return icon.highResPngUrl
+            } else{
+                return icon.lowResPngUrl
+            }
+        },
+
         showDialog(id){
             let parent = this
             parent.setSelectedIcon(parent.icon)
@@ -150,7 +163,6 @@ export default {
             const IconsBase = Parse.Object.extend("Icons2");
             const query = new Parse.Query(IconsBase);
             const docToEdit = await query.get(id)
-
 
             docToEdit.set({ [field]: newName }) // Save icnsToStore obj with .icns file and its url to Parse server
             docToEdit.save().then(() =>{

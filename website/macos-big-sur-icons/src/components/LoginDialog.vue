@@ -1,11 +1,27 @@
 <template>
-  <coral-dialog v-if="!getUser.isAuth" id="loginDialog">
+  <coral-dialog v-on:submit.prevent="nextStep" v-if="!getUser.isAuth" id="loginDialog">
 
     <!-- <coral-dialog-header>
       Join macOSicons.com
     </coral-dialog-header> -->
     <coral-dialog-content>
-      
+
+      <coral-dialog id="resetPasswordDialog">
+          <coral-dialog-header>Reset your password</coral-dialog-header>
+          
+          <coral-dialog-content style="max-width:412px">  
+              You will receive an email to reset your password. 
+              <br>
+              <br>
+              Make sure to check your spam folder if you don't receive it within the next few minutes.
+          </coral-dialog-content>
+
+          <coral-dialog-footer>
+              <button is="coral-button" variant="quiet" coral-close="">Cancel</button>
+              <button is="coral-button" @click="resetPassword" variant="default" coral-close="">Reset password</button>
+          </coral-dialog-footer>
+      </coral-dialog>
+
         <div class="signin-dialog-content">
           
           <div>
@@ -25,7 +41,7 @@
                 Almost there!
               </h3>
               <p class="coral-Body--M p-t-20" style="font-weight: lighter">
-                Please click on the link we've sent to your email to verify your account and then rerfresh this page.
+                Please click on the link we've sent to your email to verify your account and then refresh this page.
               </p>
             </div>
 
@@ -69,7 +85,7 @@
               >
                 <coral-alert-header>Verify account</coral-alert-header>
                 <coral-alert-content>
-                  You've previously submited an icon with this email address, you'll need to verify it to set a password.
+                  You've previously submitted an icon with this email address, you'll need to verify it to set a password.
                 </coral-alert-content>
               </coral-alert>
 
@@ -108,7 +124,7 @@
                 variant="warning"
               >
                 <coral-alert-header>Username already in use</coral-alert-header>
-                <coral-alert-content>Please, use a different username and try again</coral-alert-content>
+                <coral-alert-content>Please use a different username and try again</coral-alert-content>
               </coral-alert>
             
             </div>
@@ -133,7 +149,7 @@
                   Password must contain a number, a capital letter and be more than 6 characters long.
                 </p>
                 <p v-if="userInfo.step == 2 && userInfo.hasLoggedIn" class="coral-Body--XS opacity-60 f-w-400 p-t-10">
-                  Problems signing in? <a @click="resetPassword" class="coral-link">Reset password</a> 
+                  Problems signing in? <a @click="resetPassword" class="coral-link pointer">Reset password</a> 
                 </p>
               </div>   
 
@@ -147,12 +163,6 @@
                   Password must contain a number, a capital letter and be more than 6 characters long.
                 </coral-alert-content>
               </coral-alert>
-              <!-- <coral-alert
-                style="padding: 10px; margin-top: 15px"
-              >
-                <coral-alert-header>Password Requirements</coral-alert-header>
-                <coral-alert-content>The password must.</coral-alert-content>
-              </coral-alert> -->
             </div>
 
               <!-- v-if="userInfo.problems.usernameExists" -->
@@ -210,7 +220,7 @@
       <button is="coral-button" v-if="userInfo.step == 1" variant="quiet" @click="closeDialog('loginDialog')">Cancel</button>
       <button is="coral-button" v-if="userInfo.step == 2" @click="toStep(1)" variant="quiet">Back</button>
 
-      <button is="coral-button"
+      <button id="continue-btn" is="coral-button"
         v-if="isValid && userInfo.step == 1"
         @click="checkOldAccount(2)" variant="">
         Continue
@@ -218,7 +228,7 @@
       
       <!-- Sign in -->
       <div v-if="userInfo.step == 2 && !userInfo.newAccount && userInfo.hasLoggedIn">
-        <button is="coral-button"
+        <button id="continue-btn" is="coral-button"
           v-if="isNotEmpty"
           @click="logIn(3)" variant="">
           Log in
@@ -235,14 +245,14 @@
       <div v-if="userInfo.step == 2 && !userInfo.newAccount && !userInfo.hasLoggedIn">
         
         <div v-if="!userInfo.passwordResetSent">
-          <button is="coral-button"
+          <button id="continue-btn" is="coral-button"
             v-if="isNotEmpty"
             @click="resetPassword" variant=""
           >
             Verify account
           </button>
           
-          <button is="coral-button"
+          <button id="continue-btn" is="coral-button"
             v-if="!isNotEmpty"
             disabled=""
           >
@@ -252,6 +262,7 @@
         <button
           is="coral-button"
           v-else
+          id="continue-btn"
           disabled=""
         >
           Resend in <span style="width: 18px; padding: 0px 5px 0px 2px;"> {{ timeLeftForResend }} </span> seconds
@@ -262,20 +273,20 @@
       
       <!-- Sign up -->
       <div v-if="userInfo.step == 2 && userInfo.newAccount">
-        <button is="coral-button" 
+        <button id="continue-btn" is="coral-button" 
           v-if="isNotEmpty"
           @click="signUp(3)">
           Finish sign Up
         </button>
         
-        <button is="coral-button"
+        <button id="continue-btn" is="coral-button"
           v-if="!isNotEmpty"
           disabled="">
           Finish sign Up
         </button>
       </div>
      
-      <button is="coral-button"
+      <button id="continue-btn" is="coral-button"
         v-if="!isValid" disabled="">
         Continue
       </button>
@@ -313,6 +324,7 @@ export default {
       email: "",
       yourName: "",
       isLoading: false,
+      isReset: false,
       
       showResend: false,
       emailSentAt: '',
@@ -343,40 +355,11 @@ export default {
       this.userInfo.step = step
     },
 
-    // async appleLogin(){
-    //   let parent = this;
+    nextStep(){
+      let next = document.getElementById("continue-btn")
+      next.click();
+    },
 
-    //   const userToLogin = new Parse.User();
-      
-    //   console.log("decodedIdToken: ", decodedIdToken);
-     
-    //   let appleEmail = decodedIdToken.email
-    //   let appleId = decodedIdToken.sub
-    //   let token = decodedIdToken.token
-      
-    //   // const response = await window.AppleID.auth.signIn();
-    //   // const decodedIdToken = jwt_decode(response.authorization.id_token);
-    //   // let appleEmail = decodedIdToken.email
-    //   // let appleId = decodedIdToken.sub
-    //   // let token = response.authorization.id_token
-
-    //   let authData = {
-    //     id:  appleId,
-    //     email:  appleEmail,
-    //     token: token
-    //   }
-    //   await userToLogin.linkWith('apple', {
-    //     authData: authData
-    //     })
-    //     .then(async (loggedInUser) =>{
-    //       parent.setUser(JSON.parse(JSON.stringify(loggedInUser)))
-    //       userToLogin.set("email", authData.email)
-    //       userToLogin.save()
-    //     }).catch((error) => {
-    //       console.log(error);
-    //   })
-    
-    // },
 
     closeDialog(id){
       document.getElementById(id).hide()
@@ -398,6 +381,10 @@ export default {
         let fieldValue = e.target.value
         var isValid = e.target.checkValidity()
 
+        if(e.keyCode == 13){
+          parent.nextStep()
+        }
+
         // Checks if email has a '.'
         if (!fieldValue.includes(".") && isEmail) {
           isValid = false
@@ -405,7 +392,7 @@ export default {
         
         parent.userInfo[field] = fieldValue
         parent.userInfo.isValid = isValid
-
+        
         if (target.type == "password") {
           let passIsValid = !parent.validatePassword
           if(passIsValid) parent.userInfo.problems.passNotSecure = false;
@@ -456,10 +443,8 @@ export default {
       var userExists
       
       if (resultsUserame.length !=0) {
-        console.log("resultsUserame.length: ", resultsUserame.length);
         userExists = true
       } else {
-        console.log("resultsUserame.length: ", resultsUserame.length);
         userExists = false
       }
       
@@ -522,45 +507,72 @@ export default {
       let email = parent.userInfo.email
       let password = parent.userInfo.password
       
+      if (!password) {
+        password = document.getElementById("loginPass-1").value
+        parent.userInfo.password = password
+      }
+
       Parse.User.logIn(email, password).then((user) =>{
         console.log("user: ", user);
         parent.setUser(user)
-        console.log(parent.getUser);
         parent.isLoading = false
       }).catch((e) => {
-        if (e.code == 101) {
-          parent.isLoading = false
-          parent.showToast({
-            id: "toastMessage",
-            message: "❌ Invalid password, try again",
-            variant: "error"
-          }) 
+        console.log("error logging in, report this to @elrumo: ", e.code);
+        parent.isLoading = false
+        
+        switch (e.code) {
+          case 101:
+            parent.showToast({
+              id: "toastMessage",
+              message: "Invalid password, try again",
+              variant: "error"
+            }) 
+            break;
+          
+          case 201:
+            parent.showToast({
+              id: "toastMessage",
+              message: "Password cannot be empty",
+              variant: "error"
+            }) 
+            break;
+
+          default:
+            break;
         }
+
       })
 
     },
 
     async resetPassword(){
       let parent = this;
-      parent.isLoading = true;
       let email = parent.userInfo.email
-      const user = await Parse.User.requestPasswordReset(email)
-      user
-      
-      Parse.Cloud.run("firstTimeUser", {email: email}).then((result)=>{
-        parent.userInfo.passwordResetSent = true
-        parent.emailSentAt = new Date().getTime()// Set time the email was sent at
-        parent.isLoading = false;
-        
-        parent.showToast({
-          id: "toastMessage",
-          message: "✅ Check your email",
-          variant: "success"
-        })
 
-      }).catch((error) => {
-        console.log("firstTimeUser error: ", error);
-      })
+      if (parent.isReset) {
+        parent.isLoading = true;
+        parent.isReset = false; 
+
+        Parse.User.requestPasswordReset(email).then(()=>{
+          parent.showToast({
+            id: "toastMessage",
+              message: "Check your email",
+              variant: "success"
+            })
+        })  
+
+        Parse.Cloud.run("firstTimeUser", {email: email}).then((result)=>{
+          parent.userInfo.passwordResetSent = true
+          parent.emailSentAt = new Date().getTime()// Set time the email was sent at
+          parent.isLoading = false;
+
+        }).catch((error) => {
+          console.log("firstTimeUser error: ", error);
+        })
+      } else{
+        document.getElementById("resetPasswordDialog").show()
+        parent.isReset = true;
+      }
 
     },
 

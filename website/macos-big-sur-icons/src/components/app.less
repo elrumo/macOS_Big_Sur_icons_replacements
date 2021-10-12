@@ -85,9 +85,11 @@ select{
     display: flex;
     justify-content: space-between;
     width: fit-content;
-    // width: 85%;
+    width: -moz-fit-content;
     margin: auto;
     padding: 15px 0px;
+    gap: 10px;
+    // width: 85%;
 }
 
 .u-coral-noscroll{
@@ -172,14 +174,25 @@ select{
     margin: auto !important;
     position: relative !important;
     padding: 10px !important;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 25px;
+    // left: 50%;
+    // transform: translateY(-50%);
     display: grid;
     gap: 7px;
     text-align: center;
     width: calc(100% - 20px ) !important;
     height: fit-content !important;
+}
+
+.lgbt-wrapper .card-no-ad{
+    position: relative;
+    top: 0px;
+    height: fit-content;
+}
+
+.lgbt-wrapper .support-page{
+    top: 0px;
+    // transform: translateY(0%) !important;
 }
 
 .coral--dark .instructions-item{
@@ -261,6 +274,30 @@ select{
     border-radius: 8px;
 }
 
+.account-dialog-form{
+    width: calc(100% - 5px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+}
+
+.account-dialog-form > div{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 5px;
+}
+
+#accountDialog ._coral-Dialog{
+    width: 50%;
+    max-width: 720px;
+}
+
+#accountDialog .coral-FormGroup-item{
+    display: inline;
+    width: 100%;
+}
+
 ._coral-Dialog-content{
     height: 100%;
 }
@@ -327,15 +364,53 @@ option[value=""][disabled] {
 }
 
 .coral--dark .dropdown-select{
-    background-color: var(--coral-dark-card) !important;
-    border-color: var(--coral-dark-border);
     color: var(--coral-light-border);
+    background-color: var(--coral-dark-card);
+    border-color: var(--coral-dark-border);
+}
+
+.main-search .dropdown-select-chevron{
+    position: inherit;
+}
+
+.dropdown-select-chevron{
+    position: relative;
+}
+
+.dropdown-select-chevron::after{
+    pointer-events: none;
+    content: "";
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+div * {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+    ::-webkit-scrollbar-track {
+      -webkit-box-shadow: none !important;
+      background-color: transparent;
+    }
+    ::-webkit-scrollbar {
+      width: 3px !important;
+      background-color: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: transparent;
+    }
+  }
+
+.coral--dark .dropdown-select-chevron::after{
     background: url('../assets/icons/ChevronDown.svg') no-repeat 97% 50% !important;
 }
-.coral--light .dropdown-select{
-    background-color: rgb(255, 255, 255) !important;
-    border-color: rgb(225, 225, 225);
-    color: rgb(75, 75, 75);
+.coral--light .dropdown-select-chevron::after{
+    // background-color: rgb(255, 255, 255) !important;
+    // border-color: rgb(225, 225, 225);
+    // color: rgb(75, 75, 75);
     background: url('../assets/icons/ChevronDown-dark.svg') no-repeat 97% 50% !important;
 }
 
@@ -448,6 +523,11 @@ coral-buttongroup button{
     width: calc(100% - 20px);
     height: fit-content;
     max-height: calc(98vh - 200px);
+}
+
+
+.categories-sidenav coral-sidenav-item-content{
+    font-weight: 500 !important;
 }
 
 .gradient-categories-navbar{
@@ -616,6 +696,7 @@ coral-buttongroup button{
 
 .burger-btn{
     width: fit-content;
+    width: -moz-fit-content;
     margin: auto 0px auto auto;
 }
 
@@ -887,7 +968,7 @@ coral-buttongroup button{
     border-color: rgb(225, 225, 225);
     border-radius: var(--main-border-radius);
     margin: auto;
-    // min-height: 200px;
+    // max-height: 240px;
 }
 
 .card-text-wrapper{
@@ -904,13 +985,7 @@ coral-buttongroup button{
 }
 
 .coral--light .underline{
-    color: var( --coral-dark-border);
-}
-
-.card-no-ad{
-    position: absolute;
-    top: 0px;
-    height: 100%
+    color: var(--coral-dark-bg)
 }
 
 .card-hover{
@@ -1015,6 +1090,7 @@ coral-buttongroup button{
     gap: 20px;
     width: 100%;
     height: fit-content;
+    height: -moz-fit-content;
 }
 
 .icon-list-area a{
@@ -1027,7 +1103,9 @@ coral-buttongroup button{
     margin: auto;
     position: relative;
     height: fit-content;
+    height: -moz-fit-content;
     width: fit-content;
+    width: -moz-fit-content;
 }
 
 .card-img-wrapper{
@@ -1120,7 +1198,8 @@ coral-buttongroup button{
 }
 
 .width-fit{
-    width: fit-content
+    width: fit-content;
+    width: -moz-fit-content;
 }
 
 .loading-popup{
@@ -1162,6 +1241,7 @@ coral-buttongroup button{
 
 .download-counter-wrapper{
     height: fit-content;
+    height: -moz-fit-content;
     display: flex;
     margin: auto;
     gap: 7px;
@@ -1179,6 +1259,15 @@ coral-buttongroup button{
     opacity: 0.5;
     transform: translateY(-50%);
 }
+
+.pointer{
+    cursor: pointer !important;
+}
+
+// .coral--dark option{
+//     color: #4b4b4b;
+//     border-radius: 4px;
+// }
 
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
     opacity: 0;
@@ -1227,14 +1316,8 @@ coral-buttongroup button{
 
 .loading-approval-wrapper{
     position: absolute;
-    left: 50%;
-    transform: translate3d(-50%, -50%, 0px);
-    top: 50%;
-    width: 80%;
-    height: 80%;
-    z-index: 9;
-    /* backdrop-filter: blur(5px) saturate(0.5); */
-    backdrop-filter: blur(3px);
+    top: 0%;
+    left: 0%;   
 }
 
 .hide{
@@ -1352,7 +1435,7 @@ coral-buttongroup button{
 .coral--light .coral-card{
     background: var(--coral-light-card);
     border-color: var( --coral-light-border);
-    color: var( --coral-dark-border);
+    color: var(--coral-dark-bg)
 }
 
 ._coral-Icon{
@@ -1444,8 +1527,12 @@ coral-buttongroup button{
     padding-left: 10px;
 }
 
-.coral-Heading--M a{
+.coral--dark .coral-Heading--M a{
     color: white;
+}
+
+.coral--light .coral-Heading--M a{
+    color: var(--coral-dark-bg);
 }
 
 /* .search-wrapper-dashboard{
@@ -1542,6 +1629,7 @@ coral-buttongroup button{
     display: grid;
     grid-template-columns: auto auto;
     width: fit-content;
+    width: -moz-fit-content;
     height: 42px;
     border-radius: 5px;
     backdrop-filter: brightness(0.3) blur(50px) grayscale(0.2);
@@ -1585,6 +1673,7 @@ coral-buttongroup button{
 
 .waiting-wrapper{
     width: fit-content;
+    width: -moz-fit-content;
     margin: auto;
     padding-top: 30px;
 }
@@ -1630,6 +1719,7 @@ coral-buttongroup button{
     padding: 5px;
     margin-top: 7px;
     width: fit-content;
+    width: -moz-fit-content;
 }
 
 .options-popover ._coral-Popover-tip {
@@ -1893,6 +1983,13 @@ coral-buttongroup button{
 
     .mobile-hidden{
         display: none !important;
+    }
+
+    .account-dialog-form{
+        width: calc(100% - 5px);
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
     }
 
     .gitHub-sponsor{

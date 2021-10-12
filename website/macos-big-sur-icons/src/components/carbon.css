@@ -157,7 +157,15 @@ height: -moz-fit-content;
 .resources-card-ad{
     height: 100%;
     min-width: calc(100vw / 3 - 18vw);
+    min-height: 140px;
     /* max-width: 320px; */
+}
+
+.resources-card-ad .card-no-ad{
+        width: 100%;
+    left: 0px;
+    top: 50%;
+    position: absolute;
 }
 
 .resources-card-ad .carbon-text{
@@ -279,8 +287,12 @@ height: -moz-fit-content;
     text-decoration: none;
 }
 
-#carbonads a:hover {
-    color: inherit;
+.coral--light #carbonads a {
+    color: var(--coral-dark-bg)
+}
+
+.coral--dark #carbonads a {
+    color: var(--coral-light-bg)
 }
 
 #carbonads:hover .carbon-img img {
@@ -383,7 +395,7 @@ height: -moz-fit-content;
 .card-grid-nativeAd .bsa-link{
     padding: 10px 0px;
     height: fit-content;
-height: -moz-fit-content;
+    height: -moz-fit-content;
     height: -moz-fit-content;
     display: grid;
     grid-template-rows: 88px auto;
@@ -393,6 +405,30 @@ height: -moz-fit-content;
     border: 0px;
     font-size: 13px;
     gap: 10px;
+}
+
+.coral--light #stickyBanner .card-grid-nativeAd .bsa-link{
+    background-color: var(--coral-light-card);
+    color: var(--coral-dark-bg);
+}
+
+.coral--dark #stickyBanner .card-grid-nativeAd .bsa-link{
+    background-color: var(--coral-dark-card);
+    color: var(--coral-light-bg);
+}
+
+#stickyBanner .card-grid-nativeAd .bsa-link{
+    padding: 10px 20px;
+    height: fit-content;
+    height: -moz-fit-content;
+    height: -moz-fit-content;
+    display: flex;
+    grid-template-rows: 88px auto;
+    border: 0px;
+    font-size: 13px;
+    gap: 10px;
+    position: absolute;
+    width: calc(100% - 60px);
 }
 
 .coral--dark .card-grid-nativeAd .bsa-link{

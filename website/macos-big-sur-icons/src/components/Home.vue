@@ -5,7 +5,7 @@
 
     <div v-if="overflow"> {{ toggleOverflow() }} </div>
 
-    <StickyBanner coral-dragaction=""/>
+    <!-- <StickyBanner/> -->
 
     <!-- <coral-dialog id="newDialog" open style="text-align: left;">
       <coral-dialog-header>Pay to view</coral-dialog-header>
@@ -38,7 +38,6 @@
 
     <!-- Hero -->
     <Hero
-      coral-dragaction=""
       v-bind:list="list"
       :submitIconDialog="'submissionDialog'"
       :iconListLen="iconListLen"
@@ -58,11 +57,18 @@
       >
 
         <!-- Search box-->
-        <div coral-dragaction="">
-          <div class="content-wrapper-regular search">
+        <div>
+          <div @click="scrollTo" class="content-wrapper-regular search">
             <div class="m-auto main-search" style="max-width:300px;">
               <div class="shadow main-border-radius">
-                <input v-model="searchString" :placeholder="'Search ' + iconListLen + ' icons'" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
+                <input 
+                  v-model="searchString" 
+                  :placeholder="'Search ' + iconListLen + ' icons'" 
+                  type="text"  
+                  class="_coral-Search-input _coral-Textfield searchBar" 
+                  name="name" 
+                  aria-label="text input"
+                >
                 
                 <!-- Search icon -->
                 <svg class="icon searchBar-left" id="coral-css-icon-Magnifier" viewBox="0 0 16 16">
@@ -88,25 +94,27 @@
                 
                 <hr class="coral-Divider--s coral-Divider--vertical searchBar-divider m-0">
 
-                <select
-                id="selectOS"
-                class="dropdown-select searchbar-select"
-                v-on:change="changeOS"
-                >
-                  <option value="macOS" selected="">
-                    macOS
-                  </option>
-                  <option value="iOS">
-                    iOS
-                  </option>
-                </select>
+                <div class="dropdown-select-chevron">
+                  <select
+                  id="selectOS"
+                  class="dropdown-select searchbar-select"
+                  v-on:change="changeOS"
+                  >
+                    <option value="macOS" selected="">
+                      macOS
+                    </option>
+                    <option value="iOS">
+                      iOS
+                    </option>
+                  </select>
+                </div>
 
               </div>
             </div>
           </div>
         </div>
 
-         <div coral-dragaction="" v-if="isMobile" class="desktop-hidden categories-container">
+         <div v-if="isMobile" class="desktop-hidden categories-container">
           <div id="categoriesWrapper-mobile" class="categories-wrapper">
             <coral-buttongroup selectionmode="single">
                 <button
@@ -142,7 +150,7 @@
 
       <!-- Loading error -->
       <div v-if="false" class="waiting-wrapper">
-        <NativeAd :adId="'iconbar-js-card-grid'" :key="$route.fullPath + 'ad'"/>
+        <NativeAd :adPosition="'Loading error'" :adId="'iconbar-js-card-grid'" :key="$route.fullPath + 'ad'"/>
         <h3 class="coral-Heading--M">
           The site is temporarily down for maintenance purposes.
           <br>
@@ -181,7 +189,7 @@
       <div class="main-content-wrapper content-wrapper-regular">
     
         <!-- Categories List -->
-        <nav coral-dragaction="" v-if="!isMobile" id="categoriesWrapper-desktop" class="mobile-hidden categories-sidenav coral-card" is="coral-sidenav">
+        <nav v-if="!isMobile" id="categoriesWrapper-desktop" class="mobile-hidden categories-sidenav coral-card" is="coral-sidenav">
 
           <!-- All Icons -->
           <button
@@ -231,7 +239,6 @@
           <hr class="coral-Divider--S m-t-10 m-t-10">
 
           <button
-            coral-dragaction=""
             :icon="icons[category.name.replaceAll(' ', '_').replace('&_', '')]"
             v-for="category in getAppCategories"
             :key="category.name+'_categoryHome'"
@@ -248,18 +255,36 @@
         </nav>
 
 
+
         <!-- Icon list-->
-        <div id="iconList" class="icon-list-area p-b-30 ">
+        <div 
+          id="iconList" 
+          class="icon-list-area p-b-30 "
+        >
           
           <!-- Ad -->
-          <div  coral-dragaction="" style="min-height: 205px; max-height:226px" class="card-hover relative coral-card">
+          <div
+            style="min-height: 205px; max-height:240px"
+            class="card-hover relative coral-card"
+          >
             
-            <div style="z-index: 1; height: 100%; width: 100%" class="absolute carbon-card-ad">
-              <script @click="adClick" async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
+            <div
+              style="z-index: 1; height: 100%; width: 100%"
+              class="absolute carbon-card-ad"
+            >
+              <script
+                @click="adClick({position: 'Icon Grid Top', type: 'Carbon'})"
+                async
+                type="application/javascript"
+                src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom"
+                id="_carbonads_js"
+              > </script>
             </div>
 
             <div style="z-index: 2" class="absolute card-grid-nativeAd">
-              <div @click="adClick" id="card-ad">
+              <div
+                @click="adClick({position: 'Icon Grid Top', type: 'Native'})"
+                id="card-ad">
               </div>
             </div>
             
@@ -292,7 +317,13 @@
 
           </div>
 
-          <UserIconCard  coral-dragaction="" v-for="icon in search" :key="icon.icnsUrl+icon.appName" :icon="icon" :isAdmin="isAdmin" :isMacOs="isMacOs"/>
+          <UserIconCard
+            v-for="icon in search"
+            :key="icon.icnsUrl+icon.appName"
+            :icon="icon"
+            :isAdmin="isAdmin"
+            :isMacOs="isMacOs"
+          />
 
           <div v-if="
               (!scrolledToBottom && getSelectedCategory.id != 'All') ||
@@ -356,7 +387,7 @@ export default {
     NativeAd,
     UserIconCard,
     'vue-load-image': VueLoadImage,
-    StickyBanner
+    StickyBanner,
   },
 
   metaInfo: {
@@ -500,6 +531,7 @@ export default {
     parent.getAd()
     const { getters } = parent.$store;
     let fullPath = parent.$route.fullPath
+    
     let currentUser = Parse.User.current()
 
     if (fullPath.includes("/?username=") && !currentUser) {
@@ -781,7 +813,7 @@ export default {
       let parent = this
 
       function handleParseError(err){
-        console.log(err.code);
+        console.log("Error getting icons, report this error to @elrumo: ", err.code);
         switch (err.code) {
           case Parse.Error.INVALID_SESSION_TOKEN:
             Parse.User.logOut();
@@ -799,8 +831,9 @@ export default {
 
       try {
         const query = new Parse.Query(Icons);
-        query.equalTo("approved", true)
+        query.equalTo("approved", true);
         query.descending("timeStamp");
+        query.exists("icnsFile");
         query.limit(docLimit);
         parent.howManyRecords = docLimit
         const results = await query.find()
@@ -827,9 +860,6 @@ export default {
           }
           iconData.id = results[result].id
           
-          // Set fetched user info from parse User object
-          // iconData.usersName = userInfo.username
-          // iconData.credit = userInfo.credit
           allIcons.push(iconData)
         }
         parent.$store.dispatch("pushDataToArr", {data:  allIcons, arr: "list", concatArray: true});
@@ -863,7 +893,7 @@ export default {
 
       } catch (error) {
         handleParseError(error)
-        console.log("loadingError: ", error);
+        console.log("865 - Error loading icons, report this error to @elrumo: ", error);
       }
 
     },

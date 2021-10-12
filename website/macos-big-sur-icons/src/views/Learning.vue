@@ -12,7 +12,7 @@
         <ResourcesCard
           v-for="resource in resourcesData"
           :key="resource.name"
-          :link="'/leartning/'+resource.slug"
+          :link="'/learning/'+resource.slug"
           :step='resource'
         />
 
