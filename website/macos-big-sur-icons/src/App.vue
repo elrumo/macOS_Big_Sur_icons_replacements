@@ -78,6 +78,10 @@ export default {
         this.distanceFromTop =  document.getElementById("searchBar").getBoundingClientRect().y > 65;
       }
     },
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
   },
   mounted: function(){
     window.addEventListener('scroll', this.handleScroll);

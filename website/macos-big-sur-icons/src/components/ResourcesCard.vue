@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="link">
+    <router-link :to="getLink">
         <div class="coral-Well instructions-item Box">
             <div class="new-pill" v-if="isNew(step)">
                 <coral-status variant="info">New</coral-status>
@@ -22,8 +22,27 @@
             </div>
 
             <div class="resources-card-title">
-                <p class="coral-Body--L f-w-500 m-0">
+                <p
+                    :class="{
+                        'coral-Body--L': true,
+                        'f-w-500': !step.description,
+                        'f-w-900': step.description,
+                        'm-0': true,
+                    }"
+                >
                     {{ step.title }}
+                </p>
+                <p
+                    v-if="step.description"
+                    :class="{
+                        'coral-Body--S': true,
+                        'f-w-500': true,
+                        'm-0': true,
+                        'opacity-70': true,
+                    }"
+                >
+                        <!-- 'p-t-5': true, -->
+                    {{ step.description }}
                 </p>
             </div>
 
@@ -70,6 +89,17 @@ export default {
         markItDown(){
             let text = this.step.text
             return Marked(text, { sanitize: true })
+        },
+
+        getLink(){
+            let link = this.link
+            let step = this.step
+
+            if (step.slug) {
+                return link
+            } else {
+                return this.$router.currentRoute.path
+            }
         }
     }
 }

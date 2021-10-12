@@ -1,13 +1,19 @@
 <template>
     <div>
 
-        <div class="h3-description m-t-20" v-if="!text.isCenter">
+        <div :class="{
+            'h3-description': true,
+            'm-t-20': true,
+            'text-center': text.isCenter,
+        }">
             <h1 class="coral-Heading--XL resource-heading">
                <b> {{ text.h3 }}</b>
             </h1>
 
             <div class="h3-description-body">
-                <p class="coral-Body--L f-w-500" v-html="markItDown">
+                <p
+                    class="coral-Body--L f-w-500"
+                    v-html="markItDown(text.description)">
                 </p>
             </div>
 
@@ -15,11 +21,19 @@
                 <p class="coral-Body--XS">
                     Sponsored by
                 </p>
+<<<<<<< Updated upstream
                 <NativeAd :adId="'iconbar-js-h3'" :key="$route.fullPath + 'ad'"/>
+=======
+                <NativeAd
+                    :adPosition="'H3 Description Desktop'"
+                    :adId="'iconbar-js-h3'"
+                />
+>>>>>>> Stashed changes
             </div>
 
         </div>
 
+<<<<<<< Updated upstream
         <div v-else class="h3-description h3-description-center">
             <h1 class="coral-Heading--XXL resource-heading">
                <b> {{ text.h3 }}</b>
@@ -53,6 +67,8 @@
             </a>
 
         </div>
+=======
+>>>>>>> Stashed changes
     </div>
 </template>
 
@@ -91,14 +107,14 @@ export default {
                 path: currentPath, 
             }})
         },
+
+        markItDown(text){
+            console.log("text: ", text);
+            return Marked(text, { sanitize: true })
+        }
     },
 
     computed: {
-        markItDown(){
-            let text = this.text.description
-            
-            return Marked(text, { sanitize: true })
-        }
     }
 }
 </script>
