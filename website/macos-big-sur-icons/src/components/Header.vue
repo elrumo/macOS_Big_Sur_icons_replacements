@@ -3,17 +3,17 @@
         id="header"
         :class="{'scrolled-shadow': distanceFromTop & scrolled, 'scrolled-header': scrolled, header: true, 'coral-bg':true}"
     >
-    
+        
         <!-- <div v-if="true">
             {{ toggleOverflow() }}
         </div> -->
-        <OptionsMenu coral-dragaction="" :optionsList="optionsList"/>
-        <Dialog coral-dragaction="" />
-        <SubmissionDialog coral-dragaction=""/>
-        <LoginDialog coral-dragaction=""/>
-        <AccountDialog coral-dragaction=""/>
+        <OptionsMenu :optionsList="optionsList"/>
+        <Dialog/>
+        <SubmissionDialog/>
+        <LoginDialog/>
+        <AccountDialog/>
 
-        <div coral-dragaction="" class="header-wrapper">
+        <div class="header-wrapper">
             
             <div class="header-logo-name">
                 <router-link to="/">
@@ -139,6 +139,9 @@
                             <a href="https://discord.gg/f4mTRyyTkT" class="p-l-20" target="_blank" rel="noopener">
                                 <img :src="icons.discord" class="header-item header-icon" alt="Discord Logo">
                             </a>
+                            <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" class="p-l-20" target="_blank" rel="noopener">
+                                <img :src="icons.github" class="header-item header-icon" alt="GitHub Logo">
+                            </a>
                         </div>
 
                     </div>
@@ -152,10 +155,13 @@
                     <!-- Twitter + Discord -->
                     <div class="header-icon-wrapper">
                         <a href="https://twitter.com/elrumo" class="" target="_blank" rel="noopener">
-                            <img :src="icons.twitter" class="header-item header-icon" alt="Twitter logo">
+                            <img style="height: 17px;" :src="icons.twitter" class="header-item header-icon" alt="Twitter logo">
                         </a>
                         <a href="https://discord.gg/f4mTRyyTkT" class="p-l-20" target="_blank" rel="noopener">
-                            <img :src="icons.discord" class="header-item header-icon" alt="Discord Logo">
+                            <img style="height: 17px;" :src="icons.discord" class="header-item header-icon" alt="Discord Logo">
+                        </a>
+                        <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" class="p-l-20" target="_blank" rel="noopener">
+                            <img :src="icons.github" class="header-item header-icon" alt="GitHub Logo">
                         </a>
                     </div>
                     
@@ -198,8 +204,6 @@
                             </button>
                         </router-link>
                     </div>
-<<<<<<< Updated upstream
-=======
 
                     <!-- Learning -->
                     <div class="resourcesLink">
@@ -212,7 +216,6 @@
                             </button>
                         </router-link>
                     </div>
->>>>>>> Stashed changes
                     
                     <!-- Buy me a coffee -->
                     <div class="hide-on-shrink">
@@ -295,6 +298,7 @@ export default {
             icons:{
                 twitter: require("../assets/icons/twitter.svg"),
                 discord: require("../assets/icons/Discord.svg"),
+                github: require("../assets/icons/github.svg"),
                 burgerMenu: require("../assets/icons/burgerMenu.svg"),
                 settings: require("../assets/icons/Settings.svg"),
 

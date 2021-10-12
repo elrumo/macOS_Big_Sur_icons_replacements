@@ -5,12 +5,20 @@
 
       <div class="card-wrapper card-hover coral-card">
         
-        <div @click="adClick" class="absolute card-grid-nativeAd" style="z-index: 2; height: 100%">
+        <div 
+          @click="adClick({position: 'User Icon Grid', type: 'Native'})" 
+          class="absolute card-grid-nativeAd"
+          style="z-index: 2; height: 100%"
+        >
           <div id="card-ad">
           </div>
         </div>
 
-        <div @click="adClick"  class="absolute" style="z-index: 1; height: 100%">
+        <div 
+          @click="adClick({position: 'User Icon Grid', type: 'Carbon'})"  
+          class="absolute" 
+          style="z-index: 1; height: 100%"
+        >
           <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
         </div>
 

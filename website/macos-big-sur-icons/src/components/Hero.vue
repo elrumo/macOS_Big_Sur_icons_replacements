@@ -8,10 +8,6 @@
     <div class="hero-text-area" v-if="iconsEmpty">    
         
 
-<<<<<<< Updated upstream
-        <div class="ad-hero mobile-hidden">
-          <NativeAd :adId="'iconbar-js-hero'" :key="$route.fullPath + 'ad'"/>
-=======
         <div
           class="ad-hero mobile-hidden"
         >
@@ -20,7 +16,6 @@
             :adId="'iconbar-js-hero'"
             :key="$route.fullPath + 'ad' + '_hero'"
           />
->>>>>>> Stashed changes
         </div>
 
         <div class="desktop-hidden m-t-20"></div>
