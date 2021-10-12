@@ -197,7 +197,7 @@
 
                     <!-- Resources -->
                     <div class="resourcesLink">
-                        <coral-status variant="info"></coral-status>
+                        <!-- <coral-status variant="info"></coral-status> -->
                         <router-link to="/resources">
                             <button is="coral-button" variant="quiet">
                                 <span>Resources</span>
@@ -205,10 +205,10 @@
                         </router-link>
                     </div>
 
-                    <!-- Learning -->
-                    <!-- <div class="resourcesLink">
+                    <!-- Learning
+                    <div class="resourcesLink">
                         <coral-status variant="info"></coral-status>
-                        <router-link to="/resources">
+                        <router-link to="/learning">
                             <button is="coral-button" variant="quiet">
                                 <span>
                                     Learning
