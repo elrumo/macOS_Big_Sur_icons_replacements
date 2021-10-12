@@ -36,6 +36,34 @@ a{
     text-decoration: none;
 }
 
+.fade-enter-active, .fade-leave-active {
+    transition: .2s;
+}
+
+.fade-enter /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+    transform: translate3D(0px, 5px, 0px);
+}
+
+.fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+    transform: translate3D(0px, -5px, 0px);
+}
+
+.overlay-enter-active, .overlay-leave-active {
+    transition: 0.1s;
+}
+
+.overlay-enter /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+    transform: translate3D(0px, 50px, 0px);
+}
+
+.overlay-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+    transform: translate3D(0px, -50px, 0px);
+}
+
 .fit-width{
     width: fit-content;
     width: -moz-fit-content;
@@ -237,6 +265,7 @@ select{
     left: 50%;
     position: relative;
     transform: translateX(-50%);
+    transition: 0.2s;
 }
 
 .PH-badge:hover{
@@ -244,6 +273,7 @@ select{
 }
 
 .Box{
+    transition: 0.3s;
 }
 
 .coral--dark .Box{
@@ -447,6 +477,7 @@ div * {
     width: 18px;
     height: 100%;
     background-size: 25px 30px !important;
+    transition: 0.2s;
 }
 
 .chevron:hover{
@@ -507,6 +538,8 @@ div * {
     z-index: 9;
     top: -8px;
     left: -5px;
+    height: 8px;
+    width: 8px;
 }
 
 coral-buttongroup button{
@@ -519,6 +552,7 @@ coral-buttongroup button{
     top: 165px;
     padding: 10px 10px 10px 10px;
     border-right: 1px solid var(--coral-dark-border);
+    transition: 0.2s;
     overflow-y: scroll !important;
     width: calc(100% - 20px);
     height: fit-content;
@@ -687,6 +721,7 @@ coral-buttongroup button{
     background-color: rgba(0, 0, 0, 0.2);
     height: 100vh;
     backdrop-filter: blur(2px);
+    transition: 0.2s;
 }
 
 .burger-menu{
@@ -710,6 +745,7 @@ coral-buttongroup button{
     position: sticky;
     top: 0;
     z-index: 99;
+    transition: 0.3s;
 }
 
 .header-logo-name{
@@ -756,6 +792,7 @@ coral-buttongroup button{
     height: 18px;
     padding: 4px 0px 0px 0px;
     cursor: pointer;
+    transition: 0.2s;
 }
 
 .profile-nav{
@@ -806,6 +843,7 @@ coral-buttongroup button{
     z-index: 5;
     width: 100%;
     margin: auto;
+    transition: 0.2s;
 }
 
 .search{
@@ -824,6 +862,7 @@ coral-buttongroup button{
     margin: auto;
     z-index: 2;
     font-weight: 600;
+    transition: 0.1s;
     user-select: none;
 }
 
@@ -844,6 +883,7 @@ coral-buttongroup button{
     top: 50%;
     left: 25%;
     transform: translate(-50%, -50%);
+    transition: 0.3s;
 }
 
 .text-not-selected{
@@ -940,6 +980,7 @@ coral-buttongroup button{
 .shadow{
     box-shadow: 0px 5px 15px -10px #00000021,
                 0px 2px 5px -2px   #00000029;
+    transition: 0.2s;
 }
 
 .shadow:hover{
@@ -989,6 +1030,7 @@ coral-buttongroup button{
 }
 
 .card-hover{
+    transition: 0.2s;
 }
 
 .card-hover:hover{
@@ -1117,6 +1159,7 @@ coral-buttongroup button{
 
 .card-img-wrapper img{
     margin: auto;
+    transition: 0.2s;
 }
 
 .card-hover:hover .card-img-wrapper img{
@@ -1153,6 +1196,7 @@ coral-buttongroup button{
     border-radius: 10px;
     border: 1px solid rgba(256, 256, 256, 0.3);
     box-shadow: 0px 25px 24px -10px rgba(0, 0, 0, 0.25);
+    transition: 0.3s;
 }
 
 .hero-img:hover{
@@ -1237,6 +1281,7 @@ coral-buttongroup button{
 
 .icon{
     padding: 17px 20px;
+    transition: 0.2s;
 }
 
 .download-counter-wrapper{
@@ -1269,16 +1314,13 @@ coral-buttongroup button{
 //     border-radius: 4px;
 // }
 
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-    opacity: 0;
-}
-
 .searchBar-right{
     position: absolute;
     right: 115px;
     height: 52px;
     top: 50%;
     transform: translateY(-50%);
+    transition: 0.2s;
 }
 
 .searchBar-right:opacity{
@@ -1332,6 +1374,7 @@ coral-buttongroup button{
 
 .coral-card{
     border: 1px solid;
+    transition: 0.2s;
     overflow: hidden;
     border-radius: var(--main-border-radius);
 }
@@ -1557,6 +1600,7 @@ coral-buttongroup button{
     font-weight: 700;
     cursor: pointer;
     font-family: adobe-clean, 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
+    transition: 0.13s
 }
 
 .coral-btn-primary{
@@ -1633,6 +1677,7 @@ coral-buttongroup button{
     height: 42px;
     border-radius: 5px;
     backdrop-filter: brightness(0.3) blur(50px) grayscale(0.2);
+    transition: 0.15s;
     opacity: 0;
 }
 
@@ -1742,6 +1787,7 @@ coral-buttongroup button{
     padding: 8px 13px 8px 10px;
     margin: 0px;
     border-radius: 4px;
+    transition: 0.2s;
 }
 
 .coral--dark .options-item:hover{
@@ -1764,6 +1810,7 @@ coral-buttongroup button{
 
 
 .icon-UI{
+    transition: 0.2s;
 }
 
 // .icon-UI:hover{

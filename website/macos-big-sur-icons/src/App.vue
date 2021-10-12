@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-            <!-- <div id="logobar"></div> -->
     <coral-toast id="toastMessage" variant="success">
       All icons have been uploaded.
     </coral-toast>
@@ -11,11 +10,14 @@
     />
 
     <StickyBanner/>
+    
+    <transition name="fade" mode="out-in">
+      <router-view
+        :key="$route.fullPath"
+        class="min-height"
+      />
+    </transition>
 
-    <router-view
-      :key="$route.fullPath"
-      class="min-height"
-    />
     <Footer/>
   </div>
 </template>

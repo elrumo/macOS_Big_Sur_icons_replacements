@@ -90,7 +90,10 @@ export default {
           //     getAd(el)
           //   }
           // }, 500)
-        adExist()
+          try {
+            adExist()
+          } catch (error) {
+          }
       }
 
       setTimeout(() =>{
