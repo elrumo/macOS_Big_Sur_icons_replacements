@@ -2,10 +2,11 @@
     <div>
 
         <div :class="{
-            'h3-description': true,
-            'm-t-20': true,
-            'text-center': text.isCenter,
-        }">
+                'h3-description': true,
+                'm-t-20': true,
+                'text-center': text.isCenter,
+            }"
+        >
             <h1 class="coral-Heading--XL resource-heading">
                <b> {{ text.h3 }}</b>
             </h1>
@@ -17,11 +18,13 @@
                 </p>
             </div>
 
-            <div v-if="text.isAd" class="m-t-40 m-b-20">
+            <div
+                v-if="text.isAd"
+                class="m-t-40 m-b-20"
+            >
                 <p class="coral-Body--XS">
                     Sponsored by
                 </p>
-                <NativeAd :adId="'iconbar-js-h3'" :key="$route.fullPath + 'ad'"/>
                 <NativeAd
                     :adPosition="'H3 Description Desktop'"
                     :adId="'iconbar-js-h3'"

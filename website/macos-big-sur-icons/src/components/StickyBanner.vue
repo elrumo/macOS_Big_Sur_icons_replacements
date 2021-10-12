@@ -77,17 +77,40 @@ export default {
       //   let parent = this
       //   parent.getAd()
       // })
-      // this.$router.onReady(function(){
-      //   console.log("ready");
-      //   let parent = this
-      //   parent.getAd()
-      // });
+      this.$router.onReady(function(){
+
+        function getAd(){
+          try {
+            if (typeof _bsa !== 'undefined') {
+            _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
+              {
+                target: '.card-ad2',
+                template: `
+                    <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link">
+                    <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
+                      <div class="bsa-icon" style="background-image: url(##logo##);"></div>
+                    </div>
+                    <div class="text-ad-wrapper">
+                      <img style="background: ##backgroundColor##" src="##image##">
+                      <div class="bsa-desc">##description##</div>
+                    </div>
+                    </a>
+                  `
+                }
+              )
+            }
+          } catch (error) {
+            console.log("error: ", error);
+          }
+        }
+        
+        getAd()
+      });
 
     },
 
     watch:{
       $route (to, from){
-
           this.$router.onReady(function(){
             let parent = this
 
@@ -125,25 +148,24 @@ export default {
               // }, 1500);
 
             }
-          getAd()
+            // getAd()
+            
+            let el = document.querySelector('.card-ad2').children
 
-
-            // if (el.length >= 1) {
-            //   console.log('exists: ', el);
-            //   getAd()
-            //   getAd()
-            //   getAd()
-            //   setTimeout(() => {
-            //     getAd()
-            //   }, 1000);
-            // } else{
-            //   console.log('Hiii');
-            //   getAd()
-            //   getAd()
+            // if (from.name != null) {
+              // try {
+              //   el[0].remove()
+              //   setTimeout(() => {
+              //     getAd()
+              //     getAd()
+              //   }, 1000);
+              // } catch (error) {
+              //   getAd()
+              //   getAd()
+              // }
             // }
             
           });
-          // this.getAd()
       }
     },
 

@@ -39,114 +39,121 @@
             </div>
             
             <!-- Mobile -->
-            <div class="desktop-hidden coral--large">
-                <div class="burger-btn" @click="toggleOverlay">
-                    <coral-icon class="m-auto" id="mobile-menu-icon" :icon="icons.burgerMenu" size="XL" alt="Larger" title="XL">
-                    </coral-icon>
-                </div>
-
-                <coral-overlay id="popover"
-                    class="mobile-nav-wrapper"
-                    target="#target_1"
-                    interaction="on"
+                <div
+                    class="desktop-hidden coral--large"
                 >
-                    <div 
-                        class="header-grid-btns mobile-nav-options"
-                    >
-                    
-                        <!-- Account Profile -->
-                        <div v-if="getUser.isAuth" class="profile-nav">
-                            <img 
-                                id="profilePicNav-mobile" 
-                                @click="showEl({
-                                    elId: 'profileNavPopover', 
-                                    targetId: 'profilePicNav-mobile'
-                                })"
-                                class="profile-pic-nav m-l-5" 
-                                :src="icons.profilePic" alt=""
-                            >
-                            <!-- <OptionsMenu :optionsList="optionsList"/> -->
-                        </div>
-
-                        <!-- Back to all icons -->
-                        <div @click="toggleOverlay" v-if="this.$route.name != 'Home'">
-                            <router-link to="/" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
-                                Back to all Icons
-                            </router-link>
-                        </div>
-
-                        <!-- Forum -->
-                        <div @click="toggleOverlay" >
-                            <a
-                                href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/discussions"
-                                rel="noopener" target="_blank"
-                                class="_coral-Button _coral-Button--primary _coral-Button--quiet"
-                            >
-                                <span style="position: relative; left: -1px">
-                                    Forum
-                                </span>
-                            </a>
-                        </div>
-                        
-                        <!-- blog -->
-                        <div @click="toggleOverlay" v-if="this.$route.name != 'BlogHome'">
-                            <router-link to="/blog" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
-                                <span>
-                                    Blog
-                                </span>
-                            </router-link>
-                        </div>
-                        
-                        <!-- Resources -->
-                        <div class="resourcesLink" @click="toggleOverlay">
-                            <coral-status variant="info" class="_coral-StatusLight--info _coral-StatusLight" color=""></coral-status>
-                            <router-link to="/resources" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
-                                <span>
-                                    Resources
-                                </span>
-                            </router-link>
-                        </div>
-                        
-                        <hr class="coral-Divider--S">
-                        
-                        <!-- Donate -->
-                        <div class="">
-                            <a
-                                rel="noopener"
-                                target="_blank"
-                                class="m-b-10"
-                                href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
-                                @click="logDonation('header')"
-                            >
-                                <button is="coral-button" variant="cta">
-                                    <span>Donate</span>
-                                </button>
-                            </a>
-                        </div>
-
-                            <!-- Submit icons -->
-                        <div v-if="getUser.isAuth" class="profile-nav m-b-20">
-                            <button is="coral-button" variant="quiet" @click="showEl('submissionDialog')">
-                                <span>Submit</span>
-                            </button>
-                        </div>
-                        
-                        <!-- Twitter -->
-                        <div class="header-icon-wrapper">
-                            <a href="https://twitter.com/elrumo" class="" target="_blank" rel="noopener">
-                                <img :src="icons.twitter" class="header-item header-icon" alt="Twitter logo">
-                            </a>
-                            <a href="https://discord.gg/f4mTRyyTkT" class="p-l-20" target="_blank" rel="noopener">
-                                <img :src="icons.discord" class="header-item header-icon" alt="Discord Logo">
-                            </a>
-                            <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" class="p-l-20" target="_blank" rel="noopener">
-                                <img :src="icons.github" class="header-item header-icon" alt="GitHub Logo">
-                            </a>
-                        </div>
-
+                    <div class="burger-btn" @click="toggleOverlay">
+                        <coral-icon class="m-auto" id="mobile-menu-icon" :icon="icons.burgerMenu" size="XL" alt="Larger" title="XL">
+                        </coral-icon>
                     </div>
-                </coral-overlay>
-            </div>
+
+                <transition name="overlay" mode="out-in">
+                    <coral-overlay
+                        v-if="isMobileMenu"
+                        id="popover"
+                        class="mobile-nav-wrapper"
+                        target="#target_1"
+                        interaction="on"
+                        open=""
+                    >
+                        <div 
+                            class="header-grid-btns mobile-nav-options"
+                        >
+                        
+                            <!-- Account Profile -->
+                            <div v-if="getUser.isAuth" class="profile-nav">
+                                <img 
+                                    id="profilePicNav-mobile" 
+                                    @click="showEl({
+                                        elId: 'profileNavPopover', 
+                                        targetId: 'profilePicNav-mobile'
+                                    })"
+                                    class="profile-pic-nav m-l-5" 
+                                    :src="icons.profilePic" alt=""
+                                >
+                                <!-- <OptionsMenu :optionsList="optionsList"/> -->
+                            </div>
+
+                            <!-- Back to all icons -->
+                            <div @click="toggleOverlay" v-if="this.$route.name != 'Home'">
+                                <router-link to="/" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
+                                    Back to all Icons
+                                </router-link>
+                            </div>
+
+                            <!-- Forum -->
+                            <div @click="toggleOverlay" >
+                                <a
+                                    href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements/discussions"
+                                    rel="noopener" target="_blank"
+                                    class="_coral-Button _coral-Button--primary _coral-Button--quiet"
+                                >
+                                    <span style="position: relative; left: -1px">
+                                        Forum
+                                    </span>
+                                </a>
+                            </div>
+                            
+                            <!-- blog -->
+                            <div @click="toggleOverlay" v-if="this.$route.name != 'BlogHome'">
+                                <router-link to="/blog" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
+                                    <span>
+                                        Blog
+                                    </span>
+                                </router-link>
+                            </div>
+                            
+                            <!-- Resources -->
+                            <div class="resourcesLink" @click="toggleOverlay">
+                                <coral-status variant="info" class="_coral-StatusLight--info _coral-StatusLight" color=""></coral-status>
+                                <router-link to="/resources" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
+                                    <span>
+                                        Resources
+                                    </span>
+                                </router-link>
+                            </div>
+                            
+                            <hr class="coral-Divider--S">
+                            
+                            <!-- Donate -->
+                            <div class="">
+                                <a
+                                    rel="noopener"
+                                    target="_blank"
+                                    class="m-b-10"
+                                    href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+                                    @click="logDonation('header')"
+                                >
+                                    <button is="coral-button" variant="cta">
+                                        <span>Donate</span>
+                                    </button>
+                                </a>
+                            </div>
+
+                                <!-- Submit icons -->
+                            <div v-if="getUser.isAuth" class="profile-nav m-b-20">
+                                <button is="coral-button" variant="quiet" @click="showEl('submissionDialog')">
+                                    <span>Submit</span>
+                                </button>
+                            </div>
+                            
+                            <!-- Twitter -->
+                            <div class="header-icon-wrapper">
+                                <a href="https://twitter.com/elrumo" class="" target="_blank" rel="noopener">
+                                    <img :src="icons.twitter" class="header-item header-icon" alt="Twitter logo">
+                                </a>
+                                <a href="https://discord.gg/f4mTRyyTkT" class="p-l-20" target="_blank" rel="noopener">
+                                    <img :src="icons.discord" class="header-item header-icon" alt="Discord Logo">
+                                </a>
+                                <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" class="p-l-20" target="_blank" rel="noopener">
+                                    <img :src="icons.github" class="header-item header-icon" alt="GitHub Logo">
+                                </a>
+                            </div>
+
+                        </div>
+                    </coral-overlay>
+                    </transition>
+                </div>
             
             <!-- Desktop -->
             <div class="mobile-hidden">
@@ -295,6 +302,9 @@ export default {
     data(){
         return{
             darkMode: false,
+            
+            isMobileMenu: false,
+            
             icons:{
                 twitter: require("../assets/icons/twitter.svg"),
                 discord: require("../assets/icons/Discord.svg"),
@@ -304,7 +314,6 @@ export default {
 
                 profilePic: require("../assets/Resources/accounts/profilePic.png"),
             },
-            isMenu: false,
             scrolled: false,
             
             currentUser: Parse.User.current(),
@@ -348,16 +357,10 @@ export default {
         toggleOverlay(){
             let parent = this
             let popover = document.getElementById("popover")
+            parent.isMobileMenu
             
-            console.log(parent.isMenu);
-
-            if (parent.isMenu) {
-                popover.hide()
-            } else{
-                popover.show()
-            }
-
-            parent.isMenu = !parent.isMenu
+            console.log(parent.isMobileMenu);
+            parent.isMobileMenu = !parent.isMobileMenu
         },
 
         logDonation(location){
