@@ -71,8 +71,85 @@ export default {
         }
     },
     
+<<<<<<< Updated upstream
     mounted: function(){
       let parent = this
+=======
+    mounted(){
+      
+      // this.$nextTick(function () {
+      //   let parent = this
+      //   parent.getAd()
+      // })
+      // this.$router.onReady(function(){
+      //   console.log("ready");
+      //   let parent = this
+      //   parent.getAd()
+      // });
+
+    },
+
+    watch:{
+      $route (to, from){
+
+          this.$router.onReady(function(){
+            let parent = this
+
+            function getAd(){
+              try {
+                if (typeof _bsa !== 'undefined') {
+                _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
+                  {
+                    target: '.card-ad2',
+                    template: `
+                        <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link">
+                        <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
+                          <div class="bsa-icon" style="background-image: url(##logo##);"></div>
+                        </div>
+                        <div class="text-ad-wrapper">
+                          <img style="background: ##backgroundColor##" src="##image##">
+                          <div class="bsa-desc">##description##</div>
+                        </div>
+                        </a>
+                      `
+                    }
+                  )
+                }
+              } catch (error) {
+                console.log("error: ", error);
+              }
+
+              // setTimeout(() => {
+              //   let ad = document.querySelector('.bsa-link')
+              //   if (ad == null) {
+              //     console.log('no ad');
+              //     getAd()
+              //     console.log('no ad');
+              //   }
+              // }, 1500);
+
+            }
+            getAd()
+
+
+            // if (el.length >= 1) {
+            //   console.log('exists: ', el);
+            //   getAd()
+            //   getAd()
+            //   getAd()
+            //   setTimeout(() => {
+            //     getAd()
+            //   }, 1000);
+            // } else{
+            //   console.log('Hiii');
+            //   getAd()
+            //   getAd()
+            // }
+            
+          });
+          // this.getAd()
+      }
+>>>>>>> Stashed changes
     },
 
     methods:{

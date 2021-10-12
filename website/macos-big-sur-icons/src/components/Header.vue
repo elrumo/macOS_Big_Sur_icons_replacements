@@ -198,6 +198,21 @@
                             </button>
                         </router-link>
                     </div>
+<<<<<<< Updated upstream
+=======
+
+                    <!-- Learning -->
+                    <div class="resourcesLink">
+                        <coral-status variant="info"></coral-status>
+                        <router-link to="/learning">
+                            <button is="coral-button" variant="quiet">
+                                <span>
+                                    Learning
+                                </span>
+                            </button>
+                        </router-link>
+                    </div>
+>>>>>>> Stashed changes
                     
                     <!-- Buy me a coffee -->
                     <div class="hide-on-shrink">

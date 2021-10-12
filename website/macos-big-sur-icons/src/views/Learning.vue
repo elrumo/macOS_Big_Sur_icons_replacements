@@ -2,24 +2,29 @@
   <div>
     <main class="content-wrapper-compact">
 
-      <H3-Description :text="introText" class="m-b-40"/>
+      <H3-Description
+        :text="introText"
+        class="m-b-50 p-b-10 p-t-50"
+      />
 
       <div class="resources-grid card-grid" id="how-to-install">
-        
-        <ResourcesCard
-          :step='instructions'
-          :link="instructions.link"
-        />
 
         <ResourcesCard
           v-for="resource in resourcesData"
           :key="resource.name"
-          :link="'/resources/'+resource.slug"
+          :link="'/leartning/'+resource.slug"
           :step='resource'
         />
 
-        <div class="card-hover relative coral-card resources-card-ad">            
-            <script @click="adClick" async="async" type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom" id="_carbonads_js"></script>
+        <!-- <div
+          class="card-hover relative coral-card resources-card-ad"
+          @click="adClick({position: 'Icon Grid Bottom', type: 'Carbon'})"
+        >
+            <script
+              async="async"
+              type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom"
+              id="_carbonads_js">
+            </script>
           <a
               class="card-no-ad relative"
               href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
@@ -46,7 +51,7 @@
                 </p>
               </div>
             </a>
-        </div>
+        </div> -->
 
       </div>
 
@@ -66,7 +71,7 @@ import pages from '@/api/pages.json';
 
 
 export default {
-  name: 'Resources',
+  name: 'Learning',
   
   components: {
     Header,
@@ -124,26 +129,34 @@ export default {
     return {
       isMobile: this.$isMobile(),
       introText:{
-        h3: "Resources",
-        description: "Here you'll find guides, resources and templates to help you design and showcase icons for macOS.",
-        isAd: true
+        h3: "Tutorials",
+        description: "More tutorials on everything macOS icons coming soon. If you’d like to contribute or make suggestions, let us know on our [Discord](https://discord.gg/f4mTRyyTkT) channel or [Twitter](https://twitter.com/elrumo).",
+        isAd: false,
+        isCenter: true,
       },
-      instructions:{
-        title: "How to change app icons",
-        feature_image: require("../assets/Instructions/intro-instructions.jpg"),
-        link: "/how-to",
-        slug: "/how-to"
-      },
-      resourcesData: pages
+
+      resourcesData: [
+        {
+          feature_image: "https://i.imgur.com/gKriWTY.jpg",
+          title: "Introduction to macOS icon design",
+          description: "Learn how to designicons for macOS in Photoshop",
+        },
+        {
+          feature_image: "https://i.imgur.com/ScAgHYI.jpg",
+          title: "More coming soon",
+          description: "If you’d like to contribute or make suggestions, let us know on our Discord channel or Twitter.",
+        }
+      ]
+      // resourcesData: pages
     }
   },
   
   mounted: async function(){
     const parent = this;
-    let storeResourcesData = parent.$store.state.resourcesData
-    parent.getPageData
+    // let storeResourcesData = parent.$store.state.resourcesData
     // parent.getPages()
-    parent.resourcesData = await storeResourcesData;
+    // parent.getPageData
+    // parent.resourcesData = await storeResourcesData;
   },
 
   methods: {
