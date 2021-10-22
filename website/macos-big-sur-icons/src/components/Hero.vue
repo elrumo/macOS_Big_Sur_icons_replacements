@@ -72,7 +72,6 @@
               class="p-l-20"
               target="_blank"
               href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
-              @click="logDonation('hero')"
             >
               <button
                 is="coral-button"

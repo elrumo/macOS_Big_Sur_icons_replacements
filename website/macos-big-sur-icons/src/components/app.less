@@ -1009,7 +1009,38 @@ coral-buttongroup button{
     border-color: rgb(225, 225, 225);
     border-radius: var(--main-border-radius);
     margin: auto;
-    // max-height: 240px;
+
+    &:hover .save-icon{
+        opacity: 1;
+    }
+}
+
+.icon-heart{
+    background-image: url('~@/assets/icons/Category_Icons/Heart.svg');
+    background-position: 8px 8px;
+    background-repeat: no-repeat;
+
+    &:hover{
+        background-image: url('~@/assets/icons/Category_Icons/Heart_Thick.svg');
+    }
+}
+
+.icon-heart-filled{
+    background-image: url('~@/assets/icons/Category_Icons/Heart_Filled.svg');
+    background-position: 8px 8px;
+    background-repeat: no-repeat;
+}
+
+.save-icon{
+    position: absolute;
+    padding: 8px;
+    top: 0px;
+    left: 0px;
+    height: 16px;
+    width: 16px;
+    z-index: 1;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
 .card-text-wrapper{

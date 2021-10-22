@@ -41,6 +41,8 @@ export default new Vuex.Store({
       twitterHandle: "",
       username: ""
     },
+    savedIcons: [],
+    
     userData: Parse.User.current(),
 
     loading: true,
@@ -239,6 +241,10 @@ export default new Vuex.Store({
       if (search.length > 0) {
         store.dispatch('algoliaSearch')
       }
+
+      // if(category.id == 'downloads'){
+
+      // }
 
       if (category.id != "All" && !sameCategory) {
         store.commit('setDataToArr', {arr: 'dataToShow', data: [], concatArray: false})
@@ -724,7 +730,13 @@ export default new Vuex.Store({
 
     isLoading(store){
       return store.loading
+    },
+
+    getSavedIcons(store){
+      return store.savedIcons
     }
+
+
   }
 
 })
