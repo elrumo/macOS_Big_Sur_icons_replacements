@@ -20,4 +20,4 @@ Here's what you need to know know:
 
 Credits can be seen in the website
 
-[GitHub](https://github.com/elrumo/macOS_Big_Sur_icons_replacements) | [Twitter](https://twitter.com/macOS_icons) | [Discord](https://discord.gg/f4mTRyyTkT) | [Forum](/elrumo/macOS_Big_Sur_icons_replacements/discussions)
+[GitHub](https://github.com/elrumo/macOS_Big_Sur_icons_replacements) | [Twitter](https://twitter.com/macOS_icons) | [Discord](https://discord.gg/f4mTRyyTkT) | [Forum](/elrumo/macOS_Big_Sur_icons_replacements/discussions) | [Instagram](url) | [Facebook](url) | [LinkedIn](url)
