@@ -122,7 +122,6 @@
                                     target="_blank"
                                     class="m-b-10"
                                     href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
-                                    @click="logDonation('header')"
                                 >
                                     <button is="coral-button" variant="cta">
                                         <span>Donate</span>
@@ -352,7 +351,7 @@ export default {
     },
 
     methods:{
-        ...mapActions(['showEl', "logOut", "changePath"]),
+        ...mapActions(['showEl', "logOut", "changePath", "pushDataToArr"]),
 
         toggleOverlay(){
             let parent = this
@@ -418,7 +417,7 @@ export default {
 
     },
 
-    mounted: function(){
+    mounted: async function(){
         let parent = this
 
         // Scroll listener to add/remove nav meny shadow

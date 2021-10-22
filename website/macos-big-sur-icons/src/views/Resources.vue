@@ -33,7 +33,6 @@
               rel="noopener"
               target="_blank"
               style="width: 100%; left: 0;"
-              @click="logDonation('support-message')"
             >
               <div class="support-page">
                 <h3 class="coral-Heading--S m-0">

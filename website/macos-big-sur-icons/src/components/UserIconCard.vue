@@ -1,6 +1,18 @@
 <template>
     <div :label="icon.appName.replaceAll('_', ' ') + 'Icon'" class="card-wrapper card-hover coral-card m-0">
         <div class="m-auto">
+            
+            <!-- <div
+                v-if="!icon.isSaved"
+                @click="saveIcon()"
+                class="opacity-0 save-icon icon-heart"
+            />
+
+            <div
+                v-else
+                @click="saveIcon()"
+                class="save-icon icon-heart-filled"
+            /> -->
 
             <!-- Icon image -->
             <div class="card-img-wrapper" style="max-width: 120px;">
@@ -100,10 +112,14 @@ export default {
                 download: require("../assets/icons/Download.svg"),
                 placeholderIcon: require("../assets/placeholder-icon.png"),
             },
+            icons:{
+                Heart: require("../assets/icons/Category_Icons/Heart.svg"),
+            },
             dialog:{
                 editIcon: false,
                 deleteIcon: false
-            }
+            },
+            isSaved: false
         }
     },
     
@@ -169,6 +185,29 @@ export default {
                 console.log(field, "updated.");
             }).catch((e) =>{
                 document.getElementById("error").show()
+            })
+        },
+
+        async saveIcon(){
+            let parent = this
+            let icon = parent.icon
+            var Icons = Parse.Object.extend("Icons2");
+            var User = Parse.Object.extend("User");
+            let iconQuery = new Parse.Query(Icons);
+
+
+            icon = await iconQuery.get(icon.id)
+            let userRelation = Parse.User.current().relation("favIcons")
+            userRelation.add(icon)
+            
+            // console.log("icon: ", Parse.User.current().get("favIcons"));
+
+            Parse.User.current().save().then((data) =>{
+                // console.log("icon: ", data);
+                parent.isSaved = true
+                console.log("SAVED!!!");
+            }).catch((e) =>{
+                console.log("ERROR: ", e);
             })
         },
 

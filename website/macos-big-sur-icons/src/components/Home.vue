@@ -294,7 +294,6 @@
               rel="noopener"
               target="_blank"
               style="width: 100%; left: 0;"
-              @click="logDonation('support-message')"
             >
               <div class="support-page">
                 <h3 class="coral-Heading--S m-0">
@@ -524,12 +523,11 @@ export default {
     }
   },
 
-  mounted: function(){
+  mounted: async function(){
     let parent = this;
     parent.getAd()
-    const { getters } = parent.$store;
+
     let fullPath = parent.$route.fullPath
-    
     let currentUser = Parse.User.current()
 
     if (fullPath.includes("/?username=") && !currentUser) {
@@ -572,7 +570,16 @@ export default {
       }
     }
 
-    parent.getIconsArray();
+    // If user is logged in, get the user's favorites icons
+    if(currentUser){
+      currentUser.relation("favIcons").query().find().then((data) =>{
+          let savedIcons = data.map(({ id }) => id);
+        parent.pushDataToArr({ data: savedIcons, arr: "savedIcons" })
+        parent.getIconsArray();
+      })
+    } else{
+      parent.getIconsArray();
+    }
 
   },
 
@@ -586,7 +593,8 @@ export default {
         'setData',
         'loadMoreIcons',
         'algoliaSearch',
-        'scrollTo'
+        'scrollTo',
+        'pushDataToArr'
       ]),
 
     scrollEl(id, top, left){
@@ -840,12 +848,9 @@ export default {
           parent.iconListLen = count
         })
         
-        // console.log("2");
         parent.setData({state: 'list', data: []})
-        
-        var userInfo = {}
-        
         var allIcons = []
+
         for(let result in results){
 
           let iconItem = results[result]
@@ -857,7 +862,12 @@ export default {
             iconData[data] = objData[data]
           }
           iconData.id = results[result].id
-          
+
+          console.log(iconData.id, ": ", parent.getSavedIcons.includes(iconData.id));
+
+          // Check if icon has been saved by the user
+          iconData.isSaved = parent.getSavedIcons.includes(iconData.id)
+
           allIcons.push(iconData)
         }
         parent.$store.dispatch("pushDataToArr", {data:  allIcons, arr: "list", concatArray: true});
@@ -982,7 +992,7 @@ export default {
   },
 
   computed:{
-    ...mapGetters(['getUser', 'getAppCategories', 'getIconType', 'selectedIcons', 'getSelectedCategory']),
+    ...mapGetters(['getUser', 'getAppCategories', 'getIconType', 'selectedIcons', 'getSelectedCategory', 'getSavedIcons']),
 
     isMobile(){
       let parent = this;
