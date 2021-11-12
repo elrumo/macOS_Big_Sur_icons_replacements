@@ -122,6 +122,7 @@
                                     target="_blank"
                                     class="m-b-10"
                                     href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
+                                    @click="logDonation('header')"
                                 >
                                     <button is="coral-button" variant="cta">
                                         <span>Donate</span>
@@ -212,7 +213,7 @@
                     </div>
 
                     <!-- Learning -->
-                    <!-- <div class="resourcesLink">
+                    <div class="resourcesLink">
                         <coral-status variant="info"></coral-status>
                         <router-link to="/learning">
                             <button is="coral-button" variant="quiet">
@@ -221,7 +222,7 @@
                                 </span>
                             </button>
                         </router-link>
-                    </div> -->
+                    </div>
                     
                     <!-- Buy me a coffee -->
                     <div class="hide-on-shrink">
@@ -351,7 +352,7 @@ export default {
     },
 
     methods:{
-        ...mapActions(['showEl', "logOut", "changePath", "pushDataToArr"]),
+        ...mapActions(['showEl', "logOut", "changePath"]),
 
         toggleOverlay(){
             let parent = this
@@ -417,7 +418,7 @@ export default {
 
     },
 
-    mounted: async function(){
+    mounted: function(){
         let parent = this
 
         // Scroll listener to add/remove nav meny shadow
