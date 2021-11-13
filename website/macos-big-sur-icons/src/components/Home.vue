@@ -346,20 +346,19 @@
 import { mapActions, mapGetters } from 'vuex';
 import Header from './Header.vue';
 import Hero from './Hero.vue';
-// import IconCard from './IconCard.vue';
 import UserIconCard from './UserIconCard.vue';
 import Dialog from './Dialog.vue';
 import deleteDialog from './deleteDialog.vue';
 import NativeAd from './NativeAd.vue';
 import StickyBanner from './StickyBanner.vue';
 
-// import algoliasearch from 'algoliasearch'
 import Parse from 'parse'
+import axios from 'axios';
 
 import VueLoadImage from 'vue-load-image'
 
 import dotenv from 'dotenv'; // Used to access env varaibles
-dotenv.config()
+dotenv.config();
 
 // TODO: remove credentials
 const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
@@ -526,6 +525,9 @@ export default {
   mounted: async function(){
     let parent = this;
     parent.getAd()
+
+    axios.get('https://api.coindesk.com/v1/bpi/currentprice.json')
+      .then(response => ("response: ", response))
 
     let fullPath = parent.$route.fullPath
     let currentUser = Parse.User.current()

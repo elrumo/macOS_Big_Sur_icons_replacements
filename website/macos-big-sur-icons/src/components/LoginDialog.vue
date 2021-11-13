@@ -663,22 +663,16 @@ export default {
         parent.setUserFunc(user)
       }).catch((error) => {
         console.log("Cached user: ", error);
-        parent.setUserFunc(curerntUser)
+        
+        Parse.User.logout().then((data) => {
+          console.log("Logged out: ", data);
+        }).catch(err => { 
+          console.log("Error logging out after invalid user session: ", err)
+        })
       })
+
     }
-
-    // TODO: Remove Key
-    
-    // AppleID.auth.init({
-    //   clientId : process.env.VUE_APP_APPLE_CLIENTID,
-    //   scope : 'email',
-    //   redirectURI : process.env.VUE_APP_APPLE_REDIRECT,
-    //   state : process.env.VUE_APP_APPLE_STATE,
-    //   usePopup : true //or false defaults to false
-    // });
-
   }
-
 
 }
 </script>
