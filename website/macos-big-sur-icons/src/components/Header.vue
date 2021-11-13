@@ -4,9 +4,6 @@
         :class="{'scrolled-shadow': distanceFromTop & scrolled, 'scrolled-header': scrolled, header: true, 'coral-bg':true}"
     >
         
-        <!-- <div v-if="true">
-            {{ toggleOverflow() }}
-        </div> -->
         <OptionsMenu :optionsList="optionsList"/>
         <Dialog/>
         <SubmissionDialog/>
@@ -24,7 +21,6 @@
 
                 <p class="header-item coral-Body--S">
                     By
-                    <!-- <a href="https://webbites.io/" -->
                     <a href="https://eliasruiz.com/"
                         rel="noopener"
                         target="_blank"
@@ -71,7 +67,6 @@
                                     class="profile-pic-nav m-l-5" 
                                     :src="icons.profilePic" alt=""
                                 >
-                                <!-- <OptionsMenu :optionsList="optionsList"/> -->
                             </div>
 
                             <!-- Back to all icons -->
