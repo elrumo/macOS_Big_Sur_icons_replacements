@@ -3,7 +3,7 @@
     <main class="content-wrapper-compact">
       
       <router-link to="/resources">
-        <p class="coral-Detail read-more read-more-left coral-Detail--XL m-t-30 coral-Link">
+        <p class="coral-Detail read-more read-more-left coral-Detail--XL m-t-32 coral-Link">
           All Resources
         </p>
       </router-link>

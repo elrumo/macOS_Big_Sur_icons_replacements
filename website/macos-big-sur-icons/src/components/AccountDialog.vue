@@ -29,7 +29,7 @@
         </div>
       </div>
       
-      <form class="coral-FormGroup account-dialog-form m-0 p-l-5">
+      <form class="coral-FormGroup account-dialog-form m-0 p-l-4">
         
         <div>
           <h3 class="coral-Heading--S coral-Heading--light">Your Profile</h3>
@@ -130,7 +130,7 @@
               value="*******"
               readonly
             >
-            <p class="coral-Body--XS opacity-60 f-w-400 p-t-10">
+            <p class="coral-Body--XS opacity-60 f-w-400 p-t-8">
               Problems signing in? <a @click="resetPassword" class="coral-link pointer">Reset password</a> 
             </p>
           </div>
@@ -150,7 +150,7 @@
             >
           </div>
 
-          <span class="p-t-10"></span>
+          <span class="p-t-8"></span>
 
           <div class="coral-FormGroup-item">
             <coral-switch
@@ -161,7 +161,7 @@
             </coral-switch>
           </div>
 
-          <p class="coral-Body--XS p-t-10 p-r-5 m-0 opacity-60">
+          <p class="coral-Body--XS p-t-8 p-r-4 m-0 opacity-60">
             <a
               @click="requestUserData"
               rel="noopener"
@@ -171,7 +171,7 @@
               all the data macOSicons has about me.
           </p>
 
-          <p class="coral-Body--XS p-r-5 m-0 opacity-60">
+          <p class="coral-Body--XS p-r-4 m-0 opacity-60">
             <a
               rel="noopener"
               :href="'mailto:elias.ruiz.monserrat@gmail.com?subject=Right to be forgotten: '+getUserData('objectId')"

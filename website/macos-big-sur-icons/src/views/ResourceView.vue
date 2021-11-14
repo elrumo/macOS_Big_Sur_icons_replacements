@@ -4,7 +4,7 @@
       
       <!-- Back to all resources -->
       <router-link to="/resources">
-        <p class="coral-Detail read-more read-more-left coral-Detail--XL m-t-30 coral-Link">
+        <p class="coral-Detail read-more read-more-left coral-Detail--XL m-t-32 coral-Link">
           All Resources
         </p>
       </router-link>
@@ -27,7 +27,7 @@
           <NativeAd
             :adPosition="'Under image Desktop'"
             :adId="'iconbar-js-resourceItem'"
-            class="m-t-20"
+            class="m-t-24"
             sponsored="true"
             :key="$route.fullPath + 'ad'"
           />
@@ -40,13 +40,7 @@
               {{ resourceItem.title }}
             </h3>        
 
-            <!-- <p class="coral-Detail coral-Detail--L opacity-80 ">
-              <span class="coral-Detail--light">
-                {{ getDate(resourceItem.author) }}
-              </span>
-            </p> -->
-
-            <hr class="coral-Divider--S m-t-15 m-b-15">
+            <hr class="coral-Divider--S m-t-16 m-b-16">
           </div>
 
           <!-- Resource Content -->

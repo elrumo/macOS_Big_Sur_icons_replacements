@@ -58,7 +58,7 @@
             </a>
             
             <a
-              class="btn m-t-15 p-r-20"
+              class="btn m-t-16 p-r-24"
               aria-label="Donate to using PayPal"
               target="_blank"
               href="https://www.paypal.com/donate?hosted_button_id=5PMNX4DPW83KN"
@@ -81,7 +81,7 @@
             </a>
             
             <a
-              class="btn m-t-15 p-r-20"
+              class="btn m-t-16 p-r-24"
               aria-label="Donate using KoFi"
               target="_blank"
               href="https://ko-fi.com/elrumo"
@@ -105,7 +105,7 @@
             </a>
 
             <!-- <a
-              class="btn m-t-15 p-r-20"
+              class="btn m-t-16 p-r-24"
               aria-label="Donate to using PayPal"
               target="_blank"
               @click="showDialog('bitcoin')"

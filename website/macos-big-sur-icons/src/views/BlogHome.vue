@@ -4,7 +4,7 @@
         
         <!-- <iframe class="subscribe-blog-wrapper" src="https://blog.macosicons.com/blog/#subscribe" frameborder="0"></iframe> -->
 
-        <section class="p-t-30 p-b-10">
+        <section class="p-t-32 p-b-8">
 
           <NativeAd
             :adPosition="'Hero Top'"
@@ -16,11 +16,11 @@
 
           <H3-Description :text="subscribe"/>
           
-          <hr class="coral-Divider--S m-t-50">
+          <hr class="coral-Divider--S m-t-48">
 
         </section>
 
-        <div class="m-t-50 post-wrapper" v-for="post in posts" :key="post.title">
+        <div class="m-t-48 post-wrapper" v-for="post in posts" :key="post.title">
           <router-link :to="'/blog/'+post.slug">
             <p class="coral-Detail coral-Detail--L opacity-80">
               {{ getDate(post.published_at) }}
@@ -30,21 +30,21 @@
                 {{ post.title }}
             </h3>
 
-            <h3 class=" coral-Heading--S coral-Heading--light m-t-20">
+            <h3 class=" coral-Heading--S coral-Heading--light m-t-24">
               {{ post.excerpt }}
             </h3>
 
-              <p class="coral-Detail read-more read-more-right coral-Detail--XL m-t-30 coral-Link">
+              <p class="coral-Detail read-more read-more-right coral-Detail--XL m-t-32 coral-Link">
                 Read more
               </p>
 
-            <hr class="coral-Divider--S m-t-50">
+            <hr class="coral-Divider--S m-t-48">
           </router-link>
         </div>
 
         <div
           @click="adClick({position: 'Bottom Page', type: 'Carbon'})"
-          class="single-ad m-b-20 p-b-50 p-t-30"
+          class="single-ad m-b-24 p-b-40 p-t-32"
         >
           <script
             async="async"
@@ -56,7 +56,7 @@
       </div>
 
   </div>
-  <!-- <div class="m-t-50" v-html="post.html"></div> -->
+  <!-- <div class="m-t-48" v-html="post.html"></div> -->
 </template>
 
 <script>

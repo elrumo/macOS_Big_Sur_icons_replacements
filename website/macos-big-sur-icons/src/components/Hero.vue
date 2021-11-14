@@ -18,9 +18,9 @@
           />
         </div>
 
-        <div class="desktop-hidden m-t-20"></div>
+        <div class="desktop-hidden m-t-24"></div>
 
-        <p class="coral-Body--S m-b-0 p-b-10">
+        <p class="coral-Body--S m-b-0 p-b-8">
           Hosting by
           <a href="https://fosshost.org/" rel="noopener" target="_blank" class="coral-Link">
               FossHost
@@ -69,7 +69,7 @@
 
             <a
               rel="noopener"
-              class="p-l-20"
+              class="p-l-24"
               target="_blank"
               href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
             >
@@ -105,7 +105,7 @@
 
             <a
               rel="noopener"
-              class="m-l-20"
+              class="m-l-24"
               target="_blank"
               href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
               @click="logDonation('header')"

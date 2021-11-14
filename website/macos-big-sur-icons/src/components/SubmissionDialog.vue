@@ -4,11 +4,11 @@
     <coral-dialog-header>
       Submit an icon
       
-      <p class="coral-Body--M p-t-10 m-b-5">
+      <p class="coral-Body--M p-t-8 m-b-4">
         Visit the <router-link coral-close="" to="/resources" class="coral-Link">resources page </router-link> for icon templates.
       </p>
 
-      <p class="coral-Body--M p-t-5 p-b-5 m-b-0">
+      <p class="coral-Body--M p-t-4 p-b-4 m-b-0">
           All icons must be .png images and have a resolution of 1024px x 1024px.
         <br>
         <span class="coral-Body--S m-b-0 p-t-0 opacity-50">
@@ -85,7 +85,7 @@
                       </coral-quickactions>
                     </div>
 
-                    <form class="coral-FormGroup m-0 p-l-5" style="width: calc(100% - 5px)">
+                    <form class="coral-FormGroup m-0 p-l-4" style="width: calc(100% - 5px)">
                       
                       <!-- AppName -->
                       <div class="coral-FormGroup-item">

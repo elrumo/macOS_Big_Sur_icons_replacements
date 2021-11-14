@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <section class="icon-list-area p-t-40 p-b-50">
+    <section class="icon-list-area p-t-48 p-b-40">
 
       <div class="card-wrapper card-hover coral-card">
         

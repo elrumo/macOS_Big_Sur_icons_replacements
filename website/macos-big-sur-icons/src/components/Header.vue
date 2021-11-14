@@ -64,7 +64,7 @@
                                         elId: 'profileNavPopover', 
                                         targetId: 'profilePicNav-mobile'
                                     })"
-                                    class="profile-pic-nav m-l-5" 
+                                    class="profile-pic-nav m-l-4" 
                                     :src="icons.profilePic" alt=""
                                 >
                             </div>
@@ -115,7 +115,7 @@
                                 <a
                                     rel="noopener"
                                     target="_blank"
-                                    class="m-b-10"
+                                    class="m-b-8"
                                     href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
                                     @click="logDonation('header')"
                                 >
@@ -126,7 +126,7 @@
                             </div>
 
                                 <!-- Submit icons -->
-                            <div v-if="getUser.isAuth" class="profile-nav m-b-20">
+                            <div v-if="getUser.isAuth" class="profile-nav m-b-24">
                                 <button is="coral-button" variant="quiet" @click="showEl('submissionDialog')">
                                     <span>Submit</span>
                                 </button>
@@ -137,10 +137,10 @@
                                 <a href="https://twitter.com/elrumo" class="" target="_blank" rel="noopener">
                                     <img :src="icons.twitter" class="header-item header-icon" alt="Twitter logo">
                                 </a>
-                                <a href="https://discord.gg/f4mTRyyTkT" class="p-l-20" target="_blank" rel="noopener">
+                                <a href="https://discord.gg/f4mTRyyTkT" class="p-l-24" target="_blank" rel="noopener">
                                     <img :src="icons.discord" class="header-item header-icon" alt="Discord Logo">
                                 </a>
-                                <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" class="p-l-20" target="_blank" rel="noopener">
+                                <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" class="p-l-24" target="_blank" rel="noopener">
                                     <img :src="icons.github" class="header-item header-icon" alt="GitHub Logo">
                                 </a>
                             </div>
@@ -159,10 +159,10 @@
                         <a href="https://twitter.com/elrumo" class="" target="_blank" rel="noopener">
                             <img style="height: 17px;" :src="icons.twitter" class="header-item header-icon" alt="Twitter logo">
                         </a>
-                        <a href="https://discord.gg/f4mTRyyTkT" class="p-l-20" target="_blank" rel="noopener">
+                        <a href="https://discord.gg/f4mTRyyTkT" class="p-l-24" target="_blank" rel="noopener">
                             <img style="height: 17px;" :src="icons.discord" class="header-item header-icon" alt="Discord Logo">
                         </a>
-                        <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" class="p-l-20" target="_blank" rel="noopener">
+                        <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" class="p-l-24" target="_blank" rel="noopener">
                             <img :src="icons.github" class="header-item header-icon" alt="GitHub Logo">
                         </a>
                     </div>
@@ -207,13 +207,13 @@
                         </router-link>
                     </div>
 
-                    <!-- Learning -->
+                    <!-- Learn -->
                     <div class="resourcesLink">
                         <coral-status variant="info"></coral-status>
-                        <router-link to="/learning">
+                        <router-link to="/learn">
                             <button is="coral-button" variant="quiet">
                                 <span>
-                                    Learning
+                                    Learn
                                 </span>
                             </button>
                         </router-link>
@@ -249,13 +249,13 @@
                                 elId: 'profileNavPopover',
                                 targetId: 'profilePicNav-desktop'
                                 })" 
-                            class="profile-pic-nav m-l-5" 
+                            class="profile-pic-nav m-l-4" 
                             :src="icons.profilePic" alt=""
                         >
                     </div>
 
                     <!-- Submit icons -->
-                    <div v-if="!getUser.isAuth" class="p-l-10">
+                    <div v-if="!getUser.isAuth" class="p-l-8">
                         <button is="coral-button" variant="cta" @click="showEl('loginDialog')">
                             <span>Submit icons</span>
                         </button>

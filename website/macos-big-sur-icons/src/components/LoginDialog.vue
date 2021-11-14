@@ -28,7 +28,7 @@
             <img style="width: 48px" :src="imgs.macOSiconsLogo" alt="">
 
             <div v-if="userInfo.step != 3">
-              <h3 class="coral-Heading--M m-t-10">
+              <h3 class="coral-Heading--M m-t-8">
                 Sign up or sign in
               </h3>
               <p class="coral-Body--M" style="font-weight: lighter">
@@ -37,10 +37,10 @@
             </div>
 
             <div v-if="userInfo.step == 3">
-              <h3 class="coral-Heading--M m-t-10">
+              <h3 class="coral-Heading--M m-t-8">
                 Almost there!
               </h3>
-              <p class="coral-Body--M p-t-20" style="font-weight: lighter">
+              <p class="coral-Body--M p-t-24" style="font-weight: lighter">
                 Please click on the link we've sent to your email to verify your account and then refresh this page.
               </p>
             </div>
@@ -53,7 +53,7 @@
             </div>
           </div>
 
-          <form v-if="userInfo.step != 3" class="coral-FormGroup m-0 p-l-5 text-left" style="width: calc(100% - 5px)">
+          <form v-if="userInfo.step != 3" class="coral-FormGroup m-0 p-l-4 text-left" style="width: calc(100% - 5px)">
             <coral-alert
               style="padding: 10px; margin-top: 15px"
               v-if="userInfo.step == 1"
@@ -145,10 +145,10 @@
                 v-on:keyup="getTextFieldValue($event, 'password', false)"
               >
               <div v-if="!userInfo.problems.passNotSecure">
-                <p class="coral-Body--XS opacity-60 f-w-400 p-t-10">
+                <p class="coral-Body--XS opacity-60 f-w-400 p-t-8">
                   Password must contain a number, a capital letter and be more than 6 characters long.
                 </p>
-                <p v-if="userInfo.step == 2 && userInfo.hasLoggedIn" class="coral-Body--XS opacity-60 f-w-400 p-t-10">
+                <p v-if="userInfo.step == 2 && userInfo.hasLoggedIn" class="coral-Body--XS opacity-60 f-w-400 p-t-8">
                   Problems signing in? <a @click="resetPassword" class="coral-link pointer">Reset password</a> 
                 </p>
               </div>   
@@ -178,9 +178,9 @@
                 gap: 10px;
               "
             >
-              <hr class="coral-Divider--S m-t-15 m-b-15">
+              <hr class="coral-Divider--S m-t-16 m-b-16">
               <span style="margin: auto"> or </span>
-              <hr class="coral-Divider--S m-t-15 m-b-15">
+              <hr class="coral-Divider--S m-t-16 m-b-16">
             </div> -->
             
             <!-- <div @click="appleLogin" class="apple-signin-banner">
@@ -189,7 +189,7 @@
             </div> -->
 
             <!-- Terms & Conditions -->
-            <p class="coral-Body--XS p-l-5 p-t-5 p-r-5 m-0 opacity-60">
+            <p class="coral-Body--XS p-l-4 p-t-4 p-r-4 m-0 opacity-60">
               By continuing, you agree with macOSicons's
               <!-- <a
                 rel="noopener"

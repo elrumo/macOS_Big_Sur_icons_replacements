@@ -3,7 +3,7 @@
     <div class="blog-list-wrapper">
       <div class="blog-intro-wrapper">
         <router-link to="/blog">
-          <p class="coral-Detail read-more read-more-left coral-Detail--XL m-t-30 coral-Link">
+          <p class="coral-Detail read-more read-more-left coral-Detail--XL m-t-32 coral-Link">
             All Posts
           </p>
         </router-link>
@@ -12,19 +12,19 @@
 
         <p class="coral-Body--XL">{{ blogPost.excerpt }}</p>
         
-        <hr class="coral-Divider--S m-t-20 m-b-10">
+        <hr class="coral-Divider--S m-t-24 m-b-8">
 
-        <p class="coral-Detail coral-Detail--L opacity-80 m-b-30 m-l-10">
+        <p class="coral-Detail coral-Detail--L opacity-80 m-b-32 m-l-8">
           <span class="coral-Detail--light">
             {{ getDate(blogPost.published_at) }}
           </span>
-          <span class="m-l-5 m-r-5">•</span>
+          <span class="m-l-4 m-r-4">•</span>
           <span class="coral-Detail--light">
             {{ blogPost.reading_time }} Min Read
           </span>
         </p>
         
-        <div class="single-ad mobile-ad p-b-10">
+        <div class="single-ad mobile-ad p-b-8">
           <NativeAd
             :adPosition="'Blog post top desktop'"
             :adId="'iconbar-js-blogPost'"
@@ -43,7 +43,7 @@
       <div class="blog-post-wrapper post-full-content" v-html="blogPost.html"> </div>
       
 
-        <div class="single-ad p-b-20 p-t-30">
+        <div class="single-ad p-b-24 p-t-32">
           <script
             @click="adClick({position: 'Bottom Page', type: 'Carbon'})"
             async="async"
@@ -53,13 +53,13 @@
         </div>
 
 
-      <section class="p-t-30 m-b-50 p-b-50">
+      <section class="p-t-32 m-b-48 p-b-40">
         
         <div class="">
           <hr class="coral-Divider--S">
         </div>
     
-        <H3-Description class="p-t-10 p-b-40" :text="subscribe"/>
+        <H3-Description class="p-t-8 p-b-48" :text="subscribe"/>
      
         <div class="">
           <hr class="coral-Divider--S">
@@ -93,7 +93,7 @@ export default {
   data: function(){
     return {
       blogPost: localPosts,
-       subscribe:{
+      subscribe:{
         h3: "The macOSicons blog",
         description: "Hi! I'm [Elias](https://eliasruiz.com), and I'm building a platform for all things icons. You can support this project and read about my journey, tips and more by subscribing below.",
         link: "https://blog.macosicons.com/blog/#/portal",
