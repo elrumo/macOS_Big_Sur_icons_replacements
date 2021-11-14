@@ -17,7 +17,7 @@
       <div class="dialog-text">
         <b> We'll let you know by email when the icon has been approved. </b>
         <br>
-        <ul class="coral-List p-t-10 p-b-10">
+        <ul class="coral-List p-t-8 p-b-8">
           <li class="coral-List-item">Icon submitted must be a .png file</li>
           <li class="coral-List-item">
             Download template from the <router-link coral-close="" to="/resources"> <b> resources page. </b></router-link>
@@ -70,7 +70,7 @@
         <!-- <form class="coral-Form coral-Form--vertical" > -->
         <!-- </form> -->
 
-        <section class="p-t-5">
+        <section class="p-t-4">
           <div>
             <coral-checkbox id="isReupload">
               I'm re-uploading an icon that was previously on the site
@@ -79,7 +79,7 @@
 
           <div>
             <coral-checkbox id="isAuthor">I'm the original author of these icons. 
-              <span class="opacity-80 p-l-5 f-w-200 coral-Body--XS">
+              <span class="opacity-80 p-l-4 f-w-200 coral-Body--XS">
                 (It's ok if you aren't)
               </span>
             </coral-checkbox>

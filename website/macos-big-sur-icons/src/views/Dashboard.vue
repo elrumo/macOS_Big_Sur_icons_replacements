@@ -9,20 +9,20 @@
     </coral-toast>
 
     <!-- Sign in well -->
-    <div v-if="!isAuth" id="signIn-wrapper" class="coral-Well m-t-50">
-      <div class="m-b-20">
+    <div v-if="!isAuth" id="signIn-wrapper" class="coral-Well m-t-48">
+      <div class="m-b-24">
         <input id="email" type="email" placeholder="Email" is="coral-textfield" aria-label="text input">
       </div>
-      <div class="m-b-20">
+      <div class="m-b-24">
         <input id="password" type="password" placeholder="Password" is="coral-textfield"  aria-label="text input">
       </div>
-      <div id="signin-button" class="m-t-40 m-b-5">
+      <div id="signin-button" class="m-t-48 m-b-4">
         <button is="coral-button" variant="cta" @click="signIn">Sign In</button>
       </div>
     </div>
     
 
-    <h3 id="noIcons" class="coral-Heading--M m-t-50" v-if="isObjEmpty(icons) & isAuth">
+    <h3 id="noIcons" class="coral-Heading--M m-t-48" v-if="isObjEmpty(icons) & isAuth">
       No icons to aprove
     </h3>
 
@@ -51,7 +51,7 @@
     <section class="dashBoard">
       
       <!-- Search Bar -->
-      <!-- <div v-if="isAuth" @click="isSearch = true" class="main-search-wrapper coral-bg p-b-15">
+      <!-- <div v-if="isAuth" @click="isSearch = true" class="main-search-wrapper coral-bg p-b-16">
         <div class="m-auto main-search">
           <div class="shadow main-border-radius">
             <input v-model="searchString" :placeholder="'(Not working yet) - Icons to approve: ' + iconListLen" type="text"  class="_coral-Search-input _coral-Textfield searchBar" name="name" aria-label="text input">
@@ -78,12 +78,12 @@
       </coral-tablist>
 
       <div
-        class="p-t-20 p-b-50 dashboard-wrapper"
+        class="p-t-24 p-b-40 dashboard-wrapper"
       >
         <!-- v-if="iconsToShow == 'newIcons'" -->
-        <div v-for="user in iconType" :key="user.usersName" class="p-b-30">
+        <div v-for="user in iconType" :key="user.usersName" class="p-b-32">
           
-          <h3 class="coral-Heading--M p-b-10 text-left d-flex">
+          <h3 class="coral-Heading--M p-b-8 text-left d-flex">
             <a
               :href="'mailto:'+user.email+'?subject=macOS icons submission'"
               @click="copyText(user.usersName)"
@@ -91,7 +91,7 @@
               {{ user.usersName }}
             </a>
             <img @click="showDialog('editUserDialog', user)" class="dashboard-edit-user" :src="coralIcons.edit" alt="">
-            <img @click="sendEmail(user)" class="dashboard-edit-user p-l-15" :src="coralIcons.email" alt="">
+            <img @click="sendEmail(user)" class="dashboard-edit-user p-l-16" :src="coralIcons.email" alt="">
             
             <coral-status  v-if="user.emailSent == 'requested'" variant="info"></coral-status>
             <coral-status  v-if="user.emailSent == 'sent'" variant="success"></coral-status>
@@ -129,7 +129,7 @@
 
               </div>
 
-              <div class="card-text-wrapper p-l-15 p-r-15 p-b-0">                
+              <div class="card-text-wrapper p-l-16 p-r-16 p-b-0">                
                 
                 <!-- Date Submited -->                
                 <p class="coral-Body--XS opacity-60 m-b-0">
@@ -148,7 +148,7 @@
                 <p v-if="icon.credit !='' " class="coral-Body--XS p-b-0 opacity-50 m-b-0"><input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="icon.credit" is="coral-textfield" aria-label="text input"></p>
                 <p v-if="icon.credit =='' " class="coral-Body--XS p-b-0 opacity-50 m-b-0"><input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="'n/a'" is="coral-textfield" aria-label="text input"></p>
 
-                <div class="p-t-15 p-b-15">
+                <div class="p-t-16 p-b-16">
                   <button @click="approveIcon(icon)" class="coral-btn coral-btn-primary">Approve</button>
                    
                    <!-- <coral-splitbutton>

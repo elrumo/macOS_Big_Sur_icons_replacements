@@ -3,7 +3,7 @@
 
         <div :class="{
                 'h3-description': true,
-                'm-t-20': true,
+                'm-t-24': true,
                 'text-center': text.isCenter,
             }"
         >
@@ -20,7 +20,7 @@
 
             <div
                 v-if="text.isAd"
-                class="m-t-40 m-b-20"
+                class="m-t-48 m-b-24"
             >
                 <p class="coral-Body--XS">
                     Sponsored by
@@ -73,7 +73,6 @@ export default {
         },
 
         markItDown(text){
-            console.log("text: ", text);
             return Marked(text, { sanitize: true })
         }
     },

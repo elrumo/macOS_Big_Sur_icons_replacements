@@ -49,16 +49,16 @@
         </div>
 
         <div class="profile-descrption-box">
-          <div v-if="loading.user" class="loading-placeholder m-b-10"></div>
-          <div v-if="loading.user" class="loading-placeholder m-b-10"></div>
-          <p v-if="getUserInfo.bio" class="coral-Body--L m-b-5">
+          <div v-if="loading.user" class="loading-placeholder m-b-8"></div>
+          <div v-if="loading.user" class="loading-placeholder m-b-8"></div>
+          <p v-if="getUserInfo.bio" class="coral-Body--L m-b-4">
             {{ getUserInfo.bio }}
           </p>
 
           <a v-if="getUserInfo.credit" target="_blank" :href="getUserInfo.credit" class="margin-auto relative">
             <!-- <p class="coral-Body--XS"> -->
               <IconUI class="absolute-center-vertical" width="14px" :img="resources.link" alt="Credit link"/>
-              <span class="p-l-20">
+              <span class="p-l-24">
                 {{ getUserInfo.credit.replace("https://", "") }}
               </span>
             <!-- </p> -->
@@ -138,7 +138,7 @@
       />
       
       <div
-        class="icon-list-area p-t-40 p-b-50"
+        class="icon-list-area p-t-48 p-b-40"
         v-else
       >
         <div style="z-index: 2; height: 100%; min-height: 210px" class="card-wrapper card-hover coral-card">
@@ -161,7 +161,7 @@
       <button
         is="coral-button"
         v-if="userIcons.length < iconsCount && userIcons.length > 1 && isLoading"
-        class="m-b-20"
+        class="m-b-24"
         @click="fetchUserIcons(userInfo)"
       >
         Load more

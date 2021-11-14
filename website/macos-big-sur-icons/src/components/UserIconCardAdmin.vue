@@ -19,7 +19,7 @@
         </div>
 
         <!-- Icon meta -->
-        <div class="card-text-wrapper p-l-15 p-r-15 p-b-15">
+        <div class="card-text-wrapper p-l-16 p-r-16 p-b-16">
 
             <!-- App name -->
             <h3 class="coral-font-color m-b-0">
@@ -41,7 +41,7 @@
             </p>
             
             <!-- Credit -->
-            <p v-else class="coral-Body--XS opacity-60 m-b-10">
+            <p v-else class="coral-Body--XS opacity-60 m-b-8">
                 <router-link :to="'/u/'+icon.usersName" class="coral-Link">{{icon.usersName}}</router-link>
                 on
                 <span class="coral-Body--XS opacity-80">
@@ -49,7 +49,7 @@
                 </span>
             </p>
             
-            <div v-if="isOwner" class="p-t-10 p-b-5">
+            <div v-if="isOwner" class="p-t-8 p-b-4">
                 <button @click="showDialog('editIconDialog')" is="coral-button" variant="outline">Edit</button>
             </div>
 

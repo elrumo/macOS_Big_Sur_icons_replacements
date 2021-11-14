@@ -180,6 +180,7 @@ const routes = [
       ]
     }
   },
+
   {
     path: '/how-to',
     name: 'HowTo',
@@ -228,11 +229,13 @@ const routes = [
       ]
     }
   },
+
   {
     path: '/forum',
     name: 'Forum',
     component: () => import('../views/Forum.vue')
   },
+
   {
     path: '/resources/"macos-big-sur-app-icon"',
     name: 'Resource-BigSur-template',
@@ -280,6 +283,7 @@ const routes = [
       ]
     }
   },
+
   {
     path: '/resources/"macos-big-sur-dock"',
     name: 'Resource-BigSur-dock-template',
@@ -327,10 +331,11 @@ const routes = [
       ]
     }
   },
+
   {
-    path: '/learning',
-    name: 'Learning',
-    component: () => import('../views/Learning.vue'),
+    path: '/learn',
+    name: 'Learn',
+    component: () => import('../views/Learn.vue'),
     meta: { 
       title: 'Free macOS Big Sur icon templates and tutorials.',
       description:"Resources, templates and tutorials to help you design icons for macOS.",
@@ -374,6 +379,55 @@ const routes = [
       ]
     }
   },
+
+  {
+    path: '/learn/:learningResource',
+    name: 'Learn',
+    component: () => import('../views/LearningResource.vue'),
+    meta: { 
+      title: 'Free macOS Big Sur icon templates and tutorials.',
+      description:"Resources, templates and tutorials to help you design icons for macOS.",
+      titleTemplate: '%s | macOSicons',
+      meta:[
+        // Facebook
+        {
+          property: 'og:url',
+          content:  'https://macosicons.com/resources'
+        },
+        {
+          property: 'og:title',
+          content:  'Free macOS Big Sur icon templates and tutorials.',
+        },
+        {
+          property: 'og:description',
+          content:  'Resources, templates and tutorials to help you design icons for macOS.',
+        },
+        {
+          property: 'og:image',
+          content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Resources-thumbnail.jpg'
+        },
+
+        // Twitter
+        {
+          property: 'twitter:url',
+          content:  'https://macosicons.com/resources'
+        },
+        {
+          property: 'twitter:description',
+          content:  'Resources, templates and tutorials to help you design icons for macOS.',
+        },
+        {
+          property: 'twitter:title',
+          content:  'Free macOS Big Sur icon templates and tutorials.',
+        },
+        {
+          property: 'twitter:image',
+          content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Resources-thumbnail.jpg'
+        },
+      ]
+    }
+  },
+
   {
     path: '/resources',
     name: 'Resources',
@@ -421,40 +475,43 @@ const routes = [
       ]
     }
   },
+
   {
     path: '/resources/:resource',
     name: 'Resource',
     component: () => import('../views/ResourceView.vue')
   },
+
   {
-    // path: '/user',
     path: '/user/:user',
     name: 'UserProfile',
     component: () => import('../views/UserProfile.vue')
   },
+
   {
-    // path: '/user',
     path: '/u/:user',
     name: 'UserProfile_user',
     component: () => import('../views/UserProfile.vue')
   },
+
   {
-    // path: '/user',
     path: '/user/',
     name: 'uProfile',
     component: () => import('../views/UserProfile.vue')
   },
+
   {
-    // path: '/user',
     path: '/u/',
     name: 'uProfile_user',
     component: () => import('../views/UserProfile.vue')
   },
+
   {
     path: '/:search',
     name: 'Search',
     component: Home
   },
+
   {
     path: '/WhatsApp',
     name: 'WhatsApp',
@@ -502,7 +559,6 @@ const routes = [
       ]
     }
   },
-
 ]
 
 global.router = new VueRouter({

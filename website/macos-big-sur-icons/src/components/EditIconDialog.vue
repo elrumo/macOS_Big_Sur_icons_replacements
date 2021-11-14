@@ -46,7 +46,7 @@
 
       </div>
 
-      <form class="coral-FormGroup m-0 p-l-5" style="width: calc(100% - 5px)">
+      <form class="coral-FormGroup m-0 p-l-4" style="width: calc(100% - 5px)">
         
         <!-- appName -->
         <div class="coral-FormGroup-item">

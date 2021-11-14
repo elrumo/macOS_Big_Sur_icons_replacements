@@ -5,11 +5,11 @@
                 <coral-status variant="info">New</coral-status>
             </div>
             <div class="resources-card-wrapper">
-            
+
             <div v-if="!step.gradient" class="instructions-img-wrapper">
                 <img
                     class="card-img resources-card-img"
-                    :src="step.feature_image"
+                    :src="getImage"
                     alt=""
                 >
             </div>
@@ -17,7 +17,7 @@
             <div v-else :class="{ 'instructions-img-wrapper': true, 'gradient':step.gradient }">
                 <img
                     class="card-img resources-card-img"
-                    :src="step.feature_image"
+                    :src="getImage"
                 alt="">
             </div>
 
@@ -41,7 +41,7 @@
                         'opacity-70': true,
                     }"
                 >
-                        <!-- 'p-t-5': true, -->
+                        <!-- 'p-t-4': true, -->
                     {{ step.description }}
                 </p>
             </div>
@@ -72,6 +72,10 @@ export default {
 
     methods:{
         isNew(item){
+            if(item.feature != null){
+                return item.feature
+            }
+
             let postDate = new Date(item.created_at)
             postDate = Date.parse(postDate)
             postDate = postDate + 172800000 // Ads 48 hours to page date
@@ -89,6 +93,18 @@ export default {
         markItDown(){
             let text = this.step.text
             return Marked(text, { sanitize: true })
+        },
+
+        getImage(){
+            if (this.step.feature_image != null) {
+                if (this.step.feature_image.formats != null) { //check if data is coming from the Strapi API
+                    return "http://localhost:1347" + this.step.feature_image.formats.medium.url
+                } else {
+                    return this.step.feature_image
+                }
+            } else {
+                return "https://i.imgur.com/tu9ZVml.png"
+            }
         },
 
         getLink(){

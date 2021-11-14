@@ -4,6 +4,10 @@
     <deleteDialog :icon="activeIcon"/>
 
     <div v-if="overflow"> {{ toggleOverflow() }} </div>
+    
+    <!-- <button id="demo" class="button" @click="removeButton($event)" style="opacity: 1;">
+        demo
+    </button> -->
 
     <!-- <StickyBanner/> -->
 
@@ -52,7 +56,7 @@
       <div
         @click="isSearch = true"
         id="searchBar"
-        class="main-search-wrapper coral-bg p-b-15"
+        class="main-search-wrapper coral-bg p-b-16"
         :class="{'scrolled-shadow': !distanceFromTop}"
       >
 
@@ -78,7 +82,7 @@
                 <!-- Cross icon -->
                 <transition name="fade">
                   <div v-if="searchString" class="searchBar-right">
-                      <svg @click="clearSearch" class="icon p-t-20 p-b-20 p-r-10 p-l-10" xmlns="http://www.w3.org/2000/svg" height="12" viewBox="0 0 12 12" width="12">
+                      <svg @click="clearSearch" class="icon p-t-24 p-b-24 p-r-8 p-l-8" xmlns="http://www.w3.org/2000/svg" height="12" viewBox="0 0 12 12" width="12">
                         <title>CrossLarge</title>
                         <rect id="ToDelete" fill="#ff13dc" opacity="0" width="12" height="12" /><path d="M11.69673,10.28266,7.41406,6l4.28267-4.28266A.9999.9999,0,1,0,10.28266.30327L6,4.58594,1.71734.30327A.9999.9999,0,1,0,.30327,1.71734L4.58594,6,.30327,10.28266a.9999.9999,0,1,0,1.41407,1.41407L6,7.41406l4.28266,4.28267a.9999.9999,0,1,0,1.41407-1.41407Z" />
                       </svg>
@@ -226,7 +230,7 @@
           </button>
           
           <!-- Saved Icons -->
-          <!-- <button
+          <button
             is="coral-sidenav-item"
             :icon="icons.Heart"
             value="Saved"
@@ -234,9 +238,9 @@
             @click="setCategory({id: 'Saved'})"
           >
             Saved
-          </button> -->
+          </button>
 
-          <hr class="coral-Divider--S m-t-10 m-t-10">
+          <hr class="coral-Divider--S m-t-8 m-t-8">
 
           <button
             :icon="icons[category.name.replaceAll(' ', '_').replace('&_', '')]"
@@ -256,10 +260,10 @@
 
 
 
-        <!-- Icon list-->
+        <!-- Icon grid-->
         <div 
           id="iconList" 
-          class="icon-list-area p-b-30 "
+          class="icon-list-area p-b-32 "
         >
           
           <!-- Ad -->
@@ -526,9 +530,6 @@ export default {
     let parent = this;
     parent.getAd()
 
-    axios.get('https://api.coindesk.com/v1/bpi/currentprice.json')
-      .then(response => ("response: ", response))
-
     let fullPath = parent.$route.fullPath
     let currentUser = Parse.User.current()
 
@@ -587,17 +588,24 @@ export default {
 
   methods:{ 
     ...mapActions([
-        'showToast',
-        'showEl',
-        'fetchIconUserInfo',
-        'adClick',
-        'setCategory',
-        'setData',
-        'loadMoreIcons',
-        'algoliaSearch',
-        'scrollTo',
-        'pushDataToArr'
-      ]),
+      'showToast',
+      'showEl',
+      'fetchIconUserInfo',
+      'adClick',
+      'setCategory',
+      'setData',
+      'loadMoreIcons',
+      'algoliaSearch',
+      'scrollTo',
+      'pushDataToArr'
+    ]),
+
+    removeButton(t) {
+      (t.target.style.opacity = 0),
+        setTimeout(() => {
+          (t.target.style.visibility = ""), (t.target.style.opacity = 1);
+        }, 5e3);
+    },
 
     scrollEl(id, top, left){
       let scrollLeft = document.getElementById(id).scrollLeft
@@ -806,9 +814,6 @@ export default {
       let parent = this
       window.onscroll = () => {
         let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000
-        
-        // console.log(bottomOfWindow && parent.scrolledToBottom);
-        // console.log(bottomOfWindow);
 
         if (bottomOfWindow && parent.scrolledToBottom) {
           parent.scrolledToBottom = false
@@ -865,8 +870,6 @@ export default {
           }
           iconData.id = results[result].id
 
-          console.log(iconData.id, ": ", parent.getSavedIcons.includes(iconData.id));
-
           // Check if icon has been saved by the user
           iconData.isSaved = parent.getSavedIcons.includes(iconData.id)
 
@@ -879,7 +882,6 @@ export default {
           howManyRecords: 0,
           results: results
         }
-        // parent.fetchIconUserInfo(data)
 
         var attempts = 0;
 

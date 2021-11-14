@@ -14,14 +14,14 @@
         </div>
 
         <!-- Icon meta -->
-        <div class="card-text-wrapper p-l-15 p-r-15 p-b-15">
+        <div class="card-text-wrapper p-l-16 p-r-16 p-b-16">
 
             <!-- App name -->
             <h3
                 class="
                     coral-font-color
                     m-t-0
-                    m-b-10
+                    m-b-8
                     loading-placeholder
                     p-0
                 "
@@ -29,7 +29,7 @@
             </h3>
 
             <!-- User's name -->
-            <p class="coral-Body--XS opacity-60 m-b-10 loading-placeholder">
+            <p class="coral-Body--XS opacity-60 m-b-8 loading-placeholder">
             </p>
 
         </div>

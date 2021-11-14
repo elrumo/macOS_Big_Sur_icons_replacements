@@ -683,6 +683,7 @@ coral-buttongroup button{
     width: calc(var(--page-width) - 10%);
     margin: auto;
     max-width: 1120px;
+    min-height: 100vh;
 }
 
 .header-wrapper{
@@ -1016,20 +1017,45 @@ coral-buttongroup button{
 }
 
 .icon-heart{
-    background-image: url('~@/assets/icons/Category_Icons/Heart.svg');
     background-position: 8px 8px;
     background-repeat: no-repeat;
-
-    &:hover{
-        background-image: url('~@/assets/icons/Category_Icons/Heart_Thick.svg');
-    }
 }
 
 .icon-heart-filled{
-    background-image: url('~@/assets/icons/Category_Icons/Heart_Filled.svg');
     background-position: 8px 8px;
     background-repeat: no-repeat;
 }
+
+.coral--dark{
+    .icon-heart{
+        background-image: url('~@/assets/icons/Category_Icons/Heart.svg');
+        
+        &:hover{
+            background-image: url('~@/assets/icons/Category_Icons/Heart_Thick.svg');
+        }
+    }
+
+    .icon-heart-filled{
+        background-image: url('~@/assets/icons/Category_Icons/Heart_Filled.svg');
+    }
+}
+
+.coral--light{
+    .icon-heart{
+        background-image: url('~@/assets/icons/Category_Icons/Heart_dark.svg');
+        
+        &:hover{
+            background-image: url('~@/assets/icons/Category_Icons/Heart_Thick_dark.svg');
+        }
+    }
+
+    .icon-heart-filled{
+        background-image: url('~@/assets/icons/Category_Icons/Heart_Filled_dark.svg');
+    }
+}
+
+
+
 
 .save-icon{
     position: absolute;

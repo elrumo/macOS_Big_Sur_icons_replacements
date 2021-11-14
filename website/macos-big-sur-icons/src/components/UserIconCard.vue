@@ -3,7 +3,7 @@
         <div class="m-auto">
             
             <!-- <div
-                v-if="!icon.isSaved"
+                v-if="!isSaved"
                 @click="saveIcon()"
                 class="opacity-0 save-icon icon-heart"
             />
@@ -13,6 +13,17 @@
                 @click="saveIcon()"
                 class="save-icon icon-heart-filled"
             /> -->
+
+                    <!-- 'opacity-0': !isSaved, -->
+            <div
+                :id="'saveIcon_'+icon.id"
+                @click="saveIcon()"
+                :class="{
+                    'icon-heart': !isSaved,
+                    'icon-heart-filled': isSaved,
+                    'save-icon': true,
+                }"
+            > </div>
 
             <!-- Icon image -->
             <div class="card-img-wrapper" style="max-width: 120px;">
@@ -38,7 +49,7 @@
             </div>
 
             <!-- Icon meta -->
-            <div label="Icon info" class="card-text-wrapper p-l-15 p-r-15">
+            <div label="Icon info" class="card-text-wrapper p-l-16 p-r-16">
 
                 <!-- App name -->
                 <h3 class="coral-font-color m-0">
@@ -48,7 +59,7 @@
                 </h3>
                 
                 <!-- Credit -->
-                <p class="coral-Body--XS opacity-70 m-b-5 p-t-5">
+                <p class="coral-Body--XS opacity-70 m-b-4 p-t-4">
                     <router-link :to="'/u/'+icon.usersName" class="coral-Link">{{icon.usersName}}</router-link>
                     on
                     <span class="coral-Body--XS">
@@ -56,7 +67,7 @@
                     </span>
                 </p>
                 
-                <div v-if="isOwner" class="p-t-10 p-b-5">
+                <div v-if="isOwner" class="p-t-8 p-b-4">
                     <button @click="showDialog('editIconDialog')" is="coral-button" variant="outline">Edit</button>
                 </div>
 
@@ -80,7 +91,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Parse from 'parse'
+import Parse from 'parse';
 
 import deleteDialog from './deleteDialog.vue';
 import EditIconDialog from "./EditIconDialog.vue"
@@ -123,6 +134,10 @@ export default {
         }
     },
     
+    mounted(){
+        this.isSaved = this.icon.isSaved;
+    },
+
     methods:{
         ...mapActions(['showEl', 'setSelectedIcon', 'addClickCount']),
 
@@ -192,19 +207,29 @@ export default {
             let parent = this
             let icon = parent.icon
             var Icons = Parse.Object.extend("Icons2");
-            var User = Parse.Object.extend("User");
             let iconQuery = new Parse.Query(Icons);
-
 
             icon = await iconQuery.get(icon.id)
             let userRelation = Parse.User.current().relation("favIcons")
-            userRelation.add(icon)
-            
-            // console.log("icon: ", Parse.User.current().get("favIcons"));
+
+            // If isSaved is true, remove from databse
+            if (parent.isSaved) {
+                userRelation.remove(icon)
+            } else{
+
+                // let confetti = new Confetti('saveIconss_'+parent.icon.id);
+                let confetti = new Confetti('saveIcon_zcyDMASZiF');
+                confetti.setCount(75);
+                confetti.setSize(1);
+                confetti.setPower(25);
+                confetti.setFade(false);
+                confetti.destroyTarget(true);
+                
+                userRelation.add(icon)
+            }
 
             Parse.User.current().save().then((data) =>{
-                // console.log("icon: ", data);
-                parent.isSaved = true
+                parent.isSaved = !parent.isSaved
                 console.log("SAVED!!!");
             }).catch((e) =>{
                 console.log("ERROR: ", e);

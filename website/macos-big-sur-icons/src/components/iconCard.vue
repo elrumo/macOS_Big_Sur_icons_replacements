@@ -12,14 +12,14 @@
                 </coral-quickactions>
             </div>
 
-            <div class="p-l-15 p-r-15 p-b-5 card-text-wrapper">
+            <div class="p-l-16 p-r-16 p-b-4 card-text-wrapper">
                 <h3 class="coral-font-color">
                         <input class="editable-input" @change="editDoc(icon, $event, 'appName', false)" type="text" variant="quiet" :value="prettifyName(icon.appName)" is="coral-textfield" aria-label="text input">
                 </h3>
 
-                <p class="coral-Body--XS p-b-10 opacity-60">By <a class="coral-Link" :href="icon.credit" target="_blank">{{icon.usersName}}</a></p>
+                <p class="coral-Body--XS p-b-8 opacity-60">By <a class="coral-Link" :href="icon.credit" target="_blank">{{icon.usersName}}</a></p>
                 
-                <div class="p-t-10">
+                <div class="p-t-8">
                     <button @click="approveIcon(icon)" is="coral-button">Approve</button>
 
                     <div class="filler-space"></div>
@@ -37,23 +37,6 @@
 </template>
 
 <script>
-// import Vue from 'vue';
-// import * as firebase from "firebase";
-
-// let firebaseConfig = {
-//   apiKey: process.env.VUE_APP_FIREBASE_KEY,
-//   messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
-//   appId: process.env.VUE_APP_APP_ID,
-//   measurementId: process.env.VUE_APP_MEASUREMENT_ID,
-//   authDomain: "macos-icons.firebaseapp.com",
-//   databaseURL: "https://macos-icons.firebaseio.com",
-//   projectId: "macos-icons",
-//   storageBucket: "macos-icons.appspot.com"
-// };
-// firebase.initializeApp(firebaseConfig);
-
-// let db = firebase.firestore();
-// let storage = firebase.storage();
 
 export default {
     name: "IconCard",

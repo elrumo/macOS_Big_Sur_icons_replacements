@@ -2,7 +2,7 @@
   <div>
     <main class="content-wrapper-compact">
 
-      <H3-Description :text="introText" class="m-b-40"/>
+      <H3-Description :text="introText" class="m-b-48"/>
 
       <div class="resources-grid card-grid" id="how-to-install">
         
