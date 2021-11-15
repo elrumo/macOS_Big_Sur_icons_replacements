@@ -185,67 +185,71 @@
       </div>
 
       <!-- No Results for category-->
-        <!-- v-if="search.length == 0" -->
-      <div
-        v-else
-        class="waiting-wrapper"
-      >
-        <div v-if="
-          searchString.length > 0
-          && getSelectedCategory.id != 'All'
-          && getSelectedCategory.id != 'downloads' // downloads = Popular
-          && getSelectedCategory.id != 'Saved'
-        ">
-          <p class="coral-Body--S">
-            <br>
-            No results under {{ getSelectedCategory.name }}, try a different category.
-          </p>
-        </div>
-
-        <div v-else-if="
-          getSelectedCategory.id == 'Saved'
-          && isUserLoggedIn
-        ">
-            <!-- v-if="searchString.length != 0" -->
           <div
-            v-if="
-              search.length == 0
-              && searchString.length == 0
-            "
+            v-if="search.length == 0"
+            class="waiting-wrapper"
           >
-            <p class="coral-Body--S">
-              You haven't saved any icons yet, give it a go!
-            </p>
-          </div>
-          
-          <div v-else-if="searchString.length != 0">
-            <p class="coral-Body--S">
-              {{ searchString }} cound not be found in your Saved icons.
-            </p>
-          </div>
-        </div>
+            <div v-if="
+              searchString.length > 0
+              && getSelectedCategory.id != 'All'
+              && getSelectedCategory.id != 'downloads' // downloads = Popular
+              && getSelectedCategory.id != 'Saved'
+            ">
+              <p class="coral-Body--S">
+                <br>
+                No results under {{ getSelectedCategory.name }}, try a different category.
+              </p>
+            </div>
 
-        <div v-else-if="
-          getSelectedCategory.id == 'Saved'
-          && !isUserLoggedIn
-        ">
-          <p class="coral-Body--S">
-            To save icons, you need to
-            <a class="cursor-pointer" @click="showDialog('loginDialog')">
-              login
-            </a> or
-            <a class="cursor-pointer" @click="showDialog('loginDialog')">
-              create
-            </a> 
-            an account first.
-          </p>
-        </div>
-      </div>
+            <div v-else-if="
+              getSelectedCategory.id == 'Saved'
+              && isUserLoggedIn
+            ">
+                <!-- v-if="searchString.length != 0" -->
+              <div
+                v-if="
+                  search.length == 0
+                  && searchString.length == 0
+                "
+              >
+                <p class="coral-Body--S">
+                  You haven't saved any icons yet, give it a go!
+                </p>
+              </div>
+              
+              <div v-else-if="searchString.length != 0">
+                <p class="coral-Body--S">
+                  {{ searchString }} cound not be found in your Saved icons.
+                </p>
+              </div>
+            </div>
+
+            <div v-else-if="
+              getSelectedCategory.id == 'Saved'
+              && !isUserLoggedIn
+            ">
+              <p class="coral-Body--S">
+                To save icons, you need to
+                <a class="cursor-pointer" @click="showDialog('loginDialog')">
+                  login
+                </a> or
+                <a class="cursor-pointer" @click="showDialog('loginDialog')">
+                  create
+                </a> 
+                an account first.
+              </p>
+            </div>
+          </div>
 
       <!-- Main area -->
       <div class="main-content-wrapper content-wrapper-regular">
+        
         <!-- Categories List -->
-        <nav v-if="!isMobile" id="categoriesWrapper-desktop" class="mobile-hidden categories-sidenav coral-card" is="coral-sidenav">
+        <nav
+          v-if="!isMobile"
+          id="categoriesWrapper-desktop"
+          class="mobile-hidden categories-sidenav coral-card" is="coral-sidenav"
+        >
 
           <!-- All Icons -->
           <button
@@ -414,8 +418,6 @@ import dotenv from 'dotenv'; // Used to access env varaibles
 dotenv.config();
 
 // TODO: remove credentials
-// const VUE_APP_PARSE_APP_ID = "macOSicons"
-// const VUE_APP_PARSE_JAVASCRIPT_KEY = "macOSicons"
 const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
 const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
 
