@@ -223,7 +223,8 @@ export default new Vuex.Store({
 
     scrollTo(){
       if(window.innerWidth >= 820){
-        window.scrollTo(0, 365)
+        window.scrollTo(0, 296)
+        // window.scrollTo(0, 365)
         
       } else{
         window.scrollTo(0, 320)
