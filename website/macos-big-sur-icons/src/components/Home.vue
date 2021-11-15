@@ -863,8 +863,6 @@ export default {
           }
           iconData.id = results[result].id
 
-          console.log(iconData.id, ": ", parent.getSavedIcons.includes(iconData.id));
-
           // Check if icon has been saved by the user
           iconData.isSaved = parent.getSavedIcons.includes(iconData.id)
 
