@@ -78,6 +78,8 @@
                 <!-- Cross icon -->
                 <transition name="fade">
                   <div v-if="searchString" class="searchBar-right">
+                    
+                    <div class="searchBar-right-wrapper">
                       <svg @click="clearSearch" class="icon p-t-24 p-b-24 p-r-8 p-l-8" xmlns="http://www.w3.org/2000/svg" height="12" viewBox="0 0 12 12" width="12">
                         <title>CrossLarge</title>
                         <rect id="ToDelete" fill="#ff13dc" opacity="0" width="12" height="12" /><path d="M11.69673,10.28266,7.41406,6l4.28267-4.28266A.9999.9999,0,1,0,10.28266.30327L6,4.58594,1.71734.30327A.9999.9999,0,1,0,.30327,1.71734L4.58594,6,.30327,10.28266a.9999.9999,0,1,0,1.41407,1.41407L6,7.41406l4.28266,4.28267a.9999.9999,0,1,0,1.41407-1.41407Z" />
@@ -88,6 +90,7 @@
                           Share search
                         </button>
                       </div>
+                    </div>
 
                   </div>
                 </transition>
@@ -144,9 +147,7 @@
           <div @click="scrollEl('categoriesWrapper', 0, -300)" class="click-to-scroll scroll-left chevron" :src="coralIcons.chevron" alt=""/>
           <div @click="scrollEl('categoriesWrapper', 0, 300)" class="click-to-scroll scroll-right chevron" :src="coralIcons.chevron" alt=""/>
         </div>
-
-      </div>
-      
+      </div> 
 
       <!-- Loading error -->
       <div v-if="false" class="waiting-wrapper">
@@ -180,66 +181,77 @@
         class="waiting-wrapper"
       >
         <p class="coral-Body--S">
-          No results
+          No results for <b>{{ searchString }}</b>
         </p>
       </div>
 
       <!-- No Results for category-->
+      <div
+        v-if="
+          search.length == 0
+          && searchString.length > 0
+          && getSelectedCategory.id != 'All'
+          && getSelectedCategory.id != 'Saved'
+          && getSelectedCategory.id != 'downloads' // downloads = Popular
+        "
+        class="waiting-wrapper"
+      >
+        <div v-if="
+          getSelectedCategory.id != 'Saved'
+          && searchString.length > 0
+        ">
+          <p class="coral-Body--S">
+            No results for <b>{{ searchString }}</b> in {{ getSelectedCategory.name }}. Try a different category.
+          </p>
+        </div>
+      </div>
+      
+      <!-- No results for saved icons -->
+      <div
+        v-if="
+          getSelectedCategory.id == 'Saved' && search.length == 0
+        "
+        class="waiting-wrapper"
+      >
+       <div v-if="isUserLoggedIn">
           <div
-            v-if="search.length == 0"
-            class="waiting-wrapper"
+            v-if="
+              search.length == 0
+              && searchString.length == 0
+            "
           >
-            <div v-if="
-              searchString.length > 0
-              && getSelectedCategory.id != 'All'
-              && getSelectedCategory.id != 'downloads' // downloads = Popular
-              && getSelectedCategory.id != 'Saved'
-            ">
-              <p class="coral-Body--S">
-                <br>
-                No results under {{ getSelectedCategory.name }}, try a different category.
-              </p>
-            </div>
-
-            <div v-else-if="
-              getSelectedCategory.id == 'Saved'
-              && isUserLoggedIn
-            ">
-                <!-- v-if="searchString.length != 0" -->
-              <div
-                v-if="
-                  search.length == 0
-                  && searchString.length == 0
-                "
-              >
-                <p class="coral-Body--S">
-                  You haven't saved any icons yet, give it a go!
-                </p>
-              </div>
-              
-              <div v-else-if="searchString.length != 0">
-                <p class="coral-Body--S">
-                  {{ searchString }} cound not be found in your Saved icons.
-                </p>
-              </div>
-            </div>
-
-            <div v-else-if="
-              getSelectedCategory.id == 'Saved'
-              && !isUserLoggedIn
-            ">
-              <p class="coral-Body--S">
-                To save icons, you need to
-                <a class="cursor-pointer" @click="showDialog('loginDialog')">
-                  login
-                </a> or
-                <a class="cursor-pointer" @click="showDialog('loginDialog')">
-                  create
-                </a> 
-                an account first.
-              </p>
-            </div>
+            <p class="coral-Body--S">
+              You haven't saved any icons yet, give it a go!
+            </p>
           </div>
+          
+          <div v-if="
+            searchString.length != 0
+            && search.length == 0
+            "
+          >
+            <p class="coral-Body--S">
+              We cound not find <b>{{ searchString }}</b> in your Saved icons.
+            </p>
+          </div>
+        </div>
+
+        <div v-else-if="
+          getSelectedCategory.id == 'Saved'
+          && !isUserLoggedIn
+        ">
+          <p class="coral-Body--S">
+            To save icons, you need to
+            <a class="cursor-pointer" @click="showDialog('loginDialog')">
+              login
+            </a> or
+            <a class="cursor-pointer" @click="showDialog('loginDialog')">
+              create
+            </a> 
+            an account first.
+          </p>
+        </div>
+      </div>
 
       <!-- Main area -->
       <div class="main-content-wrapper content-wrapper-regular">
@@ -381,9 +393,11 @@
             :isMacOs="isMacOs"
           />
 
-          <div v-if="
-              (!scrolledToBottom && getSelectedCategory.id != 'All') ||
-              (!scrolledToBottom && searchString.length == 0 && getSelectedCategory.id == 'All')
+          <div
+            v-if="
+              searchString.length == 0
+              && search.length == 0
+              && getSelectedCategory.id != 'Saved'
             "
             class="waiting-wrapper"
           >
@@ -762,11 +776,10 @@ export default {
     },
 
     changeOS(e){
-      let parent = this;
       if (e.target.value == "macOS") {
-        parent.isMacOs = true
+        this.isMacOs = true
       } else{
-        parent.isMacOs = false
+        this.isMacOs = false
       }
     },
 
