@@ -4,10 +4,6 @@
     <deleteDialog :icon="activeIcon"/>
 
     <div v-if="overflow"> {{ toggleOverflow() }} </div>
-    
-    <!-- <button id="demo" class="button" @click="removeButton($event)" style="opacity: 1;">
-        demo
-    </button> -->
 
     <!-- <StickyBanner/> -->
 
@@ -174,24 +170,80 @@
       
       <!-- No Results -->
       <div v-if="
-        search.length == 0 && searchString.length > 0 && getSelectedCategory.id == 'All'
-      " class="waiting-wrapper">
+          search.length == 0
+          && searchString.length > 0
+          && (
+            getSelectedCategory.id == 'All'
+            || getSelectedCategory.id == 'downloads' // downloads = Popular
+          )
+        "
+        class="waiting-wrapper"
+      >
         <p class="coral-Body--S">
           No results
         </p>
       </div>
-      
+
       <!-- No Results for category-->
-      <div v-if="
-        search.length == 0 && searchString.length > 0 && getSelectedCategory.id != 'All'
-      " class="waiting-wrapper">
-        <p class="coral-Body--S">
-          No results under {{ getSelectedCategory.name }}, try a different category
-        </p>
+        <!-- v-if="search.length == 0" -->
+      <div
+        v-else
+        class="waiting-wrapper"
+      >
+        <div v-if="
+          searchString.length > 0
+          && getSelectedCategory.id != 'All'
+          && getSelectedCategory.id != 'downloads' // downloads = Popular
+          && getSelectedCategory.id != 'Saved'
+        ">
+          <p class="coral-Body--S">
+            <br>
+            No results under {{ getSelectedCategory.name }}, try a different category.
+          </p>
+        </div>
+
+        <div v-else-if="
+          getSelectedCategory.id == 'Saved'
+          && isUserLoggedIn
+        ">
+            <!-- v-if="searchString.length != 0" -->
+          <div
+            v-if="
+              search.length == 0
+              && searchString.length == 0
+            "
+          >
+            <p class="coral-Body--S">
+              You haven't saved any icons yet, give it a go!
+            </p>
+          </div>
+          
+          <div v-else-if="searchString.length != 0">
+            <p class="coral-Body--S">
+              {{ searchString }} cound not be found in your Saved icons.
+            </p>
+          </div>
+        </div>
+
+        <div v-else-if="
+          getSelectedCategory.id == 'Saved'
+          && !isUserLoggedIn
+        ">
+          <p class="coral-Body--S">
+            To save icons, you need to
+            <a class="cursor-pointer" @click="showDialog('loginDialog')">
+              login
+            </a> or
+            <a class="cursor-pointer" @click="showDialog('loginDialog')">
+              create
+            </a> 
+            an account first.
+          </p>
+        </div>
       </div>
 
+      <!-- Main area -->
       <div class="main-content-wrapper content-wrapper-regular">
-    
         <!-- Categories List -->
         <nav v-if="!isMobile" id="categoriesWrapper-desktop" class="mobile-hidden categories-sidenav coral-card" is="coral-sidenav">
 
@@ -235,7 +287,7 @@
             :icon="icons.Heart"
             value="Saved"
             title="Saved"
-            @click="setCategory({id: 'Saved'})"
+            @click="setCategoryAndFetchSaved()"
           >
             Saved
           </button>
@@ -257,8 +309,6 @@
 
           <div class="gradient-categories-navbar" />
         </nav>
-
-
 
         <!-- Icon grid-->
         <div 
@@ -317,7 +367,6 @@
                 </p>
               </div>
             </a>
-
           </div>
 
           <UserIconCard
@@ -374,6 +423,7 @@ Parse.serverURL = 'https://media.macosicons.com/parse'
 var Icons = Parse.Object.extend("Icons2");
 
 const docLimit = 20
+
 
 export default {
   name: 'Home',
@@ -527,6 +577,7 @@ export default {
   },
 
   mounted: async function(){
+
     let parent = this;
     parent.getAd()
 
@@ -574,15 +625,8 @@ export default {
     }
 
     // If user is logged in, get the user's favorites icons
-    if(currentUser){
-      currentUser.relation("favIcons").query().find().then((data) =>{
-          let savedIcons = data.map(({ id }) => id);
-        parent.pushDataToArr({ data: savedIcons, arr: "savedIcons" })
-        parent.getIconsArray();
-      })
-    } else{
-      parent.getIconsArray();
-    }
+    await parent.fetchSavedIcons()
+    parent.getIconsArray();
 
   },
 
@@ -597,14 +641,44 @@ export default {
       'loadMoreIcons',
       'algoliaSearch',
       'scrollTo',
+      'setDataToArr',
       'pushDataToArr'
     ]),
 
-    removeButton(t) {
-      (t.target.style.opacity = 0),
-        setTimeout(() => {
-          (t.target.style.visibility = ""), (t.target.style.opacity = 1);
-        }, 5e3);
+    removeButton() {
+    },
+
+    async setCategoryAndFetchSaved(){
+      this.setCategory({id: 'Saved'})
+    },
+
+    async fetchSavedIcons(){
+      if (!Parse.User.current()){
+        console.log(!Parse.User.current());
+        return 
+      }
+
+      let savedIconsQuery = Parse.User.current().relation("favIcons").query()
+      let userSavedIconData = await savedIconsQuery.descending("createdAt").find()
+
+      let savedIconCount = await savedIconsQuery.count();
+      this.setDataToArr({arr: 'savedIconCount', data: savedIconCount})
+      
+      let savedIcons = userSavedIconData.map(( icons ) => icons);
+      let iconsToShow = []        
+
+      savedIcons.forEach(icon => {
+        let newIcon = {}
+        for(let prop in icon.attributes){
+          newIcon[prop] = icon.attributes[prop]
+        }
+        newIcon.isSaved = true
+        iconsToShow.push(newIcon);
+        newIcon.id = icon.id;
+      })
+      
+      this.pushDataToArr({ data: iconsToShow, arr: "savedIcons" })
+      return iconsToShow
     },
 
     scrollEl(id, top, left){
@@ -795,14 +869,22 @@ export default {
       
       let allIcons = []
 
+      // Save savedIcons IDs to array to compare them to fetched icons
+      let savedIconsId = parent.getSavedIcons.map(({id}) => id )
+
       for(let result in results){
-        let objData = results[result].attributes
+
+        let iconItem = results[result]
+        let objData = iconItem.attributes
         let iconData = {}
 
         for(let data in objData){
           iconData[data] = objData[data]
         }
-        iconData.id = results[result].id;
+        iconData.id = iconItem.id;
+        
+        // Check if icon has been saved by the user
+        iconData.isSaved = savedIconsId.includes(iconItem.id);
         
         allIcons.push(iconData)
       }
@@ -858,6 +940,9 @@ export default {
         parent.setData({state: 'list', data: []})
         var allIcons = []
 
+        // Save savedIcons IDs to array to compare them to fetched icons
+        let savedIconsId = parent.getSavedIcons.map(({id}) => id )
+
         for(let result in results){
 
           let iconItem = results[result]
@@ -868,10 +953,10 @@ export default {
           for(let data in objData){
             iconData[data] = objData[data]
           }
-          iconData.id = results[result].id
+          iconData.id = iconItem.id
 
           // Check if icon has been saved by the user
-          iconData.isSaved = parent.getSavedIcons.includes(iconData.id)
+          iconData.isSaved = savedIconsId.includes(iconItem.id);
 
           allIcons.push(iconData)
         }
@@ -910,10 +995,10 @@ export default {
 
     },
 
-    showDialog(dialogId, icon){
+    showDialog(dialogId){
       let parent = this
-      parent.activeIcon= icon
       document.getElementById(dialogId).show()
+      // parent.activeIcon= icon
     },
 
     async editDoc(icon, e, field){
@@ -1063,6 +1148,11 @@ export default {
     iconListStore(){
       return this.$store.state.list
     },
+
+    isUserLoggedIn(){
+      if (Parse.User.current()) return true
+      else return false
+    }
 
   },
 
