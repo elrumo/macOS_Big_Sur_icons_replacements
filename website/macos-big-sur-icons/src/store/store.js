@@ -42,6 +42,7 @@ export default new Vuex.Store({
       username: ""
     },
     savedIcons: [],
+    savedIconCount: "",
     
     userData: Parse.User.current(),
 
@@ -181,7 +182,6 @@ export default new Vuex.Store({
       if (totalCategory == toSkip) {
         return
       }
-      console.log(store.state.dataToShow[toSkip-1].appName == "App Store");
 
       const query = new Parse.Query(IconsBase);
       
@@ -190,7 +190,9 @@ export default new Vuex.Store({
 
       if (selectedCategory.id == 'downloads') {
         query.descending("downloads");
-      } else{
+      } else if(selectedCategory.id == 'Saved'){
+        return
+      } else {
         query.descending("timeStamp");
         query.equalTo("category", selectedCategory.categoryObj);
       }
@@ -221,7 +223,8 @@ export default new Vuex.Store({
 
     scrollTo(){
       if(window.innerWidth >= 820){
-        window.scrollTo(0, 390)
+        window.scrollTo(0, 370)
+        
       } else{
         window.scrollTo(0, 320)
       }
@@ -242,15 +245,21 @@ export default new Vuex.Store({
         store.dispatch('algoliaSearch')
       }
 
-      // if(category.id == 'downloads'){
+      if (category.id == "Saved" && !sameCategory) {
 
-      // }
+        // let savedIconCount = await Parse.User.current().relation('favIcons').query().count();
+        // store.commit('setDataToArr', {arr: 'totalCategory', data: savedIconCount})
+        console.log(store.state.savedIconCount);
+        store.commit('setDataToArr', {arr: 'totalCategory', data: store.state.savedIconCount})
+        
+        let savedIcons = store.state.savedIcons
+        store.commit('pushDataToArr', {arr: "dataToShow", data: savedIcons})
+      }
 
-      if (category.id != "All" && !sameCategory) {
+      if (category.id != "All" && !sameCategory && category.id != "Saved") {
         store.commit('setDataToArr', {arr: 'dataToShow', data: [], concatArray: false})
 
         let toSkip = store.state.dataToShow.length // Checks how many icons with that category have already been fetched
-        // let toSkip = store.state.dataToShow.filter(icon => icon.category.id == newCategory).length // Checks how many icons with that category have already been fetched
 
         let approvedQuery = new Parse.Query(IconsBase);
         let numToLoad = 25
@@ -624,6 +633,10 @@ export default new Vuex.Store({
       let selectedCategory = store.selectedCategory.id;
 
       if (selectedCategory == 'downloads' && !store.searchString) {
+        return store.dataToShow
+      }
+
+      if (selectedCategory == 'Saved' && !store.searchString) {
         return store.dataToShow
       }
 

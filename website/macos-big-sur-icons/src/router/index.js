@@ -382,7 +382,7 @@ const routes = [
 
   {
     path: '/learn/:learningResource',
-    name: 'Learn',
+    name: 'LearningResource',
     component: () => import('../views/LearningResource.vue'),
     meta: { 
       title: 'Free macOS Big Sur icon templates and tutorials.',
