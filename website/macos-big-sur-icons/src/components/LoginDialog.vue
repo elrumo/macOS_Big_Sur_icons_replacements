@@ -663,7 +663,7 @@ export default {
         parent.setUserFunc(user)
       }).catch((error) => {
         console.log("Cached user: ", error);
-        
+        Parse.User.logout()
         Parse.User.logout().then((data) => {
           console.log("Logged out: ", data);
         }).catch(err => { 
