@@ -634,7 +634,6 @@ export default {
       switch (err.code) {
         case Parse.Error.INVALID_SESSION_TOKEN:
           Parse.User.logOut();
-          loginParse()
           break;
       
         default:

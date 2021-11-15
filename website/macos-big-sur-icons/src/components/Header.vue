@@ -403,12 +403,16 @@ export default {
                 });
             }
             const observerOptions = { childList: true, attributes: true}
-            
+
             // Add an observer for each dialog target elemnt
-            targetNode.forEach((node) => {
+            for(let node in targetNode) {
+                if(typeof targetNode[node] != 'object');{
+                    return
+                }
                 const observer = new MutationObserver(callback);
-                observer.observe(node, observerOptions);
-            })
+                observer.observe(targetNode[node], observerOptions);
+            }
+
         },
 
     },

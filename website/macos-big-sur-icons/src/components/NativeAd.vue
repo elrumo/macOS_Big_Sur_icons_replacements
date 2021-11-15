@@ -98,8 +98,8 @@ export default {
 
       setTimeout(() =>{
         let nodeList = document.querySelector("#"+adId).children
-
-        nodeList.forEach((el)=> {
+        
+        for(let el in nodeList){
           let newNodeList = document.querySelector("#"+adId).children
 
           if(newNodeList.length > 1){
@@ -110,7 +110,7 @@ export default {
             return
           }
 
-        });
+        };
       }, 1200)
 
     },
