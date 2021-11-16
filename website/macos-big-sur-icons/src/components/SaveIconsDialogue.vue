@@ -10,7 +10,7 @@
               Want to save an icon?
             </h3>
             <p class="coral-Body--M p-t-24" style="font-weight: lighter">
-              To save an icon, you need to be have an account. Creating an account is free and easy, you just need to click the button below.
+              To save an icon, you need to be have an account. Create an account to save icons, submit new ones and more!
              </p>
           </div>
 
