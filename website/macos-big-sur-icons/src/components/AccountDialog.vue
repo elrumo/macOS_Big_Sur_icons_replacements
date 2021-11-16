@@ -154,6 +154,15 @@
 
           <div class="coral-FormGroup-item">
             <coral-switch
+              v-on:change="validate($event, 'usaDateFormat')"
+              :checked="getUserData('usaDateFormat')"
+            >
+              Use USA date format <p class="coral-Body--XS"> (I won't judge you... ok, maybe a little) </p>
+            </coral-switch>
+          </div>
+
+          <div class="coral-FormGroup-item">
+            <coral-switch
               v-on:change="validate($event, 'isSubscribed')"
               :checked="getUserData('isSubscribed')"
             >
@@ -199,7 +208,7 @@
     <coral-dialog-footer>
       <button is="coral-button" variant="quiet" coral-close="">Cancel</button>
       <button is="coral-button" v-if="!hasChanged || !isValidated" disabled="" coral-close="">Save</button>
-      <button is="coral-button" v-if="hasChanged && isValidated" coral-close="" @click="updateUserProp" >Save</button>
+      <button is="coral-button" v-if="hasChanged && isValidated" @click="updateUserProp" >Save</button>
     </coral-dialog-footer>
 
   </coral-dialog>
@@ -240,6 +249,7 @@ export default {
         'showToast',
         'setUser',
         'setData',
+        'fetchUserAttributes'
       ]),
 
       async resetPassword(){
@@ -366,7 +376,9 @@ export default {
         }
 
         ParseUser.save().then((data) =>{
+          parent.fetchUserAttributes()
           parent.isLoading.updatingUser = false;
+          document.getElementById("accountDialog").hide()
           parent.showToast({
             id: "toastMessage",
             message: "Updated settings successfully.",

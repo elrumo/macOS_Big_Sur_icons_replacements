@@ -65,6 +65,7 @@
                   v-model="searchString" 
                   :placeholder="'Search ' + iconListLen + ' icons'" 
                   type="text"  
+                  id="searchBarInput"
                   class="_coral-Search-input _coral-Textfield searchBar" 
                   name="name" 
                   aria-label="text input"
@@ -595,9 +596,18 @@ export default {
   },
 
   mounted: async function(){
-
     let parent = this;
     parent.getAd()
+
+    document.addEventListener('keydown', (event) => {
+      let isCmdkPressed = event.getModifierState('Meta') && event.key.toLowerCase() == 'k'
+
+      if(isCmdkPressed){
+        document.getElementById('searchBarInput').focus()
+        document.getElementById('searchBarInput').click();
+      }
+
+    });
 
     let fullPath = parent.$route.fullPath
     let currentUser = Parse.User.current()
@@ -643,6 +653,7 @@ export default {
 
     // If user is logged in, get the user's favorites icons
     await parent.fetchSavedIcons()
+    parent.fetchUserAttributes()
     parent.getIconsArray();
 
   },
@@ -659,7 +670,8 @@ export default {
       'algoliaSearch',
       'scrollTo',
       'setDataToArr',
-      'pushDataToArr'
+      'pushDataToArr',
+      'fetchUserAttributes'
     ]),
 
     removeButton() {

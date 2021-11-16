@@ -1,5 +1,8 @@
 <template>
     <div :label="icon.appName.replaceAll('_', ' ') + 'Icon'" class="card-wrapper card-hover coral-card m-0">
+        
+        <SaveIconsDialogue/>
+
         <div class="m-auto">
             
             <div
@@ -82,6 +85,7 @@ import { mapActions, mapGetters } from 'vuex';
 import Parse from 'parse';
 
 import deleteDialog from './deleteDialog.vue';
+import SaveIconsDialogue from './SaveIconsDialogue.vue';
 import EditIconDialog from "./EditIconDialog.vue"
 
 var Icons = Parse.Object.extend("Icons2");
@@ -98,7 +102,8 @@ export default {
 
     components: {
         EditIconDialog,
-        deleteDialog
+        deleteDialog,
+        SaveIconsDialogue
     },
 
     data: function(){
@@ -151,6 +156,7 @@ export default {
         
         getDate(timeStamp){
             let newDate = new Date(timeStamp)
+            let date
             
             let day = newDate.getUTCDate()
                 if (day < 10) {
@@ -161,8 +167,13 @@ export default {
                 month = "0"+month
                 }
             let year = newDate.getFullYear()
-            let date = day + "/" + month + "/" + year
 
+            if(this.getUserAttributes.usaDateFormat){
+                 date = month + "/" + day + "/" + year
+                return date
+            }
+
+            date = day + "/" + month + "/" + year
             return date
         },
 
@@ -193,6 +204,12 @@ export default {
 
         async saveIcon(){
             let parent = this
+            
+            if(!Parse.User.current()){
+                this.showDialog('SaveIconsDialogue')
+                return
+            }
+
             let icon = parent.icon
             var Icons = Parse.Object.extend("Icons2");
             let iconQuery = new Parse.Query(Icons);
@@ -227,6 +244,9 @@ export default {
     },
 
     computed:{
+        ...mapGetters([
+            'getUserAttributes',
+        ]),
     }
 }
 </script>

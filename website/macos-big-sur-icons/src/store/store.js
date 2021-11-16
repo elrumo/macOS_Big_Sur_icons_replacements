@@ -39,8 +39,9 @@ export default new Vuex.Store({
       credit: "",
       id: "",
       twitterHandle: "",
-      username: ""
+      username: "",
     },
+    userAttributes: {},
     savedIcons: [],
     savedIconCount: "",
     
@@ -300,6 +301,12 @@ export default new Vuex.Store({
         store.commit('pushDataToArr', {arr: "dataToShow", data: allIcons})
       }
 
+    },
+
+    async fetchUserAttributes(store){
+      let ParseUser = Parse.User.current()
+      let userProps = ParseUser.attributes
+      store.commit('setDataToArr', {arr: 'userAttributes', data: userProps})
     },
 
 
@@ -748,6 +755,10 @@ export default new Vuex.Store({
 
     getSavedIcons(store){
       return store.savedIcons
+    },
+
+    getUserAttributes(store){
+      return store.userAttributes
     }
 
 

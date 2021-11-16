@@ -1,9 +1,6 @@
 <template>
   <coral-dialog v-on:submit.prevent="nextStep" v-if="!getUser.isAuth" id="loginDialog">
 
-    <!-- <coral-dialog-header>
-      Join macOSicons.com
-    </coral-dialog-header> -->
     <coral-dialog-content>
 
       <coral-dialog id="resetPasswordDialog">
@@ -54,13 +51,13 @@
           </div>
 
           <form v-if="userInfo.step != 3" class="coral-FormGroup m-0 p-l-4 text-left" style="width: calc(100% - 5px)">
-            <coral-alert
+            <!-- <coral-alert
               style="padding: 10px; margin-top: 15px"
               v-if="userInfo.step == 1"
             >
               <coral-alert-header>Important</coral-alert-header>
               <coral-alert-content>If you've submitted an icon before, use the same email address you used then.</coral-alert-content>
-            </coral-alert>
+            </coral-alert> -->
             
             <!-- Email -->
             <div class="coral-FormGroup-item">
@@ -141,6 +138,7 @@
                 class="coral-Form-field"
                 type="password"
                 name="password"
+                autofocus
                 autocomplete="current-password"
                 v-on:keyup="getTextFieldValue($event, 'password', false)"
               >
