@@ -178,9 +178,13 @@ export default {
     const parent = this;
     const slug = parent.$route.params.learningResource;
 
-    const resource = await axios.get('https://api.macosicons.com/tutorials?slug='+slug)
     const tutorials = await axios.get('https://api.macosicons.com/tutorials')
-
+    const resource = await axios.get('https://api.macosicons.com/tutorials?slug='+slug)
+    
+    for(let tutorial in tutorials.data){
+      tutorials.data[tutorial].feature_image = 'https://api.macosicons.com/'+tutorials.data[tutorial].feature_image[0].formats.medium.url
+    }
+    
     // resource.data[0].url = resource.data[0].url.replace('.com/watch?v=', '-nocookie.com/embed/')
     resource.data[0].feature_image = 'https://api.macosicons.com/'+resource.data[0].feature_image[0].formats.large.url
 
