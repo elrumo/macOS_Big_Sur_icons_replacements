@@ -1,4 +1,4 @@
-// const IN_PRODUCTION = process.env.NODE_ENV === "production";
+// const IN_PRODUCTION = import.meta.env.NODE_ENV === "production";
 
 // module.exports = {
 //   plugins: [
@@ -33,7 +33,7 @@
 
 // const plugins = [require("autoprefixer")];
 
-// // if (process.env.NODE_ENV === "production") {
+// // if (import.meta.env.NODE_ENV === "production") {
 //     plugins.push(
 //         purgecss({
 //             content: [

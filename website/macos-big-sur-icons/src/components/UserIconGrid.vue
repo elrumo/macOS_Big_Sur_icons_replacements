@@ -72,6 +72,12 @@ import deleteDialog from "./deleteDialog.vue"
 import { mapGetters, mapActions } from 'vuex'
 import Parse from 'parse'
 
+import addCoralIcon from "../assets/icons/add.svg"
+import newItemCoralIcon from "../assets/icons/newItem.svg"
+import editCoralIcon from "../assets/icons/edit.svg"
+import placeholderCoralIcon from "../assets/placeholder-icon.png"
+import deleteIcon from "../assets/delete.png"
+
 export default {
     name:"UserIconGrid",
 
@@ -88,11 +94,11 @@ export default {
     data(){
         return{
           coralIcons:{
-            addIcon: require("../assets/icons/add.svg"),
-            delete: require("../assets/icons/delete.svg"),
-            newItem: require("../assets/icons/newItem.svg"),
-            edit: require("../assets/icons/edit.svg"),
-            loading: require("../assets/placeholder-icon.png"),
+            delete: deleteIcon,
+            addIcon: addCoralIcon,
+            newItem: newItemCoralIcon,
+            edit: editCoralIcon,
+            loading: placeholderCoralIcon,
           },
           isAd: false,
 

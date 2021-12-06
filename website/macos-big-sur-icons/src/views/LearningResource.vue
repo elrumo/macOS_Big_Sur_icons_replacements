@@ -11,17 +11,20 @@
             All learning resources
           </p>
         </router-link>
-
+        
+        <!-- Title -->
         <h3 class="coral-Heading--XXL coral-Heading--heavy">
           {{ resource.title }}
         </h3>
 
+        <!-- Description -->
         <p class="coral-Body--XL">
           {{ resource.description }}
         </p>
         
         <hr class="coral-Divider--S m-t-24 m-b-8">
-
+        
+        <!-- Date -->
         <p class="coral-Detail coral-Detail--L opacity-80 m-b-32 m-l-8">
           <span class="coral-Detail--light">
             {{ getDate(resource.published_at) }}
@@ -29,7 +32,7 @@
         </p>
 
         <!-- Video -->
-        <figure class="post-full-image">
+        <figure v-if="resource.main_video" class="post-full-image">
           <iframe
             width="100%" 
             height="515" 
@@ -40,12 +43,21 @@
             allowfullscreen
           />
         </figure>
+
+        <!-- Image -->
+        <figure v-else class="post-full-image">
+          <img
+            :src="resource.feature_image"
+            width="100%" 
+            title="YouTube video player"
+          />
+        </figure>
       </div>
 
       <!-- Content -->
       <div
         class="blog-post-wrapper post-full-content"
-        v-html="markItDown(resource.content)"
+        v-html="markItDown(resource.tutorial_content)"
       ></div>
 
       <!-- About macOSicons -->
@@ -166,11 +178,12 @@ export default {
     const parent = this;
     const slug = parent.$route.params.learningResource;
 
-    const tutorials = await axios.get('http://localhost:1347/tutorials')
-    const resource = await axios.get('http://localhost:1347/tutorials?slug='+slug)
+    const resource = await axios.get('https://api.macosicons.com/tutorials?slug='+slug)
+    const tutorials = await axios.get('https://api.macosicons.com/tutorials')
 
-    resource.data[0].url = resource.data[0].url.replace('.com/watch?v=', '-nocookie.com/embed/')
-    resource.data[0].content = resource.data[0].content.replaceAll('(/uploads/', '(http://localhost:1347/uploads/')
+    // resource.data[0].url = resource.data[0].url.replace('.com/watch?v=', '-nocookie.com/embed/')
+    resource.data[0].feature_image = 'https://api.macosicons.com/'+resource.data[0].feature_image[0].formats.large.url
+
     parent.resource = resource.data[0]
     parent.tutorials = tutorials.data
   },
@@ -183,7 +196,7 @@ export default {
 
     markItDown(text){
       if(text){
-        return Marked(text, { sanitize: true })
+        return Marked(text)
       }
     },
 

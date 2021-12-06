@@ -1,11 +1,11 @@
 import GhostContentAPI from "@tryghost/content-api"
 
 // TODO: Remove API Key
-const VUE_APP_GHOST_KEY = process.env.VUE_APP_GHOST_KEY
+const VITE_GHOST_KEY =import.meta.env.VITE_GHOST_KEY
 
 const api = new GhostContentAPI({
     url: 'https://blog.macosicons.com/blog',
-    key: VUE_APP_GHOST_KEY,
+    key: VITE_GHOST_KEY,
     version: "v3"
 });
 

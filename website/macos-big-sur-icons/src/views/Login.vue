@@ -68,10 +68,10 @@ export default {
     //  logIn()
 
     // AppleID.auth.init({
-    //   clientId : process.env.VUE_APP_APPLE_CLIENTID,
+    //   clientId : import.meta.env.VITE_APPLE_CLIENTID,
     //   scope : 'email',
-    //   redirectURI : process.env.VUE_APP_APPLE_REDIRECT,
-    //   state : process.env.VUE_APP_APPLE_STATE,
+    //   redirectURI : import.meta.env.VITE_APPLE_REDIRECT,
+    //   state : import.meta.env.VITE_APPLE_STATE,
     //   usePopup : true //or false defaults to false
     // });
 

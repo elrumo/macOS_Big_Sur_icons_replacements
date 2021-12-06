@@ -45,9 +45,6 @@ export default {
         filesToShow: {},
         filesToUpload: {},
         coralIcons:{
-          addIcon: require("../assets/icons/add.svg"),
-          delete: require("../assets/icons/delete.svg"),
-          newItem: require("../assets/icons/newItem.svg"),
         },
         uploadProgress: 0,
         totalNumFiles: 0,

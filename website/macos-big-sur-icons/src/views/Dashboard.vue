@@ -197,6 +197,13 @@ let lastVisible
 
 const docLimit = 50
 
+import addCoralIcon from "../assets/icons/add.svg"
+import newItemCoralIcon from "../assets/icons/newItem.svg"
+import editCoralIcon from "../assets/icons/edit.svg"
+import placeholderCoralIcon from "../assets/placeholder-icon.png"
+import deleteIcon from "../assets/delete.png"
+import emailIcon from "../assets/icons/email.svg"
+
 export default {
   
   components:{
@@ -227,12 +234,12 @@ export default {
       reUploadedIcons: {},
 
       coralIcons:{
-        addIcon: require("../assets/icons/add.svg"),
-        delete: require("../assets/icons/delete.svg"),
-        newItem: require("../assets/icons/newItem.svg"),
-        edit: require("../assets/icons/edit.svg"),
-        loading: require("../assets/placeholder-icon.png"),
-        email: require("../assets/icons/email.svg"),
+        delete: deleteIcon,
+        addIcon: addCoralIcon,
+        newItem: newItemCoralIcon,
+        edit: editCoralIcon,
+        loading: placeholderCoralIcon,
+        email: emailIcon,
       },
     }
   },

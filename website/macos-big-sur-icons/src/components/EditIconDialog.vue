@@ -143,8 +143,12 @@
 import { mapGetters, mapActions } from 'vuex'
 import Parse from 'parse'
 import UploadDialog from './UploadDialog.vue'
+
 Parse.initialize("macOSicons");
 Parse.serverURL = 'https://media.macosicons.com/parse'
+
+import logoLowRes from "../assets/Resources/logo_lowres.png"
+
 export default {
   name:"EditIconDialog",
   
@@ -158,7 +162,7 @@ export default {
   data(){
     return{
       imgs:{
-        macOSiconsLogo: require("../assets/Resources/logo_lowres.png")
+        macOSiconsLogo: logoLowRes
       },
       isLoading: false,
       

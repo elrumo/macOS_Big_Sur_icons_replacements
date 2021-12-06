@@ -242,6 +242,8 @@ import Parse from 'parse'
 Parse.initialize("macOSicons");
 Parse.serverURL = 'https://media.macosicons.com/parse'
 
+import addCoralIcon from "../assets/icons/add.svg"
+
 export default {
     name:"SubmissionDialog",
     props:{
@@ -254,10 +256,7 @@ export default {
         filesToShow: {},
         filesToUpload: {},
         coralIcons:{
-          addIcon: require("../assets/icons/add.svg"),
-          // delete: require("../assets/icons/delete.svg"),
-          // newItem: require("../assets/icons/newItem.svg"),
-          // chevron: require("../assets/icons/ChevronDown.svg"),
+          addIcon: addCoralIcon,
         },
         uploadProgress: 0,
         totalNumFiles: 0,

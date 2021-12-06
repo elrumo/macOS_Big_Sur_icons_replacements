@@ -70,6 +70,7 @@ import H3Description from '@/components/H3_Description.vue'
 
 import pages from '@/api/pages.json';
 
+import featureImageIcon from "../assets/Instructions/intro-instructions.jpg"
 
 export default {
   name: 'Resources',
@@ -136,7 +137,7 @@ export default {
       },
       instructions:{
         title: "How to change app icons",
-        feature_image: require("../assets/Instructions/intro-instructions.jpg"),
+        feature_image: featureImageIcon,
         link: "/how-to",
         slug: "/how-to"
       },
