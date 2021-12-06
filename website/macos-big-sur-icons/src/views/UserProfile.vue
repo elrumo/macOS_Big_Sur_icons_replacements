@@ -184,6 +184,16 @@ import StickyBanner from "@/components/StickyBanner.vue"
 import Parse from 'parse'
 import { mapGetters, mapActions } from 'vuex'
 
+import twitterIcon from "../assets/icons/twitter.svg"
+import shareIcon from "../assets/icons/share.svg"
+import LinkIcon from "../assets/icons/Link.svg"
+import profilePicIcon from "../assets/Resources/accounts/profilePic.png"
+
+import addCoralIcon from "../assets/icons/add.svg"
+import newItemCoralIcon from "../assets/icons/newItem.svg"
+import editCoralIcon from "../assets/icons/edit.svg"
+import placeholderCoralIcon from "../assets/placeholder-icon.png"
+import deleteIcon from "../assets/delete.png"
 
 export default {
   name: 'UserProfile',
@@ -200,10 +210,10 @@ export default {
   data(){
     return {
       resources:{
-        twitter: require("../assets/icons/twitter.svg"),
-        share: require("../assets/icons/share.svg"),
-        link: require("../assets/icons/Link.svg"),
-        profilePic: require("../assets/Resources/accounts/profilePic.png"),
+        twitter: twitterIcon,
+        share: shareIcon,
+        link: LinkIcon,
+        profilePic: profilePicIcon,
       },
 
       iconsToShow: "approved",
@@ -224,11 +234,11 @@ export default {
       scrolledToBottom: true,
 
       coralIcons:{
-        addIcon: require("../assets/icons/add.svg"),
-        delete: require("../assets/icons/delete.svg"),
-        newItem: require("../assets/icons/newItem.svg"),
-        edit: require("../assets/icons/edit.svg"),
-        loading: require("../assets/placeholder-icon.png"),
+        delete: deleteIcon,
+        addIcon: addCoralIcon,
+        newItem: newItemCoralIcon,
+        edit: editCoralIcon,
+        loading: placeholderCoralIcon,
       }
     }
   },

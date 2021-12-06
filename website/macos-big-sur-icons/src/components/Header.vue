@@ -280,6 +280,16 @@ import { mapGetters, mapActions } from 'vuex'
 
 import Parse from 'parse'
 
+import twitter from "../assets/icons/twitter.svg"
+import discord from "../assets/icons/Discord.svg"
+import github from "../assets/icons/github.svg"
+import burgerMenu from "../assets/icons/burgerMenu.svg"
+import settings from "../assets/icons/Settings.svg"
+import profilePic from "../assets/Resources/accounts/profilePic.png"
+import Settings from "../assets/icons/Settings.svg"
+import User from "../assets/icons/User.svg"
+import LogOut from "../assets/icons/LogOut.svg"
+
 export default {
     name:"Header",
 
@@ -301,13 +311,13 @@ export default {
             isMobileMenu: false,
             
             icons:{
-                twitter: require("../assets/icons/twitter.svg"),
-                discord: require("../assets/icons/Discord.svg"),
-                github: require("../assets/icons/github.svg"),
-                burgerMenu: require("../assets/icons/burgerMenu.svg"),
-                settings: require("../assets/icons/Settings.svg"),
+                twitter: twitter,
+                discord: discord,
+                github: github ,
+                burgerMenu: burgerMenu ,
+                settings: settings ,
 
-                profilePic: require("../assets/Resources/accounts/profilePic.png"),
+                profilePic: profilePic ,
             },
             scrolled: false,
             
@@ -316,7 +326,7 @@ export default {
             optionsList: [
                 {
                     name: "Account Settings",
-                    img: require("../assets/icons/Settings.svg"),
+                    img: Settings,
                     onClick: {
                         method: this.showEl,
                         data: "accountDialog"
@@ -324,7 +334,7 @@ export default {
                 },
                 {
                     name: "Profile",
-                    img: require("../assets/icons/User.svg"),
+                    img: User,
                     onClick:{
                         method: this.changePath,
                         data: "/u/"
@@ -332,7 +342,7 @@ export default {
                 },
                 {
                     name: "Logout",
-                    img: require("../assets/icons/LogOut.svg"),
+                    img: LogOut,
                     onClick: {
                         method: this.logOut
                     }

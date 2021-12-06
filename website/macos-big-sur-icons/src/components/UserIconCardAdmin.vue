@@ -68,6 +68,12 @@ import EditIconDialog from "./EditIconDialog.vue"
 
 var Icons = Parse.Object.extend("Icons2");
 
+import addCoralIcon from "../assets/icons/add.svg"
+import newItemCoralIcon from "../assets/icons/newItem.svg"
+import editCoralIcon from "../assets/icons/edit.svg"
+import placeholderCoralIcon from "../assets/placeholder-icon.png"
+import deleteIcon from "../assets/delete.png"
+
 export default {
     name: "IconCard",
     
@@ -86,11 +92,11 @@ export default {
     data: function(){
         return{
             coralIcons:{
-                addIcon: require("../assets/icons/add.svg"),
-                delete: require("../assets/icons/delete.svg"),
-                newItem: require("../assets/icons/newItem.svg"),
-                edit: require("../assets/icons/edit.svg"),
-                placeholderIcon: require("../assets/placeholder-icon.png"),
+                delete: deleteIcon,
+                addIcon: addCoralIcon,
+                newItem: newItemCoralIcon,
+                edit: editCoralIcon,
+                loading: placeholderCoralIcon,
             },
             dialog:{
                 editIcon: false,

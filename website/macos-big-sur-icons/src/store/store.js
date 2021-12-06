@@ -14,8 +14,8 @@ var IconsBase = Parse.Object.extend("Icons2");
 
 let algolia = {
   // TODO: remove credentials
-  appid: process.env.VUE_APP_ALGOLIA_APPID,
-  apikey: process.env.VUE_APP_ALGOLIA_KEY
+  appid: import.meta.env.VITE_ALGOLIA_APPID,
+  apikey: import.meta.env.VITE_ALGOLIA_KEY
 }
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
@@ -305,8 +305,10 @@ export default new Vuex.Store({
 
     async fetchUserAttributes(store){
       let ParseUser = Parse.User.current()
-      let userProps = ParseUser.attributes
-      store.commit('setDataToArr', {arr: 'userAttributes', data: userProps})
+      if (ParseUser) {
+        let userProps = ParseUser.attributes
+        store.commit('setDataToArr', {arr: 'userAttributes', data: userProps})
+      }
     },
 
 
@@ -440,7 +442,6 @@ export default new Vuex.Store({
 
     getPageData(store){
       console.log(store.resourcesData);
-      return "Hi"
     },
 
     setSelectedIcon(store, icon){

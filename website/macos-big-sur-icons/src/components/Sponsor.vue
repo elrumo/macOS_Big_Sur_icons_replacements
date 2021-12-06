@@ -132,12 +132,14 @@
 </template>
 
 <script>
+import profilePicIcon from "../assets/profilePic.jpg"
+
 export default {
   name: "Sponsor",
   data() {
     return {
       gitHub: {
-        profile: require("../assets/profilePic.jpg"),
+        profile: profilePicIcon,
       },
     };
   },

@@ -21,7 +21,7 @@
                 
                 <!-- macOS icon download -->
                 <a v-if="isMacOs" @click="addClickCount(icon)" rel="noopener" :href="icon.icnsUrl">
-                    <div v-lazy-container="{ selector: 'img', loading: coralIcons.placeholderIcon }">
+                    <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
                         <img
                             width="100px"
                             height="100px"
@@ -33,7 +33,7 @@
 
                 <!-- iOS icon download -->
                 <a v-else @click="addClickCount(icon)" target="_blank" rel="noopener" :href="icon.iOSUrl">
-                    <div v-lazy-container="{ selector: 'img', loading: coralIcons.placeholderIcon }">
+                    <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
                         <img width="100px" height="100px" :alt="icon.appName +' icon'" :data-src="icon.lowResPngUrl">
                     </div>
                 </a>
@@ -90,6 +90,14 @@ import EditIconDialog from "./EditIconDialog.vue"
 
 var Icons = Parse.Object.extend("Icons2");
 
+import downloadIcon from "../assets/icons/Download.svg"
+import addCoralIcon from "../assets/icons/add.svg"
+import newItemCoralIcon from "../assets/icons/newItem.svg"
+import editCoralIcon from "../assets/icons/edit.svg"
+import placeholderCoralIcon from "../assets/placeholder-icon.png"
+import heartIcon from "../assets/icons/Category_Icons/Heart.svg"
+import deleteIcon from "../assets/icons/delete.svg"
+
 export default {
     name: "UserIconCard",
     
@@ -109,15 +117,15 @@ export default {
     data: function(){
         return{
             coralIcons:{
-                addIcon: require("../assets/icons/add.svg"),
-                delete: require("../assets/icons/delete.svg"),
-                newItem: require("../assets/icons/newItem.svg"),
-                edit: require("../assets/icons/edit.svg"),
-                download: require("../assets/icons/Download.svg"),
-                placeholderIcon: require("../assets/placeholder-icon.png"),
+                download: downloadIcon,
+                delete: deleteIcon,
+                addIcon: addCoralIcon,
+                newItem: newItemCoralIcon,
+                edit: editCoralIcon,
+                loading: placeholderCoralIcon,
             },
             icons:{
-                Heart: require("../assets/icons/Category_Icons/Heart.svg"),
+                Heart: heartIcon
             },
             dialog:{
                 editIcon: false,

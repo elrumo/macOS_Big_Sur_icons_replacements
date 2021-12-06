@@ -38,6 +38,12 @@
 
 <script>
 
+import addCoralIcon from "../assets/icons/add.svg"
+import newItemCoralIcon from "../assets/icons/newItem.svg"
+import editCoralIcon from "../assets/icons/edit.svg"
+import placeholderCoralIcon from "../assets/placeholder-icon.png"
+import ChevronDownCoralIcon from "../assets/icons/ChevronDown.svg"
+
 export default {
     name: "IconCard",
     
@@ -48,11 +54,11 @@ export default {
     data: function(){
         return{
             coralIcons:{
-                addIcon: require("../assets/icons/add.svg"),
-                delete: require("../assets/icons/delete.svg"),
-                newItem: require("../assets/icons/newItem.svg"),
-                edit: require("../assets/icons/edit.svg"),
-                loading: require("../assets/loading.gif"),
+                delete: deleteIcon,
+                addIcon: addCoralIcon,
+                newItem: newItemCoralIcon,
+                edit: editCoralIcon,
+                loading: placeholderCoralIcon,
             }
         }
     },

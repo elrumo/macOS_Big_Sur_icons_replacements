@@ -39,6 +39,8 @@
 
 <script>
 
+import placeholderIcon from "../assets/placeholder-icon.png"
+
 export default {
     name: "UserIconCardLoading",
     
@@ -49,7 +51,7 @@ export default {
     data: function(){
         return{
             coralIcons:{
-                placeholderIcon: require("../assets/placeholder-icon.png"),
+                placeholderIcon: placeholderIcon,
             }
         }
     },

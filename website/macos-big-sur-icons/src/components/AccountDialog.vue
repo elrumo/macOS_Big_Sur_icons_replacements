@@ -218,6 +218,8 @@
 import { mapGetters, mapActions } from 'vuex'
 import Parse from 'parse'
 
+import logoLowRes from "../assets/Resources/logo_lowres.png"
+
 export default {
     name:"AccountDialog",
     
@@ -227,7 +229,7 @@ export default {
     data(){
       return{
         imgs:{
-          macOSiconsLogo: require("../assets/Resources/logo_lowres.png")
+          macOSiconsLogo: logoLowRes,
         },
         email: "",
         yourName: "",

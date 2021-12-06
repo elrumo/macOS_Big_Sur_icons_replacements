@@ -429,20 +429,54 @@ import axios from 'axios';
 
 import VueLoadImage from 'vue-load-image'
 
-import dotenv from 'dotenv'; // Used to access env varaibles
-dotenv.config();
+// import dotenv from 'dotenv'; // Used to access env varaibles
+// dotenv.config();
 
 // TODO: remove credentials
-const VUE_APP_PARSE_APP_ID = process.env.VUE_APP_PARSE_APP_ID
-const VUE_APP_PARSE_JAVASCRIPT_KEY = process.env.VUE_APP_PARSE_JAVASCRIPT_KEY
+const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
+const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
 
-Parse.initialize(VUE_APP_PARSE_APP_ID, VUE_APP_PARSE_JAVASCRIPT_KEY)
+Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://media.macosicons.com/parse'
 
 var Icons = Parse.Object.extend("Icons2");
 
 const docLimit = 20
 
+import deleteIcon from "../assets/icons/delete.svg"
+import namingOrderIcon from "../assets/icons/namingOrder.svg"
+import dateIcon from "../assets/icons/date.svg"
+import placeholderIcon from "../assets/placeholder-icon.png"
+import BrowserExtensionsIcon from "../assets/icons/Category_Icons/Browser_Extensions.svg"
+import DeveloperToolsIcon from "../assets/icons/Category_Icons/Developer_Tools.svg"
+import EducationIcon from "../assets/icons/Category_Icons/Education.svg"
+import EntertainmentIcon from "../assets/icons/Category_Icons/Entertainment.svg"
+import FinanceIcon from "../assets/icons/Category_Icons/Finance.svg"
+import GamesIcon from "../assets/icons/Category_Icons/Games.svg"
+import Graphics_DesignIcon from "../assets/icons/Category_Icons/Graphics_Design.svg"
+import HealthFitnessIcon from "../assets/icons/Category_Icons/Health_Fitness.svg"
+import LifestyleIcon from "../assets/icons/Category_Icons/Lifestyle.svg"
+import MedicalIcon from "../assets/icons/Category_Icons/Medical.svg"
+import MusicIcon from "../assets/icons/Category_Icons/Music.svg"
+import NewsIcon from "../assets/icons/Category_Icons/News.svg"
+import PhotoVideoIcon from "../assets/icons/Category_Icons/Photo_Video.svg"
+import ProductivityIcon from "../assets/icons/Category_Icons/Productivity.svg"
+import ReferenceIcon from "../assets/icons/Category_Icons/Reference.svg"
+import SocialNetworkingIcon from "../assets/icons/Category_Icons/Social_Networking.svg"
+import SportsIcon from "../assets/icons/Category_Icons/Sports.svg"
+import TravelIcon from "../assets/icons/Category_Icons/Travel.svg"
+import UtilitiesIcon from "../assets/icons/Category_Icons/Utilities.svg"
+import WeatherIcon from "../assets/icons/Category_Icons/Weather.svg"
+import AllIconsIcon from "../assets/icons/Category_Icons/All_Icons.svg"
+import StarIcon from "../assets/icons/Category_Icons/Star.svg"
+import HeartIcon from "../assets/icons/Category_Icons/Heart.svg"
+import FlameIcon from "../assets/icons/Category_Icons/Flame.svg"
+
+import addCoralIcon from "../assets/icons/add.svg"
+import newItemCoralIcon from "../assets/icons/newItem.svg"
+import editCoralIcon from "../assets/icons/edit.svg"
+import placeholderCoralIcon from "../assets/placeholder-icon.png"
+import ChevronDownCoralIcon from "../assets/icons/ChevronDown.svg"
 
 export default {
   name: 'Home',
@@ -552,45 +586,45 @@ export default {
       lastVisible: {},
       dataToShow: [],
       activeIcon: {},
+      
       icons:{
-        success: require("../assets/icons/delete.svg"),
-        namingOrder: require("../assets/icons/namingOrder.svg"),
-        date: require("../assets/icons/date.svg"),
-        loading: require("../assets/placeholder-icon.png"),
-        iconsOrder: require("../assets/icons/namingOrder.svg"),
-        Browser_Extensions: require("../assets/icons/Category_Icons/Browser_Extensions.svg"),
-        Browser_Extensions: require("../assets/icons/Category_Icons/Browser_Extensions.svg"),
-        Developer_Tools: require("../assets/icons/Category_Icons/Developer_Tools.svg"),
-        Education: require("../assets/icons/Category_Icons/Education.svg"),
-        Entertainment: require("../assets/icons/Category_Icons/Entertainment.svg"),
-        Finance: require("../assets/icons/Category_Icons/Finance.svg"),
-        Games: require("../assets/icons/Category_Icons/Games.svg"),
-        Graphics_Design: require("../assets/icons/Category_Icons/Graphics_Design.svg"),
-        Health_Fitness: require("../assets/icons/Category_Icons/Health_Fitness.svg"),
-        Lifestyle: require("../assets/icons/Category_Icons/Lifestyle.svg"),
-        Medical: require("../assets/icons/Category_Icons/Medical.svg"),
-        Music: require("../assets/icons/Category_Icons/Music.svg"),
-        News: require("../assets/icons/Category_Icons/News.svg"),
-        Photo_Video: require("../assets/icons/Category_Icons/Photo_Video.svg"),
-        Productivity: require("../assets/icons/Category_Icons/Productivity.svg"),
-        Reference: require("../assets/icons/Category_Icons/Reference.svg"),
-        Social_Networking: require("../assets/icons/Category_Icons/Social_Networking.svg"),
-        Sports: require("../assets/icons/Category_Icons/Sports.svg"),
-        Travel: require("../assets/icons/Category_Icons/Travel.svg"),
-        Utilities: require("../assets/icons/Category_Icons/Utilities.svg"),
-        Weather: require("../assets/icons/Category_Icons/Weather.svg"),
-        AllIcons: require("../assets/icons/Category_Icons/All_Icons.svg"),
-        Star: require("../assets/icons/Category_Icons/Star.svg"),
-        Heart: require("../assets/icons/Category_Icons/Heart.svg"),
-        Flame: require("../assets/icons/Category_Icons/Flame.svg"),
+        success: deleteIcon,
+        namingOrder: namingOrderIcon,
+        date: dateIcon,
+        loading: placeholderIcon,
+        iconsOrder: namingOrderIcon,
+        Browser_Extensions: BrowserExtensionsIcon,
+        Developer_Tools: DeveloperToolsIcon,
+        Education: EducationIcon,
+        Entertainment: EntertainmentIcon,
+        Finance: FinanceIcon,
+        Games: GamesIcon,
+        Graphics_Design: Graphics_DesignIcon,
+        Health_Fitness: HealthFitnessIcon,
+        Lifestyle: LifestyleIcon,
+        Medical: MedicalIcon,
+        Music: MusicIcon,
+        News: NewsIcon,
+        Photo_Video: PhotoVideoIcon,
+        Productivity: ProductivityIcon,
+        Reference: ReferenceIcon,
+        Social_Networking: SocialNetworkingIcon,
+        Sports: SportsIcon,
+        Travel: TravelIcon,
+        Utilities: UtilitiesIcon,
+        Weather: WeatherIcon,
+        AllIcons: AllIconsIcon,
+        Star: StarIcon,
+        Heart: HeartIcon,
+        Flame: FlameIcon,
       },
       coralIcons:{
-        addIcon: require("../assets/icons/add.svg"),
-        delete: require("../assets/icons/delete.svg"),
-        newItem: require("../assets/icons/newItem.svg"),
-        edit: require("../assets/icons/edit.svg"),
-        loading: require("../assets/placeholder-icon.png"),
-        chevron: require("../assets/icons/ChevronDown.svg"),
+        delete: deleteIcon,
+        addIcon: addCoralIcon,
+        newItem: newItemCoralIcon,
+        edit: editCoralIcon,
+        loading: placeholderCoralIcon,
+        chevron: ChevronDownCoralIcon,
       }
     }
   },
@@ -683,7 +717,6 @@ export default {
 
     async fetchSavedIcons(){
       if (!Parse.User.current()){
-        console.log(!Parse.User.current());
         return 
       }
 

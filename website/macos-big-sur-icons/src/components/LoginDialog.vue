@@ -302,6 +302,15 @@ import Parse from 'parse'
 Parse.initialize("macOSicons");
 Parse.serverURL = 'https://media.macosicons.com/parse'
 
+import addCoralIcon from "../assets/icons/add.svg"
+import newItemCoralIcon from "../assets/icons/newItem.svg"
+import editCoralIcon from "../assets/icons/edit.svg"
+import placeholderCoralIcon from "../assets/placeholder-icon.png"
+import appleIcon from "../assets/icons/Apple.svg"
+import deleteIcon from "../assets/icons/delete.svg"
+
+import logoLowRes from "../assets/Resources/logo_lowres.png"
+
 export default {
   name:"LoginDialog",
   
@@ -311,13 +320,15 @@ export default {
   data(){
     return{
       coralIcons:{
-        addIcon: require("../assets/icons/add.svg"),
-        delete: require("../assets/icons/delete.svg"),
-        newItem: require("../assets/icons/newItem.svg"),
-        apple: require("../assets/icons/Apple.svg"),
+        apple: appleIcon,
+        delete: deleteIcon,
+        addIcon: addCoralIcon,
+        newItem: newItemCoralIcon,
+        edit: editCoralIcon,
+        loading: placeholderCoralIcon,
       },
       imgs:{
-        macOSiconsLogo: require("../assets/Resources/logo_lowres.png")
+        macOSiconsLogo: logoLowRes
       },
       email: "",
       yourName: "",

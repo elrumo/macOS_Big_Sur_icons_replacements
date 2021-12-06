@@ -24,6 +24,10 @@ import Header from '@/components/Header.vue'
 import HowToSteps from '@/components/HowToSteps.vue'
 import H3Description from '@/components/H3_Description.vue'
 
+import downloadIcon from "../assets/Instructions/downloadIcon.png"
+import getInfoIcon from "../assets/Instructions/getInfo.png"
+import setAppIcon from "../assets/Instructions/setApp.png"
+
 export default {
   name: 'HowTo',
 
@@ -89,19 +93,19 @@ export default {
         download:{
           name: "download",
           text:"### Download the icon you want from [**macOSicons.com**](https://macosicons.com)",
-          img: require("../assets/Instructions/downloadIcon.png"),
+          img: downloadIcon,
           gradient: false,
         },
         getInfo:{
           name: "getInfo",
           text:"### Find the app in Finder, right click on it and select **Get Info**",
-          img: require("../assets/Instructions/getInfo.png"),
+          img: getInfoIcon,
           gradient: true,
         },
         setApp:{
           name: "setApp",
           text:"### Drag the downloaded file to the current icon on the Info window",
-          img: require("../assets/Instructions/setApp.png"),
+          img: setAppIcon,
           gradient: true,
         }
       }

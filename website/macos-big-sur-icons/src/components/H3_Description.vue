@@ -73,7 +73,7 @@ export default {
         },
 
         markItDown(text){
-            return Marked(text, { sanitize: true })
+            return Marked(text)
         }
     },
 

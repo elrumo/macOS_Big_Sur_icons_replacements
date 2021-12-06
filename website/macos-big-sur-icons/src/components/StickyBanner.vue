@@ -51,6 +51,8 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
+import lgbtIcon from "../assets/Resources/lgbt.png"
+
 export default {
     name:"StickyBanner",
 
@@ -65,7 +67,7 @@ export default {
     data(){
         return{
         imgs:{
-            lgbt: require("../assets/Resources/lgbt.png")
+            lgbt: lgbtIcon
           },
         }
     },

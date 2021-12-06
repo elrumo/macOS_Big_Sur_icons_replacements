@@ -23,17 +23,12 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import { mapActions } from 'vuex'
 import Header from '@/components/Header.vue'
 import ResourcesCard from '@/components/ResourcesCard.vue'
 import Footer from '@/components/Footer.vue'
 import H3Description from '@/components/H3_Description.vue'
 
 import axios from 'axios'
-
-import pages from '@/api/pages.json';
-
 
 export default {
   name: 'Learn',
@@ -92,61 +87,40 @@ export default {
 
   data(){
     return {
-      isMobile: this.$isMobile(),
       introText:{
         h3: "Tutorials",
         description: "More tutorials on everything macOS icons coming soon. If you’d like to contribute or make suggestions, let us know on our [Discord](https://discord.gg/f4mTRyyTkT) channel or [Twitter](https://twitter.com/elrumo).",
         isAd: false,
         isCenter: true,
       },
-      resourcesData: [
-        {
-          feature_image: "https://i.imgur.com/gKriWTY.jpg",
-          title: "Introduction to macOS icon design",
-          description: "Learn how to designicons for macOS in Photoshop",
-        },
-        {
-          feature_image: "https://i.imgur.com/ScAgHYI.jpg",
-          title: "More coming soon",
-          description: "If you’d like to contribute or make suggestions, let us know on our Discord channel or Twitter.",
-        }
-      ],
       tutorials: {},
     }
   },
   
   mounted: async function(){
     const parent = this;
-    let learningHome, tutorials, user
     
+    // Tutorials homepage
     try {
-      user = await axios.post('http://localhost:1347/auth/local',{
-          identifier: 'elias.ruiz.monserrat@gmail.com',
-          password: 'xN7SE48hXYNfn6J',
-      })
-    } catch (error) {
-      console.log("Error getting user data: ", error);
-    }
-    
-    try {
-      learningHome = await axios.get('http://localhost:1347/learn',{
-        headers: {
-          Authorization:'Bearer ' + user.data.jwt
-        }
-      })
-      
+      let learningHome = await axios.get('https://api.macosicons.com/home-page')
+
       parent.introText = {
         h3: learningHome.data.title,
-        description: learningHome.data.description,
+        description: learningHome.data.intro_text,
         isAd: false,
         isCenter: true,
       }
     } catch (error) {
       console.log("Error getting learning page data: ", error);
     }
-
+    
+    // Tutorials
     try {
-      tutorials = await axios.get('http://localhost:1347/tutorials')
+      let tutorials = await axios.get('https://api.macosicons.com/tutorials')
+      // Set image from array to object
+      for(let tutorial in tutorials.data){
+        tutorials.data[tutorial].feature_image = 'https://api.macosicons.com/'+tutorials.data[tutorial].feature_image[0].formats.medium.url
+      }
       parent.tutorials = tutorials.data
     } catch (error) {
       console.log("Error getting tutorials: ", error);
@@ -155,14 +129,6 @@ export default {
   },
 
   methods: {
-    ...mapActions([
-      'getPageData',
-      'adClick'
-    ]),
-
-    async getPages(){
-      console.log(this.getPageData);
-    }
   }
 
 }

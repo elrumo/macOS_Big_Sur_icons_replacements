@@ -33,6 +33,8 @@
 <script>
 import Marked from 'marked';
 
+import logoLowRes from "../assets/Resources/logo_lowres.png"
+
 export default {
     name: "SaveIconsDialogue",
     
@@ -43,7 +45,7 @@ export default {
     data(){
         return{
             imgs:{
-                macOSiconsLogo: require("../assets/Resources/logo_lowres.png")
+                macOSiconsLogo: logoLowRes
             },
         }
     },

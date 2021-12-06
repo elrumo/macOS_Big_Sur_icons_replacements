@@ -107,6 +107,10 @@ import Parse from 'parse'
 Parse.initialize("macOSicons");
 Parse.serverURL = 'https://media.macosicons.com/parse'
 
+import addIcon from "../assets/icons/add.svg"
+import deleteIcon from "../assets/icons/delete.svg"
+import newItemIcon from "../assets/icons/newItem.svg"
+
 export default {
     name:"Dialog",
     props:{
@@ -117,9 +121,9 @@ export default {
         filesToShow: {},
         filesToUpload: {},
         coralIcons:{
-          addIcon: require("../assets/icons/add.svg"),
-          delete: require("../assets/icons/delete.svg"),
-          newItem: require("../assets/icons/newItem.svg"),
+          addIcon: addIcon,
+          delete: deleteIcon,
+          newItem: newItemIcon,
         },
         uploadProgress: 0,
         totalNumFiles: 0,
