@@ -425,7 +425,6 @@ import NativeAd from './NativeAd.vue';
 import StickyBanner from './StickyBanner.vue';
 
 import Parse from 'parse'
-import axios from 'axios';
 
 import VueLoadImage from 'vue-load-image'
 
@@ -578,7 +577,7 @@ export default {
       distanceFromTop: true ,
 
       message: "",
-      today: "",
+      today: this.getTodayDate(),
 
       downloads:{},
 
@@ -630,66 +629,21 @@ export default {
   },
 
   mounted: async function(){
-    let parent = this;
-    parent.getAd()
+    // let parent = this;
 
-    document.addEventListener('keydown', (event) => {
-      let isCmdkPressed = event.getModifierState('Meta') && event.key.toLowerCase() == 'k'
+    this.getAd()
+    this.cmdK()
+    this.searchForPathQuery()
+    this.setEventListenersOnStart()
+    await this.fetchSavedIcons()
+    this.fetchUserAttributes()
+    this.getIconsArray();
 
-      if(isCmdkPressed){
-        document.getElementById('searchBarInput').focus()
-        document.getElementById('searchBarInput').click();
-      }
-
-    });
-
-    let fullPath = parent.$route.fullPath
+    let fullPath = this.$route.fullPath
     let currentUser = Parse.User.current()
-
     if (fullPath.includes("/?username=") && !currentUser) {
-      // let userName = fullPath.replace("/?username=", "")
-      parent.showEl("loginDialog")
+      this.showEl("loginDialog")
     }
-    
-    window.addEventListener('scroll', this.handleScroll);
-
-    window.addEventListener('resize', () => {
-      parent.windowWidth = window.innerWidth
-    })
-
-    // Get today's date
-    ////////////////////////////////////////////////////////////////
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
-    today = dd + '/' + mm + '/' + yyyy;
-    parent.today = today;
-    ////////////////////////////////////////////////////////////////
-
-    let routerName = this.$router.currentRoute.name
-    if(routerName == "Search"){
-      let serachQuery = this.$router.currentRoute.params.search
-      parent.searchString = serachQuery
-    }
-
-    // Parse.User.enableUnsafeCurrentUser()
-    function handleParseError(err){
-      switch (err.code) {
-        case Parse.Error.INVALID_SESSION_TOKEN:
-          Parse.User.logOut();
-          break;
-      
-        default:
-          break;
-      }
-    }
-
-    // If user is logged in, get the user's favorites icons
-    await parent.fetchSavedIcons()
-    parent.fetchUserAttributes()
-    parent.getIconsArray();
-
   },
 
   methods:{ 
@@ -708,7 +662,44 @@ export default {
       'fetchUserAttributes'
     ]),
 
+    setEventListenersOnStart(){
+      window.addEventListener('scroll', this.handleScroll);
+
+      window.addEventListener('resize', (data) => {
+        parent.windowWidth = window.innerWidth
+      })
+    },
+
+    searchForPathQuery(){
+      let routerName = this.$router.currentRoute.name
+      if(routerName == "Search"){
+        let serachQuery = this.$router.currentRoute.params.search
+        this.searchString = serachQuery
+      }
+    },
+
     removeButton() {
+    },
+
+    getTodayDate(){
+      let today = new Date();
+      let dd = String(today.getDate()).padStart(2, '0');
+      let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      let yyyy = today.getFullYear();
+      today = dd + '/' + mm + '/' + yyyy;
+      return today
+    },
+
+    cmdK(){
+      document.addEventListener('keydown', (event) => {
+        let isCmdkPressed = event.getModifierState('Meta') && event.key.toLowerCase() == 'k'
+
+        if(isCmdkPressed){
+          document.getElementById('searchBarInput').focus()
+          document.getElementById('searchBarInput').click();
+        }
+
+      });
     },
 
     async setCategoryAndFetchSaved(){
@@ -965,25 +956,27 @@ export default {
       }
     },
 
+    handleParseError(err){
+      const parent = this
+
+      console.log("Error getting icons, report this error to @elrumo: ", err);
+      switch (err.code) {
+        case Parse.Error.INVALID_SESSION_TOKEN:
+          Parse.User.logOut();
+          window.location.reload()
+          break;
+        
+        case 100:
+          break;
+      
+        default:
+          parent.loadingError = "true"
+          break;
+      }
+    },
+
     async getIconsArray(){
       let parent = this
-
-      function handleParseError(err){
-        console.log("Error getting icons, report this error to @elrumo: ", err);
-        switch (err.code) {
-          case Parse.Error.INVALID_SESSION_TOKEN:
-            Parse.User.logOut();
-            window.location.reload()
-            break;
-          
-          case 100:
-            break;
-        
-          default:
-            parent.loadingError = "true"
-            break;
-        }
-      }
 
       try {
         const query = new Parse.Query(Icons);
@@ -994,9 +987,14 @@ export default {
         parent.howManyRecords = docLimit
         const results = await query.find()
 
-        query.count().then((count) =>{
-          parent.iconListLen = count
-        })
+        try {
+          query.count().then((count) =>{
+            parent.iconListLen = count
+          })
+        } catch (error) {
+          console.log('ERROR: ', error);
+        }
+
         
         parent.setData({state: 'list', data: []})
         var allIcons = []
@@ -1050,7 +1048,7 @@ export default {
         parent.scroll()
 
       } catch (error) {
-        handleParseError(error)
+        this.handleParseError(error)
         console.log("865 - Error loading icons, report this error to @elrumo: ", error);
       }
 
