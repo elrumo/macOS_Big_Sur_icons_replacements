@@ -84,7 +84,8 @@ export default {
   } 
 
   .min-height{
-    min-height: calc(100vh - 125px);
+    /* min-height: calc(100vh - 125px); */
+    min-height: calc(100vh - 115px);
     margin: auto;
   }
 
