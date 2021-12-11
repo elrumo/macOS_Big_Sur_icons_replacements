@@ -977,6 +977,7 @@ export default {
 
     async getIconsArray(){
       let parent = this
+        console.log("HELLO!!!");
 
       // try {
         const query = new Parse.Query(Icons);
@@ -989,13 +990,9 @@ export default {
 
         console.log("results: ", results);
 
-        try {
-          query.count().then((count) =>{
-            parent.iconListLen = count
-          })
-        } catch (error) {
-          console.log('ERROR: ', error);
-        }
+        query.count().then((count) =>{
+          parent.iconListLen = count
+        })
 
         
         parent.setData({state: 'list', data: []})
@@ -1003,25 +1000,29 @@ export default {
 
         // Save savedIcons IDs to array to compare them to fetched icons
         let savedIconsId = parent.getSavedIcons.map(({id}) => id )
+        
+        try{
+          for(let result in results){
 
-        for(let result in results){
+            let iconItem = results[result]
 
-          let iconItem = results[result]
+            let objData = iconItem.attributes
+            let iconData = {}
 
-          let objData = iconItem.attributes
-          let iconData = {}
+            for(let data in objData){
+              iconData[data] = objData[data]
+            }
+            iconData.id = iconItem.id
 
-          for(let data in objData){
-            iconData[data] = objData[data]
+            // Check if icon has been saved by the user
+            iconData.isSaved = savedIconsId.includes(iconItem.id);
+
+            allIcons.push(iconData)
           }
-          iconData.id = iconItem.id
-
-          // Check if icon has been saved by the user
-          iconData.isSaved = savedIconsId.includes(iconItem.id);
-
-          allIcons.push(iconData)
+          parent.$store.dispatch("pushDataToArr", {data:  allIcons, arr: "list", concatArray: true});
+        } catch (error) {
+          console.log('ERROR: ', error);
         }
-        parent.$store.dispatch("pushDataToArr", {data:  allIcons, arr: "list", concatArray: true});
         
         // Gets up to date info about the user
         let data = {
