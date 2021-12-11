@@ -978,7 +978,7 @@ export default {
     async getIconsArray(){
       let parent = this
 
-      try {
+      // try {
         const query = new Parse.Query(Icons);
         query.equalTo("approved", true);
         query.descending("timeStamp");
@@ -1047,10 +1047,10 @@ export default {
 
         parent.scroll()
 
-      } catch (error) {
-        this.handleParseError(error)
-        console.log("865 - Error loading icons, report this error to @elrumo: ", error);
-      }
+      // } catch (error) {
+      //   this.handleParseError(error)
+      //   console.log("865 - Error loading icons, report this error to @elrumo: ", error);
+      // }
 
     },
 
