@@ -629,7 +629,7 @@ export default {
   },
 
   mounted: async function(){
-    // let parent = this;
+    let parent = this;
 
     this.getAd()
     this.cmdK()
@@ -637,7 +637,7 @@ export default {
     this.setEventListenersOnStart()
     await this.fetchSavedIcons()
     this.fetchUserAttributes()
-    this.getIconsArray();
+    parent.getIconsArray();
 
     let fullPath = this.$route.fullPath
     let currentUser = Parse.User.current()
@@ -977,7 +977,6 @@ export default {
 
     async getIconsArray(){
       let parent = this
-        console.log("HELLO!!!");
 
       // try {
         const query = new Parse.Query(Icons);
@@ -986,8 +985,10 @@ export default {
         query.exists("icnsFile");
         query.limit(docLimit);
         parent.howManyRecords = docLimit
-        const results = await query.find()
+        
+        console.log("HELLO!!!");
 
+        const results = await query.find()
         console.log("results: ", results);
 
         query.count().then((count) =>{
