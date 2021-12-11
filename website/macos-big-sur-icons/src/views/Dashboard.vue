@@ -201,7 +201,7 @@ import addCoralIcon from "../assets/icons/add.svg"
 import newItemCoralIcon from "../assets/icons/newItem.svg"
 import editCoralIcon from "../assets/icons/edit.svg"
 import placeholderCoralIcon from "../assets/placeholder-icon.png"
-import deleteIcon from "../assets/delete.png"
+import deleteIcon from "../assets/icons/delete.svg"
 import emailIcon from "../assets/icons/email.svg"
 
 export default {

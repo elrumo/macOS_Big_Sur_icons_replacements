@@ -61,7 +61,7 @@
       ></div>
 
       <!-- About macOSicons -->
-      <section class="p-t-32 m-b-48 p-b-40">
+      <!-- <section class="p-t-32 m-b-48 p-b-40">
         <div class="">
           <hr class="coral-Divider--S">
         </div>
@@ -74,7 +74,7 @@
         <div class="">
           <hr class="coral-Divider--S">
         </div>
-      </section>
+      </section> -->
     </main>
     
     <div class="moreResources p-t-48 m-t-48">
