@@ -987,6 +987,8 @@ export default {
         parent.howManyRecords = docLimit
         const results = await query.find()
 
+        console.log("results: ", results);
+
         try {
           query.count().then((count) =>{
             parent.iconListLen = count
