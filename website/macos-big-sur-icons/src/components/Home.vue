@@ -435,6 +435,7 @@ import VueLoadImage from 'vue-load-image'
 // TODO: remove credentials
 const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
 const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
+console.log("VITE_PARSE_APP_ID: ", VITE_PARSE_APP_ID);
 
 Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://media.macosicons.com/parse'
