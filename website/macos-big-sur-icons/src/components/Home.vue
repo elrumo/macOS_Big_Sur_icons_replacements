@@ -978,81 +978,83 @@ export default {
 
     async getIconsArray(){
       let parent = this
-        console.log("1-1");
+      console.log("1-1");
 
       // try {
-        const query = new Parse.Query(Icons);
-        console.log("1-2");
-        query.equalTo("approved", true);
-        query.descending("timeStamp");
-        query.exists("icnsFile");
-        query.limit(docLimit);
-        parent.howManyRecords = docLimit
-        
-        console.log("1-3");
+      console.log("PARSE: ", Parse);
+      console.log("PARSE: ", new Parse.Query(Icons));
+      const query = new Parse.Query(Icons);
+      console.log("1-2");
+      query.equalTo("approved", true);
+      query.descending("timeStamp");
+      query.exists("icnsFile");
+      query.limit(docLimit);
+      parent.howManyRecords = docLimit
+      
+      console.log("1-3");
 
-        const results = await query.find()
-        console.log("results: ", results);
+      const results = await query.find()
+      console.log("results: ", results);
 
-        query.count().then((count) =>{
-          parent.iconListLen = count
-        })
+      query.count().then((count) =>{
+        parent.iconListLen = count
+      })
 
-        
-        parent.setData({state: 'list', data: []})
-        var allIcons = []
+      
+      parent.setData({state: 'list', data: []})
+      var allIcons = []
 
-        // Save savedIcons IDs to array to compare them to fetched icons
-        let savedIconsId = parent.getSavedIcons.map(({id}) => id )
-        
-        try{
-          for(let result in results){
+      // Save savedIcons IDs to array to compare them to fetched icons
+      let savedIconsId = parent.getSavedIcons.map(({id}) => id )
+      
+      try{
+        for(let result in results){
 
-            let iconItem = results[result]
+          let iconItem = results[result]
 
-            let objData = iconItem.attributes
-            let iconData = {}
+          let objData = iconItem.attributes
+          let iconData = {}
 
-            for(let data in objData){
-              iconData[data] = objData[data]
-            }
-            iconData.id = iconItem.id
-
-            // Check if icon has been saved by the user
-            iconData.isSaved = savedIconsId.includes(iconItem.id);
-
-            allIcons.push(iconData)
+          for(let data in objData){
+            iconData[data] = objData[data]
           }
-          parent.$store.dispatch("pushDataToArr", {data:  allIcons, arr: "list", concatArray: true});
-        } catch (error) {
-          console.log('ERROR: ', error);
+          iconData.id = iconItem.id
+
+          // Check if icon has been saved by the user
+          iconData.isSaved = savedIconsId.includes(iconItem.id);
+
+          allIcons.push(iconData)
         }
-        
-        // Gets up to date info about the user
-        let data = {
-          howManyRecords: 0,
-          results: results
-        }
+        parent.$store.dispatch("pushDataToArr", {data:  allIcons, arr: "list", concatArray: true});
+      } catch (error) {
+        console.log('ERROR: ', error);
+      }
+      
+      // Gets up to date info about the user
+      let data = {
+        howManyRecords: 0,
+        results: results
+      }
 
-        var attempts = 0;
+      var attempts = 0;
 
-        function getAd (){
-          setTimeout(() => {
-            let carbon = document.getElementById("carbonads")
-            if (attempts >= 4) return;
-            try {
-              carbon.classList.add("")
-            } catch (error) {
-              attempts++
-              getAd()
-              parent.isAdOn = true
-            }
-          }, 500);
-        }
+      function getAd (){
+        setTimeout(() => {
+          let carbon = document.getElementById("carbonads")
+          if (attempts >= 4) return;
+          try {
+            carbon.classList.add("")
+          } catch (error) {
+            attempts++
+            getAd()
+            parent.isAdOn = true
+          }
+        }, 500);
+      }
 
-        getAd()
+      getAd()
 
-        parent.scroll()
+      parent.scroll()
 
       // } catch (error) {
       //   this.handleParseError(error)
