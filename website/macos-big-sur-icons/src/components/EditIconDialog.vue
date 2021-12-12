@@ -144,8 +144,8 @@ import { mapGetters, mapActions } from 'vuex'
 import Parse from 'parse'
 import UploadDialog from './UploadDialog.vue'
 
-Parse.initialize("macOSicons");
-Parse.serverURL = 'https://media.macosicons.com/parse'
+// Parse.initialize("macOSicons");
+// Parse.serverURL = 'https://media.macosicons.com/parse'
 
 import logoLowRes from "../assets/Resources/logo_lowres.png"
 

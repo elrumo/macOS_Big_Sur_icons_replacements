@@ -435,8 +435,8 @@ import VueLoadImage from 'vue-load-image'
 const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
 const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
 
-Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
-Parse.serverURL = 'https://media.macosicons.com/parse'
+// Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
+// Parse.serverURL = 'https://media.macosicons.com/parse'
 
 var Icons = Parse.Object.extend("Icons2");
 
@@ -982,83 +982,83 @@ export default {
 
       // try {
       console.log("PARSE: ", Parse);
-      let query = new Parse.Query(Icons);
+      const query = new Parse.Query(Icons);
       console.log("1-2");
-      // query.equalTo("approved", true);
-      // query.descending("timeStamp");
-      // query.exists("icnsFile");
-      // query.limit(docLimit);
-      // parent.howManyRecords = docLimit
+      query.equalTo("approved", true);
+      query.descending("timeStamp");
+      query.exists("icnsFile");
+      query.limit(docLimit);
+      parent.howManyRecords = docLimit
       
-      // console.log("1-3");
+      console.log("1-3");
 
-      // const results = await query.find()
-      // console.log("results: ", results);
+      const results = await query.find()
+      console.log("results: ", results);
 
-      // query.count().then((count) =>{
-      //   parent.iconListLen = count
-      // })
+      query.count().then((count) =>{
+        parent.iconListLen = count
+      })
 
       
-      // parent.setData({state: 'list', data: []})
-      // var allIcons = []
+      parent.setData({state: 'list', data: []})
+      var allIcons = []
 
-      // // Save savedIcons IDs to array to compare them to fetched icons
-      // let savedIconsId = parent.getSavedIcons.map(({id}) => id )
+      // Save savedIcons IDs to array to compare them to fetched icons
+      let savedIconsId = parent.getSavedIcons.map(({id}) => id )
       
-      // try{
-      //   for(let result in results){
+      try{
+        for(let result in results){
 
-      //     let iconItem = results[result]
+          let iconItem = results[result]
 
-      //     let objData = iconItem.attributes
-      //     let iconData = {}
+          let objData = iconItem.attributes
+          let iconData = {}
 
-      //     for(let data in objData){
-      //       iconData[data] = objData[data]
-      //     }
-      //     iconData.id = iconItem.id
+          for(let data in objData){
+            iconData[data] = objData[data]
+          }
+          iconData.id = iconItem.id
 
-      //     // Check if icon has been saved by the user
-      //     iconData.isSaved = savedIconsId.includes(iconItem.id);
+          // Check if icon has been saved by the user
+          iconData.isSaved = savedIconsId.includes(iconItem.id);
 
-      //     allIcons.push(iconData)
-      //   }
-      //   parent.$store.dispatch("pushDataToArr", {data:  allIcons, arr: "list", concatArray: true});
+          allIcons.push(iconData)
+        }
+        parent.$store.dispatch("pushDataToArr", {data:  allIcons, arr: "list", concatArray: true});
+      } catch (error) {
+        console.log('ERROR: ', error);
+      }
+      
+      // Gets up to date info about the user
+      let data = {
+        howManyRecords: 0,
+        results: results
+      }
+
+      var attempts = 0;
+
+      function getAd (){
+        setTimeout(() => {
+          let carbon = document.getElementById("carbonads")
+          if (attempts >= 4) return;
+          try {
+            carbon.classList.add("")
+          } catch (error) {
+            attempts++
+            getAd()
+            parent.isAdOn = true
+          }
+        }, 500);
+      }
+
+      getAd()
+
+      parent.scroll()
+
       // } catch (error) {
-      //   console.log('ERROR: ', error);
+      //   this.handleParseError(error)
+      //   console.log("865 - Error loading icons, report this error to @elrumo: ", error);
       // }
-      
-      // // Gets up to date info about the user
-      // let data = {
-      //   howManyRecords: 0,
-      //   results: results
-      // }
-
-      // var attempts = 0;
-
-      // function getAd (){
-      //   setTimeout(() => {
-      //     let carbon = document.getElementById("carbonads")
-      //     if (attempts >= 4) return;
-      //     try {
-      //       carbon.classList.add("")
-      //     } catch (error) {
-      //       attempts++
-      //       getAd()
-      //       parent.isAdOn = true
-      //     }
-      //   }, 500);
-      // }
-
-      // getAd()
-
-      // parent.scroll()
-
-      // // } catch (error) {
-      // //   this.handleParseError(error)
-      // //   console.log("865 - Error loading icons, report this error to @elrumo: ", error);
-      // // }
 
     },
 
