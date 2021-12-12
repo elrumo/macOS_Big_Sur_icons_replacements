@@ -498,10 +498,9 @@ export default {
 
     },
 
-    mounted: function(){ 
-      let parent = this
-      parent.fetchAppCategories()
-      parent.fetchIconType()
+    mounted(){ 
+      this.fetchAppCategories()
+      this.fetchIconType()
     },
 
     computed:{
