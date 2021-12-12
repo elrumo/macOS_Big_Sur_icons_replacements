@@ -638,7 +638,7 @@ export default {
     await this.fetchSavedIcons()
     this.fetchUserAttributes()
     console.log("0-1");
-    parent.getIconsArray();
+    this.getIconsArray();
 
     let fullPath = this.$route.fullPath
     let currentUser = Parse.User.current()
