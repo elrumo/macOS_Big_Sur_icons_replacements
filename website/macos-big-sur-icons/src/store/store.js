@@ -590,8 +590,7 @@ export default new Vuex.Store({
 
     async fetchAppCategories(store) {
       let Categories = Parse.Object.extend("Categories");
-      let categories = Object.create(Parse.Query(Categories));
-      // let categories = new Parse.Query(Categories)
+      let categories = new Parse.Query(Categories)
 
       categories.find().then((results)=>{
         store.state.appCategories = []
@@ -613,8 +612,7 @@ export default new Vuex.Store({
 
     async fetchIconType(store) {
       let IconType = Parse.Object.extend("IconType");
-      let iconType = Object.create(Parse.Query(IconType));
-      // let iconType = new Parse.Query(IconType)
+      let iconType = new Parse.Query(IconType)
 
       iconType.find().then((results)=>{
         for(let result in results){
