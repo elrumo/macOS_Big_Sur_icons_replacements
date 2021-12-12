@@ -978,11 +978,11 @@ export default {
 
     async getIconsArray(){
       let parent = this
-
+      let query
       // try {
       console.log("PARSE: ", Parse);
       try{
-        const query = new Parse.Query(Icons);
+        query = new Parse.Query(Icons);
       } catch(err){
         console.log("ERRR", err);
       }
