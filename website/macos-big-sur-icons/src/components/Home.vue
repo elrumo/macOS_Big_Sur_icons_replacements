@@ -638,10 +638,10 @@ export default {
     this.cmdK()
     this.searchForPathQuery()
     this.setEventListenersOnStart()
-    await this.fetchSavedIcons()
+    // await this.fetchSavedIcons()
     this.fetchUserAttributes()
     
-    this.getIconsArray();
+    // this.getIconsArray();
 
     let fullPath = this.$route.fullPath
     let currentUser = Parse.User.current()
