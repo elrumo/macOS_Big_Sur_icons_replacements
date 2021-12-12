@@ -10,16 +10,18 @@ import { getPages, getSinglePage } from '@/api/posts';
 
 Vue.use(Vuex)
 
-Parse.initialize('macOSicons')
-Parse.serverURL = 'https://media.macosicons.com/parse'
-
-var IconsBase = Parse.Object.extend("Icons2");
-
 let algolia = {
   // TODO: remove credentials
   appid: import.meta.env.VITE_ALGOLIA_APPID,
   apikey: import.meta.env.VITE_ALGOLIA_KEY
 }
+
+const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
+const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
+
+Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
+Parse.serverURL = 'https://media.macosicons.com/parse'
+var IconsBase = Parse.Object.extend("Icons2");
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
 const index = client.initIndex('macOSicons')

@@ -981,22 +981,8 @@ export default {
       let query
       // try {
       console.log("PARSE: ", Parse);
-      
-      class Car {
-        constructor(name, year) {
-          this.name = name;
-          this.year = year;
-        }
-      }
 
-      let myCar1 = new Car("Ford", 2014);
-      console.log(myCar1);
-
-      try{
-        query = new Parse.Query(Icons);
-      } catch(err){
-        console.log("ERRR", err);
-      }
+      query = new Parse.Query(Icons);
 
       query.equalTo("approved", true);
       query.descending("timeStamp");
