@@ -629,7 +629,10 @@ export default {
   },
 
   mounted: async function(){
-    let parent = this;
+
+    console.log("Icons: ", Icons);
+    const query = new Parse.Query(Icons);
+    console.log("query: ", query);
 
     this.getAd()
     this.cmdK()
@@ -978,11 +981,8 @@ export default {
 
     async getIconsArray(){
       let parent = this
-      let query
-      // try {
-      console.log("PARSE: ", Parse);
-
-      query = new Parse.Query(Icons);
+      
+      const query = new Parse.Query(Icons);
 
       query.equalTo("approved", true);
       query.descending("timeStamp");
