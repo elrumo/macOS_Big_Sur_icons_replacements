@@ -635,8 +635,9 @@ export default {
     this.cmdK()
     this.searchForPathQuery()
     this.setEventListenersOnStart()
-    await this.fetchSavedIcons()
+    // await this.fetchSavedIcons()
     this.fetchUserAttributes()
+    console.log("0-1");
     parent.getIconsArray();
 
     let fullPath = this.$route.fullPath
@@ -977,16 +978,18 @@ export default {
 
     async getIconsArray(){
       let parent = this
+        console.log("1-1");
 
       // try {
         const query = new Parse.Query(Icons);
         query.equalTo("approved", true);
         query.descending("timeStamp");
+        console.log("1-2");
         query.exists("icnsFile");
         query.limit(docLimit);
         parent.howManyRecords = docLimit
         
-        console.log("HELLO!!!");
+        console.log("1-3");
 
         const results = await query.find()
         console.log("results: ", results);
