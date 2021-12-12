@@ -635,7 +635,7 @@ export default {
     this.cmdK()
     this.searchForPathQuery()
     this.setEventListenersOnStart()
-    // await this.fetchSavedIcons()
+    await this.fetchSavedIcons()
     this.fetchUserAttributes()
     console.log("0-1");
     parent.getIconsArray();
@@ -982,9 +982,9 @@ export default {
 
       // try {
         const query = new Parse.Query(Icons);
+        console.log("1-2");
         query.equalTo("approved", true);
         query.descending("timeStamp");
-        console.log("1-2");
         query.exists("icnsFile");
         query.limit(docLimit);
         parent.howManyRecords = docLimit
