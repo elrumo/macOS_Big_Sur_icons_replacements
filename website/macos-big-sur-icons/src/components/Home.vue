@@ -978,12 +978,14 @@ export default {
 
     async getIconsArray(){
       let parent = this
-      console.log("1-1");
 
       // try {
       console.log("PARSE: ", Parse);
-      const query = new Parse.Query(Icons);
-      console.log("1-2");
+      try{
+        const query = new Parse.Query(Icons);
+      } catch(err){
+        console.log("ERRR", err);
+      }
       query.equalTo("approved", true);
       query.descending("timeStamp");
       query.exists("icnsFile");
