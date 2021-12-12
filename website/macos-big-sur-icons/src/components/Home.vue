@@ -983,7 +983,7 @@ export default {
       // try {
       console.log("PARSE: ", Parse);
       console.log("PARSE: ", new Parse.Query(Icons));
-      const query = new Parse.Query(Icons);
+      let query = new Parse.Query(Icons);
       console.log("1-2");
       query.equalTo("approved", true);
       query.descending("timeStamp");
