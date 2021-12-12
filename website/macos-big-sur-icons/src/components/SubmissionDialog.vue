@@ -499,8 +499,8 @@ export default {
     },
 
     mounted(){ 
-      // this.fetchAppCategories()
-      // this.fetchIconType()
+      this.fetchAppCategories()
+      this.fetchIconType()
     },
 
     computed:{
