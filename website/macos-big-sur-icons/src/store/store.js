@@ -590,29 +590,31 @@ export default new Vuex.Store({
 
     async fetchAppCategories(store) {
       let Categories = Parse.Object.extend("Categories");
+      let categories = Object.create(Parse.Query(Categories));
       // let categories = new Parse.Query(Categories)
 
-      // categories.find().then((results)=>{
-      //   store.state.appCategories = []
-      //   for(let result in results){
-      //     let item = results[result];
+      categories.find().then((results)=>{
+        store.state.appCategories = []
+        for(let result in results){
+          let item = results[result];
           
-      //     let categoryObj = {
-      //       id: item.id,
-      //       name: item.get("CategoryName"),
-      //       categoryObj: item,
-      //     }
+          let categoryObj = {
+            id: item.id,
+            name: item.get("CategoryName"),
+            categoryObj: item,
+          }
           
-      //     store.commit("pushAppCategories", {state: "appCategories", storeObj: categoryObj})
-      //   }
-      // }).catch((error)=>{
-      //   console.log("error: ", error);
-      // })
+          store.commit("pushAppCategories", {state: "appCategories", storeObj: categoryObj})
+        }
+      }).catch((error)=>{
+        console.log("error: ", error);
+      })
     },
 
     async fetchIconType(store) {
       let IconType = Parse.Object.extend("IconType");
-      let iconType = new Parse.Query(IconType)
+      let iconType = Object.create(Parse.Query(IconType));
+      // let iconType = new Parse.Query(IconType)
 
       iconType.find().then((results)=>{
         for(let result in results){
