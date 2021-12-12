@@ -10,6 +10,9 @@ import { getPages, getSinglePage } from '@/api/posts';
 
 Vue.use(Vuex)
 
+Parse.initialize('macOSicons')
+Parse.serverURL = 'https://media.macosicons.com/parse'
+
 var IconsBase = Parse.Object.extend("Icons2");
 
 let algolia = {

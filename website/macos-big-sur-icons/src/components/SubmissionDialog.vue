@@ -239,8 +239,8 @@ import Vue from 'vue'
 import { mapActions, mapGetters } from 'vuex';
 import Parse from 'parse'
 
-Parse.initialize("macOSicons");
-Parse.serverURL = 'https://media.macosicons.com/parse'
+// Parse.initialize("macOSicons");
+// Parse.serverURL = 'https://media.macosicons.com/parse'
 
 import addCoralIcon from "../assets/icons/add.svg"
 

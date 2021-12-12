@@ -184,8 +184,8 @@ import { mapGetters, mapActions } from 'vuex'
 
 import Parse from 'parse'
 
-Parse.initialize("macOSicons");
-Parse.serverURL = 'https://media.macosicons.com/parse'
+// Parse.initialize("macOSicons");
+// Parse.serverURL = 'https://media.macosicons.com/parse'
 
 const Icons = Parse.Object.extend("Icons2");
 const User = Parse.Object.extend("User");

@@ -299,8 +299,8 @@ import { mapActions, mapGetters } from 'vuex';
 import Parse from 'parse'
 // import jwt_decode from 'jwt-decode';
 
-Parse.initialize("macOSicons");
-Parse.serverURL = 'https://media.macosicons.com/parse'
+// Parse.initialize("macOSicons");
+// Parse.serverURL = 'https://media.macosicons.com/parse'
 
 import addCoralIcon from "../assets/icons/add.svg"
 import newItemCoralIcon from "../assets/icons/newItem.svg"
