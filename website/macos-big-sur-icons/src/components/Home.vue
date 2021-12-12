@@ -630,9 +630,9 @@ export default {
 
   mounted: async function(){
 
-    console.log("Icons: ", Icons);
-    const query = new Parse.Query(Icons);
-    console.log("query: ", query);
+    // console.log("Icons: ", Icons);
+    // const query = new Parse.Query(Icons);
+    // console.log("query: ", query);
 
     this.getAd()
     this.cmdK()
