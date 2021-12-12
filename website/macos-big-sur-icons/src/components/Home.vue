@@ -630,18 +630,19 @@ export default {
 
   mounted: async function(){
 
-    console.log("Icons: ", Icons);
-    const query = new Parse.Query(Icons);
-    console.log("query: ", query);
+    // console.log("Icons: ", Icons);
+    // const query = new Parse.Query(Icons);
+    // console.log("query: ", query);
 
     this.getAd()
     this.cmdK()
     this.searchForPathQuery()
     this.setEventListenersOnStart()
-    await this.fetchSavedIcons()
+    // await this.fetchSavedIcons()
     this.fetchUserAttributes()
+    
     console.log("0-1");
-    this.getIconsArray();
+    // this.getIconsArray();
 
     let fullPath = this.$route.fullPath
     let currentUser = Parse.User.current()
