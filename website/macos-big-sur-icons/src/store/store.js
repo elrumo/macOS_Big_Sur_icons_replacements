@@ -7,6 +7,8 @@ import localPages from '@/api/pages.json';
 import localPosts from '@/api/posts.json';
 import icons from '@/api/icons.json';
 import { getPages, getSinglePage } from '@/api/posts';
+import { getTutorials, getLearningHome, getTutorialFromSlug } from '@/api/strapi';
+
 
 Vue.use(Vuex)
 
@@ -38,6 +40,15 @@ export default new Vuex.Store({
     resourcesData: getPages(10),
     singleResourceData: {},
     moreResources: getPages(10),
+
+    singleLearningResource: {},
+    learningResources: [],
+    learningHome: {
+                    h3: "Tutorials",
+                    description: "More tutorials on everything macOS icons coming soon. If you’d like to contribute or make suggestions, let us know on our [Discord](https://discord.gg/f4mTRyyTkT) channel or [Twitter](https://twitter.com/elrumo).",
+                    isAd: false,
+                    isCenter: true,
+                  },
 
     user: {
       bio: "",
@@ -153,6 +164,19 @@ export default new Vuex.Store({
   
 
   actions: {
+
+    async getTutorialFromSlug(store, slug){
+      let tutorial = await getTutorialFromSlug(slug)
+      store.commit('setDataToArr', {arr: 'singleLearningResource', data: tutorial})
+    },
+
+    async fetchLearningResources(store){
+      store.commit('setDataToArr', {arr: 'learningResources', data: await getTutorials()})
+    },
+
+    async fetchLearningHome(store){
+      store.commit('setDataToArr', {arr: 'learningHome', data: await getLearningHome()})
+    },
 
     algoliaSearch(store){
       let search = store.state.searchString
@@ -765,6 +789,18 @@ export default new Vuex.Store({
 
     getUserAttributes(store){
       return store.userAttributes
+    },
+
+    getLearningResources(store){
+      return store.learningResources
+    },
+
+    getLearningHome(store){
+      return store.learningHome
+    },
+
+    getSingleTutorial(store){
+      return store.singleLearningResource
     }
 
 

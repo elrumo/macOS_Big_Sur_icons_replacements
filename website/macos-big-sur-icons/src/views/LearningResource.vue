@@ -1,5 +1,6 @@
 <template>
   <div class="content-wrapper-compact">
+    
     <main class="blog-list-wrapper">
 
       <!-- Header -->
@@ -14,12 +15,12 @@
         
         <!-- Title -->
         <h3 class="coral-Heading--XXL coral-Heading--heavy">
-          {{ resource.title }}
+          {{ getSingleTutorial.title }}
         </h3>
 
         <!-- Description -->
         <p class="coral-Body--XL">
-          {{ resource.description }}
+          {{ getSingleTutorial.description }}
         </p>
         
         <hr class="coral-Divider--S m-t-24 m-b-8">
@@ -27,16 +28,19 @@
         <!-- Date -->
         <p class="coral-Detail coral-Detail--L opacity-80 m-b-32 m-l-8">
           <span class="coral-Detail--light">
-            {{ getDate(resource.published_at) }}
+            {{ getDate(getSingleTutorial.publishedAt) }}
           </span>
         </p>
 
         <!-- Video -->
-        <figure v-if="resource.main_video" class="post-full-image">
+        <figure
+          v-if="getSingleTutorial.video"
+          class="post-full-image"
+        >
           <iframe
             width="100%" 
             height="515" 
-            :src="resource.url"
+            :src="getSingleTutorial.url"
             title="YouTube video player"
             frameborder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -47,7 +51,7 @@
         <!-- Image -->
         <figure v-else class="post-full-image">
           <img
-            :src="resource.feature_image"
+            :src="getSingleTutorial.feature_image"
             width="100%" 
             title="YouTube video player"
           />
@@ -57,7 +61,7 @@
       <!-- Content -->
       <div
         class="blog-post-wrapper post-full-content"
-        v-html="markItDown(resource.tutorial_content)"
+        v-html="markItDown(getSingleTutorial.tutorial_content)"
       ></div>
 
       <!-- About macOSicons -->
@@ -95,7 +99,7 @@
 
 <script>
 // @ is an alias to /src
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import Header from '@/components/Header.vue'
 import ResourcesCard from '@/components/ResourcesCard.vue'
 import NativeAd from '@/components/NativeAd.vue'
@@ -175,27 +179,18 @@ export default {
   },
   
   mounted: async function(){
-    const parent = this;
-    const slug = parent.$route.params.learningResource;
-
-    const tutorials = await axios.get('https://api.macosicons.com/tutorials')
-    const resource = await axios.get('https://api.macosicons.com/tutorials?slug='+slug)
+    const slug = this.$route.params.learningResource;    
+    await this.getTutorialFromSlug(slug)
     
-    for(let tutorial in tutorials.data){
-      tutorials.data[tutorial].feature_image = 'https://api.macosicons.com/'+tutorials.data[tutorial].feature_image[0].formats.medium.url
-    }
-    
-    // resource.data[0].url = resource.data[0].url.replace('.com/watch?v=', '-nocookie.com/embed/')
-    resource.data[0].feature_image = 'https://api.macosicons.com/'+resource.data[0].feature_image[0].formats.large.url
-
-    parent.resource = resource.data[0]
-    parent.tutorials = tutorials.data
+    let isError = this.getSingleTutorial.error
+    if(isError) this.$router.push('/learn');
   },
 
   methods: {
     ...mapActions([
       'getPageData',
-      'adClick'
+      'adClick',
+      'getTutorialFromSlug'
     ]),
 
     markItDown(text){
@@ -283,7 +278,12 @@ export default {
       // var date = new Date(dateString);
       return month + " " + monthDate + ', ' + year
     }
+  },
 
+  computed:{
+    ...mapGetters([
+      'getSingleTutorial'
+    ])
   }
 }
 </script>

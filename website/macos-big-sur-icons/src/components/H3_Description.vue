@@ -1,7 +1,9 @@
 <template>
     <div>
 
-        <div :class="{
+        <div
+            v-if="text.h3"
+            :class="{
                 'h3-description': true,
                 'm-t-24': true,
                 'text-center': text.isCenter,
