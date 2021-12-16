@@ -97,11 +97,7 @@ export default {
 
         getImage(){
             if (this.step.feature_image != null) {
-                if (this.step.feature_image.formats != null) { //check if data is coming from the Strapi API
-                    return "http://localhost:1347" + this.step.feature_image.formats.medium.url
-                } else {
-                    return this.step.feature_image
-                }
+                return this.step.feature_image
             } else {
                 return "https://i.imgur.com/tu9ZVml.png"
             }
