@@ -432,8 +432,8 @@ import VueLoadImage from 'vue-load-image'
 // dotenv.config();
 
 // TODO: remove credentials
-const VITE_PARSE_APP_ID = process.env.VITE_PARSE_APP_ID
-const VITE_PARSE_JAVASCRIPT_KEY = process.env.VITE_PARSE_JAVASCRIPT_KEY
+const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
+const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
 
 Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://media.macosicons.com/parse'
@@ -630,18 +630,14 @@ export default {
 
   mounted: async function(){
 
-    // console.log("Icons: ", Icons);
-    // const query = new Parse.Query(Icons);
-    // console.log("query: ", query);
-
     this.getAd()
     this.cmdK()
     this.searchForPathQuery()
     this.setEventListenersOnStart()
-    // await this.fetchSavedIcons()
     this.fetchUserAttributes()
     
-    // this.getIconsArray();
+    await this.fetchSavedIcons()
+    this.getIconsArray();
 
     let fullPath = this.$route.fullPath
     let currentUser = Parse.User.current()
@@ -1051,11 +1047,6 @@ export default {
       getAd()
 
       parent.scroll()
-
-      // } catch (error) {
-      //   this.handleParseError(error)
-      //   console.log("865 - Error loading icons, report this error to @elrumo: ", error);
-      // }
 
     },
 
