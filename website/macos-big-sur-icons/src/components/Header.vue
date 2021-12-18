@@ -1,8 +1,9 @@
 <template>
     <div
         id="header"
-        :class="{'scrolled-shadow': distanceFromTop & scrolled, 'scrolled-header': scrolled, header: true, 'coral-bg':true}"
+        :class="{'scrolled-shadow': scrolled, 'scrolled-header': scrolled, header: true, 'coral-bg':true}"
     >
+        <!-- :class="{'scrolled-shadow': distanceFromTop & scrolled, 'scrolled-header': scrolled, header: true, 'coral-bg':true}" -->
         
         <OptionsMenu :optionsList="optionsList"/>
         <Dialog/>

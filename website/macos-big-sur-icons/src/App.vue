@@ -4,19 +4,20 @@
       All icons have been uploaded.
     </coral-toast>
 
-    <Header
-      :distanceFromTop="distanceFromTop"
+      <!-- :distanceFromTop="distanceFromTop" -->
+    <!-- <Header
       :submitIconDialog="'submitIcon'"
-    />
+    /> -->
 
     <StickyBanner/>
     
-    <transition name="fade" mode="out-in">
+    <!-- <transition name="fade" mode="out-in"> -->
+        <!-- :key="$route.fullPath" -->
       <router-view
-        :key="$route.fullPath"
+        :key="'$route.fullPath'"
         class="min-height"
       />
-    </transition>
+    <!-- </transition> -->
 
     <Footer/>
   </div>
@@ -26,7 +27,6 @@
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
 import StickyBanner from '@/components/StickyBanner.vue'
-
 
 // import '@adobe/spectrum-css/dist/icons/spectrum-css-icons.svg' 
 // import '@adobe/spectrum-css/dist/icons/loadIcons.js' 

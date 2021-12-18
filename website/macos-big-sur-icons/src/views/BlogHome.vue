@@ -42,7 +42,7 @@
           </router-link>
         </div>
 
-        <div
+        <!-- <div
           @click="adClick({position: 'Bottom Page', type: 'Carbon'})"
           class="single-ad m-b-24 p-b-40 p-t-32"
         >
@@ -51,7 +51,7 @@
             type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom"
             id="_carbonads_js">
           </script>
-        </div>
+        </div> -->
         
       </div>
 

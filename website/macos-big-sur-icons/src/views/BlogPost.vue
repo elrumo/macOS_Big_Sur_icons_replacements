@@ -43,14 +43,14 @@
       <div class="blog-post-wrapper post-full-content" v-html="blogPost.html"> </div>
       
 
-        <div class="single-ad p-b-24 p-t-32">
+        <!-- <div class="single-ad p-b-24 p-t-32">
           <script
             @click="adClick({position: 'Bottom Page', type: 'Carbon'})"
             async="async"
             type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom"
             id="_carbonads_js">
           </script>
-        </div>
+        </div> -->
 
 
       <section class="p-t-32 m-b-48 p-b-40">
