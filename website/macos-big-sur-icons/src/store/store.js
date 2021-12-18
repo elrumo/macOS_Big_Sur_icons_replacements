@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
+import { createStore } from 'vuex'
 import Parse from 'parse'
 import algoliasearch from 'algoliasearch'
 
@@ -8,9 +8,6 @@ import localPosts from '@/api/posts.json';
 import icons from '@/api/icons.json';
 import { getPages, getSinglePage } from '@/api/posts';
 import { getTutorials, getLearningHome, getTutorialFromSlug } from '@/api/strapi';
-
-
-Vue.use(Vuex)
 
 let algolia = {
   // TODO: remove credentials
@@ -28,9 +25,9 @@ var IconsBase = Parse.Object.extend("Icons2");
 const client = algoliasearch(algolia.appid, algolia.apikey);
 const index = client.initIndex('macOSicons')
 
-export default new Vuex.Store({
+export const store = createStore({
 
-  state: {
+  state() {
     list: icons,
     dataToShow: [],
     
