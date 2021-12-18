@@ -14,12 +14,12 @@ Vue.use(Vuex)
 
 let algolia = {
   // TODO: remove credentials
-  appid: import.meta.env.VITE_ALGOLIA_APPID,
-  apikey: import.meta.env.VITE_ALGOLIA_KEY
+  appid: process.env.VITE_ALGOLIA_APPID,
+  apikey: process.env.VITE_ALGOLIA_KEY
 }
 
-const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
-const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
+const VITE_PARSE_APP_ID = process.env.VITE_PARSE_APP_ID
+const VITE_PARSE_JAVASCRIPT_KEY = process.env.VITE_PARSE_JAVASCRIPT_KEY
 
 Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://media.macosicons.com/parse'
