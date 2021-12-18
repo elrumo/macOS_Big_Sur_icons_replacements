@@ -563,7 +563,7 @@ const routes = [
 
 global.router = new VueRouter({
   mode: 'history',
-  base: import.meta.env.BASE_URL,
+  base: process.env.BASE_URL,
   routes,
   scrollBehavior (to, from, savedPosition) {
     return { x: 0, y: 0 }

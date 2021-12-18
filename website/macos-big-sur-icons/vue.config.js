@@ -13,11 +13,11 @@ const PATHS = {
   src: path.join(__dirname, 'src')
 }
 
-// plugins:  import.meta.env.NODE_ENV === 'production' ?[] : [],
+// plugins:  process.env.NODE_ENV === 'production' ?[] : [],
 module.exports = {
   configureWebpack:  {
-    // plugins:  import.meta.env.NODE_ENV === 'dev' ?[] : [],
-    plugins:  import.meta.env.NODE_ENV === 'production' ?[] : [],
+    // plugins:  process.env.NODE_ENV === 'dev' ?[] : [],
+    // plugins:  process.env.NODE_ENV === 'production' ?[] : [],
   },
 
 }

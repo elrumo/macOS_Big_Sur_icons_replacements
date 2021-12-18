@@ -1,7 +1,7 @@
 import GhostContentAPI from "@tryghost/content-api"
 
 // TODO: Remove API Key
-const VITE_GHOST_KEY =import.meta.env.VITE_GHOST_KEY
+const VITE_GHOST_KEY =process.env.VITE_GHOST_KEY
 
 const api = new GhostContentAPI({
     url: 'https://blog.macosicons.com/blog',

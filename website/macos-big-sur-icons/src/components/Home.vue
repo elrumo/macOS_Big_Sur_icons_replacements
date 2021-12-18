@@ -432,8 +432,8 @@ import VueLoadImage from 'vue-load-image'
 // dotenv.config();
 
 // TODO: remove credentials
-const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
-const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
+const VITE_PARSE_APP_ID = process.env.VITE_PARSE_APP_ID
+const VITE_PARSE_JAVASCRIPT_KEY = process.env.VITE_PARSE_JAVASCRIPT_KEY
 
 Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = 'https://media.macosicons.com/parse'
@@ -983,7 +983,7 @@ export default {
       query.descending("timeStamp");
       query.exists("icnsFile");
       query.limit(docLimit);
-      parent.howManyRecords = docLimit
+      parent.howManyRec ords = docLimit
 
       const results = await query.find()
 
