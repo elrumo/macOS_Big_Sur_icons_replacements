@@ -17,7 +17,9 @@ const PATHS = {
 module.exports = {
   configureWebpack:  {
     // plugins:  process.env.NODE_ENV === 'dev' ?[] : [],
-    // plugins:  process.env.NODE_ENV === 'production' ?[] : [],
+    plugins:  process.env.NODE_ENV === 'production' ?[] : [],
   },
+
+  lintOnSave: false,
 
 }
