@@ -339,7 +339,7 @@
             class="card-hover relative coral-card"
           >
             
-            <div
+            <!-- <div
               style="z-index: 1; height: 100%; width: 100%"
               class="absolute carbon-card-ad"
             >
@@ -350,7 +350,7 @@
                 src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom"
                 id="_carbonads_js"
               > </script>
-            </div>
+            </div> -->
 
             <div style="z-index: 2" class="absolute card-grid-nativeAd">
               <div
@@ -426,7 +426,7 @@ import StickyBanner from './StickyBanner.vue';
 
 import Parse from 'parse'
 
-import VueLoadImage from 'vue-load-image'
+// import VueLoadImage from 'vue-load-image'
 
 // import dotenv from 'dotenv'; // Used to access env varaibles
 // dotenv.config();
@@ -488,7 +488,7 @@ export default {
     deleteDialog,
     NativeAd,
     UserIconCard,
-    'vue-load-image': VueLoadImage,
+    // 'vue-load-image': VueLoadImage,
     StickyBanner,
   },
 
@@ -639,11 +639,11 @@ export default {
     await this.fetchSavedIcons()
     this.getIconsArray();
 
-    let fullPath = this.$route.fullPath
-    let currentUser = Parse.User.current()
-    if (fullPath.includes("/?username=") && !currentUser) {
-      this.showEl("loginDialog")
-    }
+    // let fullPath = this.$route.fullPath
+    // let currentUser = Parse.User.current()
+    // if (fullPath.includes("/?username=") && !currentUser) {
+    //   this.showEl("loginDialog")
+    // }
   },
 
   methods:{ 

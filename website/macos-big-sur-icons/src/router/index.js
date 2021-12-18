@@ -1,13 +1,13 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import VueMeta from 'vue-meta'
 
 import Home from '../components/Home.vue'
 import BlogPost from '../views/BlogPost.vue'
 import BlogHome from '../views/BlogHome.vue'
 
-Vue.use(VueRouter)
-Vue.use(VueMeta)
+// Vue.use(VueRouter)
+// Vue.use(VueMeta)
 
 const routes = [
   {
@@ -561,12 +561,12 @@ const routes = [
   },
 ]
 
-global.router = new VueRouter({
-  mode: 'history',
-  base: import.meta.env.BASE_URL,
+global.router = new createRouter({
+  // base: import.meta.env.BASE_URL,
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   scrollBehavior (to, from, savedPosition) {
-    return { x: 0, y: 0 }
+    return { left: 0, top: 0 }
   }
 })
 

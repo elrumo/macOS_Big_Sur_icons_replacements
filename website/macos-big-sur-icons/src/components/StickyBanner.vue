@@ -78,35 +78,36 @@ export default {
       //   let parent = this
       //   parent.getAd()
       // })
-      this.$router.onReady(function(){
+      console.log(this.router);
+      // this.$router.onReady(function(){
 
-        function getAd(){
-          try {
-            if (typeof _bsa !== 'undefined') {
-            _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
-              {
-                target: '.card-ad2',
-                template: `
-                    <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link">
-                    <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
-                      <div class="bsa-icon" style="background-image: url(##logo##);"></div>
-                    </div>
-                    <div class="text-ad-wrapper">
-                      <img style="background: ##backgroundColor##" src="##image##">
-                      <div class="bsa-desc">##description##</div>
-                    </div>
-                    </a>
-                  `
-                }
-              )
-            }
-          } catch (error) {
-            console.log("error: ", error);
-          }
-        }
+      //   function getAd(){
+      //     try {
+      //       if (typeof _bsa !== 'undefined') {
+      //       _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
+      //         {
+      //           target: '.card-ad2',
+      //           template: `
+      //               <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link">
+      //               <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
+      //                 <div class="bsa-icon" style="background-image: url(##logo##);"></div>
+      //               </div>
+      //               <div class="text-ad-wrapper">
+      //                 <img style="background: ##backgroundColor##" src="##image##">
+      //                 <div class="bsa-desc">##description##</div>
+      //               </div>
+      //               </a>
+      //             `
+      //           }
+      //         )
+      //       }
+      //     } catch (error) {
+      //       console.log("error: ", error);
+      //     }
+      //   }
         
-        getAd()
-      });
+      //   getAd()
+      // });
 
     },
 

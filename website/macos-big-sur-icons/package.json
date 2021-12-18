@@ -16,6 +16,7 @@
     "@spectrum-web-components/overlay": "^0.9.0",
     "@tryghost/content-api": "^1.5.15",
     "@vitejs/plugin-vue": "^1.10.1",
+    "@vue/compat": "^3.1.0",
     "algoliasearch": "^4.11.0",
     "dotenv": "^8.6.0",
     "jwt-decode": "^3.1.2",
@@ -31,15 +32,16 @@
     "smoothscroll-polyfill": "^0.4.4",
     "v-click-outside": "^3.1.2",
     "vite": "^2.7.3",
-    "vite-plugin-vue2": "1.9.0",
-    "vue": "^2.6.14",
+    "vue": "^3.1.0",
     "vue-lazyload": "^1.3.3",
-    "vue-load-image": "^0.1.61",
     "vue-meta": "^2.4.0",
     "vue-mobile-detection": "^1.0.0",
-    "vue-router": "^3.5.3",
-    "vuex": "^3.6.2",
+    "vue-router": "^4.0.12",
+    "vuex": "^4.0.2",
     "webpack": "^4.46.0"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.1.0"
   },
   "browserslist": [
     "> 1%",
