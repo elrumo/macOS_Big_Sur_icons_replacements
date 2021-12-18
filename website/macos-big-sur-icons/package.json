@@ -30,14 +30,14 @@
     "smoothscroll-polyfill": "^0.4.4",
     "v-click-outside": "^3.1.2",
     
-    "@vue/cli-plugin-babel": "~4.5.0", // remove
-    "@vue/cli-plugin-eslint": "~4.5.0", // remove
-    "@vue/cli-plugin-router": "~4.5.0", // remove
-    "@vue/cli-plugin-vuex": "~4.5.0", // remove
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "vue-template-compiler": "^2.6.11",
     "sass-loader": "^8.0.2",
-    "babel-eslint": "^10.1.0", // remove
+    "babel-eslint": "^10.1.0",
     "core-js": "^3.6.5",
 
     "vue": "^2.6.14",
