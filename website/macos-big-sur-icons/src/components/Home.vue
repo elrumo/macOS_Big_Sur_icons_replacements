@@ -443,39 +443,39 @@ var Icons = Parse.Object.extend("Icons2");
 const docLimit = 20
 
 import deleteIcon from "../assets/icons/delete.svg"
-  import namingOrderIcon from "../assets/icons/namingOrder.svg"
-  import dateIcon from "../assets/icons/date.svg"
-  import placeholderIcon from "../assets/placeholder-icon.png"
-  import BrowserExtensionsIcon from "../assets/icons/Category_Icons/Browser_Extensions.svg"
-  import DeveloperToolsIcon from "../assets/icons/Category_Icons/Developer_Tools.svg"
-  import EducationIcon from "../assets/icons/Category_Icons/Education.svg"
-  import EntertainmentIcon from "../assets/icons/Category_Icons/Entertainment.svg"
-  import FinanceIcon from "../assets/icons/Category_Icons/Finance.svg"
-  import GamesIcon from "../assets/icons/Category_Icons/Games.svg"
-  import Graphics_DesignIcon from "../assets/icons/Category_Icons/Graphics_Design.svg"
-  import HealthFitnessIcon from "../assets/icons/Category_Icons/Health_Fitness.svg"
-  import LifestyleIcon from "../assets/icons/Category_Icons/Lifestyle.svg"
-  import MedicalIcon from "../assets/icons/Category_Icons/Medical.svg"
-  import MusicIcon from "../assets/icons/Category_Icons/Music.svg"
-  import NewsIcon from "../assets/icons/Category_Icons/News.svg"
-  import PhotoVideoIcon from "../assets/icons/Category_Icons/Photo_Video.svg"
-  import ProductivityIcon from "../assets/icons/Category_Icons/Productivity.svg"
-  import ReferenceIcon from "../assets/icons/Category_Icons/Reference.svg"
-  import SocialNetworkingIcon from "../assets/icons/Category_Icons/Social_Networking.svg"
-  import SportsIcon from "../assets/icons/Category_Icons/Sports.svg"
-  import TravelIcon from "../assets/icons/Category_Icons/Travel.svg"
-  import UtilitiesIcon from "../assets/icons/Category_Icons/Utilities.svg"
-  import WeatherIcon from "../assets/icons/Category_Icons/Weather.svg"
-  import AllIconsIcon from "../assets/icons/Category_Icons/All_Icons.svg"
-  import StarIcon from "../assets/icons/Category_Icons/Star.svg"
-  import HeartIcon from "../assets/icons/Category_Icons/Heart.svg"
-  import FlameIcon from "../assets/icons/Category_Icons/Flame.svg"
+import namingOrderIcon from "../assets/icons/namingOrder.svg"
+import dateIcon from "../assets/icons/date.svg"
+import placeholderIcon from "../assets/placeholder-icon.png"
+import BrowserExtensionsIcon from "../assets/icons/Category_Icons/Browser_Extensions.svg"
+import DeveloperToolsIcon from "../assets/icons/Category_Icons/Developer_Tools.svg"
+import EducationIcon from "../assets/icons/Category_Icons/Education.svg"
+import EntertainmentIcon from "../assets/icons/Category_Icons/Entertainment.svg"
+import FinanceIcon from "../assets/icons/Category_Icons/Finance.svg"
+import GamesIcon from "../assets/icons/Category_Icons/Games.svg"
+import Graphics_DesignIcon from "../assets/icons/Category_Icons/Graphics_Design.svg"
+import HealthFitnessIcon from "../assets/icons/Category_Icons/Health_Fitness.svg"
+import LifestyleIcon from "../assets/icons/Category_Icons/Lifestyle.svg"
+import MedicalIcon from "../assets/icons/Category_Icons/Medical.svg"
+import MusicIcon from "../assets/icons/Category_Icons/Music.svg"
+import NewsIcon from "../assets/icons/Category_Icons/News.svg"
+import PhotoVideoIcon from "../assets/icons/Category_Icons/Photo_Video.svg"
+import ProductivityIcon from "../assets/icons/Category_Icons/Productivity.svg"
+import ReferenceIcon from "../assets/icons/Category_Icons/Reference.svg"
+import SocialNetworkingIcon from "../assets/icons/Category_Icons/Social_Networking.svg"
+import SportsIcon from "../assets/icons/Category_Icons/Sports.svg"
+import TravelIcon from "../assets/icons/Category_Icons/Travel.svg"
+import UtilitiesIcon from "../assets/icons/Category_Icons/Utilities.svg"
+import WeatherIcon from "../assets/icons/Category_Icons/Weather.svg"
+import AllIconsIcon from "../assets/icons/Category_Icons/All_Icons.svg"
+import StarIcon from "../assets/icons/Category_Icons/Star.svg"
+import HeartIcon from "../assets/icons/Category_Icons/Heart.svg"
+import FlameIcon from "../assets/icons/Category_Icons/Flame.svg"
 
-  import addCoralIcon from "../assets/icons/add.svg"
-  import newItemCoralIcon from "../assets/icons/newItem.svg"
-  import editCoralIcon from "../assets/icons/edit.svg"
-  import placeholderCoralIcon from "../assets/placeholder-icon.png"
-  import ChevronDownCoralIcon from "../assets/icons/ChevronDown.svg"
+import addCoralIcon from "../assets/icons/add.svg"
+import newItemCoralIcon from "../assets/icons/newItem.svg"
+import editCoralIcon from "../assets/icons/edit.svg"
+import placeholderCoralIcon from "../assets/placeholder-icon.png"
+import ChevronDownCoralIcon from "../assets/icons/ChevronDown.svg"
 
 export default {
   name: 'Home',
@@ -630,14 +630,18 @@ export default {
 
   mounted: async function(){
 
+    // console.log("Icons: ", Icons);
+    // const query = new Parse.Query(Icons);
+    // console.log("query: ", query);
+
     this.getAd()
     this.cmdK()
     this.searchForPathQuery()
     this.setEventListenersOnStart()
+    // await this.fetchSavedIcons()
     this.fetchUserAttributes()
     
-    await this.fetchSavedIcons()
-    this.getIconsArray();
+    // this.getIconsArray();
 
     let fullPath = this.$route.fullPath
     let currentUser = Parse.User.current()
@@ -977,6 +981,7 @@ export default {
 
     async getIconsArray(){
       let parent = this
+      
       const query = new Parse.Query(Icons);
 
       query.equalTo("approved", true);
@@ -1046,6 +1051,11 @@ export default {
       getAd()
 
       parent.scroll()
+
+      // } catch (error) {
+      //   this.handleParseError(error)
+      //   console.log("865 - Error loading icons, report this error to @elrumo: ", error);
+      // }
 
     },
 
