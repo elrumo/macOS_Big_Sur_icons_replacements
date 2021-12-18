@@ -983,7 +983,7 @@ export default {
       query.descending("timeStamp");
       query.exists("icnsFile");
       query.limit(docLimit);
-      parent.howManyRec ords = docLimit
+      parent.howManyRecords = docLimit
 
       const results = await query.find()
 
