@@ -437,7 +437,6 @@ export default {
         parent.onDialogOpen()
         
         if (this.getUser.isAuth) {
-            // Set the "Go to profile" button to go to the user that has logged in
             parent.optionsList[1].onClick.data = "/u/" + this.getUser.userData.username
         }
 
