@@ -1,9 +1,13 @@
 <template>
     <div
         id="header"
-        :class="{'scrolled-shadow': scrolled, 'scrolled-header': scrolled, header: true, 'coral-bg':true}"
+        :class="{
+            'scrolled-shadow': distanceFromTop && scrolled,
+            'scrolled-header': scrolled,
+            'nav-header': true,
+            'coral-bg':true
+        }"
     >
-        <!-- :class="{'scrolled-shadow': distanceFromTop & scrolled, 'scrolled-header': scrolled, header: true, 'coral-bg':true}" -->
         
         <OptionsMenu :optionsList="optionsList"/>
         <Dialog/>
@@ -278,7 +282,6 @@ import AccountDialog from './AccountDialog.vue'
 import OptionsMenu from './OptionsMenu.vue'
 
 import { mapGetters, mapActions } from 'vuex'
-
 import Parse from 'parse'
 
 import twitter from "../assets/icons/twitter.svg"
@@ -293,9 +296,6 @@ import LogOut from "../assets/icons/LogOut.svg"
 
 export default {
     name:"Header",
-
-    directives:{
-    },
 
     components:{
         Dialog,
@@ -354,7 +354,7 @@ export default {
 
     props:{
         submitIconDialog: String,
-        distanceFromTop: true,
+        distanceFromTop: Boolean,
     },
 
     methods:{
@@ -379,7 +379,7 @@ export default {
             document.documentElement.style.overflow = '';
         },
 
-        handleScroll () {
+        handleScroll() {
             this.scrolled = window.scrollY > 20;
         },
 
@@ -455,7 +455,7 @@ export default {
 
     },
 
-    destroyed () {
+    unmounted () {
         window.removeEventListener('scroll', this.handleScroll);
     },
 }

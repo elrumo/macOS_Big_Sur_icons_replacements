@@ -141,14 +141,14 @@
         class="icon-list-area p-t-48 p-b-40"
         v-else
       >
-        <div style="z-index: 2; height: 100%; min-height: 210px" class="card-wrapper card-hover coral-card">
+        <!-- <div style="z-index: 2; height: 100%; min-height: 210px" class="card-wrapper card-hover coral-card">
           <script
             @click="adClick({position: 'Icon Grid Top', type: 'Native'})"
             type="application/javascript"
             src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom"
             id="_carbonads_js2">
           </script>
-        </div>
+        </div> -->
 
         <UserIconCardLoading
           v-for="num in placeholderCount"

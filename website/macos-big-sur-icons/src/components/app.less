@@ -3,6 +3,7 @@
     --main-border-radius: 7px;
 
     --coral-dark-bg: rgb(26 26 26);
+    --coral-dark-text: rgba(75, 75, 75);
     --coral-dark-border: rgba(75, 75, 75, 0.5);
     --coral-dark-border-hover: rgb(95, 95, 95);
     --coral-dark-card: rgb(37, 37, 37);
@@ -208,16 +209,23 @@ select{
 
 .support-page{
     margin: auto !important;
-    position: relative !important;
+    // position: relative !important;
     padding: 10px !important;
     top: 25px;
-    // left: 50%;
-    // transform: translateY(-50%);
     display: grid;
     gap: 7px;
     text-align: center;
     width: calc(100% - 20px ) !important;
     height: fit-content !important;
+}
+
+.resources-card-container{
+    
+    .support-page{
+        position: absolute !important;
+        top: 50%;
+        transform: translateY(-50%);
+    }
 }
 
 .lgbt-wrapper .card-no-ad{
@@ -750,7 +758,7 @@ coral-buttongroup button{
 }
 
 
-.header{
+.nav-header{
     width: 100%;
     position: sticky;
     top: 0;
@@ -1047,6 +1055,10 @@ coral-buttongroup button{
     .icon-heart-filled{
         background-image: url('@/assets/icons/Category_Icons/Heart_Filled.svg');
     }
+
+    .color-theme{
+        color: var(--coral-light-border);
+    }
 }
 
 .coral--light{
@@ -1060,6 +1072,10 @@ coral-buttongroup button{
 
     .icon-heart-filled{
         background-image: url('@/assets/icons/Category_Icons/Heart_Filled_dark.svg');
+    }
+
+    .color-theme{
+        color: var(--coral-dark-text);
     }
 }
 
@@ -1188,7 +1204,7 @@ coral-buttongroup button{
     margin: auto;
     padding-top: 30px;
     width: var(--page-width);
-    gap: 35px;
+    gap: 20px;
 }
 
 .icon-list-area{
@@ -1196,11 +1212,18 @@ coral-buttongroup button{
     margin: 0px auto;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    gap: 20px;
+    gap: 12px;
     width: 100%;
     height: fit-content;
     height: -moz-fit-content;
     padding-bottom: 28px;
+    
+    .support-page{
+        top: 50%;
+        position: absolute;
+        transform: translateY(-50%);
+    }
+
 }
 
 .icon-list-area a{
@@ -1228,6 +1251,7 @@ coral-buttongroup button{
 .card-img-wrapper img{
     margin: auto;
     transition: 0.2s;
+    width: 100px;
 }
 
 .card-hover:hover .card-img-wrapper img{

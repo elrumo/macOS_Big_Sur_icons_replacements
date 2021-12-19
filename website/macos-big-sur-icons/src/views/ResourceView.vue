@@ -66,13 +66,14 @@
           </div>
 
           <div class="card-hover relative coral-card resources-card-ad">            
-              <script
+              <!-- <script
                 @click="adClick({position: 'Icon Grid Top', type: 'Carbon'})"
                 async="async"
                 type="application/javascript"
                 src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom"
                 id="_carbonads_js">
               </script>
+               -->
             <div class="card-no-ad">
               <p class="coral-Body--M">
                 Support for .icns is on my (long) todo list.

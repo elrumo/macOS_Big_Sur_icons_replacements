@@ -148,6 +148,7 @@ import UploadDialog from './UploadDialog.vue'
 // Parse.serverURL = 'https://media.macosicons.com/parse'
 
 import logoLowRes from "../assets/Resources/logo_lowres.png"
+import { M } from '../../dist/assets/vendor.896abb9e'
 
 export default {
   name:"EditIconDialog",
@@ -185,9 +186,11 @@ export default {
   },
   
   watch:{
-    icon: function (icon) { // Reset toUpdate each time 'icon' changes.
-      let parent = this;
-      parent.toUpdate = Object.assign({}, parent.toUpdateTemplate);
+    icon:{
+      handler(icon) { // Reset toUpdate each time 'icon' changes.
+        this.toUpdate = Object.assign({}, this.toUpdateTemplate);
+      },
+      deep: true
     }
   },
   methods:{

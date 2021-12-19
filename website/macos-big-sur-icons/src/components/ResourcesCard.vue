@@ -1,50 +1,52 @@
 <template>
-    <router-link :to="getLink">
+    <router-link class="resources-card-container" :to="getLink">
         <div class="coral-Well instructions-item Box">
-            <div class="new-pill" v-if="isNew(step)">
+            <div id="statusPill" class="new-pill" v-if="isNew(step)">
                 <coral-status variant="info">New</coral-status>
             </div>
             <div class="resources-card-wrapper">
 
-            <div v-if="!step.gradient" class="instructions-img-wrapper">
-                <img
-                    class="card-img resources-card-img"
-                    :src="getImage"
-                    alt=""
-                >
-            </div>
+                <div v-if="!step.gradient" class="instructions-img-wrapper">
+                    <img
+                        class="card-img resources-card-img"
+                        :src="getImage"
+                        alt=""
+                    >
+                </div>
 
-            <div v-else :class="{ 'instructions-img-wrapper': true, 'gradient':step.gradient }">
-                <img
-                    class="card-img resources-card-img"
-                    :src="getImage"
-                alt="">
-            </div>
+                <div v-else :class="{ 'instructions-img-wrapper': true, 'gradient':step.gradient }">
+                    <img
+                        class="card-img resources-card-img"
+                        :src="getImage"
+                    alt="">
+                </div>
 
-            <div class="resources-card-title">
-                <p
-                    :class="{
-                        'coral-Body--L': true,
-                        'f-w-500': !step.description,
-                        'f-w-900': step.description,
-                        'm-0': true,
-                    }"
-                >
-                    {{ step.title }}
-                </p>
-                <p
-                    v-if="step.description"
-                    :class="{
-                        'coral-Body--S': true,
-                        'f-w-500': true,
-                        'm-0': true,
-                        'opacity-70': true,
-                    }"
-                >
-                        <!-- 'p-t-4': true, -->
-                    {{ step.description }}
-                </p>
-            </div>
+                <div class="resources-card-title">
+                    <p
+                        :class="{
+                            'resource-card-text': true,
+                            'coral-Body--L': true,
+                            'f-w-500': !step.description,
+                            'f-w-900': step.description,
+                            'm-0': true,
+                        }"
+                    >
+                        {{ step.title }}
+                    </p>
+                    <p
+                        v-if="step.description"
+                        :class="{
+                            'resource-card-text': true,
+                            'coral-Body--S': true,
+                            'f-w-500': true,
+                            'm-0': true,
+                            'opacity-70': true,
+                        }"
+                    >
+                            <!-- 'p-t-4': true, -->
+                        {{ step.description }}
+                    </p>
+                </div>
 
             </div>
         </div>
@@ -53,9 +55,10 @@
 
 <script>
 import Marked from 'marked';
+import {Status} from '@adobe/coral-spectrum/coral-component-status'
 
 export default {
-    name: "HowToSteps",
+    name: "ResourcesCard",
     
     props:{
         step:{},
@@ -68,6 +71,7 @@ export default {
     },
 
     mounted: function(){
+        // this.createCoralStatus()
     },
 
     methods:{
@@ -82,9 +86,9 @@ export default {
             let dateNow = Date.now()
 
             if (item.created_at == undefined || postDate < dateNow) {
-                return false
-            } else {
                 return true;
+            } else {
+                return false
             }
         }
     },
