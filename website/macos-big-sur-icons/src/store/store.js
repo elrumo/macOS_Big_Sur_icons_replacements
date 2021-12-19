@@ -25,73 +25,75 @@ var IconsBase = Parse.Object.extend("Icons2");
 const client = algoliasearch(algolia.appid, algolia.apikey);
 const index = client.initIndex('macOSicons')
 
-export const store = createStore({
+export default createStore({
 
   state() {
-    list: icons,
-    dataToShow: [],
-    
-    blogPosts: {},
-    localPosts: localPosts,
+    return{
+      list: icons,
+      dataToShow: [],
+      
+      blogPosts: {},
+      localPosts: localPosts,
 
-    resourcesData: getPages(10),
-    singleResourceData: {},
-    moreResources: getPages(10),
+      resourcesData: getPages(10),
+      singleResourceData: {},
+      moreResources: getPages(10),
 
-    singleLearningResource: {},
-    learningResources: [],
-    learningHome: {
-                    h3: "Tutorials",
-                    description: "More tutorials on everything macOS icons coming soon. If you’d like to contribute or make suggestions, let us know on our [Discord](https://discord.gg/f4mTRyyTkT) channel or [Twitter](https://twitter.com/elrumo).",
-                    isAd: false,
-                    isCenter: true,
-                  },
+      singleLearningResource: {},
+      learningResources: [],
+      learningHome: {
+                      h3: "Tutorials",
+                      description: "More tutorials on everything macOS icons coming soon. If you’d like to contribute or make suggestions, let us know on our [Discord](https://discord.gg/f4mTRyyTkT) channel or [Twitter](https://twitter.com/elrumo).",
+                      isAd: false,
+                      isCenter: true,
+                    },
 
-    user: {
-      bio: "",
-      credit: "",
-      id: "",
-      twitterHandle: "",
-      username: "",
-    },
-    userAttributes: {},
-    savedIcons: [],
-    savedIconCount: "",
-    
-    userData: Parse.User.current(),
-
-    loading: true,
-
-    downloads:[],
-
-    selectedIcon:{},
-    searchString: "",
-    searchData: [],
-    
-    userIcons: {
-      approved: [],
-      notApproved: [],
-      hacked: [],
-      toSkip: {
-        approved: 0,
-        notApproved: 0
+      user: {
+        bio: "",
+        credit: "",
+        id: "",
+        twitterHandle: "",
+        username: "",
       },
-      count: {
-        approved: 0,
-        notApproved: 0,
-        hacked: 0
-      }
-    },
-    
-    selectedCategory: {
-      id: "All",
-    },
-    totalCategory: 0,
-    appCategories: [
-      {"id":"qI4GKWNpum","name":"Browser Extensions","categoryObj":{"className":"Categories","_objCount":16,"id":"qI4GKWNpum"}},{"id":"m2v3VuzZEu","name":"Developer Tools","categoryObj":{"className":"Categories","_objCount":3,"id":"m2v3VuzZEu"}},{"id":"0BnPHRjdrQ","name":"Education","categoryObj":{"className":"Categories","_objCount":4,"id":"0BnPHRjdrQ"}},{"id":"gVBckgE4zl","name":"Entertainment","categoryObj":{"className":"Categories","_objCount":5,"id":"gVBckgE4zl"}},{"id":"rq2vNGoV92","name":"Finance","categoryObj":{"className":"Categories","_objCount":2,"id":"rq2vNGoV92"}},{"id":"6DiDa4yD4m","name":"Games","categoryObj":{"className":"Categories","_objCount":6,"id":"6DiDa4yD4m"}},{"id":"sQCYzXFttB","name":"Graphics & Design","categoryObj":{"className":"Categories","_objCount":7,"id":"sQCYzXFttB"}},{"id":"7SbNrtDxDh","name":"Health & Fitness","categoryObj":{"className":"Categories","_objCount":9,"id":"7SbNrtDxDh"}},{"id":"7KYFn5kd15","name":"Lifestyle","categoryObj":{"className":"Categories","_objCount":8,"id":"7KYFn5kd15"}},{"id":"GgZF9kgRR7","name":"Medical","categoryObj":{"className":"Categories","_objCount":10,"id":"GgZF9kgRR7"}},{"id":"BO0gbTCPUK","name":"Music","categoryObj":{"className":"Categories","_objCount":12,"id":"BO0gbTCPUK"}},{"id":"jQbEVy2jCI","name":"News","categoryObj":{"className":"Categories","_objCount":11,"id":"jQbEVy2jCI"}},{"id":"ghYlSc5rf4","name":"Photo & Video","categoryObj":{"className":"Categories","_objCount":13,"id":"ghYlSc5rf4"}},{"id":"joml1zA4lv","name":"Productivity","categoryObj":{"className":"Categories","_objCount":14,"id":"joml1zA4lv"}},{"id":"StBWAxgpbs","name":"Reference","categoryObj":{"className":"Categories","_objCount":15,"id":"StBWAxgpbs"}},{"id":"dtOc7xXCaR","name":"Social Networking","categoryObj":{"className":"Categories","_objCount":17,"id":"dtOc7xXCaR"}},{"id":"thUmE1CYrl","name":"Sports","categoryObj":{"className":"Categories","_objCount":18,"id":"thUmE1CYrl"}},{"id":"Fhs38OomHD","name":"Travel","categoryObj":{"className":"Categories","_objCount":19,"id":"Fhs38OomHD"}},{"id":"EzBFwmxpNd","name":"Utilities","categoryObj":{"className":"Categories","_objCount":21,"id":"EzBFwmxpNd"}},{"id":"SIMwpAEm4Z","name":"Weather","categoryObj":{"className":"Categories","_objCount":20,"id":"SIMwpAEm4Z"}}
-    ],
-    iconType: []
+      userAttributes: {},
+      savedIcons: [],
+      savedIconCount: "",
+      
+      userData: Parse.User.current(),
+
+      loading: true,
+
+      downloads:[],
+
+      selectedIcon:{},
+      searchString: "",
+      searchData: [],
+      
+      userIcons: {
+        approved: [],
+        notApproved: [],
+        hacked: [],
+        toSkip: {
+          approved: 0,
+          notApproved: 0
+        },
+        count: {
+          approved: 0,
+          notApproved: 0,
+          hacked: 0
+        }
+      },
+      
+      selectedCategory: {
+        id: "All",
+      },
+      totalCategory: 0,
+      appCategories: [
+        {"id":"qI4GKWNpum","name":"Browser Extensions","categoryObj":{"className":"Categories","_objCount":16,"id":"qI4GKWNpum"}},{"id":"m2v3VuzZEu","name":"Developer Tools","categoryObj":{"className":"Categories","_objCount":3,"id":"m2v3VuzZEu"}},{"id":"0BnPHRjdrQ","name":"Education","categoryObj":{"className":"Categories","_objCount":4,"id":"0BnPHRjdrQ"}},{"id":"gVBckgE4zl","name":"Entertainment","categoryObj":{"className":"Categories","_objCount":5,"id":"gVBckgE4zl"}},{"id":"rq2vNGoV92","name":"Finance","categoryObj":{"className":"Categories","_objCount":2,"id":"rq2vNGoV92"}},{"id":"6DiDa4yD4m","name":"Games","categoryObj":{"className":"Categories","_objCount":6,"id":"6DiDa4yD4m"}},{"id":"sQCYzXFttB","name":"Graphics & Design","categoryObj":{"className":"Categories","_objCount":7,"id":"sQCYzXFttB"}},{"id":"7SbNrtDxDh","name":"Health & Fitness","categoryObj":{"className":"Categories","_objCount":9,"id":"7SbNrtDxDh"}},{"id":"7KYFn5kd15","name":"Lifestyle","categoryObj":{"className":"Categories","_objCount":8,"id":"7KYFn5kd15"}},{"id":"GgZF9kgRR7","name":"Medical","categoryObj":{"className":"Categories","_objCount":10,"id":"GgZF9kgRR7"}},{"id":"BO0gbTCPUK","name":"Music","categoryObj":{"className":"Categories","_objCount":12,"id":"BO0gbTCPUK"}},{"id":"jQbEVy2jCI","name":"News","categoryObj":{"className":"Categories","_objCount":11,"id":"jQbEVy2jCI"}},{"id":"ghYlSc5rf4","name":"Photo & Video","categoryObj":{"className":"Categories","_objCount":13,"id":"ghYlSc5rf4"}},{"id":"joml1zA4lv","name":"Productivity","categoryObj":{"className":"Categories","_objCount":14,"id":"joml1zA4lv"}},{"id":"StBWAxgpbs","name":"Reference","categoryObj":{"className":"Categories","_objCount":15,"id":"StBWAxgpbs"}},{"id":"dtOc7xXCaR","name":"Social Networking","categoryObj":{"className":"Categories","_objCount":17,"id":"dtOc7xXCaR"}},{"id":"thUmE1CYrl","name":"Sports","categoryObj":{"className":"Categories","_objCount":18,"id":"thUmE1CYrl"}},{"id":"Fhs38OomHD","name":"Travel","categoryObj":{"className":"Categories","_objCount":19,"id":"Fhs38OomHD"}},{"id":"EzBFwmxpNd","name":"Utilities","categoryObj":{"className":"Categories","_objCount":21,"id":"EzBFwmxpNd"}},{"id":"SIMwpAEm4Z","name":"Weather","categoryObj":{"className":"Categories","_objCount":20,"id":"SIMwpAEm4Z"}}
+      ],
+      iconType: []
     // userData: JSON.parse(JSON.stringify(Parse.User.current()))
+    }
   },
 
   mutations: {   
@@ -799,8 +801,6 @@ export const store = createStore({
     getSingleTutorial(store){
       return store.singleLearningResource
     }
-
-
   }
 
 })

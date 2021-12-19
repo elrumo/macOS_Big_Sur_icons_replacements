@@ -15,6 +15,7 @@ export default {
     vue({
       template: {
         compilerOptions: {
+          isCustomElement: tag => tag.startsWith('coral-'),
           compatConfig: {
             MODE: 2
           }

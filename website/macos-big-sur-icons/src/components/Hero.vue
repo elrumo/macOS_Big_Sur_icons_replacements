@@ -184,11 +184,8 @@ export default {
       window.open("https://github.com/sponsors/elrumo?o=esc", "_blank");
     },
   },
-
-  destroyed: function() {
-  },
   
-  mounted: function() {
+  mounted() {
     
   },
 

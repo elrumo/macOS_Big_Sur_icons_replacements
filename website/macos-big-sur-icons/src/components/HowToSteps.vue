@@ -24,6 +24,9 @@ export default {
         step:{},
     },
 
+    mounted(){
+    },
+
     data: function(){
         return{
         }

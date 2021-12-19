@@ -7,9 +7,12 @@ import VueMobileDetection from 'vue-mobile-detection'
 import './registerServiceWorker'
 
 const app = createApp(App)
+
+app.use(VueMobileDetection)
 app.use(store)
 app.use(router)
 app.mount('#app')
+
 
 
 

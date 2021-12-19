@@ -162,10 +162,10 @@ height: -moz-fit-content;
 }
 
 .resources-card-ad .card-no-ad{
-        width: 100%;
+    /* width: 100%;
     left: 0px;
     top: 50%;
-    position: absolute;
+    position: absolute; */
 }
 
 .resources-card-ad .carbon-text{

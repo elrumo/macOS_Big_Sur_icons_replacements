@@ -5,6 +5,12 @@ import VueMeta from 'vue-meta'
 import Home from '../components/Home.vue'
 import BlogPost from '../views/BlogPost.vue'
 import BlogHome from '../views/BlogHome.vue'
+import Dashboard from '../views/Dashboard.vue'
+import Login from '../views/Login.vue'
+import HowTo from '../views/HowTo.vue'
+import Forum from '../views/Forum.vue'
+import ResourceView from '../views/ResourceView.vue'
+import Learn from '../views/Learn.vue'
 
 // Vue.use(VueRouter)
 // Vue.use(VueMeta)
@@ -13,7 +19,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('../components/Home.vue')
+    component: Home
   },
   {
     path: '/dashboard',
@@ -21,7 +27,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/Dashboard.vue')
+    component: Dashboard
   },
   // {
   //   path: '/about',
@@ -31,7 +37,7 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/Login.vue')
+    component: Login
   },
   {
     path: '/blog',
@@ -184,7 +190,7 @@ const routes = [
   {
     path: '/how-to',
     name: 'HowTo',
-    component: () => import('../views/HowTo.vue'),
+    component: HowTo,
     meta:{
       title: 'How to change app icons in macOS Big Sur',
       description:"Guide to donlwoad and change app icons in macOS Big Sur using Finder and a website with over 5000+ free app icons.",
@@ -233,13 +239,13 @@ const routes = [
   {
     path: '/forum',
     name: 'Forum',
-    component: () => import('../views/Forum.vue')
+    component: Forum
   },
 
   {
     path: '/resources/"macos-big-sur-app-icon"',
     name: 'Resource-BigSur-template',
-    component: () => import('../views/ResourceView.vue'),
+    component: ResourceView,
     meta: { 
       title: 'Free app icon template for macOS Big Sur.',
       description:"Template to create app icons for macOS Big Sur. Contains instructions on how to upload your icons to macOSicons.com and a set of predefined styles ready for you to apply and edit.",
@@ -335,7 +341,7 @@ const routes = [
   {
     path: '/learn',
     name: 'Learn',
-    component: () => import('../views/Learn.vue'),
+    component: Learn,
     meta: { 
       title: 'Free macOS Big Sur icon templates and tutorials.',
       description:"Resources, templates and tutorials to help you design icons for macOS.",
@@ -561,7 +567,8 @@ const routes = [
   },
 ]
 
-global.router = new createRouter({
+// global.router = new createRouter({
+const router = new createRouter({
   // base: import.meta.env.BASE_URL,
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
@@ -569,5 +576,6 @@ global.router = new createRouter({
     return { left: 0, top: 0 }
   }
 })
+
 
 export default router

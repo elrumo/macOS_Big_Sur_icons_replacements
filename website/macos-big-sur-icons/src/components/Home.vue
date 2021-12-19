@@ -371,7 +371,9 @@
                   Support this page
                 </h3>
                 <p class="coral-Body--S m-0">
-                  Please consider disabling your ad blocker or making a
+                  <span class="color-theme">
+                    Please consider disabling your ad blocker or making a
+                  </span>
                   <a  
                     rel="noopener"
                     class="coral-Link"
@@ -629,7 +631,6 @@ export default {
   },
 
   mounted: async function(){
-
     this.getAd()
     this.cmdK()
     this.searchForPathQuery()
@@ -639,11 +640,11 @@ export default {
     await this.fetchSavedIcons()
     this.getIconsArray();
 
-    // let fullPath = this.$route.fullPath
-    // let currentUser = Parse.User.current()
-    // if (fullPath.includes("/?username=") && !currentUser) {
-    //   this.showEl("loginDialog")
-    // }
+    let fullPath = this.$route.fullPath
+    let currentUser = Parse.User.current()
+    if (fullPath.includes("/?username=") && !currentUser) {
+      this.showEl("loginDialog")
+    }
   },
 
   methods:{ 
@@ -1111,27 +1112,31 @@ export default {
   },
 
   watch:{
-    searchString: function (search) {
-      let parent = this
-
-      parent.setData({state: "searchString", data: search})
-
-      if (parent.$route.name != "Home" && parent.$route.name != "Search") {
-        return
-      }
-      parent.algoliaSearch()
+    searchString: {
+      handler(val, oldVal) {
+        let search = val
+        this.setData({state: "searchString", data: search})
+        if (this.$route.name != "Home" && this.$route.name != "Search") {
+          return
+        }
+        this.algoliaSearch()
+      },
+      deep: true
     },
 
-    content() {
-      this.$nextTick(()=>{
-        let parent = this
-        let ad = document.getElementById("carbonads")
-        if(!ad) {
-          parent.isAdOn = false
-        } else {
-          parent.isAdOn = false
-        }
-      })
+    content: {
+      handler(val, oldVal) {
+        this.$nextTick(()=>{
+          let parent = this
+          let ad = document.getElementById("carbonads")
+          if(!ad) {
+            parent.isAdOn = false
+          } else {
+            parent.isAdOn = false
+          }
+        })
+      },
+      deep: true
     }
   },
 
@@ -1141,7 +1146,7 @@ export default {
     isMobile(){
       let parent = this;
       // console.log("this.windowWidth: ", this.windowWidth);
-      return parent.windowWidth <= 820
+      return this.windowWidth <= 820
     },
     
     adIsOn(){
@@ -1211,8 +1216,8 @@ export default {
 
   },
 
-  destroyed () {
-    window.removeEventListener('scroll', this.handleScroll);
+  unmounted () {
+    // window.removeEventListener('scroll', this.handleScroll);
   },
 
   props: {

@@ -14,13 +14,13 @@
           </div>
         </div>
 
-        <div 
+        <!-- <div 
           @click="adClick({position: 'User Icon Grid', type: 'Carbon'})"  
           class="absolute" 
           style="z-index: 1; height: 100%"
         >
           <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
-        </div>
+        </div> -->
 
           <a
             class="card-no-ad relative"

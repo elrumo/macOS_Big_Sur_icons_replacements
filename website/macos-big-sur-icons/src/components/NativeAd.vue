@@ -97,20 +97,24 @@ export default {
       }
 
       setTimeout(() =>{
-        let nodeList = document.querySelector("#"+adId).children
-        
-        for(let el in nodeList){
-          let newNodeList = document.querySelector("#"+adId).children
+        try {
+          let nodeList = document.querySelector("#"+adId).children
+          
+          for(let el in nodeList){
+            let newNodeList = document.querySelector("#"+adId).children
 
-          if(newNodeList.length > 1){
-            console.log(newNodeList.length);
-            el.parentNode.removeChild(el);
-          } else{
-            // console.log(newNodeList.length);
-            return
-          }
+            if(newNodeList.length > 1){
+              console.log(newNodeList.length);
+              el.parentNode.removeChild(el);
+            } else{
+              // console.log(newNodeList.length);
+              return
+            }
 
-        };
+          };
+        } catch (error) {
+          
+        }
       }, 1200)
 
     },

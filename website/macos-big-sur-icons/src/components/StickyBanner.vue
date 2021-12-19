@@ -74,11 +74,11 @@ export default {
     
     mounted(){
       
-      // this.$nextTick(function () {
-      //   let parent = this
-      //   parent.getAd()
-      // })
-      console.log(this.router);
+      this.$nextTick(function () {
+        let parent = this
+        parent.getAd()
+      })
+
       // this.$router.onReady(function(){
 
       //   function getAd(){
@@ -112,69 +112,34 @@ export default {
     },
 
     watch:{
-      // $route (to, from){
-      //     this.$router.onReady(function(){
-      //       let parent = this
-
-      //       function getAd(){
-      //         try {
-      //           if (typeof _bsa !== 'undefined') {
-      //           _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
-      //             {
-      //               target: '.card-ad2',
-      //               template: `
-      //                   <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link">
-      //                   <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
-      //                     <div class="bsa-icon" style="background-image: url(##logo##);"></div>
-      //                   </div>
-      //                   <div class="text-ad-wrapper">
-      //                     <img style="background: ##backgroundColor##" src="##image##">
-      //                     <div class="bsa-desc">##description##</div>
-      //                   </div>
-      //                   </a>
-      //                 `
-      //               }
-      //             )
-      //           }
-      //         } catch (error) {
-      //           console.log("error: ", error);
-      //         }
-
-      //         // setTimeout(() => {
-      //         //   let ad = document.querySelector('.bsa-link')
-      //         //   if (ad == null) {
-      //         //     console.log('no ad');
-      //         //     getAd()
-      //         //     console.log('no ad');
-      //         //   }
-      //         // }, 1500);
-
-      //       }
-      //       // getAd()
+      $route (to, from){
+          // this.$router.isReady(function(){
+            // let parent = this
+            // getAd()
             
-      //       let el = document.querySelector('.card-ad2').children
+            // let el = document.querySelector('.card-ad2').children
 
-      //       // if (from.name != null) {
-      //         // try {
-      //         //   el[0].remove()
-      //         //   setTimeout(() => {
-      //         //     getAd()
-      //         //     getAd()
-      //         //   }, 1000);
-      //         // } catch (error) {
-      //         //   getAd()
-      //         //   getAd()
-      //         // }
-      //       // }
+            // if (from.name != null) {
+              // try {
+              //   el[0].remove()
+              //   setTimeout(() => {
+              //     getAd()
+              //     getAd()
+              //   }, 1000);
+              // } catch (error) {
+              //   getAd()
+              //   getAd()
+              // }
+            // }
             
-      //     });
-      // }
+          // });
+      }
     },
 
     methods:{
       ...mapActions(['showEl', 'setSelectedIcon', 'addClickCount', 'adClick']),
 
-      getAd(el){
+      getAd(){
         try {
           if (typeof _bsa !== 'undefined') {
           _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',

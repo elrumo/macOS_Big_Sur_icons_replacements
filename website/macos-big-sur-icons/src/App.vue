@@ -1,23 +1,23 @@
 <template>
   <div id="app">
-    <coral-toast id="toastMessage" variant="success">
+    <!-- <coral-toast id="toastMessage" variant="success">
       All icons have been uploaded.
-    </coral-toast>
+    </coral-toast> -->
 
-      <!-- :distanceFromTop="distanceFromTop" -->
-    <!-- <Header
+    <Header
+      :distanceFromTop="distanceFromTop"
       :submitIconDialog="'submitIcon'"
-    /> -->
+    />
 
     <StickyBanner/>
-    
-    <!-- <transition name="fade" mode="out-in"> -->
-        <!-- :key="$route.fullPath" -->
-      <router-view
-        :key="'$route.fullPath'"
-        class="min-height"
-      />
-    <!-- </transition> -->
+
+    <div class="min-height">
+      <!-- <transition name="fade" mode="out-in"> -->
+          <!-- :key="$route.fullPath" -->
+        <router-view
+        />
+      <!-- </transition> -->
+    </div>
 
     <Footer/>
   </div>
@@ -27,6 +27,9 @@
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
 import StickyBanner from '@/components/StickyBanner.vue'
+
+import { Toast } from '@adobe/coral-spectrum/coral-component-toast'
+const appBody = document.getElementById('app')
 
 // import '@adobe/spectrum-css/dist/icons/spectrum-css-icons.svg' 
 // import '@adobe/spectrum-css/dist/icons/loadIcons.js' 
@@ -46,27 +49,40 @@ export default {
     }
   },
 
-  watch:{
-    $route (to, from){
-        // console.log(to);
-        // console.log(from);
-        // _bsa.reload('.target-class-name')
-    }
-  },
+  // watch:{
+  //   $route:{
+  //     handler(to, from) {
+  //       // console.log(to);
+  //       // console.log(from);
+  //       _bsa.reload('.target-class-name')
+  //     },
+  //     deep: true
+  //   }
+  // },
 
   methods:{
     handleScroll () {
-      let parent = this
-      let currentRoute = parent.$router.currentRoute.name;
-      if (currentRoute == "Home") {
-        this.distanceFromTop =  document.getElementById("searchBar").getBoundingClientRect().y > 65;
+      let currentRoute = this.$router.currentRoute.value.name;
+      let searchBar = document.getElementById("searchBar");
+      if (currentRoute == "Home" && searchBar) {
+          this.distanceFromTop =  document.getElementById("searchBar").getBoundingClientRect().y > 65;
       }
     },
 
+    createToast(){
+      const toast = new Toast()
+      toast.id = 'toastMessage';
+      toast.variant = 'success';
+      appBody.appendChild(toast)
+    }
   },
 
   mounted: function(){
-    window.addEventListener('scroll', this.handleScroll);
+    setTimeout(() => {
+      window.addEventListener('scroll', this.handleScroll);
+    }, 500);
+
+    this.createToast()
   }
 }
 </script>

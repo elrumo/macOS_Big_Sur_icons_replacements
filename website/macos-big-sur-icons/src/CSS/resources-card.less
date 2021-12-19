@@ -40,28 +40,51 @@
 // START Resources Card
 ////////////////////////////////////////////////////////////////
 .resources-grid{
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  flex-basis: auto;
+  padding-bottom: 20px;
+  padding-top: 0px;
+  flex-wrap: wrap;
+  flex-grow: 1;
+
   gap: 30px;
   padding-bottom: 20px;
   padding-top: 0px;
 }
 
+.resources-card-container{
+    width: 100%;
+    flex-grow: 1;
+    flex-shrink: 10;
+    flex-basis: 30%;
+}
+
 .resources-card-wrapper{
   position: relative;
   display: grid;
-  grid-template-rows: 6.5fr 2.5fr;
-  // grid-template-rows: 200px auto;
+  grid-template-rows: 200px auto;
   padding: 0px;
   gap: 0px;
   color: white;
   align-items: center;
-  height: 100%;
+  height: fit-content;
+  // height: 100%;
   border-radius: 10px;
   overflow: hidden;
 }
 
+.resource-card-text{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  word-wrap: break-word;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
 .resources-card-title{
-  padding: 10px 17px;
+  padding: 20px;
+  height: calc(100% - 40px);
   // padding: 20px 25px;
 }
 
