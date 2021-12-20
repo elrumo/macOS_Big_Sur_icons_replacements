@@ -37,10 +37,11 @@
           v-if="getSingleTutorial.video"
           class="post-full-image"
         >
+            <!-- :src="getSingleTutorial.url" -->
           <iframe
             width="100%" 
             height="515" 
-            :src="getSingleTutorial.url"
+            :src="getVideoUrl"
             title="YouTube video player"
             frameborder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -283,7 +284,14 @@ export default {
   computed:{
     ...mapGetters([
       'getSingleTutorial'
-    ])
+    ]),
+
+    getVideoUrl(){
+      let url = this.getSingleTutorial.video
+      url = url.substring(url.indexOf('?') + 3)
+      return 'https://www.youtube.com/embed/'+url
+    },
+
   }
 }
 </script>
