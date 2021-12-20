@@ -637,8 +637,12 @@ export default {
     this.setEventListenersOnStart()
     this.fetchUserAttributes()
     
-    await this.fetchSavedIcons()
-    this.getIconsArray();
+    // try {
+      await this.fetchSavedIcons()
+      this.getIconsArray();
+    // } catch (error) {
+    //   console.log("error: ", error);
+    // }
 
     let fullPath = this.$route.fullPath
     let currentUser = Parse.User.current()
