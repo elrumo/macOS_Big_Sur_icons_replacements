@@ -148,7 +148,6 @@ import UploadDialog from './UploadDialog.vue'
 // Parse.serverURL = 'https://media.macosicons.com/parse'
 
 import logoLowRes from "../assets/Resources/logo_lowres.png"
-import { M } from '../../dist/assets/vendor.896abb9e'
 
 export default {
   name:"EditIconDialog",
