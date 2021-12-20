@@ -2,13 +2,15 @@
 // import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
-const path = require("path");
+// const path = require("path");
+
+console.log(import.meta);
 
 export default {
   resolve: {
     alias: {
       vue: '@vue/compat',
-      "@": path.resolve(__dirname, "./src")
+      "@": resolve(__dirname, "./src")
     }
   },
   plugins: [
