@@ -12,11 +12,13 @@
     <StickyBanner/>
 
     <div class="min-height">
-      <!-- <transition name="fade" mode="out-in"> -->
-          <!-- :key="$route.fullPath" -->
-        <router-view
-        />
-      <!-- </transition> -->
+      <router-view
+        v-slot="{ Component }"
+      >
+        <transition name="fade" mode="out-in">
+          <component :is="Component" :key="$route.path"/>
+        </transition>
+      </router-view>
     </div>
 
     <Footer/>
@@ -80,6 +82,7 @@ export default {
   mounted: function(){
     setTimeout(() => {
       window.addEventListener('scroll', this.handleScroll);
+      console.log(this.$route);
     }, 500);
 
     this.createToast()
