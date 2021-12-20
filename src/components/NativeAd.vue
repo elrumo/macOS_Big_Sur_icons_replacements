@@ -53,8 +53,12 @@ export default {
 
       var attempts = 0       
       function adExist(){
-        var adExists = document.getElementById(adId).children.length
-        console.log();
+        var adExists
+        try {
+          adExists = document.getElementById(adId).children.length
+        } catch (error) {
+        }
+
         setTimeout(() => {
           if (attempts >= 15) return;
           if (adExists == 0) {
