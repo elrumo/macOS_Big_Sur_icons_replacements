@@ -166,9 +166,11 @@ export default {
         setTimeout(() => {
           let ad = document.querySelector('.bsa-link')
           if (ad == null) {
-            console.log('no ad');
-             getAd()
-             console.log('no ad');
+            try {
+              this.getAd()
+            } catch (error) {
+              console.log("error: ", error);
+            }
           }
       }, 1500);
 

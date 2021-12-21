@@ -404,10 +404,11 @@ export default {
     let parent = this; 
     // document.getElementById("accountDialog").show()
     const store = parent.$store; 
-
     let isAuth = store.getters.getUser.isAuth
+    let curerntUser = Parse.User.current();
+
     if (!isAuth) {
-      console.log("Not logged in");
+      // console.log("Not logged in");
     } else{
     }
     // curerntUser.set("username", "Elias")

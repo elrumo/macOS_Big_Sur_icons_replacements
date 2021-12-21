@@ -82,7 +82,6 @@ export default {
   mounted: function(){
     setTimeout(() => {
       window.addEventListener('scroll', this.handleScroll);
-      console.log(this.$route);
     }, 500);
 
     this.createToast()

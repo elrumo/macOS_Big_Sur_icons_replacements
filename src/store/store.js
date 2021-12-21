@@ -170,7 +170,12 @@ export default createStore({
     },
 
     async fetchLearningResources(store){
-      store.commit('setDataToArr', {arr: 'learningResources', data: await getTutorials()})
+      try {
+        let tutorials = await getTutorials()
+        store.commit('setDataToArr', {arr: 'learningResources', data: await getTutorials()})
+      } catch (error) {
+        console.log("Error fetching learning resources: ", error);
+      }
     },
 
     async fetchLearningHome(store){
