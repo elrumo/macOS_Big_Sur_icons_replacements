@@ -8,8 +8,6 @@ import './registerServiceWorker'
 
 const app = createApp(App)
 
-console.log("app: ", app);
-
 app.use(VueMobileDetection)
 app.use(store)
 app.use(router)

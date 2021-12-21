@@ -4,9 +4,8 @@ import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 // const path = require("path");
 
-console.log(import.meta);
-
 export default {
+  base: "./",
   resolve: {
     alias: {
       vue: '@vue/compat',

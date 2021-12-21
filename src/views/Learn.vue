@@ -8,6 +8,7 @@
       />
 
       <div class="resources-grid card-grid m-t-48" id="how-to-install">
+        <!-- {{getLearningResources}} -->
         <ResourcesCard
           v-for="tutorial in getLearningResources"
           :key="tutorial.id"

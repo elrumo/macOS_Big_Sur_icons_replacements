@@ -33,30 +33,37 @@
         </p>
 
         <!-- Video -->
-        <figure
-          v-if="getSingleTutorial.video"
-          class="post-full-image"
-        >
-            <!-- :src="getSingleTutorial.url" -->
-          <iframe
-            width="100%" 
-            height="515" 
-            :src="getVideoUrl"
-            title="YouTube video player"
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          />
-        </figure>
+        <div class="content-image-container">
+          <figure
+            v-if="getSingleTutorial.video"
+            class="post-full-image"
+          >
+              <!-- :src="getSingleTutorial.url" -->
+            <iframe
+              width="100%" 
+              height="515" 
+              :src="getVideoUrl"
+              title="YouTube video player"
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            />
+          </figure>
 
-        <!-- Image -->
-        <figure v-else class="post-full-image">
-          <img
-            :src="getSingleTutorial.feature_image"
-            width="100%" 
-            title="YouTube video player"
-          />
-        </figure>
+          <!-- Image -->
+          <figure v-else class="post-full-image">
+            <v-lazy-image
+              :src-placeholder="coralIcons.loading"
+              :src="getSingleTutorial.feature_image"
+            />
+            
+            <img
+              :src="getSingleTutorial.feature_image"
+              width="100%" 
+              title="YouTube video player"
+            />
+          </figure>
+        </div>
       </div>
 
       <!-- Content -->
@@ -105,6 +112,7 @@ import Header from '@/components/Header.vue'
 import ResourcesCard from '@/components/ResourcesCard.vue'
 import NativeAd from '@/components/NativeAd.vue'
 import H3Description from '@/components/H3_Description.vue'
+import VLazyImage from "v-lazy-image";
 
 import Marked from 'marked';
 import axios from 'axios'
@@ -116,7 +124,8 @@ export default {
     Header,
     ResourcesCard,
     NativeAd,
-    H3Description
+    H3Description,
+    VLazyImage
   },
 
   metaInfo: {
@@ -183,8 +192,9 @@ export default {
     const slug = this.$route.params.learningResource;    
     await this.getTutorialFromSlug(slug)
     
-    let isError = this.getSingleTutorial.error
-    if(isError) this.$router.push('/learn');
+    // console.log(this.getSingleTutorial.error);
+    // let isError = this.getSingleTutorial.error
+    // if(isError) this.$router.push('/learn');
   },
 
   methods: {

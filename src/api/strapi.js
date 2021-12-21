@@ -7,10 +7,16 @@ export async function getTutorials() {
     let tutorialsArr = []
     
     for(let tutorial in tutorials.data.data){       
-        // Set image from array to object
         let image = tutorials.data.data[tutorial].attributes.feature_image
-        tutorials.data.data[tutorial].attributes.feature_image = 'https://api.macosicons.com'+image.data.attributes.formats.medium.url    
-        tutorialsArr.push(tutorials.data.data[tutorial].attributes)
+        
+        if(image.data.attributes.formats){ // Set image from array to object
+            tutorials.data.data[tutorial].attributes.feature_image = 'https://api.macosicons.com'+image.data.attributes.formats.medium.url
+        }else{
+            tutorials.data.data[tutorial].attributes.feature_image = 'https://api.macosicons.com'+image.data.attributes.url
+        }
+
+        tutorialsArr.push(tutorials.data.data[tutorial].attributes)   
+
     }
     
     return tutorialsArr
@@ -33,8 +39,13 @@ export async function getTutorialFromSlug(slug) {
     try {
         let resource = await axios.get('https://api.macosicons.com/api/tutorials?populate=*&filters[slug][$eq]='+slug)
         resource = resource.data.data[0].attributes
+        let image = resource.feature_image.data.attributes
         
-        resource.feature_image = 'https://api.macosicons.com'+resource.feature_image.data.attributes.formats.medium.url    
+        if(image.formats){ // Set image from array to object
+            resource.feature_image = 'https://api.macosicons.com'+image.formats.large.url
+        }else{
+            resource.feature_image = 'https://api.macosicons.com'+image.url
+        }
     
         return resource   
     } catch (error) {
