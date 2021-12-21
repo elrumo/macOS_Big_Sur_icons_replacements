@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div @click="appleLogin" style="height: 40px; width: 100px; background: black;" ></div>
+    <!-- <div @click="appleLogin" style="height: 40px; width: 100px; background: black;" ></div> -->
   </div>
 </template>
 
 <script>
 import Parse from 'parse'
-import jwt_decode from 'jwt-decode';
+// import jwt_decode from 'jwt-decode';
 
 export default {
   name: 'About',
