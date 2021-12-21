@@ -6,9 +6,6 @@ import { resolve } from 'path'
 
 export default {
   base: "./",
-  build: {
-    watch: {}
-  },
   resolve: {
     alias: {
       vue: '@vue/compat',
