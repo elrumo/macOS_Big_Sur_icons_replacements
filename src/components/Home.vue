@@ -428,11 +428,6 @@ import StickyBanner from './StickyBanner.vue';
 
 import Parse from 'parse'
 
-// import VueLoadImage from 'vue-load-image'
-
-// import dotenv from 'dotenv'; // Used to access env varaibles
-// dotenv.config();
-
 // TODO: remove credentials
 const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
 const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
@@ -490,7 +485,6 @@ export default {
     deleteDialog,
     NativeAd,
     UserIconCard,
-    // 'vue-load-image': VueLoadImage,
     StickyBanner,
   },
 

@@ -1,6 +1,4 @@
-import Vue from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import VueMeta from 'vue-meta'
 
 import Home from '../components/Home.vue'
 import BlogPost from '../views/BlogPost.vue'
