@@ -3,18 +3,6 @@
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 // const path = require("path");
-import Parse from 'parse/dist/parse.min.js';
-
-const VITE_PARSE_APP_ID = 'macOSicons'
-const VITE_PARSE_JAVASCRIPT_KEY = 'macOSicons'
-
-Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
-Parse.serverURL = 'https://media.macosicons.com/parse'
-var IconsBase = Parse.Object.extend("Icons2");
-
-let icons = new Parse.Query(IconsBase)
-console.log("icons: ", icons);
-
 
 export default {
   base: "./",
