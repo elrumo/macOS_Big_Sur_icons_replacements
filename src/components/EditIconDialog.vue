@@ -141,7 +141,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import Parse from 'parse'
+import Parse from 'parse/dist/parse.min.js';
 import UploadDialog from './UploadDialog.vue'
 
 // Parse.initialize("macOSicons");

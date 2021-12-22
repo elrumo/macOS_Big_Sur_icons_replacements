@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import Parse from 'parse'
+import Parse from 'parse/dist/parse.min.js';
 import algoliasearch from 'algoliasearch'
 
 import localPages from '@/api/pages.json';

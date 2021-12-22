@@ -296,7 +296,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Parse from 'parse'
+import Parse from 'parse/dist/parse.min.js';
 // import jwt_decode from 'jwt-decode';
 
 // Parse.initialize("macOSicons");

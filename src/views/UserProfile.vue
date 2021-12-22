@@ -181,7 +181,7 @@ import EditIconDialog from "@/components/EditIconDialog.vue"
 import deleteDialog from "@/components/deleteDialog.vue"
 import StickyBanner from "@/components/StickyBanner.vue"
 
-import Parse from 'parse'
+import Parse from 'parse/dist/parse.min.js';
 import { mapGetters, mapActions } from 'vuex'
 
 import twitterIcon from "../assets/icons/twitter.svg"

@@ -426,7 +426,7 @@ import deleteDialog from './deleteDialog.vue';
 import NativeAd from './NativeAd.vue';
 import StickyBanner from './StickyBanner.vue';
 
-import Parse from 'parse'
+import Parse from 'parse/dist/parse.min.js';
 
 // TODO: remove credentials
 const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID

@@ -70,7 +70,7 @@ import EditIconDialog from "./EditIconDialog.vue"
 import deleteDialog from "./deleteDialog.vue"
 
 import { mapGetters, mapActions } from 'vuex'
-import Parse from 'parse'
+import Parse from 'parse/dist/parse.min.js';
 
 import addCoralIcon from "../assets/icons/add.svg"
 import newItemCoralIcon from "../assets/icons/newItem.svg"

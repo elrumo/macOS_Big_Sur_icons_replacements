@@ -137,7 +137,7 @@ import Sponsor from "./Sponsor.vue";
 import NativeAd from "./NativeAd.vue";
 import { mapGetters } from "vuex";
 
-import Parse from 'parse'
+import Parse from 'parse/dist/parse.min.js';
 
 export default {
   name: "Hero",
