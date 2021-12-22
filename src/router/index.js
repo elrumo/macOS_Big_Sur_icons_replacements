@@ -565,7 +565,7 @@ const routes = [
   },
 ]
 
-console.log("import.meta.env.BASE_URL: ", import.meta.env.BASE_URL);
+// console.log("import.meta.env.BASE_URL: ", import.meta.env.BASE_URL);
 
 // global.router = new createRouter({
 const router = new createRouter({
