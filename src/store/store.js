@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import { createStore } from 'vuex'
 import Parse from 'parse'
 import algoliasearch from 'algoliasearch'
@@ -347,7 +346,7 @@ export default createStore({
 
     async fetchUserIcons(store, userObj){
 
-      let IconsBase = Parse.Object.extend("Icons2");
+      // let IconsBase = Parse.Object.extend("Icons2");
       let approvedQuery = new Parse.Query(IconsBase);
       let notApprovedQuery = new Parse.Query(IconsBase);
       let numToLoad = 15
