@@ -237,7 +237,7 @@
 <script>
 import Vue from 'vue'
 import { mapActions, mapGetters } from 'vuex';
-import Parse from 'parse'
+import Parse from 'parse/dist/parse.min.js';
 
 // Parse.initialize("macOSicons");
 // Parse.serverURL = 'https://media.macosicons.com/parse'
