@@ -53,15 +53,15 @@
           <!-- Image -->
           <figure v-else class="post-full-image">
             <v-lazy-image
-              :src-placeholder="coralIcons.loading"
+              :src-placeholder="coralIcons.placeholderImage"
               :src="getSingleTutorial.feature_image"
+
             />
             
-            <img
+            <!-- <img
               :src="getSingleTutorial.feature_image"
-              width="100%" 
               title="YouTube video player"
-            />
+            /> -->
           </figure>
         </div>
       </div>
@@ -73,20 +73,20 @@
       ></div>
 
       <!-- About macOSicons -->
-      <!-- <section class="p-t-32 m-b-48 p-b-40">
+      <section class="p-t-48 m-b-48 m-t-48 p-b-48">
         <div class="">
           <hr class="coral-Divider--S">
         </div>
     
         <H3-Description
-          class="p-t-8 p-b-48"
+          class="p-t-8 p-b-24"
           :text="subscribe"
         />
       
         <div class="">
           <hr class="coral-Divider--S">
         </div>
-      </section> -->
+      </section>
     </main>
     
     <div class="moreResources p-t-48 m-t-48">
@@ -95,7 +95,7 @@
       </h3>
       <div class="resources-grid text-left card-grid">
         <ResourcesCard
-          v-for="tutorial in tutorials"
+          v-for="tutorial in getLearningResources"
           :key="tutorial.id"
           :step='tutorial'
           :link="'/learn/'+tutorial.slug"
@@ -115,7 +115,9 @@ import H3Description from '@/components/H3_Description.vue'
 import VLazyImage from "v-lazy-image";
 
 import Marked from 'marked';
-import axios from 'axios'
+
+import placeholderCoralIcon from "../assets/placeholder-icon.png"
+import placeholderImage from "../assets/placeholder-image.gif"
 
 export default {
   name: 'learningResource',
@@ -178,6 +180,12 @@ export default {
       isMobile: this.$isMobile(),
       tutorials: {},
       resource: {},
+
+      coralIcons:{
+          loading: placeholderCoralIcon,
+          placeholderImage: placeholderImage,
+      },
+
       subscribe:{
         h3: "macOSicons.com",
         description: "Hi! I'm Elias, and I'm building an open platform for all things icons, where you can [download](https://macosicons.com) thousands of macOS ready icons, [resources](https://macosicons.com/resources) and [learn](https://macosicons.com/learn) how to make them.",
@@ -192,13 +200,18 @@ export default {
     const slug = this.$route.params.learningResource;    
     await this.getTutorialFromSlug(slug)
     
+    if(this.getLearningResources.length == 0){ // If no resources, get the latest resources
+      this.fetchLearningResources()
+    }
+    
     // console.log(this.getSingleTutorial.error);
-    // let isError = this.getSingleTutorial.error
-    // if(isError) this.$router.push('/learn');
+    let isError = this.getSingleTutorial.error
+    if(isError) this.$router.push('/learn');
   },
 
   methods: {
     ...mapActions([
+      'fetchLearningResources',
       'getPageData',
       'adClick',
       'getTutorialFromSlug'
@@ -293,7 +306,8 @@ export default {
 
   computed:{
     ...mapGetters([
-      'getSingleTutorial'
+      'getSingleTutorial',
+      'getLearningResources'
     ]),
 
     getVideoUrl(){
