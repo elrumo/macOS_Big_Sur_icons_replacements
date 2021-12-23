@@ -15,6 +15,10 @@ import Learn from '../views/Learn.vue'
 
 const routes = [
   {
+    path: "/index.html",
+    redirect: "/" 
+  },
+  {
     path: '/',
     name: 'Home',
     component: Home
