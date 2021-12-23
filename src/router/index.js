@@ -566,11 +566,11 @@ const routes = [
 ]
 
 // console.log("import.meta.env.BASE_URL: ", import.meta.env.BASE_URL);
+// history: createWebHistory('./'),
 
 // global.router = new createRouter({
 const router = new createRouter({
   // base: import.meta.env.BASE_URL,
-  history: createWebHistory('./'),
   routes,
   scrollBehavior (to, from, savedPosition) {
     return { left: 0, top: 0 }
