@@ -9,6 +9,13 @@
 
       <div class="resources-grid card-grid m-t-48" id="how-to-install">
         <!-- {{getLearningResources}} -->
+        <coral-wait
+          v-if="getLearningResources.length == 0"
+          class="m-auto"
+          size="L"
+          indeterminate=""
+        />
+
         <ResourcesCard
           v-for="tutorial in getLearningResources"
           :key="tutorial.id"
