@@ -6,7 +6,7 @@ import router from './router'
 import VueMobileDetection from 'vue-mobile-detection'
 import './registerServiceWorker'
 
-console.log("ROUTER: ", router);
+console.log("ROUTERs: ", router);
 
 const app = createApp(App)
 
