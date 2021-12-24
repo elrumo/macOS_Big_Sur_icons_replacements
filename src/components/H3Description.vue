@@ -44,7 +44,7 @@ import Marked from 'marked';
 import NativeAd from "./NativeAd.vue";
 
 export default {
-    name: "H3_Description",
+    name: "H3Description",
     
     props:{
         text:{},

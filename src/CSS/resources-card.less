@@ -21,22 +21,24 @@
   width: 100%;
 }
 
-.moreResources{
+.more-resources{
   display: grid;
   grid-template-columns: auto;
   gap: 15px;
-  padding: 30px 0px 40px 0px;
+  padding: 36px 0px;
   max-width: 900px;
   margin: auto;
+
+  .resources-grid{
+    width: 90%;
+    padding-top: 18px;
+  }
+
 }
 
 .resource-excerpt{
   padding-bottom: 30px;
 }
-
-// .moreResources .resources-grid{
-//   grid-template-columns: auto auto minmax(314px, calc(100vw / 3 - 18vw));
-// }
 
 // END Resources View
 ////////////////////////////////////////////////////////////////
@@ -52,7 +54,7 @@
   flex-wrap: wrap;
   flex-grow: 1;
   // max-width: calc(var(--blog-content-width) + 40px);
-  width: 90%;
+  // width: 90%;
 
   gap: 30px;
   padding-bottom: 20px;

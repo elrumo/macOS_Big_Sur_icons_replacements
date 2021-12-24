@@ -51,7 +51,7 @@
       </div>
       
       <!-- More resources -->
-      <div class="moreResources">
+      <div class="more-resources">
         <h3 class="coral-Heading--L coral-Heading--heavy m-0">
           More resources
         </h3>

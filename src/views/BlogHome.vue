@@ -62,7 +62,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { getPosts } from '@/api/posts';
-import H3Description from '@/components/H3_Description.vue'
+import H3Description from '@/components/H3Description.vue'
 import NativeAd from "@/components/NativeAd.vue";
 
 import localPosts from '@/api/posts.json';

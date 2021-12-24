@@ -6,19 +6,28 @@
             </div>
             <div class="resources-card-wrapper">
 
-                <div v-if="!step.gradient" class="instructions-img-wrapper">
-                    <img
-                        class="card-img resources-card-img"
+                <div
+                    v-if="!step.gradient"
+                    :class="{
+                        'instructions-img-wrapper': true,
+                        'gradient':step.gradient 
+                    }"
+                >
+                    <v-lazy-image
+                        :src-placeholder="placeholderImage"
                         :src="getImage"
-                        alt=""
-                    >
+                        :alt="getImage"
+                        class="card-img resources-card-img"
+                    />
                 </div>
 
                 <div v-else :class="{ 'instructions-img-wrapper': true, 'gradient':step.gradient }">
-                    <img
+                    <v-lazy-image
+                        :src-placeholder="placeholderImage"
+                        :src="getImage ? getImage : placeholderImage"
+                        :alt="getImage"
                         class="card-img resources-card-img"
-                        :src="getImage"
-                    alt="">
+                    />
                 </div>
 
                 <div class="resources-card-title">
@@ -43,7 +52,6 @@
                             'opacity-70': true,
                         }"
                     >
-                            <!-- 'p-t-4': true, -->
                         {{ step.description }}
                     </p>
                 </div>
@@ -55,7 +63,8 @@
 
 <script>
 import Marked from 'marked';
-import {Status} from '@adobe/coral-spectrum/coral-component-status'
+import VLazyImage from "v-lazy-image";
+import placeholderImage from "../assets/placeholder-image.gif"
 
 export default {
     name: "ResourcesCard",
@@ -65,13 +74,17 @@ export default {
         link: ""
     },
 
-    data: function(){
+    components:{
+        VLazyImage
+    },
+
+    data(){
         return{
+            placeholderImage: placeholderImage
         }
     },
 
     mounted: function(){
-        // this.createCoralStatus()
     },
 
     methods:{

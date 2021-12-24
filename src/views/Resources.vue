@@ -66,7 +66,7 @@ import { mapActions } from 'vuex'
 import Header from '@/components/Header.vue'
 import ResourcesCard from '@/components/ResourcesCard.vue'
 import Footer from '@/components/Footer.vue'
-import H3Description from '@/components/H3_Description.vue'
+import H3Description from '@/components/H3Description.vue'
 
 import pages from '@/api/pages.json';
 

@@ -11,6 +11,7 @@
 
     <StickyBanner/>
 
+
     <div class="min-height">
       <router-view
         v-slot="{ Component }"
@@ -35,6 +36,7 @@ const appBody = document.getElementById('app')
 
 // import '@adobe/spectrum-css/dist/icons/spectrum-css-icons.svg' 
 // import '@adobe/spectrum-css/dist/icons/loadIcons.js' 
+
 
 export default {
   name: 'App',

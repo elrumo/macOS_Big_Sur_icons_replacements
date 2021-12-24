@@ -78,20 +78,35 @@ a{
     width: -moz-fit-content;
 }
 
+
 .coral--dark {
     background-color: var(--coral-dark-bg) !important;
+    
+    a{
+        color: rgb(75, 156, 245);
+    }
+
+    // .skeleton {
+    //     background: linear-gradient(90deg, #252525, #131313);
+    // }
+    
+
 }
 
 .coral--dark ._coral-Textfield{
     background-color: var(--coral-dark-card);
 }
 
-.coral--dark a{
-    color: rgb(75, 156, 245);
-}
 
-.coral--light a{
-    color: rgb(13, 102, 208);;
+.coral--light{
+    
+    .skeleton {
+        background: linear-gradient(90deg, #c7c7c7, #eeeeee);
+    }
+
+    a{
+        color: rgb(13, 102, 208);;
+    }
 }
 
 ul {
@@ -1473,6 +1488,11 @@ coral-buttongroup button{
     visibility: hidden;
 }
 
+.about-block{
+    padding-top: 48px;
+    padding-bottom: 48px;
+}
+
 .loading-approval{
     position: relative;
     top: 50%;
@@ -2329,8 +2349,26 @@ coral-buttongroup button{
 }
 
 
+.skeleton {
+    background: linear-gradient(90deg, #424242, #252525);
+    background-size: 100%, 400%;
+    // background-size: 400%, 400%;
+    border-radius: 2px;
 
+    animation: skeleton 2s ease infinite;
+}
 
+@keyframes skeleton { // TODO: Make keyframes work in less
+    0% {
+        background-position: 50% 0
+    }
+    50% {
+        background-position: 50% 100%
+    }
+    100% {
+        background-position: 50% 0
+    }
+}
 
 
 
@@ -2375,23 +2413,4 @@ coral-buttongroup button{
 
 ._coral-Search-input{
     padding-left: 50px;
-}
-
-.imageLoad {
-    background: linear-gradient(180deg, #5d5d5d, #eeeeee);
-    background-size: 400% 400%;
-
-    animation: imageLoad 2s ease infinite;
-}
-
-@keyframes imageLoad {
-    0% {
-        background-position: 50% 0
-    }
-    50% {
-        background-position: 50% 100%
-    }
-    100% {
-        background-position: 50% 0
-    }
 }

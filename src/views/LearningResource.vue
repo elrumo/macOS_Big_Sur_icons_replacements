@@ -6,31 +6,49 @@
       <!-- Header -->
       <div class="p-t-48 p-t-48">
         
-        <!-- Back to all resources -->
-        <router-link to="/learn">
-          <p class="coral-Detail read-more read-more-left coral-Detail--XL m-t-32 coral-Link">
-            All learning resources
-          </p>
-        </router-link>
-        
-        <!-- Title -->
-        <h3 class="coral-Heading--XXL coral-Heading--heavy">
-          {{ getSingleTutorial.title }}
-        </h3>
+        <div class="article-entry">
+          <!-- Back to all resources -->
+          <router-link to="/learn">
+            <p
+              :class="{
+                'coral-Detail': true,
+                'read-more': true,
+                'read-more-left': true,
+                'coral-Detail--XL': true,
+                'm-t-32': true,
+                'coral-Link': true,
+                'skeleton': getArticleTemplate.backToAllArticles ? false : true
+              }"
+            >
+              {{getArticleTemplate.backToAllArticles}}
+            </p>
+          </router-link>
+          
+          <!-- Title -->
+          <h3
+            :class="{
+              'coral-Heading--XXL': true,
+              'coral-Heading--heavy': true,
+              'skeleton': getArticleTemplate.backToAllArticles ? false : false
+            }"
+          >
+            {{ getSingleTutorial.title }}
+          </h3>
 
-        <!-- Description -->
-        <p class="coral-Body--XL">
-          {{ getSingleTutorial.description }}
-        </p>
-        
-        <hr class="coral-Divider--S m-t-24 m-b-8">
-        
-        <!-- Date -->
-        <p class="coral-Detail coral-Detail--L opacity-80 m-b-32 m-l-8">
-          <span class="coral-Detail--light">
-            {{ getDate(getSingleTutorial.publishedAt) }}
-          </span>
-        </p>
+          <!-- Description -->
+          <p class="coral-Body--XL">
+            {{ getSingleTutorial.description }}
+          </p>
+          
+          <hr class="coral-Divider--S m-t-24 m-b-8">
+          
+          <!-- Date -->
+          <p class="coral-Detail coral-Detail--L opacity-80 m-b-32 m-l-8">
+            <span class="coral-Detail--light">
+              {{ getDate(getSingleTutorial.publishedAt) }}
+            </span>
+          </p>
+        </div>
 
         <!-- Video -->
         <div class="content-image-container">
@@ -54,14 +72,8 @@
           <figure v-else class="post-full-image">
             <v-lazy-image
               :src-placeholder="coralIcons.placeholderImage"
-              :src="getSingleTutorial.feature_image"
-
+              :src="getSingleTutorial.feature_image ? getSingleTutorial.feature_image : coralIcons.placeholderImage"
             />
-            
-            <!-- <img
-              :src="getSingleTutorial.feature_image"
-              title="YouTube video player"
-            /> -->
           </figure>
         </div>
       </div>
@@ -73,14 +85,14 @@
       ></div>
 
       <!-- About macOSicons -->
-      <section class="p-t-48 m-b-48 m-t-48 p-b-48">
+      <section class="about-block">
         <div class="">
           <hr class="coral-Divider--S">
         </div>
-    
         <H3-Description
+          v-if="getArticleTemplate.aboutBlock"
           class="p-t-8 p-b-24"
-          :text="subscribe"
+          :text="getArticleTemplate.aboutBlock"
         />
       
         <div class="">
@@ -89,9 +101,12 @@
       </section>
     </main>
     
-    <div class="moreResources p-t-48 m-t-48">
+    <div
+      v-if="getArticleTemplate.moreArticles"
+      class="more-resources"
+    >
       <h3 class="text-left coral-Heading--L coral-Heading--heavy m-0">
-        More learning resources
+        {{getArticleTemplate.moreArticles}}
       </h3>
       <div class="resources-grid text-left card-grid">
         <ResourcesCard
@@ -102,6 +117,7 @@
         />
       </div>
     </div>
+
   </div>
 </template>
 
@@ -111,7 +127,7 @@ import { mapActions, mapGetters } from 'vuex'
 import Header from '@/components/Header.vue'
 import ResourcesCard from '@/components/ResourcesCard.vue'
 import NativeAd from '@/components/NativeAd.vue'
-import H3Description from '@/components/H3_Description.vue'
+import H3Description from '@/components/H3Description.vue'
 import VLazyImage from "v-lazy-image";
 
 import Marked from 'marked';
@@ -199,6 +215,7 @@ export default {
   mounted: async function(){
     const slug = this.$route.params.learningResource;    
     await this.getTutorialFromSlug(slug)
+    await this.fetchArticleTemplate('article-learn')
     
     if(this.getLearningResources.length == 0){ // If no resources, get the latest resources
       this.fetchLearningResources()
@@ -214,7 +231,8 @@ export default {
       'fetchLearningResources',
       'getPageData',
       'adClick',
-      'getTutorialFromSlug'
+      'getTutorialFromSlug',
+      'fetchArticleTemplate'
     ]),
 
     markItDown(text){
@@ -307,7 +325,8 @@ export default {
   computed:{
     ...mapGetters([
       'getSingleTutorial',
-      'getLearningResources'
+      'getLearningResources',
+      'getArticleTemplate'
     ]),
 
     getVideoUrl(){
