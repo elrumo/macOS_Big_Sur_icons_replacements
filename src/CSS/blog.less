@@ -1,41 +1,56 @@
-  .read-more{
+// @import url('https://unpkg.com/@adobe/coral-spectrum@4.x.x/dist/css/coral.min.css');
+
+.read-more{
     font-weight: 800;
     transition: 0.3s;
+
+    @extend .coral-Detail--XL;
+
+    &:hover{
+      text-decoration: none;
+
+      .coral--dark{
+        filter: brightness(1.2);
+      }
+    
+      .coral--light {
+        filter: brightness(0.7);
+      }
+
+    }
   }
 
-  .read-more:hover{
-    text-decoration: none;
+
+  .read-more-right{
+
+    &::after{
+      position: relative;
+      transition: 0.3s;
+      left: 0px;
+      content: "→";
+    }
+
+    &:hover::after{
+      left: 5px;
+    }
+
   }
 
-  .read-more-right::after{
-    position: relative;
-    transition: 0.3s;
-    left: 0px;
-    content: "→";
+  .read-more-left{
+    
+    &::before{
+      position: relative;
+      transition: 0.3s;
+      left: 0px;
+      content: "← ";
+    } 
+
+    &:hover::before{
+      left: -5px;
+    }
+
   }
 
-  .read-more-right:hover::after{
-    left: 5px;
-  }
-
-  .read-more-left::before{
-    position: relative;
-    transition: 0.3s;
-    left: 0px;
-    content: "←";
-  }
-
-  .read-more-left:hover::before{
-    left: -5px;
-  }
-
-  .coral--dark .read-more:hover{
-    filter: brightness(1.2);
-  }
-
-  .coral--light .read-more:hover{
-    filter: brightness(0.7);
-  }
   
 
   .blog-list-wrapper{
@@ -43,6 +58,10 @@
     margin: auto;
     max-width: 680px;
     text-align: left;
+  }
+
+  .article-entry{
+    padding-bottom: 1px;
   }
 
   .blog-post-wrapper{

@@ -22,7 +22,7 @@
 // @ is an alias to /src
 import Header from '@/components/Header.vue'
 import HowToSteps from '@/components/HowToSteps.vue'
-import H3Description from '@/components/H3_Description.vue'
+import H3Description from '@/components/H3Description.vue'
 
 import downloadIcon from "../assets/Instructions/downloadIcon.png"
 import getInfoIcon from "../assets/Instructions/getInfo.png"

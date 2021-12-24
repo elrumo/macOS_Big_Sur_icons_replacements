@@ -52,3 +52,13 @@ export async function getTutorialFromSlug(slug) {
         return {error: error}
     }
 }
+
+export async function getArticleTemplate(slug) { 
+    try {
+        let articleTemplate = await axios.get('https://api.macosicons.com/api/'+slug+'?populate=*')
+        articleTemplate = articleTemplate.data.data.attributes
+        return articleTemplate
+    } catch (error) {
+        return {error: error}
+    }
+}

@@ -74,7 +74,7 @@
 <script>
 // @ is an alias to /src
 import { mapActions, mapGetters } from 'vuex';
-import H3Description from '@/components/H3_Description.vue'
+import H3Description from '@/components/H3Description.vue'
 import NativeAd from '@/components/NativeAd.vue'
 
 import { getBlogPost } from '@/api/posts';
