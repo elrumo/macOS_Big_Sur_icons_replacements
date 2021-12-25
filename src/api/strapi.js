@@ -38,6 +38,7 @@ export async function getLearningHome() {
 export async function getTutorialFromSlug(slug) { 
     try {
         let resource = await axios.get('https://api.macosicons.com/api/tutorials?populate=*&filters[slug][$eq]='+slug)
+        console.log(slug, ": ", resource);
         resource = resource.data.data[0].attributes
         let image = resource.feature_image.data.attributes
         

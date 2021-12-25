@@ -11,12 +11,12 @@
           <router-link to="/learn">
             <p
               :class="{
+                'coral-Link': true,
                 'coral-Detail': true,
                 'read-more': true,
                 'read-more-left': true,
                 'coral-Detail--XL': true,
                 'm-t-32': true,
-                'coral-Link': true,
                 'skeleton': getArticleTemplate.backToAllArticles ? false : true
               }"
             >
@@ -29,25 +29,33 @@
             :class="{
               'coral-Heading--XXL': true,
               'coral-Heading--heavy': true,
-              'skeleton': getArticleTemplate.backToAllArticles ? false : false
+              'm-t-16': true,
+              'skeleton': isSkeleton(getSingleTutorial.title),
             }"
           >
             {{ getSingleTutorial.title }}
           </h3>
 
           <!-- Description -->
-          <p class="coral-Body--XL">
+          <p
+            :class="{
+              'coral-Body--XL': true,
+              'skeleton': isSkeleton(getSingleTutorial.description),
+            }"
+          >
             {{ getSingleTutorial.description }}
           </p>
           
-          <hr class="coral-Divider--S m-t-24 m-b-8">
+          <hr class="coral-Divider--S m-t-4 m-b-12">
           
           <!-- Date -->
-          <p class="coral-Detail coral-Detail--L opacity-80 m-b-32 m-l-8">
-            <span class="coral-Detail--light">
-              {{ getDate(getSingleTutorial.publishedAt) }}
-            </span>
-          </p>
+            <WrittenBy
+              :article="getSingleTutorial"
+              :size="'L'"
+              :showDate="true"
+            />
+              <!-- 'skeleton': isSkeleton(getSingleTutorial.description) -->
+
         </div>
 
         <!-- Video -->
@@ -56,7 +64,6 @@
             v-if="getSingleTutorial.video"
             class="post-full-image"
           >
-              <!-- :src="getSingleTutorial.url" -->
             <iframe
               width="100%" 
               height="515" 
@@ -79,31 +86,35 @@
       </div>
 
       <!-- Content -->
-      <div
-        class="blog-post-wrapper post-full-content"
-        v-html="markItDown(getSingleTutorial.tutorial_content)"
-      ></div>
+      <div class="post-full-content">
+        <div
+          v-html="markItDown(getSingleTutorial.tutorialBody)"
+          class="blog-post-wrapper"
+        ></div>
 
-      <!-- About macOSicons -->
-      <section class="about-block">
-        <div class="">
-          <hr class="coral-Divider--S">
-        </div>
-        <H3-Description
-          v-if="getArticleTemplate.aboutBlock"
-          class="p-t-8 p-b-24"
-          :text="getArticleTemplate.aboutBlock"
+        <WrittenBy
+          class="p-t-16"
+          :article="getSingleTutorial"
+          :size="'XL'"
+          :showDate="false"
         />
+      </div>
       
-        <div class="">
-          <hr class="coral-Divider--S">
-        </div>
-      </section>
     </main>
+
+    <!-- About macOSicons -->
+    <AboutBlock
+      v-if="getArticleTemplate.aboutBlock"
+      :text="getArticleTemplate.aboutBlock"
+    />
+
+      <div class="p-t-24 p-b-24">
+        <hr class="coral-Divider--S">
+      </div>
     
     <div
       v-if="getArticleTemplate.moreArticles"
-      class="more-resources"
+      class="more-resources post-full-content"
     >
       <h3 class="text-left coral-Heading--L coral-Heading--heavy m-0">
         {{getArticleTemplate.moreArticles}}
@@ -128,8 +139,10 @@ import Header from '@/components/Header.vue'
 import ResourcesCard from '@/components/ResourcesCard.vue'
 import NativeAd from '@/components/NativeAd.vue'
 import H3Description from '@/components/H3Description.vue'
-import VLazyImage from "v-lazy-image";
+import WrittenBy from '@/components/WrittenBy.vue'
+import AboutBlock from '@/components/AboutBlock.vue'
 
+import VLazyImage from "v-lazy-image";
 import Marked from 'marked';
 
 import placeholderCoralIcon from "../assets/placeholder-icon.png"
@@ -143,7 +156,9 @@ export default {
     ResourcesCard,
     NativeAd,
     H3Description,
-    VLazyImage
+    VLazyImage,
+    WrittenBy,
+    AboutBlock
   },
 
   metaInfo: {
@@ -241,85 +256,30 @@ export default {
       }
     },
 
-    getDate(dateString){
-      // var date = dateString;
-      let date = new Date(dateString);
-      var monthDate = date.getDate();
-      var year = date.getUTCFullYear();
+    isSkeleton(obj){
+      // console.log(obj.length ? false : true);
+      console.log(obj);
+      try{
+        return console.log(obj.length ? true : false)
+      }catch(e){
+        return true;
+      }
 
-      let weekDay = date.getUTCDay()
-      switch (weekDay) {
-        case 0:
-          weekDay = "Monday"
-          break;
-        case 1:
-          weekDay = "Tuesday"
-          break;
-        case 2:
-          weekDay = "Wendesday"
-          break;
-        case 3:
-          weekDay = "Thursday"
-          break;
-        case 4:
-          weekDay = "Friday"
-          break;
-        case 5:
-          weekDay = "Saturday"
-          break;
-        case 6:
-          weekDay = "Sunday"
-          break;
-          
-        default:
-          break;
-      }
+    },
+
+    isSingleAuthor(id){
+      let tutorial = this.getSingleTutorial.by.data
+
+      let pos = tutorial.map(e => {
+        return e.id;
+      }).indexOf(id);
       
-      let month = date.getUTCMonth();
-      switch (month) {
-        case 0:
-          month = "Jan"
-          break;
-        case 1:
-          month = "Feb"
-          break;
-        case 2:
-          month = "March"
-          break;
-        case 3:
-          month = "Apr"
-          break;
-        case 4:
-          month = "May"
-          break;
-        case 5:
-          month = "Jun"
-          break;
-        case 6:
-          month = "Jul"
-          break;
-        case 7:
-          month = "Aug"
-          break;
-        case 8:
-          month = "Sep"
-          break;
-        case 9:
-          month = "Oct"
-          break;
-        case 10:
-          month = "Nov"
-          break;
-        case 11:
-          month = "Dec"
-          break;
-          
-        default:
-          break;
+      if(tutorial[pos + 1] == undefined){
+        return ''
+      } else {
+        return ' &'
       }
-      // var date = new Date(dateString);
-      return month + " " + monthDate + ', ' + year
-    }
+    },
   },
 
   computed:{

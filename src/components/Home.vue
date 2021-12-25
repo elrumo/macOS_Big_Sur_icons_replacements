@@ -1223,11 +1223,11 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
   // @import url(coral.css);
-  @import url(app.less);
-  @import url(snack-helper.min.css);
-  @import url(carbon.css);
+  @import 'app.scss';
+  @import 'snack-helper.min.css';
+  @import 'carbon.css';
 
   .paypal-wrapper{
     margin-top: 20px;
