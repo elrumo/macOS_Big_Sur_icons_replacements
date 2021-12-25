@@ -14,7 +14,7 @@
                 'coral-Link': true,
                 'coral-Detail': true,
                 'read-more': true,
-                'read-more-left': true,
+                'read-more-left': getArticleTemplate.backToAllArticles ? true : false,
                 'coral-Detail--XL': true,
                 'm-t-32': true,
                 'skeleton': getArticleTemplate.backToAllArticles ? false : true
