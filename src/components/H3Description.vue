@@ -1,19 +1,18 @@
 <template>
     <div>
-
         <div
-            v-if="text.h3"
+            v-if="isNotEmpty"
             :class="{
                 'h3-description': true,
                 'm-t-24': true,
                 'text-center': text.isCenter,
             }"
         >
-            <h1 class="coral-Heading--XL resource-heading">
+            <h1 v-if="text.h3" class="coral-Heading--XL resource-heading">
                <b> {{ text.h3 }}</b>
             </h1>
 
-            <div class="h3-description-body">
+            <div v-if="text.description" class="h3-description-body">
                 <p
                     class="coral-Body--L f-w-500"
                     v-html="markItDown(text.description)">
@@ -80,6 +79,10 @@ export default {
     },
 
     computed: {
+        isNotEmpty(){
+            console.log(Object.keys(this.text).length);
+            return Object.keys(this.text).length > 0
+        }
     }
 }
 </script>

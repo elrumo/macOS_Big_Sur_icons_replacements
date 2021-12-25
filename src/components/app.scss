@@ -230,9 +230,17 @@ select{
     top: 10px;
 }
 
+.text-details{
+    opacity: 0.8;
+    font-weight: 800;
+}
+
+.post-full-content {
+    max-width: 680px;
+}
+
 .support-page{
     margin: auto !important;
-    // position: relative !important;
     padding: 10px !important;
     top: 25px;
     display: grid;
@@ -1489,8 +1497,19 @@ coral-buttongroup button{
 }
 
 .about-block{
-    padding-top: 48px;
-    padding-bottom: 48px;
+    width: 100%;
+    text-align: center;
+    background: #222222;
+    border-radius: 14px;
+    max-width: 890px;
+    box-shadow: 0 5px 21px -10px #00000042;
+
+    padding: 48px 0px;
+    margin: 56px auto 42px auto;
+
+    & > *{
+        margin: auto;
+    }
 }
 
 .loading-approval{
@@ -2369,10 +2388,6 @@ coral-buttongroup button{
         background-position: 50% 0
     }
 }
-
-
-
-
 
 
 /* Classes changed from Adobe Coral */

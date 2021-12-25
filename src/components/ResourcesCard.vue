@@ -134,6 +134,6 @@ export default {
 }
 </script>
 
-<style lang="less">
-  @import '@/CSS/resources-card.less';
+<style lang="scss">
+  @import '@/CSS/resources-card.scss';
 </style>

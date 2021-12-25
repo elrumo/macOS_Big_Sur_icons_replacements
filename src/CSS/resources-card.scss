@@ -26,12 +26,24 @@
   grid-template-columns: auto;
   gap: 15px;
   padding: 36px 0px;
-  max-width: 900px;
+  max-width: 680px;
+  // max-width: 900px;
   margin: auto;
 
   .resources-grid{
     width: 90%;
     padding-top: 18px;
+    flex-direction: column;
+  }
+
+  .resources-card-wrapper{
+    grid-template-columns: 1fr 2fr !important;
+    grid-template-rows: auto;
+    max-height: 120px;
+  }
+
+  .resources-card-title{
+    height: fit-content;
   }
 
 }
