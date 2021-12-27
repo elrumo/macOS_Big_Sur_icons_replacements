@@ -4,11 +4,13 @@
             v-if="isNotEmpty"
             :class="{
                 'h3-description': true,
-                'm-t-24': true,
                 'text-center': text.isCenter,
             }"
         >
-            <h1 v-if="text.h3" class="coral-Heading--XL resource-heading">
+            <h1
+                v-if="text.h3"
+                class="coral-Heading--XL resource-heading"
+            >
                <b> {{ text.h3 }}</b>
             </h1>
 
@@ -80,7 +82,6 @@ export default {
 
     computed: {
         isNotEmpty(){
-            console.log(Object.keys(this.text).length);
             return Object.keys(this.text).length > 0
         }
     }

@@ -13,8 +13,9 @@
                 v-html="markItDown(text.description)">
             </p>
         </div>
-
     </div>
+
+    <div v-else class="about-block skeleton-fill"></div>
 </template>
 
 <script>
@@ -44,7 +45,6 @@ export default {
 
     computed: {
         isNotEmpty(){
-            console.log(Object.keys(this.text).length);
             return Object.keys(this.text).length > 0
         }
     }

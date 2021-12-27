@@ -1,3 +1,15 @@
+@mixin skeleton-gradient-light{
+    background: linear-gradient(90deg, #c7c7c7, #eeeeee);
+}
+
+@mixin skeleton-gradient-dark{
+    background: linear-gradient(90deg, #424242, #252525);
+}
+
+@mixin coral-dark-bg{
+    background-color: var(--coral-dark-bg);
+}
+
 :root{
     --padding-top-search: 15px;
     --main-border-radius: 7px;
@@ -78,12 +90,24 @@ a{
     width: -moz-fit-content;
 }
 
-
+/////////////// START OF THEME ///////////////
 .coral--dark {
-    background-color: var(--coral-dark-bg) !important;
+    @include coral-dark-bg;
     
     a{
         color: rgb(75, 156, 245);
+    }
+
+    ._coral-Dialog.is-open, ._coral-Dialog-header, ._coral-Dialog-footer{
+        @include coral-dark-bg;
+    }
+    
+    .skeleton {
+        @include skeleton-gradient-dark;
+    }
+    
+    .skeleton-fill {
+        @include skeleton-gradient-dark;
     }
 
     .about-block{
@@ -91,28 +115,56 @@ a{
         box-shadow: 0 5px 21px -10px #00000042;
     }
 
-}
+    .instructions-img-wrapper::after{
+        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 50%, var(--coral-dark-card) 100%);
+    }
 
-.coral--dark ._coral-Textfield{
-    background-color: var(--coral-dark-card);
-}
+    .instructions-item{
+        background-color: var(--coral-dark-card) !important;
+    }
 
+    ._coral-Textfield{
+        background-color: var(--coral-dark-card);
+    }
+
+    .marked{
+        color: var(--coral-light-border);
+    }
+
+}
 
 .coral--light{
     
-    .skeleton {
-        background: linear-gradient(90deg, #c7c7c7, #eeeeee);
+    a{
+        color: rgb(13, 102, 208);
     }
 
-    a{
-        color: rgb(13, 102, 208);;
+    .skeleton {
+        @include skeleton-gradient-light;
+    }
+    
+    .skeleton-fill {
+        @include skeleton-gradient-light;
     }
 
     .about-block{
         background-color: var(--coral-light-card);
         box-shadow: 0 5px 21px -10px #00000042;
     }
+
+    .instructions-img-wrapper::after{
+        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 50%, var(--coral-light-card) 100%)
+    }
+
+    .instructions-item{
+        background-color: var(--coral-light-card) !important;
+    }
+
+    .marked{
+        color: var(--coral-dark-border);
+    }
 }
+/////////////// END OF THEME ///////////////
 
 ul {
     padding-inline-start: 10px;
@@ -124,18 +176,14 @@ main{
 }
 
 button,
-[type="button"],
-[type="reset"],
-[type="submit"] {
-  -webkit-appearance: button;
+    [type="button"],
+    [type="reset"],
+    [type="submit"] {
+    -webkit-appearance: button;
 }
 
 select{
     -webkit-appearance:none;
-}
-
-.coral--dark ._coral-Dialog.is-open, .coral--dark ._coral-Dialog-header, .coral--dark ._coral-Dialog-footer{
-    background-color: var(--coral-dark-bg)
 }
 
 .edit-dialog-acton-btns{
@@ -146,12 +194,10 @@ select{
     margin: auto;
     padding: 15px 0px;
     gap: 10px;
-    // width: 85%;
 }
 
 .u-coral-noscroll{
     overflow: hidden;
-    // margin-right: 15px;
 }
 
 .instructions-well{
@@ -196,15 +242,6 @@ select{
     left: 0;
 }
 
-.coral--dark .instructions-img-wrapper::after{
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 50%, var(--coral-dark-card) 100%);
-}
-
-.coral--light .instructions-img-wrapper::after{
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 50%, var(--coral-light-card) 100%)
-}
-
-
 .card-grid{
     display: grid;
     gap: 35px;
@@ -213,7 +250,7 @@ select{
     margin-bottom: 50px;
 
     .coral-Well{
-        
+        transition: 0.2s;
         &:hover{
             transform: translateY(-5px);
         }
@@ -227,7 +264,6 @@ select{
 
 .instructions-item{
     padding: 0px 0px 0px 0px;
-    // overflow: hidden;
     height: 100%;
 }
 
@@ -237,6 +273,10 @@ select{
 
 .text-details{
     opacity: 0.8;
+    font-weight: 800;
+}
+
+.text-details-heavy{
     font-weight: 800;
 }
 
@@ -264,50 +304,40 @@ select{
     }
 }
 
-.lgbt-wrapper .card-no-ad{
-    position: relative;
-    top: 0px;
-    height: fit-content;
+.lgbt-wrapper{
+    
+    .card-no-ad{
+        position: relative;
+        top: 0px;
+        height: fit-content;
+    }
+
+    .support-page{
+        top: 0px;
+        // transform: translateY(0%) !important;
+    }
 }
 
-.lgbt-wrapper .support-page{
-    top: 0px;
-    // transform: translateY(0%) !important;
-}
+.marked{
 
-.coral--dark .instructions-item{
-    background-color: var(--coral-dark-card) !important;
-}
-.coral--light .instructions-item{
-    background-color: var(--coral-light-card) !important;
+    h2{
+        font-weight: 400 !important;
+        font-size: 1.7rem;
+        padding: 0px 16px;
+    }
+    
+    h3{
+        font-size: 1.5rem;
+        padding: 5px 15px;
+    }
+    
+    h4{
+        font-weight: 300;
+        margin: 0px 0px 15px 0px;
+        font-size: 1.1rem;
+        padding: 5px 15px;
+    }
 
-}
-
-.marked h2{
-    font-weight: 400 !important;
-    font-size: 1.7rem;
-    padding: 0px 16px;
-}
-
-.marked h3{
-    // margin: 0px 0px 15px 0px;
-    font-size: 1.5rem;
-    padding: 5px 15px;
-}
-
-.marked h4{
-    font-weight: 300;
-    margin: 0px 0px 15px 0px;
-    font-size: 1.1rem;
-    padding: 5px 15px;
-}
-
-.coral--dark .marked{
-    color: var(--coral-light-border);
-}
-
-.coral--light .marked{
-    color: var(--coral-dark-border);
 }
 
 
@@ -736,6 +766,7 @@ coral-buttongroup button{
     margin: auto;
     max-width: 1120px;
     min-height: 88vh;
+    padding-top: 48px;
     // min-height: 100vh;
 }
 
@@ -1513,6 +1544,10 @@ coral-buttongroup button{
     & > *{
         margin: auto;
     }
+
+    .skeleton-fill{
+        min-height: 2rem;
+    }
 }
 
 .loading-approval{
@@ -2060,7 +2095,8 @@ coral-buttongroup button{
 }
 
 .h3-description{
-    margin-top: 50px;
+    padding-top: 8px;
+    padding-bottom: 48px;
 }
 
 .h3-description > h1{
@@ -2371,13 +2407,58 @@ coral-buttongroup button{
 }
 
 
+.grid-4-col{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 18px;
+}
+
+.flex-row-grid{
+    display: flex;
+    flex-direction: row;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
 .skeleton {
     background: linear-gradient(90deg, #424242, #252525);
     background-size: 100%, 400%;
-    // background-size: 400%, 400%;
     border-radius: 2px;
 
     animation: skeleton 2s ease infinite;
+}
+
+.skeleton-xxs {
+    min-height: 1.5rem;
+}
+
+.skeleton-xs {
+    min-height: 2rem;
+}
+
+.skeleton-s {
+    min-height: 2.25rem;
+}
+
+.skeleton-m {
+    min-height: 2.25rem;
+}
+
+.skeleton-l {
+    min-height: 3rem;
+}
+
+.skeleton-button {
+    max-width: 5rem;
+}
+
+.skeleton-xl {
+    min-height: 4.5rem;
+}
+
+.skeleton-fill{
+    background: linear-gradient(90deg, #424242, #252525);
+    background-size: 100%, 400%;
 }
 
 @keyframes skeleton { // TODO: Make keyframes work in less

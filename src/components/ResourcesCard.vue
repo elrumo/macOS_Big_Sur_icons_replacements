@@ -1,56 +1,30 @@
 <template>
     <router-link class="resources-card-container" :to="getLink">
         <div class="coral-Well instructions-item Box">
-            <div id="statusPill" class="new-pill" v-if="isNew(step)">
-                <coral-status variant="info">New</coral-status>
-            </div>
+            
+            <IsNew :item="step"/>
+
             <div class="resources-card-wrapper">
-
-                <div
-                    v-if="!step.gradient"
+                
+                <v-lazy-image
+                    :src-placeholder="placeholderImage" :src="getImage" :alt="getImage"
                     :class="{
-                        'instructions-img-wrapper': true,
-                        'gradient':step.gradient 
+                        'card-img': true,
+                        'resources-card-img': true,
+                        'instructions-img-wrapper': step.gradient,
+                        'gradient': step.gradient
                     }"
-                >
-                    <v-lazy-image
-                        :src-placeholder="placeholderImage"
-                        :src="getImage"
-                        :alt="getImage"
-                        class="card-img resources-card-img"
-                    />
-                </div>
+                />
 
-                <div v-else :class="{ 'instructions-img-wrapper': true, 'gradient':step.gradient }">
-                    <v-lazy-image
-                        :src-placeholder="placeholderImage"
-                        :src="getImage ? getImage : placeholderImage"
-                        :alt="getImage"
-                        class="card-img resources-card-img"
-                    />
-                </div>
-
-                <div class="resources-card-title">
+                <div class="resource-card-title-wrapper">
                     <p
-                        :class="{
-                            'resource-card-text': true,
-                            'coral-Body--L': true,
-                            'f-w-500': !step.description,
-                            'f-w-900': step.description,
-                            'm-0': true,
-                        }"
+                        class="resource-card-title coral-Body--L"
                     >
                         {{ step.title }}
                     </p>
                     <p
                         v-if="step.description"
-                        :class="{
-                            'resource-card-text': true,
-                            'coral-Body--S': true,
-                            'f-w-500': true,
-                            'm-0': true,
-                            'opacity-70': true,
-                        }"
+                        class="resource-card-description coral-Body--S"
                     >
                         {{ step.description }}
                     </p>
@@ -62,6 +36,8 @@
 </template>
 
 <script>
+import IsNew from "./IsNew.vue";
+
 import Marked from 'marked';
 import VLazyImage from "v-lazy-image";
 import placeholderImage from "../assets/placeholder-image.gif"
@@ -75,7 +51,8 @@ export default {
     },
 
     components:{
-        VLazyImage
+        VLazyImage,
+        IsNew
     },
 
     data(){
@@ -88,22 +65,7 @@ export default {
     },
 
     methods:{
-        isNew(item){
-            if(item.feature != null){
-                return item.feature
-            }
 
-            let postDate = new Date(item.created_at)
-            postDate = Date.parse(postDate)
-            postDate = postDate + 172800000 // Ads 48 hours to page date
-            let dateNow = Date.now()
-
-            if (item.created_at == undefined || postDate < dateNow) {
-                return true;
-            } else {
-                return false
-            }
-        }
     },
     
     computed: {

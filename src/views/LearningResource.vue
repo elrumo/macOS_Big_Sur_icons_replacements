@@ -17,7 +17,8 @@
                 'read-more-left': getArticleTemplate.backToAllArticles ? true : false,
                 'coral-Detail--XL': true,
                 'm-t-32': true,
-                'skeleton': getArticleTemplate.backToAllArticles ? false : true
+                'skeleton': getArticleTemplate.backToAllArticles ? false : true,
+                'skeleton-xxs': getArticleTemplate.backToAllArticles ? false : true
               }"
             >
               {{getArticleTemplate.backToAllArticles}}
@@ -104,24 +105,36 @@
 
     <!-- About macOSicons -->
     <AboutBlock
-      v-if="getArticleTemplate.aboutBlock"
-      :text="getArticleTemplate.aboutBlock"
+      :text="setProp(getArticleTemplate.aboutBlock)"
     />
 
       <div class="p-t-24 p-b-24">
         <hr class="coral-Divider--S">
       </div>
     
-    <div
-      v-if="getArticleTemplate.moreArticles"
-      class="more-resources post-full-content"
-    >
-      <h3 class="text-left coral-Heading--L coral-Heading--heavy m-0">
+      <!-- v-if="getArticleTemplate.moreArticles" -->
+    <div class="more-resources more-resources-list post-full-content">
+      <h3
+        :class="{
+          'text-left': true,
+          'coral-Heading--L': true,
+          'coral-Heading--heavy': true,
+          'm-0': true,
+          'skeleton': isSkeleton(getArticleTemplate.moreArticles)
+        }"
+      >
         {{getArticleTemplate.moreArticles}}
       </h3>
+
       <div class="resources-grid text-left card-grid">
+        <coral-wait
+          v-if="getLearningResources.length == 0"
+          class="m-auto p-t-16"
+          size="L"
+          indeterminate=""
+        />
         <ResourcesCard
-          v-for="tutorial in getLearningResources"
+          v-for="tutorial in getLearningResources.slice(0,5)"
           :key="tutorial.id"
           :step='tutorial'
           :link="'/learn/'+tutorial.slug"
@@ -147,6 +160,8 @@ import Marked from 'marked';
 
 import placeholderCoralIcon from "../assets/placeholder-icon.png"
 import placeholderImage from "../assets/placeholder-image.gif"
+
+// import {Button} from '@adobe/coral-spectrum/coral-component-button';
 
 export default {
   name: 'learningResource',
@@ -229,16 +244,10 @@ export default {
   
   mounted: async function(){
     const slug = this.$route.params.learningResource;    
+
     await this.getTutorialFromSlug(slug)
-    await this.fetchArticleTemplate('article-learn')
-    
-    if(this.getLearningResources.length == 0){ // If no resources, get the latest resources
-      this.fetchLearningResources()
-    }
-    
-    // console.log(this.getSingleTutorial.error);
-    let isError = this.getSingleTutorial.error
-    if(isError) this.$router.push('/learn');
+    await this.fetchArticleTemplate({slug: 'article-learn', state: 'articleTemplate'})
+    this.fetchLearningResources()
   },
 
   methods: {
@@ -247,8 +256,12 @@ export default {
       'getPageData',
       'adClick',
       'getTutorialFromSlug',
-      'fetchArticleTemplate'
+      'fetchArticleTemplate',
     ]),
+
+    setProp(data){
+      return data ? data : {} 
+    },
 
     markItDown(text){
       if(text){
@@ -257,14 +270,11 @@ export default {
     },
 
     isSkeleton(obj){
-      // console.log(obj.length ? false : true);
-      console.log(obj);
       try{
-        return console.log(obj.length ? true : false)
+        return obj.length > 0 ? false : true
       }catch(e){
         return true;
       }
-
     },
 
     isSingleAuthor(id){

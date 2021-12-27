@@ -1,29 +1,27 @@
 <template>
   <div>
     <div class="content-wrapper-compact text-left">
-      
       <!-- Back to all resources -->
       <router-link to="/resources">
         <p class="coral-Detail read-more read-more-left coral-Detail--XL m-t-32 coral-Link">
-          All Resources
+          {{ getArticleTemplate.backToAllArticles ? getArticleTemplate.backToAllArticles : 'All resources' }}
         </p>
       </router-link>
-
-      <div v-if="resourceItem.id == undefined" style="min-height: 350px" class="waiting-wrapper">
-        <coral-wait size="L" indeterminate=""></coral-wait>
-      </div>
       
       <!-- Resource Wrappper -->
       <div
-        v-if="resourceItem.id != undefined"
         class="resource-content-wrapper"
       >
-        
         <!-- Resource Image -->
         <div class="resource-image">  
           <figure class="post-full-image m-0 coral-Well p-0">
-            <img :src="resourceItem.feature_image"/>
+            <v-lazy-image
+              :src-placeholder="placeholderImage"
+              :src="getSingleResourceData.feature_image"
+              :alt="getSingleResourceData.feature_image"
+            />
           </figure>
+
           <NativeAd
             :adPosition="'Under image Desktop'"
             :adId="'iconbar-js-resourceItem'"
@@ -35,17 +33,83 @@
         
         <!-- Resource Description -->
         <div class="resource-description">
-          <div>
-            <h3 class="coral-Heading--L coral-Heading--heavy m-0">
-              {{ resourceItem.title }}
-            </h3>        
 
-            <hr class="coral-Divider--S m-t-16 m-b-16">
-          </div>
+          <h3
+            :class="{
+              'coral-Heading--L': true,
+              'coral-Heading--heavy': true,
+              'm-0': true,
+              'skeleton-m': getSingleResourceData.title ? false : true,
+              'skeleton': getSingleResourceData.title ? false : true
+            }"
+          >
+            {{ getSingleResourceData.title }}
+          </h3>        
+
+          <hr class="coral-Divider--S m-t-16 m-b-16">
+
 
           <!-- Resource Content -->
-          <p class="coral-Body--M resource-excerpt">{{ resourceItem.excerpt }}</p>
-          <div class="blog-post-wrapper post-full-content" id="page-js" v-html="resourceItem.html"></div>
+          <div
+            :class="{
+              'coral-Body--M': true,
+              'resource-excerpt': true,
+              'skeleton-xl': getSingleResourceData.title ? false : true,
+              'skeleton': getSingleResourceData.title ? false : true
+            }"
+            v-html="getSingleResourceData.description"
+
+          >
+          </div>
+
+          <p
+            :class="{
+              'coral-Detail': true,
+              'coral-Detail--L': true,
+              'text-details': true,
+              'p-b-16': true,
+            }"
+          >
+            {{ getArticleTemplate.downloadResource ? getArticleTemplate.downloadResource : 'Get Template For' }}
+          </p>
+          
+          <!-- Download btns wrapper -->
+          <div>
+            
+            <!-- Download btns skeleton -->
+            <div 
+              v-if="!getSingleResourceData.resourceUrls"
+              class="grid-4-col"
+            >
+              <div
+                v-for="n in 2"
+                :key="'skeletonBtn-'+n"
+                class="skeleton skeleton-xs skeleton-button"
+              >
+              </div>
+            </div>
+
+            <!-- Download btns -->
+            <div v-else class="flex-row-grid">
+              <a
+                v-for="url in getSingleResourceData.resourceUrls"
+                :key="'button_'+url.id"
+                :href="url.url"
+                target="_blank"
+                rel="noopener"
+              >
+                <component
+                  :is="'coral-button'"
+                  variant="ghost"
+                >
+                  <span>
+                    {{url.platform}}
+                  </span>
+                </component>
+              </a>
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -53,19 +117,18 @@
       <!-- More resources -->
       <div class="more-resources">
         <h3 class="coral-Heading--L coral-Heading--heavy m-0">
-          More resources
+          {{ getArticleTemplate.moreArticles ? getArticleTemplate.moreArticles : 'More resources' }}
         </h3>
 
         <div class="resources-grid card-grid" id="how-to-install">
           
-          <div v-for="resource in resourcesData" :key="resource.name" @click="getPageData">
             <ResourcesCard
+              v-for="resource in getResourcesData" :key="resource.name"
               :step='resource'
               :link="'/resources/'+resource.slug"
             />
-          </div>
 
-          <div class="card-hover relative coral-card resources-card-ad">            
+          <!-- <div class="card-hover relative coral-card resources-card-ad">             -->
               <!-- <script
                 @click="adClick({position: 'Icon Grid Top', type: 'Carbon'})"
                 async="async"
@@ -74,12 +137,12 @@
                 id="_carbonads_js">
               </script>
                -->
-            <div class="card-no-ad">
+            <!-- <div class="card-no-ad">
               <p class="coral-Body--M">
                 Support for .icns is on my (long) todo list.
               </p>
             </div>
-          </div>
+          </div> -->
 
         </div>
 
@@ -91,24 +154,27 @@
 
 <script>
 // @ is an alias to /src
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import localPosts from '@/api/posts.json';
 import ResourcesCard from '@/components/ResourcesCard.vue'
 import NativeAd from "@/components/NativeAd.vue";
-
+import VLazyImage from "v-lazy-image";
 
 import pages from '@/api/pages.json';
+import placeholderImage from "../assets/placeholder-image.gif"
 
 export default {
   name: 'ResourceView',
 
   components: {
     ResourcesCard,
-    NativeAd
+    NativeAd,
+    VLazyImage
   },
 
   data: function(){
     return {
+      placeholderImage: placeholderImage,
       resourceItem: localPosts,
       resourcesData: pages,
       meta: {
@@ -119,13 +185,24 @@ export default {
   },
 
   mounted: async function(){
-    let parent = this;
+    const slug = this.$route.params.resource;
+    console.log(slug);
+    this.fetchResourceFromSlug(slug)
+    this.fetchResourcesHome()
+    await this.fetchArticleTemplate({slug: 'article-resource', state: 'articleTemplate'})
 
-    parent.getPageData()
+    // await this.getTutorialFromSlug(slug)
+    // await this.fetchArticleTemplate('article-learn')
+    // this.fetchLearningResources()
   },
 
   methods:{
-    ...mapActions(['adClick']),
+    ...mapActions([
+      'adClick',
+      'fetchResourcesHome',
+      'fetchResourceFromSlug',
+      'fetchArticleTemplate'
+    ]),
 
     getDate(dateString){
       // var date = dateString;
@@ -276,6 +353,11 @@ export default {
   },
 
   computed:{
+    ...mapGetters([
+      'getSingleResourceData',
+      'getArticleTemplate',
+      'getResourcesData',
+    ])
   },
 
   // metaInfo() {

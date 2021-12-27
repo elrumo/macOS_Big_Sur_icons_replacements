@@ -1,8 +1,10 @@
 <template>
   <div>
-    <main class="content-wrapper-compact">
 
-      <H3-Description :text="introText" class="m-b-48"/>
+    <main class="content-wrapper-compact">
+      <H3-Description
+        :text="getResourcesHomeTemplate.H3Description ? getResourcesHomeTemplate.H3Description : introText"
+      />
 
       <div class="resources-grid card-grid" id="how-to-install">
         
@@ -12,8 +14,8 @@
         />
 
         <ResourcesCard
-          v-for="resource in resourcesData"
-          :key="resource.name"
+          v-for="resource in getResourcesData"
+          :key="resource.id"
           :link="'/resources/'+resource.slug"
           :step='resource'
         />
@@ -62,7 +64,7 @@
 
 <script>
 // @ is an alias to /src
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import Header from '@/components/Header.vue'
 import ResourcesCard from '@/components/ResourcesCard.vue'
 import Footer from '@/components/Footer.vue'
@@ -133,6 +135,7 @@ export default {
       introText:{
         h3: "Resources",
         description: "Here you'll find guides, resources and templates to help you design and showcase icons for macOS.",
+        isCenter: true,
         isAd: true
       },
       instructions:{
@@ -146,22 +149,31 @@ export default {
   },
   
   mounted: async function(){
-    const parent = this;
-    let storeResourcesData = parent.$store.state.resourcesData
-    parent.getPageData
-    // parent.getPages()
-    parent.resourcesData = await storeResourcesData;
+    // let storeResourcesData = this.$store.state.resourcesData
+    // this.resourcesData = await storeResourcesData;
+    // this.getPageData();
+    this.fetchResourcesHome();
+    this.fetchArticleTemplate({slug: 'resources-home', state: 'resourcesTemplate'});
   },
 
   methods: {
     ...mapActions([
       'getPageData',
-      'adClick'
+      'adClick',
+      'fetchResourcesHome',
+      'fetchArticleTemplate'
     ]),
 
     async getPages(){
       console.log(this.getPageData);
     }
+  },
+
+  computed: {
+    ...mapGetters([
+      'getResourcesData',
+      'getResourcesHomeTemplate'
+    ])
   }
 
 }

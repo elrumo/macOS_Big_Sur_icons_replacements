@@ -3,11 +3,10 @@
     <main class="content-wrapper-compact">
 
       <H3-Description
-        :text="getLearningHome"
-        class="m-b-48 p-b-8 p-t-48"
+        :text="getLearningHome ? getLearningHome : introText"
       />
 
-      <div class="resources-grid card-grid m-t-48" id="how-to-install">
+      <div class="resources-grid card-grid" id="how-to-install">
         <!-- {{getLearningResources}} -->
         <coral-wait
           v-if="getLearningResources.length == 0"
@@ -93,6 +92,9 @@ export default {
 
   data(){
     return {
+      introText:{
+        "description":"More tutorials on everything macOS icons coming soon. If you’d like to contribute or make suggestions, let us know on our [Discord](https://discord.gg/f4mTRyyTkT) channel or [Twitter](https://twitter.com/elrumo).","h3":"Tutorials","isAd":true,"isCenter":true
+      }
     }
   },
   
