@@ -1,16 +1,20 @@
 import { createStore } from 'vuex'
 import Parse from 'parse/dist/parse.min.js';
 import algoliasearch from 'algoliasearch'
+import router from '@/router/index.js'
 
 import localPages from '@/api/pages.json';
 import localPosts from '@/api/posts.json';
 import icons from '@/api/icons.json';
 import { getPages, getSinglePage } from '@/api/posts';
+
 import {
     getTutorials,
     getLearningHome,
     getTutorialFromSlug,
-    getArticleTemplate
+    getArticleTemplate,
+    getStrapiData,
+    getResourceFromSlug
   } from '@/api/strapi';
 
 let algolia = {
@@ -35,13 +39,14 @@ export default createStore({
     return{
       list: icons,
       dataToShow: [],
-      
+
       blogPosts: {},
       localPosts: localPosts,
 
-      resourcesData: getPages(10),
+      resourcesData: localPages,
       singleResourceData: {},
       moreResources: getPages(10),
+      resourcesTemplate: {},
       articleTemplate: {},
 
       singleLearningResource: {},
@@ -52,7 +57,7 @@ export default createStore({
                       isAd: false,
                       isCenter: true,
                     },
-
+                    
       user: {
         bio: "",
         credit: "",
@@ -168,19 +173,43 @@ export default createStore({
 
   actions: {
 
-    async fetchArticleTemplate(store, slug){
-      let pageTemplate = await getArticleTemplate(slug)
-      store.commit('setDataToArr', {arr: 'articleTemplate', data: pageTemplate})
+    async fetchResourceFromSlug(store, slug){
+      let resource = await getResourceFromSlug(slug)
+
+      if(resource.error){
+        console.log(slug);
+        console.log(resource.error);
+        // router.push('/resources')
+      }else{
+        store.commit('setDataToArr', {arr: 'singleResourceData', data: resource})
+      }
+    },
+
+    async fetchResourcesHome(store){
+      let resourcesData = await getStrapiData('resources');
+      store.commit('setDataToArr', {arr: 'resourcesData', data: resourcesData})
+    },
+    
+    async fetchArticleTemplate(store, data){
+      let pageTemplate = await getArticleTemplate(data.slug)
+      store.commit('setDataToArr', {arr: data.state, data: pageTemplate})
     },
 
     async getTutorialFromSlug(store, slug){
       let tutorial = await getTutorialFromSlug(slug)
-      store.commit('setDataToArr', {arr: 'singleLearningResource', data: tutorial})
+
+      if(tutorial.error){
+        router.push('/learn')
+      }else{
+        store.commit('setDataToArr', {arr: 'singleLearningResource', data: tutorial})
+      }
     },
 
     async fetchLearningResources(store){
+      let learningResources = store.getters.getLearningResources;
+      if(Object.keys(learningResources).length) return; // If no resources is found, fetch them
+
       try {
-        let tutorials = await getTutorials()
         store.commit('setDataToArr', {arr: 'learningResources', data: await getTutorials()})
       } catch (error) {
         console.log("Error fetching learning resources: ", error);
@@ -818,7 +847,19 @@ export default createStore({
 
     getArticleTemplate(store){
       return store.articleTemplate
-    }
+    },
+    
+    getResourcesData(store){
+      return store.resourcesData
+    },
+    
+    getSingleResourceData(store){
+      return store.singleResourceData
+    },
+
+    getResourcesHomeTemplate(store){
+      return store.resourcesTemplate
+    },
   }
 
 })

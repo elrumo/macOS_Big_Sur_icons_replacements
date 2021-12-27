@@ -11,7 +11,6 @@
 
     <StickyBanner/>
 
-
     <div class="min-height">
       <router-view
         v-slot="{ Component }"
