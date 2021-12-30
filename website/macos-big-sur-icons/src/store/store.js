@@ -317,6 +317,7 @@ export default new Vuex.Store({
       notApprovedQueryCount.equalTo("user", userObj);
       notApprovedQueryCount.equalTo("approved", false);
       notApprovedQueryCount.exists("highResPngFile");
+      notApprovedQueryCount.equalTo("isHidden", false);
       let totalNotApproved = await notApprovedQueryCount.count()
       store.state.userIcons.count.notApproved = totalNotApproved
       /////////////////////////////////////////////
@@ -326,6 +327,7 @@ export default new Vuex.Store({
       let hackedCount = new Parse.Query(IconsBase);
       hackedCount.equalTo("user", userObj);
       hackedCount.equalTo("approved", true);
+      hackedCount.equalTo("isHidden", false);
       hackedCount.doesNotExist("icnsFile");
       let hacked = await hackedCount.count()
       store.state.userIcons.count.hacked = hacked
@@ -335,6 +337,7 @@ export default new Vuex.Store({
       approvedQuery.equalTo("user", userObj);
       approvedQuery.equalTo("approved", true);
       approvedQuery.exists("icnsFile");
+      approvedQuery.equalTo("isHidden", false);
       approvedQuery.skip(store.state.userIcons.toSkip.approved)
       approvedQuery.descending("createdAt");
       store.state.userIcons.toSkip.approved += numToLoad;
@@ -349,6 +352,7 @@ export default new Vuex.Store({
       notApprovedQuery.skip(store.state.userIcons.toSkip.notApproved)
       notApprovedQuery.descending("createdAt");
       notApprovedQuery.equalTo("approved", false);
+      notApprovedQuery.equalTo("isHidden", false);
       store.state.userIcons.toSkip.notApproved += numToLoad;
       let notApproved = await notApprovedQuery.find();
 

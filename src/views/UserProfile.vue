@@ -155,7 +155,6 @@
           {{ errorMessage }}
         </p>
       </div>
-
       <UserIconGrid
         v-if="userIcons.length != 0"
         :userIcons="userIcons"
