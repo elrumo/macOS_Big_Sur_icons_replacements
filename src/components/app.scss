@@ -308,6 +308,10 @@ select{
     text-align: center;
     width: calc(100% - 20px ) !important;
     height: fit-content !important;
+
+    p{
+        margin-bottom: 0px;
+    }
 }
 
 .resources-card-container{
@@ -317,6 +321,7 @@ select{
         top: 50%;
         transform: translateY(-50%);
     }
+
 }
 
 .lgbt-wrapper{
@@ -1178,6 +1183,12 @@ coral-buttongroup button{
     transition: 0.2s;
 }
 
+.loading{
+    .card-text-wrapper{
+        width: 60%;
+    }    
+}
+
 .card-text-wrapper{
     max-width: 90%;
     margin: auto;
@@ -1298,7 +1309,7 @@ coral-buttongroup button{
     margin: 0px auto;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    gap: 12px;
+    gap: 16px;
     width: 100%;
     height: fit-content;
     height: -moz-fit-content;
@@ -1308,6 +1319,10 @@ coral-buttongroup button{
         top: 50%;
         position: absolute;
         transform: translateY(-50%);
+    }
+
+    .card-wrapper{
+        min-height: 160px;
     }
 
 }

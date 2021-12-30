@@ -199,7 +199,7 @@ export default {
       // adClick(){
       //   let parent = this
       //   window.plausible("adClick", {props: {
-      //     path: parent.$router.currentRoute.name,
+      //     path: parent.$route.name,
       //     position: "Bottom Sticky Banner"
       //   }})
       // }

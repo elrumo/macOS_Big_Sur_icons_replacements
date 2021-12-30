@@ -1,73 +1,25 @@
 <template>
-  <div>
+  <section class="icon-list-area p-t-48 p-b-40">
 
-    <section class="icon-list-area p-t-48 p-b-40">
+    <CarbonAd style="min-height: 200px" adId="homePage"/>
 
-      <div class="card-wrapper card-hover coral-card">
-        
-        <div 
-          @click="adClick({position: 'User Icon Grid', type: 'Native'})" 
-          class="absolute card-grid-nativeAd"
-          style="z-index: 2; height: 100%"
-        >
-          <div id="card-ad">
-          </div>
-        </div>
-
-        <!-- <div 
-          @click="adClick({position: 'User Icon Grid', type: 'Carbon'})"  
-          class="absolute" 
-          style="z-index: 1; height: 100%"
-        >
-          <script async type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom" id="_carbonads_js"></script>
-        </div> -->
-
-          <a
-            class="card-no-ad relative"
-            href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
-            rel="noopener"
-            target="_blank"
-            style="width: 100%; left: 0;"
-            @click="logDonation('support-message')"
-          >
-            <div class="support-page">
-              <h3 class="coral-Heading--S m-0">
-                Support this page
-              </h3>
-              <p class="coral-Body--S m-0">
-                Please consider disabling your ad blocker or making a
-                <a  
-                  rel="noopener"
-                  class="coral-Link"
-                  target="_blank"
-                  href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
-                >
-                  donation 
-                </a>
-                to support this project.
-              </p>
-            </div>
-          </a>
-
-      </div>
-
-      <UserIconCard 
-        v-for="icon in userIcons"
-        :key="icon.id"
-        :icon="icon"
-        :isAdmin="false"
-        :isMacOs="true"
-        :isOwner="isOwner"
-      />
-    </section>  
-
-  </div>
+    <UserIconCard
+      v-for="icon in userIcons"
+      :key="icon.id"
+      :icon="icon"
+      :isAdmin="false"
+      :isMacOs="true"
+      :isOwner="isOwner"
+    />
+  </section>  
 </template>
 
 <script>
 import UserIconCard from './UserIconCard.vue';
 import EditIconDialog from "./EditIconDialog.vue"
 import deleteDialog from "./deleteDialog.vue"
+import NativeAd from "./NativeAd.vue";
+import CarbonAd from "./CarbonAd.vue";
 
 import { mapGetters, mapActions } from 'vuex'
 import Parse from 'parse/dist/parse.min.js';
@@ -88,7 +40,9 @@ export default {
     components:{
       UserIconCard,
       EditIconDialog,
-      deleteDialog
+      deleteDialog,
+      CarbonAd,
+      NativeAd
     },
     
     data(){
@@ -140,11 +94,11 @@ export default {
         }
       }
 
-      window.BSANativeCallback = (a) => {
-        const total = a.ads.length;
-        let el = document.getElementById('_carbonads_js').children[0]
-      }
-      getAd()
+      // window.BSANativeCallback = (a) => {
+      //   const total = a.ads.length;
+      //   let el = document.getElementById('_carbonads_js').children[0]
+      // }
+      // getAd()
 
 
     },

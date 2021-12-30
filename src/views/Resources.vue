@@ -20,15 +20,12 @@
           :step='resource'
         />
 
-        <div
+        <CarbonAd class="resources-card-container" adId="resourcesHome"/>
+
+        <!-- <div
           class="card-hover resources-card-container relative coral-card resources-card-ad"
           @click="adClick({position: 'Icon Grid Bottom', type: 'Carbon'})"
         >
-            <!-- <script
-              async="async"
-              type="application/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom"
-              id="_carbonads_js">
-            </script> -->
           <a
               class="card-no-ad relative"
               href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
@@ -54,8 +51,9 @@
                 </p>
               </div>
             </a>
-        </div>
+        </div> -->
 
+        
       </div>
 
     </main>
@@ -69,6 +67,7 @@ import Header from '@/components/Header.vue'
 import ResourcesCard from '@/components/ResourcesCard.vue'
 import Footer from '@/components/Footer.vue'
 import H3Description from '@/components/H3Description.vue'
+import CarbonAd from '@/components/CarbonAd.vue';
 
 import pages from '@/api/pages.json';
 
@@ -81,7 +80,8 @@ export default {
     Header,
     ResourcesCard,
     Footer,
-    H3Description
+    H3Description,
+    CarbonAd
   },
 
   metaInfo: {

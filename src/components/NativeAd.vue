@@ -153,9 +153,8 @@ export default {
 
     methods:{
       adClick(){
-        let parent = this
         window.plausible("adClick", {props: {
-          path: parent.$router.currentRoute.name, 
+          path: this.$route.name
         }})
       }
     }

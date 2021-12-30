@@ -1,25 +1,9 @@
 <template>
   
  <div
-    style="min-height: 205px; max-height:280px"
+    style="min-height: 145px; max-height:280px"
     class="card-hover relative coral-card"
   >
-    
-    <!-- <div
-      style="z-index: 1; height: 100%; width: 100%"
-      class="absolute carbon-card-ad"
-      id="card-ad"
-    >
-      <script
-        @click="adClick({position: 'Icon Grid Top', type: 'Carbon'})"
-        async
-        type="application/javascript"
-        src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom"
-        id="_carbonads_js"
-      > </script>
-    </div> -->
-
-      <!-- id="elId" -->
     <div
       style="z-index: 2"
       :class="['absolute', 'card-grid-nativeAd', 'bsa-cpc', adId]"
@@ -70,10 +54,16 @@ export default {
       script.src = '//m.servedby-buysellads.com/monetization.js'
       document.head.appendChild(script)
       script.onload = () => {
-        load(parentEl)
+        try {
+          load(parentEl)
+        } catch (error) {
+        }
       }
     } else {
-      load(parentEl)
+        try {
+          load(parentEl)
+        } catch (error) {
+        }
     }
 
     function load(el) {

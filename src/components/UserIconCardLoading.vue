@@ -3,10 +3,8 @@
         
         <!-- Icon image -->
         <div class="card-img-wrapper" style="max-width: 120px;">        
+
             <img
-                width="100px"
-                height="100px"
-                style="width: auto"
                 class="placeholder-icon"
                 alt="Placeholder icon"
                 :src="coralIcons.placeholderIcon"
@@ -23,13 +21,18 @@
                     m-t-0
                     m-b-8
                     loading-placeholder
+                    loading-placeholder-large
                     p-0
                 "
             >
             </h3>
 
             <!-- User's name -->
-            <p class="coral-Body--XS opacity-60 m-b-8 loading-placeholder">
+            <p class="coral-Body--XS opacity-60 m-b-8 loading-placeholder loading-placeholder-medium">
+            </p>
+
+            <!-- User's name -->
+            <p class="coral-Body--XS opacity-60 loading-placeholder loading-placeholder-small">
             </p>
 
         </div>
@@ -45,7 +48,6 @@ export default {
     name: "UserIconCardLoading",
     
     props:{
-        icon:{},
     },
 
     data: function(){
@@ -61,6 +63,54 @@ export default {
 }
 </script>
 
-<style>
+<style lang="css">
+
+    .loading-placeholder{
+        margin: auto;
+        position: relative;
+        height: auto;
+        width: 100%;
+        border-radius: 2px;
+        background: rgb(90 90 90);
+        overflow: hidden;
+    }
+
+    .loading-placeholder::after{
+        transform: translateY(-50%);
+        top: 50%;
+        height: 100%;
+        width: 50%;
+        content: " ";
+        position: absolute;
+        animation: placeholder 2s ease-out infinite;
+        background: linear-gradient( 90deg , rgb(90 90 90 / 0%) 0%, rgb(109 109 109) 50%, rgb(90 90 90 / 0%) 100%);
+    }
+
+    .loading-placeholder-large{
+        min-height: 20px;
+    }
+
+    
+    .loading-placeholder-medium{
+        min-height: 16px;
+    }
+
+    .loading-placeholder-small{
+        min-height: 10px;
+        width: 18px !important;
+    }
+
+    @keyframes placeholder {
+        0% {
+        left: -25%;
+        }
+        50% {
+        left: 75%;
+        }
+        100% {
+        opacity: 0;
+        /* left: -25%; */
+        }
+    }
 
 </style>
