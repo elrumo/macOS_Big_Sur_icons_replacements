@@ -838,6 +838,7 @@ export default {
       try {
         const query = new Parse.Query(Icons);
         query.equalTo("approved", true);
+        query.equalTo("isHidden", false);
         query.descending("timeStamp");
         query.exists("icnsFile");
         query.limit(docLimit);
@@ -852,14 +853,12 @@ export default {
         var allIcons = []
 
         for(let result in results){
+          let iconItem = results[result].attributes
 
-          let iconItem = results[result]
-
-          let objData = iconItem.attributes
           let iconData = {}
 
-          for(let data in objData){
-            iconData[data] = objData[data]
+          for(let data in iconItem){
+            iconData[data] = iconItem[data]
           }
           iconData.id = results[result].id
 
