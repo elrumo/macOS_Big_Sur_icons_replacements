@@ -333,60 +333,7 @@
           class="icon-list-area p-b-32 "
         >
           
-          <!-- Ad -->
-          <div
-            style="min-height: 205px; max-height:240px"
-            class="card-hover relative coral-card"
-          >
-            
-            <!-- <div
-              style="z-index: 1; height: 100%; width: 100%"
-              class="absolute carbon-card-ad"
-            >
-              <script
-                @click="adClick({position: 'Icon Grid Top', type: 'Carbon'})"
-                async
-                type="application/javascript"
-                src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom"
-                id="_carbonads_js"
-              > </script>
-            </div> -->
-
-            <div style="z-index: 2" class="absolute card-grid-nativeAd">
-              <div
-                @click="adClick({position: 'Icon Grid Top', type: 'Native'})"
-                id="card-ad">
-              </div>
-            </div>
-            
-            <a
-              class="card-no-ad relative"
-              href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
-              rel="noopener"
-              target="_blank"
-              style="width: 100%; left: 0;"
-            >
-              <div class="support-page">
-                <h3 class="coral-Heading--S m-0">
-                  Support this page
-                </h3>
-                <p class="coral-Body--S m-0">
-                  <span class="color-theme">
-                    Please consider disabling your ad blocker or making a
-                  </span>
-                  <a  
-                    rel="noopener"
-                    class="coral-Link"
-                    target="_blank"
-                    href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
-                  >
-                    donation 
-                  </a>
-                  to support this project.
-                </p>
-              </div>
-            </a>
-          </div>
+          <CarbonAd adId="homePage"/>
 
           <UserIconCard
             v-for="icon in search"
@@ -425,6 +372,7 @@ import Dialog from './Dialog.vue';
 import deleteDialog from './deleteDialog.vue';
 import NativeAd from './NativeAd.vue';
 import StickyBanner from './StickyBanner.vue';
+import CarbonAd from './CarbonAd.vue';
 
 import Parse from 'parse/dist/parse.min.js';
 
@@ -486,6 +434,7 @@ export default {
     NativeAd,
     UserIconCard,
     StickyBanner,
+    CarbonAd,
   },
 
   metaInfo: {
@@ -806,6 +755,8 @@ export default {
     },
 
     handleScroll () {
+      let searchBar = document.getElementById("searchBar")
+      if(!searchBar) return 
       this.distanceFromTop =  document.getElementById("searchBar").getBoundingClientRect().y > 65
     },
 
@@ -982,6 +933,7 @@ export default {
       query.equalTo("approved", true);
       query.descending("timeStamp");
       query.exists("icnsFile");
+      query.include(["user.isBanned"]);
       query.limit(docLimit);
       parent.howManyRecords = docLimit
 
@@ -1000,20 +952,20 @@ export default {
       
       try{
         for(let result in results){
+          let iconItem = results[result].attributes
+          
+          if (iconItem.user.attributes.isBanned) continue;
 
-          let iconItem = results[result]
-
-          let objData = iconItem.attributes
           let iconData = {}
 
-          for(let data in objData){
-            iconData[data] = objData[data]
+          for(let data in iconItem){
+            iconData[data] = iconItem[data]
           }
           iconData.id = iconItem.id
 
           // Check if icon has been saved by the user
           iconData.isSaved = savedIconsId.includes(iconItem.id);
-
+          
           allIcons.push(iconData)
         }
         parent.$store.dispatch("pushDataToArr", {data:  allIcons, arr: "list", concatArray: true});
@@ -1028,22 +980,6 @@ export default {
       }
 
       var attempts = 0;
-
-      function getAd (){
-        setTimeout(() => {
-          let carbon = document.getElementById("carbonads")
-          if (attempts >= 4) return;
-          try {
-            carbon.classList.add("")
-          } catch (error) {
-            attempts++
-            getAd()
-            parent.isAdOn = true
-          }
-        }, 500);
-      }
-
-      getAd()
 
       parent.scroll()
 
@@ -1139,7 +1075,15 @@ export default {
   },
 
   computed:{
-    ...mapGetters(['getUser', 'getAppCategories', 'getIconType', 'selectedIcons', 'getSelectedCategory', 'getSavedIcons']),
+    ...mapGetters([
+      'getUser', 
+      'getAppCategories', 
+      'getIconType', 
+      'selectedIcons', 
+      'getSelectedCategory', 
+      'getSavedIcons',
+      'getSupportMessage'
+    ]),
 
     isMobile(){
       let parent = this;
@@ -1227,9 +1171,10 @@ export default {
   // @import url(coral.css);
   @import 'app.scss';
   @import 'snack-helper.min.css';
-  @import 'carbon.css';
+  @import 'carbon.scss';
 
   .paypal-wrapper{
+    margin-top: 20px;
     margin-top: 20px;
     background: white;
     padding: 20px;

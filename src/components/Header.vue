@@ -95,13 +95,13 @@
                             </div>
                             
                             <!-- blog -->
-                            <div @click="toggleOverlay" v-if="this.$route.name != 'BlogHome'">
+                            <!-- <div @click="toggleOverlay" v-if="this.$route.name != 'BlogHome'">
                                 <router-link to="/blog" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
                                     <span>
                                         Blog
                                     </span>
                                 </router-link>
-                            </div>
+                            </div> -->
                             
                             <!-- Resources -->
                             <div class="resourcesLink" @click="toggleOverlay">
@@ -194,13 +194,13 @@
                     </div>
                     
                     <!-- blog -->
-                    <div>
+                    <!-- <div>
                         <router-link to="/blog">
                             <button is="coral-button" variant="quiet">
                                 <span>Blog</span>
                             </button>
                         </router-link>
-                    </div>
+                    </div> -->
 
                     <!-- Resources -->
                     <div class="resourcesLink">
@@ -213,7 +213,7 @@
                     </div>
 
                     <!-- Learn -->
-                    <div class="resourcesLink">
+                    <!-- <div class="resourcesLink">
                         <coral-status variant="info"></coral-status>
                         <router-link to="/learn">
                             <button is="coral-button" variant="quiet">
@@ -222,7 +222,7 @@
                                 </span>
                             </button>
                         </router-link>
-                    </div>
+                    </div> -->
                     
                     <!-- Buy me a coffee -->
                     <div class="hide-on-shrink">

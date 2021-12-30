@@ -27,7 +27,7 @@
             <h3 class="coral-Heading--L m-0">
               {{ getUserInfo.username }}
             </h3>
-            
+
             <a v-if="getUserInfo.twitterHandle" target="_blank" :href="getUserInfo.twitterHandle" class="margin-auto relative">
               <IconUI class="absolute-center-vertical" width="18px" :img="resources.twitter" alt="Twitter Logo"/>
             </a>
@@ -227,6 +227,7 @@ export default {
 
       user:{
         isOwner: false,
+        isBanned: false,
       },
       
       totalIconsApproved: 0,
@@ -279,17 +280,19 @@ export default {
     async queryUser(){
       let parent = this;
       let user = parent.user;
-      var loading = parent.loading.user;
-      
+
       const queryUser = new Parse.Query(Parse.User);
-      let regular = new RegExp("\\b" + user.username + "\\b")
-      queryUser.matches("username", regular, "i")
+      let regExp = new RegExp("\\b" + user.username + "\\b")
+      queryUser.matches("username", regExp, "i")
       let userInfo = await queryUser.find()
 
       userInfo = userInfo[0];
       parent.userInfo = userInfo;
 
-      if (userInfo) {
+      let isBanned = userInfo.attributes.isBanned
+      user.isBanned =  isBanned;
+
+      if (userInfo && !isBanned){
         
         // Fetch user icons
         parent.fetchUserIcons(userInfo).then(()=>{
@@ -327,7 +330,12 @@ export default {
         }
         parent.setDataToArr(isLoading)
         parent.loading.user = false
-        parent.errorMessage = "This account doesn’t exist"
+        
+        if (isBanned) {
+          parent.errorMessage =  parent.user.username + " has been banned until further notice."
+        } else{
+          parent.errorMessage = "This account doesn’t exist"
+        }
       }
 
     },
@@ -353,8 +361,8 @@ export default {
       window.onscroll = () => {
         let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000
 
-        if (bottomOfWindow && parent.scrolledToBottom && parent.userInfo.id) {
-              parent.scrolledToBottom = true
+        if (bottomOfWindow && parent.scrolledToBottom && parent.userInfo.id && !parent.user.isBanned) {
+          parent.scrolledToBottom = true
           parent.fetchUserIcons(parent.userInfo)
         }
       }
@@ -370,6 +378,7 @@ export default {
       arr: "loading",
       data: true
     }
+
     parent.setDataToArr(isLoading)
 
     parent.emptyArr();
@@ -431,6 +440,11 @@ export default {
       } else{
         if (parent.allIcons.length == 0) {
           parent.errorMessage = "No icons to show"
+        }
+
+        if (parent.user.isBanned) {
+            parent.errorMessage = parent.user.username + " has been banned until further notice."
+            return parent.notApproved
         }
 
         switch (parent.iconsToShow) {

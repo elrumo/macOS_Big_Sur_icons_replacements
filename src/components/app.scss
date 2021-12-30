@@ -1,3 +1,28 @@
+
+:root{
+    --padding-top-search: 15px;
+    --main-border-radius: 7px;
+
+    --coral-dark-bg: rgb(26 26 26);
+    --coral-dark-text: rgb(227, 227, 227);
+    --coral-dark-border: rgba(75, 75, 75, 0.5);
+    --coral-dark-border-hover: rgb(95, 95, 95);
+    --coral-dark-card: rgb(37, 37, 37);
+    --coral-dark-card-transparent: rgba(37, 37, 37, 0);
+    
+    
+    --coral-light-bg: rgba(245, 245, 245, 1);
+    --coral-light-text: rgba(75, 75, 75);
+    --coral-light-border: rgb(224, 224, 224);
+    --coral-light-card: rgb(255, 255, 255);
+    --coral-light-card-transparent: rgba(255, 255, 255, 0);
+
+    --page-width: 95%;
+    --page-width-mobile: 85%;
+
+    --icon-preview-dimensions: 100px;
+}
+
 @mixin skeleton-gradient-light{
     background: linear-gradient(90deg, #c7c7c7, #eeeeee);
 }
@@ -8,29 +33,6 @@
 
 @mixin coral-dark-bg{
     background-color: var(--coral-dark-bg);
-}
-
-:root{
-    --padding-top-search: 15px;
-    --main-border-radius: 7px;
-
-    --coral-dark-bg: rgb(26 26 26);
-    --coral-dark-text: rgba(75, 75, 75);
-    --coral-dark-border: rgba(75, 75, 75, 0.5);
-    --coral-dark-border-hover: rgb(95, 95, 95);
-    --coral-dark-card: rgb(37, 37, 37);
-    --coral-dark-card-transparent: rgba(37, 37, 37, 0);
-    
-    
-    --coral-light-bg: rgba(245, 245, 245, 1);
-    --coral-light-border: rgb(224, 224, 224);
-    --coral-light-card: rgb(255, 255, 255);
-    --coral-light-card-transparent: rgba(255, 255, 255, 0);
-
-    --page-width: 95%;
-    --page-width-mobile: 85%;
-
-    --icon-preview-dimensions: 100px;
 }
 
 .coral-dark-bg{
@@ -47,6 +49,19 @@ body{
 
 a{
     text-decoration: none;
+}
+
+.width-100{
+    width: 100%;
+}
+
+.ellipses-text-2{
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
 }
 
 .coral-Heading--XXL{
@@ -128,7 +143,7 @@ a{
     }
 
     .marked{
-        color: var(--coral-light-border);
+        color: var(--coral-dark-text);
     }
 
 }
@@ -161,7 +176,7 @@ a{
     }
 
     .marked{
-        color: var(--coral-dark-border);
+        color: var(--coral-light-text);
     }
 }
 /////////////// END OF THEME ///////////////
@@ -306,10 +321,12 @@ select{
 
 .lgbt-wrapper{
     
+    min-height: 100px;
+
     .card-no-ad{
         position: relative;
-        top: 0px;
         height: fit-content;
+        top: 0px;
     }
 
     .support-page{
@@ -1124,7 +1141,7 @@ coral-buttongroup button{
     }
 
     .color-theme{
-        color: var(--coral-light-border);
+        color: var(--coral-dark-text);
     }
 }
 
@@ -1142,7 +1159,7 @@ coral-buttongroup button{
     }
 
     .color-theme{
-        color: var(--coral-dark-text);
+        color: var(--coral-light-text);
     }
 }
 
@@ -1164,6 +1181,20 @@ coral-buttongroup button{
 .card-text-wrapper{
     max-width: 90%;
     margin: auto;
+
+    h3{
+        @extend .ellipses-text-2;
+
+        text-decoration: none;
+        font-size: 0.9rem;
+        text-align: center;
+        padding: 5px 0px 0px 0px;
+        font-weight: 800;
+    }
+    
+    h3 input{
+        padding: 0px;
+    }
 }
 
 .underline{
@@ -1208,18 +1239,6 @@ coral-buttongroup button{
 
 .pointer{
     cursor: pointer;
-}
-
-.card-wrapper h3{
-    text-decoration: none;
-    font-size: 0.9rem;
-    text-align: center;
-    padding: 5px 0px 0px 0px;
-    font-weight: 800;
-}
-
-.card-wrapper h3 input{
-    padding: 0px;
 }
 
 .opacity-0{
@@ -1295,7 +1314,7 @@ coral-buttongroup button{
 
 .icon-list-area a{
     text-decoration: none;
-    color: black;
+    // color: black;
     margin: 0px auto;
 }
 
