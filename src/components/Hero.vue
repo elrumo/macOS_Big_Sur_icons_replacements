@@ -12,7 +12,7 @@
           class="ad-hero mobile-hidden"
         >
           <NativeAd
-            :adPosition="'Hero Top'"
+            :template="1"
             :adId="'iconbar-js-hero'"
             :key="$route.fullPath + 'ad' + '_hero'"
           />

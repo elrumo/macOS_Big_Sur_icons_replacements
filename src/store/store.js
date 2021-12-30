@@ -3,10 +3,12 @@ import Parse from 'parse/dist/parse.min.js';
 import algoliasearch from 'algoliasearch'
 import router from '@/router/index.js'
 
+import Marked from 'marked';
+
 import localPages from '@/api/pages.json';
 import localPosts from '@/api/posts.json';
 import icons from '@/api/icons.json';
-import { getPages, getSinglePage } from '@/api/posts';
+// import { getPages, getSinglePage } from '@/api/posts';
 
 import {
     getTutorials,
@@ -45,9 +47,11 @@ export default createStore({
 
       resourcesData: localPages,
       singleResourceData: {},
-      moreResources: getPages(10),
+      moreResources: {},
       resourcesTemplate: {},
       articleTemplate: {},
+
+      supportMessage: 'Disabling your ad blocker or making a [donation](https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN) is the best way to support this project.',
 
       singleLearningResource: {},
       learningResources: [],
@@ -145,9 +149,9 @@ export default createStore({
       store.blogPosts = blogData;
     },
 
-    getSinglePageMutation(store, pageData){
-      store.singleResourceData = pageData;
-    },
+    // getSinglePageMutation(store, pageData){
+    //   store.singleResourceData = pageData;
+    // },
 
     setUser(store, user){
       store.user = user;
@@ -604,10 +608,9 @@ export default createStore({
       store.commit('pushBlogs', blogData)
     },
 
-    async getSinglePageAction(store, slug){
-
-      return getSinglePage(slug)
-    },
+    // async getSinglePageAction(store, slug){
+    //   return getSinglePage(slug)
+    // },
 
     showEl(store, id){
       if(id.elId != undefined){
@@ -860,6 +863,12 @@ export default createStore({
     getResourcesHomeTemplate(store){
       return store.resourcesTemplate
     },
+
+    getSupportMessage(store){
+      return Marked(store.supportMessage)
+    },
+
+
   }
 
 })

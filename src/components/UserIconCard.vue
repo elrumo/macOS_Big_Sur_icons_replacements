@@ -3,7 +3,7 @@
         
         <SaveIconsDialogue/>
 
-        <div class="m-auto">
+        <div class="m-auto width-100">
             
             <div
                 :id="'saveIcon_'+icon.id"
@@ -42,9 +42,7 @@
 
                 <!-- App name -->
                 <h3 class="coral-font-color m-0">
-                    <span>
-                        {{icon.appName.replaceAll("_", " ")}}
-                    </span>
+                    {{icon.appName.replaceAll("_", " ")}}
                 </h3>
                 
                 <!-- Credit -->

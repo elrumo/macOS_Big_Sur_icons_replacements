@@ -28,9 +28,11 @@
                 <p class="coral-Body--XS">
                     Sponsored by
                 </p>
+                    <!-- :adId="'iconbar-js-h3'" -->
                 <NativeAd
-                    :adPosition="'H3 Description Desktop'"
-                    :adId="'iconbar-js-h3'"
+                    :adId="'resources-ad'"
+                    :template="1"
+                    :key="$route.fullPath + 'ad' + '_resources'"
                 />
             </div>
 

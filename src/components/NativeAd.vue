@@ -3,7 +3,11 @@
     <p v-if="sponsored" class="coral-Detail coral-Detail--S coral-Detail--light opacity-50">
       Sponsored
     </p>
-    <div @click="adClick" class="native-ad-wrapper" :id="adId"> </div>
+    <div
+      @click="adClick"
+      :class="template == 1 ? 'native-ad-wrapper': 'card-grid-nativeAd'"
+      :id="adId">
+    </div>
   </div>
 </template>
 
@@ -16,6 +20,7 @@ export default {
       sponsored:'',
       fullWidth:'',
       adId: '',
+      template: Number
     },
 
     components:{},
@@ -30,51 +35,74 @@ export default {
       let parent = this
       var adId = parent.adId
 
-      function getAd(el){
-        try {
-          if (typeof _bsa !== 'undefined' && !parent.isAd) {
-            _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
-            {
-              target: '#'+adId,
-              template: `
+      const templateCompact =  `
                   <a href="##statlink##" target="_blank" rel="noopener sponsored" id="`+adId+`customAd" class="bsa-link coral-card">
                   <div class="bsa-icon" style="background-image: url(##image##); background-color: ##backgroundColor##;"></div>
                   <div class="bsa-desc">##company## - ##tagline##</div>
                   </a>
                 `
+
+      const templateCard =  `
+                  <a href="##statlink##" target="_blank" rel="noopener sponsored" id="`+adId+`customAd"" class="bsa-link">
+                    <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
+                      <div class="bsa-icon" style="background-image: url(##logo##);"></div>
+                    </div>
+                    <div class="text-ad-wrapper">
+                      <img style="background: ##backgroundColor##" src="##image##">
+                      <div class="bsa-desc">##description##</div>
+                    </div>
+                  </a>
+                `
+
+      let template = this.template == 1 ? templateCompact : templateCard
+
+      function getAd(el){
+        try {
+          if (typeof _bsa !== 'undefined' && !parent.isAd ) {
+            document.getElementById(adId).innerHTML = ''
+            // el.innerHTML = ''
+            _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
+            {
+              target: '#'+adId,
+              template: template
               }
             );
           }
         } catch (error) {
         }
       }
-      
+
       getAd()
 
       var attempts = 0       
+
       function adExist(){
         var adExists
-        try {
-          adExists = document.getElementById(adId).children.length
-        } catch (error) {
-        }
 
         setTimeout(() => {
-          if (attempts >= 15) return;
+          try {
+            adExists = document.getElementById(adId).children.length
+          } catch (error) {
+          }
+
+          // console.log(document.getElementById(adId).children.length);
+
+          if (adExists > 0 || attempts >= 25) return;
+          // if (attempts >= 25) return;
           if (adExists == 0) {
             try {
               attempts++
-              getAd()
               adExist()
-            } catch (error) {
               getAd()
+            } catch (error) {
               attempts++
               adExist()
+              getAd()
               parent.isAd = false
             }
           } else return
 
-        }, 1500);
+        }, 800);
       }
 
       let el = document.getElementById(adId+"customAd")
@@ -119,7 +147,7 @@ export default {
         } catch (error) {
           
         }
-      }, 1200)
+      }, 100)
 
     },
 

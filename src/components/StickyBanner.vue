@@ -16,6 +16,16 @@
               <!-- id="card-ad2"> -->
           </div>
 
+        <!-- <CarbonAd
+          adId="carbonAd"
+        /> -->
+        
+          <NativeAd
+            :adId="'stickyAd'"
+            :template="2"
+            :key="$route.fullPath + 'ad' + '_sticky'"
+          />
+
           <a
             class="card-no-ad relative"
             href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
@@ -50,6 +60,8 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import NativeAd from "./NativeAd.vue";
+import CarbonAd from "./CarbonAd.vue";
 
 import lgbtIcon from "../assets/Resources/lgbt.png"
 
@@ -62,7 +74,10 @@ export default {
       adId: '',
     },
 
-    components:{},
+    components:{
+      NativeAd,
+      CarbonAd
+    },
 
     data(){
         return{
@@ -74,40 +89,41 @@ export default {
     
     mounted(){
       
-      this.$nextTick(function () {
-        let parent = this
-        parent.getAd()
-      })
+      // this.$nextTick(function () {
+      //   let parent = this
+      //   parent.getAd()
+      // })
 
-      // this.$router.onReady(function(){
+      let adId = 'carbonAd2'
 
-      //   function getAd(){
-      //     try {
-      //       if (typeof _bsa !== 'undefined') {
-      //       _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
-      //         {
-      //           target: '.card-ad2',
-      //           template: `
-      //               <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link">
-      //               <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
-      //                 <div class="bsa-icon" style="background-image: url(##logo##);"></div>
-      //               </div>
-      //               <div class="text-ad-wrapper">
-      //                 <img style="background: ##backgroundColor##" src="##image##">
-      //                 <div class="bsa-desc">##description##</div>
-      //               </div>
-      //               </a>
-      //             `
-      //           }
-      //         )
-      //       }
-      //     } catch (error) {
-      //       console.log("error: ", error);
-      //     }
-      //   }
-        
-      //   getAd()
-      // });
+      function getAd(adId){
+        try {
+          if (typeof _bsa !== 'undefined') {
+            _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
+            {
+            target: '.card-ad2',
+              template: `
+                  <a href="##statlink##" target="_blank" rel="noopener sponsored" id="`+adId+`customAd"" class="bsa-link">
+                  <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
+                    <div class="bsa-icon" style="background-image: url(##logo##);"></div>
+                  </div>
+                  <div class="text-ad-wrapper">
+                    <img style="background: ##backgroundColor##" src="##image##">
+                    <div class="bsa-desc">##description##</div>
+                  </div>
+                  </a>
+                `
+              }
+            )
+          }else{
+            console.log('_bsa not defined');
+          }
+        } catch (error) {
+          console.log("error: ", error);
+        }
+      }
+      
+      // getAd(adId)
 
     },
 
