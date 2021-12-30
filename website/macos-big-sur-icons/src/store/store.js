@@ -305,6 +305,7 @@ export default new Vuex.Store({
       let approvedIconsCount = new Parse.Query(IconsBase);
       approvedIconsCount.equalTo("user", userObj);
       approvedIconsCount.equalTo("approved", true);
+      approvedIconsCount.equalTo("isHidden", false);
       approvedIconsCount.exists("icnsFile");
       let totalApproved = await approvedIconsCount.count()
       store.state.userIcons.count.approved = totalApproved
