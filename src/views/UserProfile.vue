@@ -138,22 +138,12 @@
       />
       
       <div
-        class="icon-list-area p-t-48 p-b-40"
+        class="icon-list-area loading p-t-48 p-b-40"
         v-else
       >
-        <!-- <div style="z-index: 2; height: 100%; min-height: 210px" class="card-wrapper card-hover coral-card">
-          <script
-            @click="adClick({position: 'Icon Grid Top', type: 'Native'})"
-            type="application/javascript"
-            src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&placement=macosiconscom"
-            id="_carbonads_js2">
-          </script>
-        </div> -->
-
         <UserIconCardLoading
           v-for="num in placeholderCount"
           :key="num+Math.floor(Math.random() * 10000000 + 1)"
-          :icon="iconsCount"
         />
 
       </div>
@@ -280,6 +270,7 @@ export default {
     async queryUser(){
       let parent = this;
       let user = parent.user;
+      let isBanned
 
       const queryUser = new Parse.Query(Parse.User);
       let regExp = new RegExp("\\b" + user.username + "\\b")
@@ -289,11 +280,16 @@ export default {
       userInfo = userInfo[0];
       parent.userInfo = userInfo;
 
-      let isBanned = userInfo.attributes.isBanned
-      user.isBanned =  isBanned;
-
+      try {
+        isBanned = userInfo.attributes.isBanned;
+        console.log(isBanned);
+      } catch (error) {
+        isBanned = true  
+      }
+      user.isBanned = isBanned;
+      
       if (userInfo && !isBanned){
-        
+
         // Fetch user icons
         parent.fetchUserIcons(userInfo).then(()=>{
           // Wait to fetch icons then set "selectedIcon" to the first icon fetched back
@@ -309,14 +305,12 @@ export default {
           if (!twitterHandle.includes("twitter.com")) user.twitterHandle = "https://twitter.com/"+twitterHandle
         }
         
-        
         user.credit = userInfo.get("credit")
         user.username = userInfo.get("username")
         user.bio = userInfo.get("bio")
         user.id = userInfo.id
 
         parent.setData({state: 'user', data: user})
-      
 
         if (Parse.User.current() && user.username == Parse.User.current().getUsername()) {
           user.isOwner = true
@@ -324,6 +318,7 @@ export default {
         
         parent.loading.user = false
       } else{
+        
         let isLoading = {
           arr: "loading",
           data: false
@@ -334,7 +329,7 @@ export default {
         if (isBanned) {
           parent.errorMessage =  parent.user.username + " has been banned until further notice."
         } else{
-          parent.errorMessage = "This account doesn’t exist"
+          parent.errorMessage = "This account doesn't exist"
         }
       }
 
@@ -360,8 +355,10 @@ export default {
       let parent = this
       window.onscroll = () => {
         let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000
+        
+        if(parent.user.isBanned) return
 
-        if (bottomOfWindow && parent.scrolledToBottom && parent.userInfo.id && !parent.user.isBanned) {
+        if (bottomOfWindow && parent.scrolledToBottom && parent.userInfo.id) {
           parent.scrolledToBottom = true
           parent.fetchUserIcons(parent.userInfo)
         }
@@ -423,11 +420,10 @@ export default {
     },
 
     placeholderCount(){
-      let parent = this
-      if (parent.iconsCount > 15) {
-        return 15
+      if (this.iconsCount > 25) {
+        return 5
       } else{
-        return parent.iconsCount
+        return this.iconsCount
       }
     },
 
@@ -435,7 +431,6 @@ export default {
       let parent = this
       
       if (!parent.userInfo) {
-        console.log("parent.userInfo");
         return 0
       } else{
         if (parent.allIcons.length == 0) {
@@ -567,42 +562,6 @@ export default {
 
   .profile-descrption-box .loading-placeholder {
     /* height: 70% */
-  }
-
-  .loading-placeholder{
-    margin: auto;
-    position: relative;
-    height: auto;
-    width: 100%;
-    min-width: 100px;
-    min-height: 20px;
-    border-radius: 2px;
-    background: rgb(90 90 90);
-    overflow: hidden;
-  }
-
-  .loading-placeholder::after{
-    transform: translateY(-50%);
-    top: 50%;
-    height: 100%;
-    width: 50%;
-    content: " ";
-    position: absolute;
-    animation: placeholder 2s ease-out infinite;
-    background: linear-gradient( 90deg , rgb(90 90 90 / 0%) 0%, rgb(109 109 109) 50%, rgb(90 90 90 / 0%) 100%);
-  }
-
-  @keyframes placeholder {
-    0% {
-      left: -25%;
-    }
-    50% {
-      left: 75%;
-    }
-    100% {
-      opacity: 0;
-      /* left: -25%; */
-    }
   }
 
 </style>

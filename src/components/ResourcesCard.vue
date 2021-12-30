@@ -1,38 +1,40 @@
 <template>
-    <router-link class="resources-card-container" :to="getLink">
-        <div class="coral-Well instructions-item Box">
-            
-            <IsNew :item="step"/>
-
-            <div class="resources-card-wrapper">
+    <div class="resources-card-container">
+        <router-link :to="getLink">
+            <div class="coral-Well instructions-item Box">
                 
-                <v-lazy-image
-                    :src-placeholder="placeholderImage" :src="getImage" :alt="getImage"
-                    :class="{
-                        'card-img': true,
-                        'resources-card-img': true,
-                        'instructions-img-wrapper': step.gradient,
-                        'gradient': step.gradient
-                    }"
-                />
+                <IsNew :item="step"/>
 
-                <div class="resource-card-title-wrapper">
-                    <p
-                        class="resource-card-title coral-Body--L"
-                    >
-                        {{ step.title }}
-                    </p>
-                    <p
-                        v-if="step.description"
-                        class="resource-card-description coral-Body--S"
-                    >
-                        {{ step.description }}
-                    </p>
+                <div class="resources-card-wrapper">
+                    
+                    <v-lazy-image
+                        :src-placeholder="placeholderImage" :src="getImage" :alt="getImage"
+                        :class="{
+                            'card-img': true,
+                            'resources-card-img': true,
+                            'instructions-img-wrapper': step.gradient,
+                            'gradient': step.gradient
+                        }"
+                    />
+
+                    <div class="resource-card-title-wrapper">
+                        <p
+                            class="resource-card-title coral-Body--L"
+                        >
+                            {{ step.title }}
+                        </p>
+                        <p
+                            v-if="step.description"
+                            class="resource-card-description coral-Body--S"
+                        >
+                            {{ step.description }}
+                        </p>
+                    </div>
+
                 </div>
-
             </div>
-        </div>
-    </router-link>
+        </router-link>
+    </div>
 </template>
 
 <script>

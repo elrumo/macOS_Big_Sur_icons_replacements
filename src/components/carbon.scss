@@ -374,6 +374,7 @@ height: -moz-fit-content;
 .card-grid-nativeAd{
     z-index: 2;
     height: 100%;
+    width: 100%;
 
     & > div{
         height: 100%
@@ -427,6 +428,7 @@ height: -moz-fit-content;
         height: fit-content;
         height: -moz-fit-content;
         top: 5px;
+        text-align: center;
         font-size: 12px !important;
         padding: 0px 15px !important;
     }
@@ -450,10 +452,10 @@ height: -moz-fit-content;
 
 .coral--dark{
     .card-grid-nativeAd{
-        background: var(--coral-dark-card);
     }
     
     .card-grid-nativeAd .bsa-link{
+        background: var(--coral-dark-card);
         color: white;
     }
 
@@ -467,6 +469,9 @@ height: -moz-fit-content;
 .coral--light{
     
     .card-grid-nativeAd{
+    }
+    
+    .card-grid-nativeAd .bsa-link{
         background: var(--coral-light-card);
     }
 

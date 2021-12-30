@@ -23,7 +23,7 @@
           </figure>
 
           <NativeAd
-            :adPosition="'Under image Desktop'"
+            :template="1"
             :adId="'iconbar-js-resourceItem'"
             class="m-t-24"
             sponsored="true"
@@ -121,29 +121,12 @@
         </h3>
 
         <div class="resources-grid card-grid" id="how-to-install">
-          
-            <ResourcesCard
-              v-for="resource in getResourcesData" :key="resource.name"
-              :step='resource'
-              :link="'/resources/'+resource.slug"
-            />
-
-          <!-- <div class="card-hover relative coral-card resources-card-ad">             -->
-              <!-- <script
-                @click="adClick({position: 'Icon Grid Top', type: 'Carbon'})"
-                async="async"
-                type="application/javascript"
-                src="//cdn.carbonads.com/carbon.js?serve=CEBIK27J&amp;placement=macosiconscom"
-                id="_carbonads_js">
-              </script>
-               -->
-            <!-- <div class="card-no-ad">
-              <p class="coral-Body--M">
-                Support for .icns is on my (long) todo list.
-              </p>
-            </div>
-          </div> -->
-
+          <ResourcesCard
+            v-for="resource in getResourcesData" :key="resource.name"
+            :step='resource'
+            :link="'/resources/'+resource.slug"
+          />
+          <CarbonAd class="resources-card-container" adId="resourceItem"/>
         </div>
 
       </div>
@@ -159,6 +142,7 @@ import localPosts from '@/api/posts.json';
 import ResourcesCard from '@/components/ResourcesCard.vue'
 import NativeAd from "@/components/NativeAd.vue";
 import VLazyImage from "v-lazy-image";
+import CarbonAd from '@/components/CarbonAd.vue';
 
 import pages from '@/api/pages.json';
 import placeholderImage from "../assets/placeholder-image.gif"
@@ -169,7 +153,8 @@ export default {
   components: {
     ResourcesCard,
     NativeAd,
-    VLazyImage
+    VLazyImage,
+    CarbonAd
   },
 
   data: function(){
@@ -186,14 +171,9 @@ export default {
 
   mounted: async function(){
     const slug = this.$route.params.resource;
-    console.log(slug);
     this.fetchResourceFromSlug(slug)
     this.fetchResourcesHome()
     await this.fetchArticleTemplate({slug: 'article-resource', state: 'articleTemplate'})
-
-    // await this.getTutorialFromSlug(slug)
-    // await this.fetchArticleTemplate('article-learn')
-    // this.fetchLearningResources()
   },
 
   methods:{
@@ -299,12 +279,9 @@ export default {
       
       parent.fullUrl = "https://macosicons.com/"+routerName
 
-      // console.log("resourcesData: ", await moreResources);
-
       for(let post in Object.keys(storeResourcesData)){
         try {
           if (storeResourcesData[post].slug == routerName) {
-            // console.log(storeResourcesData[post].title);
             parent.resourceItem = storeResourcesData[post];
           }
         } catch (error) {
@@ -323,12 +300,10 @@ export default {
           parent.$router.push('/resources')
         }
 
-        // console.log("storeResourceItem: ", storeResourceItem);
         // Botched together to get local blog data while real blog is loading. Temporary fix, this will need to be server side rendered.
         for(let post in Object.keys(storeResourceItem)){
           try {
             if (storeResourceItem[post].slug == routerName) {
-              // console.log(storeResourceItem[post].html);
               parent.resourceItem = storeResourceItem[post];
             }
           } catch (error) {

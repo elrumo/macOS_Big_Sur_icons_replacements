@@ -126,7 +126,7 @@
                   selected="true"
                   value="All"
                   title="all"
-                  @click="setCategory({id: 'All'})"
+                  @click="setCategory({name: 'All'})"
                   aria-label="category.name  "
                 >
                   All icons
@@ -271,7 +271,7 @@
             selected=""
             value="All"
             title="all"
-            @click="setCategory({id: 'All'})"
+            @click="setCategory({name: 'All'})"
           >
             All Icons
           </button>
@@ -282,7 +282,7 @@
             :icon="icons.Star"
             value="Featured"
             title="Featured"
-            @click="setCategory({id: 'downloads'})"
+            @click="setCategory({name: 'downloads'})"
           >
             Featured
           </button> -->
@@ -293,7 +293,7 @@
             :icon="icons.Flame"
             value="Featured"
             title="Featured"
-            @click="setCategory({id: 'downloads'})"
+            @click="setCategory({name: 'downloads'})"
           >
             Popular
           </button>
@@ -327,34 +327,47 @@
           <div class="gradient-categories-navbar" />
         </nav>
 
+
         <!-- Icon grid-->
-        <div 
-          id="iconList" 
-          class="icon-list-area p-b-32 "
-        >
-          
-          <CarbonAd adId="homePage"/>
-
-          <UserIconCard
-            v-for="icon in search"
-            :key="icon.icnsUrl+icon.appName"
-            :icon="icon"
-            :isAdmin="isAdmin"
-            :isMacOs="isMacOs"
-          />
-
+        <div>
           <div
-            v-if="
-              searchString.length == 0
-              && search.length == 0
-              && getSelectedCategory.id != 'Saved'
-            "
-            class="waiting-wrapper"
+          v-if="
+            searchString.length == 0
+            && search.length == 0
+            && getSelectedCategory.id != 'Saved'
+          "
+            class="icon-list-area loading p-b-32"
           >
-            <coral-wait size="L" indeterminate=""></coral-wait>
+            <UserIconCardLoading
+              v-for="num in 30"
+              :key="num+Math.floor(Math.random() * 10000000 + 1)"
+            />
+            <!-- class="waiting-wrapper" -->
+            <!-- <coral-wait size="L" indeterminate=""></coral-wait> -->
           </div>
 
+          <div 
+            v-else
+            id="iconList" 
+            class="p-b-32 icon-list-area"
+          >
+
+              <CarbonAd
+                adId="homePage"
+              />
+              
+              <UserIconCard
+                v-for="icon in search"
+                :key="icon.icnsUrl+icon.appName"
+                :icon="icon"
+                :isAdmin="isAdmin"
+                :isMacOs="isMacOs"
+              />
+
+          </div>
         </div>
+
+
       </div>
 
 
@@ -373,6 +386,7 @@ import deleteDialog from './deleteDialog.vue';
 import NativeAd from './NativeAd.vue';
 import StickyBanner from './StickyBanner.vue';
 import CarbonAd from './CarbonAd.vue';
+import UserIconCardLoading from './UserIconCardLoading.vue';
 
 import Parse from 'parse/dist/parse.min.js';
 
@@ -435,6 +449,7 @@ export default {
     UserIconCard,
     StickyBanner,
     CarbonAd,
+    UserIconCardLoading,
   },
 
   metaInfo: {
@@ -449,44 +464,36 @@ export default {
         // Facebook
         {
           property: 'og:url',
-          // vmid:     'og:url',
           content:  'https://macosicons.com'
         },
         {
           property: 'og:title',
-          // vmid:     'og:title',
           content:  'macOS app icon pack - 5000+ free and open source icons for Big Sur & iOS',
         },
         {
           property: 'og:description',
-          // vmid:     'og:description',
           content:  'Free 5000+ App icons for macOS in the style of macOS Big Sur & Monterey. Fully open source and community led. How to install custom icons on macOS Big Sur & Monterey.',
         },
         {
           property: 'og:image',
-          // vmid:     'og:image',
           content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Thumbnail_2021.jpg'
         },
 
         // Twitter
         {
           property: 'twitter:url',
-          // vmid:     'twitter:url',
           content:  'https://macosicons.com'
         },
         {
           property: 'twitter:description',
-          // vmid:     'twitter:description',
           content:  'Free 5000+ App icons for macOS in the style of macOS Big Sur & Monterey. Fully open source and community led. How to install custom icons on macOS Big Sur & Monterey.',
         },
         {
           property: 'twitter:title',
-          // vmid:     'twitter:title',
           content:  'macOS app icon pack - 5000+ free and open source icons for Big Sur & iOS',
         },
         {
           property: 'twitter:image',
-          // vmid:     'twitter:image',
           content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Thumbnail_2021.jpg'
         },
       ]
@@ -619,7 +626,7 @@ export default {
     },
 
     searchForPathQuery(){
-      let routerName = this.$router.currentRoute.name
+      let routerName = this.$route.name
       if(routerName == "Search"){
         let serachQuery = this.$router.currentRoute.params.search
         this.searchString = serachQuery
@@ -651,7 +658,7 @@ export default {
     },
 
     async setCategoryAndFetchSaved(){
-      this.setCategory({id: 'Saved'})
+      this.setCategory({name: 'Saved'})
     },
 
     async fetchSavedIcons(){
@@ -862,6 +869,7 @@ export default {
 
       const query = new Parse.Query(Icons);
       query.equalTo("approved", true)
+      query.include("user");
       query.descending("timeStamp");
       query.skip(howManyRecords);
       query.limit(docLimit);
@@ -875,14 +883,14 @@ export default {
       let savedIconsId = parent.getSavedIcons.map(({id}) => id )
 
       for(let result in results){
-
-        let iconItem = results[result]
-        let objData = iconItem.attributes
+        let iconItem = results[result].attributes
+        if (iconItem.user.attributes.isBanned || iconItem.isHidden) continue
+        
         let iconData = {}
-
-        for(let data in objData){
-          iconData[data] = objData[data]
+        for(let data in iconItem){
+          iconData[data] = iconItem[data]
         }
+
         iconData.id = iconItem.id;
         
         // Check if icon has been saved by the user
@@ -930,8 +938,9 @@ export default {
       
       const query = new Parse.Query(Icons);
 
-      query.equalTo("approved", true);
       query.descending("timeStamp");
+      query.equalTo("isHidden", false);
+      query.equalTo("approved", true);
       query.exists("icnsFile");
       query.include(["user.isBanned"]);
       query.limit(docLimit);
@@ -952,19 +961,19 @@ export default {
       
       try{
         for(let result in results){
+          let iconId = results[result].id
           let iconItem = results[result].attributes
-          
-          if (iconItem.user.attributes.isBanned) continue;
 
+          if (iconItem.user.attributes.isBanned || iconItem.isHidden) continue
           let iconData = {}
 
           for(let data in iconItem){
             iconData[data] = iconItem[data]
           }
-          iconData.id = iconItem.id
+          iconData.id = iconId
 
           // Check if icon has been saved by the user
-          iconData.isSaved = savedIconsId.includes(iconItem.id);
+          iconData.isSaved = savedIconsId.includes(iconData.id);
           
           allIcons.push(iconData)
         }

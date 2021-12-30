@@ -99,6 +99,7 @@ export default createStore({
       },
       
       selectedCategory: {
+        name: "All",
         id: "All",
       },
       totalCategory: 0,
@@ -176,6 +177,19 @@ export default createStore({
   
 
   actions: {
+
+    async queryCategory(store, categoryId) {
+      const Categories = Parse.Object.extend("Categories");
+      let categoryQuery = new Parse.Query(Categories);
+      categoryQuery.get(categoryId.id);
+      let categoryParse = await categoryQuery.find()
+    
+      if (categoryParse.length > 0) {
+        return categoryParse[0]
+      } else{
+        return
+      }
+    },
 
     async fetchResourceFromSlug(store, slug){
       let resource = await getResourceFromSlug(slug)
@@ -255,22 +269,24 @@ export default createStore({
       let totalCategory = store.state.totalCategory
       let toSkip = store.state.dataToShow.length
 
-      if (totalCategory == toSkip) {
-        return
-      }
-
-      const query = new Parse.Query(IconsBase);
+      if (totalCategory == toSkip) return
       
+      const query = new Parse.Query(IconsBase);
       let selectedCategory = store.state.selectedCategory
       let numToLoad = 30
 
-      if (selectedCategory.id == 'downloads') {
+      console.log("selectedCategory: ", selectedCategory);
+      
+      if (selectedCategory.name == 'downloads') {
         query.descending("downloads");
-      } else if(selectedCategory.id == 'Saved'){
+      } else if(selectedCategory.name == 'Saved'){
         return
+      } else if(selectedCategory.name == 'All'){
       } else {
+        let categoryParse = await store.dispatch('queryCategory', {id: selectedCategory.id});
+        
         query.descending("timeStamp");
-        query.equalTo("category", selectedCategory.categoryObj);
+        query.equalTo("category", categoryParse);
       }
 
       query.exists("icnsFile");
@@ -309,21 +325,19 @@ export default createStore({
 
     async setCategory(store, category){
       let newCategory = category.id
-      let oldCategory = store.state.selectedCategory.id
+      let oldCategory = store.state.selectedCategory.name
       let sameCategory = newCategory == oldCategory;
       let search = store.state.searchString
       
       store.dispatch('scrollTo')
-
-      // set category
-      store.commit('setDataToArr', {arr: 'selectedCategory', data: category, concatArray: false})
-
+      
+      store.commit('setDataToArr', {arr: 'selectedCategory', data: category, concatArray: false}) // set category
+      
       if (search.length > 0) {
         store.dispatch('algoliaSearch')
       }
 
-      if (category.id == "Saved" && !sameCategory) {
-
+      if (category.name == "Saved" && !sameCategory) {
         // let savedIconCount = await Parse.User.current().relation('favIcons').query().count();
         // store.commit('setDataToArr', {arr: 'totalCategory', data: savedIconCount})
         console.log(store.state.savedIconCount);
@@ -332,20 +346,23 @@ export default createStore({
         let savedIcons = store.state.savedIcons
         store.commit('pushDataToArr', {arr: "dataToShow", data: savedIcons})
       }
-
-      if (category.id != "All" && !sameCategory && category.id != "Saved") {
+      
+      if (category.name != "All" && !sameCategory && category.name != "Saved") {
         store.commit('setDataToArr', {arr: 'dataToShow', data: [], concatArray: false})
 
         let toSkip = store.state.dataToShow.length // Checks how many icons with that category have already been fetched
 
         let approvedQuery = new Parse.Query(IconsBase);
         let numToLoad = 25
-        
-        if (category.id == "downloads") {
+
+        if (category.name == "downloads") {
           approvedQuery.descending("downloads");
-        } else{
+        } else if (category.id) {
+          let categoryParse = await store.dispatch('queryCategory', {id: newCategory});
           approvedQuery.descending("timeStamp");
-          approvedQuery.equalTo("category", category.categoryObj);
+          approvedQuery.equalTo("category", categoryParse);
+        }else{
+          console.log("Error: No category selected");
         }
         
         approvedQuery.exists("icnsFile");
@@ -396,6 +413,7 @@ export default createStore({
 
       // Approved Count
       /////////////////////////////////////////////
+      // approvedIconsCount.equalTo("isHidden", false|| undefined);
       let approvedIconsCount = new Parse.Query(IconsBase);
       approvedIconsCount.equalTo("user", userObj);
       approvedIconsCount.equalTo("approved", true);
@@ -406,6 +424,7 @@ export default createStore({
       
       // Not Approved Count
       /////////////////////////////////////////////
+      // notApprovedQueryCount.equalTo("isHidden", false || undefined);
       let notApprovedQueryCount = new Parse.Query(IconsBase);
       notApprovedQueryCount.equalTo("user", userObj);
       notApprovedQueryCount.equalTo("approved", false);
@@ -416,6 +435,7 @@ export default createStore({
 
       // Hacked Count
       /////////////////////////////////////////////
+      // hackedCount.equalTo("isHidden", false || undefined);
       let hackedCount = new Parse.Query(IconsBase);
       hackedCount.equalTo("user", userObj);
       hackedCount.equalTo("approved", true);
@@ -424,6 +444,7 @@ export default createStore({
       store.state.userIcons.count.hacked = hacked
       /////////////////////////////////////////////
       
+      // approvedQuery.equalTo("isHidden", false || undefined);
       approvedQuery.limit(numToLoad)
       approvedQuery.equalTo("user", userObj);
       approvedQuery.equalTo("approved", true);
@@ -440,8 +461,8 @@ export default createStore({
       notApprovedQuery.limit(numToLoad)
       notApprovedQuery.equalTo("user", userObj);
       notApprovedQuery.skip(store.state.userIcons.toSkip.notApproved)
-      notApprovedQuery.descending("createdAt");
       notApprovedQuery.equalTo("approved", false);
+      notApprovedQuery.descending("createdAt");
       store.state.userIcons.toSkip.notApproved += numToLoad;
       let notApproved = await notApprovedQuery.find();
 
@@ -713,7 +734,8 @@ export default createStore({
 
     // Return icons based on criteria, like what category has been selected etc...
     selectedIcons(store){
-      let selectedCategory = store.selectedCategory.id;
+      let selectedCategory = store.selectedCategory.name;
+      let categoryId = store.selectedCategory.id;
 
       if (selectedCategory == 'downloads' && !store.searchString) {
         return store.dataToShow
@@ -723,18 +745,19 @@ export default createStore({
         return store.dataToShow
       }
 
-      // Return icons data if the user has NOT serached for something and has clicked to view a category.
+      // Return icons data if the user has NOT searched for something and has clicked to view a category.
       if (selectedCategory == "All" && !store.searchString) {
         return store.list
+        // return store.list
       } else if (selectedCategory != "All" && !store.searchString) {
         try {
-          return store.dataToShow.filter(icon => icon.category.id == selectedCategory);
+          return store.dataToShow.filter(icon => icon.category.id == categoryId);
         } catch (error) {
           return store.dataToShow; 
         }
       }
 
-      // Return icons data if the user has serached for something
+      // Return icons data if the user has searched for something
       if (selectedCategory == "All" && store.searchString !="") {
         return store.searchData
       } else if (selectedCategory != "All" && store.searchString !="") {
