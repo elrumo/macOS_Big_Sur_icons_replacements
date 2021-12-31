@@ -46,8 +46,14 @@
                 </h3>
                 
                 <!-- Credit -->
-                <p class="coral-Body--XS opacity-70 m-b-4 p-t-4">
-                    <router-link :to="'/u/'+icon.usersName" class="coral-Link">{{icon.usersName}}</router-link>
+                <p class="coral-Body--XS opacity-70 m-b-4 p-t-4 ellipses-text-2">
+                    <span class="coral-Link">
+                        <router-link
+                            :to="'/u/'+icon.usersName"
+                        >
+                        {{icon.usersName}}
+                        </router-link>
+                    </span>
                     on
                     <span class="coral-Body--XS">
                         {{ getDate(icon.timeStamp) }}

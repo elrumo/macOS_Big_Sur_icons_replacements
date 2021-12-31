@@ -175,8 +175,8 @@
           search.length == 0
           && searchString.length > 0
           && (
-            getSelectedCategory.id == 'All'
-            || getSelectedCategory.id == 'downloads' // downloads = Popular
+            getSelectedCategory.name == 'All'
+            || getSelectedCategory.name == 'downloads' // downloads = Popular
           )
         "
         class="waiting-wrapper"
@@ -191,14 +191,14 @@
         v-if="
           search.length == 0
           && searchString.length > 0
-          && getSelectedCategory.id != 'All'
-          && getSelectedCategory.id != 'Saved'
-          && getSelectedCategory.id != 'downloads' // downloads = Popular
+          && getSelectedCategory.name != 'All'
+          && getSelectedCategory.name != 'Saved'
+          && getSelectedCategory.name != 'downloads' // downloads = Popular
         "
         class="waiting-wrapper"
       >
         <div v-if="
-          getSelectedCategory.id != 'Saved'
+          getSelectedCategory.nameid != 'Saved'
           && searchString.length > 0
         ">
           <p class="coral-Body--S">
@@ -210,7 +210,7 @@
       <!-- No results for saved icons -->
       <div
         v-if="
-          getSelectedCategory.id == 'Saved' && search.length == 0
+          getSelectedCategory.name == 'Saved' && search.length == 0
         "
         class="waiting-wrapper"
       >
@@ -238,7 +238,7 @@
         </div>
 
         <div v-else-if="
-          getSelectedCategory.id == 'Saved'
+          getSelectedCategory.name == 'Saved'
           && !isUserLoggedIn
         ">
           <p class="coral-Body--S">
@@ -334,7 +334,7 @@
           v-if="
             searchString.length == 0
             && search.length == 0
-            && getSelectedCategory.id != 'Saved'
+            && getSelectedCategory.name != 'Saved'
           "
             class="icon-list-area loading p-b-32"
           >
@@ -342,8 +342,6 @@
               v-for="num in 30"
               :key="num+Math.floor(Math.random() * 10000000 + 1)"
             />
-            <!-- class="waiting-wrapper" -->
-            <!-- <coral-wait size="L" indeterminate=""></coral-wait> -->
           </div>
 
           <div 
@@ -939,7 +937,7 @@ export default {
       const query = new Parse.Query(Icons);
 
       query.descending("timeStamp");
-      query.equalTo("isHidden", false);
+      query.equalTo("isHidden", false || undefined);
       query.equalTo("approved", true);
       query.exists("icnsFile");
       query.include(["user.isBanned"]);
