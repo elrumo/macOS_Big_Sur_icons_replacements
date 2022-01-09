@@ -80,9 +80,8 @@
       <div
         class="p-t-24 p-b-40 dashboard-wrapper"
       >
-        {{iconType}}
+        <!-- v-if="iconsToShow == 'newIcons'" -->
         <div v-for="user in iconType" :key="user.usersName" class="p-b-32">
-
           
           <h3 class="coral-Heading--M p-b-8 text-left d-flex">
             <a

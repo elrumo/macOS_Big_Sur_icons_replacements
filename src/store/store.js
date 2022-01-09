@@ -436,12 +436,12 @@ export default createStore({
       // Hacked Count
       /////////////////////////////////////////////
       // hackedCount.equalTo("isHidden", false || undefined);
-      // let hackedCount = new Parse.Query(IconsBase);
-      // hackedCount.equalTo("user", userObj);
-      // hackedCount.equalTo("approved", true);
-      // hackedCount.doesNotExist("icnsFile");
-      // let hacked = await hackedCount.count()
-      // store.state.userIcons.count.hacked = hacked
+      let hackedCount = new Parse.Query(IconsBase);
+      hackedCount.equalTo("user", userObj);
+      hackedCount.equalTo("approved", true);
+      hackedCount.doesNotExist("icnsFile");
+      let hacked = await hackedCount.count()
+      store.state.userIcons.count.hacked = hacked
       /////////////////////////////////////////////
       
       // approvedQuery.equalTo("isHidden", false || undefined);
@@ -460,8 +460,8 @@ export default createStore({
       
       notApprovedQuery.limit(numToLoad)
       notApprovedQuery.equalTo("user", userObj);
-      notApprovedQuery.equalTo("approved", false);
       notApprovedQuery.skip(store.state.userIcons.toSkip.notApproved)
+      notApprovedQuery.equalTo("approved", false);
       notApprovedQuery.descending("createdAt");
       store.state.userIcons.toSkip.notApproved += numToLoad;
       let notApproved = await notApprovedQuery.find();
@@ -472,7 +472,6 @@ export default createStore({
 
       function returnIconData(result, status){
         let icon = result.attributes
-        console.log(icon.savedIcons);
         let dataToPush = {
             status: status,
             iconData: {}
