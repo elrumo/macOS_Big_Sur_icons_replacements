@@ -979,6 +979,14 @@ export default {
       } catch (error) {
         console.log('ERROR: ', error);
       }
+      
+      // Gets up to date info about the user
+      let data = {
+        howManyRecords: 0,
+        results: results
+      }
+
+      var attempts = 0;
 
       parent.scroll()
 
