@@ -445,7 +445,7 @@ export default {
         switch (parent.iconsToShow) {
           case "all":
             parent.errorMessage = parent.user.username + " hasn't submitted any icons yet."
-            return parent.allIcons
+          return parent.allIcons
 
           case "approved":
             parent.errorMessage = parent.user.username + " doesn't have any approved icons yet."
