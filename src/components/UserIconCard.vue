@@ -27,7 +27,6 @@
                     @click="addClickCount(icon)"
                     target="_blank"
                 >
-
                     <v-lazy-image
                         :src-placeholder="coralIcons.loading"
                         :alt="icon.appName +' icon'"

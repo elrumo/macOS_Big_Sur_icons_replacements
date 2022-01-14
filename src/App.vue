@@ -36,6 +36,14 @@ const appBody = document.getElementById('app')
 // import '@adobe/spectrum-css/dist/icons/spectrum-css-icons.svg' 
 // import '@adobe/spectrum-css/dist/icons/loadIcons.js' 
 
+import Parse from 'parse/dist/parse.min.js';
+
+// TODO: remove credentials
+const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
+const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
+
+Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
+Parse.serverURL = 'https://media.macosicons.com/parse'
 
 export default {
   name: 'App',
@@ -63,7 +71,47 @@ export default {
   //   }
   // },
 
+  mounted(){
+    setTimeout(() => {
+      window.addEventListener('scroll', this.handleScroll);
+    }, 500);
+
+    this.createToast()
+
+    this.fetchSavedIcons()
+  },
+
   methods:{
+
+    async fetchSavedIcons(){
+      if (!Parse.User.current()){
+        return 
+      }
+
+      let savedIconsQuery = Parse.User.current().relation("favIcons").query()
+      let userSavedIconData = await savedIconsQuery.descending("createdAt").find()
+
+      let savedIconCount = await savedIconsQuery.count();
+      this.setDataToArr({arr: 'savedIconCount', data: savedIconCount})
+      
+      let savedIcons = userSavedIconData.map(( icons ) => icons);
+      let iconsToShow = []        
+
+      fetchSavedIcons.forEach(icon => {
+        let newIcon = {}
+        for(let prop in icon.attributes){
+          newIcon[prop] = icon.attributes[prop]
+        }
+        newIcon.isSaved = true
+        iconsToShow.push(newIcon);
+        newIcon.id = icon.id;
+      })
+      
+      // this.pushDataToArr({ data: iconsToShow, arr: "savedIcons" })
+      console.log(savedIconCount);
+      return iconsToShow
+    },
+
     handleScroll () {
       let currentRoute = this.$router.currentRoute.value.name;
       let searchBar = document.getElementById("searchBar");
@@ -80,13 +128,6 @@ export default {
     }
   },
 
-  mounted: function(){
-    setTimeout(() => {
-      window.addEventListener('scroll', this.handleScroll);
-    }, 500);
-
-    this.createToast()
-  }
 }
 </script>
 
