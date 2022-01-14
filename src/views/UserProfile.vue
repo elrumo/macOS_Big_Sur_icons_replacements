@@ -58,7 +58,7 @@
           <a v-if="getUserInfo.credit" target="_blank" :href="getUserInfo.credit" class="margin-auto relative">
             <!-- <p class="coral-Body--XS"> -->
               <IconUI class="absolute-center-vertical" width="14px" :img="resources.link" alt="Credit link"/>
-              <span class="p-l-24">
+              <span>
                 {{ getUserInfo.credit.replace("https://", "") }}
               </span>
             <!-- </p> -->

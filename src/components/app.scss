@@ -1169,8 +1169,6 @@ coral-buttongroup button{
 }
 
 
-
-
 .save-icon{
     position: absolute;
     padding: 8px;
@@ -1206,6 +1204,11 @@ coral-buttongroup button{
     h3 input{
         padding: 0px;
     }
+}
+
+
+._coral-Dialog-footer>*, ._coral-Dialog-footer>._coral-Button+._coral-Button{
+    margin: 8px;
 }
 
 .underline{

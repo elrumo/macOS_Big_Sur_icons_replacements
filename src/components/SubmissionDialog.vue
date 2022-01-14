@@ -239,9 +239,8 @@ import Vue from 'vue'
 import { mapActions, mapGetters } from 'vuex';
 import Parse from 'parse/dist/parse.min.js';
 
-// Parse.initialize("macOSicons");
-// Parse.serverURL = 'https://media.macosicons.com/parse'
 
+import deleteIcon from "../assets/icons/delete.svg"
 import addCoralIcon from "../assets/icons/add.svg"
 
 export default {
@@ -257,6 +256,7 @@ export default {
         filesToUpload: {},
         coralIcons:{
           addIcon: addCoralIcon,
+          deleteIcon: deleteIcon,
         },
         uploadProgress: 0,
         totalNumFiles: 0,
@@ -499,8 +499,8 @@ export default {
     },
 
     mounted(){ 
-      // this.fetchAppCategories()
-      // this.fetchIconType()
+      this.fetchAppCategories()
+      this.fetchIconType()
     },
 
     computed:{

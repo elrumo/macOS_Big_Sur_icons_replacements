@@ -31,7 +31,7 @@ import placeholderCoralIcon from "../assets/placeholder-icon.png"
 import deleteIcon from "../assets/icons/delete.svg"
 
 export default {
-    name:"UserIconGrid",
+    name: "UserIconGrid",
 
     props:{
       userIcons:'',
@@ -64,35 +64,38 @@ export default {
       let parent = this
       let currentUser = Parse.User.current();
       let requestedUser = this.$route.params.user;
+
       if (currentUser) {
         let userMatches = currentUser.get("username") == requestedUser;
         parent.isOwner = userMatches
       }
 
-      function getAd(){
-        try {
-          if (typeof _bsa !== 'undefined'  && _bsa) {
-          _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
-            {
-              target: '#card-ad',
-              template: `
-                  <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link">
-                  <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
-                    <div class="bsa-icon" style="background-image: url(##logo##);"></div>
-                  </div>
-                  <div class="text-ad-wrapper">
-                    <img style="background: ##backgroundColor##" src="##image##">
-                    <div class="bsa-desc">##description##</div>
-                  </div>
-                  </a>
-                `
-              }
-            )
+      console.log(this.isIconSaved());
+
+      // function getAd(){
+      //   try {
+      //     if (typeof _bsa !== 'undefined'  && _bsa) {
+      //     _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
+      //       {
+      //         target: '#card-ad',
+      //         template: `
+      //             <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link">
+      //             <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
+      //               <div class="bsa-icon" style="background-image: url(##logo##);"></div>
+      //             </div>
+      //             <div class="text-ad-wrapper">
+      //               <img style="background: ##backgroundColor##" src="##image##">
+      //               <div class="bsa-desc">##description##</div>
+      //             </div>
+      //             </a>
+      //           `
+      //         }
+      //       )
             
-          }
-        } catch (error) {
-        }
-      }
+      //     }
+      //   } catch (error) {
+      //   }
+      // }
 
       // window.BSANativeCallback = (a) => {
       //   const total = a.ads.length;
@@ -109,6 +112,12 @@ export default {
 
     methods:{
       ...mapActions(['adClick']),
+
+      isIconSaved(){
+        let savedIconsId = this.getSavedIcons.map(({id}) => id )
+        console.log(savedIconsId);
+        // this.isIconSaved = this.userIcons.filter(icon => icon.isSaved)
+      },
 
       isSelected(selected, option){
         try {
@@ -148,7 +157,8 @@ export default {
         'allIcons', 
         'notApproved', 
         'getAppCategories',
-        'getSelectedIcon'
+        'getSelectedIcon',
+        'getSavedIcons'
       ]),
 
 

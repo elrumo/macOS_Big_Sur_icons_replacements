@@ -937,7 +937,7 @@ export default {
       const query = new Parse.Query(Icons);
 
       query.descending("timeStamp");
-      query.equalTo("isHidden", false || undefined);
+      query.equalTo("isHidden", false);
       query.equalTo("approved", true);
       query.exists("icnsFile");
       query.include(["user.isBanned"]);

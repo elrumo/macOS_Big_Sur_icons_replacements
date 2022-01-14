@@ -411,41 +411,19 @@ export default createStore({
       let notApprovedQuery = new Parse.Query(IconsBase);
       let numToLoad = 15
 
-      // Approved Count
-      /////////////////////////////////////////////
-      // approvedIconsCount.equalTo("isHidden", false|| undefined);
-      let approvedIconsCount = new Parse.Query(IconsBase);
-      approvedIconsCount.equalTo("user", userObj);
-      approvedIconsCount.equalTo("approved", true);
-      approvedIconsCount.exists("icnsFile");
-      let totalApproved = await approvedIconsCount.count()
-      store.state.userIcons.count.approved = totalApproved
-      /////////////////////////////////////////////
-      
-      // Not Approved Count
-      /////////////////////////////////////////////
-      // notApprovedQueryCount.equalTo("isHidden", false || undefined);
-      let notApprovedQueryCount = new Parse.Query(IconsBase);
-      notApprovedQueryCount.equalTo("user", userObj);
-      notApprovedQueryCount.equalTo("approved", false);
-      notApprovedQueryCount.exists("highResPngFile");
-      let totalNotApproved = await notApprovedQueryCount.count()
-      store.state.userIcons.count.notApproved = totalNotApproved
-      /////////////////////////////////////////////
-
       // Hacked Count
       /////////////////////////////////////////////
+      // let hackedCount = new Parse.Query(IconsBase);
       // hackedCount.equalTo("isHidden", false || undefined);
-      let hackedCount = new Parse.Query(IconsBase);
-      hackedCount.equalTo("user", userObj);
-      hackedCount.equalTo("approved", true);
-      hackedCount.doesNotExist("icnsFile");
-      let hacked = await hackedCount.count()
-      store.state.userIcons.count.hacked = hacked
+      // hackedCount.equalTo("user", userObj);
+      // hackedCount.equalTo("approved", true);
+      // hackedCount.doesNotExist("icnsFile");
+      // let hacked = await hackedCount.count()
+      // store.state.userIcons.count.hacked = hacked
       /////////////////////////////////////////////
       
-      // approvedQuery.equalTo("isHidden", false || undefined);
       approvedQuery.limit(numToLoad)
+      // approvedQuery.equalTo("isHidden", false || undefined);
       approvedQuery.equalTo("user", userObj);
       approvedQuery.equalTo("approved", true);
       approvedQuery.exists("icnsFile");
@@ -453,6 +431,7 @@ export default createStore({
       approvedQuery.descending("createdAt");
       store.state.userIcons.toSkip.approved += numToLoad;
       let iconResults = await approvedQuery.find();
+      store.state.userIcons.count.approved = await approvedQuery.count()
       
       iconResults.forEach((result)=>{
         returnIconData(result, "approved");
@@ -465,6 +444,7 @@ export default createStore({
       notApprovedQuery.descending("createdAt");
       store.state.userIcons.toSkip.notApproved += numToLoad;
       let notApproved = await notApprovedQuery.find();
+      store.state.userIcons.count.notApproved = await notApprovedQuery.count()
 
       notApproved.forEach((result)=>{
         returnIconData(result, "notApproved");
@@ -662,7 +642,7 @@ export default createStore({
       }
       
       try {
-        globalThis.router.push(path)
+        router.push(path)
       } catch (error) {
       }
     },
@@ -673,8 +653,10 @@ export default createStore({
     },
 
     adClick(store, data){
+      let currentPathName = router.currentRoute.value.name
+      console.log("router: ", currentPathName);
       window.plausible("adClick", {props: {
-        path: globalThis.router.currentRoute.name,
+        path: currentPathName,
         position: data.adPosition,
         type: data.adType
       }})
@@ -705,17 +687,21 @@ export default createStore({
     async fetchIconType(store) {
       let IconType = Parse.Object.extend("IconType");
       let iconType = new Parse.Query(IconType)
-
+      
+      if (store.state.iconType.length > 0) {
+        return
+      }
+      
       iconType.find().then((results)=>{
         for(let result in results){
           let item = results[result];
-
+          
           let typeObj = {
             id: item.id,
             name: item.get("type"),
             parseObj: item
           }
-
+          
           store.commit("pushAppCategories", {state: "iconType", storeObj: typeObj})
         }
       }).catch((error)=>{
