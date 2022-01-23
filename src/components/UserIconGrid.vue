@@ -70,39 +70,7 @@ export default {
         parent.isOwner = userMatches
       }
 
-      console.log(this.isIconSaved());
-
-      // function getAd(){
-      //   try {
-      //     if (typeof _bsa !== 'undefined'  && _bsa) {
-      //     _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
-      //       {
-      //         target: '#card-ad',
-      //         template: `
-      //             <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link">
-      //             <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
-      //               <div class="bsa-icon" style="background-image: url(##logo##);"></div>
-      //             </div>
-      //             <div class="text-ad-wrapper">
-      //               <img style="background: ##backgroundColor##" src="##image##">
-      //               <div class="bsa-desc">##description##</div>
-      //             </div>
-      //             </a>
-      //           `
-      //         }
-      //       )
-            
-      //     }
-      //   } catch (error) {
-      //   }
-      // }
-
-      // window.BSANativeCallback = (a) => {
-      //   const total = a.ads.length;
-      //   let el = document.getElementById('_carbonads_js').children[0]
-      // }
-      // getAd()
-
+      // console.log(this.isIconSaved());
 
     },
 

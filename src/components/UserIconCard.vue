@@ -1,7 +1,9 @@
 <template>
-    <div :label="icon.appName.replaceAll('_', ' ') + 'Icon'" class="card-wrapper card-hover coral-card m-0">
-        
-        <SaveIconsDialogue/>
+    <div
+        v-if="!isHidden.isHidden"
+        :label="icon.appName.replaceAll('_', ' ') + 'Icon'"
+        class="card-wrapper card-hover coral-card m-0"
+    >
 
         <div class="m-auto width-100">
             
@@ -27,10 +29,13 @@
                     @click="addClickCount(icon)"
                     target="_blank"
                 >
-                    <v-lazy-image
-                        :src-placeholder="coralIcons.loading"
-                        :alt="icon.appName +' icon'"
-                        :src="iconUrl(icon)"
+                    <img
+                        v-lazy="{
+                            src: lazyOptions.src,
+                            loading: lazyOptions.loading,
+                            error: lazyOptions.loading,
+                            lifecycle: lazyOptions.lifecycle
+                        }" 
                     />
                 </a>
 
@@ -59,9 +64,9 @@
                     </span>
                 </p>
                 
-                <!-- <div v-if="isOwner" class="p-t-8 p-b-4">
+                <div v-if="isOwner" class="p-t-8 p-b-4">
                     <button @click="showDialog('editIconDialog')" is="coral-button" variant="outline">Edit</button>
-                </div> -->
+                </div>
 
             </div>
 
@@ -84,12 +89,8 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import { reactive } from 'vue'
 import Parse from 'parse/dist/parse.min.js';;
-
-import deleteDialog from './deleteDialog.vue';
-import SaveIconsDialogue from './SaveIconsDialogue.vue';
-import EditIconDialog from "./EditIconDialog.vue"
-import VLazyImage from "v-lazy-image";
 
 var Icons = Parse.Object.extend("Icons2");
 
@@ -112,10 +113,6 @@ export default {
     },
 
     components: {
-        EditIconDialog,
-        deleteDialog,
-        SaveIconsDialogue,
-        VLazyImage
     },
 
     data(){
@@ -138,28 +135,63 @@ export default {
             isSaved: false
         }
     },
-    
-    mounted(){
-        console.log(this.icon.isSaved);
-        this.isSaved = this.icon.isSaved;
-    },
 
-    methods:{
-        ...mapActions(['showEl', 'setSelectedIcon', 'addClickCount']),
+    setup(context) {
 
-        prettifyName(name){
-            console.log("name: ", name);
-            name = name.replaceAll("_", " ")
-            return name
-        },
-
-        iconUrl(icon){
+        function iconUrl(){
+            const icon = context.icon;
             if (!icon.lowResPngUrl) {
                 return icon.highResPngUrl
             } else{
                 return icon.lowResPngUrl
             }
-        },
+        }
+
+        let isHidden = reactive({
+            isHidden: context.icon.isHidden
+        });
+
+        const lazyOptions = reactive({
+            src: iconUrl(),
+            loading: placeholderCoralIcon,
+            // src: context.iconUrl(context.icon),
+            lifecycle: {
+                loading: (el) => {
+                    // console.log('image loading', el)
+                },
+                loaded: (el) => {
+                    // console.log('image loaded', el)
+                },
+                error: (el) => {
+                    isHidden.isHidden = true
+                },
+            }
+        })
+        return {
+            iconUrl,
+            isHidden,
+            lazyOptions,
+        }
+    },
+    
+    mounted(){
+        // let iconID = this.icon.id;
+        // let isSaved = this.getSavedIconsId.includes(iconID)
+        // this.isSaved = isSaved;
+    },
+
+    watch:{
+        getSavedIconsId:{
+            handler(val, oldVal) {
+                let iconID = this.icon.id;
+                let isSaved = this.getSavedIconsId.includes(iconID)
+                this.isSaved = isSaved;
+            }
+        }
+    },
+
+    methods:{
+        ...mapActions(['showEl', 'setSelectedIcon', 'addClickCount']),
 
         showDialog(id){
             let parent = this
@@ -188,31 +220,6 @@ export default {
 
             date = day + "/" + month + "/" + year
             return date
-        },
-
-        async editDoc(icon, e, field){
-            let newName = e.target.value
-            
-            let id
-            if (icon.algoliaID == undefined) {
-                id = icon.id
-            } else {
-                id = icon.algoliaID
-            }
-
-            console.log(icon);
-            console.log(id);
-
-            const IconsBase = Parse.Object.extend("Icons2");
-            const query = new Parse.Query(IconsBase);
-            const docToEdit = await query.get(id)
-
-            docToEdit.set({ [field]: newName }) // Save icnsToStore obj with .icns file and its url to Parse server
-            docToEdit.save().then(() =>{
-                console.log(field, "updated.");
-            }).catch((e) =>{
-                document.getElementById("error").show()
-            })
         },
 
         async saveIcon(){
@@ -250,10 +257,11 @@ export default {
     computed:{
         ...mapGetters([
             'getUserAttributes',
+            'getSavedIconsId',
         ]),
 
         iconDownloadUrl(){
-            let icon = this.icon
+            const icon = this.icon
             if (this.isMacOs) {
                 return icon.icnsUrl
             } else{

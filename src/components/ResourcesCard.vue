@@ -7,8 +7,12 @@
 
                 <div class="resources-card-wrapper">
                     
-                    <v-lazy-image
-                        :src-placeholder="placeholderImage" :src="getImage" :alt="getImage"
+                    <img
+                        v-lazy="{
+                            src: getImage,
+                            loading: placeholderImage,
+                            error: placeholderImage
+                        }" 
                         :class="{
                             'card-img': true,
                             'resources-card-img': true,
@@ -41,7 +45,6 @@
 import IsNew from "./IsNew.vue";
 
 import Marked from 'marked';
-import VLazyImage from "v-lazy-image";
 import placeholderImage from "../assets/placeholder-image.gif"
 
 export default {
@@ -53,7 +56,6 @@ export default {
     },
 
     components:{
-        VLazyImage,
         IsNew
     },
 
