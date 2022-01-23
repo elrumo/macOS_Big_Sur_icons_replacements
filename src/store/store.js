@@ -33,7 +33,7 @@ Parse.serverURL = 'https://media.macosicons.com/parse'
 var IconsBase = Parse.Object.extend("Icons2");
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
-const index = client.initIndex('macOSicons')
+const algoliaIndex = client.initIndex('macOSicons')
 
 export default createStore({
 
@@ -238,19 +238,36 @@ export default createStore({
       store.commit('setDataToArr', {arr: 'learningHome', data: await getLearningHome()})
     },
 
-    algoliaSearch(store){
+    async algoliaSearch(store){
       let search = store.state.searchString
       let category = store.state.selectedCategory.id
 
-      if (store.state.selectedCategory.id != "All") {
-        index.search(search, {filters: `approved:true AND category:"`+category+`"`, hitsPerPage: 150 }).then(function(responses) {
-          store.commit('pushDataToArr', {arr: "searchData", data: responses.hits})
+      if (store.state.selectedCategory.name != "All") {
+        
+        let algoliaSearch = await algoliaIndex.search(search, {filters: `approved:true AND category:"`+category+`"`, hitsPerPage: 150 })
+        
+        // Set the value of objectID to a new key named id
+        algoliaSearch.hits = algoliaSearch.hits.map(item => {
+          return {
+            ...item,
+            id: item.objectID 
+          }; 
         });
+        
+        store.commit('pushDataToArr', {arr: "searchData", data: algoliaSearch.hits})
 
       } else{ 
-        index.search(search, {filters: `approved:true`, hitsPerPage: 150 }).then(function(responses) {
-          store.commit('pushDataToArr', {arr: "searchData", data: responses.hits})
+        let algoliaSearch = await algoliaIndex.search(search, {filters: `approved:true`, hitsPerPage: 20 })
+
+        // Set the value of objectID to a new key named id
+        algoliaSearch.hits = algoliaSearch.hits.map(item => {
+          return {
+            ...item,
+            id: item.objectID 
+          }; 
         });
+
+        store.commit('pushDataToArr', {arr: "searchData", data: algoliaSearch.hits})
       }
 
     },
@@ -274,8 +291,6 @@ export default createStore({
       const query = new Parse.Query(IconsBase);
       let selectedCategory = store.state.selectedCategory
       let numToLoad = 30
-
-      console.log("selectedCategory: ", selectedCategory);
       
       if (selectedCategory.name == 'downloads') {
         query.descending("downloads");
@@ -323,27 +338,56 @@ export default createStore({
       }
     },
 
+    async fetchSavedIcons(store){
+      if (!Parse.User.current()){
+        return 
+      }
+
+      let savedIconsQuery = Parse.User.current().relation("favIcons").query()
+      let userSavedIconData = await savedIconsQuery.descending("createdAt").find()
+
+      let savedIconCount = await savedIconsQuery.count();
+      store.commit('setDataToArr', {arr: 'savedIconCount', data: savedIconCount})
+      
+      let savedIcons = userSavedIconData.map(( icons ) => icons);
+      let iconsToShow = []        
+
+      savedIcons.forEach(icon => {
+        let newIcon = {}
+        for(let prop in icon.attributes){
+          newIcon[prop] = icon.attributes[prop]
+        }
+        newIcon.isSaved = true
+        iconsToShow.push(newIcon);
+        newIcon.id = icon.id;
+      })
+      
+      store.commit('pushDataToArr', {data: iconsToShow, arr: "savedIcons" })
+      return iconsToShow
+    },
+
     async setCategory(store, category){
-      let newCategory = category.id
+      let newCategory = category.name
       let oldCategory = store.state.selectedCategory.name
       let sameCategory = newCategory == oldCategory;
       let search = store.state.searchString
       
       store.dispatch('scrollTo')
-      
+      store.dispatch('fetchSavedIcons')
       store.commit('setDataToArr', {arr: 'selectedCategory', data: category, concatArray: false}) // set category
+      
+      
+      let savedIcons = store.state.savedIcons
       
       if (search.length > 0) {
         store.dispatch('algoliaSearch')
       }
 
+      // if (category.name == "All") return;
+
       if (category.name == "Saved" && !sameCategory) {
-        // let savedIconCount = await Parse.User.current().relation('favIcons').query().count();
-        // store.commit('setDataToArr', {arr: 'totalCategory', data: savedIconCount})
-        console.log(store.state.savedIconCount);
+        // let savedIcons = store.state.savedIcons
         store.commit('setDataToArr', {arr: 'totalCategory', data: store.state.savedIconCount})
-        
-        let savedIcons = store.state.savedIcons
         store.commit('pushDataToArr', {arr: "dataToShow", data: savedIcons})
       }
       
@@ -358,7 +402,8 @@ export default createStore({
         if (category.name == "downloads") {
           approvedQuery.descending("downloads");
         } else if (category.id) {
-          let categoryParse = await store.dispatch('queryCategory', {id: newCategory});
+          let categoryParse = await store.dispatch('queryCategory', {id: category.id});
+          console.log('category: ', category);
           approvedQuery.descending("timeStamp");
           approvedQuery.equalTo("category", categoryParse);
         }else{
@@ -366,6 +411,7 @@ export default createStore({
         }
         
         approvedQuery.exists("icnsFile");
+        approvedQuery.equalTo("isHidden", false);
         approvedQuery.equalTo("approved", true);
         approvedQuery.limit(numToLoad)
         approvedQuery.skip(toSkip)
@@ -381,7 +427,8 @@ export default createStore({
           let iconItem = results[result]
           let objData = iconItem.attributes
           let iconData = {}
-
+          iconData.id = iconItem.id
+          
           for(let data in objData){
             iconData[data] = objData[data]
           }
@@ -389,7 +436,7 @@ export default createStore({
           iconData.id = results[result].id
           allIcons.push(iconData)
         }
-        
+
         store.commit('pushDataToArr', {arr: "dataToShow", data: allIcons})
       }
 
@@ -406,30 +453,19 @@ export default createStore({
 
     async fetchUserIcons(store, userObj){
 
-      // let IconsBase = Parse.Object.extend("Icons2");
       let approvedQuery = new Parse.Query(IconsBase);
       let notApprovedQuery = new Parse.Query(IconsBase);
       let numToLoad = 15
-
-      // Hacked Count
-      /////////////////////////////////////////////
-      // let hackedCount = new Parse.Query(IconsBase);
-      // hackedCount.equalTo("isHidden", false || undefined);
-      // hackedCount.equalTo("user", userObj);
-      // hackedCount.equalTo("approved", true);
-      // hackedCount.doesNotExist("icnsFile");
-      // let hacked = await hackedCount.count()
-      // store.state.userIcons.count.hacked = hacked
-      /////////////////////////////////////////////
       
       approvedQuery.limit(numToLoad)
-      // approvedQuery.equalTo("isHidden", false || undefined);
+      approvedQuery.equalTo("isHidden", false);
       approvedQuery.equalTo("user", userObj);
       approvedQuery.equalTo("approved", true);
       approvedQuery.exists("icnsFile");
       approvedQuery.skip(store.state.userIcons.toSkip.approved)
       approvedQuery.descending("createdAt");
       store.state.userIcons.toSkip.approved += numToLoad;
+      
       let iconResults = await approvedQuery.find();
       store.state.userIcons.count.approved = await approvedQuery.count()
       
@@ -437,12 +473,14 @@ export default createStore({
         returnIconData(result, "approved");
       })
       
+      notApprovedQuery.equalTo("isHidden", false);
       notApprovedQuery.limit(numToLoad)
       notApprovedQuery.equalTo("user", userObj);
       notApprovedQuery.skip(store.state.userIcons.toSkip.notApproved)
       notApprovedQuery.equalTo("approved", false);
       notApprovedQuery.descending("createdAt");
       store.state.userIcons.toSkip.notApproved += numToLoad;
+
       let notApproved = await notApprovedQuery.find();
       store.state.userIcons.count.notApproved = await notApprovedQuery.count()
 
@@ -459,11 +497,6 @@ export default createStore({
 
         // Set icon ID to icon properties
         dataToPush.iconData.id = result.id
-        
-        // Pass high res png url if lor res png is not present
-        // if (!icon.lowResPngFile) {
-        //   dataToPush.iconData.lowResPngUrl = icon.highResPngUrl
-        // }
 
         // Set category if empty
         if (!icon.category) {
@@ -734,7 +767,6 @@ export default createStore({
       // Return icons data if the user has NOT searched for something and has clicked to view a category.
       if (selectedCategory == "All" && !store.searchString) {
         return store.list
-        // return store.list
       } else if (selectedCategory != "All" && !store.searchString) {
         try {
           return store.dataToShow.filter(icon => icon.category.id == categoryId);
@@ -839,6 +871,11 @@ export default createStore({
 
     getSavedIcons(store){
       return store.savedIcons
+    },
+
+    getSavedIconsId(store){
+      let savedIconsId = store.savedIcons.map(({id}) => id )
+      return savedIconsId
     },
 
     getUserAttributes(store){

@@ -15,10 +15,12 @@
         <!-- Resource Image -->
         <div class="resource-image">  
           <figure class="post-full-image m-0 coral-Well p-0">
-            <v-lazy-image
-              :src-placeholder="placeholderImage"
-              :src="getSingleResourceData.feature_image"
-              :alt="getSingleResourceData.feature_image"
+            <img
+              v-lazy="{
+                  src: getSingleResourceData.feature_image,
+                  loading: placeholderImage,
+                  error: placeholderImage
+              }" 
             />
           </figure>
 
@@ -141,7 +143,6 @@ import { mapActions, mapGetters } from 'vuex';
 import localPosts from '@/api/posts.json';
 import ResourcesCard from '@/components/ResourcesCard.vue'
 import NativeAd from "@/components/NativeAd.vue";
-import VLazyImage from "v-lazy-image";
 import CarbonAd from '@/components/CarbonAd.vue';
 
 import pages from '@/api/pages.json';
@@ -153,7 +154,6 @@ export default {
   components: {
     ResourcesCard,
     NativeAd,
-    VLazyImage,
     CarbonAd
   },
 

@@ -1,11 +1,11 @@
 <template>
   <div>
-
-    <deleteDialog :icon="activeIcon"/>
+    <deleteDialog :icon="!activeIcon"/>
 
     <div v-if="overflow"> {{ toggleOverflow() }} </div>
 
     <!-- <StickyBanner/> -->
+    <SaveIconsDialogue v-if="!isAuth"/>
 
     <!-- <coral-dialog id="newDialog" open style="text-align: left;">
       <coral-dialog-header>Pay to view</coral-dialog-header>
@@ -356,7 +356,7 @@
               
               <UserIconCard
                 v-for="icon in search"
-                :key="icon.icnsUrl+icon.appName"
+                :key="icon.id+icon.appName+getSelectedCategory.name"
                 :icon="icon"
                 :isAdmin="isAdmin"
                 :isMacOs="isMacOs"
@@ -385,6 +385,8 @@ import NativeAd from './NativeAd.vue';
 import StickyBanner from './StickyBanner.vue';
 import CarbonAd from './CarbonAd.vue';
 import UserIconCardLoading from './UserIconCardLoading.vue';
+import SaveIconsDialogue from './SaveIconsDialogue.vue';
+
 
 import Parse from 'parse/dist/parse.min.js';
 
@@ -448,6 +450,7 @@ export default {
     StickyBanner,
     CarbonAd,
     UserIconCardLoading,
+    SaveIconsDialogue,
   },
 
   metaInfo: {
@@ -505,6 +508,7 @@ export default {
 
       iconList:{},
       searchString: "",
+      awaitingSearch: false,
       iconsToShow: [],
       list: [],
       
@@ -584,9 +588,11 @@ export default {
     this.searchForPathQuery()
     this.setEventListenersOnStart()
     this.fetchUserAttributes()
+
+    this.isAuth = this.getUser.isAuth
     
     try {
-      await this.fetchSavedIcons()
+      // await this.fetchSavedIcons()
       this.getIconsArray();
     } catch (error) {
       console.log("error: ", error);
@@ -612,7 +618,8 @@ export default {
       'scrollTo',
       'setDataToArr',
       'pushDataToArr',
-      'fetchUserAttributes'
+      'fetchUserAttributes',
+      'fetchSavedIcons'
     ]),
 
     setEventListenersOnStart(){
@@ -657,34 +664,6 @@ export default {
 
     async setCategoryAndFetchSaved(){
       this.setCategory({name: 'Saved'})
-    },
-
-    async fetchSavedIcons(){
-      if (!Parse.User.current()){
-        return 
-      }
-
-      let savedIconsQuery = Parse.User.current().relation("favIcons").query()
-      let userSavedIconData = await savedIconsQuery.descending("createdAt").find()
-
-      let savedIconCount = await savedIconsQuery.count();
-      this.setDataToArr({arr: 'savedIconCount', data: savedIconCount})
-      
-      let savedIcons = userSavedIconData.map(( icons ) => icons);
-      let iconsToShow = []        
-
-      savedIcons.forEach(icon => {
-        let newIcon = {}
-        for(let prop in icon.attributes){
-          newIcon[prop] = icon.attributes[prop]
-        }
-        newIcon.isSaved = true
-        iconsToShow.push(newIcon);
-        newIcon.id = icon.id;
-      })
-      
-      this.pushDataToArr({ data: iconsToShow, arr: "savedIcons" })
-      return iconsToShow
     },
 
     scrollEl(id, top, left){
@@ -844,7 +823,7 @@ export default {
         return
       }
       
-      if (parent.$store.state.selectedCategory.id != "All") {
+      if (parent.$store.state.selectedCategory.name != "All") {
 
         if (parent.$store.state.totalCategory == parent.selectedIcons.length) {
           parent.scrolledToBottom = true
@@ -866,6 +845,7 @@ export default {
       parent.howManyRecords = howManyRecords + docLimit
 
       const query = new Parse.Query(Icons);
+      query.equalTo("isHidden", false)
       query.equalTo("approved", true)
       query.include("user");
       query.descending("timeStamp");
@@ -877,9 +857,6 @@ export default {
       
       let allIcons = []
 
-      // Save savedIcons IDs to array to compare them to fetched icons
-      let savedIconsId = parent.getSavedIcons.map(({id}) => id )
-
       for(let result in results){
         let iconItem = results[result].attributes
         if (iconItem.user.attributes.isBanned || iconItem.isHidden) continue
@@ -889,11 +866,7 @@ export default {
           iconData[data] = iconItem[data]
         }
 
-        iconData.id = iconItem.id;
-        
-        // Check if icon has been saved by the user
-        iconData.isSaved = savedIconsId.includes(iconItem.id);
-        
+        iconData.id =  results[result].id;
         allIcons.push(iconData)
       }
 
@@ -1053,14 +1026,35 @@ export default {
   },
 
   watch:{
+
+    // searchQuery: _.debounce(function() {
+    //   this.isTyping = false;
+    // }, 1000),
+    // isTyping: function(value) {
+    //   if (!value) {
+    //     this.searchUser(this.searchQuery);
+    //   }
+    // },
+
     searchString: {
       handler(val, oldVal) {
-        let search = val
-        this.setData({state: "searchString", data: search})
-        if (this.$route.name != "Home" && this.$route.name != "Search") {
-          return
-        }
-        this.algoliaSearch()
+        if (this.$route.name != "Home" && this.$route.name != "Search") return;
+
+        if (val == '') this.setData({state: "searchString", data: val}); // Don't wait 500ms before showing empty search results
+
+
+        // if (!this.awaitingSearch && val != '') {
+          this.setData({state: "searchString", data: val})
+          this.algoliaSearch()
+          
+        //   setTimeout(() => {
+        //     this.setData({state: "searchString", data: val})
+        //     this.algoliaSearch()
+        //     this.awaitingSearch = false;
+        //   }, 500); // 1 sec delay
+        // }
+
+        // this.awaitingSearch = true;
       },
       deep: true
     },
@@ -1109,8 +1103,8 @@ export default {
 
     isAdmin(){
       let parent = this
+
       if (parent.getUser.isAuth) {
-        
         if (parent.getUser.userData.Role.objectId == "OoxWjSJuQi") {
           return true
         } else { return false }

@@ -29,6 +29,7 @@
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
 import StickyBanner from '@/components/StickyBanner.vue'
+import { mapActions } from 'vuex'
 
 import { Toast } from '@adobe/coral-spectrum/coral-component-toast'
 const appBody = document.getElementById('app')
@@ -83,6 +84,11 @@ export default {
 
   methods:{
 
+  ...mapActions([
+      'setDataToArr',
+      'pushDataToArr',
+    ]),
+
     async fetchSavedIcons(){
       if (!Parse.User.current()){
         return 
@@ -97,7 +103,7 @@ export default {
       let savedIcons = userSavedIconData.map(( icons ) => icons);
       let iconsToShow = []        
 
-      fetchSavedIcons.forEach(icon => {
+      savedIcons.forEach(icon => {
         let newIcon = {}
         for(let prop in icon.attributes){
           newIcon[prop] = icon.attributes[prop]
@@ -107,7 +113,7 @@ export default {
         newIcon.id = icon.id;
       })
       
-      // this.pushDataToArr({ data: iconsToShow, arr: "savedIcons" })
+      this.pushDataToArr({ data: iconsToShow, arr: "savedIcons" })
       console.log(savedIconCount);
       return iconsToShow
     },

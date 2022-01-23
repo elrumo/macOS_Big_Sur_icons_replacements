@@ -78,9 +78,12 @@
 
           <!-- Image -->
           <figure v-else class="post-full-image">
-            <v-lazy-image
-              :src-placeholder="coralIcons.placeholderImage"
-              :src="getSingleTutorial.feature_image ? getSingleTutorial.feature_image : coralIcons.placeholderImage"
+            <img
+              v-lazy="{
+                  src: getSingleTutorial.feature_image ? getSingleTutorial.feature_image : coralIcons.placeholderImage,
+                  loading: coralIcons.placeholderImage,
+                  error: coralIcons.placeholderImage
+              }" 
             />
           </figure>
         </div>
@@ -155,7 +158,6 @@ import H3Description from '@/components/H3Description.vue'
 import WrittenBy from '@/components/WrittenBy.vue'
 import AboutBlock from '@/components/AboutBlock.vue'
 
-import VLazyImage from "v-lazy-image";
 import Marked from 'marked';
 
 import placeholderCoralIcon from "../assets/placeholder-icon.png"
@@ -171,7 +173,6 @@ export default {
     ResourcesCard,
     NativeAd,
     H3Description,
-    VLazyImage,
     WrittenBy,
     AboutBlock
   },
