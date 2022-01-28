@@ -16,7 +16,8 @@ import {
     getTutorialFromSlug,
     getArticleTemplate,
     getStrapiData,
-    getResourceFromSlug
+    getResourceFromSlug,
+    getDialogHome
   } from '@/api/strapi';
 
 let algolia = {
@@ -50,6 +51,8 @@ export default createStore({
       moreResources: {},
       resourcesTemplate: {},
       articleTemplate: {},
+      
+      homeDialog: {},
 
       supportMessage: 'Disabling your ad blocker or making a [donation](https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN) is the best way to support this project.',
 
@@ -201,6 +204,11 @@ export default createStore({
       }else{
         store.commit('setDataToArr', {arr: 'singleResourceData', data: resource})
       }
+    },
+
+    async fetchHomeDialog(store){
+      let dialogData = await getDialogHome();
+      store.commit('setDataToArr', {arr: 'homeDialog', data: dialogData})
     },
 
     async fetchResourcesHome(store){
@@ -912,6 +920,10 @@ export default createStore({
 
     getSupportMessage(store){
       return Marked(store.supportMessage)
+    },
+    
+    getHomeDialog(store){
+      return store.homeDialog
     },
 
 

@@ -51,6 +51,23 @@ a{
     text-decoration: none;
 }
 
+li{
+    img{
+        border-radius: 4px;
+        border: 1px solid var(--coral-dark-border);
+        margin: 15px 0px 25px;
+        width: 100%;
+
+        opacity: 0.5;
+        @extend .Box;
+    }
+
+    img:hover{
+        opacity: 1;
+        cursor: auto !important;
+    }
+}
+
 .width-100{
     width: 100%;
 }
@@ -434,6 +451,9 @@ select{
 
 ._coral-Dialog-content{
     height: 100%;
+    ul{
+       padding-left: 20px; 
+    }
 }
 
 .coral-dialog-content::-webkit-scrollbar{
@@ -1094,6 +1114,16 @@ coral-buttongroup button{
     box-shadow: 0px 15px 30px -10px rgba(0, 0, 0, 0.1),
                 0px 20px 20px -15px   rgba(0, 0, 0, 0.2);
     cursor: pointer;
+}
+
+.shadow-l{
+    box-shadow: 0px 5px 15px -10px #00000098,
+                0px 2px 5px -2px   #00000029;
+    transition: 0.2s;
+}
+
+._coral-Dialog.is-open{
+    @extend .shadow-l;
 }
 
 .card-wrapper{
@@ -2550,3 +2580,5 @@ coral-buttongroup button{
 ._coral-Search-input{
     padding-left: 50px;
 }
+
+

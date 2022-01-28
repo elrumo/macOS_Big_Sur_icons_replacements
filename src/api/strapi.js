@@ -21,7 +21,6 @@ export async function getTutorials() {
 }
 
 export async function getLearningHome() { 
-    console.log("Hiii");
     let learningHome = await axios.get('https://api.macosicons.com/api/learn-home?populate=*')
     console.log('learningHome: ', learningHome.data.data.attributes.H3Description);
 
@@ -33,6 +32,20 @@ export async function getLearningHome() {
     //   }
     
     return learningHome.data.data.attributes.H3Description
+}
+
+export async function getDialogHome() { 
+    console.log("Hiii");
+    let learningHome = await axios.get('https://api.macosicons.com/api/home-dialog?populate=*')
+
+    // let introText = {
+    //     h3: learningHome.data.data.attributes.title,
+    //     description: learningHome.data.data.attributes.description,
+    //     isAd: false,
+    //     isCenter: true,
+    //   }
+    
+    return learningHome.data.data.attributes
 }
 
 export async function getTutorialFromSlug(slug) { 
