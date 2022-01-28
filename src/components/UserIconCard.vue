@@ -175,9 +175,9 @@ export default {
     },
     
     mounted(){
-        // let iconID = this.icon.id;
-        // let isSaved = this.getSavedIconsId.includes(iconID)
-        // this.isSaved = isSaved;
+        let iconID = this.icon.id;
+        let isSaved = this.getSavedIconsId.includes(iconID)
+        this.isSaved = isSaved;
     },
 
     watch:{

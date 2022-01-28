@@ -190,7 +190,7 @@
                           :id="'isAuthorUpload'+icon.randId"
                           v-on:change="getCheckedValue($event, icon.randId, 'isAuthor')"
                         >
-                          I'm the author of this icon
+                          * I'm the author of this icon
                         </coral-checkbox>
                       </div>
 
@@ -513,9 +513,10 @@ export default {
         
         if (parent.imageData) {
           for (let item in filesToShow){
+            let isAuthor = filesToShow[item].isAuthor;
             for (let field in filesToShow[item]){
               let submission = filesToShow[item][field]
-              if (submission != "" && submission != undefined && field != "appWebsite") {
+              if (submission != "" && submission != undefined && field != "appWebsite" && isAuthor) {
                 isValid.push(true)
               } else if (field != "appWebsite" && field != "isDarkMode") {
                 isValid.push(false)

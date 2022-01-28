@@ -4,12 +4,15 @@ import store from './store/store'
 import router from './router'
 import VueMobileDetection from 'vue-mobile-detection'
 import VueLazyLoad from 'vue3-lazyload'
+import vueCookies from 'vue-cookies'
 // import './registerServiceWorker'
 
 const app = createApp(App)
 
 configureCompat({ WATCH_ARRAY: false })
 
+app.use(vueCookies)
+app.$cookies.config('30d')
 app.use(VueMobileDetection)
 app.use(store)
 app.use(router)

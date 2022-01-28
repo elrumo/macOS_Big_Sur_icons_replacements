@@ -7,34 +7,38 @@
     <!-- <StickyBanner/> -->
     <SaveIconsDialogue v-if="!isAuth"/>
 
-    <!-- <coral-dialog id="newDialog" open style="text-align: left;">
-      <coral-dialog-header>Pay to view</coral-dialog-header>
-      
-      <coral-dialog-content style="max-width: 350px">
-        <p class="coral-Body--M">
-          Unfortunately this website will now be only accessible through a one time purchase of $9.99.
-          <br>
-          <br>
-          <router-link class="coral-Link" to="/blog/new-paid-access">
-            <b>Read the blog to learn more.</b>
-          </router-link>
+      <!-- v-if="cookies.updatesIsRead == 'false'" -->
+    <coral-dialog
+      v-if="$cookies.get('updatesIsRead') == 'false'|| $cookies.get('updatesIsRead') == undefined "
+      open
+      id="newDialog"
+      style="text-align: left;"
+    >
+      <coral-dialog-header>{{getHomeDialog.header}}</coral-dialog-header>
+      <coral-dialog-content style="max-width: 650px">
+        <p class="coral-Body--M" v-html="marked(getHomeDialog.content)">
         </p>
       </coral-dialog-content>
 
       <coral-dialog-footer>
-        <button is="coral-button" variant="quiet" coral-close="">Cancel</button>
-            <a rel="noopener"
-              class="coral-Link"
-              href="https://py.pl/UKrQC"
-              target="_blank"
-              @click="logDonation('pass-dialog')"
-            >
-          <button is="coral-button" variant="CTA">
-              Purchase pass
-          </button>
-            </a>
+        <button
+          is="coral-button"
+          variant="quiet"
+          coral-close=""
+        >
+          Remind me again later
+        </button>
+
+        <button
+          @click="setCookie('updatesIsRead', 'true')"
+          is="coral-button"
+          variant="CTA"
+          coral-close=""
+        >
+          Ok, don't remind me again
+        </button>
       </coral-dialog-footer>
-    </coral-dialog> -->
+    </coral-dialog>
 
     <!-- Hero -->
     <Hero
@@ -387,6 +391,7 @@ import CarbonAd from './CarbonAd.vue';
 import UserIconCardLoading from './UserIconCardLoading.vue';
 import SaveIconsDialogue from './SaveIconsDialogue.vue';
 
+import Marked from 'marked';
 
 import Parse from 'parse/dist/parse.min.js';
 
@@ -511,6 +516,10 @@ export default {
       awaitingSearch: false,
       iconsToShow: [],
       list: [],
+
+      cookies: {
+        updatesIsRead: $cookies.get('updatesIsRead'),
+      },
       
       overflow: true,
       windowWidth: window.innerWidth,
@@ -588,11 +597,15 @@ export default {
     this.searchForPathQuery()
     this.setEventListenersOnStart()
     this.fetchUserAttributes()
+    this.fetchHomeDialog()
+
+    // $cookies.set('updatesIsRead', 'false');
+    this.updatesIsRead = $cookies.get('updatesIsRead');
 
     this.isAuth = this.getUser.isAuth
     
     try {
-      // await this.fetchSavedIcons()
+      await this.fetchSavedIcons()
       this.getIconsArray();
     } catch (error) {
       console.log("error: ", error);
@@ -619,8 +632,27 @@ export default {
       'setDataToArr',
       'pushDataToArr',
       'fetchUserAttributes',
-      'fetchSavedIcons'
+      'fetchSavedIcons',
+      'fetchHomeDialog'
     ]),
+
+    marked(content){
+      try {
+        return Marked(content);
+      } catch (error) {
+        return content;
+      }
+    },
+
+    getCookie(key){
+      let cookie = $cookies.get(key);
+      return cookie
+    },
+
+    setCookie(key, val){
+      this.cookies[key] = val
+      $cookies.set(key, val);
+    },
 
     setEventListenersOnStart(){
       window.addEventListener('scroll', this.handleScroll);
@@ -1083,7 +1115,8 @@ export default {
       'selectedIcons', 
       'getSelectedCategory', 
       'getSavedIcons',
-      'getSupportMessage'
+      'getSupportMessage',
+      'getHomeDialog'
     ]),
 
     isMobile(){
@@ -1155,7 +1188,7 @@ export default {
     isUserLoggedIn(){
       if (Parse.User.current()) return true
       else return false
-    }
+    },
 
   },
 
