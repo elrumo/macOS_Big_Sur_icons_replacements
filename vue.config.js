@@ -14,9 +14,10 @@ const PATHS = {
 }
 
 // plugins:  import.meta.env.NODE_ENV === 'production' ?[] : [],
+// publicPath: process.env.NODE_ENV === 'production' ? './dist/' : './'
 module.exports = {
   base: './',
-  publicPath: process.env.NODE_ENV === 'production' ? './' : './'
+  publicPath: './'
   // configureWebpack:  {
   //   // plugins:  import.meta.env.NODE_ENV === 'dev' ?[] : [],
   //   plugins:  import.meta.env.NODE_ENV === 'production' ?[] : [],
