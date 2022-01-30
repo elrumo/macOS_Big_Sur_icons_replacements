@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite --host --https",
     "build": "vite build",
-    "serve": "vite preview --host",
+    "serve": "vite preview --https --host",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "deploy": "npm run build; push-dir --dir=dist --branch=gh-pages --cleanup"
   },
