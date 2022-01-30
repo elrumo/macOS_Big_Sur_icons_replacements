@@ -8,7 +8,7 @@
     <SaveIconsDialogue v-if="!isAuth"/>
       <!-- v-if="cookies.updatesIsRead == 'false'" -->
     <coral-dialog
-      v-if="($cookies.get('updatesIsRead') == 'false'|| $cookies.get('updatesIsRead')) && Object.keys(getHomeDialog).length != 0 && getHomeDialog.ShowDialog"
+      v-if="($cookies.get('updatesIsRead') == 'false'|| $cookies.get('updatesIsRead') == null ) && Object.keys(getHomeDialog).length != 0 && getHomeDialog.ShowDialog"
       open
       id="newDialog"
       style="text-align: left;"
@@ -600,6 +600,7 @@ export default {
 
     // $cookies.set('updatesIsRead', 'false');
     this.updatesIsRead = $cookies.get('updatesIsRead');
+    console.log("updatesIsRead: ", $cookies.get('updatesIsRead'));
 
 
     this.isAuth = this.getUser.isAuth

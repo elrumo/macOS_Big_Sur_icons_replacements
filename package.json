@@ -25,7 +25,6 @@
     "less-loader": "^7.3.0",
     "marked": "^1.2.9",
     "parse": "^3.4.0",
-    "prerender-spa-plugin": "^3.4.0",
     "push-dir": "^0.4.1",
     "register-service-worker": "^1.7.2",
     "sass": "^1.45.1",
