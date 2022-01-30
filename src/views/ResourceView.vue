@@ -272,7 +272,7 @@ export default {
         parent.showAd = true;
       }, 200);
 
-      let routerName = this.$router.currentRoute.params.resource
+      let routerName = this.$router.currentRoute.value.params.resource
       let moreResources = parent.$store.state.moreResources
       let storeResourcesData = parent.resourcesData
       let storeResourceItem = parent.$store.state.singleResourceData

@@ -1,6 +1,6 @@
 <template>
   <div id="stickyBanner">
-    <div class="sticky-banner card-wrapper card-hover coral-card">
+    <div class="sticky-banner card-wrapper card-hover mobile-hidden coral-card">
       
       <div class="lgbt-wrapper">
 
@@ -26,11 +26,11 @@
             :key="$route.fullPath + 'ad' + '_sticky'"
           />
 
-          <a
+            <!-- href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" -->
+            <!-- target="_blank" -->
+          <div
             class="card-no-ad relative"
-            href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
             rel="noopener"
-            target="_blank"
             style="width: 100%; left: 0;"
           >
             <div class="support-page">
@@ -50,7 +50,7 @@
                 to support this project.
               </p>
             </div>
-          </a>
+          </div>
 
       </div>
 

@@ -114,7 +114,6 @@ export default {
       })
       
       this.pushDataToArr({ data: iconsToShow, arr: "savedIcons" })
-      console.log(savedIconCount);
       return iconsToShow
     },
 

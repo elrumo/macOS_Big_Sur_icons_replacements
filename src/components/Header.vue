@@ -44,7 +44,7 @@
                     class="desktop-hidden coral--large"
                 >
                     <div class="burger-btn" @click="toggleOverlay">
-                        <coral-icon class="m-auto" id="mobile-menu-icon" :icon="icons.burgerMenu" size="XL" alt="Larger" title="XL">
+                        <coral-icon class="m-auto" id="mobile-menu-icon" :icon="icons.burgerMenu" size="S" alt="Larger">
                         </coral-icon>
                     </div>
 
@@ -343,6 +343,13 @@ export default {
                 },
                 {
                     name: "Logout",
+                    img: LogOut,
+                    onClick: {
+                        method: this.logOut
+                    }
+                },
+                {
+                    name: "What's new",
                     img: LogOut,
                     onClick: {
                         method: this.logOut
