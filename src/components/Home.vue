@@ -598,10 +598,7 @@ export default {
     this.fetchUserAttributes()
     this.fetchHomeDialog()
 
-    // $cookies.set('updatesIsRead', 'false');
     this.updatesIsRead = $cookies.get('updatesIsRead');
-    console.log("updatesIsRead: ", $cookies.get('updatesIsRead'));
-
 
     this.isAuth = this.getUser.isAuth
     
