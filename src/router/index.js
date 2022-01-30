@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 
 import Home from '../components/Home.vue'
 import BlogPost from '../views/BlogPost.vue'
@@ -569,10 +569,11 @@ const routes = [
   },
 ]
 
-// global.router = new createRouter({
+  // const router = new createRouter({
+    // history: createWebHistory('./'),
 const router = new createRouter({
   base: import.meta.env.BASE_URL,
-  history: createWebHistory('/'),
+  history: createWebHashHistory('/'),
   routes,
   scrollBehavior (to, from, savedPosition) {
     return { left: 0, top: 0 }

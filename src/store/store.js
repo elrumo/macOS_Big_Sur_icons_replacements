@@ -338,11 +338,11 @@ export default createStore({
 
     scrollTo(){
       if(window.innerWidth >= 820){
-        window.scrollTo(0, 296)
-        // window.scrollTo(0, 365)
+        // window.scrollTo(0, 296)
+        window.scrollTo(0, 370)
         
       } else{
-        window.scrollTo(0, 320)
+        window.scrollTo(0, 300)
       }
     },
 

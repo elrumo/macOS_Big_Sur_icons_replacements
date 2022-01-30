@@ -6,10 +6,9 @@
 
     <!-- <StickyBanner/> -->
     <SaveIconsDialogue v-if="!isAuth"/>
-
       <!-- v-if="cookies.updatesIsRead == 'false'" -->
     <coral-dialog
-      v-if="$cookies.get('updatesIsRead') == 'false'|| $cookies.get('updatesIsRead') == undefined "
+      v-if="($cookies.get('updatesIsRead') == 'false'|| $cookies.get('updatesIsRead')) && Object.keys(getHomeDialog).length != 0 && getHomeDialog.ShowDialog"
       open
       id="newDialog"
       style="text-align: left;"
@@ -602,6 +601,7 @@ export default {
     // $cookies.set('updatesIsRead', 'false');
     this.updatesIsRead = $cookies.get('updatesIsRead');
 
+
     this.isAuth = this.getUser.isAuth
     
     try {
@@ -612,6 +612,7 @@ export default {
     }
 
     let fullPath = this.$route.fullPath
+
     let currentUser = Parse.User.current()
     if (fullPath.includes("/?username=") && !currentUser) {
       this.showEl("loginDialog")
@@ -664,9 +665,9 @@ export default {
 
     searchForPathQuery(){
       let routerName = this.$route.name
+      let serachValue = this.$router.currentRoute.value.params.search
       if(routerName == "Search"){
-        let serachQuery = this.$router.currentRoute.params.search
-        this.searchString = serachQuery
+        this.searchString = serachValue
       }
     },
 
@@ -750,7 +751,7 @@ export default {
 
     async copySearch(){
       let parent = this;
-      let toCopy = "https://macosicons.com/" + parent.searchString
+      let toCopy = "https://macosicons.com/#/" + parent.searchString
       
       await navigator.clipboard.writeText(toCopy);
       

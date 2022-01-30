@@ -35,15 +35,7 @@ export async function getLearningHome() {
 }
 
 export async function getDialogHome() { 
-    console.log("Hiii");
     let learningHome = await axios.get('https://api.macosicons.com/api/home-dialog?populate=*')
-
-    // let introText = {
-    //     h3: learningHome.data.data.attributes.title,
-    //     description: learningHome.data.data.attributes.description,
-    //     isAd: false,
-    //     isCenter: true,
-    //   }
     
     return learningHome.data.data.attributes
 }

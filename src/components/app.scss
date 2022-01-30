@@ -58,13 +58,12 @@ li{
         margin: 15px 0px 25px;
         width: 100%;
 
-        opacity: 0.5;
         @extend .Box;
-    }
 
-    img:hover{
-        opacity: 1;
-        cursor: auto !important;
+        &:hover{
+            opacity: 1 !important;
+            cursor: auto !important;     
+        }
     }
 }
 
@@ -126,6 +125,12 @@ li{
 .coral--dark {
     @include coral-dark-bg;
     
+    li{
+        img{
+            opacity: 0.5;
+        }
+    }
+
     a{
         color: rgb(75, 156, 245);
     }
@@ -169,6 +174,12 @@ li{
     
     a{
         color: rgb(13, 102, 208);
+    }
+
+    li{
+        img{
+            opacity: 0.8;
+        }
     }
 
     .skeleton {
@@ -317,7 +328,7 @@ select{
 }
 
 .support-page{
-    margin: auto !important;
+    // margin: auto !important;
     padding: 10px !important;
     top: 25px;
     display: grid;

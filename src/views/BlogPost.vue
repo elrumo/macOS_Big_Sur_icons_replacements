@@ -108,7 +108,7 @@ export default {
 
     const parent = this;
 
-    let routerName = this.$router.currentRoute.params.post
+    let routerName = this.$router.currentRoute.value.params.post
     let storeBlogData = parent.$store.state.blogPosts
     let localBlogData = parent.$store.state.localPosts
     // console.log(localBlogData);
@@ -242,7 +242,7 @@ export default {
         // Facebook
         {
           property: 'og:url',
-          content:  "https://macosicons.com" + this.$router.currentRoute.path
+          content:  "https://macosicons.com" + this.$router.currentRoute.value.path
         },
         {
           property: 'og:title',
@@ -260,7 +260,7 @@ export default {
         // Twitter
         {
           property: 'twitter:url',
-          content:  "https://macosicons.com" + this.$router.currentRoute.path
+          content:  "https://macosicons.com" + this.$router.currentRoute.value.path
         },
         {
           property: 'twitter:title',
