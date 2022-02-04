@@ -267,28 +267,29 @@
           class="mobile-hidden categories-sidenav coral-card" is="coral-sidenav"
         >
 
-          <!-- All Icons -->
-          <button
-            is="coral-sidenav-item"
-            :icon="icons.AllIcons"
-            selected=""
-            value="All"
-            title="all"
-            @click="setCategory({name: 'All'})"
-          >
-            All Icons
-          </button>
-
-          <!-- Featured Icons -->
+         <!-- Featured Icons -->
           <!-- <button
             is="coral-sidenav-item"
             :icon="icons.Star"
+            selected
             value="Featured"
             title="Featured"
             @click="setCategory({name: 'downloads'})"
           >
             Featured
           </button> -->
+
+          <!-- All Icons -->
+          <button
+            is="coral-sidenav-item"
+            :icon="icons.AllIcons"
+            selected
+            value="All"
+            title="all"
+            @click="setCategory({name: 'All'})"
+          >
+            All Icons
+          </button>
           
           <!-- Popular Icons -->
           <button
