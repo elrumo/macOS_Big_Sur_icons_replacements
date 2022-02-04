@@ -348,13 +348,13 @@ export default {
                         method: this.logOut
                     }
                 },
-                {
-                    name: "What's new",
-                    img: LogOut,
-                    onClick: {
-                        method: this.logOut
-                    }
-                }
+                // {
+                //     name: "What's new",
+                //     img: LogOut,
+                //     onClick: {
+                //         method: this.logOut
+                //     }
+                // }
             ]
         }
     },

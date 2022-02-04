@@ -115,9 +115,14 @@
                 </div>
                 
                 <a :href="icon.imgUrl" target="_blank">
-                  <div v-lazy-container="{ selector: 'img', loading: coralIcons.loading }">
-                    <img class="w-full" :data-src="icon.imgUrl.replace('/media/', '/parse/')">
-                  </div>
+                  <img
+                    v-lazy="{
+                        src: icon.imgUrl.replace('/media/', '/parse/'),
+                        loading:  coralIcons.loading,
+                        error:  coralIcons.loading,
+                        lifecycle:  coralIcons.loading
+                    }" 
+                  />
                 </a>
 
 
@@ -722,7 +727,7 @@ export default {
   mounted: function(){  
 
     let parent = this
-  
+
     function handleParseError(err){
       switch (err.code) {
         case Parse.Error.INVALID_SESSION_TOKEN:
@@ -736,8 +741,9 @@ export default {
     }
 
     if (currentUser) {
+
       if (!Parse.User.current().attributes.isAdmin) {
-        parent.$router.push({ path: '/' })
+        parent.$router.push({ path: '/#' })
         Parse.User.logOut();
         return
       }
