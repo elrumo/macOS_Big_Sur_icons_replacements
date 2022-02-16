@@ -20,6 +20,7 @@
     "@vitejs/plugin-vue": "^1.10.1",
     "@vue/compat": "^3.1.0",
     "algoliasearch": "^4.11.0",
+    "confetti-js": "^0.0.18",
     "esbuild": "^0.14.8",
     "less": "^4.1.2",
     "less-loader": "^7.3.0",

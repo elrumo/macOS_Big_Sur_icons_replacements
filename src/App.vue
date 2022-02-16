@@ -34,9 +34,6 @@ import { mapActions } from 'vuex'
 import { Toast } from '@adobe/coral-spectrum/coral-component-toast'
 const appBody = document.getElementById('app')
 
-// import '@adobe/spectrum-css/dist/icons/spectrum-css-icons.svg' 
-// import '@adobe/spectrum-css/dist/icons/loadIcons.js' 
-
 import Parse from 'parse/dist/parse.min.js';
 
 // TODO: remove credentials
@@ -61,16 +58,6 @@ export default {
     }
   },
 
-  // watch:{
-  //   $route:{
-  //     handler(to, from) {
-  //       // console.log(to);
-  //       // console.log(from);
-  //       _bsa.reload('.target-class-name')
-  //     },
-  //     deep: true
-  //   }
-  // },
 
   mounted(){
     setTimeout(() => {
