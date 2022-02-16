@@ -1,5 +1,12 @@
 <template>
   <div>
+    <canvas
+      v-if="getHomeDialog.showParticles"
+      id="confetti-canvas"
+      style="position: fixed; left: 0px; top: 0px; z-index: 9999; pointer-events: none;"
+    >
+    </canvas>
+
     <deleteDialog :icon="!activeIcon"/>
 
     <div v-if="overflow"> {{ toggleOverflow() }} </div>
@@ -391,6 +398,8 @@ import CarbonAd from './CarbonAd.vue';
 import UserIconCardLoading from './UserIconCardLoading.vue';
 import SaveIconsDialogue from './SaveIconsDialogue.vue';
 
+import ConfettiGenerator from "confetti-js";
+
 import Marked from 'marked';
 
 import Parse from 'parse/dist/parse.min.js';
@@ -433,6 +442,8 @@ import WeatherIcon from "../assets/icons/Category_Icons/Weather.svg"
 import AllIconsIcon from "../assets/icons/Category_Icons/All_Icons.svg"
 import StarIcon from "../assets/icons/Category_Icons/Star.svg"
 import HeartIcon from "../assets/icons/Category_Icons/Heart.svg"
+import HeartIconFilled from "../assets/icons/Category_Icons/Heart_Filled.svg"
+import HeartIconFilledRed from "../assets/icons/Category_Icons/Heart_Filled_Red.svg"
 import FlameIcon from "../assets/icons/Category_Icons/Flame.svg"
 
 import addCoralIcon from "../assets/icons/add.svg"
@@ -578,6 +589,7 @@ export default {
         AllIcons: AllIconsIcon,
         Star: StarIcon,
         Heart: HeartIcon,
+        HeartFilled: HeartIconFilled,
         Flame: FlameIcon,
       },
       coralIcons:{
@@ -597,7 +609,33 @@ export default {
     this.searchForPathQuery()
     this.setEventListenersOnStart()
     this.fetchUserAttributes()
-    this.fetchHomeDialog()
+    await this.fetchHomeDialog()
+    
+    if (this.getHomeDialog.showParticles) {
+      let particlesImageUrl = 'https://api.macosicons.com' + this.getHomeDialog.particlesImage.data.attributes.url
+      try {
+        var confettiSettings = {
+          target:"confetti-canvas",
+          max:" 20",
+          size:" 1",
+          animate:true,
+          props:[{
+            type: "svg",
+            // src: HeartIconFilledRed,
+            src: particlesImageUrl,
+            size: 25,
+          }],
+          respawn: false,
+          clock:"15",
+          rotate:true,
+          start_from_edge:true,
+        };
+        var confetti = new ConfettiGenerator(confettiSettings);
+        confetti.render(); 
+      } catch (error) {
+        console.log("No confetti: " , error);
+      }
+    }
 
     this.updatesIsRead = $cookies.get('updatesIsRead');
 
