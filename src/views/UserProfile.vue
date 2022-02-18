@@ -282,10 +282,10 @@ export default {
 
       try {
         isBanned = userInfo.attributes.isBanned;
-        console.log(isBanned);
-      } catch (error) {
         isBanned = true  
+      } catch (error) {
       }
+      
       user.isBanned = isBanned;
       
       if (userInfo && !isBanned){

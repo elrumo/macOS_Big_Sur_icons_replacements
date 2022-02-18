@@ -621,7 +621,6 @@ export default {
           animate:true,
           props:[{
             type: "svg",
-            // src: HeartIconFilledRed,
             src: particlesImageUrl,
             size: 25,
           }],
