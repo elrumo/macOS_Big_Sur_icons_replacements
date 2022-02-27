@@ -5,7 +5,11 @@
     </p>
     <div
       @click="adClick"
-      :class="template == 1 ? 'native-ad-wrapper': 'card-grid-nativeAd'"
+      :class="{
+        'coral-card': template == 2,
+        'native-ad-wrapper': template == 1,
+        'card-grid-nativeAd': template != 1
+      }"
       :id="adId">
     </div>
   </div>
@@ -17,10 +21,17 @@ export default {
     name:"NativeAd",
 
     props:{
-      sponsored:'',
-      fullWidth:'',
+      sponsored: '',
+      // sponsored: {
+      //   type: Boolean,
+      //   default: false,
+      // },
+      fullWidth: '',
       adId: '',
-      template: Number
+      template: {
+        type: Number,
+        default: 1
+      },
     },
 
     components:{},

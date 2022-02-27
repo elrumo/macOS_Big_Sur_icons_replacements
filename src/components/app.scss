@@ -647,13 +647,50 @@ div * {
     grid-template-columns: repeat(3, auto);
 }
 
-.icon-preview{
-    max-width: var(--icon-preview-dimensions);
+.icon-submission-img-size{
+    width: var(--icon-preview-dimensions);
+    height: var(--icon-preview-dimensions);
     margin: auto;
 }
 
-.icon-preview img{
+.icon-preview{
+    max-width: 125px;
+    margin: auto;
+    position: relative;
     width: 100%;
+
+    .icon-submission-img{
+        @extend .icon-submission-img-size;
+
+        position: absolute;
+        left: 50%;
+        transform: translate3d(-50%, 0px, 0px);
+
+        &:first-child{
+            z-index: 3;
+        }
+
+        &:last-child{
+            z-index: 2;
+        }
+    }
+}
+
+.check-size{
+    animation: checkSize 2s ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes checkSize {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.1;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 .main-border-radius{
@@ -1684,7 +1721,7 @@ coral-buttongroup button{
 
 .upload-card{
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1.5fr 3fr;
     gap: 15px;
 }
 

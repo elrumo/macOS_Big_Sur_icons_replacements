@@ -361,9 +361,16 @@
             class="p-b-32 icon-list-area"
           >
 
-              <CarbonAd
+              <!-- <CarbonAd
+                :template="2"
                 adId="homePage"
+              /> -->
+
+               <NativeAd
+                :adId="'homePage'"
+                :template="2"
               />
+
               
               <UserIconCard
                 v-for="icon in search"
@@ -386,17 +393,14 @@
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
-import Header from './Header.vue';
+
 import Hero from './Hero.vue';
-import UserIconCard from './UserIconCard.vue';
-import Dialog from './Dialog.vue';
-import deleteDialog from './deleteDialog.vue';
 import NativeAd from './NativeAd.vue';
 import StickyBanner from './StickyBanner.vue';
 import CarbonAd from './CarbonAd.vue';
 import UserIconCardLoading from './UserIconCardLoading.vue';
-import SaveIconsDialogue from './SaveIconsDialogue.vue';
 
 import ConfettiGenerator from "confetti-js";
 
@@ -456,17 +460,16 @@ export default {
   name: 'Home',
 
   components: {
-    Header,
+    "Header": defineAsyncComponent(() => import('@/components/Header.vue')),
+    "Dialog": defineAsyncComponent(() => import('@/components/Dialog.vue')),
+    "deleteDialog": defineAsyncComponent(() => import('@/components/deleteDialog.vue')),
+    "SaveIconsDialogue": defineAsyncComponent(() => import('@/components/SaveIconsDialogue.vue')),
+    "UserIconCard": defineAsyncComponent(() => import('@/components/UserIconCard.vue')),
     Hero,
-    // IconCard,
-    Dialog,
-    deleteDialog,
     NativeAd,
-    UserIconCard,
     StickyBanner,
     CarbonAd,
     UserIconCardLoading,
-    SaveIconsDialogue,
   },
 
   metaInfo: {

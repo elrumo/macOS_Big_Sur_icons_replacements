@@ -69,21 +69,11 @@
                 <div v-if="imageData" class="upload-card-wrapper">
                 
                   <div v-for="icon in filesToShow" :key="icon.randId" class="upload-card coral-dark-bg coral-Well">
-
-                    <div class="icon-preview">
-                      <img :src="icon.img" :alt="icon.name+' preview'">
-                      
-                      <coral-quickactions placement="center" target="_prev">
-                        <coral-quickactions-item
-                          type="button" 
-                          @click="removeFile($event, icon.randId)" 
-                          :id="icon.name" 
-                          icon="delete"
-                        >
-                          Remove file
-                        </coral-quickactions-item>
-                      </coral-quickactions>
-                    </div>
+<!-- {{icon}} -->
+                    <SubmissionIconPreview
+                      :icon="icon"
+                      :removeFile="removeFile"
+                    />
 
                     <form class="coral-FormGroup m-0 p-l-4" style="width: calc(100% - 5px)">
                       
@@ -235,17 +225,23 @@
 </template>
 
 <script>
-import Vue from 'vue'
+import { defineAsyncComponent } from 'vue'
 import { mapActions, mapGetters } from 'vuex';
 import Parse from 'parse/dist/parse.min.js';
 
-
 import deleteIcon from "../assets/icons/delete.svg"
 import addCoralIcon from "../assets/icons/add.svg"
+import iconTemplate from "../assets/icons/icon_template.png"
+import iconBrew from "../api/iconBrew.js"
 
 export default {
     name:"SubmissionDialog",
+
     props:{
+    },
+
+    components:{
+      "SubmissionIconPreview": defineAsyncComponent(() => import('@/components/SubmissionIconPreview.vue'))
     },
 
     data(){
@@ -258,6 +254,8 @@ export default {
           addIcon: addCoralIcon,
           deleteIcon: deleteIcon,
         },
+        isCheckingSize: false,
+        iconTemplate: iconTemplate,
         uploadProgress: 0,
         totalNumFiles: 0,
         email: "",
@@ -272,6 +270,16 @@ export default {
 
     methods:{
       ...mapActions(['showToast', 'fetchAppCategories', 'fetchIconType']),
+
+      iconBrew(icon){
+        console.log(iconBrew[icon]);
+        return iconBrew[icon];
+      },
+
+      checkSize(id){
+        this.isCheckingSize = !this.isCheckingSize;
+        document.getElementById(id).classList.toggle("check-size");
+      },
 
       getCheckedValue(e, appName, field){
         let parent = this
@@ -295,11 +303,11 @@ export default {
       },
 
       removeFile(e, randId){
-        let parent = this
-        Vue.delete(parent.filesToShow, randId)
-        Vue.delete(parent.filesToUpload, randId)
+        delete this.filesToUpload[randId]
+        delete this.filesToShow[randId]
+
         // If imageURL is empty, show the upload files component
-        if (Object.keys(parent.filesToShow).length === 0) {
+        if (Object.keys(this.filesToShow).length === 0) {
           parent.imageData = false
         }
       },
@@ -345,8 +353,10 @@ export default {
                     type: "Zz9QX1BBIZ",
                     randId: randId,
                   }
+
                   parent.imageData = true
-                  parent.$set(parent.filesToShow, randId, value)
+                  parent.filesToShow[randId] = value;
+                  // parent.$set(parent.filesToShow, randId, value)
               }
 
             }
@@ -457,17 +467,13 @@ export default {
                 console.log("error: ", error)
               });
 
-              // icon.save().then().catch((error) =>{
-              //   console.log("error: ", error)
-              // });
+              parent.imageData = {}
+              parent.picture= null
+              parent.uploadProgress++
+              
+              delete parent.filesToShow[randId]
+              delete parent.filesToUpload[randId]
 
-                parent.imageData = {}
-                parent.picture= null
-                parent.uploadProgress++
-                // console.log("Document successfully written!");
-                
-                Vue.delete(parent.filesToShow, randId)
-                Vue.delete(parent.filesToUpload, randId)
               if (Object.keys(parent.filesToUpload).length === 0) {
                   parent.isLoading = false
                   parent.imageData = false
