@@ -67,8 +67,7 @@ export default {
     },
     
     methods:{
-        ...mapActions(['adClick',]),
-
+        
         logSubscription(){
             let parent = this
             let currentPath = parent.$route.name;

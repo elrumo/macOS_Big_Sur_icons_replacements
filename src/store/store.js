@@ -696,10 +696,11 @@ export default createStore({
     adClick(store, data){
       let currentPathName = router.currentRoute.value.name
       console.log("router: ", currentPathName);
+      console.log(data.adPosition);
       window.plausible("adClick", {props: {
         path: currentPathName,
-        position: data.adPosition,
-        type: data.adType
+        position: data.position,
+        type: data.type
       }})
     },
 

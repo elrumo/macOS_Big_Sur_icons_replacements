@@ -282,7 +282,6 @@ export default {
 
       try {
         isBanned = userInfo.attributes.isBanned;
-        isBanned = true  
       } catch (error) {
       }
       
