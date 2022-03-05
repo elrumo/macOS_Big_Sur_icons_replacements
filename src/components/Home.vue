@@ -162,7 +162,9 @@
 
       <!-- Loading error -->
       <div v-if="false" class="waiting-wrapper">
+        
         <NativeAd :adPosition="'Loading error'" :adId="'iconbar-js-card-grid'" :key="$route.fullPath + 'ad'"/>
+
         <h3 class="coral-Heading--M">
           The site is temporarily down for maintenance purposes.
           <br>
@@ -369,6 +371,7 @@
                <NativeAd
                 :adId="'homePage'"
                 :template="2"
+                class="grid-ad"
               />
 
               

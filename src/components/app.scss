@@ -1400,6 +1400,10 @@ coral-buttongroup button{
     gap: 20px;
 }
 
+.grid-ad{
+    max-height: 250px;
+}
+
 .icon-list-area{
     position: relative;
     margin: 0px auto;
@@ -1411,9 +1415,9 @@ coral-buttongroup button{
     height: -moz-fit-content;
     padding-bottom: 28px;
 
-    & > div{
-        max-height: 240px;
-    }
+    // & > div{
+    //     max-height: 240px;
+    // }
     
     .support-page{
         top: 50%;

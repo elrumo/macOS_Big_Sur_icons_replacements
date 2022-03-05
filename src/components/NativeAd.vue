@@ -113,7 +113,7 @@ export default {
             }
           } else return
 
-        }, 800);
+        }, 1800);
       }
 
       let el = document.getElementById(adId+"customAd")
