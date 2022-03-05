@@ -19,6 +19,7 @@
     --coral-light-card-transparent: rgba(255, 255, 255, 0);
 
     --page-width: 95%;
+    --max-page-width: 1500px;
     --page-width-mobile: 85%;
 
     --icon-preview-dimensions: 100px;
@@ -884,8 +885,8 @@ coral-buttongroup button{
     grid-template-columns: auto auto;
     justify-content: space-between;
     align-content: start;
-    max-width: 1300px;
     margin: auto;
+    max-width: var(--max-page-width);
     width: var(--page-width);
 }
 
