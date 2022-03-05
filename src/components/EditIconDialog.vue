@@ -4,7 +4,7 @@
     id="editIconDialog"
     v-if="getUser.isAuth"
     focusOnShow="off"
-  >
+  > 
 
 
     <coral-dialog-header>
@@ -27,7 +27,14 @@
       
       <div class="edit-dialog-acton-btns">
         <!-- <button is="coral-button" variant="quiet" icon="edit">Upload new</button> -->
-        <button @click="showEl('deleteDialog')" is="coral-button" variant="quiet" icon="delete">Delete</button>
+        <button
+          @click="showEl('deleteDialog')"
+          is="coral-button"
+          variant="quiet"
+          :icon="iconBrew('trashWithLines', '24')"
+        >
+          Delete
+        </button>
 
         <coral-fileupload
           @change="selectIcon"
@@ -38,8 +45,9 @@
             is="coral-button"
             variant="quiet"
             coral-fileupload-select=""
-            icon="UploadToCloud"
+            :icon="iconBrew('uploadToCloud', '24')"
           >
+            <!-- :icon="UploadToCloud" -->
             Replace
           </button>
         </coral-fileupload>
@@ -60,8 +68,8 @@
             required=""
             :id="'appNameUpdateField'+icon.id"
             :labelledby="'appNameLabel'+icon.id"
-            :value="icon.appName"
             v-on:keyup="getValue($event, 'appName')"
+            :placeholder="icon.appName"
           >
         </div>
 
@@ -148,6 +156,7 @@ import UploadDialog from './UploadDialog.vue'
 // Parse.serverURL = 'https://media.macosicons.com/parse'
 
 import logoLowRes from "../assets/Resources/logo_lowres.png"
+import iconBrew from "../api/iconBrew.js"
 
 export default {
   name:"EditIconDialog",
@@ -205,6 +214,12 @@ export default {
         name: ""
       }
     },
+
+    iconBrew(icon, size){
+      console.log(iconBrew[icon + size]);
+      return iconBrew[icon + size];
+    },
+
     async saveIconData(){
       let parent = this
       

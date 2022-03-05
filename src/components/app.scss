@@ -4,6 +4,7 @@
     --main-border-radius: 7px;
 
     --coral-dark-bg: rgb(26 26 26);
+    --coral-dark-secondary-bg: rgb(50, 50, 50);
     --coral-dark-text: rgb(227, 227, 227);
     --coral-dark-border: rgba(75, 75, 75, 0.5);
     --coral-dark-border-hover: rgb(95, 95, 95);
@@ -168,6 +169,11 @@ li{
         color: var(--coral-dark-text);
     }
 
+    .loading-popup{
+        background: var(--coral-dark-secondary-bg);
+        // background: rgb(50, 50, 50);
+    }
+
 }
 
 .coral--light{
@@ -205,6 +211,11 @@ li{
 
     .marked{
         color: var(--coral-light-text);
+    }
+
+    .loading-popup{
+        background: var(--coral-dark-secondary-bg);
+        // background: rgb(50, 50, 50);
     }
 }
 /////////////// END OF THEME ///////////////
@@ -1529,7 +1540,6 @@ coral-buttongroup button{
     height: fit-content;
     height: -moz-fit-content;
     border-radius: 4px;
-    background: rgb(50, 50, 50);
 }
 
 .loading-animation{

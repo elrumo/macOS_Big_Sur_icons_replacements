@@ -271,9 +271,9 @@ export default {
     methods:{
       ...mapActions(['showToast', 'fetchAppCategories', 'fetchIconType']),
 
-      iconBrew(icon){
-        console.log(iconBrew[icon]);
-        return iconBrew[icon];
+      iconBrew(icon, size){
+        console.log(iconBrew[icon + size]);
+        return iconBrew[icon + size];
       },
 
       checkSize(id){
