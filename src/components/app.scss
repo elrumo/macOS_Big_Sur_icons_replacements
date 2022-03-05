@@ -68,6 +68,10 @@ li{
     }
 }
 
+.height-24px{
+    height: 24px !important;
+}
+
 .width-100{
     width: 100%;
 }
@@ -1406,6 +1410,10 @@ coral-buttongroup button{
     height: fit-content;
     height: -moz-fit-content;
     padding-bottom: 28px;
+
+    & > div{
+        max-height: 240px;
+    }
     
     .support-page{
         top: 50%;

@@ -31,7 +31,7 @@
           @click="showEl('deleteDialog')"
           is="coral-button"
           variant="quiet"
-          :icon="iconBrew('trashWithLines', '24')"
+          :icon="iconBrew('trashWithLines24')"
         >
           Delete
         </button>
@@ -45,7 +45,7 @@
             is="coral-button"
             variant="quiet"
             coral-fileupload-select=""
-            :icon="iconBrew('uploadToCloud', '24')"
+            :icon="iconBrew('uploadToCloud24')"
           >
             <!-- :icon="UploadToCloud" -->
             Replace
@@ -150,13 +150,11 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import Parse from 'parse/dist/parse.min.js';
+
 import UploadDialog from './UploadDialog.vue'
 
-// Parse.initialize("macOSicons");
-// Parse.serverURL = 'https://media.macosicons.com/parse'
-
+import iconBrew from '../api/iconBrew.js'
 import logoLowRes from "../assets/Resources/logo_lowres.png"
-import iconBrew from "../api/iconBrew.js"
 
 export default {
   name:"EditIconDialog",
@@ -203,7 +201,16 @@ export default {
   },
   
   methods:{
-    ...mapActions(['showToast', 'setUser', 'showEl']),
+    ...mapActions([
+      'showToast',
+      'setUser',
+      'showEl',
+    ]),
+
+    iconBrew(iconName, filled){
+      return iconBrew(iconName, filled)
+    },
+    
     resetDialog(){
       let parent  = this;
       
@@ -213,11 +220,6 @@ export default {
         img: "",
         name: ""
       }
-    },
-
-    iconBrew(icon, size){
-      console.log(iconBrew[icon + size]);
-      return iconBrew[icon + size];
     },
 
     async saveIconData(){

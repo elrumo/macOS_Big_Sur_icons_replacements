@@ -27,13 +27,37 @@
             <h3 class="coral-Heading--L m-0">
               {{ getUserInfo.username }}
             </h3>
+            
+            <div>
+              <a
+                v-if="getUserInfo.twitterHandle"
+                target="_blank"
+                :href="getUserInfo.twitterHandle"
+                class="margin-auto relative height-24px"
+              >
+                <coral-icon
+                  size="M"
+                  :icon="iconBrew('twitter24', true)"
+                  alt="Twitter Logo"
+                  title="Twitter">
+                </coral-icon>
+              </a>
 
-            <a v-if="getUserInfo.twitterHandle" target="_blank" :href="getUserInfo.twitterHandle" class="margin-auto relative">
-              <IconUI class="absolute-center-vertical" width="18px" :img="resources.twitter" alt="Twitter Logo"/>
-            </a>
-            <div target="_blank" @click="copyUserUrl" class="margin-auto relative pointer">
-              <IconUI class="absolute-center-vertical" width="18px" :img="resources.share" alt="Twitter Logo"/>
+              <div 
+                target="_blank" 
+                @click="copyUserUrl" 
+                class="margin-auto relative pointer height-24px"
+              >
+                <coral-icon
+                  size="M"
+                  :icon="iconBrew('share24')"
+                  alt="Twitter Logo"
+                  title="Twitter">
+                </coral-icon>
+                <!-- <IconUI class="absolute-center-vertical" width="18px" :img="resources.share" alt="Twitter Logo"/> -->
+              </div>
             </div>
+
           </div>
 
           <div v-if="user.isOwner" class="profile-edit-btn mobile-hidden opacity-80">
@@ -185,6 +209,8 @@ import editCoralIcon from "../assets/icons/edit.svg"
 import placeholderCoralIcon from "../assets/placeholder-icon.png"
 import deleteIcon from "../assets/icons/delete.svg"
 
+import iconBrew from '../api/iconBrew.js'
+
 export default {
   name: 'UserProfile',
   
@@ -245,6 +271,10 @@ export default {
       'pushDataToArr',
       'adClick'
     ]),
+
+    iconBrew(iconName, filled){
+      return iconBrew(iconName, filled)
+    },
 
     async copyUserUrl(){
       let parent = this;
@@ -466,7 +496,7 @@ export default {
 </script>
 
 
-<style>
+<style lang="scss">
   
   .user-icon-card{
     text-align: left;
@@ -553,11 +583,19 @@ export default {
     min-height: 36px;
     gap: 25px;
     margin: auto auto auto 0;
+
+    & > div{
+      display: flex;
+      gap: 8px;
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
+
+    .loading-placeholder {
+        height: 70%
+    }
   }
-  
-  .profile-name-social .loading-placeholder {
-    height: 70%
-  }
+
 
   .profile-descrption-box .loading-placeholder {
     /* height: 70% */

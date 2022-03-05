@@ -14,8 +14,9 @@
           type="button" 
           @click="removeFile($event, icon.randId)" 
           :id="icon.name" 
-          :icon="coralIcons.deleteIcon"
+          :icon="iconBrew('trashWithLines24')"
         >
+          <!-- :icon="coralIcons.deleteIcon" -->
           Remove file
         </coral-quickactions-item>
       </coral-quickactions>
@@ -38,7 +39,7 @@
       @click="checkSize(icon.randId)"
       class="w-full"
       :id="'a'+randomNumber"
-      :icon="iconBrew('alertWithCircle')"
+      :icon="iconBrew('alertWithCircle24')"
       iconposition="right"
       is="coral-button"
     >
@@ -48,11 +49,13 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
+import iconBrew from '../api/iconBrew.js'
 
 import deleteIcon from "../assets/icons/delete.svg"
 import addCoralIcon from "../assets/icons/add.svg"
 import iconTemplate from "../assets/icons/icon_template.png"
-import iconBrew from "../api/iconBrew.js"
 
 export default {
     name:"SubmissionDialog",
@@ -74,10 +77,11 @@ export default {
     },
 
     methods:{
+      ...mapActions([
+      ]),
 
-      iconBrew(icon){
-        console.log(iconBrew[icon]);
-        return iconBrew[icon];
+      iconBrew(iconName, filled){
+        return iconBrew(iconName, filled)
       },
 
       checkSize(id){
