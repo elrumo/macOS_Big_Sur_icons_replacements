@@ -8,6 +8,7 @@ import Marked from 'marked';
 import localPages from '@/api/pages.json';
 import localPosts from '@/api/posts.json';
 import icons from '@/api/icons.json';
+import iconBrew from "@/api/iconBrew.js"
 // import { getPages, getSinglePage } from '@/api/posts';
 
 import {
