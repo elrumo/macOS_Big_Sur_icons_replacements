@@ -9,12 +9,11 @@
           <rect id="ToDelete" fill="#ff13dc" opacity="0" width="12" height="12" /><path d="M11.69673,10.28266,7.41406,6l4.28267-4.28266A.9999.9999,0,1,0,10.28266.30327L6,4.58594,1.71734.30327A.9999.9999,0,1,0,.30327,1.71734L4.58594,6,.30327,10.28266a.9999.9999,0,1,0,1.41407,1.41407L6,7.41406l4.28266,4.28267a.9999.9999,0,1,0,1.41407-1.41407Z" />
         </svg>
         
-          <div style="z-index: 2" class="card-grid-nativeAd">
+          <!-- <div style="z-index: 2" class="card-grid-nativeAd">
             <div
               class="card-ad2">
             </div>
-              <!-- id="card-ad2"> -->
-          </div>
+          </div> -->
 
         <!-- <CarbonAd
           adId="carbonAd"
@@ -22,14 +21,14 @@
         
           <NativeAd
             :adId="'stickyAd'"
-            :template="2"
+            :template="3"
             :key="$route.fullPath + 'ad' + '_sticky'"
           />
 
             <!-- href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" -->
             <!-- target="_blank" -->
           <div
-            class="card-no-ad relative"
+            class="card-no-ad absolute"
             rel="noopener"
             style="width: 100%; left: 0;"
           >
@@ -240,12 +239,6 @@ export default {
 
   .lgbt-text p{
     margin: 5px;
-  }
-
-  .lgbt-wrapper{
-    display: grid;
-    grid-template-columns: auto auto;
-    gap: 10px;
   }
 
   .sticky-banner ._coral-Button{
