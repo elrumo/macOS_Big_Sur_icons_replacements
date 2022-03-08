@@ -404,6 +404,7 @@ import NativeAd from './NativeAd.vue';
 import StickyBanner from './StickyBanner.vue';
 import CarbonAd from './CarbonAd.vue';
 import UserIconCardLoading from './UserIconCardLoading.vue';
+import UserIconCard from './UserIconCard.vue';
 
 import ConfettiGenerator from "confetti-js";
 
@@ -467,7 +468,7 @@ export default {
     "Dialog": defineAsyncComponent(() => import('@/components/Dialog.vue')),
     "deleteDialog": defineAsyncComponent(() => import('@/components/deleteDialog.vue')),
     "SaveIconsDialogue": defineAsyncComponent(() => import('@/components/SaveIconsDialogue.vue')),
-    "UserIconCard": defineAsyncComponent(() => import('@/components/UserIconCard.vue')),
+    UserIconCard,
     Hero,
     NativeAd,
     StickyBanner,
