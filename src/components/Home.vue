@@ -616,7 +616,12 @@ export default {
     this.searchForPathQuery()
     this.setEventListenersOnStart()
     this.fetchUserAttributes()
-    await this.fetchHomeDialog()
+    
+    try{
+      await this.fetchHomeDialog()
+    }catch{
+      console.log("loading error");
+    }
     
     if (this.getHomeDialog.showParticles) {
       let particlesImageUrl = 'https://api.macosicons.com' + this.getHomeDialog.particlesImage.data.attributes.url
