@@ -24,7 +24,9 @@ pnpm-debug.log*
 .env
 *.env
 *.DS_Store
+*/*.DS_Store
 
 dist/
 
 package-lock.json
+website/.DS_Store
