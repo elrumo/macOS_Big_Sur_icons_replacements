@@ -30,6 +30,7 @@
                     target="_blank"
                 >
                     <img
+                        :alt="icon.appName + ' icon'"
                         v-lazy="{
                             src: lazyOptions.src,
                             loading: lazyOptions.loading,

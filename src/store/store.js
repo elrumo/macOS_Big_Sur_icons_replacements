@@ -298,8 +298,6 @@ export default createStore({
     },
 
     setData(store, data){
-      // console.log("data.state: ", data);
-      // Set data, syntax: Array[objectKey] = data
       if (data.key) {
         store.commit('setDataToArr', {arr: data.state, key: data.key, data: data.data})
       } else{
@@ -428,7 +426,6 @@ export default createStore({
           approvedQuery.descending("downloads");
         } else if (category.id) {
           let categoryParse = await store.dispatch('queryCategory', {id: category.id});
-          console.log('category: ', category);
           approvedQuery.descending("timeStamp");
           approvedQuery.equalTo("category", categoryParse);
         }else{
@@ -529,7 +526,7 @@ export default createStore({
         }
         
         if (!result.get('type')) {
-          console.log("icon.type: ", result.get('appName'));
+          // console.log("icon.type: ", result.get('appName'));
         }
 
         for(let data in icon){
@@ -554,14 +551,10 @@ export default createStore({
     
     async addClickCount(store, icon){
       
-      console.log("store.state.downloads: ", store.state.downloads);
-      console.log("icon: ", icon);
       if (store.state.downloads.indexOf(icon.id) == -1) {
         store.commit('setDataToArr', {arr: 'downloads', data: icon.id})
         // store.state.downloads.push(icon.id)
-        console.log(store.state.downloads.indexOf(icon.id));
         var id
-        console.log("icon.appName: ", icon.appName);
         if (icon.id) {
           id = icon.id
         } else{
@@ -712,8 +705,6 @@ export default createStore({
 
     adClick(store, data){
       let currentPathName = router.currentRoute.value.name
-      console.log("router: ", currentPathName);
-      console.log(data.adPosition);
       window.plausible("adClick", {props: {
         path: currentPathName,
         position: data.position,
@@ -853,9 +844,7 @@ export default createStore({
           return 1;
         }
         return 0;
-        // return a.name.length - b.name.length;
       });
-      // console.log(ordered);
       return ordered
     },
 

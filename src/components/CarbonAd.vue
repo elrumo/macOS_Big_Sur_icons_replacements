@@ -177,10 +177,8 @@ export default {
           let newNodeList = document.querySelector("#"+adId).children
 
           if(newNodeList.length > 1){
-            console.log(newNodeList.length);
             el.parentNode.removeChild(el);
           } else{
-            // console.log(newNodeList.length);
             return
           }
 
