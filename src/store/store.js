@@ -36,6 +36,8 @@ var IconsBase = Parse.Object.extend("Icons2");
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
 const algoliaIndex = client.initIndex('macOSicons')
+const replicaIndex = client.initIndex('macOSicons-date');
+
 
 export default createStore({
 
@@ -43,6 +45,9 @@ export default createStore({
     return{
       list: icons,
       dataToShow: [],
+      
+      noMoreResults: false,
+      iconListLen: 13_072,
 
       blogPosts: {},
       localPosts: localPosts,
@@ -247,12 +252,11 @@ export default createStore({
       store.commit('setDataToArr', {arr: 'learningHome', data: await getLearningHome()})
     },
 
-    async algoliaSearch(store){
+    async algoliaSearch(store, payload){
       let search = store.state.searchString
       let category = store.state.selectedCategory.id
 
       if (store.state.selectedCategory.name != "All") {
-        
         let algoliaSearch = await algoliaIndex.search(search, {filters: `approved:true AND category:"`+category+`"`, hitsPerPage: 150 })
         
         // Set the value of objectID to a new key named id
@@ -265,9 +269,16 @@ export default createStore({
         
         store.commit('pushDataToArr', {arr: "searchData", data: algoliaSearch.hits})
 
-      } else{ 
-        let algoliaSearch = await algoliaIndex.search(search, {filters: `approved:true`, hitsPerPage: 20 })
-
+      } else{ ;
+        let algoliaSearch
+        
+        if (search.length != 0) {
+          algoliaSearch = await algoliaIndex.search(search, {filters: `approved:true`, hitsPerPage: 25, page: payload.page })
+        } else{
+          algoliaSearch = await replicaIndex.search(search, {filters: `approved:true`, hitsPerPage: 25, page: payload.page })
+        }
+        
+        
         // Set the value of objectID to a new key named id
         algoliaSearch.hits = algoliaSearch.hits.map(item => {
           return {
@@ -275,8 +286,13 @@ export default createStore({
             id: item.objectID 
           }; 
         });
-
-        store.commit('pushDataToArr', {arr: "searchData", data: algoliaSearch.hits})
+        
+        if (payload.concat) {
+          store.commit('pushDataToArr', {arr: "searchData", data: algoliaSearch.hits, concatArray: true})
+        } else{
+          store.commit('pushDataToArr', {arr: "searchData", data: algoliaSearch.hits})
+          store.commit('setDataToArr', {arr: "iconListLen", data: algoliaSearch.nbHits})
+        }
       }
 
     },
@@ -389,7 +405,7 @@ export default createStore({
       let savedIcons = store.state.savedIcons
       
       if (search.length > 0) {
-        store.dispatch('algoliaSearch')
+        store.dispatch('algoliaSearch', {page: 0})
       }
 
       // if (category.name == "All") return;
@@ -776,7 +792,8 @@ export default createStore({
 
       // Return icons data if the user has NOT searched for something and has clicked to view a category.
       if (selectedCategory == "All" && !store.searchString) {
-        return store.list
+        // return store.list
+        return store.searchData
       } else if (selectedCategory != "All" && !store.searchString) {
         try {
           return store.dataToShow.filter(icon => icon.category.id == categoryId);
@@ -926,6 +943,14 @@ export default createStore({
     
     getHomeDialog(store){
       return store.homeDialog
+    },
+
+    noMoreResults(store){
+      return store.noMoreResults
+    },
+
+    getIconListLen(store){
+      return store.iconListLen
     },
 
 
