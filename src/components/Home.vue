@@ -785,7 +785,7 @@ export default {
     },
 
     isDialog(){
-      console.log(document.getElementByTagName("coral-dialog").open);
+      document.getElementByTagName("coral-dialog").open;
       return true;
     },
 
@@ -865,20 +865,16 @@ export default {
     },
 
     changeSortOrder(){
-      let parent = this
-      let sortByName = parent.sortByName
-      let date = parent.icons.date
-      let namingOrder = parent.icons.namingOrder
-      
-      console.log(sortByName);
+      let date = this.icons.date
+      let namingOrder = this.icons.namingOrder
 
-      if (parent.sortByName) {
-        parent.icons.iconsOrder = date
+      if (this.sortByName) {
+        this.icons.iconsOrder = date
       } else{
-        parent.icons.iconsOrder = namingOrder
+        this.icons.iconsOrder = namingOrder
       }
 
-      parent.sortByName = !parent.sortByName
+      this.sortByName = !this.sortByName
       
     },
     
@@ -925,8 +921,6 @@ export default {
           setTimeout(() => {
             let page = this.page
             this.page = page + 1
-            console.log("page:", this.page);
-
             parent.algoliaSearch({page: parent.page, concat: true})
             parent.scrolledToBottom = true
           }, 800)
@@ -1004,9 +998,6 @@ export default {
           id = icon.algoliaID
       }
 
-      console.log(icon);
-      console.log(id);
-
       const IconsBase = Parse.Object.extend("Icons2");
       const query = new Parse.Query(IconsBase);
       const docToEdit = await query.get(id)
@@ -1014,7 +1005,6 @@ export default {
 
       docToEdit.set({ [field]: newName }) // Save icnsToStore obj with .icns file and its url to Parse server
       docToEdit.save().then(() =>{
-        console.log(field, "updated.");
       }).catch((e) =>{
         document.getElementById("error").show()
       })
@@ -1023,7 +1013,6 @@ export default {
 
     changeDate(icon, e){
         let date = e.target.value
-        console.log(icon);
         
         // Get new input date and convert it to Unix miliseconds
         let day = date[0]+date[1]
@@ -1032,9 +1021,6 @@ export default {
 
         let newDate = new Date(month + "/" + day + "/" + year)
         let newTimeStamp = newDate.getTime()
-
-        console.log(newDate);
-        console.log(newTimeStamp);
 
         db.collection("submissions").doc(icon.id).update({
             timeStamp: newTimeStamp
@@ -1052,7 +1038,6 @@ export default {
     
     searchString: {
       handler(val, oldVal) {
-        console.log(val);
         this.page = 0;
 
         if (this.$route.name != "Home" && this.$route.name != "Search") return;
@@ -1095,8 +1080,6 @@ export default {
     ]),
 
     isMobile(){
-      let parent = this;
-      // console.log("this.windowWidth: ", this.windowWidth);
       return this.windowWidth <= 820
     },
     
@@ -1122,12 +1105,6 @@ export default {
       }
     },
 
-    async getTotalRestore(){
-      // let numIcons = await query.count()
-      // const query = new Parse.Query(Icons)
-      // query.exists("icnsFile")
-      // console.log(numIcons);
-    },
 
     getParseObj(){
       return Icons
@@ -1146,12 +1123,6 @@ export default {
         parent.noIcons = false
       }
       
-      // If searchString is empty (no search by the user), return the full list of icons
-      // if(!parent.searchString || parent.searchString.length == 0){
-      //   parent.isSearch = false 
-      //   return parent.selectedIcons
-      // }
-
       return parent.selectedIcons
     },
 

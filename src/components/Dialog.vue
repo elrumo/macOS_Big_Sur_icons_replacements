@@ -200,7 +200,6 @@ export default {
             fileName = Math.round(Math.random()*10000 + d.getTime() )
             fileName = fileName.toString()
           }
-          console.log(fileName, file.name);
           
           const Icons = Parse.Object.extend("Icons2");
           const icons = new Icons()

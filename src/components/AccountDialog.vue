@@ -320,7 +320,6 @@ export default {
       },
 
       setYourName(e){
-        console.log(e.target.value);
         this.yourName = e.target.value
       },
 
@@ -402,20 +401,13 @@ export default {
 
   mounted: async function(){
     let parent = this; 
-    // document.getElementById("accountDialog").show()
     const store = parent.$store; 
     let isAuth = store.getters.getUser.isAuth
     let curerntUser = Parse.User.current();
 
     if (!isAuth) {
-      // console.log("Not logged in");
     } else{
     }
-    // curerntUser.set("username", "Elias")
-    // curerntUser.save().then((data)=>{
-    // }).catch(e=>{
-    //   console.log(e);
-    // })
   },
 
   computed:{
