@@ -6,7 +6,6 @@
       style="position: fixed; left: 0px; top: 0px; z-index: 9999; pointer-events: none;"
     >
     </canvas>
-
     <deleteDialog :icon="!activeIcon"/>
 
     <div v-if="overflow"> {{ toggleOverflow() }} </div>
@@ -73,7 +72,7 @@
               <div class="shadow main-border-radius">
                 <input 
                   v-model="searchString" 
-                  :placeholder="'Search ' + iconListLen + ' icons'" 
+                  :placeholder="'Search ' + getIconListLen + ' icons'" 
                   type="text"  
                   id="searchBarInput"
                   class="_coral-Search-input _coral-Textfield searchBar" 
@@ -362,7 +361,6 @@
             id="iconList" 
             class="p-b-32 icon-list-area"
           >
-
               <!-- <CarbonAd
                 :template="2"
                 adId="homePage"
@@ -529,6 +527,8 @@ export default {
       Icons: Icons,
       Parse: Parse,
 
+      page: 0,
+
       iconList:{},
       searchString: "",
       awaitingSearch: false,
@@ -562,7 +562,7 @@ export default {
 
       downloads:{},
 
-      iconListLen: 5_385,
+      iconListLen: this.iconListLen,
       lastVisible: {},
       dataToShow: [],
       activeIcon: {},
@@ -654,6 +654,8 @@ export default {
     
     try {
       await this.fetchSavedIcons()
+      this.algoliaSearch({page: this.page, concat: false})
+      this.scroll()
       this.getIconsArray();
     } catch (error) {
       console.log("error: ", error);
@@ -905,12 +907,9 @@ export default {
       }
       
       if (parent.$store.state.selectedCategory.name != "All") {
-
         if (parent.$store.state.totalCategory == parent.selectedIcons.length) {
           parent.scrolledToBottom = true
           return
-          setTimeout(() => {
-          }, 800)
         } else{
           setTimeout(() => {
             parent.loadMoreIcons()
@@ -918,40 +917,23 @@ export default {
           }, 800)
           return
         }
+      } else{
+        if (parent.$store.state.totalCategory == parent.selectedIcons.length && !this.noMoreResults) {
+          parent.scrolledToBottom = true
+          return
+        } else{
+          setTimeout(() => {
+            let page = this.page
+            this.page = page + 1
+            console.log("page:", this.page);
 
-      }
-
-      let howManyRecords = parent.howManyRecords
-      
-      parent.howManyRecords = howManyRecords + docLimit
-
-      const query = new Parse.Query(Icons);
-      query.equalTo("isHidden", false)
-      query.equalTo("approved", true)
-      query.include("user");
-      query.descending("timeStamp");
-      query.skip(howManyRecords);
-      query.limit(docLimit);
-      const results = await query.find()
-      
-      parent.scrolledToBottom = true
-      
-      let allIcons = []
-
-      for(let result in results){
-        let iconItem = results[result].attributes
-        if (iconItem.user.attributes.isBanned || iconItem.isHidden) continue
-        
-        let iconData = {}
-        for(let data in iconItem){
-          iconData[data] = iconItem[data]
+            parent.algoliaSearch({page: parent.page, concat: true})
+            parent.scrolledToBottom = true
+          }, 800)
+          return
         }
-
-        iconData.id =  results[result].id;
-        allIcons.push(iconData)
       }
 
-      parent.$store.dispatch("pushDataToArr", {data:  allIcons, arr: "list", concatArray: true});
     },
 
     scroll() {
@@ -1003,46 +985,6 @@ export default {
       query.count().then((count) =>{
         parent.iconListLen = count
       })
-
-      
-      parent.setData({state: 'list', data: []})
-      var allIcons = []
-
-      // Save savedIcons IDs to array to compare them to fetched icons
-      let savedIconsId = parent.getSavedIcons.map(({id}) => id )
-      
-      try{
-        for(let result in results){
-          let iconId = results[result].id
-          let iconItem = results[result].attributes
-
-          if (iconItem.user.attributes.isBanned || iconItem.isHidden) continue
-          let iconData = {}
-
-          for(let data in iconItem){
-            iconData[data] = iconItem[data]
-          }
-          iconData.id = iconId
-
-          // Check if icon has been saved by the user
-          iconData.isSaved = savedIconsId.includes(iconData.id);
-          
-          allIcons.push(iconData)
-        }
-        parent.$store.dispatch("pushDataToArr", {data:  allIcons, arr: "list", concatArray: true});
-      } catch (error) {
-        console.log('ERROR: ', error);
-      }
-      
-      // Gets up to date info about the user
-      let data = {
-        howManyRecords: 0,
-        results: results
-      }
-
-      var attempts = 0;
-
-      parent.scroll()
 
     },
 
@@ -1107,35 +1049,18 @@ export default {
   },
 
   watch:{
-
-    // searchQuery: _.debounce(function() {
-    //   this.isTyping = false;
-    // }, 1000),
-    // isTyping: function(value) {
-    //   if (!value) {
-    //     this.searchUser(this.searchQuery);
-    //   }
-    // },
-
+    
     searchString: {
       handler(val, oldVal) {
+        console.log(val);
+        this.page = 0;
+
         if (this.$route.name != "Home" && this.$route.name != "Search") return;
 
         if (val == '') this.setData({state: "searchString", data: val}); // Don't wait 500ms before showing empty search results
 
-
-        // if (!this.awaitingSearch && val != '') {
           this.setData({state: "searchString", data: val})
-          this.algoliaSearch()
-          
-        //   setTimeout(() => {
-        //     this.setData({state: "searchString", data: val})
-        //     this.algoliaSearch()
-        //     this.awaitingSearch = false;
-        //   }, 500); // 1 sec delay
-        // }
-
-        // this.awaitingSearch = true;
+          this.algoliaSearch({page: 0, concat: false})
       },
       deep: true
     },
@@ -1165,7 +1090,8 @@ export default {
       'getSelectedCategory', 
       'getSavedIcons',
       'getSupportMessage',
-      'getHomeDialog'
+      'getHomeDialog',
+      'getIconListLen',
     ]),
 
     isMobile(){
@@ -1221,13 +1147,12 @@ export default {
       }
       
       // If searchString is empty (no search by the user), return the full list of icons
-      if(!parent.searchString || parent.searchString.length == 0){
-        parent.isSearch = false 
-        return parent.selectedIcons
-      }
+      // if(!parent.searchString || parent.searchString.length == 0){
+      //   parent.isSearch = false 
+      //   return parent.selectedIcons
+      // }
 
       return parent.selectedIcons
-      // return parent.$store.state.dataToShow
     },
 
     iconListStore(){
