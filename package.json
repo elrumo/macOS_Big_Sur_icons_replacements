@@ -25,7 +25,7 @@
     "esbuild": "^0.14.8",
     "less": "^4.1.2",
     "less-loader": "^7.3.0",
-    "marked": "^1.2.9",
+    "marked": "^4.0.10",
     "parse": "^3.4.0",
     "push-dir": "^0.4.1",
     "register-service-worker": "^1.7.2",
