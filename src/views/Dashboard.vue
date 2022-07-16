@@ -189,18 +189,14 @@ import { mapGetters, mapActions } from 'vuex'
 
 import Parse from 'parse/dist/parse.min.js';
 
-// Parse.initialize("macOSicons");
-// Parse.serverURL = 'https://media.macosicons.com/parse'
-
 const Icons = Parse.Object.extend("Icons2");
 const User = Parse.Object.extend("User");
 
 Parse.User.enableUnsafeCurrentUser() // Enable cache for user auth, to avoid having to always login
-const currentUser = Parse.User.current(); // Check if user is currently logged in or not
 
 let lastVisible
 
-const docLimit = 50
+const docLimit = 800
 
 import addCoralIcon from "../assets/icons/add.svg"
 import newItemCoralIcon from "../assets/icons/newItem.svg"
@@ -250,7 +246,7 @@ export default {
   },
 
   methods:{
-    ...mapActions(['showToast']),
+    ...mapActions(['showToast', 'setAuth', 'setUser']),
     
     changeIconStatus(status) {
       let parent = this
@@ -374,10 +370,11 @@ export default {
       });
 
       console.log(user);
-
       Parse.User.logIn(email, password).then((user) => { // Logging in user
-        parent.isAuth = true;
-        console.log(user);
+        this.isAuth = true;
+        this.setUser(user)
+        this.getParseData()
+        this.getReUploadIcons()
       }).catch((error) =>{
         console.log(error);
       })
@@ -388,17 +385,16 @@ export default {
     },
 
     async deleteSubmission(icon){
-        let parent = this
         console.log(icon);
 
         let query = new Parse.Query(Icons)
         let docToDelete = await query.get(icon.id);
 
         docToDelete.destroy().then(() =>{
-          Vue.delete(parent.icons[icon.usersName].icons, icon.appName) // Delete object locally
+          Vue.delete(this.icons[icon.usersName].icons, icon.appName) // Delete object locally
           
-          if (Object.keys(parent.icons[icon.usersName].icons).length == 0 ) { // Delete user from UI if no icons are left
-            Vue.delete(parent.icons, icon.usersName)
+          if (Object.keys(this.icons[icon.usersName].icons).length == 0 ) { // Delete user from UI if no icons are left
+            Vue.delete(this.icons, icon.usersName)
           }
         }).catch((e) =>{
           console.log(e);
@@ -414,7 +410,6 @@ export default {
     },
 
     async approveIcon(icon){  
-      let parent = this
       // console.log(icon);
       console.log("icon.id: ", icon.id);
 
@@ -428,14 +423,14 @@ export default {
       Parse.Cloud.run("testJob", newIcon).then((result)=>{
         icon.isReview = true
         icon.isReUploadReview = true
-        parent.showToast({
+        this.showToast({
           id: "toastMessage",
           message: "Icon has been approved",
           variant: "success"
         })
       }).catch((e)=>{
         console.log("e: ", e);
-        parent.showToast({
+        this.showToast({
           id: "toastMessage",
           message: e,
           variant: "error"
@@ -447,12 +442,6 @@ export default {
     async sendEmail(icon){  
       let parent = this
       console.log("icon: ", icon);
-
-      // delete icon.DownloadCount
-      // delete icon.user
-      // delete icon.category
-      // delete icon.type
-      // delete icon.icons
       
       parent.icons[icon.usersName].emailSent = "requested";
 
@@ -580,7 +569,11 @@ export default {
       
       // query.equalTo("isReUpload", false)
       // query.ascending("usersName");
-      query.equalTo("approved", false)
+
+      // query.doesNotExist("icnsUrl");
+      // query.doesNotExist("icnsFile");
+      // query.equalTo("approved", true);
+      query.equalTo("approved", false);
       query.descending("createdAt");
       query.exists("highResPngFile");
       query.limit(docLimit);
@@ -657,11 +650,10 @@ export default {
         }
       }
       
-      parent.scroll()
+      this.scroll()
     },
 
     async getReUploadIcons(){
-      let parent = this
       const query = new Parse.Query(Icons);
       
       query.equalTo("approved", false)
@@ -678,9 +670,9 @@ export default {
           handleParseError(error)
       }
 
-      parent.getIconListLenReUpload(query); // Get how many icons to approve.
+      this.getIconListLenReUpload(query); // Get how many icons to approve.
 
-      parent.howManyRecords = docLimit
+      this.howManyRecords = docLimit
       
       for(let result in results){
         
@@ -702,8 +694,8 @@ export default {
         let creditUrl = docData.credit
 
         // Set user if the user has no icons on the dashboard
-        if(parent.icons.reUploaded[usersName] == undefined ){
-          Vue.set(parent.icons.reUploaded, usersName, {
+        if(this.icons.reUploaded[usersName] == undefined ){
+          Vue.set(this.icons.reUploaded, usersName, {
             "usersName": usersName, 
             "email": email, 
             "icons":{}, 
@@ -712,10 +704,10 @@ export default {
             "user": user
           })
 
-          Vue.set(parent.icons.reUploaded[usersName].icons, docData.id, docData)
+          Vue.set(this.icons.reUploaded[usersName].icons, docData.id, docData)
           
         } else{
-          Vue.set(parent.icons.reUploaded[usersName].icons, docData.id, docData)
+          Vue.set(this.icons.reUploaded[usersName].icons, docData.id, docData)
         }
 
       }
@@ -725,9 +717,6 @@ export default {
   },
 
   mounted: function(){  
-
-    let parent = this
-
     function handleParseError(err){
       switch (err.code) {
         case Parse.Error.INVALID_SESSION_TOKEN:
@@ -740,21 +729,20 @@ export default {
       }
     }
 
-    if (currentUser) {
+    if (this.currentUser) {
 
       if (!Parse.User.current().attributes.isAdmin) {
-        parent.$router.push({ path: '/#' })
+        this.$router.push({ path: '/#' })
         Parse.User.logOut();
         return
       }
 
-      parent.isAuth = true
-
-      parent.getParseData()
-      parent.getReUploadIcons()
+      this.isAuth = true
+      this.getParseData()
+      this.getReUploadIcons()
 
     } else{
-      parent.isAuth = false
+      this.isAuth = false
       console.log("You are not logged in");
     }
     
@@ -770,7 +758,7 @@ export default {
       'approvedIconsCount',
       'isLoading',
       'getSelectedIcon',
-      'getUserInfo'
+      'getUserInfo',
     ]),
 
     userIcons(){
@@ -810,6 +798,11 @@ export default {
         return parent.icons.reUploaded
       }
 
+    },
+
+    currentUser(){
+      let currentUser = Parse.User.current(); // Check if user is currently logged in or not
+      return currentUser
     }
   }
 

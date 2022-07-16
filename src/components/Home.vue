@@ -52,6 +52,7 @@
       :iconListLen="iconListLen"
       :parseObj="getParseObj"
       :iconsEmpty="true"
+      :getHomeDialog="getHomeDialog"
     />
 
     
@@ -71,7 +72,7 @@
             <div class="m-auto main-search" style="max-width:300px;">
               <div class="shadow main-border-radius">
                 <input 
-                  v-model="searchString" 
+                  v-model="searchString"
                   :placeholder="'Search ' + getIconListLen + ' icons'" 
                   type="text"  
                   id="searchBarInput"
@@ -86,6 +87,19 @@
                 </svg>
                 
                 <!-- Cross icon -->
+                <transition name="fade">
+                  <div v-if="!searchString" class="searchBar-right">
+                    <div class="search-by-algolia-wrapper">
+                      <p class="coral-Body--XS">
+                        Search powered by
+                      </p>
+                      <a href="https://www.algolia.com/" target="_blank">
+                        <img class="algolia-logo" :src="alogliaLogo" alt="">
+                      </a>
+                    </div>
+                  </div>
+                </transition>
+
                 <transition name="fade">
                   <div v-if="searchString" class="searchBar-right">
                     
@@ -413,9 +427,10 @@ import Parse from 'parse/dist/parse.min.js';
 // TODO: remove credentials
 const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
 const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
+const VITE_PARSE_URL = import.meta.env.VITE_PARSE_URL
 
 Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
-Parse.serverURL = 'https://media.macosicons.com/parse'
+Parse.serverURL = VITE_PARSE_URL
 
 var Icons = Parse.Object.extend("Icons2");
 
@@ -457,6 +472,8 @@ import newItemCoralIcon from "../assets/icons/newItem.svg"
 import editCoralIcon from "../assets/icons/edit.svg"
 import placeholderCoralIcon from "../assets/placeholder-icon.png"
 import ChevronDownCoralIcon from "../assets/icons/ChevronDown.svg"
+
+import AlgoliaIcon from "../assets/algolia_logo.svg"
 
 export default {
   name: 'Home',
@@ -567,6 +584,8 @@ export default {
       dataToShow: [],
       activeIcon: {},
       
+      alogliaLogo: AlgoliaIcon,
+
       icons:{
         success: deleteIcon,
         namingOrder: namingOrderIcon,
@@ -658,7 +677,7 @@ export default {
       this.scroll()
       this.getIconsArray();
     } catch (error) {
-      console.log("error: ", error);
+      this.handleParseError(error)
     }
 
     let fullPath = this.$route.fullPath

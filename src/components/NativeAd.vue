@@ -96,8 +96,6 @@ export default {
           } catch (error) {
           }
 
-          // console.log(document.getElementById(adId).children.length);
-
           if (adExists > 0 || attempts >= 25) return;
           // if (attempts >= 25) return;
           if (adExists == 0) {
@@ -113,7 +111,7 @@ export default {
             }
           } else return
 
-        }, 1800);
+        }, 800);
       }
 
       let el = document.getElementById(adId+"customAd")
@@ -127,12 +125,6 @@ export default {
       }
 
       if (!parent.isAd) {
-          // // console.log(parent.isAd);
-          // setTimeout(() =>{
-          //   if (!_bsa.exists(el)) {
-          //     getAd(el)
-          //   }
-          // }, 500)
           try {
             adExist()
           } catch (error) {

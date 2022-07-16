@@ -27,7 +27,7 @@ export default {
     },
 
     methods:{
-        ...mapActions(['showToast', 'deleteItem']),
+        ...mapActions(['showToast', 'deleteItem', 'handleParseError']),
 
         async deleteIcon(icon){
             let parent = this
@@ -47,8 +47,8 @@ export default {
                     message: icon.appName+" has been deleted.",
                     variant: "success"
                 })
-            }).catch((e) =>{
-                console.log("e: ", e);
+            }).catch((error) =>{
+                this.handleParseError(error)
             })
             
         },

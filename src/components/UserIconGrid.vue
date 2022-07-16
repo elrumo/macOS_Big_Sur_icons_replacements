@@ -1,7 +1,12 @@
 <template>
   <section class="icon-list-area p-t-48 p-b-40">
 
-    <CarbonAd style="min-height: 200px" adId="homePage"/>
+    <!-- <CarbonAd style="min-height: 200px" adId="homePage"/> -->
+    <NativeAd
+      :adId="'userProfile'"
+      :template="2"
+      class="grid-ad"
+    />
 
     <UserIconCard
       v-for="icon in userIcons"

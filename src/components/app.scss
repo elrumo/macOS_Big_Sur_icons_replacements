@@ -86,6 +86,14 @@ li{
   word-wrap: break-word;
 }
 
+.hidden{
+    display: none;
+}
+
+.is-focused{
+    border-radius: var(--main-border-radius) !important;
+}
+
 .coral-Heading--XXL{
     min-height: 3.66rem;
 }
@@ -1383,6 +1391,33 @@ coral-buttongroup button{
 
 .opacity-80{
     opacity: 0.8;
+}
+
+.search-by-algolia-wrapper{
+    transform: translateY(-50%);
+    top: 53%;
+    opacity: 0.3;
+    transition: 0.3s;
+    font-size: 0.7rem;
+    display: flex !important;
+    align-items: center;
+
+    &:hover{
+        opacity: 1;
+    }
+
+    p{
+        margin: 0px !important;
+    }
+
+    a{
+        display: flex;
+    }
+}
+
+.algolia-logo{
+    padding: 0px 5px;
+    width: 50px;
 }
 
 .dark-mode-btn{

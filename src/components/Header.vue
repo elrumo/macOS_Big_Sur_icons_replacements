@@ -365,7 +365,12 @@ export default {
     },
 
     methods:{
-        ...mapActions(['showEl', "logOut", "changePath"]),
+        ...mapActions([
+            'showEl',
+            'logOut',
+            'changePath',
+            'handleParseError'
+        ]),
 
         toggleOverlay(){
             let parent = this
@@ -436,30 +441,28 @@ export default {
     },
 
     mounted: function(){
-        let parent = this
-
-        // Scroll listener to add/remove nav meny shadow
+        // Scroll listener to add/remove nav menu shadow
         window.addEventListener('scroll', this.handleScroll);
 
         // Obvserve everytime the dialog is opened
-        parent.onDialogOpen()
+        this.onDialogOpen()
         
         if (this.getUser.isAuth) {
-            parent.optionsList[1].onClick.data = "/u/" + this.getUser.userData.username
+            this.optionsList[1].onClick.data = "/u/" + this.getUser.userData.username
         }
 
         // Sets light/dark mode based on browser
         let useDark = window.matchMedia('(prefers-color-scheme: dark)');
         // Sets light/dark mode based on browser on first load
         if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-            parent.toggleDarkMode()
+            this.toggleDarkMode()
         }
-        useDark.addListener((evt) => parent.toggleDarkMode());
+        useDark.addListener((evt) => this.toggleDarkMode());
+
     },
 
     computed: {
         ...mapGetters(['getUser']),
-
     },
 
     unmounted () {

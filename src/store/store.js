@@ -29,9 +29,10 @@ let algolia = {
 
 const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
 const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
+const VITE_PARSE_URL = import.meta.env.VITE_PARSE_URL
 
 Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
-Parse.serverURL = 'https://media.macosicons.com/parse'
+Parse.serverURL = VITE_PARSE_URL
 var IconsBase = Parse.Object.extend("Icons2");
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
@@ -83,6 +84,8 @@ export default createStore({
       savedIconCount: "",
       
       userData: Parse.User.current(),
+
+      isAuth: false,
 
       loading: true,
 
@@ -172,6 +175,12 @@ export default createStore({
       store.userData = userData;
     },
 
+    setState(store, data){
+      let state = data.state
+      let payload = data.payload
+      store[state] = payload;
+    },
+
     pushUserIcons(store, data){
       let iconData = data.iconData
       let status = data.status
@@ -198,6 +207,10 @@ export default createStore({
       } else{
         return
       }
+    },
+
+    setAuth(store, isAuth){
+      store.commit('setState', {state: 'isAuth', payload: isAuth})
     },
 
     async fetchResourceFromSlug(store, slug){
@@ -674,9 +687,9 @@ export default createStore({
     },
 
     setUser(store, user){
-      let curerntUser = Parse.User.current()
-      if (curerntUser) {
-        store.commit('setUser', curerntUser)
+      let currentUser = Parse.User.current()
+      if (currentUser) {
+        store.commit('setUser', currentUser)
       }
     },
 
@@ -684,6 +697,7 @@ export default createStore({
       Parse.User.logOut().then(() => {
         console.log("logged out");
         store.commit('setUser', null)  // this will now be null
+        window.location.reload()
       });
     },
 
@@ -755,8 +769,18 @@ export default createStore({
           store.commit("pushAppCategories", {state: "iconType", storeObj: typeObj})
         }
       }).catch((error)=>{
-        console.log("error: ", error);
+        store.dispatch('handleParseError', error);
       })
+    },
+    
+    handleParseError(store, err) {
+      console.log("Parse error: ", err);
+      switch (err.code) {
+        case Parse.Error.INVALID_SESSION_TOKEN:
+          console.log("Parse error: ", err.code);
+          store.dispatch('logOut');
+          break;
+      }
     }
 
   },  
@@ -869,8 +893,8 @@ export default createStore({
     getUser(store){
       let parseUserObj = Parse.User.current()
       let userData = JSON.parse(JSON.stringify(store.userData))
-      let isAuth
-
+      let isAuth = store.isAuth
+      
       if (userData != null) {
         isAuth = true
         return { userData, parseUserObj, isAuth}
