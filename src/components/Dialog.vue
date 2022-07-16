@@ -104,9 +104,6 @@ import Vue from 'vue'
 import { mapActions } from 'vuex';
 import Parse from 'parse/dist/parse.min.js';
 
-// Parse.initialize("macOSicons");
-// Parse.serverURL = 'https://media.macosicons.com/parse'
-
 import addIcon from "../assets/icons/add.svg"
 import deleteIcon from "../assets/icons/delete.svg"
 import newItemIcon from "../assets/icons/newItem.svg"

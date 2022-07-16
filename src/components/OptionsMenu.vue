@@ -7,7 +7,7 @@
   >
       <div class="_coral-Popover-tip"></div>
       <coral-popover-content>
-          <div class="options-list">
+          <div class="options-list" @click="closeMenu('profileNavPopover')">
 
               <ul @click="item.onClick.method(item.onClick.data)" v-for="item in optionsList" :key="item.name" class="options-item">
                   <IconUI :img="item.img" :alt="item.name"/>
@@ -40,7 +40,11 @@ export default {
       optionsList: {},
     },
 
-    methods:{},
+    methods:{
+        closeMenu(id){
+            document.getElementById(id).open = false
+        }
+    },
 
     computed:{}
 }

@@ -125,6 +125,23 @@
               </coral-alert>
             
             </div>
+
+            <!-- Name to show -->
+            <div v-if="userInfo.step == 2 && userInfo.newAccount" class="coral-FormGroup-item">
+              <label id="nameToShowLabel-1" class="coral-FieldLabel">
+                Name To Show (optional)
+              </label>
+              <input
+                id="nameToShow-1"
+                is="coral-textfield"
+                labelledby="nameToShowLabel-1"
+                class="coral-Form-field"
+                type="text"
+                name="nameToShow"
+                v-on:keyup="getTextFieldValue($event, 'nameToShow', false)"
+                v-on:change="getTextFieldValue($event, 'nameToShow', false)"
+              >
+            </div>
             
             <!-- Password -->
             <div v-if="userInfo.step == 2 && (userInfo.newAccount || userInfo.hasLoggedIn)" class="coral-FormGroup-item">
@@ -144,7 +161,7 @@
               >
               <div v-if="!userInfo.problems.passNotSecure">
                 <p class="coral-Body--XS opacity-60 f-w-400 p-t-8">
-                  Password must contain a number, a capital letter and be more than 6 characters long.
+                  Password must contain a number, a capital letter and be 6 or more characters long.
                 </p>
                 <p v-if="userInfo.step == 2 && userInfo.hasLoggedIn" class="coral-Body--XS opacity-60 f-w-400 p-t-8">
                   Problems signing in? <a @click="resetPassword" class="coral-link pointer">Reset password</a> 
@@ -272,22 +289,22 @@
       <!-- Sign up -->
       <div v-if="userInfo.step == 2 && userInfo.newAccount">
         <button id="continue-btn" is="coral-button" 
-          v-if="isNotEmpty"
+          v-if="isSignUpValid"
           @click="signUp(3)">
           Finish sign Up
         </button>
         
         <button id="continue-btn" is="coral-button"
-          v-if="!isNotEmpty"
+          v-if="!isSignUpValid"
           disabled="">
           Finish sign Up
         </button>
       </div>
      
-      <button id="continue-btn" is="coral-button"
+      <!-- <button id="continue-btn" is="coral-button"
         v-if="!isValid" disabled="">
         Continue
-      </button>
+      </button> -->
 
     </coral-dialog-footer>
 
@@ -299,8 +316,6 @@ import { mapActions, mapGetters } from 'vuex';
 import Parse from 'parse/dist/parse.min.js';
 // import jwt_decode from 'jwt-decode';
 
-// Parse.initialize("macOSicons");
-// Parse.serverURL = 'https://media.macosicons.com/parse'
 
 import addCoralIcon from "../assets/icons/add.svg"
 import newItemCoralIcon from "../assets/icons/newItem.svg"
@@ -350,6 +365,7 @@ export default {
         passwordResetSent: false,
         email: "",
         username: "",
+        nameToShow: "",
         password: "",
         hasLoggedIn: false,
         newAccount: true,
@@ -358,7 +374,7 @@ export default {
   },
   
   methods:{
-    ...mapActions(['showToast', 'setUser']),
+    ...mapActions(['showToast', 'setUser', 'handleParseError']),
     
     toStep(step){
       this.userInfo.step = step
@@ -390,13 +406,17 @@ export default {
         let fieldValue = e.target.value
         var isValid = e.target.checkValidity()
 
-        if(e.keyCode == 13){
-          parent.nextStep()
+        if (field == 'username') {
+          fieldValue = fieldValue.replaceAll(" ", '_')
+          e.target.value = fieldValue.toLowerCase()
+        }
+        
+        if (field == 'email') {
+          isValid = this.validateEmail(fieldValue);
         }
 
-        // Checks if email has a '.'
-        if (!fieldValue.includes(".") && isEmail) {
-          isValid = false
+        if(e.keyCode == 13){
+          parent.nextStep()
         }
         
         parent.userInfo[field] = fieldValue
@@ -412,17 +432,20 @@ export default {
       return Object.keys(obj)
     },
 
-    checkOldAccount(step){
+    async checkOldAccount(step){
       let parent = this;
       parent.isLoading = true
       let email = parent.userInfo.email;
       let queryUsers = new Parse.Query(Parse.User)
       queryUsers.equalTo("email", email);
+      console.log('Hiii');
+
+      let findUsers = await queryUsers.find()
+      console.log(findUsers);
 
       queryUsers.find().then((response)=>{
 
         if (response.length != 0) {
-          
           if (response[0].get("hasLoggedIn")) {
             parent.userInfo.hasLoggedIn = true
           } else{
@@ -468,6 +491,8 @@ export default {
       let roleIsUser = await roleQuery.get("NedBDJozKh")
       let userExists = await parent.userExists()
 
+      console.log(this.userInfo.nameToShow.length == 0 ? this.userInfo.username : this.userInfo.nameToShow);
+
       if (userExists) {
         console.log(userExists);
         parent.userInfo.problems.usernameExists = true
@@ -477,14 +502,15 @@ export default {
       }
 
       user.set({
-        username: parent.userInfo.username,
-        password: parent.userInfo.password,
-        email: parent.userInfo.email,
+        username: this.userInfo.username,
+        nameToShow: this.userInfo.nameToShow.length == 0 ? this.userInfo.username : this.userInfo.nameToShow,
+        password: this.userInfo.password,
+        email: this.userInfo.email,
         Role: roleIsUser
       });
       
-      user.signUp().then((saved) =>{
-        console.log(saved);
+      user.signUp().then((newUser) =>{
+        this.setUser(newUser)
         parent.userInfo.step = 3
         parent.isLoading = false
       }).catch((error)=>{
@@ -585,11 +611,29 @@ export default {
 
     },
 
+    allAreTrue(arr) {
+      return arr.every(element => element === true);
+    },
+
+    validateEmail(email){
+      if (!email) {
+        email = this.userInfo.email;
+      }
+      const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return emailRegex.test(String(email).toLowerCase())
+    },
+
   },
 
   computed:{
     ...mapGetters(['getUser']),
     
+    isSignUpValid(){
+      let isValid = [this.validatePassword, this.validateEmail(), this.validateUsername]
+      console.log(this.validatePassword, this.validateEmail(), this.validateUsername);
+      return this.allAreTrue(isValid)
+    },
+
     waitSeconds(){
       let parent = this
       var interval = setInterval(function(){
@@ -612,12 +656,17 @@ export default {
       return parent.showResend 
     },
 
+    validateUsername(){
+      const username = this.userInfo.username
+      console.log(this.userInfo.username);
+      return username.length > 2
+    },
+
     validatePassword(){
       let parent = this
       let userInfo = parent.userInfo
       var passwordRules = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})");
-      // console.log("Passes: ", passwordRules.test(userInfo.password));
-      return !passwordRules.test(userInfo.password)
+      return passwordRules.test(userInfo.password) && userInfo.password.length >= 6
     },
 
     async isNotEmpty(){
@@ -629,6 +678,7 @@ export default {
       
       // Do password strengh checks only if the user does not exist
       let userExists = await parent.userExists()
+      
       if (!userExists) {
         isValid.push(parent.validatePassword)
       }
@@ -637,7 +687,6 @@ export default {
           if (userInfo[field] == "" && field != "hasLoggedIn" && field != "newAccount") {
             isValid.push(true)
           }
-          // console.log(field, ": ", userInfo[field]);
       })
 
       if (isValid.length == 0) {
@@ -671,13 +720,12 @@ export default {
       query.get(curerntUser.id).then((user)=>{
         parent.setUserFunc(user)
       }).catch((error) => {
-        console.log("Cached user: ", error);
-        Parse.User.logout()
-        Parse.User.logout().then((data) => {
-          console.log("Logged out: ", data);
-        }).catch(err => { 
-          console.log("Error logging out after invalid user session: ", err)
-        })
+        this.handleParseError(error)
+        // Parse.User.logout().then((data) => {
+        //   console.log("Logged out: ", data);
+        // }).catch(err => { 
+        //   console.log("Error logging out after invalid user session: ", err)
+        // })
       })
 
     }

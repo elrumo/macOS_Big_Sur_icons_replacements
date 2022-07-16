@@ -2,13 +2,19 @@
 <div class="content-wrapper-regular">
   <div id="hero" class="hero-wrapper">
 
-    <!-- <div class="PH-badge">
-      <Sponsor class="gitHub-sponsor"/>
-    </div> -->
+    <div
+      v-if="getHomeDialog.showAnnouncement"
+      class="PH-badge"
+    >
+      <Announcement
+        class="gitHub-sponsor"
+        :getHomeDialog="getHomeDialog"
+      />
+    </div>
     <div class="hero-text-area" v-if="iconsEmpty">    
         
 
-        <div
+        <!-- <div
           class="ad-hero mobile-hidden"
         >
           <NativeAd
@@ -16,7 +22,7 @@
             :adId="'iconbar-js-hero'"
             :key="$route.fullPath + 'ad' + '_hero'"
           />
-        </div>
+        </div> -->
 
         <div class="desktop-hidden m-t-24"></div>
 
@@ -134,6 +140,7 @@
 
 <script>
 import Sponsor from "./Sponsor.vue";
+import Announcement from "./Announcement.vue";
 import NativeAd from "./NativeAd.vue";
 import { mapGetters } from "vuex";
 
@@ -144,6 +151,7 @@ export default {
 
   components:{
     Sponsor,
+    Announcement,
     NativeAd
   },
 
@@ -162,6 +170,7 @@ export default {
     iconListLen: 0,
     iconsEmpty: Boolean,
     parseObj: {},
+    getHomeDialog: {}
   },
 
   methods: {

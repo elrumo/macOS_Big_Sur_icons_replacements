@@ -69,7 +69,7 @@
                 <div v-if="imageData" class="upload-card-wrapper">
                 
                   <div v-for="icon in filesToShow" :key="icon.randId" class="upload-card coral-dark-bg coral-Well">
-<!-- {{icon}} -->
+                    <!-- {{icon}} -->
                     <SubmissionIconPreview
                       :icon="icon"
                       :removeFile="removeFile"
@@ -145,7 +145,6 @@
                               :value="type.id"
                               :selected="selectedOption(type.id, icon.type)"
                             >
-                              <!-- :selected="icon.category.includes(category.id)" -->
                               {{ type.name }}
                             </option>
                           </select>
@@ -166,6 +165,38 @@
                           placeholder="The app's developer website"
                           v-on:change="getValue($event, icon.randId, 'appWebsite')"
                         >
+                      </div>
+                      
+                      <!-- .icns file -->
+                      <div class="coral-FormGroup-item">
+                        <div>
+                          <label
+                            class="coral-FieldLabel"
+                            for="icnsFileUpload"
+                          >
+                            .icns file (optional)
+                          </label>
+
+                          <button
+                            is="coral-button"
+                            for="icnsFileUpload"
+                            @click="openFileUpload('icnsFileUpload', icon.randId)"
+                          >
+                            <span v-if="!filesToShow[icon.randId].icnsFile">
+                              Upload .icns file
+                            </span>
+                            <span v-if="filesToShow[icon.randId].icnsFile">
+                              Remove .icns file
+                            </span>
+                          </button>
+                          <input
+                            type="file"
+                            id="icnsFileUpload"
+                            accept=".icns"
+                            class="hidden"
+                            @change="setIcns($event, icon.randId)"
+                          >
+                        </div>
                       </div>
                       
                       <!-- Is dark mode -->
@@ -271,6 +302,19 @@ export default {
     methods:{
       ...mapActions(['showToast', 'fetchAppCategories', 'fetchIconType']),
 
+      openFileUpload(uploadId, iconId){
+        event.preventDefault()
+        const uploadInput = document.getElementById(uploadId)
+        let iconFile = this.filesToShow[iconId].icnsFile
+
+        if (iconFile) {
+          this.filesToShow[iconId].icnsFile = ''
+          uploadInput.value = '';
+        }else{
+          uploadInput.click();
+        }
+      },
+
       iconBrew(icon, size){
         console.log(iconBrew[icon + size]);
         return iconBrew[icon + size];
@@ -288,10 +332,10 @@ export default {
       },
 
       getValue(e, appName, field){
-        let parent = this
+        console.log(e);
         let target = e.target
         let fieldValue = target.value
-        parent.filesToShow[appName][field] = fieldValue;
+        this.filesToShow[appName][field] = fieldValue;
       },
 
       selectedOption(option, value){
@@ -310,6 +354,12 @@ export default {
         if (Object.keys(this.filesToShow).length === 0) {
           parent.imageData = false
         }
+      },
+
+      setIcns(event, iconId){
+        let file = event.target.files[0]
+        this.filesToShow[iconId].icnsFile = file
+        console.log("event: ", this.filesToShow[iconId]);
       },
 
       selectIcon(event) {
@@ -398,6 +448,9 @@ export default {
           let typeId = parent.filesToShow[fileNum].type;
           let isDarkMode = parent.filesToShow[fileNum].isDarkMode;
           let isAuthor = parent.filesToShow[fileNum].isAuthor;
+          let icnsFile = parent.filesToShow[fileNum].icnsFile ? parent.filesToShow[fileNum].icnsFile: '';
+          let icnsFileUrl = '';
+          let parseIcnsFile;
           
           // Retrieve Category Parse object
           let category = parent.filesToShow[fileNum].category;
@@ -426,6 +479,14 @@ export default {
           const Icons = Parse.Object.extend("Icons2");
           const icons = new Icons()
 
+          // const parseFile = new Parse.File(fileName, file); // Set file to new Parse object
+          console.log("icnsFile: ", icnsFile);
+          if (icnsFile != '') {
+            parseIcnsFile = new Parse.File(fileName+'.icns', icnsFile); // Set file to new Parse object
+            let saveIcns = await parseIcnsFile.save()
+            icnsFileUrl = saveIcns._url;
+          }
+
           const parseFile = new Parse.File(fileName, file); // Set file to new Parse object
           parseFile.save().then((uploaded) => {
             console.log("Success: ", uploaded._url);
@@ -448,6 +509,11 @@ export default {
               DownloadCount: new DownloadCount(),
               isDarkMode: isDarkMode,
               isAuthor: isAuthor
+            }
+
+            if (parseIcnsFile != '') {
+              dataToStore.icnsFile = parseIcnsFile;
+              dataToStore.icnsUrl = icnsFileUrl;
             }
 
             icons.set(dataToStore);
@@ -497,16 +563,27 @@ export default {
               message: "There was an error, get in touch with @elrumo on Twitter",
               variant: "error"
             })
-            // The file either could not be read, or could not be saved to Parse.
           });
+
         }
       },
 
     },
 
-    mounted(){ 
+    async mounted(){ 
       this.fetchAppCategories()
       this.fetchIconType()
+
+      // const IconsBase = Parse.Object.extend("Icons2");
+      // const query = new Parse.Query(IconsBase);
+      // const newQuery = await query.get('Bg7PB3BbSA')
+
+      // const icnsFile = await newQuery.get("icnsFile");
+      
+      // if(icnsFile){
+      //   console.log(icnsFile.url());
+      // }
+
     },
 
     computed:{

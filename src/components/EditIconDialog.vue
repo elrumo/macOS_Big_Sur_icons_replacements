@@ -205,6 +205,7 @@ export default {
       'showToast',
       'setUser',
       'showEl',
+      'handleParseError'
     ]),
 
     iconBrew(iconName, filled){
@@ -279,6 +280,7 @@ export default {
           variant: "success"
         })
       }).catch((error) => {
+        this.handleParseError(error)
         parent.isLoading = false
         console.log(error);
         document.getElementById("editIconDialog").hide()
@@ -461,6 +463,7 @@ export default {
   },
   computed:{
     ...mapGetters(['getUser', 'getAppCategories', 'getIconType']),
+
     hasChanged(){
       let parent = this
       let icon = parent.icon
@@ -483,7 +486,7 @@ export default {
           return false
         }
       } catch (error) {
-        console.log("error: ", error);
+        this.handleParseError(error)
       }
     },
   }

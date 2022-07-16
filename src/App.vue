@@ -37,11 +37,14 @@ const appBody = document.getElementById('app')
 import Parse from 'parse/dist/parse.min.js';
 
 // TODO: remove credentials
-const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
-const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
+const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID;
+const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY;
+const VITE_PARSE_URL = import.meta.env.VITE_PARSE_URL;
 
-Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
-Parse.serverURL = 'https://media.macosicons.com/parse'
+Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY);
+Parse.serverURL = VITE_PARSE_URL;
+console.log(VITE_PARSE_URL);
+// Parse.serverURL = 'https://media.macosicons.com/parse'
 
 export default {
   name: 'App',
@@ -77,6 +80,7 @@ export default {
     ]),
 
     async fetchSavedIcons(){
+
       if (!Parse.User.current()){
         return 
       }

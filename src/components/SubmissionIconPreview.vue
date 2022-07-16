@@ -8,7 +8,6 @@
         :alt="icon.name+' preview'"
         :id="icon.randId"
       >
-
       <coral-quickactions placement="center" target="_prev">
         <coral-quickactions-item
           type="button" 
@@ -42,6 +41,7 @@
       :icon="iconBrew('alertWithCircle24')"
       iconposition="right"
       is="coral-button"
+      variant="quiet"
     >
       {{ isCheckingSize ? 'Stop' : 'Check size' }}
     </button>

@@ -6,7 +6,6 @@
     </coral-dialog-header>
     
     <coral-dialog-content>
-      
       <coral-dialog id="resetPasswordDialog">
           <coral-dialog-header>Reset your password</coral-dialog-header>
           
@@ -32,7 +31,9 @@
       <form class="coral-FormGroup account-dialog-form m-0 p-l-4">
         
         <div>
-          <h3 class="coral-Heading--S coral-Heading--light">Your Profile</h3>
+          <h3 class="coral-Heading--S coral-Heading--light">
+            Your Profile
+          </h3>
           
           <!-- Username -->
           <div class="coral-FormGroup-item">
@@ -41,12 +42,29 @@
             <input
               id="username-settings"
               is="coral-textfield"
-              labelledby="email-label"
+              labelledby="username-label"
               class="coral-Form-field"
               type="text"
               v-on:change="validate($event, 'username')"
               v-on:keyup="validate($event, 'username')"
               :value="getUser.userData.username"
+            >
+              <!-- :placeholder="getUser.userData.username" -->
+          </div>
+
+          <!-- nameToShow -->
+          <div class="coral-FormGroup-item">
+            <p v-if="propExists('authData')" class="coral-Body--XS"></p>
+            <label id="nameToShow-label" class="coral-FieldLabel">Your username</label>
+            <input
+              id="nameToShow-settings"
+              is="coral-textfield"
+              labelledby="nameToShow-label"
+              class="coral-Form-field"
+              type="text"
+              v-on:change="validate($event, 'nameToShow')"
+              v-on:keyup="validate($event, 'nameToShow')"
+              :value="getUser.userData.nameToShow"
             >
           </div>
           
@@ -341,21 +359,30 @@ export default {
       },
 
       validate(e, field){
-        let parent = this
         try {
           let isInvalid = e.target.classList.contains("is-invalid")
-
-          if (isInvalid) { parent.isValidated = false }
-          else{ parent.isValidated = true }
+          if (isInvalid || e.target.value.length == 0){
+            this.isValidated = false
+          }else{
+            this.isValidated = true
+          }
 
         }catch(error){ }
-        parent.getTextFieldValue(e, field)
+        this.getTextFieldValue(e, field)
       },
 
       getTextFieldValue(e, field){
         let parent = this
         let fieldValue
         
+        if (field == 'username') {
+          fieldValue = e.target.value
+          if (fieldValue.length != 0) {
+            fieldValue = fieldValue.replaceAll(" ", '_')
+            e.target.value = fieldValue.toLowerCase()
+          }
+        }
+
         if (e.target.nodeName == "CORAL-SWITCH") {
           fieldValue = e.target.checked
         } else{
@@ -363,24 +390,28 @@ export default {
         }
         parent.hasChanged = true
         parent.toUpdate[field] = fieldValue
+
+        if(e.keyCode == 13 && this.isValidated && this.hasChanged){
+          this.updateUserProp()
+        }
       },
 
       updateUserProp(){
         let parent = this
         let toUpdate = parent.toUpdate
         let ParseUser = Parse.User.current()
-        parent.isLoading.updatingUser = true;
+        this.isLoading.updatingUser = true;
 
         for(let key in toUpdate){
           ParseUser.set(key, toUpdate[key])
-          parent.setData({state: 'user', key: key, data: toUpdate[key]})
+          this.setData({state: 'user', key: key, data: toUpdate[key]})
         }
 
         ParseUser.save().then((data) =>{
-          parent.fetchUserAttributes()
-          parent.isLoading.updatingUser = false;
+          this.fetchUserAttributes()
+          this.isLoading.updatingUser = false;
           document.getElementById("accountDialog").hide()
-          parent.showToast({
+          this.showToast({
             id: "toastMessage",
             message: "Updated settings successfully.",
             variant: "success"

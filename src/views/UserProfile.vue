@@ -24,11 +24,16 @@
       <div class="profile-info-wrapper">
         <div class="profile-header-wrapper">
           <div class="profile-name-social">
-            <h3 class="coral-Heading--L m-0">
-              {{ getUserInfo.username }}
-            </h3>
+            <!-- <div class="profile-name-wrapper"> -->
+              <h3 class="coral-Heading--L m-0">
+                {{ getUserInfo.nameToShow }}
+              </h3>
+              <!-- <h4 class="coral-Heading--S m-0">
+                {{ getUserInfo.username }}
+              </h4> -->
+            <!-- </div> -->
             
-            <div>
+            <div class="profile-socials-wrapper">
               <a
                 v-if="getUserInfo.twitterHandle"
                 target="_blank"
@@ -75,6 +80,11 @@
         <div class="profile-descrption-box">
           <div v-if="loading.user" class="loading-placeholder m-b-8"></div>
           <div v-if="loading.user" class="loading-placeholder m-b-8"></div>
+
+           <h4 class="coral-Heading--S m-0 opacity-70">
+            {{ getUserInfo.username }}
+          </h4>
+
           <p v-if="getUserInfo.bio" class="coral-Body--L m-b-4">
             {{ getUserInfo.bio }}
           </p>
@@ -155,6 +165,7 @@
           {{ errorMessage }}
         </p>
       </div>
+      
       <UserIconGrid
         v-if="userIcons.length != 0"
         :userIcons="userIcons"
@@ -268,7 +279,8 @@ export default {
       'setDataToArr',
       'setData',
       'pushDataToArr',
-      'adClick'
+      'adClick',
+      'handleParseError'
     ]),
 
     iconBrew(iconName, filled){
@@ -277,7 +289,7 @@ export default {
 
     async copyUserUrl(){
       let parent = this;
-      let toCopy = "https://macosicons.com/u/" + parent.$route.params.user
+      let toCopy = "https://macosicons.com/#/u/" + parent.$route.params.user
       
       await navigator.clipboard.writeText(toCopy);
       
@@ -298,16 +310,22 @@ export default {
 
     async queryUser(){
       let parent = this;
-      let user = parent.user;
+      let user = this.user;
       let isBanned
 
       const queryUser = new Parse.Query(Parse.User);
-      let regExp = new RegExp("\\b" + user.username + "\\b")
-      queryUser.matches("username", regExp, "i")
-      let userInfo = await queryUser.find()
+      user.username = user.username.toLowerCase()
+      user.username = user.username.replaceAll(' ', '_')
+
+      try {
+        queryUser.equalTo("username", user.username);
+      } catch (error) {
+        this.handleParseError(error)
+      }
+      let userInfo = await queryUser.find();
 
       userInfo = userInfo[0];
-      parent.userInfo = userInfo;
+      this.userInfo = userInfo;
 
       try {
         isBanned = userInfo.attributes.isBanned;
@@ -319,11 +337,11 @@ export default {
       if (userInfo && !isBanned){
 
         // Fetch user icons
-        parent.fetchUserIcons(userInfo).then(()=>{
+        this.fetchUserIcons(userInfo).then(()=>{
           // Wait to fetch icons then set "selectedIcon" to the first icon fetched back
-          parent.setDataToArr({
+          this.setDataToArr({
             arr: "selectedIcon",
-            data: parent.userIcons[0],
+            data: this.userIcons[0],
           })
         })
 
@@ -336,28 +354,29 @@ export default {
         user.credit = userInfo.get("credit")
         user.username = userInfo.get("username")
         user.bio = userInfo.get("bio")
+        user.nameToShow = userInfo.get("nameToShow")
         user.id = userInfo.id
 
-        parent.setData({state: 'user', data: user})
+        this.setData({state: 'user', data: user})
 
         if (Parse.User.current() && user.username == Parse.User.current().getUsername()) {
           user.isOwner = true
         }
         
-        parent.loading.user = false
+        this.loading.user = false
       } else{
         
         let isLoading = {
           arr: "loading",
           data: false
         }
-        parent.setDataToArr(isLoading)
-        parent.loading.user = false
+        this.setDataToArr(isLoading)
+        this.loading.user = false
         
         if (isBanned) {
-          parent.errorMessage =  parent.user.username + " has been banned until further notice."
+          this.errorMessage =  this.user.username + " has been banned until further notice."
         } else{
-          parent.errorMessage = "This account doesn't exist"
+          this.errorMessage = "This account doesn't exist"
         }
       }
 
@@ -369,26 +388,24 @@ export default {
     },
 
     changeIconStatus(status) {
-      let parent = this
-      parent.iconsToShow = status
+      this.iconsToShow = status
     },
 
     userData(){
-      let parent = this
-      console.log("parent.user: ", parent.$store.state.user);
-      return parent.$store.state.user
+      console.log("parent.user: ", this.$store.state.user);
+      return this.$store.state.user
     },
     
     scrolled() {
-      let parent = this
+
       window.onscroll = () => {
         let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000
         
-        if(parent.user.isBanned) return
+        if(this.user.isBanned) return
 
-        if (bottomOfWindow && parent.scrolledToBottom && parent.userInfo.id) {
-          parent.scrolledToBottom = true
-          parent.fetchUserIcons(parent.userInfo)
+        if (bottomOfWindow && this.scrolledToBottom && this.userInfo.id) {
+          this.scrolledToBottom = true
+          this.fetchUserIcons(this.userInfo)
         }
       }
     },
@@ -582,6 +599,13 @@ export default {
     min-height: 36px;
     gap: 25px;
     margin: auto auto auto 0;
+
+    .profile-name-wrapper{
+      display: flex;
+      gap: 2px;
+      flex-direction: column;
+      flex-wrap: nowrap;
+    }
 
     & > div{
       display: flex;
