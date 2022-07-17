@@ -1,89 +1,99 @@
 <template>
-    <div
-        v-if="!isHidden.isHidden"
-        :label="icon.appName.replaceAll('_', ' ') + 'Icon'"
-        class="card-wrapper card-hover coral-card m-0"
-    >
+    <div>
+        <div
+            v-if="!isHidden.isHidden && !isLoading"
+            :label="icon.appName.replaceAll('_', ' ') + 'Icon'"
+            class="card-wrapper card-hover coral-card m-0"
+        >
 
-        <div class="m-auto width-100">
-            
-            <div
-                :id="'saveIcon_'+icon.id"
-                @click="saveIcon()"
-                :class="{
-                    'opacity-0': !isSaved,
-                    'icon-heart': !isSaved,
-                    'icon-heart-filled': isSaved,
-                    'save-icon': true,
-                }"
-            > </div>
-
-            <!-- Icon image -->
-            <div class="card-img-wrapper" style="max-width: 120px;">
+            <div class="m-auto width-100">
                 
-                <!-- macOS icon download -->
-                <a
-                    v-if="true"
-                    rel="noopener"
-                    :href="iconDownloadUrl"
-                    @click="addClickCount(icon)"
-                    target="_blank"
+                <div
+                    :id="'saveIcon_'+icon.id"
+                    @click="saveIcon()"
+                    :class="{
+                        'opacity-0': !isSaved,
+                        'icon-heart': !isSaved,
+                        'icon-heart-filled': isSaved,
+                        'save-icon': true,
+                    }"
                 >
-                    <img
-                        :alt="icon.appName + ' icon'"
-                        v-lazy="{
-                            src: lazyOptions.src,
-                            loading: lazyOptions.loading,
-                            error: lazyOptions.loading,
-                            lifecycle: lazyOptions.lifecycle
-                        }" 
-                    />
-                </a>
+                </div>
 
-            </div>
+                <!-- Icon image -->
+                <div class="card-img-wrapper" style="max-width: 120px;">
+                    
+                    <!-- macOS icon download -->
+                    <a
+                        v-if="true"
+                        rel="noopener"
+                        :href="iconDownloadUrl"
+                        @click="addClickCount(icon)"
+                        target="_blank"
+                    >
+                        <img
+                            :alt="icon.appName + ' icon'"
+                            v-lazy="{
+                                src: lazyOptions.src,
+                                loading: lazyOptions.loading,
+                                error: lazyOptions.loading,
+                                lifecycle: lazyOptions.lifecycle
+                            }" 
+                        />
+                    </a>
 
-            <!-- Icon meta -->
-            <div label="Icon info" class="card-text-wrapper p-l-16 p-r-16">
+                </div>
 
-                <!-- App name -->
-                <h3 class="coral-font-color m-0">
-                    {{icon.appName.replaceAll("_", " ")}}
-                </h3>
-                
-                <!-- Credit -->
-                <p class="coral-Body--XS opacity-70 m-b-4 p-t-4 ellipses-text-2">
-                    <span class="coral-Link">
-                        <router-link
-                            :to="'/u/'+icon.usersName"
-                        >
-                        {{icon.usersName}}
-                        </router-link>
-                    </span>
-                    on
-                    <span class="coral-Body--XS">
-                        {{ getDate(icon.timeStamp) }}
-                    </span>
-                </p>
-                
-                <div v-if="isOwner" class="p-t-8 p-b-4">
-                    <button @click="showDialog('editIconDialog')" is="coral-button" variant="outline">Edit</button>
+                <!-- Icon meta -->
+                <div label="Icon info" class="card-text-wrapper p-l-16 p-r-16">
+
+                    <!-- App name -->
+                    <h3 class="coral-font-color m-0">
+                        {{icon.appName.replaceAll("_", " ")}}
+                    </h3>
+                    
+                    <!-- Credit -->
+                    <p class="coral-Body--XS opacity-70 m-b-4 p-t-4 ellipses-text-2">
+                        <span class="coral-Link">
+                            <router-link
+                                :to="'/u/'+icon.usersName"
+                            >
+                            {{icon.usersName}}
+                            </router-link>
+                        </span>
+                        on
+                        <span class="coral-Body--XS">
+                            {{ getDate(icon.timeStamp) }}
+                        </span>
+                    </p>
+                    
+                    <div v-if="isOwner" class="p-t-8 p-b-4">
+                        <button @click="showDialog('editIconDialog')" is="coral-button" variant="outline">Edit</button>
+                    </div>
+
                 </div>
 
             </div>
+            
+            <!-- Download Counter -->
+            <div label="Download Counter" class="download-counter-wrapper opacity-70">
+                <p v-if="icon.downloads > 1" class="coral-Body--XS m-0 d-inline">
+                    {{icon.downloads}}
+                </p>
 
+                <p v-else class="coral-Body--XS m-0 d-inline">
+                    0
+                </p>
+
+                <img height="10px" :src="coralIcons.download" alt="Download counter">
+            </div>
         </div>
         
-        <!-- Download Counter -->
-        <div label="Download Counter" class="download-counter-wrapper opacity-70">
-            <p v-if="icon.downloads > 1" class="coral-Body--XS m-0 d-inline">
-                {{icon.downloads}}
-            </p>
-
-            <p v-else class="coral-Body--XS m-0 d-inline">
-                0
-            </p>
-
-            <img height="10px" :src="coralIcons.download" alt="Download counter">
+        <div
+            v-else
+            class="loading"
+        >
+             <UserIconCardLoading/>
         </div>
     </div>  
 </template>
@@ -103,6 +113,8 @@ import placeholderCoralIcon from "../assets/placeholder-icon.png"
 import heartIcon from "../assets/icons/Category_Icons/Heart.svg"
 import deleteIcon from "../assets/icons/delete.svg"
 
+import UserIconCardLoading from './UserIconCardLoading.vue';
+
 export default {
     name: "UserIconCard",
     
@@ -111,9 +123,11 @@ export default {
         isAdmin: false,
         isOwner: false,
         isMacOs: Boolean,
+        isLoading: Boolean,
     },
 
     components: {
+        UserIconCardLoading,
     },
 
     data(){

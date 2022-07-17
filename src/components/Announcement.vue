@@ -29,7 +29,7 @@
             </div>
 
             <div class="mb-2 f-w-400">
-              <p class="coral-Body--M" v-html="marked(getHomeDialog.announcement)"></p>
+              <p v-html="marked(getHomeDialog.announcement)"></p>
             </div>
           </div>
 

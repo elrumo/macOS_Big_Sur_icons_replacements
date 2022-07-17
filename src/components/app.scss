@@ -2402,7 +2402,7 @@ coral-buttongroup button{
     }
 
     .gitHub-sponsor{
-        width: var(--page-width-mobile);
+        // width: var(--page-width-mobile);
     }
 
     .categories-container{
@@ -2480,6 +2480,23 @@ coral-buttongroup button{
 
     .main-search{
         width: 100%;
+    }
+    
+    .PH-badge{
+        margin-bottom: 20px;
+        margin-top: 0px;
+    }
+
+    .search-by-algolia-container{
+        display: none;
+        // display: flex;
+        justify-content: center;
+        padding-top: 10px;
+    }
+
+    .search-by-algolia-wrapper{
+        transform: translate(0px);
+        top: auto;
     }
 
     .instructions-well{
@@ -2566,11 +2583,6 @@ coral-buttongroup button{
     }
 }
 
-@media only screen and (max-width: 460px){
-    .PH-badge{
-        margin-bottom: 30px;
-    }
-}
 @media only screen and (max-width: 412px){
     /* .gitHub-sponsor{
         height: 330px;
