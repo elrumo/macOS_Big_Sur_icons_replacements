@@ -554,6 +554,7 @@
 .mr-3 {
     margin-right: 16px !important
 }
+
 @media(min-width:544px) {
     .mr-sm-3 {
         margin-right: 16px !important
@@ -571,11 +572,19 @@
 .d-flex {
     display: flex
 }
+
 @media(min-width:544px) {
     .d-sm-flex {
         display: flex
     }
 }
+
+@media(max-width:760px) {
+    .d-flex {
+        flex-direction: column;
+    }
+}
+
 .flex-auto {
     flex: auto
 }

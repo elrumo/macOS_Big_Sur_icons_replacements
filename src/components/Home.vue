@@ -88,7 +88,7 @@
                 
                 <!-- Cross icon -->
                 <transition name="fade">
-                  <div v-if="!searchString" class="searchBar-right">
+                  <div v-if="!searchString" class="searchBar-right mobile-hidden">
                     <div class="search-by-algolia-wrapper">
                       <p class="coral-Body--XS">
                         Search powered by
@@ -102,7 +102,6 @@
 
                 <transition name="fade">
                   <div v-if="searchString" class="searchBar-right">
-                    
                     <div class="searchBar-right-wrapper">
                       <svg @click="clearSearch" class="icon p-t-24 p-b-24 p-r-8 p-l-8" xmlns="http://www.w3.org/2000/svg" height="12" viewBox="0 0 12 12" width="12">
                         <title>CrossLarge</title>
@@ -115,7 +114,6 @@
                         </button>
                       </div>
                     </div>
-
                   </div>
                 </transition>
                 
@@ -142,6 +140,16 @@
         </div>
 
          <div v-if="isMobile" class="desktop-hidden categories-container">
+          <div class="search-by-algolia-container">
+            <div class="search-by-algolia-wrapper">
+              <p class="coral-Body--XS">
+                Search powered by
+              </p>
+              <a href="https://www.algolia.com/" target="_blank">
+                <img class="algolia-logo" :src="alogliaLogo" alt="">
+              </a>
+            </div>
+          </div>
           <div id="categoriesWrapper-mobile" class="categories-wrapper">
             <coral-buttongroup selectionmode="single">
                 <button
@@ -356,52 +364,35 @@
 
         <!-- Icon grid-->
         <div>
-          <div
-          v-if="
-            searchString.length == 0
-            && search.length == 0
-            && getSelectedCategory.name != 'Saved'
-          "
-            class="icon-list-area loading p-b-32"
-          >
-            <UserIconCardLoading
-              v-for="num in 30"
-              :key="num+Math.floor(Math.random() * 10000000 + 1)"
-            />
-          </div>
-
           <div 
-            v-else
             id="iconList" 
             class="p-b-32 icon-list-area"
           >
-              <!-- <CarbonAd
-                :template="2"
-                adId="homePage"
-              /> -->
+          
+            <NativeAd
+              :adId="'homePage'"
+              :template="2"
+              class="grid-ad"
+            />
 
-               <NativeAd
-                :adId="'homePage'"
-                :template="2"
-                class="grid-ad"
-              />
-
-              
-              <UserIconCard
-                v-for="icon in search"
-                :key="icon.id+icon.appName+getSelectedCategory.name"
-                :icon="icon"
-                :isAdmin="isAdmin"
-                :isMacOs="isMacOs"
-              />
-
+              <!-- v-for="icon in search" -->
+            <UserIconCard
+              v-for="icon in iconInSearch(25)"
+              :isLoading="
+                searchString.length == 0
+                && search.length == 0
+                && getSelectedCategory.name != 'Saved'
+              "
+              :key="icon.id != undefined ? icon.id+icon.appName+getSelectedCategory.name : icon+Math.floor(Math.random() * 10000000 + 1)"
+              :icon="icon"
+              :isAdmin="isAdmin"
+              :isMacOs="isMacOs"
+            />
           </div>
+
+
         </div>
-
-
       </div>
-
-
     </section>
 
   </div>
@@ -705,6 +696,16 @@ export default {
       'fetchSavedIcons',
       'fetchHomeDialog'
     ]),
+
+    iconInSearch(num){
+      let search = this.search
+
+      if (search.length > 0) {
+        return search
+      } else{
+        return num
+      }
+    },
 
     marked(content){
       try {
