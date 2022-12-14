@@ -112,6 +112,16 @@
                                     </span>
                                 </router-link>
                             </div>
+
+                            <!-- License -->
+                            <div class="resourcesLink" @click="toggleOverlay">
+                                <coral-status variant="info" class="_coral-StatusLight--info _coral-StatusLight" color=""></coral-status>
+                                <router-link to="/cicense" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
+                                    <span>
+                                        License
+                                    </span>
+                                </router-link>
+                            </div>
                             
                             <hr class="coral-Divider--S">
                             
@@ -211,6 +221,16 @@
                             </button>
                         </router-link>
                     </div>
+
+                    <!-- License -->
+                    <!-- <div class="resourcesLink"> -->
+                        <!-- <coral-status variant="info"></coral-status> -->
+                        <!-- <router-link to="/license">
+                            <button is="coral-button" variant="quiet">
+                                <span>License</span>
+                            </button>
+                        </router-link>
+                    </div> -->
 
                     <!-- Learn -->
                     <!-- <div class="resourcesLink">

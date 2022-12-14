@@ -44,7 +44,7 @@
 <script>
 import IsNew from "./IsNew.vue";
 
-import Marked from 'marked';
+import { marked } from 'marked';
 import placeholderImage from "../assets/placeholder-image.gif"
 
 export default {
@@ -75,7 +75,7 @@ export default {
     computed: {
         markItDown(){
             let text = this.step.text
-            return Marked(text, { sanitize: true })
+            return marked(text, { sanitize: true })
         },
 
         getImage(){

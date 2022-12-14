@@ -43,7 +43,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Marked from 'marked';
+import { marked } from 'marked';
 import NativeAd from "./NativeAd.vue";
 
 export default {
@@ -77,7 +77,7 @@ export default {
         },
 
         markItDown(text){
-            return Marked(text)
+            return marked(text)
         }
     },
 

@@ -3,7 +3,7 @@ import Parse from 'parse/dist/parse.min.js';
 import algoliasearch from 'algoliasearch'
 import router from '@/router/index.js'
 
-import Marked from 'marked';
+import { marked } from 'marked';
 
 import localPages from '@/api/pages.json';
 import localPosts from '@/api/posts.json';
@@ -52,6 +52,8 @@ export default createStore({
 
       blogPosts: {},
       localPosts: localPosts,
+
+      selectedIcon: {},
 
       resourcesData: localPages,
       singleResourceData: {},
@@ -574,6 +576,8 @@ export default createStore({
           id = icon.objectID
         }
         icon = { appName: icon.appName, id: id }
+        console.log("Hii");
+        console.log({icon: icon});
         await Parse.Cloud.run("addClickCount", {icon: icon})
       } else{
         return "No download"
@@ -788,6 +792,10 @@ export default createStore({
   
   getters: {
     
+    getSelectedIcon(store){
+      return store.selectedIcon;
+    },
+
     getSelectedCategory(store){
       return store.selectedCategory
     },
@@ -951,7 +959,7 @@ export default createStore({
     },
 
     getSupportMessage(store){
-      return Marked(store.supportMessage)
+      return marked(store.supportMessage)
     },
     
     getHomeDialog(store){

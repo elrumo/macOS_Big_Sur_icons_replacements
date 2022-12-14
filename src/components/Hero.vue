@@ -2,19 +2,19 @@
 <div class="content-wrapper-regular">
   <div id="hero" class="hero-wrapper">
 
-    <div
+    <!-- <div
       v-if="getHomeDialog.showAnnouncement"
       class="PH-badge"
     >
       <Announcement
-        class="gitHub-sponsor"
         :getHomeDialog="getHomeDialog"
+        type="heroBanner"
       />
-    </div>
-    <div class="hero-text-area" v-if="iconsEmpty">    
-        
+    </div> -->
 
-        <!-- <div
+    <div class="hero-text-area" v-if="iconsEmpty">
+        
+        <div
           class="ad-hero mobile-hidden"
         >
           <NativeAd
@@ -22,23 +22,16 @@
             :adId="'iconbar-js-hero'"
             :key="$route.fullPath + 'ad' + '_hero'"
           />
-        </div> -->
+        </div>
 
         <div class="desktop-hidden m-t-24"></div>
-
-        <p class="coral-Body--S m-b-0 p-b-8">
-          Hosting by
-          <a href="https://fosshost.org/" rel="noopener" target="_blank" class="coral-Link">
-              FossHost
-          </a> 
-        </p>
 
         <h1
           class="main-heading m-t-0 coral-Heading--XL coral-Heading--regular"
         >
-          <span style="display: none;" class="f-w-100 f-s-26">
+          <!-- <span style="display: none;" class="f-w-100 f-s-26">
             macOS Big Sur <span class="coral-Body--XS m-b-0"> &  Monterey </span>
-          </span>
+          </span> -->
           <!-- The Icons Page -->
            macOS App icons
         </h1>

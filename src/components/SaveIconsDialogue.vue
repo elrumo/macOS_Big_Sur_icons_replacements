@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import Marked from 'marked';
 
 import logoLowRes from "../assets/Resources/logo_lowres.png"
 

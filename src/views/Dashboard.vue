@@ -419,8 +419,8 @@ export default {
       delete newIcon.category
       delete newIcon.type
 
-      // Parse.Cloud.run("approve", icon).then((result)=>{
-      Parse.Cloud.run("testJob", newIcon).then((result)=>{
+      Parse.Cloud.run("approve", icon).then((result)=>{
+      // Parse.Cloud.run("testJob", newIcon).then((result)=>{
         icon.isReview = true
         icon.isReUploadReview = true
         this.showToast({

@@ -9,6 +9,7 @@ import HowTo from '../views/HowTo.vue'
 import Forum from '../views/Forum.vue'
 import ResourceView from '../views/ResourceView.vue'
 import Learn from '../views/Learn.vue'
+import License from '../views/License.vue'
 
 // Vue.use(VueRouter)
 // Vue.use(VueMeta)
@@ -41,6 +42,13 @@ const routes = [
     name: 'Login',
     component: Login
   },
+
+  {
+    path: '/license',
+    name: 'License',
+    component: License
+  },
+
   {
     path: '/blog',
     name: 'BlogHome',
