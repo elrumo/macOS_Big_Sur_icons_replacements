@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <div class="gitHub-sponsor" v-if="type == 'heroBanner'">
     <a
       aria-label="Support the project on PayPal"
       target="_blank"
@@ -37,15 +37,53 @@
       </div>
     </article>
     </a>
+  </div>
+
+  <main class="announcement-top-banner" v-if="type == 'topBanner'">
+    <a
+      aria-label="Support the project on PayPal"
+      target="_blank"
+      :href="getHomeDialog.announcementUrl"
+      style="color: black"
+    >
+    <article class="Box">
+      <div class="d-flex">
+
+        <img
+          :src="getStrapiImg(getHomeDialog.announcementImg)"
+          class="rounded-1 avatar-user"
+          width="48"
+          height="48"
+          alt="@elrumo"
+        />
+
+        <div class="d-sm-flex flex-auto">
+          
+          <div class="flex-sm-auto mr-sm-3">
+            <div class="h3 mb-2 f-w-900">
+            {{getHomeDialog.announcementTitle}}
+              <!-- New project announcement -->
+            </div>
+
+            <div class="mb-2 f-w-400">
+              <p v-html="markItDown(getHomeDialog.announcement)"></p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </article>
+    </a>
   </main>
+
 </template>
 
 <script>
 import profilePicIcon from "../assets/profilePic.jpg"
-import Marked from 'marked';
+import { marked } from 'marked';
 
 export default {
-  name: "Sponsor",
+  name: "Announcement",
   data() {
     return {
       gitHub: {
@@ -55,7 +93,11 @@ export default {
   },
 
   props:{
-    getHomeDialog: {}
+    getHomeDialog: {},
+    type: {
+      type: String,
+      default: 'heroBanner',
+      }
   },
 
   methods:{
@@ -65,15 +107,17 @@ export default {
       document.getElementById(dialogId).show()
     },
 
-    marked(content){
+    markItDown(content){
       try {
-        return Marked(content);
+        return marked(content);
       } catch (error) {
         return content;
       }
     },
 
     getStrapiImg(strapi){
+      console.log(strapi);
+      
       return 'https://api.macosicons.com/'+strapi.data.attributes.url
     }
   }

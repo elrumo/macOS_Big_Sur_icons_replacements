@@ -6,6 +6,7 @@
       style="position: fixed; left: 0px; top: 0px; z-index: 9999; pointer-events: none;"
     >
     </canvas>
+    
     <deleteDialog :icon="!activeIcon"/>
 
     <div v-if="overflow"> {{ toggleOverflow() }} </div>
@@ -21,7 +22,7 @@
     >
       <coral-dialog-header>{{getHomeDialog.header}}</coral-dialog-header>
       <coral-dialog-content style="max-width: 650px">
-        <p class="coral-Body--M" v-html="marked(getHomeDialog.content)">
+        <p class="coral-Body--M" v-html="markItDown(getHomeDialog.content)">
         </p>
       </coral-dialog-content>
 
@@ -44,6 +45,8 @@
         </button>
       </coral-dialog-footer>
     </coral-dialog>
+
+    <IconDialog/>
 
     <!-- Hero -->
     <Hero
@@ -204,7 +207,8 @@
       </div>
       
       <!-- No Results -->
-      <div v-if="
+      <div
+        v-if="
           search.length == 0
           && searchString.length > 0
           && (
@@ -411,17 +415,18 @@ import UserIconCard from './UserIconCard.vue';
 
 import ConfettiGenerator from "confetti-js";
 
-import Marked from 'marked';
+import { marked } from 'marked';
 
 import Parse from 'parse/dist/parse.min.js';
+
 
 // TODO: remove credentials
 const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
 const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
 const VITE_PARSE_URL = import.meta.env.VITE_PARSE_URL
 
-Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
-Parse.serverURL = VITE_PARSE_URL
+Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY);
+Parse.serverURL = VITE_PARSE_URL;
 
 var Icons = Parse.Object.extend("Icons2");
 
@@ -474,6 +479,7 @@ export default {
     "Dialog": defineAsyncComponent(() => import('@/components/Dialog.vue')),
     "deleteDialog": defineAsyncComponent(() => import('@/components/deleteDialog.vue')),
     "SaveIconsDialogue": defineAsyncComponent(() => import('@/components/SaveIconsDialogue.vue')),
+    "IconDialog": defineAsyncComponent(() => import('@/components/IconDialog.vue')),
     UserIconCard,
     Hero,
     NativeAd,
@@ -621,11 +627,22 @@ export default {
   },
 
   mounted: async function(){
+
+    try {
+      this.algoliaSearch({page: this.page, concat: false})
+      this.scroll()
+      this.fetchSavedIcons()
+      this.getIconsArray();
+    } catch (error) {
+      this.handleParseError(error)
+    }
+
     this.getAd()
     this.cmdK()
     this.searchForPathQuery()
     this.setEventListenersOnStart()
     this.fetchUserAttributes()
+    
     
     try{
       await this.fetchHomeDialog()
@@ -661,15 +678,7 @@ export default {
     this.updatesIsRead = $cookies.get('updatesIsRead');
 
     this.isAuth = this.getUser.isAuth
-    
-    try {
-      await this.fetchSavedIcons()
-      this.algoliaSearch({page: this.page, concat: false})
-      this.scroll()
-      this.getIconsArray();
-    } catch (error) {
-      this.handleParseError(error)
-    }
+
 
     let fullPath = this.$route.fullPath
 
@@ -677,6 +686,8 @@ export default {
     if (fullPath.includes("/?username=") && !currentUser) {
       this.showEl("loginDialog")
     }
+
+    // await this.getAllData();
   },
 
   methods:{ 
@@ -697,19 +708,33 @@ export default {
       'fetchHomeDialog'
     ]),
 
+    async getAllData(className){
+      
+      const query = new Parse.Query(Icons);
+      const results = await query.limit(99).find();
+
+      results.forEach(element => {
+        console.log(element.id + ' - ' + element);
+      });
+  
+    },
+
     iconInSearch(num){
       let search = this.search
+      let searchStringEmpty = this.searchString.length == 0
 
       if (search.length > 0) {
         return search
-      } else{
+      } else if (!searchStringEmpty && search.length == 0) {
+        return 0
+      }{
         return num
       }
     },
 
-    marked(content){
+    markItDown(content){
       try {
-        return Marked(content);
+        return marked(content);
       } catch (error) {
         return content;
       }
@@ -866,10 +891,8 @@ export default {
     },
 
     async addClickCount(icon){
-      let parent = this
-
       var id
-
+      
       if (icon.id) {
         id = icon.id
       } else{
@@ -880,7 +903,7 @@ export default {
     },
 
     prettifyName(name){
-      name = name.replaceAll("_", " ")
+      // name = name.replaceAll("_", " ")
       return name
     },
 
@@ -993,8 +1016,8 @@ export default {
       query.include(["user.isBanned"]);
       query.limit(docLimit);
       parent.howManyRecords = docLimit
-
-      const results = await query.find()
+      
+      // const results = await query.find()
 
       query.count().then((count) =>{
         parent.iconListLen = count
@@ -1064,8 +1087,8 @@ export default {
 
         if (val == '') this.setData({state: "searchString", data: val}); // Don't wait 500ms before showing empty search results
 
-          this.setData({state: "searchString", data: val})
-          this.algoliaSearch({page: 0, concat: false})
+        this.setData({state: "searchString", data: val})
+        this.algoliaSearch({page: 0, concat: false})
       },
       deep: true
     },

@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div v-if="!isHidden.isHidden">
         <div
             v-if="!isHidden.isHidden && !isLoading"
-            :label="icon.appName.replaceAll('_', ' ') + 'Icon'"
+            :label="printIconName('icon')"
             class="card-wrapper card-hover coral-card m-0"
         >
 
@@ -24,11 +24,12 @@
                 <div class="card-img-wrapper" style="max-width: 120px;">
                     
                     <!-- macOS icon download -->
+                    <!-- :href="iconDownloadUrl" -->
+                    <!-- @click="addClickCount(icon)" -->
                     <a
                         v-if="true"
                         rel="noopener"
-                        :href="iconDownloadUrl"
-                        @click="addClickCount(icon)"
+                        @click="iconClick(icon)"
                         target="_blank"
                     >
                         <img
@@ -53,19 +54,19 @@
                     </h3>
                     
                     <!-- Credit -->
-                    <p class="coral-Body--XS opacity-70 m-b-4 p-t-4 ellipses-text-2">
-                        <span class="coral-Link">
-                            <router-link
-                                :to="'/u/'+icon.usersName"
-                            >
-                            {{icon.usersName}}
-                            </router-link>
-                        </span>
+                    <!-- <p class="coral-Body--XS opacity-70 m-b-4 p-t-4 ellipses-text-2"> -->
+                    <div class="coral-Body--XS opacity-70 p-t-4 card-bottom-text-wrapper">
+                        <router-link
+                            class="coral-Link"
+                            :to="'/u/'+icon.usersName"
+                        >
+                        {{icon.usersName}}
+                        </router-link>
                         on
-                        <span class="coral-Body--XS">
+                        <span class="coral-Body--XS m-0">
                             {{ getDate(icon.timeStamp) }}
                         </span>
-                    </p>
+                    </div>
                     
                     <div v-if="isOwner" class="p-t-8 p-b-4">
                         <button @click="showDialog('editIconDialog')" is="coral-button" variant="outline">Edit</button>
@@ -90,7 +91,7 @@
         </div>
         
         <div
-            v-else
+            v-else-if="!isHidden.isHidden"
             class="loading"
         >
              <UserIconCardLoading/>
@@ -179,6 +180,7 @@ export default {
                 },
                 error: (el) => {
                     isHidden.isHidden = true
+                    return false
                 },
             }
         })
@@ -206,12 +208,33 @@ export default {
     },
 
     methods:{
-        ...mapActions(['showEl', 'setSelectedIcon', 'addClickCount']),
+        ...mapActions([
+            'showEl',
+            'setSelectedIcon',
+            'addClickCount',
+            'setData'
+        ]),
+
+        iconClick(icon){
+            this.addClickCount(icon)
+
+            this.setData({arr: 'selectedIcon', data: icon});
+
+            this.showDialog('iconDialog')
+        },
 
         showDialog(id){
             let parent = this
             parent.setSelectedIcon(parent.icon)
             parent.showEl(id)
+        },
+
+        printIconName(string){
+            try {
+                return this.icon.appName.replaceAll('_', ' ') + string
+            } catch (error) {
+                return this.icon.appName
+            }
         },
         
         getDate(timeStamp){
@@ -239,7 +262,8 @@ export default {
 
         async saveIcon(){
             let parent = this
-            
+            // console.log("Hii");
+            // return
             if(!Parse.User.current()){
                 this.showDialog('SaveIconsDialogue')
                 return

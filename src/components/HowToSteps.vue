@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Marked from 'marked';
+import { marked } from 'marked';
 
 export default {
     name: "HowToSteps",
@@ -35,7 +35,7 @@ export default {
     computed: {
         markItDown(){
             let text = this.step.text
-            return Marked(text, { sanitize: true })
+            return marked(text, { sanitize: true })
         }
     }
 }

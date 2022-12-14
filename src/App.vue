@@ -1,8 +1,11 @@
 <template>
   <div id="app">
-    <!-- <coral-toast id="toastMessage" variant="success">
-      All icons have been uploaded.
-    </coral-toast> -->
+
+    <Announcement
+      v-if="getHomeDialog.hasOwnProperty('announcementImg') || dummyData.hasOwnProperty('announcementImg')"
+      :getHomeDialog="getHomeDialog.hasOwnProperty('announcementImg') ? getHomeDialog : dummyData"
+      type="topBanner"
+    />
 
     <Header
       :distanceFromTop="distanceFromTop"
@@ -29,7 +32,10 @@
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
 import StickyBanner from '@/components/StickyBanner.vue'
-import { mapActions } from 'vuex'
+import Announcement from '@/components/Announcement.vue'
+import { mapActions, mapGetters } from 'vuex'
+
+import dummyData from '@/components/announcementDummy.json'
 
 import { Toast } from '@adobe/coral-spectrum/coral-component-toast'
 const appBody = document.getElementById('app')
@@ -51,13 +57,15 @@ export default {
   components: {
     Header,
     Footer,
-    StickyBanner
+    StickyBanner,
+    Announcement
   },
 
   data(){
     return{
       distanceFromTop: true,
-      isBanner: true
+      isBanner: true,
+      dummyData: dummyData
     }
   },
 
@@ -74,7 +82,7 @@ export default {
 
   methods:{
 
-  ...mapActions([
+    ...mapActions([
       'setDataToArr',
       'pushDataToArr',
     ]),
@@ -123,6 +131,12 @@ export default {
       appBody.appendChild(toast)
     }
   },
+
+  computed:{
+    ...mapGetters([
+      'getHomeDialog',
+    ])
+  }
 
 }
 </script>

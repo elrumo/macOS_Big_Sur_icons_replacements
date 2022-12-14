@@ -22,14 +22,7 @@ export async function getTutorials() {
 
 export async function getLearningHome() { 
     let learningHome = await axios.get('https://api.macosicons.com/api/learn-home?populate=*')
-    console.log('learningHome: ', learningHome.data.data.attributes.H3Description);
-
-    // let introText = {
-    //     h3: learningHome.data.data.attributes.title,
-    //     description: learningHome.data.data.attributes.description,
-    //     isAd: false,
-    //     isCenter: true,
-    //   }
+    console.log('learningHome: ', learningHome.data.data.attributes.H3Description)
     
     return learningHome.data.data.attributes.H3Description
 }

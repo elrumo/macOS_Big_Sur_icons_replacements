@@ -420,7 +420,7 @@ select{
 
 
 .PH-badge{
-    margin-top: 40px;
+    // margin-top: 40px;
     margin-bottom: 25px;
     left: 50%;
     position: relative;
@@ -462,6 +462,39 @@ select{
     width: var(--page-width);
     max-width: 730px;
     border-radius: 8px;
+}
+
+.announcement-top-banner{
+    margin: auto;
+    text-align: left;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+    
+    .Box{
+        color: white;
+        border: none;
+        background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+        border-radius: 0px;
+        padding: 8px 16px 8px 16px;
+        a{
+            color: rgb(125 184 255)
+        }
+        > div{
+            gap: 8px;
+            align-items: center;
+            max-width: 820px;
+            margin: auto;
+        }
+        &:hover{
+            transform: translate(0px);
+        }
+    }
+
+    p{
+        margin: 4px;
+    }
 }
 
 .account-dialog-form{
@@ -1361,6 +1394,10 @@ coral-buttongroup button{
     cursor: pointer;
 }
 
+.opacity-hover:hover{
+    opacity: 1;
+}
+
 .opacity-0{
     opacity: 0;
 }
@@ -1473,8 +1510,24 @@ coral-buttongroup button{
 
 .icon-list-area a{
     text-decoration: none;
-    // color: black;
-    margin: 0px auto;
+    margin: 0px;
+    height: fit-content;
+
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+}
+
+.card-bottom-text-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+    width: fit-content;
+    margin: 0px auto !important;
 }
 
 .icon-list-area a > div{
@@ -1515,7 +1568,8 @@ coral-buttongroup button{
     display: grid;
     grid-template-columns: 1fr;
     max-width: 1300px;
-    padding: 30px 0px 15px 0px;
+    padding: 15px 0px 15px 0px;
+    // padding: 30px 0px 15px 0px;
     margin: 10px 0px 30px 0px;
     left: 50%;
     transform: translateX(-50%);

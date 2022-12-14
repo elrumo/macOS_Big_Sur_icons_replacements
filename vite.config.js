@@ -1,11 +1,13 @@
 // vite.config.js
-// import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
-// const path = require("path");
+import mkcert from'vite-plugin-mkcert'
 
 export default {
   base: "./",
+  server: {
+    https: true
+  },
   resolve: {
     alias: {
       vue: '@vue/compat',
@@ -14,6 +16,7 @@ export default {
   },
   
   plugins: [
+    mkcert(),
     vue({
       template: {
         compilerOptions: {
