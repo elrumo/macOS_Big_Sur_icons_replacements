@@ -22,8 +22,10 @@
     >
       <coral-dialog-header>{{getHomeDialog.header}}</coral-dialog-header>
       <coral-dialog-content style="max-width: 650px">
-        <p class="coral-Body--M" v-html="markItDown(getHomeDialog.content)">
-        </p>
+        <vue-markdown
+          :source="getHomeDialog.content"
+          class="coral-Body--M"
+        />
       </coral-dialog-content>
 
       <coral-dialog-footer>
@@ -46,7 +48,7 @@
       </coral-dialog-footer>
     </coral-dialog>
 
-    <IconDialog/>
+    <IconDialog :isMacOs="isMacOs"/>
 
     <!-- Hero -->
     <Hero
@@ -83,7 +85,7 @@
                   name="name" 
                   aria-label="text input"
                 >
-                
+
                 <!-- Search icon -->
                 <svg class="icon searchBar-left" id="coral-css-icon-Magnifier" viewBox="0 0 16 16">
                   <path d="M15.77 14.71l-4.534-4.535a6.014 6.014 0 1 0-1.06 1.06l4.533 4.535a.75.75 0 1 0 1.061-1.06zM6.5 11A4.5 4.5 0 1 1 11 6.5 4.505 4.505 0 0 1 6.5 11z"></path>
@@ -264,9 +266,9 @@
           </div>
           
           <div v-if="
-            searchString.length != 0
-            && search.length == 0
-            "
+          searchString.length != 0
+          && search.length == 0
+          "
           >
             <p class="coral-Body--S">
               We cound not find <b>{{ searchString }}</b> in your Saved icons.
@@ -380,6 +382,12 @@
             />
 
               <!-- v-for="icon in search" -->
+              <!-- <div
+                v-for="icon in iconInSearch(25)"
+                :key="icon"
+              >
+                {{ typeof icon }}
+              </div> -->
             <UserIconCard
               v-for="icon in iconInSearch(25)"
               :isLoading="
@@ -415,7 +423,7 @@ import UserIconCard from './UserIconCard.vue';
 
 import ConfettiGenerator from "confetti-js";
 
-import { marked } from 'marked';
+import VueMarkdown from 'vue-markdown-render'
 
 import Parse from 'parse/dist/parse.min.js';
 
@@ -486,6 +494,7 @@ export default {
     StickyBanner,
     CarbonAd,
     UserIconCardLoading,
+    VueMarkdown
   },
 
   metaInfo: {
@@ -632,7 +641,7 @@ export default {
       this.algoliaSearch({page: this.page, concat: false})
       this.scroll()
       this.fetchSavedIcons()
-      this.getIconsArray();
+      // this.getIconsArray();
     } catch (error) {
       this.handleParseError(error)
     }
@@ -676,18 +685,13 @@ export default {
     }
 
     this.updatesIsRead = $cookies.get('updatesIsRead');
-
     this.isAuth = this.getUser.isAuth
-
-
     let fullPath = this.$route.fullPath
-
     let currentUser = Parse.User.current()
     if (fullPath.includes("/?username=") && !currentUser) {
       this.showEl("loginDialog")
     }
 
-    // await this.getAllData();
   },
 
   methods:{ 
@@ -708,17 +712,6 @@ export default {
       'fetchHomeDialog'
     ]),
 
-    async getAllData(className){
-      
-      const query = new Parse.Query(Icons);
-      const results = await query.limit(99).find();
-
-      results.forEach(element => {
-        console.log(element.id + ' - ' + element);
-      });
-  
-    },
-
     iconInSearch(num){
       let search = this.search
       let searchStringEmpty = this.searchString.length == 0
@@ -729,14 +722,6 @@ export default {
         return 0
       }{
         return num
-      }
-    },
-
-    markItDown(content){
-      try {
-        return marked(content);
-      } catch (error) {
-        return content;
       }
     },
 
@@ -890,18 +875,6 @@ export default {
       }
     },
 
-    async addClickCount(icon){
-      var id
-      
-      if (icon.id) {
-        id = icon.id
-      } else{
-        id = icon.objectID
-      }
-      icon = { appName: icon.appName, id: id }
-      await Parse.Cloud.run("addClickCount", {icon: icon})
-    },
-
     prettifyName(name){
       // name = name.replaceAll("_", " ")
       return name
@@ -1006,7 +979,7 @@ export default {
 
     async getIconsArray(){
       let parent = this
-      
+      return
       const query = new Parse.Query(Icons);
 
       query.descending("timeStamp");
@@ -1016,10 +989,10 @@ export default {
       query.include(["user.isBanned"]);
       query.limit(docLimit);
       parent.howManyRecords = docLimit
-      
       // const results = await query.find()
 
       query.count().then((count) =>{
+        console.log(count);
         parent.iconListLen = count
       })
 
@@ -1051,7 +1024,6 @@ export default {
       }).catch((e) =>{
         document.getElementById("error").show()
       })
-
     },
 
     changeDate(icon, e){

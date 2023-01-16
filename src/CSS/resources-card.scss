@@ -88,6 +88,10 @@
     flex-grow: 1;
     flex-shrink: 10;
     flex-basis: 30%;
+
+    .native-ad-wrapper{
+      width: fit-content;
+    }
 }
 
 .resources-card-wrapper{

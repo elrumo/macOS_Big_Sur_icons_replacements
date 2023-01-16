@@ -1,7 +1,7 @@
 <template>
   <coral-dialog v-on:submit.prevent="nextStep" v-if="!getUser.isAuth" id="loginDialog">
 
-    <coral-dialog-content>
+    <coral-dialog-content class="dialog-content">
 
       <coral-dialog id="resetPasswordDialog">
           <coral-dialog-header>Reset your password</coral-dialog-header>
@@ -161,6 +161,9 @@
               >
               <div v-if="!userInfo.problems.passNotSecure">
                 <p class="coral-Body--XS opacity-60 f-w-400 p-t-8">
+                  <span style="color: #E97273" v-if="!validatePassword && userInfo.password.length > 2">
+                    Important:
+                  </span>
                   Password must contain a number, a capital letter and be 6 or more characters long.
                 </p>
                 <p v-if="userInfo.step == 2 && userInfo.hasLoggedIn" class="coral-Body--XS opacity-60 f-w-400 p-t-8">
@@ -709,7 +712,7 @@ export default {
 
   mounted: async function(){
     let parent = this; 
-    const store = parent.$store; 
+    const store = parent.$store;
     
     let curerntUser = Parse.User.current()
     

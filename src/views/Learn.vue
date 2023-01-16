@@ -32,7 +32,6 @@ import Header from '@/components/Header.vue'
 import ResourcesCard from '@/components/ResourcesCard.vue'
 import Footer from '@/components/Footer.vue'
 import H3Description from '@/components/H3Description.vue'
-import axios from 'axios'
 import { mapActions, mapGetters } from 'vuex';
 
 export default {

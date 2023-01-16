@@ -66,7 +66,7 @@
             </div>
 
             <div class="mb-2 f-w-400">
-              <p v-html="markItDown(getHomeDialog.announcement)"></p>
+              <vue-markdown :source="getHomeDialog.announcement"/>
             </div>
           </div>
 
@@ -80,7 +80,7 @@
 
 <script>
 import profilePicIcon from "../assets/profilePic.jpg"
-import { marked } from 'marked';
+import VueMarkdown from 'vue-markdown-render'
 
 export default {
   name: "Announcement",
@@ -90,6 +90,10 @@ export default {
         profile: profilePicIcon,
       },
     };
+  },
+
+  components:{
+    VueMarkdown,
   },
 
   props:{
@@ -107,17 +111,8 @@ export default {
       document.getElementById(dialogId).show()
     },
 
-    markItDown(content){
-      try {
-        return marked(content);
-      } catch (error) {
-        return content;
-      }
-    },
-
     getStrapiImg(strapi){
-      console.log(strapi);
-      
+      // console.log(strapi);      
       return 'https://api.macosicons.com/'+strapi.data.attributes.url
     }
   }

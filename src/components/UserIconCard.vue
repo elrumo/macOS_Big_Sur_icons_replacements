@@ -1,14 +1,14 @@
 <template>
     <div v-if="!isHidden.isHidden">
         <div
-            v-if="!isHidden.isHidden && !isLoading"
+            v-if="!isHidden.isHidden && !isLoading && typeof icon == 'object'"
             :label="printIconName('icon')"
             class="card-wrapper card-hover coral-card m-0"
         >
 
             <div class="m-auto width-100">
-                
                 <div
+                    v-if="isSaveable"
                     :id="'saveIcon_'+icon.id"
                     @click="saveIcon()"
                     :class="{
@@ -24,12 +24,12 @@
                 <div class="card-img-wrapper" style="max-width: 120px;">
                     
                     <!-- macOS icon download -->
-                    <!-- :href="iconDownloadUrl" -->
-                    <!-- @click="addClickCount(icon)" -->
+                    <!-- @click="iconClick(icon)" -->
                     <a
                         v-if="true"
                         rel="noopener"
-                        @click="iconClick(icon)"
+                        :href="iconDownloadUrl"
+                        @click="addClickCount(icon)"
                         target="_blank"
                     >
                         <img
@@ -62,8 +62,8 @@
                         >
                         {{icon.usersName}}
                         </router-link>
-                        on
-                        <span class="coral-Body--XS m-0">
+                        <span v-if="!hideDate" class="coral-Body--XS m-0">
+                            on
                             {{ getDate(icon.timeStamp) }}
                         </span>
                     </div>
@@ -77,7 +77,7 @@
             </div>
             
             <!-- Download Counter -->
-            <div label="Download Counter" class="download-counter-wrapper opacity-70">
+            <div v-if="!hideDownloads" label="Download Counter" class="download-counter-wrapper opacity-70">
                 <p v-if="icon.downloads > 1" class="coral-Body--XS m-0 d-inline">
                     {{icon.downloads}}
                 </p>
@@ -123,6 +123,18 @@ export default {
         icon:{},
         isAdmin: false,
         isOwner: false,
+        isSaveable: {
+            type: Boolean,
+            default: true
+        },
+        hideDate: {
+            type: Boolean,
+            default: false
+        },
+        hideDownloads:{
+            type: Boolean,
+            default: false
+        },
         isMacOs: Boolean,
         isLoading: Boolean,
     },
@@ -156,10 +168,15 @@ export default {
 
         function iconUrl(){
             const icon = context.icon;
-            if (!icon.lowResPngUrl) {
-                return icon.highResPngUrl
-            } else{
-                return icon.lowResPngUrl
+            try {
+                
+                if (!icon.lowResPngUrl) {
+                    return icon.highResPngUrl
+                } else{
+                    return icon.lowResPngUrl
+                }
+            } catch (error) {
+                console.log("error fetching icon url: ", error);
             }
         }
 
@@ -216,11 +233,9 @@ export default {
         ]),
 
         iconClick(icon){
-            this.addClickCount(icon)
-
+            this.addClickCount(icon);
             this.setData({arr: 'selectedIcon', data: icon});
-
-            this.showDialog('iconDialog')
+            this.showDialog('iconDialog');
         },
 
         showDialog(id){
@@ -301,10 +316,15 @@ export default {
 
         iconDownloadUrl(){
             const icon = this.icon
-            if (this.isMacOs) {
-                return icon.icnsUrl
-            } else{
-                return icon.iOSUrl
+            try {
+                if (this.isMacOs) {
+                    // console.log(icon);
+                    return icon.icnsUrl
+                } else{
+                    return icon.iOSUrl
+                }
+            } catch (error) {
+                // console.log("error fetching icon url: ", error);
             }
         },
     }

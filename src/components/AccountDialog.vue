@@ -431,11 +431,9 @@ export default {
     },
 
   mounted: async function(){
-    let parent = this; 
-    const store = parent.$store; 
+    const store = this.$store; 
     let isAuth = store.getters.getUser.isAuth
-    let curerntUser = Parse.User.current();
-
+    // let curerntUser = Parse.User.current();
     if (!isAuth) {
     } else{
     }

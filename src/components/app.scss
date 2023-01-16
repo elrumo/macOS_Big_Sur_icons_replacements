@@ -34,11 +34,11 @@
 }
 
 @mixin coral-dark-bg{
-    background-color: var(--coral-dark-bg);
+    background-color: var(--coral-dark-bg) !important;
 }
 
 .coral-dark-bg{
-    background: var(--coral-dark-bg)
+    background: var(--coral-dark-bg) !important;
 }
 
 html{
@@ -330,7 +330,7 @@ select{
 }
 
 .instructions-item{
-    padding: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px !important;
     height: 100%;
 }
 
@@ -779,11 +779,15 @@ coral-buttongroup button{
     border-radius:  100px !important;
 }
 
+.dialog-content{
+    // min-width: 920px;
+}
+
 .categories-sidenav{
     background: var(--coral-dark-card);
     position: sticky;
     top: 165px;
-    padding: 10px 10px 10px 10px;
+    padding: 10px 10px 10px 10px !important;
     border-right: 1px solid var(--coral-dark-border);
     transition: 0.2s;
     overflow-y: scroll !important;
@@ -1160,11 +1164,12 @@ coral-buttongroup button{
 
 .searchBar-divider{
     top: 50%;
-    height: 55%;
+    height: 55% !important;
     position: absolute;
     right: 110px;
     transform: translateY(-50%);
     border: 1px solid;
+    border-radius: 1rem;
 }
 
 .coral--dark .searchBar-divider{
@@ -1508,6 +1513,45 @@ coral-buttongroup button{
 
 }
 
+.icon-download-dialog{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.icon-download-details{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    height: fit-content;
+    padding-top: 8px;
+
+    p{
+        margin: 0px;
+    }
+}
+
+.similar-icons-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow-y: auto;
+    gap: 18px;
+    background: #252525;
+    border-radius: 8px;
+    border: 1px solid var(--coral-dark-border);
+    background: var(--coral-dark-card);
+
+    >div{
+        width: 100%;
+    }
+
+    .coral-card{
+        border: none !important;
+    }
+}
+
 .icon-list-area a{
     text-decoration: none;
     margin: 0px;
@@ -1544,6 +1588,11 @@ coral-buttongroup button{
     // padding: 20px 65px 0px 65px;
     margin: auto;
     position: relative;
+    display: flex;
+    justify-content: center;
+    &:hover{
+        cursor: pointer;
+    }
 }
 
 .card-img-wrapper img{
@@ -2755,6 +2804,17 @@ coral-buttongroup button{
 
 ._coral-Search-input{
     padding-left: 50px;
+}
+
+coral-sidenav{
+    display: flex;
+    flex-direction: column;
+}
+
+coral-sidenav-item{
+    min-height: 2rem;
+    // text-align: left;
+    cursor: pointer;
 }
 
 

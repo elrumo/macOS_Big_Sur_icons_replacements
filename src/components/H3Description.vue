@@ -15,10 +15,10 @@
             </h1>
 
             <div v-if="text.description" class="h3-description-body">
-                <p
+                <vue-markdown
+                    :source="text.description"
                     class="coral-Body--L f-w-500"
-                    v-html="markItDown(text.description)">
-                </p>
+                />
             </div>
 
             <div
@@ -46,6 +46,8 @@ import { mapActions, mapGetters } from 'vuex';
 import { marked } from 'marked';
 import NativeAd from "./NativeAd.vue";
 
+import VueMarkdown from 'vue-markdown-render'
+
 export default {
     name: "H3Description",
     
@@ -54,7 +56,8 @@ export default {
     },
     
     components:{
-        NativeAd
+        NativeAd,
+        VueMarkdown
     },
 
     data: function(){
@@ -74,10 +77,6 @@ export default {
             window.plausible("logSubscription", {props: {
                 path: currentPath, 
             }})
-        },
-
-        markItDown(text){
-            return marked(text)
         }
     },
 

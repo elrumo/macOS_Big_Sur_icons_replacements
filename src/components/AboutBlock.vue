@@ -8,10 +8,11 @@
         </h1>
 
         <div v-if="text.description" class="h3-description-body">
-            <p
+
+            <vue-markdown
+                :source="text.description"
                 class="coral-Body--L f-w-500"
-                v-html="markItDown(text.description)">
-            </p>
+            />
         </div>
     </div>
 
@@ -19,10 +20,15 @@
 </template>
 
 <script>
-import Marked from 'marked';
+import VueMarkdown from 'vue-markdown-render'
+// import Marked from 'marked';
 
 export default {
     name: "AboutBlock",
+
+    components:{
+        VueMarkdown,
+    },
     
     props:{
         text:{},
@@ -38,9 +44,6 @@ export default {
     },
     
     methods:{
-        markItDown(text){
-            return Marked(text)
-        }
     },
 
     computed: {

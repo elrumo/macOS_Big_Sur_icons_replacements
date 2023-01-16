@@ -20,6 +20,7 @@
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/compat": "^3.2.45",
     "algoliasearch": "^4.14.2",
+    "axios": "^1.2.2",
     "confetti-js": "^0.0.18",
     "dotenv": "^16.0.3",
     "esbuild": "^0.16.5",
@@ -37,6 +38,7 @@
     "vite-plugin-mkcert": "^1.10.1",
     "vue": "^3.2.45",
     "vue-cookies": "^1.8.2",
+    "vue-markdown-render": "^2.0.1",
     "vue-mobile-detection": "^2.0.1",
     "vue3-lazyload": "^0.3.6",
     "vuex": "^4.1.0"

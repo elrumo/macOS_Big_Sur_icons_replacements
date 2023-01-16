@@ -49,8 +49,6 @@ const VITE_PARSE_URL = import.meta.env.VITE_PARSE_URL;
 
 Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY);
 Parse.serverURL = VITE_PARSE_URL;
-console.log(VITE_PARSE_URL);
-// Parse.serverURL = 'https://media.macosicons.com/parse'
 
 export default {
   name: 'App',
@@ -77,7 +75,7 @@ export default {
 
     this.createToast()
 
-    this.fetchSavedIcons()
+    // this.fetchSavedIcons()
   },
 
   methods:{
@@ -98,7 +96,6 @@ export default {
 
       let savedIconCount = await savedIconsQuery.count();
       this.setDataToArr({arr: 'savedIconCount', data: savedIconCount})
-      
       let savedIcons = userSavedIconData.map(( icons ) => icons);
       let iconsToShow = []        
 
