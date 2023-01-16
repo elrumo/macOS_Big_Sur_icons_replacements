@@ -281,7 +281,7 @@ export default createStore({
             id: item.objectID 
           }; 
         });
-        
+        console.log("algoliaSearch.hits: ", algoliaSearch.hits);
         store.commit('pushDataToArr', {arr: "searchData", data: algoliaSearch.hits})
 
       } else{ ;
@@ -380,16 +380,16 @@ export default createStore({
       if (!Parse.User.current()){
         return 
       }
-
       let savedIconsQuery = Parse.User.current().relation("favIcons").query()
       let userSavedIconData = await savedIconsQuery.descending("createdAt").find()
-
-      let savedIconCount = await savedIconsQuery.count();
+      let savedIconCount = userSavedIconData.length;
+      // let savedIconCount = await savedIconsQuery.count();
+      
       store.commit('setDataToArr', {arr: 'savedIconCount', data: savedIconCount})
       
       let savedIcons = userSavedIconData.map(( icons ) => icons);
       let iconsToShow = []        
-
+      
       savedIcons.forEach(icon => {
         let newIcon = {}
         for(let prop in icon.attributes){
@@ -565,10 +565,9 @@ export default createStore({
     },
     
     async addClickCount(store, icon){
-      
       if (store.state.downloads.indexOf(icon.id) == -1) {
         store.commit('setDataToArr', {arr: 'downloads', data: icon.id})
-        // store.state.downloads.push(icon.id)
+        
         var id
         if (icon.id) {
           id = icon.id
@@ -576,9 +575,9 @@ export default createStore({
           id = icon.objectID
         }
         icon = { appName: icon.appName, id: id }
-        console.log("Hii");
         console.log({icon: icon});
-        await Parse.Cloud.run("addClickCount", {icon: icon})
+        let clickCount = await Parse.Cloud.run("addClickCount", {icon: icon});
+        console.log(clickCount);
       } else{
         return "No download"
       }

@@ -3,7 +3,10 @@
         <div class="instructions-well">
         
         <div class="instructions-title">
-            <div class="marked" v-html="markItDown"></div>
+            <vue-markdown
+                :source="step.text"
+                class="marked"
+            />
         </div>
 
         <div :class="{ 'instructions-img-wrapper': true, 'gradient':step.gradient }">
@@ -15,13 +18,17 @@
 </template>
 
 <script>
-import { marked } from 'marked';
+import VueMarkdown from 'vue-markdown-render'
 
 export default {
     name: "HowToSteps",
     
     props:{
         step:{},
+    },
+
+    components:{
+        VueMarkdown,
     },
 
     mounted(){
@@ -33,10 +40,6 @@ export default {
     },
     
     computed: {
-        markItDown(){
-            let text = this.step.text
-            return marked(text, { sanitize: true })
-        }
     }
 }
 </script>

@@ -16,6 +16,9 @@
       <div class="m-b-24">
         <input id="password" type="password" placeholder="Password" is="coral-textfield"  aria-label="text input">
       </div>
+      <div style="color: #E97273" v-if="errorSinginIn">
+        {{ errorMessage }}
+      </div>
       <div id="signin-button" class="m-t-48 m-b-4">
         <button is="coral-button" variant="cta" @click="signIn">Sign In</button>
       </div>
@@ -99,8 +102,7 @@
           </h3>
 
           <div class="icon-list-area">
-            <div v-for="icon in user.icons" class="card-wrapper coral-card" :key="icon.fileName+icon.imgUrl">
-              
+            <div v-for="icon in user.icons" class="card-wrapper coral-card" :key="icon.highResPngUrl">
               <coral-status v-if="icon.isReupload && icon.isAuthor" variant="success"></coral-status>
               <coral-status v-if="icon.isReupload && !icon.isAuthor" variant="warning"></coral-status>
 
@@ -113,11 +115,11 @@
                 <div v-if="!icon.isReview && icon.isReUpload" class="loading-approval-wrapper">
                   <coral-status v-if="icon.isReUpload" color="Yellow"></coral-status>
                 </div>
-                
                 <a :href="icon.imgUrl" target="_blank">
+                  <!-- src: icon.imgUrl.replace('/media/', '/parse/'), -->
                   <img
                     v-lazy="{
-                        src: icon.imgUrl.replace('/media/', '/parse/'),
+                        src: icon.highResPngFile.url,
                         loading:  coralIcons.loading,
                         error:  coralIcons.loading,
                         lifecycle:  coralIcons.loading
@@ -215,6 +217,8 @@ export default {
       icons:{
         reUploaded: {}
       },
+
+      errorSinginIn: false,
       
       // Search
       isSearch: false,
@@ -321,9 +325,6 @@ export default {
       let parent = this
       let newName = e.target.value
 
-      console.log("icon: ", icon);
-      // console.log(newName);
-
       if(isMultipleIcons){
         let listLen = Object.keys(icon.icons).length
         let count = 0
@@ -338,6 +339,7 @@ export default {
           docToEdit.save().then(() =>{
             console.log(field, "updated.");
           }).catch((e) =>{
+            console.log(e);
             document.getElementById("error").show()
           })
 
@@ -352,6 +354,7 @@ export default {
         docToEdit.save().then(() =>{
           console.log(field, "updated.");
         }).catch((e) =>{
+          console.log(e);
           document.getElementById("error").show()
         })
       }
@@ -375,7 +378,10 @@ export default {
         this.setUser(user)
         this.getParseData()
         this.getReUploadIcons()
+        this.errorMessage = ""
       }).catch((error) =>{
+        this.errorSinginIn = true;
+        this.errorMessage = error.message;
         console.log(error);
       })
     },
@@ -385,21 +391,19 @@ export default {
     },
 
     async deleteSubmission(icon){
-        console.log(icon);
-
+      console.log(icon);
+      try {
         let query = new Parse.Query(Icons)
         let docToDelete = await query.get(icon.id);
+        await docToDelete.destroy();
 
-        docToDelete.destroy().then(() =>{
-          Vue.delete(this.icons[icon.usersName].icons, icon.appName) // Delete object locally
+        Vue.delete(this.icons[icon.usersName].icons, icon.appName) // Delete object locally
+        if (Object.keys(this.icons[icon.usersName].icons).length == 0 ) { // Delete user from UI if no icons are left
+          Vue.delete(this.icons, icon.usersName)
+        }
+        } catch (error) {
           
-          if (Object.keys(this.icons[icon.usersName].icons).length == 0 ) { // Delete user from UI if no icons are left
-            Vue.delete(this.icons, icon.usersName)
-          }
-        }).catch((e) =>{
-          console.log(e);
-        })
-
+        }
     },
 
     prettifyName(name){
@@ -481,7 +485,6 @@ export default {
     getIconListLenReUpload(query){
       let parent = this
       query.count().then((count) =>{
-        console.log(count);
         parent.iconListLenReUpload = count
       })
     },

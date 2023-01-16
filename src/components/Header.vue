@@ -13,7 +13,7 @@
         <Dialog/>
         <SubmissionDialog/>
         <LoginDialog/>
-        <AccountDialog/>
+        <AccountDialog v-if="accountDialog"/>
 
         <div class="header-wrapper">
             
@@ -271,9 +271,9 @@
                         <img 
                             id="profilePicNav-desktop" 
                             @click="showEl({
-                                elId: 'profileNavPopover',
-                                targetId: 'profilePicNav-desktop'
-                                })" 
+                            elId: 'profileNavPopover',
+                            targetId: 'profilePicNav-desktop'
+                            })" 
                             class="profile-pic-nav m-l-4" 
                             :src="icons.profilePic" alt=""
                         >
@@ -281,7 +281,7 @@
 
                     <!-- Submit icons -->
                     <div v-if="!getUser.isAuth" class="p-l-8">
-                        <button is="coral-button" variant="cta" @click="showEl('loginDialog')">
+                        <button is="coral-button" variant="cta" @click="showDialog('loginDialog')">
                             <span>Submit icons</span>
                         </button>
                     </div>
@@ -342,6 +342,9 @@ export default {
             },
             scrolled: false,
             
+            accountDialog: false,
+            loginDialog: false,
+            
             currentUser: Parse.User.current(),
 
             optionsList: [
@@ -349,7 +352,7 @@ export default {
                     name: "Account Settings",
                     img: Settings,
                     onClick: {
-                        method: this.showEl,
+                        method: this.showDialog,
                         data: "accountDialog"
                     }
                 },
@@ -391,6 +394,13 @@ export default {
             'changePath',
             'handleParseError'
         ]),
+
+        showDialog(dialog){
+            this[dialog] = true;
+            setTimeout(() => {
+                this.showEl(dialog);
+            }, 100);
+        },
 
         toggleOverlay(){
             let parent = this
@@ -479,6 +489,10 @@ export default {
         }
         useDark.addListener((evt) => this.toggleDarkMode());
 
+        // check url and if visiting /u/ set loginDialog to true in Vue
+        if (this.$route.path.includes('/u/')) {
+            this.accountDialog = true;
+        }
     },
 
     computed: {

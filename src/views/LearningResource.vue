@@ -91,10 +91,10 @@
 
       <!-- Content -->
       <div class="post-full-content">
-        <div
-          v-html="markItDown(getSingleTutorial.tutorialBody)"
+        <vue-markdown
+          :source="getSingleTutorial.tutorialBody"
           class="blog-post-wrapper"
-        ></div>
+        />
 
         <WrittenBy
           class="p-t-16"
@@ -158,7 +158,7 @@ import H3Description from '@/components/H3Description.vue'
 import WrittenBy from '@/components/WrittenBy.vue'
 import AboutBlock from '@/components/AboutBlock.vue'
 
-import Marked from 'marked';
+import VueMarkdown from 'vue-markdown-render'
 
 import placeholderCoralIcon from "../assets/placeholder-icon.png"
 import placeholderImage from "../assets/placeholder-image.gif"
@@ -174,7 +174,8 @@ export default {
     NativeAd,
     H3Description,
     WrittenBy,
-    AboutBlock
+    AboutBlock,
+    VueMarkdown,
   },
 
   metaInfo: {
