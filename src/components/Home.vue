@@ -189,7 +189,7 @@
       <!-- Loading error -->
       <div v-if="false" class="waiting-wrapper">
         
-        <NativeAdIconGrid
+        <NativeAd
           :adPosition="'Loading error'"
           :template="2"
           adId="CWYD65Q7"
@@ -381,7 +381,7 @@
             class="p-b-32 icon-list-area"
           >
           
-            <NativeAdIconGrid
+            <NativeAd
               :template="2"
               class="grid-ad"
               adId="CWYD65Q7"
@@ -423,7 +423,7 @@ import { defineAsyncComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
 
 import Hero from './Hero.vue';
-import NativeAdIconGrid from './NativeAdIconGrid.vue';
+import NativeAd from './NativeAd.vue';
 import StickyBanner from './StickyBanner.vue';
 import CarbonAd from './CarbonAd.vue';
 import UserIconCardLoading from './UserIconCardLoading.vue';
@@ -498,7 +498,7 @@ export default {
     "IconDialog": defineAsyncComponent(() => import('@/components/IconDialog.vue')),
     UserIconCard,
     Hero,
-    NativeAdIconGrid,
+    NativeAd,
     StickyBanner,
     CarbonAd,
     UserIconCardLoading,
