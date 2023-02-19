@@ -26,10 +26,11 @@
 
           <NativeAd
             :template="1"
-            :adId="'iconbar-js-resourceItem'"
             class="m-t-24"
             sponsored="true"
             :key="$route.fullPath + 'ad'"
+            adId="CWYDCK3J"
+            zoneKey="CWYDCK3J"
           />
         </div>
         

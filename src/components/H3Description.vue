@@ -30,9 +30,10 @@
                 </p>
                     <!-- :adId="'iconbar-js-h3'" -->
                 <NativeAd
-                    :adId="'resources-ad'"
                     :template="1"
                     :key="$route.fullPath + 'ad' + '_resources'"
+                    zoneKey="CWYDCK3J"
+                    adId="CWYDCK3J"
                 />
             </div>
 
