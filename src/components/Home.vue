@@ -189,7 +189,13 @@
       <!-- Loading error -->
       <div v-if="false" class="waiting-wrapper">
         
-        <NativeAd :adPosition="'Loading error'" :adId="'iconbar-js-card-grid'" :key="$route.fullPath + 'ad'"/>
+        <NativeAdIconGrid
+          :adPosition="'Loading error'"
+          :template="2"
+          adId="CWYD65Q7"
+          zoneKey="CWYD65Q7"
+          key="CWYD65Q7"
+        />
 
         <h3 class="coral-Heading--M">
           The site is temporarily down for maintenance purposes.
@@ -375,10 +381,12 @@
             class="p-b-32 icon-list-area"
           >
           
-            <NativeAd
-              :adId="'homePage'"
+            <NativeAdIconGrid
               :template="2"
               class="grid-ad"
+              adId="CWYD65Q7"
+              zoneKey="CWYD65Q7"
+              key="CWYD65Q7"
             />
 
               <!-- v-for="icon in search" -->
@@ -415,7 +423,7 @@ import { defineAsyncComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
 
 import Hero from './Hero.vue';
-import NativeAd from './NativeAd.vue';
+import NativeAdIconGrid from './NativeAdIconGrid.vue';
 import StickyBanner from './StickyBanner.vue';
 import CarbonAd from './CarbonAd.vue';
 import UserIconCardLoading from './UserIconCardLoading.vue';
@@ -490,7 +498,7 @@ export default {
     "IconDialog": defineAsyncComponent(() => import('@/components/IconDialog.vue')),
     UserIconCard,
     Hero,
-    NativeAd,
+    NativeAdIconGrid,
     StickyBanner,
     CarbonAd,
     UserIconCardLoading,
@@ -646,7 +654,7 @@ export default {
       this.handleParseError(error)
     }
 
-    this.getAd()
+    // this.getAd()
     this.cmdK()
     this.searchForPathQuery()
     this.setEventListenersOnStart()

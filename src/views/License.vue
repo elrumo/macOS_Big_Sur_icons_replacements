@@ -27,10 +27,11 @@
         <div class="single-ad mobile-ad p-b-8">
           <NativeAd
             :adPosition="'Blog post top desktop'"
-            :adId="'iconbar-js-blogPost'"
             :sponsored="true"
             :fullWidth="false"
             :key="$route.fullPath + 'ad'"
+            adId="CWYD65Q7"
+            zoneKey="CWYD65Q7"
           />
         </div>
 

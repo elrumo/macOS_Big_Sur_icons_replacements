@@ -153,7 +153,6 @@
 import { mapActions, mapGetters } from 'vuex'
 import Header from '@/components/Header.vue'
 import ResourcesCard from '@/components/ResourcesCard.vue'
-import NativeAd from '@/components/NativeAd.vue'
 import H3Description from '@/components/H3Description.vue'
 import WrittenBy from '@/components/WrittenBy.vue'
 import AboutBlock from '@/components/AboutBlock.vue'
@@ -171,7 +170,6 @@ export default {
   components: {
     Header,
     ResourcesCard,
-    NativeAd,
     H3Description,
     WrittenBy,
     AboutBlock,

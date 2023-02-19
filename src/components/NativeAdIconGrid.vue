@@ -70,13 +70,16 @@ export default {
       let template = this.template == 1 ? templateCompact : templateCard
       let zoneKey = this.zoneKey;
       let count = this.count
-
+      
       function initAds() {
         if (typeof _bsa !== 'undefined' && _bsa) {
           _bsa.init('custom', zoneKey, 'placement:macosiconscom', {
             target: '#' + adId,
             template: template,
           })
+          // check if _bsa.callback is already defined;
+          // if not, define it as a function
+          console.log(_bsa.callback);
           _bsa.callback = BSANativeCallbacks // This is the callback function
         }
       };
@@ -103,7 +106,7 @@ export default {
               target: '#'+adId,
               template: template
             });
-            // _bsa.callback = BSANativeCallback
+            // _bsa.callback = BSANativeCallback // This is the callback function
           }
         } catch (error) {
           console.log(error);

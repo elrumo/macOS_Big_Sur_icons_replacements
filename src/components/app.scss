@@ -1162,6 +1162,23 @@ coral-buttongroup button{
     cursor: pointer;
 }
 
+.close-add-btn{
+    height: 24px;
+    width: 24px;
+    padding: 1rem;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 5;
+
+    &:hover{
+        cursor: pointer;
+        .icon-absolute{
+            opacity: 1 !important;
+        }
+    }
+}
+
 .searchBar-divider{
     top: 50%;
     height: 55% !important;

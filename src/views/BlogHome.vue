@@ -8,10 +8,12 @@
 
           <NativeAd
             :adPosition="'Hero Top'"
-            :adId="'iconbar-js-blogHome'"
             class="width-fit m-auto"
             :sponsored="true"
             :key="$route.fullPath + 'ad'"
+            :template="1"
+            adId="CWYDCK3J"
+            zoneKey="CWYDCK3J"
           />
 
           <H3-Description :text="subscribe"/>

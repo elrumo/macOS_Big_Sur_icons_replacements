@@ -3,9 +3,10 @@
 
     <!-- <CarbonAd style="min-height: 200px" adId="homePage"/> -->
     <NativeAd
-      :adId="'userProfile'"
       :template="2"
       class="grid-ad"
+      adId="CWYD65Q7"
+      zoneKey="CWYD65Q7"
     />
 
     <UserIconCard

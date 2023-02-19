@@ -19,8 +19,9 @@
         >
           <NativeAd
             :template="1"
-            :adId="'iconbar-js-hero'"
-            :key="$route.fullPath + 'ad' + '_hero'"
+            adId="CWYDCK3J"
+            zoneKey="CWYDCK3J"
+            key="CWYDCK3J"
           />
         </div>
 
