@@ -475,11 +475,29 @@ select{
     .Box{
         color: white;
         border: none;
-        background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+        // aniamte the gradinend background to make it look like it is pulsing
+        animation: pulse 8s infinite;
+        background: linear-gradient(89.13deg, #05B0B9 0.75%, #0EBAB5 15.4%, #1DAA99 44.4%, #1B6860 100%);
+        // background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
         border-radius: 0px;
         padding: 8px 16px 8px 16px;
+
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.05);
+                }
+                100% {
+                    transform: scale(1);
+                }
+            }
+
         a{
-            color: rgb(125 184 255)
+            color: rgb(132 255 234);
+            font-weight: 600;
+            // color: rgb(125 184 255);
         }
         > div{
             gap: 8px;

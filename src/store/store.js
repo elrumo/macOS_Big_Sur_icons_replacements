@@ -60,7 +60,9 @@ export default createStore({
       moreResources: {},
       resourcesTemplate: {},
       articleTemplate: {},
-      
+    
+      refreshAd: false,
+
       homeDialog: {},
 
       supportMessage: 'Disabling your ad blocker or making a [donation](https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN) is the best way to support this project.',
@@ -281,6 +283,7 @@ export default createStore({
             id: item.objectID 
           }; 
         });
+
         console.log("algoliaSearch.hits: ", algoliaSearch.hits);
         store.commit('pushDataToArr', {arr: "searchData", data: algoliaSearch.hits})
 
@@ -567,7 +570,8 @@ export default createStore({
     async addClickCount(store, icon){
       if (store.state.downloads.indexOf(icon.id) == -1) {
         store.commit('setDataToArr', {arr: 'downloads', data: icon.id})
-        
+        store.commit('setDataToArr', {arr: 'refreshAd', data: true})
+        console.log("store.refreshAd: ", store.refreshAd);
         var id
         if (icon.id) {
           id = icon.id
@@ -971,6 +975,10 @@ export default createStore({
 
     getIconListLen(store){
       return store.iconListLen
+    },
+
+    getRefreshAd(store){
+      return store.refreshAd
     },
 
 

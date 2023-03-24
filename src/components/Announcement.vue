@@ -10,9 +10,9 @@
       <div class="d-flex">
 
         <div class="mr-3">
-          <!-- :src="gitHub.profile" -->
+          <!-- :src="getStrapiImg(getHomeDialog.announcementImg)" -->
             <img
-              :src="getStrapiImg(getHomeDialog.announcementImg)"
+              src="https://www.webbites.io/_nuxt/WebBites-Icon.209a5576.png"
               class="rounded-1 avatar-user"
               width="48"
               height="48"
@@ -49,8 +49,9 @@
     <article class="Box">
       <div class="d-flex">
 
+        <!-- :src="getStrapiImg(getHomeDialog.announcementImg)" -->
         <img
-          :src="getStrapiImg(getHomeDialog.announcementImg)"
+          src="https://www.webbites.io/_nuxt/WebBites-Icon.209a5576.png"
           class="rounded-1 avatar-user"
           width="48"
           height="48"
@@ -66,7 +67,8 @@
             </div>
 
             <div class="mb-2 f-w-400">
-              <vue-markdown :source="getHomeDialog.announcement"/>
+              For the past few months I've been busy working on my biggest project so far, <a href="https://www.webbites.io/?utm_source=macOSicons.com&utm_medium=topBanner&utm_campaign=waitlist">WebBites.io</a>, a new smart bookmarking service powered by AI! I hope you like and let me know what you think on <a href="https://twitter.com/elrumo">Twitter</a>!
+              <!-- <vue-markdown :source="getHomeDialog.announcement"/> -->
             </div>
           </div>
 

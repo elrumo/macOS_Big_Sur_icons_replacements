@@ -22,10 +22,6 @@ export default {
 
     props:{
       sponsored: '',
-      // sponsored: {
-      //   type: Boolean,
-      //   default: false,
-      // },
       zoneKey: '',
       fullWidth: '',
       adId: '',
@@ -44,141 +40,21 @@ export default {
         }
     },
     
-    mounted: function(){
-      let parent = this
-      var adId = parent.adId
+    mounted(){
+      this.runAd();
+    },
 
-      const templateCompact =  `
-                  <a href="##statlink##" target="_blank" rel="noopener sponsored" id="`+adId+`customAd" class="bsa-link coral-card">
-                  <div class="bsa-icon" style="background-image: url(##image##); background-color: ##backgroundColor##;"></div>
-                  <div class="bsa-desc">##company## - ##tagline##</div>
-                  </a>
-                `
-
-      const templateCard =  `
-                  <a href="##statlink##" target="_blank" rel="noopener sponsored" id="`+adId+`customAd"" class="bsa-link">
-                    <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
-                      <div class="bsa-icon" style="background-image: url(##logo##);"></div>
-                    </div>
-                    <div class="text-ad-wrapper">
-                      <img style="background: ##backgroundColor##" src="##image##">
-                      <div class="bsa-desc">##description##</div>
-                    </div>
-                  </a>
-                `
-
-      let template = this.template == 1 ? templateCompact : templateCard
-      let zoneKey = this.zoneKey;
-      let count = this.count
-
-      function initAds() {
-        if (typeof _bsa !== 'undefined' && _bsa) {
-          _bsa.init('custom', zoneKey, 'placement:macosiconscom', {
-            target: '#' + adId,
-            template: template,
-          })
-          _bsa.callback = BSANativeCallbacks // This is the callback function
+    watch:{
+      refreshAd(val){
+        if (val) {
+          _bsa.reload('#' + this.adId)
+          // set refreshAd to false
+          this.$store.commit('setDataToArr', { arr: 'refreshAd', data: false })
         }
-      };
-
-      function BSANativeCallbacks(a) {
-        // console.log(a.ads);
-        if (a.ads.length == 0) {
-          count++
-          console.log(adId + ' ' + count);
-          initAds();
-          // Do something here to display fallback when the ads array is empty
-        }
+      },
+      $route(to, from){
+        // this.runAd();
       }
-      
-      // initAds()
-      // return
-
-      function getAd(el){
-        try {
-          if (typeof _bsa !== 'undefined' && !parent.isAd ) {
-            document.getElementById(adId).innerHTML = ''
-            // el.innerHTML = ''
-            _bsa.init('custom', zoneKey, 'placement:macosiconscom',{
-              target: '#'+adId,
-              template: template
-            });
-            // _bsa.callback = BSANativeCallback
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      }
-
-      getAd()
-
-      var attempts = 0       
-
-      function adExist(){
-        var adExists
-
-        setTimeout(() => {
-          try {
-            adExists = document.getElementById(adId).children.length
-          } catch (error) {
-          }
-
-          if (adExists > 0 || attempts >= 25) return;
-          // if (attempts >= 25) return;
-          if (adExists == 0) {
-            try {
-              attempts++
-              adExist()
-              getAd()
-            } catch (error) {
-              attempts++
-              adExist()
-              getAd()
-              parent.isAd = false
-            }
-          } else return
-
-        }, 800);
-      }
-
-      let el = document.getElementById(adId)
-
-      // function BSANativeCallback(a){
-      //   console.log(a.ads);
-      //   if (a.ads.length == 0) {
-      //     getAd(el)
-      //     parent.isAd = true
-      //   }
-      // }
-
-      if (!parent.isAd) {
-          try {
-            adExist()
-          } catch (error) {
-          }
-      }
-
-      setTimeout(() =>{
-        try {
-          let nodeList = document.querySelector("#"+adId).children
-          
-          for(let el in nodeList){
-            let newNodeList = document.querySelector("#"+adId).children
-
-            if(newNodeList.length > 1){
-              console.log(newNodeList.length);
-              el.parentNode.removeChild(el);
-            } else{
-              // console.log(newNodeList.length);
-              return
-            }
-
-          };
-        } catch (error) {
-          
-        }
-      }, 100)
-
     },
 
     methods:{
@@ -186,7 +62,54 @@ export default {
         window.plausible("adClick", {props: {
           path: this.$route.name
         }})
+      },
+
+      runAd(){
+        let parent = this
+        let adId = parent.adId
+
+        const templateCompact = `
+                    <a href="##statlink##" target="_blank" rel="noopener sponsored" id="`+ adId + `customAd" class="bsa-link coral-card">
+                    <div class="bsa-icon" style="background-image: url(##image##); background-color: ##backgroundColor##;"></div>
+                    <div class="bsa-desc">##company## - ##tagline##</div>
+                    </a>
+                  `
+
+        const templateCard = `
+                    <a href="##statlink##" target="_blank" rel="noopener sponsored" id="`+ adId + `customAd"" class="bsa-link">
+                      <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
+                        <div class="bsa-icon" style="background-image: url(##logo##);"></div>
+                      </div>
+                      <div class="text-ad-wrapper">
+                        <img style="background: ##backgroundColor##" src="##image##">
+                        <div class="bsa-desc">##description##</div>
+                      </div>
+                    </a>
+                  `
+
+        let template = this.template == 1 ? templateCompact : templateCard
+        let zoneKey = this.zoneKey;
+
+        try {
+          if (typeof _bsa !== 'undefined' && !parent.isAd) {
+            document.getElementById(adId).innerHTML = ''
+            _bsa.init('custom', zoneKey, 'placement:macosiconscom', {
+              target: '#' + adId,
+              template: template
+            });
+          }
+        } catch (error) {
+          console.log(error);
+        }
       }
+    },
+
+    computed: {
+      // get the getter getRefreshAd
+      refreshAd() {
+        return this.$store.getters.getRefreshAd
+      }
+
     }
 }
 </script>

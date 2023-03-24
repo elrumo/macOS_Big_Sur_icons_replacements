@@ -1,63 +1,47 @@
 <template>
-  <div id="stickyBanner">
-    <div class="sticky-banner card-wrapper card-hover mobile-hidden coral-card">
-      
-      <div class="lgbt-wrapper">
-
-        <div @click="closeBanner" class="close-add-btn">
-          <svg style="z-index: 9; width: 12px; height: 12px" class="icon icon-absolute" xmlns="http://www.w3.org/2000/svg" height="12" width="12" viewBox="0 0 12 12">
-            <title>CrossLarge</title>
-            <rect id="ToDelete" fill="#ff13dc" opacity="0" width="12" height="12" /><path d="M11.69673,10.28266,7.41406,6l4.28267-4.28266A.9999.9999,0,1,0,10.28266.30327L6,4.58594,1.71734.30327A.9999.9999,0,1,0,.30327,1.71734L4.58594,6,.30327,10.28266a.9999.9999,0,1,0,1.41407,1.41407L6,7.41406l4.28266,4.28267a.9999.9999,0,1,0,1.41407-1.41407Z" />
-          </svg>
+    <div id="stickyBanner">
+        <div class="sticky-banner card-wrapper card-hover mobile-hidden coral-card">
+            <div class="lgbt-wrapper">
+    
+                <div @click="closeBanner" class="close-add-btn">
+                    <svg style="z-index: 9; width: 12px; height: 12px" class="icon icon-absolute" xmlns="http://www.w3.org/2000/svg" height="12" width="12" viewBox="0 0 12 12">
+                                        <title>CrossLarge</title>
+                                        <rect id="ToDelete" fill="#ff13dc" opacity="0" width="12" height="12" /><path d="M11.69673,10.28266,7.41406,6l4.28267-4.28266A.9999.9999,0,1,0,10.28266.30327L6,4.58594,1.71734.30327A.9999.9999,0,1,0,.30327,1.71734L4.58594,6,.30327,10.28266a.9999.9999,0,1,0,1.41407,1.41407L6,7.41406l4.28266,4.28267a.9999.9999,0,1,0,1.41407-1.41407Z" />
+                                      </svg>
+                </div>
+    
+                <!-- <div style="z-index: 2" class="card-grid-nativeAd">
+                                        <div
+                                          class="card-ad2">
+                                        </div>
+                                      </div> -->
+    
+                <!-- <CarbonAd
+                                      adId="carbonAd"
+                                    /> -->
+    
+                <NativeAd :template="3" key="CWYDCK3E" adId="CWYDCK3E" zoneKey="CWYDCK3E" />
+    
+                <!-- href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" -->
+                <!-- target="_blank" -->
+                <div class="card-no-ad absolute" rel="noopener" style="width: 100%; left: 0;">
+                    <div class="support-page">
+                        <h3 class="coral-Heading--S m-0">
+                            Support this page
+                        </h3>
+                        <p class="coral-Body--S m-0">
+                            Please consider disabling your ad blocker or making a
+                            <a rel="noopener" class="coral-Link" target="_blank" href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN">
+                                              donation 
+                                            </a> to support this project.
+                        </p>
+                    </div>
+                </div>
+    
+            </div>
+    
         </div>
-        
-          <!-- <div style="z-index: 2" class="card-grid-nativeAd">
-            <div
-              class="card-ad2">
-            </div>
-          </div> -->
-
-        <!-- <CarbonAd
-          adId="carbonAd"
-        /> -->
-        
-          <NativeAd
-            :template="3"
-            key="CWYDCK3E"
-            adId="CWYDCK3E"
-            zoneKey="CWYDCK3E"
-          />
-
-            <!-- href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" -->
-            <!-- target="_blank" -->
-          <div
-            class="card-no-ad absolute"
-            rel="noopener"
-            style="width: 100%; left: 0;"
-          >
-            <div class="support-page">
-              <h3 class="coral-Heading--S m-0">
-                Support this page
-              </h3>
-              <p class="coral-Body--S m-0">
-                Please consider disabling your ad blocker or making a
-                <a  
-                  rel="noopener"
-                  class="coral-Link"
-                  target="_blank"
-                  href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN"
-                >
-                  donation 
-                </a>
-                to support this project.
-              </p>
-            </div>
-          </div>
-
-      </div>
-
     </div>
-  </div>
 </template>
 
 <script>
@@ -68,155 +52,58 @@ import CarbonAd from "./CarbonAd.vue";
 import lgbtIcon from "../assets/Resources/lgbt.png"
 
 export default {
-    name:"StickyBanner",
+    name: "StickyBanner",
 
-    props:{
-      sponsored:'',
-      fullWidth:'',
-      adId: '',
+    props: {
+        sponsored: '',
+        fullWidth: '',
+        adId: '',
     },
 
-    components:{
-      NativeAd,
-      CarbonAd
+    components: {
+        NativeAd,
+        CarbonAd
     },
 
-    data(){
-        return{
-        imgs:{
-            lgbt: lgbtIcon
-          },
+    data() {
+        return {
+            imgs: {
+                lgbt: lgbtIcon
+            },
         }
     },
-    
-    mounted(){
-      
-      // this.$nextTick(function () {
-      //   let parent = this
-      //   parent.getAd()
-      // })
 
-      let adId = 'carbonAd2'
-
-      function getAd(adId){
-        try {
-          if (typeof _bsa !== 'undefined') {
-            _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
-            {
-            target: '.card-ad2',
-              template: `
-                  <a href="##statlink##" target="_blank" rel="noopener sponsored" id="`+adId+`customAd"" class="bsa-link">
-                  <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
-                    <div class="bsa-icon" style="background-image: url(##logo##);"></div>
-                  </div>
-                  <div class="text-ad-wrapper">
-                    <img style="background: ##backgroundColor##" src="##image##">
-                    <div class="bsa-desc">##description##</div>
-                  </div>
-                  </a>
-                `
-              }
-            )
-          }else{
-            console.log('_bsa not defined');
-          }
-        } catch (error) {
-          console.log("error: ", error);
-        }
-      }
-      
-      // getAd(adId)
-
-    },
-
-    watch:{
-      $route (to, from){
-          // this.$router.isReady(function(){
-            // let parent = this
-            // getAd()
-            
-            // let el = document.querySelector('.card-ad2').children
-
-            // if (from.name != null) {
-              // try {
-              //   el[0].remove()
-              //   setTimeout(() => {
-              //     getAd()
-              //     getAd()
-              //   }, 1000);
-              // } catch (error) {
-              //   getAd()
-              //   getAd()
-              // }
-            // }
-            
-          // });
-      }
-    },
-
-    methods:{
-      ...mapActions(['showEl', 'setSelectedIcon', 'addClickCount', 'adClick']),
-
-      getAd(){
-        try {
-          if (typeof _bsa !== 'undefined') {
-          _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
-            {
-              target: '.card-ad2',
-              template: `
-                  <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link">
-                  <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
-                    <div class="bsa-icon" style="background-image: url(##logo##);"></div>
-                  </div>
-                  <div class="text-ad-wrapper">
-                    <img style="background: ##backgroundColor##" src="##image##">
-                    <div class="bsa-desc">##description##</div>
-                  </div>
-                  </a>
-                `
-              }
-            );
-          }
-        } catch (error) {
-          console.log("error: ", error);
-        }
-
+    mounted() {
         setTimeout(() => {
-          let ad = document.querySelector('.bsa-link')
-          if (ad == null) {
-            try {
-              this.getAd()
-            } catch (error) {
-              console.log("error: ", error);
-            }
-          }
-      }, 1500);
+            // let childCount = document.getElementById("CWYDCK3E").childElementCount;
+            // if (childCount == 0) {
+            //     document.getElementById("stickyBanner").remove()
+            // }
+        }, 600);
+    },
 
-      },
+    watch: {
+        $route(to, from) {}
+    },
 
-      closeBanner(){
-        document.getElementById("stickyBanner").remove()
-      },
+    methods: {
+        ...mapActions(['showEl', 'setSelectedIcon', 'addClickCount', 'adClick']),
 
-      // adClick(){
-      //   let parent = this
-      //   window.plausible("adClick", {props: {
-      //     path: parent.$route.name,
-      //     position: "Bottom Sticky Banner"
-      //   }})
-      // }
+        closeBanner() {
+            document.getElementById("stickyBanner").remove()
+        },
 
     }
 }
 </script>
 
 <style>
-  .lgbt-img{
+.lgbt-img {
     width: 80px;
     margin: auto;
-  }
+}
 
-  .icon-absolute{
+.icon-absolute {
     position: absolute;
     padding: 0px !important;
     height: 10px;
@@ -225,30 +112,30 @@ export default {
     top: 10px;
     opacity: 0.7;
     cursor: pointer;
-  }
-  
-  .icon-absolute:hover{
-    opacity: 1;
-  }
+}
 
-  .lgbt-text{
+.icon-absolute:hover {
+    opacity: 1;
+}
+
+.lgbt-text {
     height: fit-content;
     margin: auto;
     text-align: left;
     display: grid;
     grid-template-columns: auto;
     gap: 10px;
-  }
+}
 
-  .lgbt-text p{
+.lgbt-text p {
     margin: 5px;
-  }
+}
 
-  .sticky-banner ._coral-Button{
+.sticky-banner ._coral-Button {
     width: 100%;
-  }
+}
 
-  .sticky-banner{
+.sticky-banner {
     position: fixed !important;
     height: auto !important;
     width: 100%;
@@ -263,22 +150,19 @@ export default {
     min-height: 20px !important;
 }
 
-@media only screen and (max-width: 720px){
-  .sticky-banner{
-    bottom: 10px;
-    max-width: 500px !important;
-    width: calc(100% - 20px) !important;
-    right: 50%;
-    transform: translateX(50%)
-  }
-
-  .lgbt-img{
-    width: 70px;
-  }
-
-  #stickyBanner .card-hover:hover {
-    transform: translateX(50%) !important;  
-  }
+@media only screen and (max-width: 720px) {
+    .sticky-banner {
+        bottom: 10px;
+        max-width: 500px !important;
+        width: calc(100% - 20px) !important;
+        right: 50%;
+        transform: translateX(50%)
+    }
+    .lgbt-img {
+        width: 70px;
+    }
+    #stickyBanner .card-hover:hover {
+        transform: translateX(50%) !important;
+    }
 }
-
 </style>
