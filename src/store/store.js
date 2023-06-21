@@ -60,8 +60,6 @@ export default createStore({
       moreResources: {},
       resourcesTemplate: {},
       articleTemplate: {},
-    
-      refreshAd: false,
 
       homeDialog: {},
 
@@ -95,7 +93,6 @@ export default createStore({
 
       downloads:[],
 
-      selectedIcon:{},
       searchString: "",
       searchData: [],
       
@@ -570,8 +567,6 @@ export default createStore({
     async addClickCount(store, icon){
       if (store.state.downloads.indexOf(icon.id) == -1) {
         store.commit('setDataToArr', {arr: 'downloads', data: icon.id})
-        store.commit('setDataToArr', {arr: 'refreshAd', data: true})
-        console.log("store.refreshAd: ", store.refreshAd);
         var id
         if (icon.id) {
           id = icon.id
@@ -579,9 +574,7 @@ export default createStore({
           id = icon.objectID
         }
         icon = { appName: icon.appName, id: id }
-        console.log({icon: icon});
-        let clickCount = await Parse.Cloud.run("addClickCount", {icon: icon});
-        console.log(clickCount);
+        await Parse.Cloud.run("addClickCount", {icon: icon});
       } else{
         return "No download"
       }
@@ -977,10 +970,9 @@ export default createStore({
       return store.iconListLen
     },
 
-    getRefreshAd(store){
-      return store.refreshAd
+    getDownloads(store){
+      return store.downloads
     },
-
 
   }
 

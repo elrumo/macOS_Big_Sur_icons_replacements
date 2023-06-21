@@ -356,13 +356,14 @@ select{
     padding: 10px !important;
     top: 25px;
     display: grid;
-    gap: 7px;
+    // gap: 7px;
     text-align: center;
     width: calc(100% - 20px ) !important;
     height: fit-content !important;
 
     p{
         margin-bottom: 0px;
+        line-height: 130%;
     }
 }
 
@@ -385,14 +386,29 @@ select{
     /* grid-template-columns: auto auto; */
 
     .card-no-ad{
-        position: relative;
-        height: fit-content;
-        top: 0px;
+        position: absolute;
+        height: 97%;
+        width: 90%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+
+        &:hover{
+            img{
+                transform: translateY(-5px) rotate(-6deg);
+            }
+        }
     }
 
     .support-page{
         top: 0px;
-        // transform: translateY(0%) !important;
+        
     }
 }
 
@@ -1522,6 +1538,9 @@ coral-buttongroup button{
 
 .grid-ad{
     max-height: 250px;
+    position: relative;
+    background: var(--coral-light-card);
+    border-radius: 8px;
 }
 
 .icon-list-area{
@@ -1539,10 +1558,44 @@ coral-buttongroup button{
     //     max-height: 240px;
     // }
     
-    .support-page{
-        top: 50%;
+    .card-no-ad{
         position: absolute;
-        transform: translateY(-50%);
+        height: calc(100% - 2rem);
+        width: calc(100% - 2rem);
+        padding: 1rem 1rem;
+        gap: 0.75rem;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+
+        .support-page{
+            top: 0px;
+            margin: 0px !important;
+            padding: 0px !important;
+            width: 100% !important;
+        }
+
+        .ad-banner-image{
+            width: auto;
+            height: 100%;
+            max-height: 60%;
+            border-radius: 0;
+            box-shadow: none;
+            object-fit: cover;
+            transition: 0.2s;
+        }
+
+        &:hover{
+            .ad-banner-image{
+                transform: translateY(-5px) rotate(-6deg);
+            }
+        }
     }
 
     .card-wrapper{
@@ -1877,7 +1930,8 @@ coral-buttongroup button{
 .coral-card{
     border: 1px solid;
     transition: 0.2s;
-    overflow: hidden;
+    // overflow: hidden; TODO:
+    overflow: visible;
     border-radius: var(--main-border-radius);
 }
 
@@ -2856,3 +2910,11 @@ coral-sidenav-item{
 }
 
 
+.ad-banner-image{
+    width: 70%;
+    height: 80%;
+    border-radius: 0.5rem;
+    box-shadow: 0px 2px 8px 0px rgba(1, 171, 197, 0.5);
+    object-fit: cover;
+    transition: 0.2s;
+}

@@ -1,13 +1,13 @@
 <template>
-    <div id="stickyBanner">
+    <div v-if="showStickyBanner" id="stickyBanner">
         <div class="sticky-banner card-wrapper card-hover mobile-hidden coral-card">
             <div class="lgbt-wrapper">
     
                 <div @click="closeBanner" class="close-add-btn">
                     <svg style="z-index: 9; width: 12px; height: 12px" class="icon icon-absolute" xmlns="http://www.w3.org/2000/svg" height="12" width="12" viewBox="0 0 12 12">
-                                        <title>CrossLarge</title>
-                                        <rect id="ToDelete" fill="#ff13dc" opacity="0" width="12" height="12" /><path d="M11.69673,10.28266,7.41406,6l4.28267-4.28266A.9999.9999,0,1,0,10.28266.30327L6,4.58594,1.71734.30327A.9999.9999,0,1,0,.30327,1.71734L4.58594,6,.30327,10.28266a.9999.9999,0,1,0,1.41407,1.41407L6,7.41406l4.28266,4.28267a.9999.9999,0,1,0,1.41407-1.41407Z" />
-                                      </svg>
+                        <title>CrossLarge</title>
+                        <rect id="ToDelete" fill="#ff13dc" opacity="0" width="12" height="12" /><path d="M11.69673,10.28266,7.41406,6l4.28267-4.28266A.9999.9999,0,1,0,10.28266.30327L6,4.58594,1.71734.30327A.9999.9999,0,1,0,.30327,1.71734L4.58594,6,.30327,10.28266a.9999.9999,0,1,0,1.41407,1.41407L6,7.41406l4.28266,4.28267a.9999.9999,0,1,0,1.41407-1.41407Z" />
+                    </svg>
                 </div>
     
                 <!-- <div style="z-index: 2" class="card-grid-nativeAd">
@@ -22,21 +22,20 @@
     
                 <NativeAd :template="3" key="CWYDCK3E" adId="CWYDCK3E" zoneKey="CWYDCK3E" />
     
-                <!-- href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN" -->
-                <!-- target="_blank" -->
-                <div class="card-no-ad absolute" rel="noopener" style="width: 100%; left: 0;">
+                <a class="card-no-ad absolute" rel="noopener" href="https://www.webbites.io" target="_blank">
+                    <img
+                        :src="webbitesAd"
+                        class="ad-banner-image"
+                        width="38"
+                        height="38"
+                        alt="WebBites.io"
+                    />
                     <div class="support-page">
-                        <h3 class="coral-Heading--S m-0">
-                            Support this page
-                        </h3>
                         <p class="coral-Body--S m-0">
-                            Please consider disabling your ad blocker or making a
-                            <a rel="noopener" class="coral-Link" target="_blank" href="https://www.paypal.com/donate/?hosted_button_id=5PMNX4DPW83KN">
-                                              donation 
-                                            </a> to support this project.
+                           Introducing <a href="https://www.webbites.io/?utm_source=macOSicons.com&utm_medium=topBanner&utm_campaign=waitlist">WebBites.io</a>, a new smart bookmarking service powered by AI.
                         </p>
                     </div>
-                </div>
+                </a>
     
             </div>
     
@@ -48,6 +47,10 @@
 import { mapActions, mapGetters } from 'vuex';
 import NativeAd from "./NativeAd.vue";
 import CarbonAd from "./CarbonAd.vue";
+
+import WebBitesLogo from "../assets/webbites-logo-small.png"
+import og_webbites from "../assets/og_webbites.jpg"
+import webbitesAd from "../assets/WebbitesAd.jpg"
 
 import lgbtIcon from "../assets/Resources/lgbt.png"
 
@@ -70,16 +73,20 @@ export default {
             imgs: {
                 lgbt: lgbtIcon
             },
+            showStickyBanner: true,
+            WebBitesLogo: WebBitesLogo,
+            og_webbites: og_webbites,
+            webbitesAd: webbitesAd,
         }
     },
 
     mounted() {
-        setTimeout(() => {
-            // let childCount = document.getElementById("CWYDCK3E").childElementCount;
-            // if (childCount == 0) {
-            //     document.getElementById("stickyBanner").remove()
-            // }
-        }, 600);
+        // setTimeout(() => {
+        //     let childCount = document.getElementById("CWYDCK3E").childElementCount;
+        //     if (childCount == 0) {
+        //         this.closeBanner()
+        //     }
+        // }, 1600);
     },
 
     watch: {
@@ -90,10 +97,11 @@ export default {
         ...mapActions(['showEl', 'setSelectedIcon', 'addClickCount', 'adClick']),
 
         closeBanner() {
-            document.getElementById("stickyBanner").remove()
+            // document.getElementById("stickyBanner").remove()
+            this.showStickyBanner = false;
         },
-
     }
+
 }
 </script>
 
