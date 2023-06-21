@@ -235,6 +235,7 @@ export default {
         iconClick(icon){
             this.addClickCount(icon);
             this.setData({arr: 'selectedIcon', data: icon});
+            this.setData({arr: 'refreshAd', data: true});
             this.showDialog('iconDialog');
         },
 

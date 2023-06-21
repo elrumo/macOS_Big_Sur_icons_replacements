@@ -1,21 +1,46 @@
 <template>
-  <div :class="{fullWidth: fullWidth, 'mobile-hidden': true}">
-    <p v-if="sponsored" class="coral-Detail coral-Detail--S coral-Detail--light opacity-50">
-      Sponsored
-    </p>
-    <div
-      @click="adClick"
-      :class="{
-        'coral-card': template == 2,
-        'native-ad-wrapper': template == 1,
-        'card-grid-nativeAd': template != 1
-      }"
-      :id="adId">
+  <div
+    :class="{
+      'relative': true,
+      'coral-card': template == 2,
+    }">
+    <div :class="{fullWidth: fullWidth, 'mobile-hidden': true}">
+      <p v-if="sponsored" class="coral-Detail coral-Detail--S coral-Detail--light opacity-50">
+        Sponsored
+      </p>
+
+      <div
+        @click="adClick"
+        :class="{
+          'native-ad-wrapper': template == 1,
+          'card-grid-nativeAd': template != 1,
+          'relative': true
+        }"
+        :id="adId"
+      ></div>    
     </div>
+    <a v-if="template == 2" class="card-no-ad" href="https://www.webbites.io" target="_blank">
+          <!-- :src="webbitesAd" -->
+          <img
+              :src="webitesIcon"
+              class="ad-banner-image"
+              width="38"
+              height="38"
+              alt="WebBites.io"
+          />
+          <div class="support-page">
+              <p class="coral-Body--S m-0">
+                  <b href="https://www.webbites.io/?utm_source=macOSicons.com&utm_medium=topBanner&utm_campaign=waitlist">WebBites.io</b>, a new smart bookmarking service powered by AI.
+              </p>
+          </div>
+        </a>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+import webbitesAd from "../assets/WebbitesAd.jpg"
+import webitesIcon from "../assets/WebBitesIcon.png"
 
 export default {
     name:"NativeAd",
@@ -36,7 +61,9 @@ export default {
     data(){
         return{
           isAd: false,
-          count: 0
+          count: 0,
+          webbitesAd: webbitesAd,
+          webitesIcon: webitesIcon,
         }
     },
     
@@ -45,19 +72,43 @@ export default {
     },
 
     watch:{
-      refreshAd(val){
-        if (val) {
-          _bsa.reload('#' + this.adId)
-          // set refreshAd to false
-          this.$store.commit('setDataToArr', { arr: 'refreshAd', data: false })
+        getDownloads(){
+          this.refreshAd();
+        },
+        
+        $route(to, from){
+          // this.runAd();
         }
-      },
-      $route(to, from){
-        // this.runAd();
-      }
     },
 
     methods:{
+
+      refreshAd(){
+        // let parent = this
+        // let adId = parent.adId
+
+        // let ad = document.getElementById(adId + "customAd")
+        // if (ad) {
+        //   ad.remove()
+        // }
+
+        // parent.runAd()
+
+        let adLength = document.querySelectorAll('#' + this.adId).length;
+
+        if (adLength > 0) {
+          try {
+            _bsa.reload('#' + this.adId);
+          } catch (error) {
+            this.runAd();
+          }
+        } else {
+          console.log('ad not found');
+          this.runAd();
+        }
+
+      },
+
       adClick(){
         window.plausible("adClick", {props: {
           path: this.$route.name
@@ -105,11 +156,7 @@ export default {
     },
 
     computed: {
-      // get the getter getRefreshAd
-      refreshAd() {
-        return this.$store.getters.getRefreshAd
-      }
-
+      ...mapGetters(['getDownloads'])
     }
 }
 </script>

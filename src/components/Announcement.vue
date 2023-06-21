@@ -12,7 +12,7 @@
         <div class="mr-3">
           <!-- :src="getStrapiImg(getHomeDialog.announcementImg)" -->
             <img
-              src="https://www.webbites.io/_nuxt/WebBites-Icon.209a5576.png"
+              :src="WebBitesLogo"
               class="rounded-1 avatar-user"
               width="48"
               height="48"
@@ -50,12 +50,13 @@
       <div class="d-flex">
 
         <!-- :src="getStrapiImg(getHomeDialog.announcementImg)" -->
+        <!-- src="https://www.webbites.io/_nuxt/WebBites-Icon.209a5576.png" -->
         <img
-          src="https://www.webbites.io/_nuxt/WebBites-Icon.209a5576.png"
+          :src="WebBitesLogo"
           class="rounded-1 avatar-user"
-          width="48"
-          height="48"
-          alt="@elrumo"
+          width="38"
+          height="38"
+          alt="WebBites.io"
         />
 
         <div class="d-sm-flex flex-auto">
@@ -82,6 +83,7 @@
 
 <script>
 import profilePicIcon from "../assets/profilePic.jpg"
+import WebBitesLogo from "../assets/webbites-logo-small.png"
 import VueMarkdown from 'vue-markdown-render'
 
 export default {
@@ -91,6 +93,7 @@ export default {
       gitHub: {
         profile: profilePicIcon,
       },
+      WebBitesLogo: WebBitesLogo,
     };
   },
 
