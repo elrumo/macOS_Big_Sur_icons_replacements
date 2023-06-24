@@ -313,44 +313,56 @@ height: -moz-fit-content;
     height: 42px;
 }
 
-.icon-list-area .carbon-img img {
+.icon-list-area {
+
+    .bsa-link{
+        top: 50%;
+        position: absolute;
+        transform: translateY(-20%);
+    }
+
+ .carbon-img img {
     width: auto;
     height: 100%;
     max-height: 80px;
 }
 
-.icon-list-area #carbonads{
-    overflow: visible;
-    cursor: pointer;
-}
+    #carbonads{
+        overflow: visible;
+        cursor: pointer;
 
-.icon-list-area #carbonads:hover img {
-    transform: translateY(-5px);
-}
+        &:hover{
 
-.icon-list-area #carbonads > span {
-    /* height: fit-content;
-height: -moz-fit-content; */
-    height: calc(100% - 20px) !important;
-    padding: 10px 7px 10px 7px;
-    grid-template-rows: auto 19px;
-    gap: 5px;
-    margin: auto;
-    max-height: 200px;
-}
+            img{
+                transform: translateY(-5px);
+            }
+        }
 
-.icon-list-area #carbonads span {
-    display: grid;
-    overflow: visible;
-    position: relative;
-    /* height: 100%; */
-    height: fit-content;
-height: -moz-fit-content;
-}
 
-.icon-list-area #carbonads .carbon-wrap{
-    grid-template-rows: auto auto;
-    /* grid-template-rows: 65px auto; */
+        &>span{
+            height: calc(100% - 20px) !important;
+            padding: 10px 7px 10px 7px;
+            grid-template-rows: auto 19px;
+            gap: 5px;
+            margin: auto;
+            max-height: 200px;
+        }
+
+        span {
+            display: grid;
+            overflow: visible;
+            position: relative;
+            /* height: 100%; */
+            height: fit-content;
+            height: -moz-fit-content;
+        }
+        .carbon-wrap{
+            grid-template-rows: auto auto;
+            /* grid-template-rows: 65px auto; */
+        }
+
+    }
+
 }
 
 #carbonads .carbon-wrap {
@@ -409,6 +421,7 @@ height: -moz-fit-content;
         border: 0px;
         font-size: 13px;
         gap: 10px;
+        min-height: 170px;
         // top: 50%;
         // transform: translateY(-50%);
     }
