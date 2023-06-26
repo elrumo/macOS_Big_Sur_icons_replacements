@@ -11,7 +11,6 @@
     --coral-dark-card: rgb(37, 37, 37);
     --coral-dark-card-transparent: rgba(37, 37, 37, 0);
     
-    
     --coral-light-bg: rgba(245, 245, 245, 1);
     --coral-light-text: rgba(75, 75, 75);
     --coral-light-border: rgb(224, 224, 224);
@@ -23,6 +22,15 @@
     --page-width-mobile: 85%;
 
     --icon-preview-dimensions: 100px;
+
+    // light media query css
+    @media (prefers-color-scheme: light) {
+        --coral-text: var(--coral-light-text);
+    }
+
+    @media (prefers-color-scheme: dark) {
+        --coral-text: var(--coral-dark-text);
+    }
 }
 
 @mixin skeleton-gradient-light{
@@ -1541,7 +1549,11 @@ coral-buttongroup button{
     position: relative;
     background: var(--coral-light-card);
     border-radius: 8px;
-    min-height: 180px;
+    overflow: hidden !important;
+
+    .bsa-link{
+        min-height: 170px;
+    }
 }
 
 .icon-list-area{

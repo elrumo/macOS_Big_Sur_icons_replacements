@@ -136,7 +136,19 @@ height: -moz-fit-content;
 }
 
 /* background: #f1f1f2; */
-  
+
+
+.ad-warning{
+    content: "Ad";
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    height: fit-content;
+    font-size: 0.7rem;
+    opacity: 0.7;
+    color: var(--coral-text);
+}
+
 
 /* Resources card ad */
 /* //////////////////////////////////////////////////////////////// */
@@ -319,6 +331,14 @@ height: -moz-fit-content;
         top: 50%;
         position: absolute;
         transform: translateY(-20%);
+        min-height: 210px;
+        text-align: left;
+
+        &::after{
+            @extend .ad-warning;
+            bottom: 0px;
+            top: 4px;
+        }
     }
 
  .carbon-img img {
@@ -384,13 +404,6 @@ height: -moz-fit-content;
 /* card-grid-nativeAd START */
 /* //////////////////////////////////// */
 
-.icon-list-area{
-
-    .bsa-desc{
-        text-align: left;
-    }
-}
-
 .card-grid-nativeAd{
     z-index: 2;
     height: 100%;
@@ -411,7 +424,7 @@ height: -moz-fit-content;
     }
 
     .bsa-link{
-        padding: 10px 0px;
+        padding: 0px 0px 20px 0px;
         height: fit-content;
         height: -moz-fit-content;
         height: -moz-fit-content;
@@ -420,10 +433,15 @@ height: -moz-fit-content;
         background-color: transparent;
         border: 0px;
         font-size: 13px;
+        align-content: center;
+        overflow-y: visible;
         gap: 10px;
-        min-height: 170px;
         // top: 50%;
         // transform: translateY(-50%);
+
+        @media screen and (max-width: 990px) {
+            gap: 0px;
+        }
     }
 
     .coral-card{
@@ -458,7 +476,8 @@ height: -moz-fit-content;
 
     .text-ad-wrapper{
         display: grid;
-        width: calc(100% + 4px);
+        width: 100%;
+        height: 100%;
         grid-template-columns: auto;
         height: fit-content;
         height: -moz-fit-content;
@@ -663,4 +682,112 @@ height: -moz-fit-content;
     font-weight: 600;
     font-size: 9px;
     line-height: 1;
+}
+
+
+.lgbt-wrapper{
+    .text-ad-wrapper{
+        position: relative;
+        padding-bottom: 0.25rem;
+        margin-bottom: 0.75rem;
+
+        &::after{
+            bottom: -18px;
+            right: 0%;
+            @extend .ad-warning;
+            // content: "Ad";
+            // position: absolute;
+            // text-align: center;
+            // // transform: translateX(-50%);
+            // width: 100%;
+            // font-size: 0.7rem;
+            // height: 16px;
+            // opacity: 0.7;
+            // color: var(--coral-text);
+        }
+    }
+}
+
+.ad-hero{
+    .native-ad-wrapper{
+        overflow: visible;
+        &>div{
+            &::after{
+                @extend .ad-warning;
+                top: -18px;
+                left: 0%;
+                width: 100%;
+                // right: 0px;
+            }
+        }
+    }
+}
+
+.lgbt-img {
+    width: 80px;
+    margin: auto;
+}
+
+.icon-absolute {
+    position: absolute;
+    padding: 0px !important;
+    height: 10px;
+    width: 8px;
+    right: 8px;
+    top: 10px;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.icon-absolute:hover {
+    opacity: 1;
+}
+
+.lgbt-text {
+    height: fit-content;
+    margin: auto;
+    text-align: left;
+    display: grid;
+    grid-template-columns: auto;
+    gap: 10px;
+}
+
+.lgbt-text p {
+    margin: 5px;
+}
+
+
+.sticky-banner {
+    position: fixed !important;
+    height: auto !important;
+    width: 100%;
+    max-width: 430px !important;
+    max-height: 180px !important;
+    padding: 5px;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9;
+    box-shadow: 0px 10px 30px -10px rgb(0 0 0);
+    min-height: 20px !important;
+    overflow: hidden;
+    
+    ._coral-Button {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    .sticky-banner {
+        bottom: 10px;
+        max-width: 500px !important;
+        width: calc(100% - 20px) !important;
+        right: 50%;
+        transform: translateX(50%)
+    }
+    .lgbt-img {
+        width: 70px;
+    }
+    #stickyBanner .card-hover:hover {
+        transform: translateX(50%) !important;
+    }
 }
