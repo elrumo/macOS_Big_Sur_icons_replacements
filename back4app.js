@@ -12,11 +12,11 @@ const { resolve } = require('path');
 var Icons = Parse.Object.extend("Icons2");
 
 let parseAppId = 'JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc';
-let parseJsApi = 'LI8g9vlPT3tkABLfrgksAyZYXNm82KbdPXQuyT40';
-let parseRestApi = 'FPpFOAadZPTgMjyAJwkzzraoYAwMZyxpQSQL6PBG';
+let parseJsApi = 'm6CDglgxjbC14JOUlwzdl5Yjp2TCMvHJJfnT0H4L';
+let parseRestApi = '8AiItnvMLbFUHP6ViJChzLm4WMwO1RbzqxeVVYCo';
 let parseServerUrl = 'https://parseapi.back4app.com/';
 
-Parse.initialize(parseAppId, parseJsApi, 'lPNcMx0IrqJfSziO4MP8CbjxODda8pLiBbYoWGBv');
+Parse.initialize(parseAppId, parseJsApi, 'J3TG1fm6jeYldM12bK53RXOMIj2d77BI4K6LeK5Z');
 Parse.serverURL = parseServerUrl;
 
 var mainClass = Icons;
