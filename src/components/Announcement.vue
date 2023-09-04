@@ -3,7 +3,7 @@
     <a
       aria-label="Support the project on PayPal"
       target="_blank"
-      :href="getHomeDialog.announcementUrl"
+      href="https://www.webbites.io/?utm_source=macOSicons.com&utm_medium=topBanner&utm_campaign=waitlist"
       style="color: black"
     >
     <article class="Box p-3">
@@ -43,9 +43,10 @@
     <a
       aria-label="Support the project on PayPal"
       target="_blank"
-      :href="getHomeDialog.announcementUrl"
+      href="https://www.webbites.io/?utm_source=macOSicons.com&utm_medium=topBanner&utm_campaign=waitlist"
       style="color: black"
-    >
+      >
+      <!-- :href="getHomeDialog.announcementUrl" -->
     <article class="Box">
       <div class="d-flex">
 
@@ -63,7 +64,7 @@
           
           <div class="flex-sm-auto mr-sm-3">
             <div class="h3 mb-2 f-w-900">
-            {{getHomeDialog.announcementTitle}}
+            <!-- {{getHomeDialog.announcementTitle}} -->
               <!-- New project announcement -->
             </div>
 
