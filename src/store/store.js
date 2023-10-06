@@ -289,8 +289,10 @@ export default createStore({
         
         if (search.length != 0) {
           algoliaSearch = await algoliaIndex.search(search, {filters: `approved:true`, hitsPerPage: 25, page: payload.page })
+          // algoliaSearch = await replicaIndex.search(search, {filters: `approved:true`, hitsPerPage: 25, page: payload.page })
         } else{
-          algoliaSearch = await replicaIndex.search(search, {filters: `approved:true`, hitsPerPage: 25, page: payload.page })
+          // algoliaSearch = await replicaIndex.search(search, {filters: `approved:true`, hitsPerPage: 25, page: payload.page })
+          algoliaSearch = await algoliaIndex.search(search, {filters: `approved:true`, hitsPerPage: 25, page: payload.page })
         }
         
         

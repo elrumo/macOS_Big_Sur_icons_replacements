@@ -157,6 +157,7 @@
 
                 <div class="p-t-16 p-b-16">
                   <button @click="approveIcon(icon)" class="coral-btn coral-btn-primary">Approve</button>
+                  <button v-if="icon.isReview" @click="unApproveIcon(icon)" class="coral-btn coral-btn-primary m-l-8 ">Unapprove</button>
                    
                    <!-- <coral-splitbutton>
                     <button class="coral-btn coral-btn-primary" is="coral-button" coral-splitbutton-action="">Action</button>
@@ -440,6 +441,34 @@ export default {
           variant: "error"
         })
       });
+    },
+
+    async unApproveIcon(icon){  
+
+      icon.isReview = false
+      icon.isReUploadReview = false
+
+      // set icon.approved to false
+      const IconsBase = Parse.Object.extend("Icons2");
+      const query = new Parse.Query(IconsBase);
+      const docToEdit = await query.get(icon.id)
+
+      docToEdit.set({ "approved": false }) // Save icnsToStore obj with .icns file and its url to Parse server
+      
+      try {
+        await docToEdit.save()  
+        this.showToast({
+          id: "toastMessage",
+          message: 'Icon has been unapproved',
+          variant: "success"
+        })
+      } catch (error) {
+        this.showToast({
+          id: "toastMessage",
+          message: e,
+          variant: "error"
+        })
+      }
 
     },
 
