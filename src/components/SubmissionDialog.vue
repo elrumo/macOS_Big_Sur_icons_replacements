@@ -68,7 +68,7 @@
                 
                 <div v-if="imageData" class="upload-card-wrapper">
                 
-                  <div v-for="icon in filesToShow" :key="icon.randId" class="upload-card coral-dark-bg coral-Well">
+                  <div v-for="icon in filesToShow" :key="icon.randId" class="upload-card coral-Well">
                     <!-- {{icon}} -->
                     <SubmissionIconPreview
                       :icon="icon"
