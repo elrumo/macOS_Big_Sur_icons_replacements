@@ -168,7 +168,7 @@ export default {
           weekDay = "Tuesday"
           break;
         case 2:
-          weekDay = "Wendesday"
+          weekDay = "Wednesday"
           break;
         case 3:
           weekDay = "Thursday"
