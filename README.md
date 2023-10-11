@@ -10,6 +10,8 @@ You just need to download the icon you want, find the app to update on Finder, s
 <br>
 <img style="text-align: left" src="https://i.imgur.com/0Vj6sFS.png" width="300">
 
+If you want to restore to the original icon, select "File/Get Info", and then select "Edit/Cut".
+
 ## I'd like to contribute
 Download the template for Sketch, Figma, Pixelmator, Photoshop, Pixelmator or Illustrator from the [Resources](https://macosicons.com/resources) page. <br>
 Here's what you need to know know:
