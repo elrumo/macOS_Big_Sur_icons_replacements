@@ -6,7 +6,8 @@
     </coral-dialog-header>
     
     <coral-dialog-content>
-      <coral-dialog id="resetPasswordDialog">
+      
+      <coral-dialog id="resetPasswordDialog" >
           <coral-dialog-header>Reset your password</coral-dialog-header>
           
           <coral-dialog-content style="max-width:412px">  
@@ -16,7 +17,7 @@
               Make sure to check your spam folder if you don't receive it within the next few minutes.
           </coral-dialog-content>
 
-          <coral-dialog-footer>
+          <coral-dialog-footer v-if="isReset">
               <button is="coral-button" variant="quiet" coral-close="">Cancel</button>
               <button is="coral-button" @click="resetPassword" variant="default" coral-close="">Reset password</button>
           </coral-dialog-footer>
@@ -34,6 +35,20 @@
           <h3 class="coral-Heading--S coral-Heading--light">
             Your Profile
           </h3>
+
+          <div class="profile-img-edit-wrapper p-t-8 p-b-8">
+            <img class="profile-img" :src="getUserProfilePic()" alt="">
+            
+            <coral-fileupload @change="uploadProfilePhoto" class="m-auto" accept="image/*">
+              <button is="coral-button" variant="action" coral-fileupload-select="" @click="$event.preventDefault()">
+                <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 18 18" width="18">
+                  <rect id="Canvas" fill="#ff13dc" opacity="0" width="18" height="18" /><path class="fill" d="M14.643,4.7355a4.3935,4.3935,0,0,0-8.5095-1.521,3.861,3.861,0,0,0-3.8445,3.7A2.612,2.612,0,0,0,.5165,9.6865,2.673,2.673,0,0,0,3.205,12H5.75A.25.25,0,0,0,6,11.75v-.5A.25.25,0,0,0,5.75,11H3.2A1.668,1.668,0,0,1,1.5045,9.4795,1.607,1.607,0,0,1,3.02214,7.78786q.0434-.00235.08686-.00236h.1795v-.714a2.85951,2.85951,0,0,1,3.6-2.7595,3.3935,3.3935,0,1,1,6.634,1.35,2.6785,2.6785,0,1,1,.3,5.34H12.25a.25.25,0,0,0-.25.25v.5a.25.25,0,0,0,.25.25H13.7A3.7585,3.7585,0,0,0,17.4735,8.76,3.684,3.684,0,0,0,14.643,4.7355Z" />
+                  <path class="fill" d="M6.75,9H8v7.5a.5.5,0,0,0,.5.5h1a.5.5,0,0,0,.5-.5V9h1.25a.25.25,0,0,0,.25-.25.24453.24453,0,0,0-.0585-.1585L9.182,6.08a.25.25,0,0,0-.3534-.01061L8.818,6.08,6.5585,8.59A.24453.24453,0,0,0,6.5,8.75.25.25,0,0,0,6.75,9Z" />
+                </svg>
+              </button>
+            </coral-fileupload>
+          </div>
+
           
           <!-- Username -->
           <div class="coral-FormGroup-item">
@@ -55,7 +70,7 @@
           <!-- nameToShow -->
           <div class="coral-FormGroup-item">
             <p v-if="propExists('authData')" class="coral-Body--XS"></p>
-            <label id="nameToShow-label" class="coral-FieldLabel">Your username</label>
+            <label id="nameToShow-label" class="coral-FieldLabel">Your name</label>
             <input
               id="nameToShow-settings"
               is="coral-textfield"
@@ -175,7 +190,7 @@
               v-on:change="validate($event, 'usaDateFormat')"
               :checked="getUserData('usaDateFormat')"
             >
-              Use USA date format <p class="coral-Body--XS"> (I won't judge you... ok, maybe a little) </p>
+              Use USA date format
             </coral-switch>
           </div>
 
@@ -272,14 +287,38 @@ export default {
         'fetchUserAttributes'
       ]),
 
+      getUserProfilePic() {
+        let userPic = Parse.User.current().get("profilePhoto")
+        return userPic ? userPic.url() : '/src/assets/Resources/accounts/profilePic.png'
+      },
+
+      async uploadProfilePhoto(event){
+        try {
+          let parent = this;
+          console.log("event.target.uploadQueue[0]: ", event.target.uploadQueue[0]);
+          let file = event.target.uploadQueue[0].file;
+          let parseFile = new Parse.File(file.name, file);
+        
+          await parseFile.save();
+          let user = Parse.User.current();
+          user.set('profilePhoto', parseFile);
+          await user.save();
+          
+          parent.yourName = user.get('profilePhoto').url();
+          console.log('Profile photo uploaded successfully.');
+        } catch (error) {
+          console.error('Error while uploading profile photo: ', error);
+        }
+      },
+
       async resetPassword(){
         let parent = this;
 
         let email = Parse.User.current().get("email");
 
-        if (parent.isReset) {
+        if (this.isReset) {
           // parent.isLoading = true;
-          parent.isReset = false; 
+          this.isReset = false; 
 
           Parse.User.requestPasswordReset(email).then(()=>{
             parent.showToast({
@@ -291,7 +330,7 @@ export default {
 
         } else{
           document.getElementById("resetPasswordDialog").show()
-          parent.isReset = true;
+          this.isReset = true;
         }
 
       },
@@ -434,6 +473,7 @@ export default {
     const store = this.$store; 
     let isAuth = store.getters.getUser.isAuth
     // let curerntUser = Parse.User.current();
+
     if (!isAuth) {
     } else{
     }

@@ -70,7 +70,7 @@
                                         targetId: 'profilePicNav-mobile'
                                     })"
                                     class="profile-pic-nav m-l-4" 
-                                    :src="icons.profilePic" alt=""
+                                    :src="getProfilePic" alt=""
                                 >
                             </div>
 
@@ -271,12 +271,12 @@
                         <img 
                             id="profilePicNav-desktop" 
                             @click="showEl({
-                            elId: 'profileNavPopover',
-                            targetId: 'profilePicNav-desktop'
+                                elId: 'profileNavPopover',
+                                targetId: 'profilePicNav-desktop'
                             })" 
                             class="profile-pic-nav m-l-4" 
-                            :src="icons.profilePic" alt=""
-                        >
+                            :src="getProfilePic" alt=""
+                            >
                     </div>
 
                     <!-- Submit icons -->
@@ -342,7 +342,7 @@ export default {
             },
             scrolled: false,
             
-            accountDialog: false,
+            accountDialog: true,
             loginDialog: false,
             
             currentUser: Parse.User.current(),
@@ -488,15 +488,18 @@ export default {
             this.toggleDarkMode()
         }
         useDark.addListener((evt) => this.toggleDarkMode());
-
-        // check url and if visiting /u/ set loginDialog to true in Vue
-        if (this.$route.path.includes('/u/')) {
-            this.accountDialog = true;
-        }
     },
 
     computed: {
         ...mapGetters(['getUser']),
+
+        getProfilePic(){
+            try {
+                return this.getUser.userData.profilePhoto ? this.getUser.userData.profilePhoto.url : this.icons.profilePic
+            } catch (error) {
+                return this.icons.profilePic
+            }
+        }
     },
 
     unmounted () {

@@ -266,9 +266,9 @@ export default {
                 month = "0"+month
                 }
             let year = newDate.getFullYear()
-
+        
             if(this.getUserAttributes.usaDateFormat){
-                 date = month + "/" + day + "/" + year
+                date = month + "/" + day + "/" + year
                 return date
             }
 

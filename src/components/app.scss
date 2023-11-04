@@ -2931,3 +2931,29 @@ coral-sidenav-item{
     object-fit: cover;
     transition: 0.2s;
 }
+
+.profile-img-edit-wrapper{
+    position: relative;
+    width: fit-content;
+
+    .profile-img {
+        max-width: 90px;
+    }
+
+    button{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0.8;
+        transition: 0.2s;
+        
+        .fill {
+            fill: white;
+        }
+
+        &:hover{
+            opacity: 1;
+        }
+    }
+}

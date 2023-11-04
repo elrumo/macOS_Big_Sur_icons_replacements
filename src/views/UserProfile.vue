@@ -6,7 +6,8 @@
     <!-- Intro section -->
     <section class="profile-page-head-wrapper">
       <div class="profile-page-img-wrapper">
-        <img class="profile-img" :src="resources.profilePic" alt="">
+        <!-- {{ user.profilePhoto }} -->
+        <img class="profile-img" :src="user.profilePhoto ? user.profilePhoto.url() : resources.profilePic" alt="">
 
         <div class="profile-edit-btn desktop-hidden opacity-80">
             <button
@@ -26,7 +27,7 @@
           <div class="profile-name-social">
             <!-- <div class="profile-name-wrapper"> -->
               <h3 class="coral-Heading--L m-0">
-                {{ getUserInfo.nameToShow }}
+                {{ user.nameToShow }}
               </h3>
               <!-- <h4 class="coral-Heading--S m-0">
                 {{ getUserInfo.username }}
@@ -35,9 +36,9 @@
             
             <div class="profile-socials-wrapper">
               <a
-                v-if="getUserInfo.twitterHandle"
+                v-if="user.twitterHandle"
                 target="_blank"
-                :href="getUserInfo.twitterHandle"
+                :href="user.twitterHandle"
                 class="margin-auto relative height-24px"
               >
                 <coral-icon
@@ -82,18 +83,18 @@
           <div v-if="loading.user" class="loading-placeholder m-b-8"></div>
 
            <h4 class="coral-Heading--S m-0 opacity-70">
-            {{ getUserInfo.username }}
+            {{ user.username }}
           </h4>
 
-          <p v-if="getUserInfo.bio" class="coral-Body--L m-b-4">
-            {{ getUserInfo.bio }}
+          <p v-if="user.bio" class="coral-Body--L m-b-4">
+            {{ user.bio }}
           </p>
 
-          <a v-if="getUserInfo.credit" target="_blank" :href="getUserInfo.credit" class="margin-auto relative">
+          <a v-if="user.credit" target="_blank" :href="user.credit" class="margin-auto relative">
             <!-- <p class="coral-Body--XS"> -->
               <IconUI class="absolute-center-vertical" width="14px" :img="resources.link" alt="Credit link"/>
               <span>
-                {{ getUserInfo.credit.replace("https://", "") }}
+                {{ user.credit.replace("https://", "") }}
               </span>
             <!-- </p> -->
           </a>
@@ -310,15 +311,16 @@ export default {
 
     async queryUser(){
       let parent = this;
+      // let user;
       let user = this.user;
       let isBanned
 
       const queryUser = new Parse.Query(Parse.User);
-      user.username = user.username.toLowerCase()
-      user.username = user.username.replaceAll(' ', '_')
+      // user.username = user.username.toLowerCase()
+      // user.username = user.username.replaceAll(' ', '_')
 
       try {
-        queryUser.equalTo("username", user.username);
+        queryUser.equalTo("username", this.user.username);
       } catch (error) {
         this.handleParseError(error)
       }
@@ -344,24 +346,14 @@ export default {
             data: this.userIcons[0],
           })
         })
+        user.isOwner = Parse.User.current() && userInfo.id == Parse.User.current().id;
 
-        let twitterHandle = userInfo.get("twitterHandle") // Check if twitterHandle is a URL or not
-        if (twitterHandle) {
-          user.twitterHandle = twitterHandle
-          if (!twitterHandle.includes("twitter.com")) user.twitterHandle = "https://twitter.com/"+twitterHandle
-        }
-        
-        user.credit = userInfo.get("credit")
-        user.username = userInfo.get("username")
-        user.bio = userInfo.get("bio")
-        user.nameToShow = userInfo.get("nameToShow")
-        user.id = userInfo.id
+        Object.keys(userInfo.attributes).forEach(key => {
+          user[key] = userInfo.attributes[key]
+          if(key == 'twitterHandle') user[key] = !user[key].includes("twitter.com") ? "https://twitter.com/" + user[key] : user[key];
+        });
 
         this.setData({state: 'user', data: user})
-
-        if (Parse.User.current() && user.username == Parse.User.current().getUsername()) {
-          user.isOwner = true
-        }
         
         this.loading.user = false
       } else{
@@ -384,6 +376,7 @@ export default {
 
     showDialog(dialog) {
       let dialogEl = document.getElementById(dialog);
+      console.log(dialog, document.getElementById(dialog));
       dialogEl.show();
     },
 
@@ -440,6 +433,11 @@ export default {
       'getSelectedIcon',
       'getUserInfo'
     ]),
+
+    getUserProfilePic() {
+      return this.user.profilePhoto ? this.user.profilePhoto.url() : this.resources.profilePic
+      // return userPic ? userPic.url() : this.resources.profilePic
+    },
 
     iconsCount(){
       let parent = this;
@@ -566,6 +564,7 @@ export default {
     width: 100%;
     height: auto;
     max-width: 60px;
+    border-radius: 4px;
   }
   
   .profile-descrption-box{
