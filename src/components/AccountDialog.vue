@@ -289,7 +289,7 @@ export default {
 
       getUserProfilePic() {
         let userPic = Parse.User.current().get("profilePhoto")
-        return userPic ? userPic.url() : '/src/assets/Resources/accounts/profilePic.png'
+        return userPic ? userPic.url() : '/assets/Resources/accounts/profilePic.png'
       },
 
       async uploadProfilePhoto(event){
@@ -303,7 +303,7 @@ export default {
           let user = Parse.User.current();
           user.set('profilePhoto', parseFile);
           await user.save();
-          
+
           parent.yourName = user.get('profilePhoto').url();
           console.log('Profile photo uploaded successfully.');
         } catch (error) {
