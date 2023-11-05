@@ -65,12 +65,10 @@ import { mapActions, mapGetters } from 'vuex';
 import H3Description from '@/components/H3Description.vue'
 import NativeAd from '@/components/NativeAd.vue'
 
-import { getBlogPost } from '@/api/posts';
+// import { getBlogPost } from '@/api/posts';
 import localPosts from '@/api/posts.json';
 
-import {
-    getStrapiData,
-  } from '@/api/strapi';
+// import { getStrapiData } from '@/api/strapi';
 
 let name = "get"
 
@@ -97,8 +95,8 @@ export default {
     let localBlogData = parent.$store.state.localPosts
     // console.log(localBlogData);
 
-    let licenseData = await getStrapiData('licenses');
-    console.log(licenseData);
+    // let licenseData = await getStrapiData('licenses');
+    // console.log(licenseData);
     
     // Check if blog data has already been fetched, if not, fetch only the blog required
     if (storeBlogData.length == undefined) {
@@ -114,11 +112,11 @@ export default {
           }
       }
 
-      const blogPost = await getBlogPost(routerName);
-      // If the blog post requested does not exists, redirect user to main blog page
-      if (blogPost == undefined) { 
-        parent.$router.push('/blog')
-      }
+      // const blogPost = await getBlogPost(routerName);
+      // // If the blog post requested does not exists, redirect user to main blog page
+      // if (blogPost == undefined) { 
+      //   parent.$router.push('/blog')
+      // }
       
       parent.blogPost = blogPost;
 

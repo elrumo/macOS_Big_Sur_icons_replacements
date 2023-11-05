@@ -1,13 +1,13 @@
-import GhostContentAPI from "@tryghost/content-api"
+// import GhostContentAPI from "@tryghost/content-api"
 
-// TODO: Remove API Key
-const VITE_GHOST_KEY =import.meta.env.VITE_GHOST_KEY
+// // TODO: Remove API Key
+// const VITE_GHOST_KEY =import.meta.env.VITE_GHOST_KEY
 
-const api = new GhostContentAPI({
-    url: 'https://blog.macosicons.com/blog',
-    key: VITE_GHOST_KEY,
-    version: "v3"
-});
+// const api = new GhostContentAPI({
+//     url: 'https://blog.macosicons.com/blog',
+//     key: VITE_GHOST_KEY,
+//     version: "v3"
+// });
 
 export async function getPosts() { 
     let posts = api.posts.browse({order: 'published_at DESC'})

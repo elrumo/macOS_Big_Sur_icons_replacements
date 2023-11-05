@@ -1,11 +1,11 @@
 <template>
   <div id="app">
 
-    <Announcement
+    <!-- <Announcement
       v-if="getHomeDialog.hasOwnProperty('announcementImg') || dummyData.hasOwnProperty('announcementImg')"
       :getHomeDialog="getHomeDialog.hasOwnProperty('announcementImg') ? getHomeDialog : dummyData"
       type="topBanner"
-    />
+    /> -->
 
     <Header
       :distanceFromTop="distanceFromTop"

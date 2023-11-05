@@ -63,10 +63,10 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import { getPosts } from '@/api/posts';
 import H3Description from '@/components/H3Description.vue'
 import NativeAd from "@/components/NativeAd.vue";
 
+// import { getPosts } from '@/api/posts';
 import localPosts from '@/api/posts.json';
 
 export default {
@@ -93,15 +93,14 @@ export default {
   },
 
   mounted: async function(){
-    const parent = this;
-    let storeBlogData = parent.$store.state.blogPosts
+    // let storeBlogData = parent.$store.state.blogPosts
 
-    if (storeBlogData.length == undefined) {
-      const posts = await getPosts();
-      parent.$store.commit('pushBlogs', posts)
-    }
+    // if (storeBlogData.length == undefined) {
+    //   const posts = await getPosts();
+    //   parent.$store.commit('pushBlogs', posts)
+    // }
 
-    parent.posts = parent.$store.state.blogPosts;
+    this.posts = this.$store.state.blogPosts;
     
   },
 

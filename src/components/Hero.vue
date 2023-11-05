@@ -2,16 +2,6 @@
 <div class="content-wrapper-regular">
   <div id="hero" class="hero-wrapper">
 
-    <!-- <div
-      v-if="getHomeDialog.showAnnouncement"
-      class="PH-badge"
-    >
-      <Announcement
-        :getHomeDialog="getHomeDialog"
-        type="heroBanner"
-      />
-    </div> -->
-
     <div class="hero-text-area" v-if="iconsEmpty">
         
         <div
@@ -134,18 +124,14 @@
 
 <script>
 import Sponsor from "./Sponsor.vue";
-import Announcement from "./Announcement.vue";
 import NativeAd from "./NativeAd.vue";
 import { mapGetters } from "vuex";
-
-import Parse from 'parse/dist/parse.min.js';
 
 export default {
   name: "Hero",
 
   components:{
     Sponsor,
-    Announcement,
     NativeAd
   },
 

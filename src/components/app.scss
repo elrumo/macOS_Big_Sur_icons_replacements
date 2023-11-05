@@ -2936,10 +2936,6 @@ coral-sidenav-item{
     position: relative;
     width: fit-content;
 
-    .profile-img {
-        max-width: 90px;
-    }
-
     button{
         position: absolute;
         top: 50%;
@@ -2949,11 +2945,118 @@ coral-sidenav-item{
         transition: 0.2s;
         
         .fill {
-            fill: white;
+            fill: var(--coral-text);
         }
 
         &:hover{
             opacity: 1;
         }
+    }
+}
+
+
+.user-icon-card {
+    text-align: left;
+}
+
+.icon-card-wrapper {
+    display: grid;
+    grid-template-rows: 2px auto auto;
+}
+
+/* //////////////////////////////////////////////////////////////// */
+
+.user-profile-icons {
+    max-width: 1150px;
+    margin: auto;
+    width: var(--page-width);
+}
+
+.right-align-tablist {
+    margin-left: auto !important;
+    max-width: 148px;
+}
+
+.profile-page-head-wrapper {
+    display: grid;
+    grid-template-columns: 64px auto;
+    margin: auto;
+    gap: 25px;
+    width: 80%;
+    max-width: 480px;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    text-align: left;
+}
+
+@media(max-width:544px) {
+    .profile-page-head-wrapper {
+        grid-template-columns: auto;
+        padding-top: 30px;
+    }
+
+}
+
+.profile-page-img-wrapper {
+    display: grid;
+    grid-template-columns: auto auto;
+    width: 100%;
+}
+
+.profile-img {
+    width: 100%;
+    height: auto;
+    max-width: 90px;
+    border-radius: 4px;
+}
+
+.profile-descrption-box {
+    /* min-height: calc(27px + 13px); */
+    /* min-height: 107px; */
+}
+
+.profile-header-wrapper {
+    display: grid;
+    grid-template-columns: auto auto;
+    width: 100%;
+}
+
+.profile-info-wrapper {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: auto;
+}
+
+.profile-edit-btn {
+    width: fit-content;
+    height: fit-content;
+    margin: auto 0 auto auto;
+}
+
+.profile-name-social {
+    display: flex;
+    grid-template-columns: auto auto;
+    width: fit-content;
+    height: fit-content;
+    min-height: 36px;
+    gap: 25px;
+    margin: auto auto auto 0;
+
+    .profile-name-wrapper {
+        display: flex;
+        gap: 2px;
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    &>div {
+        display: flex;
+        gap: 8px;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+
+    .loading-placeholder {
+        height: 70%
     }
 }

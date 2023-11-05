@@ -252,6 +252,7 @@ import { mapGetters, mapActions } from 'vuex'
 import Parse from 'parse/dist/parse.min.js';
 
 import logoLowRes from "../assets/Resources/logo_lowres.png"
+import profilePic from "../assets/Resources/accounts/profilePic.png"
 
 export default {
     name:"AccountDialog",
@@ -289,7 +290,7 @@ export default {
 
       getUserProfilePic() {
         let userPic = Parse.User.current().get("profilePhoto")
-        return userPic ? userPic.url() : '/assets/Resources/accounts/profilePic.png'
+        return userPic ? userPic.url() : profilePic
       },
 
       async uploadProfilePhoto(event){

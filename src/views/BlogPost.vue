@@ -129,11 +129,11 @@ export default {
           }
       }
 
-      const blogPost = await getBlogPost(routerName);
-      // If the blog post requested does not exists, redirect user to main blog page
-      if (blogPost == undefined) { 
-        parent.$router.push('/blog')
-      }
+      // const blogPost = await getBlogPost(routerName);
+      // // If the blog post requested does not exists, redirect user to main blog page
+      // if (blogPost == undefined) { 
+      //   parent.$router.push('/blog')
+      // }
       
       parent.blogPost = blogPost;
 

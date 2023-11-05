@@ -37,8 +37,6 @@ var IconsBase = Parse.Object.extend("Icons2");
 
 const client = algoliasearch(algolia.appid, algolia.apikey);
 const algoliaIndex = client.initIndex('macOSicons')
-const replicaIndex = client.initIndex('macOSicons-date');
-
 
 export default createStore({
 
