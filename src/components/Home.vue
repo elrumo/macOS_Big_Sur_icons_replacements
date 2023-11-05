@@ -661,11 +661,11 @@ export default {
     this.fetchUserAttributes()
     
     
-    try{
-      await this.fetchHomeDialog()
-    }catch{
-      console.log("loading error");
-    }
+    // try{
+    //   await this.fetchHomeDialog()
+    // }catch{
+    //   console.log("loading error");
+    // }
     
     if (this.getHomeDialog.showParticles) {
       let particlesImageUrl = 'https://api.macosicons.com' + this.getHomeDialog.particlesImage.data.attributes.url

@@ -376,7 +376,6 @@ export default {
 
     showDialog(dialog) {
       let dialogEl = document.getElementById(dialog);
-      console.log(dialog, document.getElementById(dialog));
       dialogEl.show();
     },
 

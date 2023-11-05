@@ -15,12 +15,18 @@
               <br>
               <br>
               Make sure to check your spam folder if you don't receive it within the next few minutes.
+              {{ isReset }}
+
+              <coral-dialog-footer class="_coral-Dialog-footer m-0">
+                <button is="coral-button" variant="quiet" coral-close="">Cancel</button>
+                <button is="coral-button" @click="resetPassword" variant="default" coral-close="">Reset password</button>
+            </coral-dialog-footer>
           </coral-dialog-content>
 
-          <coral-dialog-footer v-if="isReset">
+          <!-- <coral-dialog-footer v-if="isReset">
               <button is="coral-button" variant="quiet" coral-close="">Cancel</button>
               <button is="coral-button" @click="resetPassword" variant="default" coral-close="">Reset password</button>
-          </coral-dialog-footer>
+          </coral-dialog-footer> -->
       </coral-dialog>
 
       <div v-if="isLoading.requestUserData" class="loading-overlay">
@@ -330,10 +336,9 @@ export default {
           })  
 
         } else{
-          document.getElementById("resetPasswordDialog").show()
           this.isReset = true;
+          document.getElementById("resetPasswordDialog").show()
         }
-
       },
 
       async requestUserData(){

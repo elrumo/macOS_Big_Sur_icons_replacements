@@ -494,9 +494,11 @@ export default {
         ...mapGetters(['getUser']),
 
         getProfilePic(){
-            console.log("this.getUser.userData.profilePhoto: ", this.getUser.userData.profilePhoto);
+            // console.log("this.getUser.userData.profilePhoto: ", this.getUser.userData.profilePhoto);
             try {
-                return this.getUser.userData.profilePhoto ? this.getUser.userData.profilePhoto.url : this.icons.profilePic
+                if(Parse.User.current()){
+                    return Parse.User.current().get("profilePhoto") ? Parse.User.current().get("profilePhoto").url() : this.icons.profilePic
+                }
             } catch (error) {
                 return this.icons.profilePic
             }
