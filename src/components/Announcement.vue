@@ -69,7 +69,8 @@
             </div>
 
             <div class="mb-2 f-w-400">
-              For the past few months I've been busy working on my biggest project so far, <a href="https://www.webbites.io/?utm_source=macOSicons.com&utm_medium=topBanner&utm_campaign=waitlist">WebBites.io</a>, a new smart bookmarking service powered by AI! I hope you like and let me know what you think on <a href="https://twitter.com/elrumo">Twitter</a>!
+              I'm looking for beta testers for my biggest project so far, <a href="https://www.webbites.io/?utm_source=macOSicons.com&utm_medium=topBanner&utm_campaign=waitlist" target="_blank">WebBites.io</a>, a new smart bookmarking service powered by AI. Any feedback is welcome! Let me know what you think and on <a href="https://twitter.com/elrumo" target="_blank">Twitter</a>!
+              <!-- For the past few months I've been busy working on my biggest project so far, <a href="https://www.webbites.io/?utm_source=macOSicons.com&utm_medium=topBanner&utm_campaign=waitlist">WebBites.io</a>, a new smart bookmarking service powered by AI! I hope you like and let me know what you think on <a href="https://twitter.com/elrumo">Twitter</a>! -->
               <!-- <vue-markdown :source="getHomeDialog.announcement"/> -->
             </div>
           </div>

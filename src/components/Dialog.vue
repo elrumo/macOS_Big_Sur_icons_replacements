@@ -6,13 +6,6 @@
     </coral-dialog-header>
     
     <coral-dialog-content>
-      
-      <div class="dialog-text coral-Well m-b-25">
-        On the 2nd of April, the database with all the icons was hacked and deleted. Everything has been secured and is now safe to upload icons. Some old icons might still be unavailabe while I work to get as many icons as I can back.
-        <br>
-        <br>
-        To read more about the incident, <router-link to="/blog/hacked"> read the blog post. </router-link>
-      </div>
 
       <div class="dialog-text">
         <b> We'll let you know by email when the icon has been approved. </b>
