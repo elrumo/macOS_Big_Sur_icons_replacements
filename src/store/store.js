@@ -380,28 +380,41 @@ export default createStore({
       if (!Parse.User.current()){
         return 
       }
+
+      if (store.state.cache.savedIcons) {
+        store.commit('setDataToArr', {arr: 'savedIcons', data: store.state.cache.savedIcons})
+        store.commit('setDataToArr', {arr: 'savedIconCount', data: store.state.cache.savedIcons.length})
+        return store.state.cache.savedIcons
+      }
+
       let savedIconsQuery = Parse.User.current().relation("favIcons").query()
-      let userSavedIconData = await savedIconsQuery.descending("createdAt").find()
-      let savedIconCount = userSavedIconData.length;
-      // let savedIconCount = await savedIconsQuery.count();
       
-      store.commit('setDataToArr', {arr: 'savedIconCount', data: savedIconCount})
-      
-      let savedIcons = userSavedIconData.map(( icons ) => icons);
-      let iconsToShow = []        
-      
-      savedIcons.forEach(icon => {
-        let newIcon = {}
-        for(let prop in icon.attributes){
-          newIcon[prop] = icon.attributes[prop]
-        }
-        newIcon.isSaved = true
-        iconsToShow.push(newIcon);
-        newIcon.id = icon.id;
-      })
-      
-      store.commit('pushDataToArr', {data: iconsToShow, arr: "savedIcons" })
-      return iconsToShow
+      try {
+        let userSavedIconData = await savedIconsQuery.descending("createdAt").find()
+        let savedIconCount = userSavedIconData.length;
+        
+        store.commit('setDataToArr', {arr: 'savedIconCount', data: savedIconCount})
+        
+        let iconsToShow = userSavedIconData.map(icon => {
+          let newIcon = {
+            ...icon.attributes,
+            isSaved: true,
+            id: icon.id
+          }
+          return newIcon
+        })
+        
+        store.commit('setDataToArr', {arr: "savedIcons", data: iconsToShow })
+        
+        // Cache the results
+        store.commit('setDataToArr', {arr: 'cache', key: 'savedIcons', data: iconsToShow})
+        
+        return iconsToShow
+      } catch (error) {
+        console.error("Error fetching saved icons:", error);
+        store.dispatch('handleParseError', error);
+        return []
+      }
     },
 
     async setCategory(store, category){
@@ -489,6 +502,11 @@ export default createStore({
 
 
     async fetchUserIcons(store, userObj){
+      const cacheKey = userObj.id;
+      if (store.state.cache.userIcons[cacheKey]) {
+        store.commit('setDataToArr', {arr: 'userIcons', data: store.state.cache.userIcons[cacheKey]})
+        return true
+      }
 
       let approvedQuery = new Parse.Query(IconsBase);
       let notApprovedQuery = new Parse.Query(IconsBase);
@@ -501,14 +519,6 @@ export default createStore({
       approvedQuery.exists("icnsFile");
       approvedQuery.skip(store.state.userIcons.toSkip.approved)
       approvedQuery.descending("createdAt");
-      store.state.userIcons.toSkip.approved += numToLoad;
-      
-      let iconResults = await approvedQuery.find();
-      store.state.userIcons.count.approved = await approvedQuery.count()
-      
-      iconResults.forEach((result)=>{
-        returnIconData(result, "approved");
-      })
       
       notApprovedQuery.equalTo("isHidden", false);
       notApprovedQuery.limit(numToLoad)
@@ -516,46 +526,58 @@ export default createStore({
       notApprovedQuery.skip(store.state.userIcons.toSkip.notApproved)
       notApprovedQuery.equalTo("approved", false);
       notApprovedQuery.descending("createdAt");
-      store.state.userIcons.toSkip.notApproved += numToLoad;
 
-      let notApproved = await notApprovedQuery.find();
-      store.state.userIcons.count.notApproved = await notApprovedQuery.count()
+      try {
+        const [iconResults, notApproved, approvedCount, notApprovedCount] = await Promise.all([
+          approvedQuery.find(),
+          notApprovedQuery.find(),
+          approvedQuery.count(),
+          notApprovedQuery.count()
+        ]);
 
-      notApproved.forEach((result)=>{
-        returnIconData(result, "notApproved");
-      })
+        store.state.userIcons.toSkip.approved += numToLoad;
+        store.state.userIcons.toSkip.notApproved += numToLoad;
+        store.state.userIcons.count.approved = approvedCount;
+        store.state.userIcons.count.notApproved = notApprovedCount;
 
-      function returnIconData(result, status){
-        let icon = result.attributes
-        let dataToPush = {
-            status: status,
-            iconData: {}
-        }
+        const processResults = (results, status) => {
+          return results.map(result => {
+            let icon = result.attributes;
+            let iconData = {
+              ...icon,
+              id: result.id,
+              category: icon.category || {id: ""}
+            };
+            return {status, iconData};
+          });
+        };
 
-        // Set icon ID to icon properties
-        dataToPush.iconData.id = result.id
+        const approvedIcons = processResults(iconResults, "approved");
+        const notApprovedIcons = processResults(notApproved, "notApproved");
 
-        // Set category if empty
-        if (!icon.category) {
-          dataToPush.iconData.category = {id: ""}
-        }
-        
-        if (!result.get('type')) {
-          // console.log("icon.type: ", result.get('appName'));
-        }
+        const allIcons = [...approvedIcons, ...notApprovedIcons];
+        store.commit('setDataToArr', {arr: 'userIcons', data: {
+          approved: approvedIcons,
+          notApproved: notApprovedIcons,
+          count: store.state.userIcons.count,
+          toSkip: store.state.userIcons.toSkip
+        }});
 
-        for(let data in icon){
-          dataToPush.iconData[data] = icon[data]
-        }
-        store.commit('pushUserIcons',  dataToPush);
+        // Cache the results
+        store.commit('setDataToArr', {
+          arr: 'cache',
+          key: 'userIcons',
+          data: {[cacheKey]: store.state.userIcons}
+        });
+
+        store.commit('setDataToArr', {arr: "loading", data: false});
+        return true;
+      } catch (error) {
+        console.error("Error fetching user icons:", error);
+        store.dispatch('handleParseError', error);
+        store.commit('setDataToArr', {arr: "loading", data: false});
+        return false;
       }
-
-      let isLoading = {
-        arr: "loading",
-        data: false
-      }
-      store.commit('setDataToArr', isLoading)
-      return true
     },
 
     showToast(store, dialogId){
@@ -727,50 +749,52 @@ export default createStore({
     },
 
     async fetchAppCategories(store) {
+      if (store.state.cache.categories) {
+        store.commit('setDataToArr', {arr: 'appCategories', data: store.state.cache.categories})
+        return
+      }
+
       let Categories = Parse.Object.extend("Categories");
       let categories = new Parse.Query(Categories)
 
-      categories.find().then((results)=>{
-        store.state.appCategories = []
-        for(let result in results){
-          let item = results[result];
-          
-          let categoryObj = {
-            id: item.id,
-            name: item.get("CategoryName"),
-            categoryObj: item,
-          }
-          
-          store.commit("pushAppCategories", {state: "appCategories", storeObj: categoryObj})
-        }
-      }).catch((error)=>{
+      try {
+        const results = await categories.find()
+        const categoriesData = results.map(item => ({
+          id: item.id,
+          name: item.get("CategoryName"),
+          categoryObj: item,
+        }))
+        
+        store.commit('setDataToArr', {arr: 'appCategories', data: categoriesData})
+        store.commit('setDataToArr', {arr: 'cache', key: 'categories', data: categoriesData})
+      } catch (error) {
         console.log("error: ", error);
-      })
+        store.dispatch('handleParseError', error);
+      }
     },
 
     async fetchIconType(store) {
+      if (store.state.cache.iconTypes) {
+        store.commit('setDataToArr', {arr: 'iconType', data: store.state.cache.iconTypes})
+        return
+      }
+
       let IconType = Parse.Object.extend("IconType");
       let iconType = new Parse.Query(IconType)
       
-      if (store.state.iconType.length > 0) {
-        return
-      }
-      
-      iconType.find().then((results)=>{
-        for(let result in results){
-          let item = results[result];
-          
-          let typeObj = {
-            id: item.id,
-            name: item.get("type"),
-            parseObj: item
-          }
-          
-          store.commit("pushAppCategories", {state: "iconType", storeObj: typeObj})
-        }
-      }).catch((error)=>{
+      try {
+        const results = await iconType.find()
+        const iconTypesData = results.map(item => ({
+          id: item.id,
+          name: item.get("type"),
+          parseObj: item
+        }))
+        
+        store.commit('setDataToArr', {arr: 'iconType', data: iconTypesData})
+        store.commit('setDataToArr', {arr: 'cache', key: 'iconTypes', data: iconTypesData})
+      } catch (error) {
         store.dispatch('handleParseError', error);
-      })
+      }
     },
     
     handleParseError(store, err) {
