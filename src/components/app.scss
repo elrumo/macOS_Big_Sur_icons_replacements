@@ -1566,6 +1566,7 @@ coral-buttongroup button{
     height: fit-content;
     height: -moz-fit-content;
     padding-bottom: 28px;
+    min-height: 160px;
 
     // & > div{
     //     max-height: 240px;

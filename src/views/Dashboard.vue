@@ -424,23 +424,24 @@ export default {
       delete newIcon.category
       delete newIcon.type
 
-      Parse.Cloud.run("approve", icon).then((result)=>{
-      // Parse.Cloud.run("testJob", newIcon).then((result)=>{
-        icon.isReview = true
-        icon.isReUploadReview = true
+      try {
+        let result = await Parse.Cloud.run("approve", icon);
+        console.log("result: ", result);
+        icon.isReview = true;
+        icon.isReUploadReview = true;
         this.showToast({
           id: "toastMessage",
           message: "Icon has been approved",
           variant: "success"
-        })
-      }).catch((e)=>{
+        });
+      } catch (e) {
         console.log("e: ", e);
         this.showToast({
           id: "toastMessage",
-          message: e,
+          message: e.message,
           variant: "error"
-        })
-      });
+        });
+      }
     },
 
     async unApproveIcon(icon){  

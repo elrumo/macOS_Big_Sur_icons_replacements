@@ -5,10 +5,6 @@ const request = require('request-promise');
 const { resolve } = require('path');
 
 
-// Parse.initialize('macOSicons', 'macOSicons');
-// Parse.serverURL = 'https://media.macosicons.com/parse';
-// var Categories = Parse.Object.extend("Categories");
-// var Users = Parse.Object.extend("_User");
 var Icons = Parse.Object.extend("Icons2");
 
 let parseAppId = '...';

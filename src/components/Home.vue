@@ -73,7 +73,8 @@
 
         <!-- Search box-->
         <div>
-          <div @click="scrollTo" class="content-wrapper-regular search">
+          <!-- @click="scrollTo" -->
+          <div class="content-wrapper-regular search">
             <div class="m-auto main-search" style="max-width:300px;">
               <div class="shadow main-border-radius">
                 <input 

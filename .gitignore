@@ -35,3 +35,5 @@ website/.DS_Store
 *dist
 
 main.js
+main_copy.js
+.aider*
