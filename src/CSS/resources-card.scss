@@ -69,12 +69,14 @@
 // START Resources Card
 ////////////////////////////////////////////////////////////////
 .resources-grid{
-  display: flex;
-  flex-basis: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   padding-bottom: 20px;
   padding-top: 0px;
-  flex-wrap: wrap;
-  flex-grow: 1;
+  // display: flex;
+  // flex-basis: auto;
+  // flex-wrap: wrap;
+  // flex-grow: 1;
   // max-width: calc(var(--blog-content-width) + 40px);
   // width: 90%;
 

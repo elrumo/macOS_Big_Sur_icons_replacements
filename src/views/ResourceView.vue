@@ -27,7 +27,7 @@
           <NativeAd
             :template="1"
             class="m-t-24"
-            sponsored="true"
+            :sponsored="false"
             :key="$route.fullPath + 'ad'"
             adId="CWYDCK3J"
             zoneKey="CWYDCK3J"
@@ -72,16 +72,21 @@
               'text-details': true,
               'p-b-16': true,
             }"
+            v-if="getSingleResourceData.resourceUrl"
           >
             {{ getArticleTemplate.downloadResource ? getArticleTemplate.downloadResource : 'Get Template For' }}
           </p>
+
+          <a target="_blank\" class="m-r-8\" :href="getSingleResourceData.resourceUrl" style="text-decoration: none">
+            <button class="coral-btn coral-btn-primary\" variant="CTA\">Figma</button>
+          </a>
           
           <!-- Download btns wrapper -->
           <div>
             
             <!-- Download btns skeleton -->
             <div 
-              v-if="!getSingleResourceData.resourceUrls"
+              v-if="!getSingleResourceData.resourceUrl"
               class="grid-4-col"
             >
               <div
@@ -112,9 +117,7 @@
               </a>
             </div>
           </div>
-
         </div>
-
       </div>
       
       <!-- More resources -->
@@ -170,7 +173,7 @@ export default {
     }
   },
 
-  mounted: async function(){
+  async mounted(){
     const slug = this.$route.params.resource;
     this.fetchResourceFromSlug(slug)
     this.fetchResourcesHome()

@@ -2,7 +2,6 @@
     <div class="resources-card-container">
         <router-link :to="getLink">
             <div class="coral-Well instructions-item Box">
-                
                 <IsNew :item="step"/>
 
                 <div class="resources-card-wrapper">
@@ -27,12 +26,12 @@
                         >
                             {{ step.title }}
                         </p>
-                        <p
+                        <!-- <p
                             v-if="step.description"
                             class="resource-card-description coral-Body--S"
                         >
                             {{ step.description }}
-                        </p>
+                        </p> -->
                     </div>
 
                 </div>
@@ -81,19 +80,24 @@ export default {
         getImage(){
             if (this.step.feature_image != null) {
                 return this.step.feature_image
+                // return this.step.feature_image
             } else {
                 return "https://i.imgur.com/tu9ZVml.png"
             }
         },
 
         getLink(){
-            let link = this.link
-            let step = this.step
+            try {
+                let link = this.link
+                let step = this.step
 
-            if (step.slug) {
-                return link
-            } else {
-                return this.$router.currentRoute.path
+                if (step.slug) {
+                    return link
+                } else {
+                    return this.$router.currentRoute.path
+                }
+            } catch (error) {
+                console.log('Error getLink:', error);
             }
         }
     }

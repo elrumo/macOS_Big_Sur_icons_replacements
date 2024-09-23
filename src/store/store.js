@@ -237,6 +237,8 @@ export default createStore({
 
     async fetchResourcesHome(store){
       let resourcesData = await getStrapiData('resources');
+
+      console.log("resourcesData:", resourcesData);
       store.commit('setDataToArr', {arr: 'resourcesData', data: resourcesData})
     },
     

@@ -4,9 +4,7 @@
 
     <div class="hero-text-area" v-if="iconsEmpty">
         
-        <div
-          class="ad-hero mobile-hidden"
-        >
+        <div class="ad-hero mobile-hidden">
           <NativeAd
             :template="1"
             adId="CWYDCK3J"

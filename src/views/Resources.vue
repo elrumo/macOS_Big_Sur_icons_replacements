@@ -20,7 +20,14 @@
           :step='resource'
         />
 
-        <CarbonAd class="resources-card-container" adId="resourcesHome"/>
+        <!-- <CarbonAd class="resources-card-container" adId="resourcesHome"/> -->
+        <NativeAd
+          :adPosition="'Loading error'"
+          :template="2"
+          adId="CWYD65Q7"
+          zoneKey="CWYD65Q7"
+          key="CWYD65Q7"
+        />
 
         <!-- <div
           class="card-hover resources-card-container relative coral-card resources-card-ad"
@@ -153,6 +160,7 @@ export default {
     // this.resourcesData = await storeResourcesData;
     // this.getPageData();
     this.fetchResourcesHome();
+
     this.fetchArticleTemplate({slug: 'resources-home', state: 'resourcesTemplate'});
   },
 

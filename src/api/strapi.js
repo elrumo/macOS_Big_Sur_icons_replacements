@@ -1,5 +1,11 @@
 import axios from 'axios'
 
+const strapiKey = import.meta.env.VITE_STRAPI_API_TOKEN
+const strapiUrl = import.meta.env.VITE_STRAPI_URL
+console.log("strapiUrl: ", strapiUrl);
+// const strapiUrl = 'https://strapi.macosicons.com/api/'
+// const strapiUrl = 'http://localhost:1337/api/'
+
 export async function getTutorials() { 
     
     let tutorials = await axios.get('https://api.macosicons.com/api/tutorials?populate=*')
@@ -63,22 +69,29 @@ export async function getArticleTemplate(slug) {
 
 export async function getStrapiData(slug) { 
     try {
-        let strapiData = await axios.get('https://api.macosicons.com/api/'+slug+'?populate=*')
-        strapiData = strapiData.data.data
-
-        let newArr = strapiData.map(el =>{
-            el = el.attributes
-            
-            if(el.feature_image.data.attributes.formats){
-                el.feature_image = 'https://api.macosicons.com'+el.feature_image.data.attributes.formats.small.url
-            } else {
-                el.feature_image = 'https://api.macosicons.com'+el.feature_image.data.attributes.url
-            }
-
-            return el
+        let strapiData = await axios.get(`${strapiUrl}${slug}?populate=*`, {
+          headers: {
+            Authorization: `Bearer ${strapiKey}`
+            // Authorization: `Bearer ${import.meta.env.VITE_STRAPI_API_TOKEN}`
+          }
         })
+        // let strapiData = await axios.get('https://api.macosicons.com/api/'+slug+'?populate=*')
+        strapiData = strapiData.data.data
+        console.log("strapiData: ", strapiData);
 
-        return newArr
+        // let newArr = strapiData.map(el =>{
+        //     el = el.attributes
+            
+        //     if(el.feature_image.data.attributes.formats){
+        //         el.feature_image = strapiData+el.feature_image.data.attributes.formats.small.url
+        //     } else {
+        //         el.feature_image = strapiData+el.feature_image.data.attributes.url
+        //     }
+
+        //     return el
+        // })
+
+        return strapiData
     } catch (error) {
         return {error: error}
     }
@@ -86,18 +99,25 @@ export async function getStrapiData(slug) {
 
 export async function getResourceFromSlug(slug) { 
     try {
-        let resource = await axios.get('https://api.macosicons.com/api/resources?populate=*&filters[slug][$eq]='+slug)
-        resource = resource.data.data[0].attributes
-        let image = resource.feature_image.data.attributes
+        let resource = await axios.get(strapiUrl+'resources?populate=*&filters[slug][$eq]='+slug,{
+            headers: {
+                Authorization: `Bearer ${import.meta.env.VITE_STRAPI_API_TOKEN}`
+              }
+        })
+        // let resource = await axios.get('https://api.macosicons.com/api/resources?populate=*&filters[slug][$eq]='+slug)
+        resource = resource.data.data[0]
+        console.log("resource: ", resource);
+        // let image = resource.feature_image.data.attributes
         
-        if(image.formats){ // Set image from array to object
-            resource.feature_image = 'https://api.macosicons.com'+image.formats.large.url
-        }else{
-            resource.feature_image = 'https://api.macosicons.com'+image.url
-        }
+        // if(image.formats){ // Set image from array to object
+        //     resource.feature_image = 'https://api.macosicons.com'+image.formats.large.url
+        // }else{
+        //     resource.feature_image = 'https://api.macosicons.com'+image.url
+        // }
     
         return resource   
     } catch (error) {
+        console.log('Error getResourceFromSlug', error);
         return {error: error}
     }
 }
