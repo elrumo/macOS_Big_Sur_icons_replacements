@@ -76,7 +76,7 @@ import Footer from '@/components/Footer.vue'
 import H3Description from '@/components/H3Description.vue'
 import CarbonAd from '@/components/CarbonAd.vue';
 
-import pages from '@/api/pages.json';
+// import pages from '@/api/pages.json';
 
 import featureImageIcon from "../assets/Instructions/intro-instructions.jpg"
 
@@ -151,7 +151,7 @@ export default {
         link: "/how-to",
         slug: "/how-to"
       },
-      resourcesData: pages
+      // resourcesData: pages
     }
   },
   

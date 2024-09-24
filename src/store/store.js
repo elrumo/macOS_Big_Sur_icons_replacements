@@ -5,6 +5,7 @@ import router from '@/router/index.js'
 
 import { marked } from 'marked';
 
+import localResources from '@/api/resources.json';
 import localPages from '@/api/pages.json';
 import localPosts from '@/api/posts.json';
 import icons from '@/api/icons.json';
@@ -53,7 +54,7 @@ export default createStore({
 
       selectedIcon: {},
 
-      resourcesData: localPages,
+      resourcesData: localResources,
       singleResourceData: {},
       moreResources: {},
       resourcesTemplate: {},
@@ -219,14 +220,21 @@ export default createStore({
     },
 
     async fetchResourceFromSlug(store, slug){
-      let resource = await getResourceFromSlug(slug)
-
-      if(resource.error){
-        console.log(slug);
-        console.log(resource.error);
-        // router.push('/resources')
-      }else{
-        store.commit('setDataToArr', {arr: 'singleResourceData', data: resource})
+      let resource;
+      
+      try {
+        resource = await getResourceFromSlug(slug)
+        if(resource.error){
+          console.log(slug);
+          console.log(resource.error);
+          // router.push('/resources')
+        }else{
+          store.commit('setDataToArr', {arr: 'singleResourceData', data: resource})
+        }
+      } catch (error) {
+        console.log('error: ', error);
+      } finally{  
+        console.log("resource: ", resource);
       }
     },
 

@@ -6,6 +6,8 @@ console.log("strapiUrl: ", strapiUrl);
 // const strapiUrl = 'https://strapi.macosicons.com/api/'
 // const strapiUrl = 'http://localhost:1337/api/'
 
+import localResources from '@/api/resources.json';
+
 export async function getTutorials() { 
     
     let tutorials = await axios.get('https://api.macosicons.com/api/tutorials?populate=*')
@@ -97,27 +99,44 @@ export async function getStrapiData(slug) {
     }
 }
 
-export async function getResourceFromSlug(slug) { 
+export async function getResourceFromSlug(slug) {
     try {
-        let resource = await axios.get(strapiUrl+'resources?populate=*&filters[slug][$eq]='+slug,{
-            headers: {
-                Authorization: `Bearer ${import.meta.env.VITE_STRAPI_API_TOKEN}`
-              }
-        })
-        // let resource = await axios.get('https://api.macosicons.com/api/resources?populate=*&filters[slug][$eq]='+slug)
-        resource = resource.data.data[0]
-        console.log("resource: ", resource);
-        // let image = resource.feature_image.data.attributes
-        
-        // if(image.formats){ // Set image from array to object
-        //     resource.feature_image = 'https://api.macosicons.com'+image.formats.large.url
-        // }else{
-        //     resource.feature_image = 'https://api.macosicons.com'+image.url
-        // }
-    
-        return resource   
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 1000);
+
+        const resource = await Promise.race([
+            axios.get(strapiUrl + 'resources?populate=*&filters[slug][$eq]=' + slug, {
+                headers: {
+                    Authorization: `Bearer ${import.meta.env.VITE_STRAPI_API_TOKEN}`
+                },
+                signal: controller.signal
+            }),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Request timeout')), 1000))
+        ]);
+
+        clearTimeout(timeoutId);
+
+        const resourceData = resource.data.data[0];
+        console.log("resource: ", resourceData);
+
+        return resourceData;
     } catch (error) {
         console.log('Error getResourceFromSlug', error);
-        return {error: error}
+        
+        // If there's an error, try to find the resource in the local JSON file
+        try {
+            const localResource = localResources.find(resource => resource.slug === slug);
+            
+            if (localResource) {
+                console.log('Resource found in local JSON file');
+                return localResource;
+            } else {
+                console.log('Resource not found in local JSON file');
+                return { error: error.message || 'Request failed' };
+            }
+        } catch (localError) {
+            console.log('Error reading local resources file', localError);
+            return { error: error.message || 'Request failed' };
+        }
     }
 }
