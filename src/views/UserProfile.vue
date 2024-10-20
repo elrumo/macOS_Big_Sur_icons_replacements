@@ -310,68 +310,71 @@ export default {
     },
 
     async queryUser(){
-      let parent = this;
-      // let user;
-      let user = this.user;
-      let isBanned
-
-      const queryUser = new Parse.Query(Parse.User);
-      // user.username = user.username.toLowerCase()
-      // user.username = user.username.replaceAll(' ', '_')
-
       try {
-        queryUser.equalTo("username", this.user.username);
-      } catch (error) {
-        this.handleParseError(error)
-      }
-      let userInfo = await queryUser.find();
+        let parent = this;
+        // let user;
+        let user = this.user;
+        let isBanned
 
-      userInfo = userInfo[0];
-      this.userInfo = userInfo;
+        const queryUser = new Parse.Query(Parse.User);
+        user.username = user.username.toLowerCase()
+        // user.username = user.username.replaceAll(' ', '_')
 
-      try {
-        isBanned = userInfo.attributes.isBanned;
-      } catch (error) {
-      }
-      
-      user.isBanned = isBanned;
-      
-      if (userInfo && !isBanned){
+        try {
+          queryUser.equalTo("username", this.user.username);
+        } catch (error) {
+          this.handleParseError(error)
+        }
+        let userInfo = await queryUser.find();
 
-        // Fetch user icons
-        this.fetchUserIcons(userInfo).then(()=>{
-          // Wait to fetch icons then set "selectedIcon" to the first icon fetched back
-          this.setDataToArr({
-            arr: "selectedIcon",
-            data: this.userIcons[0],
+        userInfo = userInfo[0];
+        this.userInfo = userInfo;
+
+        try {
+          isBanned = userInfo.attributes.isBanned;
+        } catch (error) {
+        }
+        
+        user.isBanned = isBanned;
+        
+        if (userInfo && !isBanned){
+
+          // Fetch user icons
+          this.fetchUserIcons(userInfo).then(()=>{
+            // Wait to fetch icons then set "selectedIcon" to the first icon fetched back
+            this.setDataToArr({
+              arr: "selectedIcon",
+              data: this.userIcons[0],
+            })
           })
-        })
-        user.isOwner = Parse.User.current() && userInfo.id == Parse.User.current().id;
+          user.isOwner = Parse.User.current() && userInfo.id == Parse.User.current().id;
 
-        Object.keys(userInfo.attributes).forEach(key => {
-          user[key] = userInfo.attributes[key]
-          if(key == 'twitterHandle') user[key] = !user[key].includes("twitter.com") ? "https://twitter.com/" + user[key] : user[key];
-        });
+          Object.keys(userInfo.attributes).forEach(key => {
+            user[key] = userInfo.attributes[key]
+            if(key == 'twitterHandle') user[key] = !user[key].includes("twitter.com") ? "https://twitter.com/" + user[key] : user[key];
+          });
 
-        this.setData({state: 'user', data: user})
-        
-        this.loading.user = false
-      } else{
-        
-        let isLoading = {
-          arr: "loading",
-          data: false
-        }
-        this.setDataToArr(isLoading)
-        this.loading.user = false
-        
-        if (isBanned) {
-          this.errorMessage =  this.user.username + " has been banned until further notice."
+          this.setData({state: 'user', data: user})
+          
+          this.loading.user = false
         } else{
-          this.errorMessage = "This account doesn't exist"
+          
+          let isLoading = {
+            arr: "loading",
+            data: false
+          }
+          this.setDataToArr(isLoading)
+          this.loading.user = false
+          
+          if (isBanned) {
+            this.errorMessage =  this.user.username + " has been banned until further notice."
+          } else{
+            this.errorMessage = "This account doesn't exist"
+          }
         }
+      } catch (error) {
+        console.log("error in queryUser: ", error);
       }
-
     },
 
     showDialog(dialog) {
@@ -487,6 +490,7 @@ export default {
         switch (parent.iconsToShow) {
           case "all":
             parent.errorMessage = parent.user.username + " hasn't submitted any icons yet."
+            console.log("parent.allIcons: ", parent.allIcons);
             return parent.allIcons
 
           case "approved":

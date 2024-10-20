@@ -280,13 +280,45 @@ export default createStore({
       store.commit('setDataToArr', {arr: 'learningHome', data: await getLearningHome()})
     },
 
+    async getSearchResults(store, searchQuery){
+      try {
+        const backendUrl = import.meta.env.VITE_BACKEND_URL;
+        console.log("searchQuery: ", searchQuery);
+        
+        const response = await fetch(`${backendUrl}api/search?query=${encodeURIComponent(searchQuery)}`, {
+          mode: 'no-cors'
+        });
+
+        console.log("response: ", response);
+        
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Error meilisearch 1:', error);
+        return [];
+      }
+    },
+
     async algoliaSearch(store, payload){
       let search = store.state.searchString
       let category = store.state.selectedCategory.id
 
-      if (store.state.selectedCategory.name != "All") {
-        let algoliaSearch = await algoliaIndex.search(search, {filters: `approved:true AND category:"`+category+`"`, hitsPerPage: 150 })
+      try {
+        console.log("search: ", search);
         
+        let searchResults = await store.dispatch('getSearchResults', search);
+        console.log("searchResults: ", searchResults);
+      } catch (error) {
+        console.log("error meilisearch 2: ", error);
+        
+      }
+
+      if (store.state.selectedCategory.name != "All") {
+        let algoliaSearch = await algoliaIndex.search(search, {filters: `approved:true AND category:"`+category+`"`, hitsPerPage: 150 })        
         // Set the value of objectID to a new key named id
         algoliaSearch.hits = algoliaSearch.hits.map(item => {
           return {
@@ -535,6 +567,7 @@ export default createStore({
       approvedQuery.exists("icnsFile");
       approvedQuery.skip(store.state.userIcons.toSkip.approved)
       approvedQuery.descending("createdAt");
+      approvedQuery.select("appName", "approved", "category", "createdAt", "credit", "downloads", "highResPngUrl", "iOSUrl", "icnsUrl", "id", "isHidden", "isReview", "lowResPngUrl", "status", "timeStamp", "type", "usersName" );
       
       notApprovedQuery.equalTo("isHidden", false);
       notApprovedQuery.limit(numToLoad)
@@ -564,7 +597,7 @@ export default createStore({
               id: result.id,
               category: icon.category || {id: ""}
             };
-            return {status, iconData};
+            return {status, ...iconData};
           });
         };
 

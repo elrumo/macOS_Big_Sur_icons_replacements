@@ -50,7 +50,8 @@
 
                     <!-- App name -->
                     <h3 class="coral-font-color m-0">
-                        {{icon.appName.replaceAll("_", " ")}}
+                        {{icon.appName}}
+                        <!-- {{icon.appName.replaceAll("_", " ")}} -->
                     </h3>
                     
                     <!-- Credit -->
@@ -292,7 +293,7 @@ export default {
             icon = await iconQuery.get(icon.id)
             let userRelation = Parse.User.current().relation("favIcons")
             
-            // If isSaved is true, remove from databse
+            // If isSaved is true, remove from database
             if (parent.isSaved) {
                 userRelation.remove(icon)
             } else{

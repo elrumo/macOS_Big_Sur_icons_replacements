@@ -41,7 +41,7 @@
             
             <!-- Mobile -->
                 <div
-                    class="desktop-hidden coral--large"
+                    class="desktop-hidden "
                 >
                     <div class="burger-btn" @click="toggleOverlay">
                         <coral-icon class="m-auto" id="mobile-menu-icon" :icon="icons.burgerMenu" size="S" alt="Larger">
@@ -114,14 +114,14 @@
                             </div>
 
                             <!-- License -->
-                            <div class="resourcesLink" @click="toggleOverlay">
+                            <!-- <div class="resourcesLink" @click="toggleOverlay">
                                 <coral-status variant="info" class="_coral-StatusLight--info _coral-StatusLight" color=""></coral-status>
                                 <router-link to="/cicense" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
                                     <span>
                                         License
                                     </span>
                                 </router-link>
-                            </div>
+                            </div> -->
                             
                             <hr class="coral-Divider--S">
                             
@@ -214,7 +214,7 @@
 
                     <!-- Resources -->
                     <div class="resourcesLink">
-                        <!-- <coral-status variant="info"></coral-status> -->
+                        <coral-status variant="info"></coral-status>
                         <router-link to="/resources">
                             <button is="coral-button" variant="quiet">
                                 <span>Resources</span>

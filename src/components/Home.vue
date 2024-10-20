@@ -661,6 +661,7 @@ export default {
     this.setEventListenersOnStart()
     this.fetchUserAttributes()
     
+    console.log("Parse.User.current().getSessionToken(): ", Parse.User.current().getSessionToken());
     
     // try{
     //   await this.fetchHomeDialog()
