@@ -5,7 +5,6 @@
             :label="printIconName('icon')"
             class="card-wrapper card-hover coral-card m-0"
         >
-
             <div class="m-auto width-100">
                 <div
                     v-if="isSaveable"
@@ -24,7 +23,6 @@
                 <div class="card-img-wrapper" style="max-width: 120px;">
                     
                     <!-- macOS icon download -->
-                    <!-- @click="iconClick(icon)" -->
                     <a
                         v-if="true"
                         rel="noopener"

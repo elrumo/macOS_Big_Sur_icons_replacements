@@ -20,7 +20,10 @@
       id="newDialog"
       style="text-align: left;"
     >
-      <coral-dialog-header>{{getHomeDialog.header}}</coral-dialog-header>
+      <coral-dialog-header>
+        {{getHomeDialog.header}}
+      </coral-dialog-header>
+
       <coral-dialog-content style="max-width: 650px">
         <vue-markdown
           :source="getHomeDialog.content"
@@ -93,7 +96,7 @@
                 </svg>
                 
                 <!-- Cross icon -->
-                <transition name="fade">
+                <!-- <transition name="fade">
                   <div v-if="!searchString" class="searchBar-right mobile-hidden">
                     <div class="search-by-algolia-wrapper">
                       <p class="coral-Body--XS">
@@ -104,7 +107,7 @@
                       </a>
                     </div>
                   </div>
-                </transition>
+                </transition> -->
 
                 <transition name="fade">
                   <div v-if="searchString" class="searchBar-right">
@@ -146,7 +149,7 @@
         </div>
 
          <div v-if="isMobile" class="desktop-hidden categories-container">
-          <div class="search-by-algolia-container">
+          <!-- <div class="search-by-algolia-container">
             <div class="search-by-algolia-wrapper">
               <p class="coral-Body--XS">
                 Search powered by
@@ -155,7 +158,7 @@
                 <img class="algolia-logo" :src="alogliaLogo" alt="">
               </a>
             </div>
-          </div>
+          </div> -->
           <div id="categoriesWrapper-mobile" class="categories-wrapper">
             <coral-buttongroup selectionmode="single">
                 <button
@@ -397,6 +400,7 @@
               >
                 {{ typeof icon }}
               </div> -->
+
             <UserIconCard
               v-for="icon in iconInSearch(25)"
               :isLoading="
@@ -661,8 +665,6 @@ export default {
     this.setEventListenersOnStart()
     this.fetchUserAttributes()
     
-    console.log("Parse.User.current().getSessionToken(): ", Parse.User.current().getSessionToken());
-    
     // try{
     //   await this.fetchHomeDialog()
     // }catch{
@@ -724,7 +726,7 @@ export default {
 
     iconInSearch(num){
       let search = this.search
-      let searchStringEmpty = this.searchString.length == 0
+      let searchStringEmpty = this.searchString.length == 0      
 
       if (search.length > 0) {
         return search
@@ -1140,15 +1142,13 @@ export default {
     },
 
     search(){
-      let parent = this
-
-      if(parent.selectedIcons.length == 0){
-        parent.noIcons = true
+      if(this.selectedIcons.length == 0){
+        this.noIcons = true
       } else{
-        parent.noIcons = false
+        this.noIcons = false
       }
       
-      return parent.selectedIcons
+      return this.selectedIcons;
     },
 
     iconListStore(){

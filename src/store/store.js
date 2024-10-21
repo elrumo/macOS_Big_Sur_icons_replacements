@@ -22,11 +22,10 @@ import {
     getDialogHome
   } from '@/api/strapi';
 
-let algolia = {
-  // TODO: remove credentials
-  appid: import.meta.env.VITE_ALGOLIA_APPID,
-  apikey: import.meta.env.VITE_ALGOLIA_KEY
-}
+// let algolia = {
+//   appid: import.meta.env.VITE_ALGOLIA_APPID,
+//   apikey: import.meta.env.VITE_ALGOLIA_KEY
+// }
 
 const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
 const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
@@ -36,8 +35,8 @@ Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = VITE_PARSE_URL
 var IconsBase = Parse.Object.extend("Icons2");
 
-const client = algoliasearch(algolia.appid, algolia.apikey);
-const algoliaIndex = client.initIndex('macOSicons')
+// const client = algoliasearch(algolia.appid, algolia.apikey);
+// const algoliaIndex = client.initIndex('macOSicons')
 
 export default createStore({
 
@@ -280,17 +279,20 @@ export default createStore({
       store.commit('setDataToArr', {arr: 'learningHome', data: await getLearningHome()})
     },
 
-    async getSearchResults(store, searchQuery){
+    async getSearchResults(store, options ){
       try {
+        const searchQuery = options.search;
+        const searchOptions = options.searchOptions;
+
         const backendUrl = import.meta.env.VITE_BACKEND_URL;
-        console.log("searchQuery: ", searchQuery);
-        
         const response = await fetch(`${backendUrl}api/search?query=${encodeURIComponent(searchQuery)}`, {
-          mode: 'no-cors'
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({searchOptions}),
         });
 
-        console.log("response: ", response);
-        
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -306,58 +308,78 @@ export default createStore({
     async algoliaSearch(store, payload){
       let search = store.state.searchString
       let category = store.state.selectedCategory.id
-
+      
       try {
-        console.log("search: ", search);
+        let searchOptions = {
+          filters: category !== "All" ? `category = "${category}"` : "",
+          hitsPerPage: 150,
+          sort: ['timeStamp:desc']
+        }
+
+        let algoliaOptions = {
+          hitsPerPage: 150,
+          page: payload.page,
+          filters: "approved:true",
+        }
         
-        let searchResults = await store.dispatch('getSearchResults', search);
-        console.log("searchResults: ", searchResults);
+        if (store.state.selectedCategory.name != "All") {
+          algoliaOptions.filters += ` AND category:"`+category+`"`
+          // let algoliaSearch = await algoliaIndex.search(search, algoliaOptions);
+          let searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
+
+          searchResults.hits = searchResults.hits.map(item => {
+            return {
+              ...item,
+              id: item.objectID 
+            }; 
+          });
+
+          // Set the value of objectID to a new key named id
+          // algoliaSearch.hits = algoliaSearch.hits.map(item => {
+          //   return {
+          //     ...item,
+          //     id: item.objectID 
+          //   }; 
+          // });
+
+
+          console.log("algoliaSearch.hits: ", searchResults.hits);
+          store.commit('pushDataToArr', {arr: "searchData", data: searchResults.hits})
+
+        } else{ ;
+          let algoliaSearch
+          
+          if (search.length != 0) {
+            algoliaOptions.hitsPerPage = 25
+            algoliaOptions.page = payload.page
+
+            searchOptions.hitsPerPage = 25
+            searchOptions.page = payload.page
+          }
+          
+          // algoliaSearch = await algoliaIndex.search(search, algoliaOptions)
+          let searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
+
+          // Set the value of objectID to a new key named id
+          searchResults.hits = searchResults.hits.map(item => {
+            return {
+              ...item,
+              id: item.objectID 
+            }; 
+          });
+
+          // console.log("searchResults.hits: ", searchResults);
+          
+          if (payload.concat) {
+            store.commit('pushDataToArr', {arr: "searchData", data: searchResults.hits, concatArray: true})
+          } else{
+            store.commit('pushDataToArr', {arr: "searchData", data: searchResults.hits})
+            store.commit('setDataToArr', {arr: "iconListLen", data: searchResults.totalDocuments})
+          }
+        }
       } catch (error) {
-        console.log("error meilisearch 2: ", error);
-        
+        console.log("Error on search: ", error); 
       }
-
-      if (store.state.selectedCategory.name != "All") {
-        let algoliaSearch = await algoliaIndex.search(search, {filters: `approved:true AND category:"`+category+`"`, hitsPerPage: 150 })        
-        // Set the value of objectID to a new key named id
-        algoliaSearch.hits = algoliaSearch.hits.map(item => {
-          return {
-            ...item,
-            id: item.objectID 
-          }; 
-        });
-
-        console.log("algoliaSearch.hits: ", algoliaSearch.hits);
-        store.commit('pushDataToArr', {arr: "searchData", data: algoliaSearch.hits})
-
-      } else{ ;
-        let algoliaSearch
-        
-        if (search.length != 0) {
-          algoliaSearch = await algoliaIndex.search(search, {filters: `approved:true`, hitsPerPage: 25, page: payload.page })
-          // algoliaSearch = await replicaIndex.search(search, {filters: `approved:true`, hitsPerPage: 25, page: payload.page })
-        } else{
-          // algoliaSearch = await replicaIndex.search(search, {filters: `approved:true`, hitsPerPage: 25, page: payload.page })
-          algoliaSearch = await algoliaIndex.search(search, {filters: `approved:true`, hitsPerPage: 25, page: payload.page })
-        }
-        
-        
-        // Set the value of objectID to a new key named id
-        algoliaSearch.hits = algoliaSearch.hits.map(item => {
-          return {
-            ...item,
-            id: item.objectID 
-          }; 
-        });
-        
-        if (payload.concat) {
-          store.commit('pushDataToArr', {arr: "searchData", data: algoliaSearch.hits, concatArray: true})
-        } else{
-          store.commit('pushDataToArr', {arr: "searchData", data: algoliaSearch.hits})
-          store.commit('setDataToArr', {arr: "iconListLen", data: algoliaSearch.nbHits})
-        }
-      }
-
     },
 
     setData(store, data){
@@ -475,10 +497,10 @@ export default createStore({
       store.dispatch('fetchSavedIcons')
       store.commit('setDataToArr', {arr: 'selectedCategory', data: category, concatArray: false}) // set category
       
-      
       let savedIcons = store.state.savedIcons
       
-      if (search.length > 0) {
+
+      if (search.length > 0) {  
         store.dispatch('algoliaSearch', {page: 0})
       }
 
@@ -513,7 +535,7 @@ export default createStore({
         approvedQuery.equalTo("approved", true);
         approvedQuery.limit(numToLoad)
         approvedQuery.skip(toSkip)
-        
+
         let totalCategory = await approvedQuery.count()
         store.commit('setDataToArr', {arr: 'totalCategory', data: totalCategory})
         
