@@ -1069,10 +1069,19 @@ export default {
 
         if (this.$route.name != "Home" && this.$route.name != "Search") return;
 
-        if (val == '') this.setData({state: "searchString", data: val}); // Don't wait 500ms before showing empty search results
+        if (val == '') {
+          this.setData({state: "searchString", data: val});
+          this.algoliaSearch({page: 0, concat: false});
+          return;
+        }
 
-        this.setData({state: "searchString", data: val})
-        this.algoliaSearch({page: 0, concat: false})
+        this.setData({state: "searchString", data: val});
+        
+        if (this.debounceTimer) clearTimeout(this.debounceTimer);
+        
+        this.debounceTimer = setTimeout(() => {
+          this.algoliaSearch({page: 0, concat: false});
+        }, 200);
       },
       deep: true
     },
