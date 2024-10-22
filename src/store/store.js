@@ -279,40 +279,42 @@ export default createStore({
       store.commit('setDataToArr', {arr: 'learningHome', data: await getLearningHome()})
     },
 
-    async getSearchResults(store, options ){
+    async getSearchResults(store, options) {
       try {
         const searchQuery = options.search;
         const searchOptions = options.searchOptions;
-
-        console.log(1);
-        
         
         const backendUrl = import.meta.env.VITE_BACKEND_URL;
-        console.log(`${backendUrl}api/search?query=${encodeURIComponent(searchQuery)}`);
         
-        const response = await fetch(`${backendUrl}api/search?query=${encodeURIComponent(searchQuery)}`, {
+        // Build query parameters
+        const queryParams = new URLSearchParams({
+          query: searchQuery
+        }).toString();
+        
+        const response = await fetch(`${backendUrl}api/search?${queryParams}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
           },
-          body: JSON.stringify({searchOptions, query: searchQuery}),
+          credentials: 'include', // This is fine as we've properly configured CORS on the server
+          body: JSON.stringify({
+            searchOptions,
+            query: searchQuery
+          }),
         });
-
+    
         if (!response.ok) {
-          console.log("response NOT OK: ", response);
-          
-          throw new Error('Network response was not ok');
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
         
         const data = await response.json();
         return data;
       } catch (error) {
-        console.log('Error searching:', error);
-        throw new Error("Error searching 2: ", error);
-        
+        console.error('Error searching:', error);
+        throw error;
       }
-    },
+    },   
 
     async algoliaSearch(store, payload){
       let search = store.state.searchString
