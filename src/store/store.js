@@ -294,8 +294,9 @@ export default createStore({
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Accept': 'application/json',
           },
-          body: JSON.stringify({searchOptions}),
+          body: JSON.stringify({searchOptions, query: searchQuery}),
         });
 
         if (!response.ok) {
