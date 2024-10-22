@@ -6,7 +6,7 @@ import mkcert from'vite-plugin-mkcert'
 export default {
   base: "./",
   server: {
-    https: false
+    https: true
   },
   resolve: {
     alias: {

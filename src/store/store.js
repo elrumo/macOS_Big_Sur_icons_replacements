@@ -284,7 +284,10 @@ export default createStore({
         const searchQuery = options.search;
         const searchOptions = options.searchOptions;
 
+        
         const backendUrl = import.meta.env.VITE_BACKEND_URL;
+        console.log(`${backendUrl}api/search?query=${encodeURIComponent(searchQuery)}`);
+        
         const response = await fetch(`${backendUrl}api/search?query=${encodeURIComponent(searchQuery)}`, {
           method: 'POST',
           headers: {
@@ -300,8 +303,9 @@ export default createStore({
         const data = await response.json();
         return data;
       } catch (error) {
-        console.error('Error meilisearch 1:', error);
-        return [];
+        console.log('Error searching:', error);
+        throw new Error("Error searching 2: ", error);
+        
       }
     },
 
@@ -326,6 +330,8 @@ export default createStore({
           algoliaOptions.filters += ` AND category:"`+category+`"`
           // let algoliaSearch = await algoliaIndex.search(search, algoliaOptions);
           let searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
+
+          console.log("algoliaSearch.hits: ", searchResults.hits);
 
           searchResults.hits = searchResults.hits.map(item => {
             return {
@@ -359,6 +365,7 @@ export default createStore({
           
           // algoliaSearch = await algoliaIndex.search(search, algoliaOptions)
           let searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
+          console.log("searchResults.hits: ", searchResults);
 
           // Set the value of objectID to a new key named id
           searchResults.hits = searchResults.hits.map(item => {
@@ -379,6 +386,7 @@ export default createStore({
         }
       } catch (error) {
         console.log("Error on search: ", error); 
+        throw error
       }
     },
 
