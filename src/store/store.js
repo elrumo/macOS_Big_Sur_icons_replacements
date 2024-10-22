@@ -284,6 +284,8 @@ export default createStore({
         const searchQuery = options.search;
         const searchOptions = options.searchOptions;
 
+        console.log(1);
+        
         
         const backendUrl = import.meta.env.VITE_BACKEND_URL;
         console.log(`${backendUrl}api/search?query=${encodeURIComponent(searchQuery)}`);
@@ -297,6 +299,8 @@ export default createStore({
         });
 
         if (!response.ok) {
+          console.log("response NOT OK: ", response);
+          
           throw new Error('Network response was not ok');
         }
         
