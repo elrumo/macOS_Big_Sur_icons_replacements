@@ -297,7 +297,7 @@ export default createStore({
             'Content-Type': 'application/json',
             'Accept': 'application/json',
           },
-          credentials: 'include', // This is fine as we've properly configured CORS on the server
+          credentials: 'include',
           body: JSON.stringify({
             searchOptions,
             query: searchQuery
