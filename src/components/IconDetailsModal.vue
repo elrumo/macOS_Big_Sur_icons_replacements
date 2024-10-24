@@ -116,7 +116,8 @@ export default {
     },
 
     shareIcon() {
-      const url = `${window.location.origin}${window.location.pathname}?icon=${this.icon.id}`;
+      console.log("this.icon: ", this.getSelectedIcon);
+      const url = `${window.location.origin}${window.location.pathname}?icon=${this.getSelectedIcon.id}`;
       navigator.clipboard.writeText(url);
       this.$emit('share');
     },
@@ -140,13 +141,16 @@ export default {
 .icon-details-content {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .icon-details-header {
   display: flex;
-  gap: 32px;
-  align-items: flex-start;
+  gap: 2rem;
+  align-items: center;
+  width: fit-content;
+  padding-right: 1rem;
 }
 
 .icon-details-right {
@@ -154,11 +158,12 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 256px;
+  gap: 2rem;
 }
 
 .icon-preview {
   flex-shrink: 0;
+  max-width: fit-content;
 }
 
 .icon-preview img {
@@ -186,7 +191,6 @@ export default {
 .action-buttons {
   display: flex;
   gap: 12px;
-  margin-top: auto;
 }
 
 @media (max-width: 640px) {
@@ -198,6 +202,7 @@ export default {
   .icon-details-right {
     width: 100%;
     min-height: auto;
+    justify-content: center;
     gap: 24px;
   }
 
@@ -208,15 +213,16 @@ export default {
 }
 
 .similar-icons {
-  margin-top: 24px;
+  width: 100%;
 }
 
 .similar-icons-scroll {
   display: flex;
   overflow-x: auto;
-  gap: 16px;
-  margin-top: 16px;
-  padding-bottom: 16px;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 0.25rem;
+  padding-bottom: 1rem;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
