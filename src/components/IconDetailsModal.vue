@@ -48,7 +48,7 @@
         <!-- Similar Icons -->
         <div v-if="getSimilarIcons.length" class="similar-icons">
           <h3 class="coral-Heading--S">Similar Icons</h3>
-          <div class="similar-icons-grid">
+          <div class="similar-icons-scroll">
             <UserIconCard
               v-for="similarIcon in getSimilarIcons"
               :key="similarIcon.id"
@@ -178,10 +178,35 @@ export default {
   margin-top: 24px;
 }
 
-.similar-icons-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+.similar-icons-scroll {
+  display: flex;
+  overflow-x: auto;
   gap: 16px;
   margin-top: 16px;
+  padding-bottom: 16px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.similar-icons-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.similar-icons-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.similar-icons-scroll::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.similar-icons-scroll::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.similar-icons-scroll > * {
+  flex: 0 0 200px;
 }
 </style>
