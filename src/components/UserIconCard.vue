@@ -21,15 +21,7 @@
 
                 <!-- Icon image -->
                 <div class="card-img-wrapper" style="max-width: 120px;">
-                    
-                    <!-- macOS icon download -->
-                    <a
-                        v-if="true"
-                        rel="noopener"
-                        :href="iconDownloadUrl"
-                        @click="addClickCount(icon)"
-                        target="_blank"
-                    >
+                    <div @click="showIconDetails">
                         <img
                             :alt="icon.appName + ' icon'"
                             v-lazy="{
@@ -230,6 +222,18 @@ export default {
             'addClickCount',
             'setData'
         ]),
+
+        showIconDetails() {
+            // Update URL with icon ID
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set('icon', this.icon.id);
+            window.history.pushState({}, '', newUrl);
+
+            // Set selected icon and show modal
+            this.setSelectedIcon(this.icon);
+            this.$emit('showDetails', this.icon);
+            this.showEl('iconDetailsDialog');
+        },
 
         iconClick(icon){
             this.addClickCount(icon);
