@@ -5,11 +5,10 @@
       <button 
         @click="closeModal"
         is="coral-button" 
-        variant="quiet"
         class="close-button"
-      >
-        Close
-      </button>
+        variant="quiet"
+        :icon="iconBrew('close18')"
+      />
     </coral-dialog-header>
 
         
@@ -58,14 +57,16 @@
         </div>
 
         <!-- Similar Icons -->
-        <div v-if="getSimilarIcons.length" class="similar-icons">
+        <div v-if="getSimilarIcons.length > 0 || getIsSimilarLoading" class="similar-icons">
+        <!-- <div class="similar-icons"> -->
           <h3 class="coral-Heading--S">Similar Icons</h3>
           <div class="similar-icons-scroll">
             <UserIconCard
-              v-for="similarIcon in getSimilarIcons"
+              v-for="similarIcon in getSimilarIcons.length > 0 ? getSimilarIcons : 5"
               :key="similarIcon.id"
               :icon="similarIcon"
               :isMacOs="true"
+              :isLoading="getIsSimilarLoading"
             />
           </div>
         </div>
@@ -78,6 +79,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import UserIconCard from './UserIconCard.vue';
+import iconBrew from '../api/iconBrew.js'
 
 export default {
   name: 'IconDetailsModal',
@@ -102,6 +104,7 @@ export default {
     ...mapGetters([
         'getSelectedIcon',
         'getSimilarIcons',
+        'getIsSimilarLoading',
       ]),
 
     getUploaderName() {
@@ -114,16 +117,25 @@ export default {
   },
 
   methods: {
-    ...mapActions(['algoliaSearch']),
+    ...mapActions([
+      'algoliaSearch',
+      'addClickCount',
+    ]),
 
     formatDate(timestamp) {
       const date = new Date(timestamp);
       return date.toLocaleDateString();
     },
 
+    iconBrew(iconName, filled = false) {
+      let icon = iconBrew(iconName, filled);
+      return icon
+    },
+
     async downloadIcon() {
       window.open(this.getSelectedIcon.icnsUrl, '_blank');
-      this.$emit('download', this.getSelectedIcon);
+      this.addClickCount(this.getSelectedIcon);
+      // this.$emit('download', this.getSelectedIcon);
     },
 
     shareIcon() {
@@ -141,7 +153,23 @@ export default {
     },
   },
 
-  mounted() {
+  async mounted() {
+    const urlParams = new URL(window.location.href.replace(/#/g, "%23")).searchParams;
+    const iconParam = urlParams.get('icon');
+    
+    if (iconParam && Object.keys(this.getSelectedIcon).length == 0) {
+      let icon = await this.algoliaSearch({
+          similarSearch: false,
+          setSelectedIcon: true,
+          iconId: iconParam
+      });
+
+      this.algoliaSearch({
+          search: icon.appName,
+          similarSearch: true,
+          category: icon.category
+      });
+    }
   }
 }
 </script>
@@ -193,6 +221,7 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   gap: 1rem;
+  width: 300px;
 
   @media (max-width: 640px) {
     width: 100%;
@@ -229,6 +258,7 @@ export default {
   display: flex;
   margin: 0px;
   flex-direction: column;
+  max-width: 300px;
   
   @media (max-width: 820px) {
     text-align: center;
@@ -295,8 +325,12 @@ export default {
 
 .close-button {
   position: absolute;
-  right: 1rem;
+  right: 0rem;
+  width: fit-content;
+  padding-left: 0px;
+  padding-right: 0px;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-100%);
+  min-width: 2.3rem;
 }
 </style>
