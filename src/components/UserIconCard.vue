@@ -225,25 +225,22 @@ export default {
 
         showIconDetails() {
             try {
-                // Update URL with icon ID while preserving the hash
-                const currentUrl = window.location.href;
-                const hashIndex = currentUrl.indexOf('#');
-                const baseUrl = hashIndex >= 0 ? currentUrl.substring(0, hashIndex) : currentUrl;
-                const hash = hashIndex >= 0 ? currentUrl.substring(hashIndex) : '';
-                const newUrl = `${baseUrl}${hash}${hash.includes('?') ? '&' : '?'}icon=${this.icon.id}`;
-                window.history.pushState({}, '', newUrl);
+                // Update URL with icon ID while preserving existing query params
+                const url = new URL(window.location.href);
+                url.searchParams.set('icon', this.icon.id);
+                window.history.replaceState({}, '', url);
 
                 // Set selected icon and show modal
                 this.setSelectedIcon(this.icon);
                 this.$emit('showDetails', this.icon);
-                
+
                 // Wait for next tick and ensure modal exists before showing
                 this.$nextTick(() => {
                     const modal = document.getElementById('iconDetailsDialog');
-                    if (modal) {
-                        this.showEl('iconDetailsDialog');
+                    if (modal && typeof modal.show === 'function') {
+                        modal.show();
                     } else {
-                        console.error('Modal element not found');
+                        console.error('Modal element not found or show method not available');
                     }
                 });
             } catch (error) {
