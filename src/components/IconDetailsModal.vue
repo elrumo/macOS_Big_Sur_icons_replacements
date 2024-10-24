@@ -2,6 +2,14 @@
   <coral-dialog id="iconDetailsDialog" class="icon-details-dialog">
     <coral-dialog-header>
       Icon Details
+      <button 
+        @click="closeModal"
+        is="coral-button" 
+        variant="quiet"
+        class="close-button"
+      >
+        Close
+      </button>
     </coral-dialog-header>
 
         
@@ -276,5 +284,12 @@ export default {
 
 .similar-icons-scroll > * {
   flex: 0 0 200px;
+}
+
+.close-button {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
 }
 </style>
