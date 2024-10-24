@@ -787,17 +787,25 @@ export default createStore({
     // },
 
     showEl(store, id){
-      if(id.elId != undefined){
-        const element = document.getElementById(id.elId);
-        if (element) {
-          element.target = "#"+id.targetId;
-          element.show();
+      try {
+        if(id.elId != undefined){
+          const element = document.getElementById(id.elId);
+          if (element) {
+            element.target = "#"+id.targetId;
+            element.show();
+          } else {
+            console.error(`Element with ID ${id.elId} not found`);
+          }
+        } else {
+          const element = document.getElementById(id);
+          if (element) {
+            element.show();
+          } else {
+            console.error(`Element with ID ${id} not found`);
+          }
         }
-      } else{
-        const element = document.getElementById(id);
-        if (element) {
-          element.show();
-        }
+      } catch (error) {
+        console.error('Error showing element:', error);
       }
     },
 
