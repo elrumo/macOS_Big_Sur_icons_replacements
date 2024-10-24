@@ -7,34 +7,35 @@
         
     <coral-dialog-content>
       <div class="icon-details-content">
-        
-        <!-- Icon Image -->
-        <div class="icon-preview">
-          <img :src="getSelectedIcon.lowResPngUrl" :alt="getSelectedIcon.appName + ' icon'">
-        </div>
+        <div class="icon-details-header">
+          <!-- Icon Image -->
+          <div class="icon-preview">
+            <img :src="getSelectedIcon.lowResPngUrl" :alt="getSelectedIcon.appName + ' icon'">
+          </div>
 
-        <!-- Icon Info -->
-        <div class="icon-info">
-          <div class="info-row">
-            <span class="label">Uploaded by:</span>
-            <a :href="getSelectedIcon.uploadedBy" class="coral-Link">{{ getUploaderName }}</a>
-          </div>
-          <div class="info-row">
-            <span class="label">Downloads:</span>
-            <span>{{ getSelectedIcon.downloads }}</span>
-          </div>
-          <div class="info-row">
-            <span class="label">Upload date:</span>
-            <span>{{ formatDate(getSelectedIcon.timeStamp) }}</span>
-          </div>
-          <div v-if="icon.credit" class="info-row">
-            <span class="label">Credit:</span>
-            <span>{{ getSelectedIcon.credit }}</span>
-          </div>
-        </div>
+          <div class="icon-details-right">
+            <!-- Icon Info -->
+            <div class="icon-info">
+              <div class="info-row">
+                <span class="label">Uploaded by:</span>
+                <a :href="getSelectedIcon.uploadedBy" class="coral-Link">{{ getUploaderName }}</a>
+              </div>
+              <div class="info-row">
+                <span class="label">Downloads:</span>
+                <span>{{ getSelectedIcon.downloads }}</span>
+              </div>
+              <div class="info-row">
+                <span class="label">Upload date:</span>
+                <span>{{ formatDate(getSelectedIcon.timeStamp) }}</span>
+              </div>
+              <div v-if="icon.credit" class="info-row">
+                <span class="label">Credit:</span>
+                <span>{{ getSelectedIcon.credit }}</span>
+              </div>
+            </div>
 
-        <!-- Action Buttons -->
-        <div class="action-buttons">
+            <!-- Action Buttons -->
+            <div class="action-buttons">
           <button @click="downloadIcon" is="coral-button" variant="cta">
             Download
           </button>
@@ -142,14 +143,28 @@ export default {
   gap: 24px;
 }
 
-.icon-preview {
+.icon-details-header {
   display: flex;
-  justify-content: center;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.icon-details-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 256px;
+}
+
+.icon-preview {
+  flex-shrink: 0;
 }
 
 .icon-preview img {
-  max-width: 256px;
-  height: auto;
+  width: 256px;
+  height: 256px;
+  object-fit: contain;
 }
 
 .icon-info {
@@ -171,7 +186,25 @@ export default {
 .action-buttons {
   display: flex;
   gap: 12px;
-  justify-content: center;
+  margin-top: auto;
+}
+
+@media (max-width: 640px) {
+  .icon-details-header {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .icon-details-right {
+    width: 100%;
+    min-height: auto;
+    gap: 24px;
+  }
+
+  .action-buttons {
+    margin-top: 24px;
+    justify-content: center;
+  }
 }
 
 .similar-icons {
