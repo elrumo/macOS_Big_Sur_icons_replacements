@@ -443,6 +443,7 @@ import StickyBanner from './StickyBanner.vue';
 import CarbonAd from './CarbonAd.vue';
 import UserIconCardLoading from './UserIconCardLoading.vue';
 import UserIconCard from './UserIconCard.vue';
+import IconDetailsModal from './IconDetailsModal.vue';
 
 import ConfettiGenerator from "confetti-js";
 
@@ -517,7 +518,8 @@ export default {
     StickyBanner,
     CarbonAd,
     UserIconCardLoading,
-    VueMarkdown
+    VueMarkdown,
+    IconDetailsModal
   },
 
   metaInfo: {
@@ -605,7 +607,7 @@ export default {
 
       message: "",
       today: this.getTodayDate(),
-
+      selectedIcon: {},
       downloads:{},
 
       iconListLen: this.iconListLen,
