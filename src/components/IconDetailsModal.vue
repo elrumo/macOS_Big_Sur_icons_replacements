@@ -36,15 +36,15 @@
 
             <!-- Action Buttons -->
             <div class="action-buttons">
-          <button @click="downloadIcon" is="coral-button" variant="cta">
-            Download
-          </button>
-          <button @click="shareIcon" is="coral-button" variant="secondary">
-            Share
-          </button>
+              <button @click="downloadIcon" is="coral-button" variant="cta">
+                Download
+              </button>
+              <button @click="shareIcon" is="coral-button" variant="secondary">
+                Share
+              </button>
+            </div>
+          </div>
         </div>
-
-        <!-- {{ getSimilarIcons }} -->
 
         <!-- Similar Icons -->
         <div v-if="getSimilarIcons.length" class="similar-icons">
