@@ -284,14 +284,15 @@ export default createStore({
         const searchQuery = options.search;
         const searchOptions = options.searchOptions;
         
-        const backendUrl = import.meta.env.VITE_BACKEND_URL;
+        const backendUrl = import.meta.env.VITE_BACKEND_URL + 'api/search';
         
         // Build query parameters
         const queryParams = new URLSearchParams({
           query: searchQuery
         }).toString();
         
-        const response = await fetch(`${backendUrl}api/search?${queryParams}`, {
+        const response = await fetch(backendUrl, {
+        // const response = await fetch(`${backendUrl}api/search?${queryParams}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -299,8 +300,8 @@ export default createStore({
           },
           credentials: 'include',
           body: JSON.stringify({
-            searchOptions,
-            query: searchQuery
+            query: searchQuery,
+            searchOptions
           }),
         });
     

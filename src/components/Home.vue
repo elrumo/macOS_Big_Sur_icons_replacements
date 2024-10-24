@@ -668,7 +668,7 @@ export default {
     // try{
     //   await this.fetchHomeDialog()
     // }catch{
-    //   console.log("loading error");
+    //   console.log("loading fetchHomeDialog error");
     // }
     
     if (this.getHomeDialog.showParticles) {

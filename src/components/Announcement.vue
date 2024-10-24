@@ -29,7 +29,8 @@
             </div>
 
             <div class="mb-2 f-w-400">
-              <p v-html="marked(getHomeDialog.announcement)"></p>
+              <p>Holaaa</p>
+              <!-- <p v-html="marked(getHomeDialog.announcement)"></p> -->
             </div>
           </div>
 
