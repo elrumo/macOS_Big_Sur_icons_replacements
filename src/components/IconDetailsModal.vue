@@ -182,6 +182,13 @@ export default {
           category: icon.category
       });
     }
+
+    // Add event listeners for modal close events
+    const modal = document.getElementById('iconDetailsDialog');
+    if (modal) {
+      modal.addEventListener('coral-overlay:close', this.handleModalClose);
+      modal.addEventListener('coral-overlay:beforeclose', this.handleModalClose);
+    }
   }
 }
 </script>
