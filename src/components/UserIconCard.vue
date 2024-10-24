@@ -21,7 +21,8 @@
 
                 <!-- Icon image -->
                 <div class="card-img-wrapper" style="max-width: 120px;">
-                    <div @click="showIconDetails">
+                    <div @click="iconClick(icon)">
+                    <!-- <div @click="showIconDetails"> -->
                         <img
                             :alt="icon.appName + ' icon'"
                             v-lazy="{
@@ -220,6 +221,7 @@ export default {
             'showEl',
             'setSelectedIcon',
             'addClickCount',
+            'algoliaSearch',
             'setData'
         ]),
 
@@ -252,7 +254,11 @@ export default {
             this.addClickCount(icon);
             this.setData({arr: 'selectedIcon', data: icon});
             this.setData({arr: 'refreshAd', data: true});
-            this.showDialog('iconDialog');
+            console.log("icon.appName: ", icon.appName);
+            
+            this.algoliaSearch({ search: icon.appName, similarSearch: true });
+            this.showDialog('iconDetailsDialog');
+            // this.showDialog('iconDialog');
         },
 
         showDialog(id){

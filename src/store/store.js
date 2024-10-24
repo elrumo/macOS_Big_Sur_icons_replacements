@@ -44,6 +44,7 @@ export default createStore({
     return{
       list: icons,
       dataToShow: [],
+      similarIcons: [],
       
       noMoreResults: false,
       iconListLen: 13_072,
@@ -318,8 +319,11 @@ export default createStore({
     },   
 
     async algoliaSearch(store, payload){
-      let search = store.state.searchString
-      let category = store.state.selectedCategory.id
+      let search = payload.search || store.state.searchString;
+      let category = store.state.selectedCategory.id;
+      let page = payload.page || 0;
+      let concat = payload.concat || false;
+      let similarSearch = payload.similarSearch || false;
       
       try {
         let searchOptions = {
@@ -330,11 +334,11 @@ export default createStore({
 
         let algoliaOptions = {
           hitsPerPage: 150,
-          page: payload.page,
+          page,
           filters: "approved:true",
         }
         
-        if (store.state.selectedCategory.name != "All") {
+        if (store.state.selectedCategory.name != "All" && !similarSearch) {
           algoliaOptions.filters += ` AND category:"`+category+`"`
           // let algoliaSearch = await algoliaIndex.search(search, algoliaOptions);
           let searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
@@ -385,10 +389,10 @@ export default createStore({
 
           // console.log("searchResults.hits: ", searchResults);
           
-          if (payload.concat) {
+          if (concat) {
             store.commit('pushDataToArr', {arr: "searchData", data: searchResults.hits, concatArray: true})
           } else{
-            store.commit('pushDataToArr', {arr: "searchData", data: searchResults.hits})
+            store.commit('pushDataToArr', {arr: similarSearch ? "similarIcons" : "searchData", data: searchResults.hits})
             store.commit('setDataToArr', {arr: "iconListLen", data: searchResults.totalDocuments})
           }
         }
@@ -1101,6 +1105,10 @@ export default createStore({
 
     getDownloads(store){
       return store.downloads
+    },
+
+    getSimilarIcons(store){
+      return store.similarIcons
     },
 
   }

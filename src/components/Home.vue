@@ -1,9 +1,9 @@
 <template>
   <div>
+    <!-- v-if="selectedIcon.id" -->
+    <!-- @download="addClickCount" -->
     <IconDetailsModal 
-      v-if="selectedIcon.id"
       :icon="selectedIcon"
-      @download="addClickCount"
       @share="showToast({
         id: 'toastMessage',
         message: '✅ Link copied to clipboard',
@@ -61,7 +61,7 @@
       </coral-dialog-footer>
     </coral-dialog>
 
-    <IconDialog :isMacOs="isMacOs"/>
+    <!-- <IconDialog :isMacOs="isMacOs"/> -->
 
     <!-- Hero -->
     <Hero
@@ -422,8 +422,8 @@
               :icon="icon"
               :isAdmin="isAdmin"
               :isMacOs="isMacOs"
-              @showDetails="handleShowDetails"
             />
+              <!-- @showDetails="handleShowDetails" -->
           </div>
 
 
@@ -1027,13 +1027,6 @@ export default {
       let parent = this
       document.getElementById(dialogId).show()
       // parent.activeIcon= icon
-    },
-
-    handleShowDetails(icon) {
-      const modal = document.getElementById('iconDetailsDialog');
-      if (modal && typeof modal.show === 'function') {
-        modal.show();
-      }
     },
 
     async editDoc(icon, e, field){
