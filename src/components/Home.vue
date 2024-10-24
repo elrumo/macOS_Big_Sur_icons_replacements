@@ -422,6 +422,7 @@
               :icon="icon"
               :isAdmin="isAdmin"
               :isMacOs="isMacOs"
+              @showDetails="handleShowDetails"
             />
           </div>
 
