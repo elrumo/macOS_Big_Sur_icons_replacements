@@ -1,7 +1,7 @@
 <template>
   <coral-dialog id="iconDetailsDialog" class="icon-details-dialog">
     <coral-dialog-header>
-      {{ getSelectedIcon.appName }}
+      Icon Details
     </coral-dialog-header>
 
         
@@ -14,33 +14,36 @@
           </div>
 
           <div class="icon-details-right">
+            <h2 class="info-row">
+              {{ getSelectedIcon.appName }}
+            </h2>
             <!-- Icon Info -->
             <div class="icon-info">
               <div class="info-row">
-                <span class="label">Uploaded by:</span>
+                <span class="label">Uploaded by</span>
                 <a :href="getSelectedIcon.uploadedBy" class="coral-Link">{{ getUploaderName }}</a>
               </div>
               <div class="info-row">
-                <span class="label">Downloads:</span>
+                <span class="label">Downloads</span>
                 <span>{{ getSelectedIcon.downloads }}</span>
               </div>
               <div class="info-row">
-                <span class="label">Upload date:</span>
+                <span class="label">Upload date</span>
                 <span>{{ formatDate(getSelectedIcon.timeStamp) }}</span>
               </div>
               <div v-if="icon.credit" class="info-row">
-                <span class="label">Credit:</span>
+                <span class="label">Credit</span>
                 <span>{{ getSelectedIcon.credit }}</span>
               </div>
             </div>
 
             <!-- Action Buttons -->
             <div class="action-buttons">
-              <button @click="downloadIcon" is="coral-button" variant="cta">
-                Download
-              </button>
               <button @click="shareIcon" is="coral-button" variant="secondary">
                 Share
+              </button>
+              <button @click="downloadIcon" is="coral-button" variant="cta">
+                Download
               </button>
             </div>
           </div>
@@ -128,7 +131,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .icon-details-dialog {
   max-width: 800px;
   margin: 0 auto;
@@ -142,13 +145,11 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
-  min-width: 720px;
-}
+  gap: 1rem;
 
-@media (max-width: 720px) {
-  .icon-details-content {
-    min-width: auto;
+  @media (max-width: 720px) {
+      min-width: 720px;
+      min-width: auto;
   }
 }
 
@@ -157,7 +158,18 @@ export default {
   gap: 2rem;
   align-items: center;
   width: fit-content;
-  padding-right: 1rem;
+
+  @media (min-width: 801px) {
+    padding-right: 1rem;
+  }
+
+  @media (max-width: 801px) {
+    width: 100%;
+    gap: 0rem;
+    flex-direction: column;
+    align-items: center;
+  }
+  
 }
 
 .icon-details-right {
@@ -165,56 +177,66 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 1rem;
+
+  @media (max-width: 640px) {
+    width: 100%;
+    min-height: auto;
+    justify-content: center;
+    gap: 1rem;
+  }
 }
 
 .icon-preview {
   flex-shrink: 0;
   max-width: fit-content;
-}
 
-.icon-preview img {
-  width: 256px;
-  height: 256px;
-  object-fit: contain;
+  img {
+    width: 256px;
+    height: 256px;
+    object-fit: contain;
+
+    @media (max-width: 640px) {
+      width: 200px;
+      height: 200px;
+    }
+  }
 }
 
 .icon-info {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .info-row {
   display: flex;
-  gap: 8px;
+  margin: 0px;
+  flex-direction: column;
+  
+  @media (max-width: 820px) {
+    text-align: center;
+  }
 }
 
 .label {
-  font-weight: bold;
-  min-width: 100px;
+  opacity: 0.8;
+  font-size: 0.8rem;
 }
 
 .action-buttons {
   display: flex;
-  gap: 12px;
-}
+  margin-top: 0.75rem;
+  gap: 1rem;
 
-@media (max-width: 640px) {
-  .icon-details-header {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .icon-details-right {
+  button{
     width: 100%;
-    min-height: auto;
-    justify-content: center;
-    gap: 24px;
+    margin: 0px;
   }
 
-  .action-buttons {
-    margin-top: 24px;
+  @media screen and (max-width: 820px) {
+    margin-top: 0.5rem;
     justify-content: center;
   }
 }
