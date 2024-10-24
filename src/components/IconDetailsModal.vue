@@ -132,6 +132,13 @@ export default {
       navigator.clipboard.writeText(url);
       this.$emit('share');
     },
+
+    closeModal() {
+      const modal = document.getElementById('iconDetailsDialog');
+      if (modal) {
+        modal.hide();
+      }
+    },
   },
 
   mounted() {
