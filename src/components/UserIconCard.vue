@@ -222,7 +222,8 @@ export default {
             'setSelectedIcon',
             'addClickCount',
             'algoliaSearch',
-            'setData'
+            'setData',
+            'stateStateAction'
         ]),
 
         showIconDetails() {
@@ -251,14 +252,19 @@ export default {
         },
 
         iconClick(icon){
-            this.addClickCount(icon);
             this.setData({arr: 'selectedIcon', data: icon});
             this.setData({arr: 'refreshAd', data: true});
-            console.log("icon.appName: ", icon.appName);
+
+            const url = `${window.location.origin}${window.location.pathname}#/?icon=${icon.id}`;
+            console.log("url: ", url);
+            window.history.replaceState({}, '', url);
             
-            this.algoliaSearch({ search: icon.appName, similarSearch: true });
-            this.showDialog('iconDetailsDialog');
-            // this.showDialog('iconDialog');
+            this.algoliaSearch({
+                search: icon.appName,
+                similarSearch: true,
+                category: icon.category
+            });
+            this.showDialog('iconDetailsDialog');       
         },
 
         showDialog(id){

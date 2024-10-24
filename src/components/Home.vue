@@ -663,6 +663,14 @@ export default {
 
   mounted: async function(){
 
+    // Check if the URL has the 'icon' query parameter
+    const urlParams = new URL(window.location.href.replace(/#/g, "%23")).searchParams;
+    const iconParam = urlParams.get('icon');
+    
+    if (iconParam) {
+      this.showDialog('iconDetailsDialog');
+    }
+
     try {
       this.algoliaSearch({page: this.page, concat: false})
       this.scroll()
@@ -734,7 +742,8 @@ export default {
       'pushDataToArr',
       'fetchUserAttributes',
       'fetchSavedIcons',
-      'fetchHomeDialog'
+      'fetchHomeDialog',
+      'stateStateAction',
     ]),
 
     iconInSearch(num){
@@ -1075,11 +1084,10 @@ export default {
   },
 
   watch:{
-    
     searchString: {
       handler(val, oldVal) {
         this.page = 0;
-
+        
         if (this.$route.name != "Home" && this.$route.name != "Search") return;
 
         if (val == '') {

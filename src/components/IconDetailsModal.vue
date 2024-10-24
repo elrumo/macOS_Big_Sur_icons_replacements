@@ -139,8 +139,7 @@ export default {
     },
 
     shareIcon() {
-      console.log("this.icon: ", this.getSelectedIcon);
-      const url = `${window.location.origin}${window.location.pathname}?icon=${this.getSelectedIcon.id}`;
+      const url = `${window.location.origin}${window.location.pathname}#/?icon=${this.getSelectedIcon.id}`;
       navigator.clipboard.writeText(url);
       this.$emit('share');
     },
@@ -159,8 +158,7 @@ export default {
 
     clearIconFromUrl() {
       // Remove icon parameter from URL while preserving other params
-      const url = new URL(window.location.href);
-      url.searchParams.delete('icon');
+      const url = new URL(window.location.origin+'#/');
       window.history.replaceState({}, '', url);
     },
   },
@@ -168,7 +166,8 @@ export default {
   async mounted() {
     const urlParams = new URL(window.location.href.replace(/#/g, "%23")).searchParams;
     const iconParam = urlParams.get('icon');
-    
+    let parent = this;
+  
     if (iconParam && Object.keys(this.getSelectedIcon).length == 0) {
       let icon = await this.algoliaSearch({
           similarSearch: false,
@@ -183,12 +182,10 @@ export default {
       });
     }
 
-    // Add event listeners for modal close events
-    const modal = document.getElementById('iconDetailsDialog');
-    if (modal) {
-      modal.addEventListener('coral-overlay:close', this.handleModalClose);
-      modal.addEventListener('coral-overlay:beforeclose', this.handleModalClose);
-    }
+    let dialog = document.querySelector('#iconDetailsDialog');
+    dialog.on('coral-overlay:close', function (event) {
+      parent.clearIconFromUrl();
+    });
   }
 }
 </script>

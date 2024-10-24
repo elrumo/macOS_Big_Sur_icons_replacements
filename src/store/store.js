@@ -45,6 +45,7 @@ export default createStore({
       list: icons,
       dataToShow: [],
       similarIcons: [],
+      isSimilarLoading: false,
       
       noMoreResults: false,
       iconListLen: 13_072,
@@ -184,6 +185,8 @@ export default createStore({
     setState(store, data){
       let state = data.state
       let payload = data.payload
+      console.log("payload: ", payload);
+      
       store[state] = payload;
     },
 
@@ -201,6 +204,10 @@ export default createStore({
   
 
   actions: {
+
+    stateStateAction(store, payload){
+      store.commit('setState', payload)
+    },
 
     async queryCategory(store, categoryId) {
       const Categories = Parse.Object.extend("Categories");
@@ -316,18 +323,25 @@ export default createStore({
         console.error('Error searching:', error);
         throw error;
       }
-    },   
+    },
 
     async algoliaSearch(store, payload){
       let search = payload.search || store.state.searchString;
-      let category = store.state.selectedCategory.id;
+      let category = payload.category || store.state.selectedCategory.id;
       let page = payload.page || 0;
       let concat = payload.concat || false;
       let similarSearch = payload.similarSearch || false;
+      let setSelectedIcon = payload.setSelectedIcon || false;
+      let iconId = payload.iconId || null;
       
+      if(similarSearch) store.commit('setState', {state: "isSimilarLoading", payload: true});
+
       try {
         let searchOptions = {
-          filters: category !== "All" ? `category = "${category}"` : "",
+          filters: [
+            category !== "All" ? `category = ${category}` : "",
+            iconId !== null ? `objectID = ${iconId}` : ""
+          ].filter(Boolean).join(" AND "),
           hitsPerPage: 150,
           sort: ['timeStamp:desc']
         }
@@ -338,9 +352,8 @@ export default createStore({
           filters: "approved:true",
         }
         
-        if (store.state.selectedCategory.name != "All" && !similarSearch) {
+        if (store.state.selectedCategory.name != "All" && !similarSearch && !setSelectedIcon) {
           algoliaOptions.filters += ` AND category:"`+category+`"`
-          // let algoliaSearch = await algoliaIndex.search(search, algoliaOptions);
           let searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
 
           console.log("algoliaSearch.hits: ", searchResults.hits);
@@ -351,15 +364,6 @@ export default createStore({
               id: item.objectID 
             }; 
           });
-
-          // Set the value of objectID to a new key named id
-          // algoliaSearch.hits = algoliaSearch.hits.map(item => {
-          //   return {
-          //     ...item,
-          //     id: item.objectID 
-          //   }; 
-          // });
-
 
           console.log("algoliaSearch.hits: ", searchResults.hits);
           store.commit('pushDataToArr', {arr: "searchData", data: searchResults.hits})
@@ -374,7 +378,7 @@ export default createStore({
             searchOptions.hitsPerPage = 25
             searchOptions.page = payload.page
           }
-          
+
           // algoliaSearch = await algoliaIndex.search(search, algoliaOptions)
           let searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
           console.log("searchResults.hits: ", searchResults);
@@ -387,7 +391,10 @@ export default createStore({
             }; 
           });
 
-          // console.log("searchResults.hits: ", searchResults);
+          if(setSelectedIcon){
+            store.commit('setDataToArr', {arr: "selectedIcon", data: searchResults.hits[0]})
+            return searchResults.hits[0]
+          }
           
           if (concat) {
             store.commit('pushDataToArr', {arr: "searchData", data: searchResults.hits, concatArray: true})
@@ -399,6 +406,8 @@ export default createStore({
       } catch (error) {
         console.log("Error on search: ", error); 
         throw error
+      } finally{
+        if(similarSearch) store.commit('setState', {state: "isSimilarLoading", payload: false});
       }
     },
 
@@ -1108,7 +1117,11 @@ export default createStore({
     },
 
     getSimilarIcons(store){
-      return store.similarIcons
+      return store.similarIcons;
+    },
+
+    getIsSimilarLoading(store){
+      return store.isSimilarLoading;
     },
 
   }
