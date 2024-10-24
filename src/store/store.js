@@ -788,10 +788,16 @@ export default createStore({
 
     showEl(store, id){
       if(id.elId != undefined){
-        document.getElementById(id.elId).target = "#"+id.targetId
-        document.getElementById(id.elId).show()
+        const element = document.getElementById(id.elId);
+        if (element) {
+          element.target = "#"+id.targetId;
+          element.show();
+        }
       } else{
-        document.getElementById(id).show()
+        const element = document.getElementById(id);
+        if (element) {
+          element.show();
+        }
       }
     },
 
