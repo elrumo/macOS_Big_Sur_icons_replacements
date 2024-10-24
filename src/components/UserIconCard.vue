@@ -225,9 +225,12 @@ export default {
 
         showIconDetails() {
             try {
-                // Update URL with icon ID
-                const newUrl = new URL(window.location);
-                newUrl.searchParams.set('icon', this.icon.id);
+                // Update URL with icon ID while preserving the hash
+                const currentUrl = window.location.href;
+                const hashIndex = currentUrl.indexOf('#');
+                const baseUrl = hashIndex >= 0 ? currentUrl.substring(0, hashIndex) : currentUrl;
+                const hash = hashIndex >= 0 ? currentUrl.substring(hashIndex) : '';
+                const newUrl = `${baseUrl}${hash}${hash.includes('?') ? '&' : '?'}icon=${this.icon.id}`;
                 window.history.pushState({}, '', newUrl);
 
                 // Set selected icon and show modal

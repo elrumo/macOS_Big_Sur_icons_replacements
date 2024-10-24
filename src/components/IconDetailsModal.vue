@@ -131,6 +131,7 @@ export default {
 <style scoped>
 .icon-details-dialog {
   max-width: 800px;
+  display: none;
 }
 
 .icon-details-content {

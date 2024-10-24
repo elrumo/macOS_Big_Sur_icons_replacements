@@ -790,16 +790,20 @@ export default createStore({
       try {
         if(id.elId != undefined){
           const element = document.getElementById(id.elId);
-          if (element) {
+          if (element && typeof element.show === 'function') {
             element.target = "#"+id.targetId;
             element.show();
+          } else if (element) {
+            element.style.display = 'block';
           } else {
             console.error(`Element with ID ${id.elId} not found`);
           }
         } else {
           const element = document.getElementById(id);
-          if (element) {
+          if (element && typeof element.show === 'function') {
             element.show();
+          } else if (element) {
+            element.style.display = 'block';
           } else {
             console.error(`Element with ID ${id} not found`);
           }
