@@ -232,7 +232,10 @@ export default {
             // Set selected icon and show modal
             this.setSelectedIcon(this.icon);
             this.$emit('showDetails', this.icon);
-            this.showEl('iconDetailsDialog');
+            // Wait for next tick to ensure modal is mounted
+            this.$nextTick(() => {
+                this.showEl('iconDetailsDialog');
+            });
         },
 
         iconClick(icon){
