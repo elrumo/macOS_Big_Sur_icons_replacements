@@ -149,11 +149,19 @@ export default {
       const modal = document.getElementById('iconDetailsDialog');
       if (modal) {
         modal.hide();
-        // Remove icon parameter from URL while preserving other params
-        const url = new URL(window.location.href);
-        url.searchParams.delete('icon');
-        window.history.replaceState({}, '', url);
+        this.clearIconFromUrl();
       }
+    },
+
+    handleModalClose() {
+      this.clearIconFromUrl();
+    },
+
+    clearIconFromUrl() {
+      // Remove icon parameter from URL while preserving other params
+      const url = new URL(window.location.href);
+      url.searchParams.delete('icon');
+      window.history.replaceState({}, '', url);
     },
   },
 
