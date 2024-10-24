@@ -224,18 +224,28 @@ export default {
         ]),
 
         showIconDetails() {
-            // Update URL with icon ID
-            const newUrl = new URL(window.location);
-            newUrl.searchParams.set('icon', this.icon.id);
-            window.history.pushState({}, '', newUrl);
+            try {
+                // Update URL with icon ID
+                const newUrl = new URL(window.location);
+                newUrl.searchParams.set('icon', this.icon.id);
+                window.history.pushState({}, '', newUrl);
 
-            // Set selected icon and show modal
-            this.setSelectedIcon(this.icon);
-            this.$emit('showDetails', this.icon);
-            // Wait for next tick to ensure modal is mounted
-            this.$nextTick(() => {
-                this.showEl('iconDetailsDialog');
-            });
+                // Set selected icon and show modal
+                this.setSelectedIcon(this.icon);
+                this.$emit('showDetails', this.icon);
+                
+                // Wait for next tick and ensure modal exists before showing
+                this.$nextTick(() => {
+                    const modal = document.getElementById('iconDetailsDialog');
+                    if (modal) {
+                        this.showEl('iconDetailsDialog');
+                    } else {
+                        console.error('Modal element not found');
+                    }
+                });
+            } catch (error) {
+                console.error('Error showing icon details:', error);
+            }
         },
 
         iconClick(icon){
