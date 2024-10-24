@@ -143,7 +143,8 @@ export default {
 }
 
 .icon-preview {
-  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .icon-preview img {
