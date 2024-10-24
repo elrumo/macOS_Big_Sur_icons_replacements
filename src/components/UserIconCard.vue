@@ -31,7 +31,7 @@
                                 lifecycle: lazyOptions.lifecycle
                             }" 
                         />
-                    </a>
+                    </div>
 
                 </div>
 
