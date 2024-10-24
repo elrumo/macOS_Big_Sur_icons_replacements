@@ -1029,6 +1029,13 @@ export default {
       // parent.activeIcon= icon
     },
 
+    handleShowDetails(icon) {
+      const modal = document.getElementById('iconDetailsDialog');
+      if (modal && typeof modal.show === 'function') {
+        modal.show();
+      }
+    },
+
     async editDoc(icon, e, field){
       let newName = e.target.value
       
