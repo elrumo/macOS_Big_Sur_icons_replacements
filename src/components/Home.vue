@@ -1,5 +1,15 @@
 <template>
   <div>
+    <IconDetailsModal 
+      v-if="selectedIcon.id"
+      :icon="selectedIcon"
+      @download="addClickCount"
+      @share="showToast({
+        id: 'toastMessage',
+        message: '✅ Link copied to clipboard',
+        variant: 'success'
+      })"
+    />
     <canvas
       v-if="getHomeDialog.showParticles"
       id="confetti-canvas"
