@@ -143,6 +143,13 @@ export default {
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
+  min-width: 720px;
+}
+
+@media (max-width: 720px) {
+  .icon-details-content {
+    min-width: auto;
+  }
 }
 
 .icon-details-header {
