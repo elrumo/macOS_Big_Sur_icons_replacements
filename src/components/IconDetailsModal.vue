@@ -42,7 +42,7 @@
               <div class="info-row">
                 <span class="label">Downloads</span>
                 <span>{{ getSelectedIcon.downloads || '0' }}</span>
-                <span>{{ getSelectedIcon.id }}</span>
+                <!-- <span>{{ getSelectedIcon.id }}</span> -->
               </div>
               <div class="info-row">
                 <span class="label">Upload date</span>
