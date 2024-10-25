@@ -398,9 +398,9 @@ export default {
         let docToDelete = await query.get(icon.id);
         await docToDelete.destroy();
 
-        Vue.delete(this.icons[icon.usersName].icons, icon.appName) // Delete object locally
+        delete this.icons[icon.usersName].icons[icon.appName] // Delete object locally
         if (Object.keys(this.icons[icon.usersName].icons).length == 0 ) { // Delete user from UI if no icons are left
-          Vue.delete(this.icons, icon.usersName)
+          delete this.icons[icon.usersName]
         }
         } catch (error) {
           
@@ -563,19 +563,19 @@ export default {
               console.log("docData: ", docData);
             }else{
               if(parent.icons[usersName] == undefined ){
-                Vue.set(parent.icons, usersName, {
-                  "usersName": usersName, 
-                  "email": email, 
-                  "icons":{}, 
-                  "creditUrl": creditUrl,
+                parent.icons[usersName] = {
+                  "usersName": usersName,
+                  "email": email,
+                  "icons":{},
+                  "creditUrl": creditUrl, 
                   "user": user
-                })
-                Vue.set(parent.icons[usersName].icons, docData.id, docData)
-                Vue.set(parent.icons[usersName].icons[docData.id], "imgUrl",  docData.highResPngUrl)        
-              } else{
-                Vue.set(parent.icons[usersName].icons, docData.id, docData)
-                Vue.set(parent.icons[usersName].icons[docData.id], "imgUrl",  docData.highResPngUrl)
-              }              
+                }
+                parent.icons[usersName].icons[docData.id] = docData
+                parent.icons[usersName].icons[docData.id].imgUrl = docData.highResPngUrl
+              } else {
+                parent.icons[usersName].icons[docData.id] = docData
+                parent.icons[usersName].icons[docData.id].imgUrl = docData.highResPngUrl
+              }
             }
       }
 
@@ -645,39 +645,37 @@ export default {
           
           // Set user if the user is undefined has no icons on the dashboard
           if(parent.icons["Undefined"] == undefined ){
-            Vue.set(parent.icons, "Undefined", {
-              "usersName": "Undefined", 
-              "email": email, 
+            parent.icons["Undefined"] = {
+              "usersName": "Undefined",
+              "email": email,
               "icons":{},
               "emailSent": false,
               "creditUrl": creditUrl
-            })
-            Vue.set(parent.icons["Undefined"].icons, appName, docData)
-            Vue.set(parent.icons["Undefined"].icons[docData.id], "usersName",  "Undefined")
-            Vue.set(parent.icons["Undefined"], "usersName",  "Undefined")                
-          } else{
-            Vue.set(parent.icons["Undefined"].icons, docData.id, docData)
-            Vue.set(parent.icons["Undefined"].icons[docData.id], "usersName",  "Undefined")
-            Vue.set(parent.icons["Undefined"], "usersName",  "Undefined")
+            }
+            parent.icons["Undefined"].icons[appName] = docData
+            parent.icons["Undefined"].icons[docData.id].usersName = "Undefined"
+            parent.icons["Undefined"].usersName = "Undefined"
+          } else {
+            parent.icons["Undefined"].icons[docData.id] = docData
+            parent.icons["Undefined"].icons[docData.id].usersName = "Undefined"
+            parent.icons["Undefined"].usersName = "Undefined"
           }
 
         }else{
 
           // Set user if the user has no icons on the dashboard
           if(parent.icons[usersName] == undefined ){
-            Vue.set(parent.icons, usersName, {
-              "usersName": usersName, 
-              "email": email, 
-              "icons":{}, 
+            parent.icons[usersName] = {
+              "usersName": usersName,
+              "email": email,
+              "icons":{},
               "emailSent": false,
               "creditUrl": creditUrl,
               "user": user
-            })
-
-            Vue.set(parent.icons[usersName].icons, docData.id, docData)
-            
-          } else{
-            Vue.set(parent.icons[usersName].icons, docData.id, docData)
+            }
+            parent.icons[usersName].icons[docData.id] = docData
+          } else {
+            parent.icons[usersName].icons[docData.id] = docData
           }
 
         }
