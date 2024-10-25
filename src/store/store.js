@@ -472,6 +472,10 @@ export default createStore({
       }
     },
 
+    setDroppedFile(state, file) {
+      state.droppedFile = file
+    },
+
     async fetchSavedIcons(store){
       if (!Parse.User.current()){
         return 

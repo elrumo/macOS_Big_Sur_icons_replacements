@@ -41,6 +41,7 @@ export default {
         imageData: false,
         filesToShow: {},
         filesToUpload: {},
+        droppedFile: null,
         coralIcons:{
         },
         uploadProgress: 0,
