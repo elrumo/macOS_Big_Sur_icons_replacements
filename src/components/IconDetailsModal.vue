@@ -88,12 +88,14 @@
 import { mapGetters, mapActions } from 'vuex'
 import UserIconCard from './UserIconCard.vue';
 import iconBrew from '../api/iconBrew.js'
+import NativeAd from "./NativeAd.vue";
 
 export default {
   name: 'IconDetailsModal',
   
   components: {
-    UserIconCard
+    UserIconCard,
+    NativeAd
   },
 
   props: {
@@ -357,4 +359,19 @@ export default {
   transform: translateY(-100%);
   min-width: 2.3rem;
 }
+
+.ad-hero{
+  display: flex;
+  justify-content: center;
+  padding-bottom: 0.5rem;
+  opacity: 0.7;
+  transition: 0.2s;
+  scale: 0.8;
+
+  &:hover{
+    opacity: 1;
+    scale: 1;
+  }
+}
+
 </style>
