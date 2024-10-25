@@ -50,6 +50,10 @@ export default {
       zoneKey: '',
       fullWidth: '',
       adId: '',
+      varToWatch: {
+        type: Object,
+        default: {}
+      },
       template: {
         type: Number,
         default: 1
@@ -72,13 +76,21 @@ export default {
     },
 
     watch:{
-        getDownloads(){
+
+      varToWatch:{
+        handler(val){
           this.refreshAd();
         },
-        
-        $route(to, from){
-          // this.runAd();
-        }
+        deep: true
+      },
+
+      getDownloads(){
+        this.refreshAd();
+      },
+      
+      $route(to, from){
+        // this.runAd();
+      }
     },
 
     methods:{
