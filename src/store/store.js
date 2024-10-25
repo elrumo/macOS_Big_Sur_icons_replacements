@@ -176,7 +176,6 @@ export default createStore({
     setState(store, data){
       let state = data.state
       let payload = data.payload
-      console.log("payload: ", payload);
       
       store[state] = payload;
     },
@@ -238,8 +237,6 @@ export default createStore({
 
     async fetchHomeDialog(store){
       let dialogData = await getDialogHome();
-      console.log("dialogData: ", dialogData);
-      
       store.commit('setDataToArr', {arr: 'homeDialog', data: dialogData[0]})
     },
 

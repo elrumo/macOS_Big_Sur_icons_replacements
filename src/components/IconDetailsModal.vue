@@ -15,6 +15,7 @@
     <coral-dialog-content>
       <div class="ad-hero mobile-hidden">
           <NativeAd
+            :varToWatch="getSelectedIcon"
             :template="1"
             adId="CWYDCK3J"
             zoneKey="CWYDCK3J"
@@ -40,7 +41,7 @@
               </div>
               <div class="info-row">
                 <span class="label">Downloads</span>
-                <span>{{ getSelectedIcon.downloads }}</span>
+                <span>{{ getSelectedIcon.downloads || '0' }}</span>
               </div>
               <div class="info-row">
                 <span class="label">Upload date</span>

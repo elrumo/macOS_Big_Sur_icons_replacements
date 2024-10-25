@@ -322,7 +322,8 @@ height: -moz-fit-content;
 
 .native-ad-wrapper{
     overflow: hidden;
-    height: 42px;
+    height: fit-content;
+    max-height: 42px;
 }
 
 .icon-list-area {
@@ -709,6 +710,7 @@ height: -moz-fit-content;
 }
 
 .ad-hero{
+    overflow: hidden;
     .native-ad-wrapper{
         overflow: visible;
         &>div{
