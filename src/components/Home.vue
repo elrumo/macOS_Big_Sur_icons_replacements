@@ -10,6 +10,7 @@
         variant: 'success'
       })"
     />
+    
     <canvas
       v-if="getHomeDialog.showParticles"
       id="confetti-canvas"
@@ -23,7 +24,8 @@
 
     <!-- <StickyBanner/> -->
     <SaveIconsDialogue v-if="!isAuth"/>
-      <!-- v-if="cookies.updatesIsRead == 'false'" -->
+
+    <!-- v-if="Object.keys(getHomeDialog).length != 0 && getHomeDialog.ShowDialog" -->
     <coral-dialog
       v-if="($cookies.get('updatesIsRead') == 'false'|| $cookies.get('updatesIsRead') == null ) && Object.keys(getHomeDialog).length != 0 && getHomeDialog.ShowDialog"
       open
@@ -35,9 +37,10 @@
       </coral-dialog-header>
 
       <coral-dialog-content style="max-width: 650px">
+        <img style="max-width: 100%" v-if="getHomeDialog.image" :src="getHomeDialog.image">
         <vue-markdown
           :source="getHomeDialog.content"
-          class="coral-Body--M"
+          class="coral-Body--M text-center"
         />
       </coral-dialog-content>
 
@@ -687,7 +690,7 @@ export default {
     this.fetchUserAttributes()
     
     // try{
-    //   await this.fetchHomeDialog()
+      await this.fetchHomeDialog()
     // }catch{
     //   console.log("loading fetchHomeDialog error");
     // }

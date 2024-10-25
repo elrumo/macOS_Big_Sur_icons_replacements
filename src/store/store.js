@@ -1,6 +1,5 @@
 import { createStore } from 'vuex'
 import Parse from 'parse/dist/parse.min.js';
-import algoliasearch from 'algoliasearch'
 import router from '@/router/index.js'
 
 import { marked } from 'marked';
@@ -22,21 +21,13 @@ import {
     getDialogHome
   } from '@/api/strapi';
 
-// let algolia = {
-//   appid: import.meta.env.VITE_ALGOLIA_APPID,
-//   apikey: import.meta.env.VITE_ALGOLIA_KEY
-// }
-
 const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
 const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
 const VITE_PARSE_URL = import.meta.env.VITE_PARSE_URL
 
 Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = VITE_PARSE_URL
-var IconsBase = Parse.Object.extend("Icons2");
-
-// const client = algoliasearch(algolia.appid, algolia.apikey);
-// const algoliaIndex = client.initIndex('macOSicons')
+let IconsBase = Parse.Object.extend("Icons2");
 
 export default createStore({
 
@@ -247,7 +238,9 @@ export default createStore({
 
     async fetchHomeDialog(store){
       let dialogData = await getDialogHome();
-      store.commit('setDataToArr', {arr: 'homeDialog', data: dialogData})
+      console.log("dialogData: ", dialogData);
+      
+      store.commit('setDataToArr', {arr: 'homeDialog', data: dialogData[0]})
     },
 
     async fetchResourcesHome(store){
@@ -381,7 +374,6 @@ export default createStore({
 
           // algoliaSearch = await algoliaIndex.search(search, algoliaOptions)
           let searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
-          console.log("searchResults.hits: ", searchResults);
 
           // Set the value of objectID to a new key named id
           searchResults.hits = searchResults.hits.map(item => {

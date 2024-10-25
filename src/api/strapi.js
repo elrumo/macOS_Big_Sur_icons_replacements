@@ -7,6 +7,7 @@ console.log("strapiUrl: ", strapiUrl);
 // const strapiUrl = 'http://localhost:1337/api/'
 
 import localResources from '@/api/resources.json';
+import homeDialogueLocal from '@/api/homeDialogue.json';
 
 export async function getTutorials() { 
     
@@ -36,9 +37,9 @@ export async function getLearningHome() {
 }
 
 export async function getDialogHome() { 
-    let learningHome = await axios.get('https://api.macosicons.com/api/home-dialog?populate=*')
+    // let learningHome = await axios.get('https://api.macosicons.com/api/home-dialog?populate=*')
     
-    return learningHome.data.data.attributes
+    return homeDialogueLocal
 }
 
 export async function getTutorialFromSlug(slug) { 

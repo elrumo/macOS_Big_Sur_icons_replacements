@@ -116,12 +116,22 @@
                             <!-- License -->
                             <!-- <div class="resourcesLink" @click="toggleOverlay">
                                 <coral-status variant="info" class="_coral-StatusLight--info _coral-StatusLight" color=""></coral-status>
-                                <router-link to="/cicense" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
+                                <router-link to="/license" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
                                     <span>
                                         License
                                     </span>
                                 </router-link>
                             </div> -->
+
+                            <!-- API -->
+                            <div class="resourcesLink" @click="toggleOverlay">
+                                <coral-status variant="info" class="_coral-StatusLight--info _coral-StatusLight" color=""></coral-status>
+                                <router-link to="/cicense" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
+                                    <span>
+                                        License
+                                    </span>
+                                </router-link>
+                            </div>
                             
                             <hr class="coral-Divider--S">
                             
@@ -191,6 +201,15 @@
                         </router-link>
                     </div>
 
+                    <div class="resourcesLink" @click="toggleOverlay">
+                    <!-- <button is="coral-button" variant="primary"> -->
+                        <!-- <coral-status variant="info" class="_coral-StatusLight--info _coral-StatusLight"></coral-status> -->
+                        <a href="https://docs.macosicons.com/api-management" target="_blank" class="_coral-Button _coral-Button--cta">
+                            API
+                        </a>
+                    <!-- </button> -->
+                    </div>
+
                     <!-- Forum -->
                     <div>
                         <a
@@ -217,7 +236,7 @@
                         <coral-status variant="info"></coral-status>
                         <router-link to="/resources">
                             <button is="coral-button" variant="quiet">
-                                <span>Resources</span>
+                                <span>Free Resources</span>
                             </button>
                         </router-link>
                     </div>
