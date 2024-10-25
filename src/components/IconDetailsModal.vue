@@ -13,6 +13,14 @@
 
         
     <coral-dialog-content>
+      <div class="ad-hero mobile-hidden">
+          <NativeAd
+            :template="1"
+            adId="CWYDCK3J"
+            zoneKey="CWYDCK3J"
+            key="CWYDCK3J"
+          />
+        </div>
       <div class="icon-details-content">
         <div class="icon-details-header">
           <!-- Icon Image -->
