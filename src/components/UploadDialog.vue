@@ -3,8 +3,15 @@
   <coral-dialog id="uploadDialog">
     <coral-dialog-header>Are you sure you want to delete {{icon.appName}}?</coral-dialog-header>
     
-    <coral-dialog-content>  
-        <coral-fileupload name="file" class="m-auto" accept="image/png" multiple>
+    <coral-dialog-content>
+      <div v-if="imageData && Object.keys(filesToShow).length > 0" class="selected-files">
+        <div v-for="(file, name) in filesToShow" :key="name" class="selected-file">
+          <img :src="file.img" :alt="file.name" class="preview-image"/>
+          <span class="file-name">{{ file.name }}</span>
+        </div>
+      </div>
+      
+      <coral-fileupload name="file" class="m-auto" accept="image/png" multiple>
         <div coral-fileupload-dropzone=""  class="fileUpload-dropZone drop-zone"> 
           <div class="h-full" coral-fileupload-select="">
             <div class="drop-zone-wrapper">
@@ -12,8 +19,8 @@
               <span class="m-auto"> Add/drop files </span>
             </div>
           </div>
-      </div>
-    </coral-fileupload>
+        </div>
+      </coral-fileupload>
     </coral-dialog-content>
 
     <coral-dialog-footer>
@@ -231,4 +238,33 @@ export default {
 </script>
 
 <style>
+.selected-files {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 4px;
+  background: #f5f5f5;
+}
+
+.selected-file {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background: white;
+  border-radius: 4px;
+}
+
+.preview-image {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  margin-right: 1rem;
+}
+
+.file-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 </style>

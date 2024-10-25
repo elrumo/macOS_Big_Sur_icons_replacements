@@ -37,6 +37,7 @@ export default createStore({
       dataToShow: [],
       similarIcons: [],
       isSimilarLoading: false,
+      droppedFile: null,
       
       noMoreResults: false,
       iconListLen: 13_072,
@@ -123,6 +124,10 @@ export default createStore({
   mutations: {   
     pushIconData(store, iconData){
       store.list.push(iconData)
+    },
+      
+    setDroppedFile(state, file) {
+      state.droppedFile = file;
     },
     
     pushAllPages(){
