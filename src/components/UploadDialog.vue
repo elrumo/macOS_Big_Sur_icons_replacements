@@ -114,7 +114,7 @@ export default {
           const icons = new Icons()
 
           const parseFile = new Parse.File(fileName, file); // Set file to new Parse object
-          parseFile.save().then((uploaded) => {
+          parseFile.save({  ACL: new Parse.ACL().setPublicReadAccess(true) }).then((uploaded) => {
             console.log("Success: ", uploaded._url);
             let iconUrl = uploaded._url.replace('http:', "https:")
             let currentUser = Parse.User.current()

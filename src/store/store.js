@@ -385,6 +385,14 @@ export default createStore({
             return searchResults.hits[0]
           }
           
+          if(similarSearch){
+            console.log("store.state.selectedIcon.id: ", store.state.selectedIcon.id);
+            
+            if (store.state.selectedIcon && store.state.selectedIcon.id) {
+              searchResults.hits = searchResults.hits.filter(icon => icon.id !== store.state.selectedIcon.id);
+            }
+          }
+
           if (concat) {
             store.commit('pushDataToArr', {arr: "searchData", data: searchResults.hits, concatArray: true})
           } else{
