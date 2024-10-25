@@ -118,9 +118,12 @@ export default {
         }})
       },
 
-      runAd(){
+      async runAd(){
         let parent = this
         let adId = parent.adId
+        let maxRetries = 3
+        let retryCount = 0
+        let retryDelay = 1000 // 1 second
 
         const templateCompact = `
                     <a href="##statlink##" target="_blank" rel="noopener sponsored" id="`+ adId + `customAd" class="bsa-link coral-card">
@@ -144,16 +147,42 @@ export default {
         let template = this.template == 1 ? templateCompact : templateCard
         let zoneKey = this.zoneKey;
 
-        try {
-          if (typeof _bsa !== 'undefined' && !parent.isAd) {
-            document.getElementById(adId).innerHTML = ''
-            _bsa.init('custom', zoneKey, 'placement:macosiconscom', {
-              target: '#' + adId,
-              template: template
-            });
+        const tryLoadAd = async () => {
+          try {
+            if (typeof _bsa !== 'undefined' && !parent.isAd) {
+              const adContainer = document.getElementById(adId);
+              if (adContainer) {
+                adContainer.innerHTML = '';
+                _bsa.init('custom', zoneKey, 'placement:macosiconscom', {
+                  target: '#' + adId,
+                  template: template
+                });
+
+                // Check if ad was successfully loaded
+                await new Promise((resolve) => setTimeout(resolve, 500));
+                const adElement = document.querySelector(`#${adId} .bsa-link`);
+                if (adElement) {
+                  parent.isAd = true;
+                  return true;
+                }
+              }
+            }
+            return false;
+          } catch (error) {
+            console.log('Ad load attempt failed:', error);
+            return false;
           }
-        } catch (error) {
-          console.log(error);
+        };
+
+        while (retryCount < maxRetries) {
+          const success = await tryLoadAd();
+          if (success) {
+            break;
+          }
+          retryCount++;
+          if (retryCount < maxRetries) {
+            await new Promise(resolve => setTimeout(resolve, retryDelay));
+          }
         }
       }
     },
