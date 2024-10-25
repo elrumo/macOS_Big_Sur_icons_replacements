@@ -96,29 +96,20 @@ export default {
     methods:{
 
       refreshAd(){
-        // let parent = this
-        // let adId = parent.adId
-
-        // let ad = document.getElementById(adId + "customAd")
-        // if (ad) {
-        //   ad.remove()
-        // }
-
-        // parent.runAd()
-
-        let adLength = document.querySelectorAll('#' + this.adId).length;
-
-        if (adLength > 0) {
-          try {
-            _bsa.reload('#' + this.adId);
-          } catch (error) {
-            this.runAd();
-          }
-        } else {
-          console.log('ad not found');
-          this.runAd();
+        // First remove any existing ads
+        const adContainer = document.getElementById(this.adId);
+        if (adContainer) {
+          adContainer.innerHTML = '';
         }
 
+        // Remove any existing custom ad elements
+        const existingCustomAd = document.getElementById(this.adId + "customAd");
+        if (existingCustomAd) {
+          existingCustomAd.remove();
+        }
+
+        // Run the new ad
+        this.runAd();
       },
 
       adClick(){
