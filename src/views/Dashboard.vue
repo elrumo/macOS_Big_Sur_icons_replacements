@@ -64,7 +64,7 @@
       </div> -->
       
       <!-- Tabs -->
-      <coral-tablist v-if="isAuth">
+      <coral-tablist v-if="isAuth && isAdmin">
         <coral-tab aria-label="newIcons" selected="" @click="changeIconStatus('newIcons')">
           New Icons
           <span class="coral-Detail coral-Detail--M f-w-400 opacity-80">
@@ -106,6 +106,7 @@
               <coral-status v-if="icon.isReupload && icon.isAuthor" variant="success"></coral-status>
               <coral-status v-if="icon.isReupload && !icon.isAuthor" variant="warning"></coral-status>
 
+              <!-- {{ icon.id }} -->
               <div class="card-img-wrapper" style="max-width: 120px;">
 
                 <div v-if="icon.isReview || icon.isReview && icon.isReUpload" class="loading-approval-wrapper">
@@ -115,6 +116,7 @@
                 <div v-if="!icon.isReview && icon.isReUpload" class="loading-approval-wrapper">
                   <coral-status v-if="icon.isReUpload" color="Yellow"></coral-status>
                 </div>
+                
                 <a :href="icon.imgUrl" target="_blank">
                   <!-- src: icon.imgUrl.replace('/media/', '/parse/'), -->
                   <img
@@ -192,6 +194,15 @@ import { mapGetters, mapActions } from 'vuex'
 
 import Parse from 'parse/dist/parse.min.js';
 
+const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID;
+const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY;
+const VITE_PARSE_URL = import.meta.env.VITE_PARSE_URL;
+// const VITE_PARSE_MASTER_KEY = import.meta.env.VITE_PARSE_MASTER_KEY
+
+// Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY, VITE_PARSE_MASTER_KEY);
+Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY);
+Parse.serverURL = VITE_PARSE_URL;
+
 const Icons = Parse.Object.extend("Icons2");
 const User = Parse.Object.extend("User");
 
@@ -229,6 +240,8 @@ export default {
 
       howManyRecords: 0,
       sortBy: "usersName",
+
+      isAdmin: false,
 
       emailMsg: "Thanks you for your submission to macosicons.com! I'm just getting in touch with you to ask if you could ..., otherwise the icons won't work propperly. You can either email me back or re-submit the icons on macosicons.com. Thanks again, Elias webbites.io",
       // approvedIcons: {},
@@ -414,6 +427,7 @@ export default {
       //   }
     },
 
+
     async approveIcon(icon){  
       // console.log(icon);
       console.log("icon.id: ", icon.id);
@@ -425,7 +439,10 @@ export default {
       delete newIcon.type
 
       try {
-        let result = await Parse.Cloud.run("approve", icon);
+        console.log("icon: ", icon);
+        
+        let result = await Parse.Cloud.run("approve", newIcon);
+        // let result = await Parse.Cloud.run("approve", {id: icon.id, appName: icon.appName, newIcon: newIcon});
         console.log("result: ", result);
         icon.isReview = true;
         icon.isReUploadReview = true;
@@ -614,6 +631,7 @@ export default {
       
       try{
         var results = await query.find()
+        // var results = await query.find(null, {useMasterKey: true})
       } catch (error) {
           console.log(error);
           handleParseError(error)
@@ -760,9 +778,14 @@ export default {
       }
     }
 
-    if (this.currentUser) {
+    this.currentUser = Parse.User.current();
+    console.log("this.currentUser: ", this.currentUser);
 
-      if (!Parse.User.current().attributes.isAdmin) {
+    if (this.currentUser) {
+    
+      this.isAdmin = Parse.User.current().attributes.isAdmin
+
+      if (!this.isAdmin) {
         this.$router.push({ path: '/#' })
         Parse.User.logOut();
         return
@@ -771,7 +794,6 @@ export default {
       this.isAuth = true
       this.getParseData()
       this.getReUploadIcons()
-
     } else{
       this.isAuth = false
       console.log("You are not logged in");

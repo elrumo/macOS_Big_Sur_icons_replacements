@@ -48,8 +48,10 @@ import Parse from 'parse/dist/parse.min.js';
 const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID;
 const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY;
 const VITE_PARSE_URL = import.meta.env.VITE_PARSE_URL;
+// const VITE_PARSE_MASTER_KEY = import.meta.env.VITE_PARSE_MASTER_KEY
 
 Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY);
+// Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY, VITE_PARSE_MASTER_KEY);
 Parse.serverURL = VITE_PARSE_URL;
 
 export default {

@@ -42,6 +42,7 @@
               <div class="info-row">
                 <span class="label">Downloads</span>
                 <span>{{ getSelectedIcon.downloads || '0' }}</span>
+                <span>{{ getSelectedIcon.id }}</span>
               </div>
               <div class="info-row">
                 <span class="label">Upload date</span>
@@ -64,6 +65,10 @@
             </div>
           </div>
         </div>
+        
+        <!-- <div v-for="icon in getSimilarIcons">
+          {{ icon }}
+        </div> -->
 
         <!-- Similar Icons -->
         <div v-if="getSimilarIcons.length > 0 || getIsSimilarLoading" class="similar-icons">
@@ -365,9 +370,9 @@ export default {
   display: flex;
   justify-content: center;
   padding-bottom: 0.5rem;
-  opacity: 0.7;
+  opacity: 0.8;
   transition: 0.2s;
-  scale: 0.8;
+  scale: 0.9;
 
   &:hover{
     opacity: 1;

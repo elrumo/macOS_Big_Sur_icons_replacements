@@ -712,7 +712,8 @@ height: -moz-fit-content;
 .ad-hero{
     overflow: hidden;
     .native-ad-wrapper{
-        overflow: visible;
+        overflow: hidden;
+        // overflow: visible;
         &>div{
             &::after{
                 @extend .ad-warning;

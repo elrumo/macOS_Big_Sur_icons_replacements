@@ -682,6 +682,20 @@ export default {
       this.imageData = true
       this.$store.commit('setDroppedFile', null)
     }
+    if (this.$store.state.droppedFile) {
+      const file = this.$store.state.droppedFile
+      const fileName = file.name.replace('.png', '')
+      this.filesToUpload[fileName] = file
+      const objectURL = window.URL.createObjectURL(file)
+      const value = {
+        img: objectURL,
+        name: fileName
+      }
+      this.$set(this.filesToShow, fileName, value)
+      this.totalNumFiles = Object.keys(this.filesToShow).length
+      this.imageData = true
+      this.$store.commit('setDroppedFile', null)
+    }
 
     // Check if the URL has the 'icon' query parameter
     const urlParams = new URL(window.location.href.replace(/#/g, "%23")).searchParams;
