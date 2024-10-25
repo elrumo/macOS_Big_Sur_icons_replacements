@@ -64,8 +64,7 @@ export default {
     
     data(){
         return{
-          isAd: false,
-          count: 0,
+          currentAd: null,
           webbitesAd: webbitesAd,
           webitesIcon: webitesIcon,
         }
@@ -95,19 +94,28 @@ export default {
 
     methods:{
 
-      refreshAd(){
-        // First remove any existing ads
+      async refreshAd(){
+        // Clean up any existing BSA ads
+        if (typeof _bsa !== 'undefined' && _bsa.destroy) {
+          _bsa.destroy('#' + this.adId);
+        }
+
+        // Clean up DOM
         const adContainer = document.getElementById(this.adId);
         if (adContainer) {
           adContainer.innerHTML = '';
         }
 
         // Remove any existing custom ad elements
-        const existingCustomAd = document.getElementById(this.adId + "customAd");
-        if (existingCustomAd) {
-          existingCustomAd.remove();
-        }
+        const existingCustomAds = document.querySelectorAll(`[id="${this.adId}customAd"]`);
+        existingCustomAds.forEach(ad => ad.remove());
 
+        // Reset current ad tracking
+        this.currentAd = null;
+
+        // Wait a moment before creating new ad
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
         // Run the new ad
         this.runAd();
       },
@@ -149,10 +157,13 @@ export default {
 
         const tryLoadAd = async () => {
           try {
-            if (typeof _bsa !== 'undefined' && !parent.isAd) {
+            if (typeof _bsa !== 'undefined' && !parent.currentAd) {
               const adContainer = document.getElementById(adId);
               if (adContainer) {
+                // Ensure container is empty
                 adContainer.innerHTML = '';
+                
+                // Initialize new ad
                 _bsa.init('custom', zoneKey, 'placement:macosiconscom', {
                   target: '#' + adId,
                   template: template
@@ -162,7 +173,8 @@ export default {
                 await new Promise((resolve) => setTimeout(resolve, 500));
                 const adElement = document.querySelector(`#${adId} .bsa-link`);
                 if (adElement) {
-                  parent.isAd = true;
+                  // Track current ad
+                  parent.currentAd = adElement;
                   return true;
                 }
               }
