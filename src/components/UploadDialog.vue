@@ -79,117 +79,136 @@ export default {
         
       },
 
-      async onUpload(){
-        let parent = this
-        
-        // Get today's date
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        var yyyy = today.getFullYear();
-
-        today = dd + '/' + mm + '/' + yyyy;
-
-        window.plausible("IconSubmission", {props: { date: today}})
-
-        parent.isLoading = true
-        let dialog = document.getElementById('submitIcon')
-        let isReupload = document.getElementById('isReupload').checked
-        let isAuthor = document.getElementById('isAuthor').checked
-
-        for(let fileNum in parent.filesToUpload){
-          let file =  parent.filesToUpload[fileNum];
-          let appName = file.name.replace('.png', '');
-          let fileName;
+      async onUpload() {
+        try {
+          this.isLoading = true
           
-          if (/^[A-Za-z][A-Za-z0-9]*$/.test(file.name)) {
-            fileName = `${file.name}`
-          } else {
-            let d = new Date()
-            fileName = Math.round(Math.random()*10000 + d.getTime() )
-            fileName = fileName.toString()
-          }
-          console.log(fileName, file.name);
-          
-          const Icons = Parse.Object.extend("Icons2");
-          const icons = new Icons()
+          const today = new Date().toLocaleDateString()
+          window.plausible("IconSubmission", {props: { date: today}})
 
-          const parseFile = new Parse.File(fileName, file); // Set file to new Parse object
-          parseFile.save({  ACL: new Parse.ACL().setPublicReadAccess(true) }).then((uploaded) => {
-            console.log("Success: ", uploaded._url);
-            let iconUrl = uploaded._url.replace('http:', "https:")
-            let currentUser = Parse.User.current()
-          
-            let dataToStore = {
-              appName: appName,
-              email: parent.email,
-              credit: parent.credit,
-              usersName: parent.yourName,
-              uploadedBy: parent.yourName,
-              fileName: fileName,
-              highResPngFile: parseFile,
-              highResPngUrl: iconUrl,
-              isReupload: isReupload,
-              isAuthor: isAuthor,
-              timeStamp: Date.now(),
-              approved: false,
-              user: currentUser
-            }
+          const dialog = document.getElementById('submitIcon')
+          const isReupload = document.getElementById('isReupload').checked
+          const isAuthor = document.getElementById('isAuthor').checked
+          const currentUser = Parse.User.current()
 
-            icons.set(dataToStore);
-            icons.save().then((icon) => { // Reset input boxes
+          for (const [appName, file] of Object.entries(this.filesToUpload)) {
+            try {
+              // Generate filename
+              const fileName = this.generateFileName(file.name)
               
+              // Upload file to Parse
+              const parseFile = await this.uploadFileToParse(fileName, file)
+              
+              // Create icon record
+              const icon = await this.createIconRecord({
+                appName: appName.replace('.png', ''),
+                fileName,
+                parseFile,
+                iconUrl: parseFile._url.replace('http:', 'https:'),
+                isReupload,
+                isAuthor,
+                currentUser
+              })
+
               // Add icon relationship to user
-              let userRelation = currentUser.relation("icons")
-              userRelation.add(icons)
-              currentUser.save()
+              await this.addIconToUser(icon, currentUser)
 
-              icon.set("alogliaID", icons.id);
-              icon.save();
+              // Cleanup UI state
+              this.cleanupFileUpload(appName)
 
-              parent.imageData = {},
-                parent.picture= null,
-                parent.uploadProgress++
-                console.log("Document successfully written!");
-                
-                function clearInput(id){
-                  document.getElementById(id).value = ""
-                }
-                
-                Vue.delete(parent.filesToUpload, appName)
-                Vue.delete(parent.filesToShow, appName)
-               if (Object.keys(parent.filesToUpload).length === 0) {
-                  parent.isLoading = false
-                  parent.imageData = false
-                  parent.email, parent.name = ""
-                  parent.uploadProgress = 0
-                  
-                  let inputs = ["credit", "email-contributor", "yourName-contributor"]
-                  for(let i in inputs){
-                    clearInput(inputs[i])  
-                  }
+              if (Object.keys(this.filesToUpload).length === 0) {
+                await this.resetUploadState(dialog)
+              }
 
-                  parent.showToast({
-                    id: "toastMessage",
-                    message: "All icons have been uploaded.",
-                    variant: "success"
-                  })
-                  dialog.hide()
-                }
-            },(error)=>{
-              console.log("Data NOT saved: ", error);
-            })
-          }, function(error) {
-            console.log(error);
-            parent.isLoading = false
-            parent.showToast({
-              id: "toastMessage",
-              message: "There was an error, get in touch with @elrumo on Twitter",
-              variant: "error"
-            })
-            // The file either could not be read, or could not be saved to Parse.
-          });
+            } catch (error) {
+              console.error(`Error processing file ${appName}:`, error)
+              this.showToast({
+                id: "toastMessage", 
+                message: `Error uploading ${appName}: ${error.message}`,
+                variant: "error"
+              })
+            }
+          }
+
+        } catch (error) {
+          console.error('Upload error:', error)
+          this.showToast({
+            id: "toastMessage",
+            message: "Upload failed. Please try again or contact support.",
+            variant: "error" 
+          })
+        } finally {
+          this.isLoading = false
         }
+      },
+
+      generateFileName(originalName) {
+        if (/^[A-Za-z][A-Za-z0-9]*$/.test(originalName)) {
+          return originalName
+        }
+        return Date.now() + Math.round(Math.random() * 10000).toString()
+      },
+
+      async uploadFileToParse(fileName, file) {
+        const parseFile = new Parse.File(fileName, file)
+        await parseFile.save({ ACL: new Parse.ACL().setPublicReadAccess(true) })
+        return parseFile
+      },
+
+      async createIconRecord({appName, fileName, parseFile, iconUrl, isReupload, isAuthor, currentUser}) {
+        const Icons = Parse.Object.extend("Icons2")
+        const icon = new Icons()
+        
+        const iconData = {
+          appName,
+          email: this.email,
+          credit: this.credit, 
+          usersName: this.yourName,
+          uploadedBy: this.yourName,
+          fileName,
+          highResPngFile: parseFile,
+          highResPngUrl: iconUrl,
+          isReupload,
+          isAuthor,
+          timeStamp: Date.now(),
+          approved: false,
+          user: currentUser
+        }
+
+        icon.set(iconData)
+        const savedIcon = await icon.save()
+        savedIcon.set("alogliaID", savedIcon.id)
+        return savedIcon.save()
+      },
+
+      async addIconToUser(icon, user) {
+        const userRelation = user.relation("icons")
+        userRelation.add(icon)
+        return user.save()
+      },
+
+      cleanupFileUpload(appName) {
+        Vue.delete(this.filesToUpload, appName)
+        Vue.delete(this.filesToShow, appName)
+        this.uploadProgress++
+      },
+
+      async resetUploadState(dialog) {
+        this.imageData = false
+        this.email = ''
+        this.name = ''
+        this.uploadProgress = 0
+        
+        const inputs = ["credit", "email-contributor", "yourName-contributor"]
+        inputs.forEach(id => document.getElementById(id).value = '')
+
+        this.showToast({
+          id: "toastMessage",
+          message: "All icons have been uploaded.",
+          variant: "success"
+        })
+
+        dialog.hide()
       },
       setEmail(e){
         console.log(e.target.value);
