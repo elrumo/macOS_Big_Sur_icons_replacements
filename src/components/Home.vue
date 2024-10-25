@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div
+    @dragover.prevent
+    @drop.prevent="handleDrop"
+  >
     <!-- v-if="selectedIcon.id" -->
     <!-- @download="addClickCount" -->
     <IconDetailsModal 
@@ -992,6 +995,13 @@ export default {
           parent.scrolledToBottom = false
           parent.loadMore()
         }
+      }
+    },
+
+    handleDrop(e) {
+      const file = e.dataTransfer.files[0]
+      if (file && file.type === 'image/png') {
+        this.showDialog('submissionDialog')
       }
     },
 
