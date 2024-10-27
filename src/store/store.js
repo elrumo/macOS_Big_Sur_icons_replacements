@@ -3,6 +3,7 @@ import Parse from 'parse/dist/parse.min.js';
 import router from '@/router/index.js'
 
 import { marked } from 'marked';
+import algoliasearch from 'algoliasearch'
 
 import localResources from '@/api/resources.json';
 import localPages from '@/api/pages.json';
@@ -28,6 +29,14 @@ const VITE_PARSE_URL = import.meta.env.VITE_PARSE_URL
 Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = VITE_PARSE_URL
 let IconsBase = Parse.Object.extend("Icons2");
+
+let algolia = {
+  appid: import.meta.env.VITE_ALGOLIA_APPID,
+  apikey: import.meta.env.VITE_ALGOLIA_KEY
+}
+
+const client = algoliasearch(algolia.appid, algolia.apikey);
+const algoliaIndex = client.initIndex('macOSicons')
 
 export default createStore({
 
@@ -331,6 +340,9 @@ export default createStore({
       
       if(similarSearch) store.commit('setState', {state: "isSimilarLoading", payload: true});
 
+      let algoliaSearch;
+      let searchResults;
+
       try {
         let searchOptions = {
           filters: [
@@ -353,7 +365,10 @@ export default createStore({
         
         if (store.state.selectedCategory.name != "All" && !similarSearch && !setSelectedIcon) {
           algoliaOptions.filters += ` AND category:"`+category+`"`
-          let searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
+
+          algoliaSearch = await algoliaIndex.search(search, algoliaOptions)
+          searchResults = algoliaSearch;
+          // searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
 
           searchResults.hits = searchResults.hits.map(item => {
             return {
@@ -364,8 +379,7 @@ export default createStore({
 
           store.commit('pushDataToArr', {arr: "searchData", data: searchResults.hits})
         } else{ ;
-          let algoliaSearch
-          
+
           if (search.length != 0) {
             algoliaOptions.hitsPerPage = 25
             algoliaOptions.page = payload.page
@@ -374,8 +388,10 @@ export default createStore({
             searchOptions.page = payload.page
           }
 
-          // algoliaSearch = await algoliaIndex.search(search, algoliaOptions)
-          let searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
+
+          algoliaSearch = await algoliaIndex.search(search, algoliaOptions)
+          searchResults = algoliaSearch;
+          // searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
 
           // Set the value of objectID to a new key named id
           searchResults.hits = searchResults.hits.map(item => {
