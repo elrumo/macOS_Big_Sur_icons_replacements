@@ -2,7 +2,6 @@ import axios from 'axios'
 
 const strapiKey = import.meta.env.VITE_STRAPI_API_TOKEN
 const strapiUrl = import.meta.env.VITE_STRAPI_URL
-console.log("strapiUrl: ", strapiUrl);
 // const strapiUrl = 'https://strapi.macosicons.com/api/'
 // const strapiUrl = 'http://localhost:1337/api/'
 

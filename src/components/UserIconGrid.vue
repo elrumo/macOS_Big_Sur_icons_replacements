@@ -131,7 +131,6 @@ export default {
         'allIcons', 
         'notApproved', 
         'getAppCategories',
-        'getSelectedIcon',
         'getSavedIcons'
       ]),
 

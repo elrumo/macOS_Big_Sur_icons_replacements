@@ -256,7 +256,6 @@ export default {
             this.setData({arr: 'refreshAd', data: true});
 
             const url = `${window.location.origin}${window.location.pathname}#/?icon=${icon.id}`;
-            console.log("url: ", url);
             window.history.replaceState({}, '', url);
             
             this.algoliaSearch({

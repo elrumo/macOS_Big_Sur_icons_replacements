@@ -182,6 +182,7 @@ export default {
   async mounted() {
     const urlParams = new URL(window.location.href.replace(/#/g, "%23")).searchParams;
     const iconParam = urlParams.get('icon');
+
     let parent = this;
   
     if (iconParam && Object.keys(this.getSelectedIcon).length == 0) {

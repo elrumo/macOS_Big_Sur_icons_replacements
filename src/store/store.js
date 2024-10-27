@@ -335,8 +335,12 @@ export default createStore({
         let searchOptions = {
           filters: [
             category !== "All" ? `category = ${category}` : "",
-            iconId !== null ? `objectID = ${iconId}` : ""
-          ].filter(Boolean).join(" AND "),
+            iconId !== null ? `objectID = ${iconId}` :  ""
+          ],
+          // filters: [
+          //   category !== "All" ? `category = ${category}` : "",
+          //   iconId !== null ? `objectID = ${iconId}` : ""
+          // ].filter(Boolean).join(" AND "),
           hitsPerPage: 150,
           sort: ['timeStamp:desc']
         }
@@ -351,8 +355,6 @@ export default createStore({
           algoliaOptions.filters += ` AND category:"`+category+`"`
           let searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
 
-          console.log("algoliaSearch.hits: ", searchResults.hits);
-
           searchResults.hits = searchResults.hits.map(item => {
             return {
               ...item,
@@ -360,9 +362,7 @@ export default createStore({
             }; 
           });
 
-          console.log("algoliaSearch.hits: ", searchResults.hits);
           store.commit('pushDataToArr', {arr: "searchData", data: searchResults.hits})
-
         } else{ ;
           let algoliaSearch
           
@@ -391,8 +391,6 @@ export default createStore({
           }
           
           if(similarSearch){
-            console.log("store.state.selectedIcon.id: ", store.state.selectedIcon.id);
-            
             if (store.state.selectedIcon && store.state.selectedIcon.id) {
               searchResults.hits = searchResults.hits.filter(icon => icon.id !== store.state.selectedIcon.id);
             }
@@ -981,10 +979,6 @@ export default createStore({
         }
       }
 
-    },
-
-    getSelectedIcon(store){
-      return store.selectedIcon
     },
 
     getBlogPost(store, blogData){
