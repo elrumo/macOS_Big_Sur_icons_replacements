@@ -5,7 +5,6 @@
                 <IsNew :item="step"/>
 
                 <div class="resources-card-wrapper">
-                    
                     <img
                         v-lazy="{
                             src: getImage,

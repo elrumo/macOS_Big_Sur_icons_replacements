@@ -244,8 +244,6 @@ export default createStore({
         }
       } catch (error) {
         console.log('error: ', error);
-      } finally{  
-        console.log("resource: ", resource);
       }
     },
 
@@ -256,8 +254,6 @@ export default createStore({
 
     async fetchResourcesHome(store){
       let resourcesData = await getStrapiData('resources');
-
-      console.log("resourcesData:", resourcesData);
       store.commit('setDataToArr', {arr: 'resourcesData', data: resourcesData})
     },
     
@@ -296,7 +292,7 @@ export default createStore({
         const searchQuery = options.search;
         const searchOptions = options.searchOptions;
         
-        const backendUrl = import.meta.env.VITE_BACKEND_URL + 'api/search';
+        const backendUrl = import.meta.env.VITE_BACKEND_URL + 'search';
         
         // Build query parameters
         const queryParams = new URLSearchParams({
@@ -366,9 +362,9 @@ export default createStore({
         if (store.state.selectedCategory.name != "All" && !similarSearch && !setSelectedIcon) {
           algoliaOptions.filters += ` AND category:"`+category+`"`
 
+          // searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
           algoliaSearch = await algoliaIndex.search(search, algoliaOptions)
           searchResults = algoliaSearch;
-          // searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
 
           searchResults.hits = searchResults.hits.map(item => {
             return {
@@ -389,9 +385,9 @@ export default createStore({
           }
 
 
+          // searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
           algoliaSearch = await algoliaIndex.search(search, algoliaOptions)
           searchResults = algoliaSearch;
-          // searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
 
           // Set the value of objectID to a new key named id
           searchResults.hits = searchResults.hits.map(item => {

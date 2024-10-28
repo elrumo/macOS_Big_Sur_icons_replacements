@@ -21,13 +21,14 @@
         />
 
         <!-- <CarbonAd class="resources-card-container" adId="resourcesHome"/> -->
-        <NativeAd
+
+        <!-- <NativeAd
           :adPosition="'Loading error'"
           :template="2"
           adId="CWYD65Q7"
           zoneKey="CWYD65Q7"
           key="CWYD65Q7"
-        />
+        /> -->
 
         <!-- <div
           class="card-hover resources-card-container relative coral-card resources-card-ad"
@@ -75,6 +76,7 @@ import ResourcesCard from '@/components/ResourcesCard.vue'
 import Footer from '@/components/Footer.vue'
 import H3Description from '@/components/H3Description.vue'
 import CarbonAd from '@/components/CarbonAd.vue';
+import NativeAd from '@/components/NativeAd.vue'
 
 // import pages from '@/api/pages.json';
 
@@ -88,7 +90,8 @@ export default {
     ResourcesCard,
     Footer,
     H3Description,
-    CarbonAd
+    CarbonAd,
+    NativeAd
   },
 
   metaInfo: {
@@ -161,7 +164,7 @@ export default {
     // this.getPageData();
     this.fetchResourcesHome();
 
-    this.fetchArticleTemplate({slug: 'resources-home', state: 'resourcesTemplate'});
+    // this.fetchArticleTemplate({slug: 'resources-home', state: 'resourcesTemplate'});
   },
 
   methods: {

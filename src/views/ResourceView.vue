@@ -177,7 +177,7 @@ export default {
     const slug = this.$route.params.resource;
     this.fetchResourceFromSlug(slug)
     this.fetchResourcesHome()
-    await this.fetchArticleTemplate({slug: 'article-resource', state: 'articleTemplate'})
+    // await this.fetchArticleTemplate({slug: 'article-resource', state: 'articleTemplate'})
   },
 
   methods:{

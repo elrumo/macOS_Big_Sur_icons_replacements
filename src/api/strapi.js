@@ -1,7 +1,9 @@
 import axios from 'axios'
 
 const strapiKey = import.meta.env.VITE_STRAPI_API_TOKEN
-const strapiUrl = import.meta.env.VITE_STRAPI_URL
+const strapiUrl = import.meta.env.VITE_BACKEND_URL
+// const strapiUrl = import.meta.env.VITE_STRAPI_URL
+
 // const strapiUrl = 'https://strapi.macosicons.com/api/'
 // const strapiUrl = 'http://localhost:1337/api/'
 
@@ -29,6 +31,8 @@ export async function getTutorials() {
 }
 
 export async function getLearningHome() { 
+    console.log('getLearningHome');
+    
     let learningHome = await axios.get('https://api.macosicons.com/api/learn-home?populate=*')
     console.log('learningHome: ', learningHome.data.data.attributes.H3Description)
     
@@ -69,57 +73,34 @@ export async function getArticleTemplate(slug) {
     }
 }
 
-export async function getStrapiData(slug) { 
+export async function getStrapiData(collection) { 
     try {
-        let strapiData = await axios.get(`${strapiUrl}${slug}?populate=*`, {
+        let strapiData = await fetch(`${strapiUrl}get-resources?collection=${collection}`, {
+          method: 'GET',
           headers: {
-            Authorization: `Bearer ${strapiKey}`
-            // Authorization: `Bearer ${import.meta.env.VITE_STRAPI_API_TOKEN}`
-          }
-        })
-        // let strapiData = await axios.get('https://api.macosicons.com/api/'+slug+'?populate=*')
-        strapiData = strapiData.data.data
-        console.log("strapiData: ", strapiData);
-
-        // let newArr = strapiData.map(el =>{
-        //     el = el.attributes
-            
-        //     if(el.feature_image.data.attributes.formats){
-        //         el.feature_image = strapiData+el.feature_image.data.attributes.formats.small.url
-        //     } else {
-        //         el.feature_image = strapiData+el.feature_image.data.attributes.url
-        //     }
-
-        //     return el
-        // })
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include' // Add this if you need to send cookies
+        }).then(res => res.json())
 
         return strapiData
     } catch (error) {
+        console.log('Error getStrapiData', error);
         return {error: error}
     }
 }
 
 export async function getResourceFromSlug(slug) {
     try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 1000);
+        const resource = await fetch(`${strapiUrl}get-resources?collection=resources&slug=${slug}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include' // Add this if you need to send cookies
+        }).then(res => res.json());
 
-        const resource = await Promise.race([
-            axios.get(strapiUrl + 'resources?populate=*&filters[slug][$eq]=' + slug, {
-                headers: {
-                    Authorization: `Bearer ${import.meta.env.VITE_STRAPI_API_TOKEN}`
-                },
-                signal: controller.signal
-            }),
-            new Promise((_, reject) => setTimeout(() => reject(new Error('Request timeout')), 1000))
-        ]);
-
-        clearTimeout(timeoutId);
-
-        const resourceData = resource.data.data[0];
-        console.log("resource: ", resourceData);
-
-        return resourceData;
+        return resource;
     } catch (error) {
         console.log('Error getResourceFromSlug', error);
         
