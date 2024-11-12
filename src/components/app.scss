@@ -1866,14 +1866,25 @@ coral-buttongroup button{
     top: 50%;
     transform: translateY(-50%);
     transition: 0.2s;
+    display: flex;
+    align-items: center;
 
     .searchBar-right-wrapper{
         display: flex;
         height: 100%;
         align-items: center;
     }
-
 }
+
+.rotating-search{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 16px;
+    width: 16px;
+    padding-right: 0.5rem;
+}
+
 
 .searchBar-right:opacity{
     opacity: 1;

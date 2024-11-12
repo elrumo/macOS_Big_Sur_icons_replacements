@@ -127,6 +127,24 @@
 
                 <transition name="fade">
                   <div v-if="searchString" class="searchBar-right">
+                    
+                    <transition name="fade">
+                      <div v-if="isLoading" class="rotating-search">
+                        <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                          <path fill="#464646" d="M8 1.33a6.67 6.67 0 1 0 6.67 6.67A6.68 6.68 0 0 0 8 1.33zm0 12A5.33 5.33 0 1 1 13.33 8 5.34 5.34 0 0 1 8 13.33z" opacity=".4"/>
+                          <path fill="#464646" d="M8 0a8 8 0 0 1 8 8h-1.33a6.67 6.67 0 0 0-6.67-6.67V0z">
+                            <animateTransform 
+                              attributeName="transform"
+                              type="rotate"
+                              from="0 8 8"
+                              to="360 8 8"
+                              dur="1s"
+                              repeatCount="indefinite"/>
+                          </path>
+                        </svg>
+                      </div>
+                    </transition>
+
                     <div class="searchBar-right-wrapper">
                       <svg @click="clearSearch" class="icon p-t-24 p-b-24 p-r-8 p-l-8" xmlns="http://www.w3.org/2000/svg" height="12" viewBox="0 0 12 12" width="12">
                         <title>CrossLarge</title>
@@ -1176,6 +1194,7 @@ export default {
       'getSupportMessage',
       'getHomeDialog',
       'getIconListLen',
+      'isLoading',
     ]),
 
     isMobile(){

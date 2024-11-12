@@ -353,7 +353,7 @@ export default createStore({
       let similarSearch = payload.similarSearch || false;
       let setSelectedIcon = payload.setSelectedIcon || false;
       let iconId = payload.iconId || null;
-      
+
       if(similarSearch) store.commit('setState', {state: "isSimilarLoading", payload: true});
 
       let algoliaSearch;
@@ -378,8 +378,21 @@ export default createStore({
         if (store.state.selectedCategory.name != "All" && !similarSearch && !setSelectedIcon) {
           algoliaOptions.filters += ` AND category:"`+category+`"`
 
-          searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
-          // algoliaSearch = await algoliaIndex.search(search, algoliaOptions)
+          const startTime = Date.now();
+          const searchPromise = store.dispatch('getSearchResults', {search, searchOptions});
+          
+          const timeoutPromise = new Promise(resolve => {
+            setTimeout(() => {
+              if (Date.now() - startTime > 500) {
+                store.commit('setDataToArr', {arr: "loading", data: true});
+              }
+              resolve();
+            }, 500);
+          });
+          
+          await Promise.race([timeoutPromise, searchPromise]);
+          searchResults = await searchPromise;
+
           // searchResults = algoliaSearch;
 
           searchResults.hits = searchResults.hits.map(item => {
@@ -401,7 +414,28 @@ export default createStore({
           }
 
 
-          searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
+          const startTime = Date.now();
+          let timeoutId;
+          
+          const timeoutPromise = new Promise(resolve => {
+            timeoutId = setTimeout(() => {
+              if (Date.now() - startTime > 300) {
+                store.commit('setDataToArr', {arr: "loading", data: true});
+              }
+              resolve();
+            }, 300);
+          });
+
+          const searchPromise = store.dispatch('getSearchResults', {search, searchOptions})
+            .then(result => {
+              store.commit('setDataToArr', {arr: "loading", data: false});
+              clearTimeout(timeoutId); // Cancel timeout if search finishes first
+              return result;
+            });
+          
+          await Promise.race([timeoutPromise, searchPromise]);
+          searchResults = await searchPromise;
+
           // algoliaSearch = await algoliaIndex.search(search, algoliaOptions)
           // searchResults = algoliaSearch;
 
@@ -435,7 +469,10 @@ export default createStore({
         console.log("Error on search: ", error); 
         throw error
       } finally{
-        if(similarSearch) store.commit('setState', {state: "isSimilarLoading", payload: false});
+        if(similarSearch) {
+          store.commit('setState', {state: "loading", payload: false});
+          store.commit('setState', {state: "isSimilarLoading", payload: false});
+        }
       }
     },
 
