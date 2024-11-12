@@ -203,8 +203,8 @@
 
                     <div class="resourcesLink" @click="toggleOverlay">
                     <!-- <button is="coral-button" variant="primary"> -->
-                        <!-- <coral-status variant="info" class="_coral-StatusLight--info _coral-StatusLight"></coral-status> -->
-                        <a href="https://docs.macosicons.com/api-management" target="_blank" class="_coral-Button _coral-Button--cta">
+                        <coral-status variant="info" class="_coral-StatusLight--info _coral-StatusLight"></coral-status>
+                        <a href="https://docs.macosicons.com/api-management" target="_blank" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
                             API
                         </a>
                     <!-- </button> -->
@@ -233,7 +233,6 @@
 
                     <!-- Resources -->
                     <div class="resourcesLink">
-                        <coral-status variant="info"></coral-status>
                         <router-link to="/resources">
                             <button is="coral-button" variant="quiet">
                                 <span>Free Resources</span>
@@ -264,7 +263,7 @@
                     </div> -->
                     
                     <!-- Buy me a coffee -->
-                    <div class="hide-on-shrink">
+                    <!-- <div class="hide-on-shrink">
                         <a
                             rel="noopener"
                             class=""
@@ -279,7 +278,17 @@
                                 <span>Donate</span>
                             </button>
                         </a>
+                    </div> -->
+
+                    <!-- Blog -->
+                    <div @click="toggleOverlay" v-if="this.$route.name != 'BlogHome'">
+                        <router-link to="/blog" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
+                            <span>
+                                Blog
+                            </span>
+                        </router-link>
                     </div>
+                    
                     
                     <!-- Account Profile -->
                     <div v-if="getUser.isAuth" class="profile-nav">

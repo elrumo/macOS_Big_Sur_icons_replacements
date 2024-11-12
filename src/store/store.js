@@ -3,7 +3,7 @@ import Parse from 'parse/dist/parse.min.js';
 import router from '@/router/index.js'
 
 import { marked } from 'marked';
-import algoliasearch from 'algoliasearch'
+// import algoliasearch from 'algoliasearch'
 
 import localResources from '@/api/resources.json';
 import localPages from '@/api/pages.json';
@@ -30,13 +30,13 @@ Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = VITE_PARSE_URL
 let IconsBase = Parse.Object.extend("Icons2");
 
-let algolia = {
-  appid: import.meta.env.VITE_ALGOLIA_APPID,
-  apikey: import.meta.env.VITE_ALGOLIA_KEY
-}
+// let algolia = {
+//   appid: import.meta.env.VITE_ALGOLIA_APPID,
+//   apikey: import.meta.env.VITE_ALGOLIA_KEY
+// }
 
-const client = algoliasearch(algolia.appid, algolia.apikey);
-const algoliaIndex = client.initIndex('macOSicons')
+// const client = algoliasearch(algolia.appid, algolia.apikey);
+// const algoliaIndex = client.initIndex('macOSicons')
 
 export default createStore({
 
@@ -292,33 +292,53 @@ export default createStore({
         const searchQuery = options.search;
         const searchOptions = options.searchOptions;
         
-        const backendUrl = import.meta.env.VITE_BACKEND_URL + 'search';
-        
-        // Build query parameters
-        const queryParams = new URLSearchParams({
-          query: searchQuery
-        }).toString();
-        
-        const response = await fetch(backendUrl, {
-        // const response = await fetch(`${backendUrl}api/search?${queryParams}`, {
+        const primaryUrl = import.meta.env.VITE_BACKEND_URL + 'search';
+        const backupUrl = import.meta.env.VITE_BACKEND_URL_ALT + 'search';
+
+        const requestBody = JSON.stringify({
+          query: searchQuery,
+          searchOptions,
+          apiKey: import.meta.env.VITE_PARSE_JAVASCRIPT_KEY,
+        });
+
+        const requestConfig = {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json',
+            'Accept': 'application/json'
           },
-          credentials: 'include',
-          body: JSON.stringify({
-            query: searchQuery,
-            searchOptions
-          }),
-        });
-    
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          mode: 'cors',
+          credentials: 'same-origin',
+          body: requestBody
+        };
+
+        // Try primary URL with timeout
+        const primaryPromise = Promise.race([
+          fetch(primaryUrl, requestConfig),
+          new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Timeout')), 2000)
+          )
+        ]);
+
+        try {
+          const response = await primaryPromise;
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return await response.json();
+        } catch (primaryError) {
+          console.log('Primary URL failed, trying backup URL...');
+          
+          // Try backup URL
+          const backupResponse = await fetch(backupUrl, requestConfig);
+          
+          if (!backupResponse.ok) {
+            throw new Error(`HTTP error! status: ${backupResponse.status}`);
+          }
+          
+          return await backupResponse.json();
         }
-        
-        const data = await response.json();
-        return data;
+
       } catch (error) {
         console.error('Error searching:', error);
         throw error;
@@ -345,10 +365,6 @@ export default createStore({
             category !== "All" ? `category = ${category}` : "",
             iconId !== null ? `objectID = ${iconId}` :  ""
           ],
-          // filters: [
-          //   category !== "All" ? `category = ${category}` : "",
-          //   iconId !== null ? `objectID = ${iconId}` : ""
-          // ].filter(Boolean).join(" AND "),
           hitsPerPage: 150,
           sort: ['timeStamp:desc']
         }
@@ -362,9 +378,9 @@ export default createStore({
         if (store.state.selectedCategory.name != "All" && !similarSearch && !setSelectedIcon) {
           algoliaOptions.filters += ` AND category:"`+category+`"`
 
-          // searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
-          algoliaSearch = await algoliaIndex.search(search, algoliaOptions)
-          searchResults = algoliaSearch;
+          searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
+          // algoliaSearch = await algoliaIndex.search(search, algoliaOptions)
+          // searchResults = algoliaSearch;
 
           searchResults.hits = searchResults.hits.map(item => {
             return {
@@ -385,9 +401,9 @@ export default createStore({
           }
 
 
-          // searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
-          algoliaSearch = await algoliaIndex.search(search, algoliaOptions)
-          searchResults = algoliaSearch;
+          searchResults = await store.dispatch('getSearchResults', {search, searchOptions});
+          // algoliaSearch = await algoliaIndex.search(search, algoliaOptions)
+          // searchResults = algoliaSearch;
 
           // Set the value of objectID to a new key named id
           searchResults.hits = searchResults.hits.map(item => {
@@ -543,7 +559,6 @@ export default createStore({
       store.commit('setDataToArr', {arr: 'selectedCategory', data: category, concatArray: false}) // set category
       
       let savedIcons = store.state.savedIcons
-      
 
       if (search.length > 0) {  
         store.dispatch('algoliaSearch', {page: 0})
