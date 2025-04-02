@@ -6,14 +6,11 @@
     focusOnShow="off"
   > 
 
-
     <coral-dialog-header>
       {{icon.appName}}
     </coral-dialog-header>
-    
 
     <coral-dialog-content>
-
       <div v-if="isLoading" class="loading-overlay">
         <div class="loading-popup">
           <coral-progress indeterminate> Updating {{ icon.appName }} </coral-progress>

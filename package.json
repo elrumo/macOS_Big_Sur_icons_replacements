@@ -48,6 +48,7 @@
   "devDependencies": {
     "@vue/compiler-sfc": "^3.2.45",
     "@vueuse/head": "^1.0.22",
+    "vite-plugin-static-copy": "^2.3.0",
     "vue-router": "^4.1.6"
   },
   "browserslist": [

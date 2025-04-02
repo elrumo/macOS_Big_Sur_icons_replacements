@@ -325,6 +325,7 @@ export default createStore({
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
+
           return await response.json();
         } catch (primaryError) {
           console.log('Primary URL failed, trying backup URL...');

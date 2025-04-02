@@ -8,7 +8,7 @@
       :getHomeDialog="getHomeDialog.hasOwnProperty('announcementImg') ? getHomeDialog : dummyData"
       type="topBanner"
     /> -->
-
+    
     <Header
       :distanceFromTop="distanceFromTop"
       :submitIconDialog="'submitIcon'"
@@ -40,6 +40,26 @@ import { mapActions, mapGetters } from 'vuex'
 import dummyData from '@/components/announcementDummy.json'
 
 import { Toast } from '@adobe/coral-spectrum/coral-component-toast'
+import { Textfield } from '@adobe/coral-spectrum/coral-component-textfield'
+import { SideNav } from '@adobe/coral-spectrum/coral-component-sidenav'
+import { Table } from '@adobe/coral-spectrum/coral-component-table'
+import { Textarea } from '@adobe/coral-spectrum/coral-component-textarea'
+import { Dialog } from '@adobe/coral-spectrum/coral-component-dialog';
+import { Button } from '@adobe/coral-spectrum/coral-component-button';
+import { ButtonGroup } from '@adobe/coral-spectrum/coral-component-buttongroup';
+import { SplitButton } from '@adobe/coral-spectrum/coral-component-splitbutton';
+import { FileUpload } from '@adobe/coral-spectrum/coral-component-fileupload';
+import { CharacterCount } from '@adobe/coral-spectrum/coral-component-charactercount';
+import { Switch } from '@adobe/coral-spectrum/coral-component-switch';
+import { Progress } from '@adobe/coral-spectrum/coral-component-progress';
+import { QuickActions } from '@adobe/coral-spectrum/coral-component-quickactions';
+import { Icon } from '@adobe/coral-spectrum/coral-component-icon';
+import { Overlay } from '@adobe/coral-spectrum/coral-component-overlay';
+import { Status } from '@adobe/coral-spectrum/coral-component-status';
+import { Alert } from '@adobe/coral-spectrum/coral-component-alert';
+import { Popover } from '@adobe/coral-spectrum/coral-component-popover';
+import { Tooltip } from '@adobe/coral-spectrum/coral-component-tooltip';
+
 const appBody = document.getElementById('app')
 
 import Parse from 'parse/dist/parse.min.js';
@@ -60,7 +80,8 @@ export default {
     Header,
     Footer,
     StickyBanner,
-    Announcement
+    Announcement,
+    Toast
   },
 
   data(){

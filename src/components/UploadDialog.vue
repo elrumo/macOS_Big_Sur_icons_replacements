@@ -1,5 +1,4 @@
 <template>
-
   <coral-dialog id="uploadDialog">
     <coral-dialog-header>Are you sure you want to delete {{icon.appName}}?</coral-dialog-header>
     
@@ -42,7 +41,11 @@ export default {
     props:{
       icon: {}
     },
+
+    components: {
+    },
     
+
     data(){
       return{
         imageData: false,
@@ -60,6 +63,7 @@ export default {
         isLoading: false
       }
     },
+
     methods:{
       ...mapActions(['showToast']),
       

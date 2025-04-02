@@ -130,7 +130,7 @@ export default {
 
   components:{
     Sponsor,
-    NativeAd
+    NativeAd,
   },
 
   data() {
