@@ -9,11 +9,9 @@
       </p>
 
       <p class="coral-Body--M p-t-4 p-b-4 m-b-0">
-          All icons must be .png images and have a resolution of 1024px x 1024px.
-        <br>
-        <span class="coral-Body--S m-b-0 p-t-0 opacity-50">
-          Support for .icns is on my (long) todo list.
-        </span>
+          All icons must be .png, or .icns images and have a resolution of 1024px x 1024px.
+          <br>
+          <b>If you're uploading a .icns file, you must also upload a high resolution .png file.</b>
       </p>
 
 
@@ -69,153 +67,168 @@
                 <div v-if="imageData" class="upload-card-wrapper">
                 
                   <div v-for="icon in filesToShow" :key="icon.randId" class="upload-card coral-Well">
-                    <!-- {{icon}} -->
-                    <SubmissionIconPreview
-                      :icon="icon"
-                      :removeFile="removeFile"
-                    />
 
-                    <form class="coral-FormGroup m-0 p-l-4" style="width: calc(100% - 5px)">
-                      
-                      <!-- AppName -->
-                      <div class="coral-FormGroup-item">
-                        <label :id="'appNameLabel'+icon.randId" class="coral-FieldLabel">
-                          App name
-                        </label>
-                        <input
-                          is="coral-textfield"
-                          class="coral-Form-field"
-                          type="text"
-                          required=""
-                          :id="'appNameUploadField'+icon.randId"
-                          :labelledby="'appNameLabel'+icon.randId"
-                          :value="icon.name"
-                          v-on:change="getValue($event, icon.randId, 'name')"
-                        >
-                      </div>
-                      
-                      <!-- App category -->
-                      <div class="coral-FormGroup-item">
-                        <label :id="'categoryUploadLabel'+icon.randId" class="coral-FieldLabel">
-                          App category
-                        </label>
-                        <div class="dropdown-select-chevron relative">
-                          <select
-                            name="categoryUploadField"
-                            :id="'categoryUploadField'+icon.randId"
-                            placeholder="Select category"
-                            class="dropdown-select"
-                            v-on:change="getValue($event, icon.randId, 'category')"
-                          >
-                            <option
-                              value=""
-                              disabled selected
-                            >
-                              Select category (required)
-                            </option>
-                            <option
-                              v-for="category in getAppCategories"
-                              :key="category.name+icon.randId+Math.floor(Math.random() * 10000000 + 1)"
-                              :id="icon.randId+category.id"
-                              :value="category.id"
-                              :selected="icon.category.includes(category.id)"
-                            >
-                              {{ category.name }}
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-                      
-                      <!-- Type of icon -->
-                      <div class="coral-FormGroup-item">
-                        <label :id="'TypeUploadLabel'+icon.randId" class="coral-FieldLabel">
-                          Type of icon
-                        </label>
-                        <div class="dropdown-select-chevron relative">
-                          <select
-                            name="TypeUploadField"
-                            :id="'TypeUploadField'+icon.randId"
-                            placeholder="Select Type"
-                            class="dropdown-select"
-                            v-on:change="getValue($event, icon.randId, 'type')"
-                          >
-                            <option
-                              v-for="type in getIconType"
-                              :key="type.name+icon.randId+Math.floor(Math.random() * 10000000 + 1)"
-                              :value="type.id"
-                              :selected="selectedOption(type.id, icon.type)"
-                            >
-                              {{ type.name }}
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-                      
-                      <!-- App website -->
-                      <div class="coral-FormGroup-item">
-                        <label :id="'appWebsiteUploadLabel'+icon.randId" class="coral-FieldLabel">
-                          App website (optional)
-                        </label>
-                        <input
-                          :id="'appWebsiteUploadField'+icon.randId"
-                          is="coral-textfield"
-                          :labelledby="'appWebsiteUploadLabel'+icon.randId"
-                          class="coral-Form-field"
-                          type="url"
-                          placeholder="The app's developer website"
-                          v-on:change="getValue($event, icon.randId, 'appWebsite')"
-                        >
-                      </div>
-                      
-                      <!-- .icns file -->
-                      <div class="coral-FormGroup-item">
-                        <div>
-                          <label
-                            class="coral-FieldLabel"
-                            for="icnsFileUpload"
-                          >
-                            .icns file (optional)
+                    <coral-status variant="info" class="status-alert">
+                      <b>Important:</b>
+                      Please use the 'Check Size' button below to ensure your icon is the correct size. App icons that are not the correct size will not be approved.
+                    </coral-status>
+
+                    <div class="upload-card-content">
+                      <SubmissionIconPreview
+                        :icon="icon"
+                        :removeFile="removeFile"
+                      />
+
+                      <form class="coral-FormGroup m-0 p-l-4" style="width: calc(100% - 5px)">
+                        
+                        <!-- AppName -->
+                        <div class="coral-FormGroup-item">
+                          <label :id="'appNameLabel'+icon.randId" class="coral-FieldLabel">
+                            *App name
                           </label>
-
-                          <button
-                            is="coral-button"
-                            for="icnsFileUpload"
-                            @click="openFileUpload('icnsFileUpload', icon.randId)"
-                          >
-                            <span v-if="!filesToShow[icon.randId].icnsFile">
-                              Upload .icns file
-                            </span>
-                            <span v-if="filesToShow[icon.randId].icnsFile">
-                              Remove .icns file
-                            </span>
-                          </button>
                           <input
-                            type="file"
-                            id="icnsFileUpload"
-                            accept=".icns"
-                            class="hidden"
-                            @change="setIcns($event, icon.randId)"
+                            is="coral-textfield"
+                            class="coral-Form-field"
+                            type="text"
+                            required=""
+                            :id="'appNameUploadField'+icon.randId"
+                            :labelledby="'appNameLabel'+icon.randId"
+                            :value="icon.name"
+                            v-on:change="getValue($event, icon.randId, 'name')"
                           >
                         </div>
-                      </div>
-                      
-                      <!-- Is dark mode -->
-                      <div class="coral-FormGroup-item">
-                        <coral-checkbox
-                          :id="'isDarkUpload'+icon.randId"
-                          v-on:change="getCheckedValue($event, icon.randId, 'isDarkMode')"
-                        >
-                          Is dark mode
-                        </coral-checkbox>
-                        <coral-checkbox
-                          :id="'isAuthorUpload'+icon.randId"
-                          v-on:change="getCheckedValue($event, icon.randId, 'isAuthor')"
-                        >
-                          * I'm the author of this icon
-                        </coral-checkbox>
-                      </div>
+                        
+                        <!-- App category -->
+                        <div class="coral-FormGroup-item">
+                          <label :id="'categoryUploadLabel'+icon.randId" class="coral-FieldLabel">
+                            *App category
+                          </label>
+                          <div class="dropdown-select-chevron relative">
+                            <select
+                              name="categoryUploadField"
+                              :id="'categoryUploadField'+icon.randId"
+                              placeholder="Select category"
+                              class="dropdown-select"
+                              v-on:change="getValue($event, icon.randId, 'category')"
+                            >
+                              <option
+                                value=""
+                                disabled selected
+                              >
+                                Select category (required)
+                              </option>
+                              <option
+                                v-for="category in getAppCategories"
+                                :key="category.name+icon.randId+Math.floor(Math.random() * 10000000 + 1)"
+                                :id="icon.randId+category.id"
+                                :value="category.id"
+                                :selected="icon.category.includes(category.id)"
+                              >
+                                {{ category.name }}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        
+                        <!-- Type of icon -->
+                        <div class="coral-FormGroup-item">
+                          <label :id="'TypeUploadLabel'+icon.randId" class="coral-FieldLabel">
+                            *Type of icon
+                          </label>
+                          <div class="dropdown-select-chevron relative">
+                            <select
+                              name="TypeUploadField"
+                              :id="'TypeUploadField'+icon.randId"
+                              placeholder="Select Type"
+                              class="dropdown-select"
+                              v-on:change="getValue($event, icon.randId, 'type')"
+                            >
+                              <option
+                                v-for="type in getIconType"
+                                :key="type.name+icon.randId+Math.floor(Math.random() * 10000000 + 1)"
+                                :value="type.id"
+                                :selected="selectedOption(type.id, icon.type)"
+                              >
+                                {{ type.name }}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        
+                        <!-- App website -->
+                        <div class="coral-FormGroup-item">
+                          <label :id="'appWebsiteUploadLabel'+icon.randId" class="coral-FieldLabel">
+                            App website (optional)
+                          </label>
+                          <input
+                            :id="'appWebsiteUploadField'+icon.randId"
+                            is="coral-textfield"
+                            :labelledby="'appWebsiteUploadLabel'+icon.randId"
+                            class="coral-Form-field"
+                            type="url"
+                            placeholder="The app's developer website"
+                            v-on:change="getValue($event, icon.randId, 'appWebsite')"
+                          >
+                        </div>
+                        
+                        <!-- .icns file -->
+                        <div class="coral-FormGroup-item">
+                          <div>
+                            <label
+                              class="coral-FieldLabel"
+                              for="icnsFileUpload"
+                            >
+                              .icns file (optional)
+                            </label>
 
-                    </form>
+                            <button
+                              is="coral-button"
+                              for="icnsFileUpload"
+                              @click="openFileUpload('icnsFileUpload', icon.randId)"
+                            >
+                              <span v-if="!filesToShow[icon.randId].icnsFile">
+                                Upload .icns file
+                              </span>
+                              <span v-if="filesToShow[icon.randId].icnsFile">
+                                Remove .icns file
+                              </span>
+                            </button>
+                            <input
+                              type="file"
+                              id="icnsFileUpload"
+                              accept=".icns"
+                              class="hidden"
+                              @change="setIcns($event, icon.randId)"
+                            >
+                          </div>
+                        </div>
+                        
+                        <!-- Is dark mode -->
+                        <div class="coral-FormGroup-item">
+                          <coral-checkbox
+                            :id="'isDarkUpload'+icon.randId"
+                            v-on:change="getCheckedValue($event, icon.randId, 'isDarkMode')"
+                          >
+                            Is dark mode
+                          </coral-checkbox>
+
+                          <coral-checkbox
+                            :id="'isLiquidGlassUpload'+icon.randId"
+                            v-on:change="getCheckedValue($event, icon.randId, 'isLiquidGlass')"
+                          >
+                            Liquid Glass design style
+                          </coral-checkbox>
+
+                          <coral-checkbox
+                            :id="'isAuthorUpload'+icon.randId"
+                            v-on:change="getCheckedValue($event, icon.randId, 'isAuthor')"
+                          >
+                            * I'm the author of this icon
+                          </coral-checkbox>
+                        </div>
+
+                      </form>
+                    </div>
                   </div>
                   
                   <!-- Drag to upload -->
@@ -398,6 +411,7 @@ export default {
                     name: fileName,
                     file: file,
                     isDarkMode: false,
+                    isLiquidGlass: false,
                     category: "",
                     appWebsite: "",
                     type: "Zz9QX1BBIZ",
@@ -447,6 +461,7 @@ export default {
           let randId = parent.filesToShow[fileNum].randId;
           let typeId = parent.filesToShow[fileNum].type;
           let isDarkMode = parent.filesToShow[fileNum].isDarkMode;
+          let isLiquidGlass = parent.filesToShow[fileNum].isLiquidGlass;
           let isAuthor = parent.filesToShow[fileNum].isAuthor;
           let icnsFile = parent.filesToShow[fileNum].icnsFile ? parent.filesToShow[fileNum].icnsFile: '';
           let icnsFileUrl = '';
@@ -508,6 +523,7 @@ export default {
               type: type,
               DownloadCount: new DownloadCount(),
               isDarkMode: isDarkMode,
+              isLiquidGlass: isLiquidGlass,
               isAuthor: isAuthor
             }
 
@@ -601,7 +617,7 @@ export default {
               let submission = filesToShow[item][field]
               if (submission != "" && submission != undefined && field != "appWebsite" && isAuthor) {
                 isValid.push(true)
-              } else if (field != "appWebsite" && field != "isDarkMode") {
+              } else if (field != "appWebsite" && field != "isDarkMode" && field != "isLiquidGlass") {
                 isValid.push(false)
               }
             }

@@ -811,13 +811,22 @@ div * {
     position: relative;
 }
 
-.resourcesLink coral-status{
+.status-base{
     position: absolute;
     z-index: 9;
     top: -8px;
-    left: -5px;
     height: 8px;
     width: 8px;
+}
+
+.status coral-status{
+    @extend .status-base;
+    left: -5px;
+}
+
+.status-right coral-status{
+    @extend .status-base;
+    right: 13px;
 }
 
 coral-buttongroup button{
@@ -1396,6 +1405,7 @@ coral-buttongroup button{
 .card-text-wrapper{
     max-width: 90%;
     margin: auto;
+    margin-top: 0px;
 
     h3{
         @extend .ellipses-text-2;
@@ -1450,6 +1460,21 @@ coral-buttongroup button{
 
 ._coral-Tabs{
     justify-content: center;
+}
+
+coral-tablist{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+}
+
+coral-tab{
+    cursor: pointer;
+
+    @media (prefers-color-scheme: dark) {
+        color: #4b9df5d2;
+    }
 }
 
 .sponsor-buttons{
@@ -1993,19 +2018,55 @@ coral-buttongroup button{
     z-index: 99999;
 }
 
+
 .upload-card-wrapper{
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 25px;
     height: fit-content;
     height: -moz-fit-content;
-    // padding-top: 25px;
 }
 
 .upload-card{
+    display: flex;
+    flex-direction: column;
+}
+
+.upload-card-content{
     display: grid;
     grid-template-columns: 1.5fr 3fr;
     gap: 15px;
+}
+
+
+.status-alert{
+    @extend .shadow;
+    padding: 8px 10px;
+    border-radius: 0.75rem;
+    background: white;
+    border: var(--coral-light-border) 1px solid;
+    opacity: 75%;
+
+    &._coral-StatusLight{
+        &:before{
+            display: none;
+        }
+    }
+
+    p{
+        margin: 0px;
+        font-weight: 600;
+        padding-bottom: 0.2rem;
+    }
+
+    &:hover{
+        opacity: 100%;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        background: var(--coral-dark-bg);
+        border-color: var(--coral-dark-border);
+    }
 }
 
 .upload-card-options{
@@ -2069,6 +2130,7 @@ coral-buttongroup button{
 
 .coral--dark ._coral-Icon{
     filter: brightness(1.2);
+    // filter: invert(1);
 }
 
 .coral--dark ._coral-Icon:hover{
@@ -2125,7 +2187,8 @@ coral-buttongroup button{
 }
 
 .dashBoard .card-img-wrapper{
-    padding: 20px 45px 5px 45px;
+    padding: 0px 45px 0px 45px;
+    margin-bottom: 0px;
     position: relative;
 }
 
@@ -2933,6 +2996,15 @@ coral-sidenav-item{
     min-height: 2rem;
     // text-align: left;
     cursor: pointer;
+}
+
+.is-selected{
+    background: #f3f3f3;
+    border-radius: 0.25rem;
+
+    @media (prefers-color-scheme: dark) {
+        background: #343434;
+    }
 }
 
 

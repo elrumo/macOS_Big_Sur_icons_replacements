@@ -37,3 +37,7 @@ website/.DS_Store
 main.js
 main_copy.js
 .aider*
+
+# macOSicons-parse-schema.json
+.trae/.ignore
+macOSicons-parse-schema.json

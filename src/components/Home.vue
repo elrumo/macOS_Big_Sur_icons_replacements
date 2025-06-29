@@ -370,6 +370,20 @@
           >
             All Icons
           </button>
+
+          <button
+            is="coral-sidenav-item"
+            @click="setLiquidGlassFilter()"
+            :value="'Liquid Glass'"
+            :title="'Liquid Glass'"
+            :aria-label="'Liquid Glass'"
+            :icon="icons.AppIcon"
+            class="status-right"
+            :class="{ 'is-selected': getIsLiquidGlassActive }"
+          >
+            <coral-status variant="info" class="_coral-StatusLight--info _coral-StatusLight"></coral-status>
+            Liquid Glass
+          </button>
           
           <!-- Popular Icons -->
           <button
@@ -516,6 +530,7 @@ import WeatherIcon from "../assets/icons/Category_Icons/Weather.svg"
 import AllIconsIcon from "../assets/icons/Category_Icons/All_Icons.svg"
 import StarIcon from "../assets/icons/Category_Icons/Star.svg"
 import HeartIcon from "../assets/icons/Category_Icons/Heart.svg"
+import AppIcon from "../assets/icons/Category_Icons/AppIcon.svg"
 import HeartIconFilled from "../assets/icons/Category_Icons/Heart_Filled.svg"
 import HeartIconFilledRed from "../assets/icons/Category_Icons/Heart_Filled_Red.svg"
 import FlameIcon from "../assets/icons/Category_Icons/Flame.svg"
@@ -671,6 +686,7 @@ export default {
         AllIcons: AllIconsIcon,
         Star: StarIcon,
         Heart: HeartIcon,
+        AppIcon: AppIcon,
         HeartFilled: HeartIconFilled,
         Flame: FlameIcon,
       },
@@ -786,6 +802,7 @@ export default {
       'fetchIconUserInfo',
       'adClick',
       'setCategory',
+      'setLiquidGlassFilter',
       'setData',
       'loadMoreIcons',
       'algoliaSearch',
@@ -1195,6 +1212,7 @@ export default {
       'getHomeDialog',
       'getIconListLen',
       'isLoading',
+      'getIsLiquidGlassActive',
     ]),
 
     isMobile(){

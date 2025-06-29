@@ -154,12 +154,30 @@
                 <p class="coral-Body--XS p-b-0 opacity-80 m-b-0"><input class="editable-input" @change="editDoc(icon, $event, 'usersName')" type="text" variant="quiet" :value="icon.usersName" is="coral-textfield" aria-label="text input"></p>
                 
                 <!-- Credit URL -->
-                <p v-if="icon.credit !='' " class="coral-Body--XS p-b-0 opacity-50 m-b-0"><input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="icon.credit" is="coral-textfield" aria-label="text input"></p>
+                <!-- v-if="icon.credit !='' "  -->
+                <!-- <p
+                  v-if="icon.credit !='' " 
+                  class="coral-Body--XS p-b-0 opacity-50 m-b-0"
+                >
+                  <input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="icon.credit" is="coral-textfield" aria-label="text input">
+                </p> -->
+                
                 <p v-if="icon.credit =='' " class="coral-Body--XS p-b-0 opacity-50 m-b-0"><input class="editable-input small-text" @change="editDoc(icon, $event, 'credit')" type="text" variant="quiet" :value="'n/a'" is="coral-textfield" aria-label="text input"></p>
 
                 <div class="p-t-16 p-b-16">
-                  <button @click="approveIcon(icon)" class="coral-btn coral-btn-primary">Approve</button>
-                  <button v-if="icon.isReview" @click="unApproveIcon(icon)" class="coral-btn coral-btn-primary m-l-8 ">Unapprove</button>
+                  <coral-checkbox
+                    :id="'isLiquidGlassAdmin'+icon.id"
+                    :checked="icon.isLiquidGlass"
+                    @change="toggleLiquidGlass(icon, $event)"
+                    class="m-b-8"
+                  >
+                    Liquid Glass
+                  </coral-checkbox>
+                  
+                  <div>
+                    <button @click="approveIcon(icon)" class="coral-btn coral-btn-primary">Approve</button>
+                    <button v-if="icon.isReview" @click="unApproveIcon(icon)" class="coral-btn coral-btn-primary m-l-8 ">Unapprove</button>
+                  </div>
                 </div>
                 
               </div>
@@ -185,9 +203,7 @@ import Parse from 'parse/dist/parse.min.js';
 const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID;
 const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY;
 const VITE_PARSE_URL = import.meta.env.VITE_PARSE_URL;
-// const VITE_PARSE_MASTER_KEY = import.meta.env.VITE_PARSE_MASTER_KEY
 
-// Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY, VITE_PARSE_MASTER_KEY);
 Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY);
 Parse.serverURL = VITE_PARSE_URL;
 
@@ -478,6 +494,36 @@ export default {
 
     },
 
+    async toggleLiquidGlass(icon, event){
+      const isChecked = event.target.checked;
+      icon.isLiquidGlass = isChecked;
+
+      const IconsBase = Parse.Object.extend("Icons2");
+      const query = new Parse.Query(IconsBase);
+      const docToEdit = await query.get(icon.id);
+
+      console.log('icon.id: ', icon.id)
+      console.log('docToEdit: ', docToEdit)
+
+      docToEdit.set("isLiquidGlass", isChecked);
+      
+      try {
+        await docToEdit.save();
+        this.showToast({
+          id: "toastMessage",
+          message: isChecked ? 'Icon marked as Liquid Glass' : 'Liquid Glass removed from icon',
+          variant: "success"
+        });
+      } catch (error) {
+        console.log('error: ', error)
+        this.showToast({
+          id: "toastMessage",
+          message: error.message,
+          variant: "error"
+        });
+      }
+    },
+
     async sendEmail(icon){  
       let parent = this
       console.log("icon: ", icon);
@@ -619,7 +665,6 @@ export default {
       
       try{
         var results = await query.find()
-        // var results = await query.find(null, {useMasterKey: true})
       } catch (error) {
           console.log(error);
           handleParseError(error)
@@ -771,9 +816,10 @@ export default {
 
     if (this.currentUser) {
     
-      this.isAdmin = Parse.User.current().attributes.isAdmin
-
-      if (!this.isAdmin) {
+      this.isAdmin = Parse.User.current().attributes.isAdmin 
+      console.log('Parse.User.current().attributes.isAdmin:', Parse.User.current().attributes.isAdmin) 
+ 
+       if (!this.isAdmin) {
         this.$router.push({ path: '/#' })
         Parse.User.logOut();
         return

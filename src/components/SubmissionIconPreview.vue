@@ -1,6 +1,5 @@
 <template>
-  <div class="icon-preview">
-    
+  <div class="icon-preview">    
     <div class="icon-submission-img-size p-b-8">
       <img
         class="icon-submission-img"

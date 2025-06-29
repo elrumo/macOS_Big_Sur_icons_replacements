@@ -201,9 +201,9 @@
                         </router-link>
                     </div>
 
-                    <div class="resourcesLink" @click="toggleOverlay">
+                    <div class="resourcesLink status" @click="toggleOverlay">
                     <!-- <button is="coral-button" variant="primary"> -->
-                        <coral-status variant="info" class="_coral-StatusLight--info _coral-StatusLight"></coral-status>
+                        <coral-status variant="info" class="coral-status _coral-StatusLight--info _coral-StatusLight"></coral-status>
                         <a href="https://docs.macosicons.com/api-management" target="_blank" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
                             API
                         </a>

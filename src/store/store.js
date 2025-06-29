@@ -3,7 +3,6 @@ import Parse from 'parse/dist/parse.min.js';
 import router from '@/router/index.js'
 
 import { marked } from 'marked';
-// import algoliasearch from 'algoliasearch'
 
 import localResources from '@/api/resources.json';
 import localPages from '@/api/pages.json';
@@ -29,14 +28,6 @@ const VITE_PARSE_URL = import.meta.env.VITE_PARSE_URL
 Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = VITE_PARSE_URL
 let IconsBase = Parse.Object.extend("Icons2");
-
-// let algolia = {
-//   appid: import.meta.env.VITE_ALGOLIA_APPID,
-//   apikey: import.meta.env.VITE_ALGOLIA_KEY
-// }
-
-// const client = algoliasearch(algolia.appid, algolia.apikey);
-// const algoliaIndex = client.initIndex('macOSicons')
 
 export default createStore({
 
@@ -116,6 +107,7 @@ export default createStore({
         name: "All",
         id: "All",
       },
+      isLiquidGlassActive: false,
       totalCategory: 0,
       appCategories: [
         {"id":"qI4GKWNpum","name":"Browser Extensions","categoryObj":{"className":"Categories","_objCount":16,"id":"qI4GKWNpum"}},{"id":"m2v3VuzZEu","name":"Developer Tools","categoryObj":{"className":"Categories","_objCount":3,"id":"m2v3VuzZEu"}},{"id":"0BnPHRjdrQ","name":"Education","categoryObj":{"className":"Categories","_objCount":4,"id":"0BnPHRjdrQ"}},{"id":"gVBckgE4zl","name":"Entertainment","categoryObj":{"className":"Categories","_objCount":5,"id":"gVBckgE4zl"}},{"id":"rq2vNGoV92","name":"Finance","categoryObj":{"className":"Categories","_objCount":2,"id":"rq2vNGoV92"}},{"id":"6DiDa4yD4m","name":"Games","categoryObj":{"className":"Categories","_objCount":6,"id":"6DiDa4yD4m"}},{"id":"sQCYzXFttB","name":"Graphics & Design","categoryObj":{"className":"Categories","_objCount":7,"id":"sQCYzXFttB"}},{"id":"7SbNrtDxDh","name":"Health & Fitness","categoryObj":{"className":"Categories","_objCount":9,"id":"7SbNrtDxDh"}},{"id":"7KYFn5kd15","name":"Lifestyle","categoryObj":{"className":"Categories","_objCount":8,"id":"7KYFn5kd15"}},{"id":"GgZF9kgRR7","name":"Medical","categoryObj":{"className":"Categories","_objCount":10,"id":"GgZF9kgRR7"}},{"id":"BO0gbTCPUK","name":"Music","categoryObj":{"className":"Categories","_objCount":12,"id":"BO0gbTCPUK"}},{"id":"jQbEVy2jCI","name":"News","categoryObj":{"className":"Categories","_objCount":11,"id":"jQbEVy2jCI"}},{"id":"ghYlSc5rf4","name":"Photo & Video","categoryObj":{"className":"Categories","_objCount":13,"id":"ghYlSc5rf4"}},{"id":"joml1zA4lv","name":"Productivity","categoryObj":{"className":"Categories","_objCount":14,"id":"joml1zA4lv"}},{"id":"StBWAxgpbs","name":"Reference","categoryObj":{"className":"Categories","_objCount":15,"id":"StBWAxgpbs"}},{"id":"dtOc7xXCaR","name":"Social Networking","categoryObj":{"className":"Categories","_objCount":17,"id":"dtOc7xXCaR"}},{"id":"thUmE1CYrl","name":"Sports","categoryObj":{"className":"Categories","_objCount":18,"id":"thUmE1CYrl"}},{"id":"Fhs38OomHD","name":"Travel","categoryObj":{"className":"Categories","_objCount":19,"id":"Fhs38OomHD"}},{"id":"EzBFwmxpNd","name":"Utilities","categoryObj":{"className":"Categories","_objCount":21,"id":"EzBFwmxpNd"}},{"id":"SIMwpAEm4Z","name":"Weather","categoryObj":{"className":"Categories","_objCount":20,"id":"SIMwpAEm4Z"}}
@@ -216,7 +208,7 @@ export default createStore({
     async queryCategory(store, categoryId) {
       const Categories = Parse.Object.extend("Categories");
       let categoryQuery = new Parse.Query(Categories);
-      categoryQuery.get(categoryId.id);
+      categoryQuery.get(categoryId.name);
       let categoryParse = await categoryQuery.find()
     
       if (categoryParse.length > 0) {
@@ -348,7 +340,7 @@ export default createStore({
 
     async algoliaSearch(store, payload){
       let search = payload.search || store.state.searchString;
-      let category = payload.category || store.state.selectedCategory.id;
+      let category = payload.category != undefined ? payload.category : store.state.selectedCategory.name;
       let page = payload.page || 0;
       let concat = payload.concat || false;
       let similarSearch = payload.similarSearch || false;
@@ -363,7 +355,8 @@ export default createStore({
       try {
         let searchOptions = {
           filters: [
-            category !== "All" ? `category = ${category}` : "",
+            category !== "All" && !store.state.isLiquidGlassActive ? `category = ${category}` : "",
+            store.state.isLiquidGlassActive ? `isLiquidGlass = true` : "",
             iconId !== null ? `objectID = ${iconId}` :  ""
           ],
           hitsPerPage: 150,
@@ -375,9 +368,13 @@ export default createStore({
           page,
           filters: "approved:true",
         }
-        
-        if (store.state.selectedCategory.name != "All" && !similarSearch && !setSelectedIcon) {
-          algoliaOptions.filters += ` AND category:"`+category+`"`
+
+        if ((store.state.selectedCategory.name != "All" || store.state.isLiquidGlassActive) && !similarSearch && !setSelectedIcon) {
+          if (store.state.isLiquidGlassActive) {
+            algoliaOptions.filters += ` AND isLiquidGlass:true`
+          } else {
+            algoliaOptions.filters += ` AND category:"`+category+`"`
+          }
 
           const startTime = Date.now();
           const searchPromise = store.dispatch('getSearchResults', {search, searchOptions});
@@ -402,6 +399,8 @@ export default createStore({
               id: item.objectID 
             }; 
           });
+
+          console.log
 
           store.commit('pushDataToArr', {arr: "searchData", data: searchResults.hits})
         } else{ ;
@@ -499,9 +498,12 @@ export default createStore({
         query.descending("downloads");
       } else if(selectedCategory.name == 'Saved'){
         return
+      } else if(store.state.isLiquidGlassActive){
+        query.descending("timeStamp");
+        query.equalTo("isLiquidGlass", true);
       } else if(selectedCategory.name == 'All'){
       } else {
-        let categoryParse = await store.dispatch('queryCategory', {id: selectedCategory.id});
+        let categoryParse = await store.dispatch('queryCategory', {name: selectedCategory.name});
         
         query.descending("timeStamp");
         query.equalTo("category", categoryParse);
@@ -590,17 +592,16 @@ export default createStore({
       let newCategory = category.name
       let oldCategory = store.state.selectedCategory.name
       let sameCategory = newCategory == oldCategory;
-      let search = store.state.searchString
-      
+      // let search = store.state.searchString
+
       store.dispatch('scrollTo')
       store.dispatch('fetchSavedIcons')
       store.commit('setDataToArr', {arr: 'selectedCategory', data: category, concatArray: false}) // set category
+      store.commit('setDataToArr', {arr: 'isLiquidGlassActive', data: false, concatArray: false}) // reset liquid glass filter
       
       let savedIcons = store.state.savedIcons
 
-      if (search.length > 0) {  
-        store.dispatch('algoliaSearch', {page: 0})
-      }
+      store.dispatch('algoliaSearch', {page: 0})
 
       // if (category.name == "All") return;
 
@@ -658,6 +659,15 @@ export default createStore({
         store.commit('pushDataToArr', {arr: "dataToShow", data: allIcons})
       }
 
+    },
+
+    async setLiquidGlassFilter(store){
+      store.dispatch('scrollTo')
+      store.dispatch('fetchSavedIcons')
+      store.commit('setDataToArr', {arr: 'selectedCategory', data: {name: 'All', id: 'All'}, concatArray: false})
+      store.commit('setDataToArr', {arr: 'isLiquidGlassActive', data: true, concatArray: false})
+      
+      store.dispatch('algoliaSearch', {page: 0})
     },
 
     async fetchUserAttributes(store){
@@ -1007,10 +1017,14 @@ export default createStore({
       return store.selectedCategory
     },
 
+    getIsLiquidGlassActive(store){
+      return store.isLiquidGlassActive
+    },
+
     // Return icons based on criteria, like what category has been selected etc...
     selectedIcons(store){
       let selectedCategory = store.selectedCategory.name;
-      let categoryId = store.selectedCategory.id;
+      let categoryId = store.selectedCategory.name;
 
       if (selectedCategory == 'downloads' && !store.searchString) {
         return store.dataToShow
