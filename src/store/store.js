@@ -1002,9 +1002,53 @@ export default createStore({
           store.dispatch('logOut');
           break;
       }
+    },
+
+    async deleteUserAccount(store, password) {      
+      if (!password) {
+        return;
+      }
+
+      console.log('deleting account password: ', password)
+      
+      try {        
+        // Call the secure Cloud Function
+        let result = await Parse.Cloud.run("deleteUserAccount", {
+          password: password,
+          // confirmationCode: confirmationCode // if using confirmation codes
+        });
+
+        console.log('result: ', result)
+        return
+        
+        // Close dialogs
+        document.getElementById('deleteAccountDialog').hide();
+        document.getElementById('accountDialog').hide();
+        
+        // Show success message
+        this.showToast({
+          id: "toastMessage",
+          message: "Your account has been successfully deleted.",
+          variant: "success"
+        });
+        
+        // Log out the user
+        this.logOut();
+        
+      } catch (error) {
+        console.error('Error deleting account:', error);
+        this.handleParseError(error);
+        
+        this.showToast({
+          id: "toastMessage",
+          message: error.message || "Failed to delete account. Please try again or contact support.",
+          variant: "error"
+        });
+      }
     }
 
-  },  
+  }, 
+   
   
   
   getters: {

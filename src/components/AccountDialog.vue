@@ -1,5 +1,6 @@
 <template>
-  <coral-dialog id="accountDialog" v-if="getUser.isAuth" focusOnShow="off">
+  <div>
+    <coral-dialog id="accountDialog" v-if="getUser.isAuth" focusOnShow="off">
 
     <coral-dialog-header>
       Settings
@@ -219,16 +220,20 @@
               all the data macOSicons has about me.
           </p>
 
-          <p class="coral-Body--XS p-r-4 m-0 opacity-60">
-            <a
-              rel="noopener"
-              :href="'mailto:elias.ruiz.monserrat@gmail.com?subject=Right to be forgotten: '+getUserData('objectId')"
-              target="_blank"
-              class="coral-Link">
-                Exercise
-              </a> 
-              right to be forgotten and delete account.
-          </p>
+          <div class="coral-FormGroup-item delete-account-section">
+            <h4 class="coral-Heading--XS coral-Heading--light">Danger Zone</h4>
+            <p class="coral-Body--XS opacity-60 m-b-8">
+              Once you delete your account, there is no going back. Please be certain.
+            </p>
+            <!-- <button is="coral-button" variant="action"  @click="$event.preventDefault()"> -->
+            <button 
+              is="coral-button" 
+              variant="warning"
+              @click="showDeleteAccountDialog"
+            >
+              Delete Account
+            </button>
+          </div>
 
         </div>
 
@@ -250,7 +255,11 @@
       <button is="coral-button" v-if="hasChanged && isValidated" @click="updateUserProp" >Save</button>
     </coral-dialog-footer>
 
-  </coral-dialog>
+    </coral-dialog>
+    
+    <!-- Delete Account Dialog -->
+    <DeleteAccountDialog />
+  </div>
 </template>
 
 <script>
@@ -259,9 +268,14 @@ import Parse from 'parse/dist/parse.min.js';
 
 import logoLowRes from "../assets/Resources/logo_lowres.png"
 import profilePic from "../assets/Resources/accounts/profilePic.png"
+import DeleteAccountDialog from './DeleteAccountDialog.vue'
 
 export default {
     name:"AccountDialog",
+    
+    components: {
+      DeleteAccountDialog
+    },
     
     props:{
     },
@@ -471,6 +485,13 @@ export default {
         let ParseUser = Parse.User.current()
         let userProps = JSON.parse(JSON.stringify(ParseUser))
         return userProps[prop]
+      },
+
+      showDeleteAccountDialog() {
+        const deleteDialog = document.getElementById('deleteAccountDialog');
+        if (deleteDialog && typeof deleteDialog.show === 'function') {
+          deleteDialog.show();
+        }
       }
 
     },
@@ -492,4 +513,14 @@ export default {
 </script>
 
 <style>
+.delete-account-section {
+  border-top: 1px solid #e5e5e5;
+  padding-top: 16px;
+  margin-top: 24px;
+}
+
+.delete-account-section h4 {
+  color: #d73a49;
+  margin-bottom: 8px;
+}
 </style>
