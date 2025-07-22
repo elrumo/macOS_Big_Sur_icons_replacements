@@ -166,7 +166,7 @@
           {{ errorMessage }}
         </p>
       </div>
-      
+
       <UserIconGrid
         v-if="userIcons.length != 0"
         :userIcons="userIcons"
@@ -496,6 +496,7 @@ export default {
           case "approved":
             parent.errorMessage = parent.user.username + " doesn't have any approved icons yet."
             return parent.approvedIcons
+            // return parent.approvedIcons
 
           case "notApproved":
             parent.errorMessage = parent.user.username + " doesn't have any icons awaiting approval."

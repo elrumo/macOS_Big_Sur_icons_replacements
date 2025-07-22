@@ -287,6 +287,9 @@ export default createStore({
         const primaryUrl = import.meta.env.VITE_BACKEND_URL + 'search';
         const backupUrl = import.meta.env.VITE_BACKEND_URL_ALT + 'search';
 
+        console.log('primaryUrl: ', primaryUrl)
+        console.log('backupUrl: ', backupUrl)
+
         const requestBody = JSON.stringify({
           query: searchQuery,
           searchOptions,
@@ -677,10 +680,9 @@ export default createStore({
         store.commit('setDataToArr', {arr: 'userAttributes', data: userProps})
       }
     },
-
-
+     //  async fetchUserIconsOld(store, userObj){
     async fetchUserIcons(store, userObj){
-      const cacheKey = userObj.id;
+       const cacheKey = userObj.id;
       if (store.state.cache.userIcons[cacheKey]) {
         store.commit('setDataToArr', {arr: 'userIcons', data: store.state.cache.userIcons[cacheKey]})
         return true
@@ -688,7 +690,7 @@ export default createStore({
 
       let approvedQuery = new Parse.Query(IconsBase);
       let notApprovedQuery = new Parse.Query(IconsBase);
-      let numToLoad = 15
+      let numToLoad = 1500
       
       approvedQuery.limit(numToLoad)
       approvedQuery.equalTo("isHidden", false);
@@ -735,6 +737,7 @@ export default createStore({
         const notApprovedIcons = processResults(notApproved, "notApproved");
 
         const allIcons = [...approvedIcons, ...notApprovedIcons];
+
         store.commit('setDataToArr', {arr: 'userIcons', data: {
           approved: approvedIcons,
           notApproved: notApprovedIcons,
