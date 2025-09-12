@@ -197,7 +197,7 @@
         @click="fetchUserIcons(userInfo)"
       >
         Load more
-      </button> 
+      </button>
 
     </section>
 
@@ -212,6 +212,7 @@ import UserIconCardLoading from '@/components/UserIconCardLoading.vue';
 import EditIconDialog from "@/components/EditIconDialog.vue"
 import deleteDialog from "@/components/deleteDialog.vue"
 import StickyBanner from "@/components/StickyBanner.vue"
+import IconDetailsModal from "@/components/IconDetailsModal.vue"
 
 import Parse from 'parse/dist/parse.min.js';
 import { mapGetters, mapActions } from 'vuex'
@@ -239,6 +240,7 @@ export default {
       EditIconDialog,
       deleteDialog,
       StickyBanner,
+      IconDetailsModal,
   },
 
   data(){
@@ -281,6 +283,7 @@ export default {
   methods: {
     ...mapActions([
       'fetchUserIcons',
+      'showToast',
       'fetchAppCategories',
       'emptyArr', 
       'showToast',
@@ -440,7 +443,7 @@ export default {
       'approvedIconsCount',
       'isLoading',
       'getSelectedIcon',
-      'getUserInfo'
+      'getUserInfo',
     ]),
 
     getUserProfilePic() {

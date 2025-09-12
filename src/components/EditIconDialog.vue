@@ -44,10 +44,26 @@
             coral-fileupload-select=""
             :icon="iconBrew('uploadToCloud24')"
           >
-            <!-- :icon="UploadToCloud" -->
             Replace
           </button>
         </coral-fileupload>
+
+        <button
+          is="coral-button"
+          variant="quiet"
+          :icon="iconBrew('uploadToCloud24')"
+          @click="openIcnsFileUpload"
+        >
+          <span v-if="!icnsFile">Upload .icns</span>
+          <span v-else>Remove .icns</span>
+        </button>
+        <input
+          type="file"
+          id="icnsFileUpload"
+          accept=".icns"
+          class="hidden"
+          @change="selectIcnsFile"
+        >
 
       </div>
 
@@ -65,8 +81,8 @@
             required=""
             :id="'appNameUpdateField'+icon.id"
             :labelledby="'appNameLabel'+icon.id"
-            v-on:keyup="getValue($event, 'appName')"
-            :placeholder="icon.appName"
+            :value="newAppName"
+            @input="updateAppName($event)"
           >
         </div>
 
@@ -169,6 +185,8 @@ export default {
         macOSiconsLogo: logoLowRes
       },
       isLoading: false,
+
+      newAppName: "",
       
       isValidated: false,
       toUpdateTemplate: {
@@ -184,16 +202,18 @@ export default {
         img: "",
         name: ""
       },
-      imageData: false
+      imageData: false,
+      icnsFile: null
     }
   },
   
   watch:{
     icon:{
-      handler(icon) { // Reset toUpdate each time 'icon' changes.
-        this.toUpdate = Object.assign({}, this.toUpdateTemplate);
+      handler() { // Reset all dialog state when 'icon' changes
+        this.resetDialog();
       },
-      deep: true
+      deep: true,
+      immediate: true
     }
   },
   
@@ -218,6 +238,9 @@ export default {
         img: "",
         name: ""
       }
+      parent.icnsFile = null;
+      parent.newAppName = parent.icon ? parent.icon.appName : "";
+      parent.toUpdate = Object.assign({}, parent.toUpdateTemplate);
     },
 
     async saveIconData(){
@@ -262,6 +285,25 @@ export default {
         icon = await parent.onUplaod(icon);
         parent.icon.highResPngUrl = icon.get('highResPngUrl')
         parent.icon.lowResPngUrl = icon.get('highResPngUrl')
+      }
+
+      // Handle .icns file upload separately
+      if(parent.icnsFile) {
+        let fileName = parent.icon.appName || 'icon';
+        // Clean filename
+        if (/^[A-Za-z][A-Za-z0-9]*$/.test(fileName)) {
+          fileName = fileName
+        } else {
+          let d = new Date()
+          fileName = d.getTime()
+          fileName = fileName.toString()
+        }
+        
+        let icnsFileName = fileName + '.icns';
+        const parseIcnsFile = new Parse.File(icnsFileName, parent.icnsFile);
+        let savedIcnsFile = await parseIcnsFile.save();
+        icon.set("icnsFile", parseIcnsFile);
+        icon.set("icnsUrl", savedIcnsFile._url);
       }
       
       icon.save().then((data) =>{
@@ -315,12 +357,21 @@ export default {
         return false
       }
     },
+    updateAppName(e) {
+      let parent = this
+      let fieldValue = e.target.value
+      parent.newAppName = fieldValue
+      parent.toUpdate.appName = fieldValue
+    },
     getValue(e, field){
       let parent = this
       let target = e.target
       let toUpdate = parent.toUpdate
       let fieldValue = target.value
       toUpdate[field] = fieldValue;
+      if (field === 'appName') {
+        parent.newAppName = fieldValue;
+      }
     },
     setYourName(e){
       console.log(e.target.value);
@@ -416,6 +467,23 @@ export default {
       parent.fileToShow.name = fileName
       parent.imageData = true
     },
+    openIcnsFileUpload(){
+      const uploadInput = document.getElementById('icnsFileUpload')
+      if (this.icnsFile) {
+        this.icnsFile = null
+        uploadInput.value = '';
+      } else {
+        uploadInput.click();
+      }
+    },
+
+    selectIcnsFile(event) {
+      let file = event.target.files[0]
+      if (file) {
+        this.icnsFile = file
+      }
+    },
+
     async onUplaod(icon){
       let parent = this;
       let file = parent.fileToUpload;
@@ -442,6 +510,16 @@ export default {
       await icon.set("isReview", false);
       await icon.set("approved", false);
       await icon.set("highResPngFile", parseFile);
+
+      // Handle .icns file upload if present
+      if(parent.icnsFile) {
+        let icnsFileName = fileName + '.icns';
+        const parseIcnsFile = new Parse.File(icnsFileName, parent.icnsFile);
+        let savedIcnsFile = await parseIcnsFile.save();
+        await icon.set("icnsFile", parseIcnsFile);
+        await icon.set("icnsUrl", savedIcnsFile._url);
+      }
+
       return icon
       // console.log(parseFile);
     }
@@ -452,6 +530,12 @@ export default {
     // Copies the value of the object instead of assigning a reference
     // parent.toUpdate = Object.assign({}, parent.icon);
     parent.toUpdate = Object.assign({}, parent.toUpdateTemplate)
+    
+    // Initialize newAppName with icon's appName if available
+    if (parent.icon && parent.icon.appName) {
+      parent.newAppName = parent.icon.appName;
+    }
+
     let isAuth = store.getters.getUser.isAuth
     if (!isAuth) {
       console.log("Not logged in");
@@ -467,6 +551,7 @@ export default {
       let toUpdate = parent.toUpdate
       let isValid = parent.isValid
       let imageData = parent.imageData
+      let icnsFile = parent.icnsFile
     
       // Check if input is different from original
       try {
@@ -475,7 +560,8 @@ export default {
               (toUpdate.appName != icon.appName && isValid("appName")) ||
               (toUpdate.category != icon.category.id && isValid("category")) ||
               (toUpdate.type != icon.type.id && isValid("type")) ||
-              (imageData)
+              (imageData) ||
+              (icnsFile)
             )
         ){
           return true
@@ -491,4 +577,7 @@ export default {
 </script>
 
 <style>
+.hidden {
+  display: none;
+}
 </style>
