@@ -40,7 +40,7 @@
                 <div label="Icon info" class="card-text-wrapper p-l-16 p-r-16">
 
                     <!-- App name -->
-                    <h3 class="coral-font-color m-0">
+                    <h3 class="coral-font-color m-0 card-app-name">
                         {{icon.appName}}
                         <!-- {{icon.appName.replaceAll("_", " ")}} -->
                     </h3>
@@ -218,6 +218,7 @@ export default {
 
     methods:{
         ...mapActions([
+            'showToast',
             'showEl',
             'setSelectedIcon',
             'addClickCount',
@@ -257,6 +258,8 @@ export default {
 
             const url = `${window.location.origin}${window.location.pathname}#/?icon=${icon.id}`;
             window.history.replaceState({}, '', url);
+
+            console.log('getSelectedIcon: ', this.getSelectedIcon)
             
             this.algoliaSearch({
                 search: icon.appName,
@@ -340,6 +343,7 @@ export default {
         ...mapGetters([
             'getUserAttributes',
             'getSavedIconsId',
+            'getSelectedIcon',
         ]),
 
         iconDownloadUrl(){

@@ -1,7 +1,14 @@
 <template>
   <div>
-    
-    <!-- <StickyBanner/> -->
+    <IconDetailsModal 
+      :icon="getSelectedIcon"
+      @share="showToast({
+        id: 'toastMessage',
+        message: '✅ Link copied to clipboard',
+        variant: 'success'
+      })"
+    /> 
+     <!-- <StickyBanner/> -->
 
     <!-- Intro section -->
     <section class="profile-page-head-wrapper">

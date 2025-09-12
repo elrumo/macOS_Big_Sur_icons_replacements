@@ -1052,7 +1052,6 @@ export default createStore({
   }, 
    
   
-  
   getters: {
     
     getSelectedIcon(store){

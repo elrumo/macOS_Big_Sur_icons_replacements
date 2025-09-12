@@ -1406,6 +1406,9 @@ coral-buttongroup button{
     max-width: 90%;
     margin: auto;
     margin-top: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     h3{
         @extend .ellipses-text-2;
@@ -2346,6 +2349,10 @@ coral-tab{
     padding-top: 0px;
     height: 24px !important;
     font-size: 12px !important;
+}
+
+.card-app-name{
+    max-width: 140px;
 }
 
 .approval-img-wrapper{
