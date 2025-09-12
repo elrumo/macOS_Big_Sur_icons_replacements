@@ -287,8 +287,8 @@ export default createStore({
         const primaryUrl = import.meta.env.VITE_BACKEND_URL + 'search';
         const backupUrl = import.meta.env.VITE_BACKEND_URL_ALT + 'search';
 
-        console.log('primaryUrl: ', primaryUrl)
-        console.log('backupUrl: ', backupUrl)
+        // console.log('primaryUrl: ', primaryUrl)
+        // console.log('backupUrl: ', backupUrl)
 
         const requestBody = JSON.stringify({
           query: searchQuery,
@@ -323,7 +323,7 @@ export default createStore({
 
           return await response.json();
         } catch (primaryError) {
-          console.log('Primary URL failed, trying backup URL...');
+          console.log('Primary URL failed, trying backup URL...:', {primaryUrl, backupUrl});
           
           // Try backup URL
           const backupResponse = await fetch(backupUrl, requestConfig);
@@ -358,7 +358,7 @@ export default createStore({
       try {
         let searchOptions = {
           filters: [
-            category !== "All" && !store.state.isLiquidGlassActive ? `category = ${category}` : "",
+            // category !== "All" && !store.state.isLiquidGlassActive ? `category:${category}` : "",
             store.state.isLiquidGlassActive ? `isLiquidGlass = true` : "",
             iconId !== null ? `objectID = ${iconId}` :  ""
           ],
@@ -376,7 +376,7 @@ export default createStore({
           if (store.state.isLiquidGlassActive) {
             algoliaOptions.filters += ` AND isLiquidGlass:true`
           } else {
-            algoliaOptions.filters += ` AND category:"`+category+`"`
+            // algoliaOptions.filters += ` AND category:"`+category+`"`
           }
 
           const startTime = Date.now();
@@ -415,7 +415,6 @@ export default createStore({
             searchOptions.hitsPerPage = 25
             searchOptions.page = payload.page
           }
-
 
           const startTime = Date.now();
           let timeoutId;
@@ -690,7 +689,7 @@ export default createStore({
 
       let approvedQuery = new Parse.Query(IconsBase);
       let notApprovedQuery = new Parse.Query(IconsBase);
-      let numToLoad = 1500
+      let numToLoad = 999
       
       approvedQuery.limit(numToLoad)
       approvedQuery.equalTo("isHidden", false);
