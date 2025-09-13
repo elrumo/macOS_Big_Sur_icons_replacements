@@ -441,10 +441,8 @@ export default {
       let email = parent.userInfo.email;
       let queryUsers = new Parse.Query(Parse.User)
       queryUsers.equalTo("email", email);
-      console.log('Hiii');
 
       let findUsers = await queryUsers.find()
-      console.log(findUsers);
 
       queryUsers.find().then((response)=>{
 
