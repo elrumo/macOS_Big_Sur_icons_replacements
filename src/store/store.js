@@ -603,6 +603,15 @@ export default createStore({
     },
 
     async setCategory(store, category){
+      if (category.name == "Saved" && !Parse.User.current()) {
+        store.dispatch('showToast', {
+          id: "toastMessage",
+          message: "Please log in to view your saved icons.",
+          variant: "info"
+        });
+        return
+      }
+
       let newCategory = category.name
       let oldCategory = store.state.selectedCategory.name
       let sameCategory = newCategory == oldCategory;
@@ -614,13 +623,13 @@ export default createStore({
       
       let savedIcons = store.state.savedIcons
 
-      if(category.name == 'downloads' && !Parse.User.current()){
-        store.commit('setDataToArr', {arr: 'totalCategory', data: store.state.savedIconCount})
-        store.commit('pushDataToArr', {arr: "dataToShow", data: savedIcons})
+      // if(category.name == 'Saved' && !Parse.User.current()){
+      //   store.commit('setDataToArr', {arr: 'totalCategory', data: store.state.savedIconCount})
+      //   store.commit('pushDataToArr', {arr: "dataToShow", data: savedIcons})
         
-        console.log('Downloads')
-        return
-      }
+      //   console.log('Saved')
+      //   return
+      // }
 
       // Clear dataToShow first to avoid showing old data
       store.commit('setDataToArr', {arr: 'dataToShow', data: [], concatArray: false})
@@ -631,10 +640,12 @@ export default createStore({
       if (category.name == "downloads") searchParams.category = category.name
 
 
+      console.log('category.name: ', category.name)
+
       if(category.name != 'Saved') await store.dispatch('algoliaSearch', searchParams)
 
 
-      if (category.name == "Saved" && !sameCategory) {
+      if (category.name == "Saved" && !sameCategory && Parse.User.current()) {
         
         savedIcons = await store.dispatch('fetchSavedIcons')
         
