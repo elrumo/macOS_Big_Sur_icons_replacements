@@ -283,6 +283,8 @@ export default createStore({
       try {
         const searchQuery = options.search;
         const searchOptions = options.searchOptions;
+
+        searchOptions.filters = searchOptions.filters.filter(Boolean) // Remove empty strings
         
         const primaryUrl = import.meta.env.VITE_BACKEND_URL + 'search';
         const backupUrl = import.meta.env.VITE_BACKEND_URL_ALT + 'search';
@@ -296,6 +298,7 @@ export default createStore({
           apiKey: import.meta.env.VITE_PARSE_JAVASCRIPT_KEY,
         });
 
+
         const requestConfig = {
           method: 'POST',
           headers: {
@@ -306,6 +309,9 @@ export default createStore({
           credentials: 'same-origin',
           body: requestBody
         };
+
+        console.log('requestBody: ', requestBody)
+        console.log('searchOptions: ', searchOptions)
 
         // Try primary URL with timeout
         const primaryPromise = Promise.race([
@@ -343,7 +349,7 @@ export default createStore({
 
     async algoliaSearch(store, payload){
       let search = payload.search || store.state.searchString;
-      let category = payload.category != undefined ? payload.category : store.state.selectedCategory.name;
+      let category = payload.category != undefined ? payload.category : store.state.selectedCategory.id;
       let page = payload.page || 0;
       let concat = payload.concat || false;
       let similarSearch = payload.similarSearch || false;
@@ -358,12 +364,17 @@ export default createStore({
       try {
         let searchOptions = {
           filters: [
-            // category !== "All" && !store.state.isLiquidGlassActive ? `category:${category}` : "",
+            category !== "All"
+            && !store.state.isLiquidGlassActive 
+            && category != 'downloads'
+            && category != undefined 
+              ? `category = ${category}`
+              : "",
             store.state.isLiquidGlassActive ? `isLiquidGlass = true` : "",
             iconId !== null ? `objectID = ${iconId}` :  ""
           ],
           hitsPerPage: 150,
-          sort: ['timeStamp:desc']
+          sort: [category == 'downloads'? 'downloads:desc' : 'timeStamp:desc']
         }
 
         let algoliaOptions = {
@@ -393,6 +404,7 @@ export default createStore({
           
           await Promise.race([timeoutPromise, searchPromise]);
           searchResults = await searchPromise;
+          console.log('searchResults: ', searchResults)
 
           // searchResults = algoliaSearch;
 
@@ -403,7 +415,7 @@ export default createStore({
             }; 
           });
 
-          console.log
+          console.log('searchResults.hits: ', searchResults.hits)
 
           store.commit('pushDataToArr', {arr: "searchData", data: searchResults.hits})
         } else{ ;
@@ -550,9 +562,7 @@ export default createStore({
     },
 
     async fetchSavedIcons(store){
-      if (!Parse.User.current()){
-        return 
-      }
+      if (!Parse.User.current()) return {error: 'No user'}
 
       if (store.state.cache.savedIcons) {
         store.commit('setDataToArr', {arr: 'savedIcons', data: store.state.cache.savedIcons})
@@ -561,6 +571,8 @@ export default createStore({
       }
 
       let savedIconsQuery = Parse.User.current().relation("favIcons").query()
+
+      console.log('savedIconsQuery: ', savedIconsQuery)
       
       try {
         let userSavedIconData = await savedIconsQuery.descending("createdAt").find()
@@ -597,68 +609,49 @@ export default createStore({
       // let search = store.state.searchString
 
       store.dispatch('scrollTo')
-      store.dispatch('fetchSavedIcons')
       store.commit('setDataToArr', {arr: 'selectedCategory', data: category, concatArray: false}) // set category
       store.commit('setDataToArr', {arr: 'isLiquidGlassActive', data: false, concatArray: false}) // reset liquid glass filter
       
       let savedIcons = store.state.savedIcons
 
-      store.dispatch('algoliaSearch', {page: 0})
+      if(category.name == 'downloads' && !Parse.User.current()){
+        store.commit('setDataToArr', {arr: 'totalCategory', data: store.state.savedIconCount})
+        store.commit('pushDataToArr', {arr: "dataToShow", data: savedIcons})
+        
+        console.log('Downloads')
+        return
+      }
 
-      // if (category.name == "All") return;
+      // Clear dataToShow first to avoid showing old data
+      store.commit('setDataToArr', {arr: 'dataToShow', data: [], concatArray: false})
+
+      const searchParams = {page: 0}
+      
+      if (category && category.name !== "All" && category.id) searchParams.category = category.id
+      if (category.name == "downloads") searchParams.category = category.name
+
+
+      if(category.name != 'Saved') await store.dispatch('algoliaSearch', searchParams)
+
 
       if (category.name == "Saved" && !sameCategory) {
+        
+        savedIcons = await store.dispatch('fetchSavedIcons')
+        
+        console.log("savedIcons 1:", savedIcons)
+
+        if (savedIcons.error) return {error: savedIcons.error}
+
+        console.log("savedIcons:", savedIcons)
         // let savedIcons = store.state.savedIcons
         store.commit('setDataToArr', {arr: 'totalCategory', data: store.state.savedIconCount})
         store.commit('pushDataToArr', {arr: "dataToShow", data: savedIcons})
-      }
-      
-      if (category.name != "All" && !sameCategory && category.name != "Saved") {
-        store.commit('setDataToArr', {arr: 'dataToShow', data: [], concatArray: false})
-
-        let toSkip = store.state.dataToShow.length // Checks how many icons with that category have already been fetched
-
-        let approvedQuery = new Parse.Query(IconsBase);
-        let numToLoad = 25
-
-        if (category.name == "downloads") {
-          approvedQuery.descending("downloads");
-        } else if (category.id) {
-          let categoryParse = await store.dispatch('queryCategory', {id: category.id});
-          approvedQuery.descending("timeStamp");
-          approvedQuery.equalTo("category", categoryParse);
-        }else{
-          console.log("Error: No category selected");
-        }
-        
-        approvedQuery.exists("icnsFile");
-        approvedQuery.equalTo("isHidden", false);
-        approvedQuery.equalTo("approved", true);
-        approvedQuery.limit(numToLoad)
-        approvedQuery.skip(toSkip)
-
-        let totalCategory = await approvedQuery.count()
-        store.commit('setDataToArr', {arr: 'totalCategory', data: totalCategory})
-        
-        let results = await approvedQuery.find();        
-        let allIcons = []
-
-        for(let result in results){
-
-          let iconItem = results[result]
-          let objData = iconItem.attributes
-          let iconData = {}
-          iconData.id = iconItem.id
-          
-          for(let data in objData){
-            iconData[data] = objData[data]
-          }
-          
-          iconData.id = results[result].id
-          allIcons.push(iconData)
-        }
-
-        store.commit('pushDataToArr', {arr: "dataToShow", data: allIcons})
+      } else if (category.name != "All" && !sameCategory && category.name != "Saved") {
+        // Use algoliaSearch results for dataToShow instead of running separate Parse query
+        // The algoliaSearch has already populated searchData with filtered results
+        let searchResults = store.state.searchData
+        store.commit('setDataToArr', {arr: 'totalCategory', data: searchResults.length})
+        store.commit('pushDataToArr', {arr: "dataToShow", data: searchResults})
       }
 
     },
@@ -1084,11 +1077,8 @@ export default createStore({
         // return store.list
         return store.searchData
       } else if (selectedCategory != "All" && !store.searchString) {
-        try {
-          return store.dataToShow.filter(icon => icon.category.id == categoryId);
-        } catch (error) {
-          return store.dataToShow; 
-        }
+        // Use dataToShow which now contains algoliaSearch results for the selected category
+        return store.dataToShow;
       }
 
       // Return icons data if the user has searched for something

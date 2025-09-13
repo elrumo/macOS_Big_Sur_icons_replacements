@@ -402,7 +402,7 @@
             :icon="icons.Heart"
             value="Saved"
             title="Saved"
-            @click="setCategoryAndFetchSaved()"
+            @click="setCategory({name: 'Saved'})"
           >
             Saved
           </button>
@@ -876,10 +876,6 @@ export default {
         }
 
       });
-    },
-
-    async setCategoryAndFetchSaved(){
-      this.setCategory({name: 'Saved'})
     },
 
     scrollEl(id, top, left){
