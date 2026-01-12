@@ -472,15 +472,14 @@
   </div>
 </template>
 
-<script>
-import { defineAsyncComponent } from 'vue';
-import { mapActions, mapGetters } from 'vuex';
+<script setup>
+import { ref, computed, watch, onMounted, onUnmounted, nextTick, defineAsyncComponent, getCurrentInstance } from 'vue';
+import { useStore } from 'vuex';
+import { useRoute, useRouter } from 'vue-router';
+import { useHead } from '@unhead/vue'
 
 import Hero from './Hero.vue';
 import NativeAd from './NativeAd.vue';
-import StickyBanner from './StickyBanner.vue';
-import CarbonAd from './CarbonAd.vue';
-import UserIconCardLoading from './UserIconCardLoading.vue';
 import UserIconCard from './UserIconCard.vue';
 import IconDetailsModal from './IconDetailsModal.vue';
 
@@ -532,7 +531,6 @@ import StarIcon from "../assets/icons/Category_Icons/Star.svg"
 import HeartIcon from "../assets/icons/Category_Icons/Heart.svg"
 import AppIcon from "../assets/icons/Category_Icons/AppIcon.svg"
 import HeartIconFilled from "../assets/icons/Category_Icons/Heart_Filled.svg"
-import HeartIconFilledRed from "../assets/icons/Category_Icons/Heart_Filled_Red.svg"
 import FlameIcon from "../assets/icons/Category_Icons/Flame.svg"
 
 import addCoralIcon from "../assets/icons/add.svg"
@@ -543,737 +541,466 @@ import ChevronDownCoralIcon from "../assets/icons/ChevronDown.svg"
 
 import AlgoliaIcon from "../assets/algolia_logo.svg"
 
-export default {
-  name: 'Home',
+// Async components - automatically registered
+defineAsyncComponent(() => import('@/components/Header.vue'));
+defineAsyncComponent(() => import('@/components/Dialog.vue'));
+defineAsyncComponent(() => import('@/components/deleteDialog.vue'));
+defineAsyncComponent(() => import('@/components/SaveIconsDialogue.vue'));
+defineAsyncComponent(() => import('@/components/IconDialog.vue'));
 
-  components: {
-    "Header": defineAsyncComponent(() => import('@/components/Header.vue')),
-    "Dialog": defineAsyncComponent(() => import('@/components/Dialog.vue')),
-    "deleteDialog": defineAsyncComponent(() => import('@/components/deleteDialog.vue')),
-    "SaveIconsDialogue": defineAsyncComponent(() => import('@/components/SaveIconsDialogue.vue')),
-    "IconDialog": defineAsyncComponent(() => import('@/components/IconDialog.vue')),
-    UserIconCard,
-    Hero,
-    NativeAd,
-    StickyBanner,
-    CarbonAd,
-    UserIconCardLoading,
-    VueMarkdown,
-    IconDetailsModal
-  },
+// Composables
+const instance = getCurrentInstance();
+const $cookies = instance?.appContext.config.globalProperties.$cookies;
+const store = useStore();
+const route = useRoute();
+const router = useRouter();
 
-  metaInfo: {
-      // if no subcomponents specify a metaInfo.title, this title will be used
-      // title: 'How to change app icons in macOS Big Sur & Monterey',
-      title: 'macOS app icon pack - 7000+ ready icons for Big Sur & iOS',
-      // description:"Instructions on how to donlwoad and change app icons in macOS Big Sur & Monterey using Finder and a website with over 5000+ free app icons.",
-      description:"7000+ App icons for macOS in the style of macOS Big Sur & Monterey. Fully open source and community led. How to install custom icons on macOS Big Sur & Monterey.",
-      // all titles will be injected into this template
-      titleTemplate: '%s | macOSicons',
-      meta:[
-        // Facebook
-        {
-          property: 'og:url',
-          content:  'https://macosicons.com'
-        },
-        {
-          property: 'og:title',
-          content:  'macOS app icon pack - 5000+ free and open source icons for Big Sur & iOS',
-        },
-        {
-          property: 'og:description',
-          content:  'Free 5000+ App icons for macOS in the style of macOS Big Sur & Monterey. Fully open source and community led. How to install custom icons on macOS Big Sur & Monterey.',
-        },
-        {
-          property: 'og:image',
-          content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Thumbnail_2021.jpg'
-        },
-
-        // Twitter
-        {
-          property: 'twitter:url',
-          content:  'https://macosicons.com'
-        },
-        {
-          property: 'twitter:description',
-          content:  'Free 5000+ App icons for macOS in the style of macOS Big Sur & Monterey. Fully open source and community led. How to install custom icons on macOS Big Sur & Monterey.',
-        },
-        {
-          property: 'twitter:title',
-          content:  'macOS app icon pack - 5000+ free and open source icons for Big Sur & iOS',
-        },
-        {
-          property: 'twitter:image',
-          content:  'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Thumbnail_2021.jpg'
-        },
-      ]
-  },
-
-  data(){
-    return{
-
-      Icons: Icons,
-      Parse: Parse,
-
-      page: 0,
-
-      iconList:{},
-      searchString: "",
-      awaitingSearch: false,
-      iconsToShow: [],
-      list: [],
-
-      cookies: {
-        updatesIsRead: $cookies.get('updatesIsRead'),
+// Meta info
+useHead({
+  bodyAttrs: {
+    title: 'macOS app icon pack - 7000+ ready icons for Big Sur & iOS',
+    description: "7000+ App icons for macOS in the style of macOS Big Sur & Monterey. Fully open source and community led. How to install custom icons on macOS Big Sur & Monterey.",
+    titleTemplate: '%s | macOSicons',
+    meta: [
+      // Facebook
+      {
+        property: 'og:url',
+        content: 'https://macosicons.com'
       },
-      
-      overflow: true,
-      windowWidth: window.innerWidth,
-      scrolledToBottom: true,
-      sortByName: true,
-      sortBy: "createdAt",
-      isSearch: false,
-      noIcons: true,
-      isAuth: false,
-      loadingError: false,
-      
-      howManyRecords: 0,
-
-      isMacOs: true,
-      isAdOn: false,
-
-      scrolled: false,
-      distanceFromTop: true ,
-
-      message: "",
-      today: this.getTodayDate(),
-      selectedIcon: {},
-      downloads:{},
-
-      iconListLen: this.iconListLen,
-      lastVisible: {},
-      dataToShow: [],
-      activeIcon: {},
-      
-      alogliaLogo: AlgoliaIcon,
-
-      icons:{
-        success: deleteIcon,
-        namingOrder: namingOrderIcon,
-        date: dateIcon,
-        loading: placeholderIcon,
-        iconsOrder: namingOrderIcon,
-        Browser_Extensions: BrowserExtensionsIcon,
-        Developer_Tools: DeveloperToolsIcon,
-        Education: EducationIcon,
-        Entertainment: EntertainmentIcon,
-        Finance: FinanceIcon,
-        Games: GamesIcon,
-        Graphics_Design: Graphics_DesignIcon,
-        Health_Fitness: HealthFitnessIcon,
-        Lifestyle: LifestyleIcon,
-        Medical: MedicalIcon,
-        Music: MusicIcon,
-        News: NewsIcon,
-        Photo_Video: PhotoVideoIcon,
-        Productivity: ProductivityIcon,
-        Reference: ReferenceIcon,
-        Social_Networking: SocialNetworkingIcon,
-        Sports: SportsIcon,
-        Travel: TravelIcon,
-        Utilities: UtilitiesIcon,
-        Weather: WeatherIcon,
-        AllIcons: AllIconsIcon,
-        Star: StarIcon,
-        Heart: HeartIcon,
-        AppIcon: AppIcon,
-        HeartFilled: HeartIconFilled,
-        Flame: FlameIcon,
+      {
+        property: 'og:title',
+        content: 'macOS app icon pack - 5000+ free and open source icons for Big Sur & iOS',
       },
-      coralIcons:{
-        delete: deleteIcon,
-        addIcon: addCoralIcon,
-        newItem: newItemCoralIcon,
-        edit: editCoralIcon,
-        loading: placeholderCoralIcon,
-        chevron: ChevronDownCoralIcon,
-      }
-    }
-  },
-
-  mounted: async function(){
-    if (this.$store.state.droppedFile) {
-      const file = this.$store.state.droppedFile
-      const fileName = file.name.replace('.png', '')
-      this.filesToUpload[fileName] = file
-      const objectURL = window.URL.createObjectURL(file)
-      const value = {
-        img: objectURL,
-        name: fileName
-      }
-      this.$set(this.filesToShow, fileName, value)
-      this.totalNumFiles = Object.keys(this.filesToShow).length
-      this.imageData = true
-      this.$store.commit('setDroppedFile', null)
-    }
-    if (this.$store.state.droppedFile) {
-      const file = this.$store.state.droppedFile
-      const fileName = file.name.replace('.png', '')
-      this.filesToUpload[fileName] = file
-      const objectURL = window.URL.createObjectURL(file)
-      const value = {
-        img: objectURL,
-        name: fileName
-      }
-      this.$set(this.filesToShow, fileName, value)
-      this.totalNumFiles = Object.keys(this.filesToShow).length
-      this.imageData = true
-      this.$store.commit('setDroppedFile', null)
-    }
-
-    // Check if the URL has the 'icon' query parameter
-    const urlParams = new URL(window.location.href.replace(/#/g, "%23")).searchParams;
-    const iconParam = urlParams.get('icon');
-    
-    if (iconParam) {
-      this.showDialog('iconDetailsDialog');
-    }
-
-    try {
-      this.algoliaSearch({page: this.page, concat: false})
-      this.scroll()
-      this.fetchSavedIcons()
-      // this.getIconsArray();
-    } catch (error) {
-      this.handleParseError(error)
-    }
-
-    // this.getAd()
-    this.cmdK()
-    this.searchForPathQuery()
-    this.setEventListenersOnStart()
-    this.fetchUserAttributes()
-    
-    // try{
-      await this.fetchHomeDialog()
-    // }catch{
-    //   console.log("loading fetchHomeDialog error");
-    // }
-    
-    if (this.getHomeDialog.showParticles) {
-      let particlesImageUrl = 'https://api.macosicons.com' + this.getHomeDialog.particlesImage.data.attributes.url
-      try {
-        var confettiSettings = {
-          target:"confetti-canvas",
-          max:" 20",
-          size:" 1",
-          animate:true,
-          props:[{
-            type: "svg",
-            src: particlesImageUrl,
-            size: 25,
-          }],
-          respawn: false,
-          clock:"15",
-          rotate:true,
-          start_from_edge:true,
-        };
-        var confetti = new ConfettiGenerator(confettiSettings);
-        confetti.render(); 
-      } catch (error) {
-        console.log("No confetti: " , error);
-      }
-    }
-
-    this.updatesIsRead = $cookies.get('updatesIsRead');
-    this.isAuth = this.getUser.isAuth
-    let fullPath = this.$route.fullPath
-    let currentUser = Parse.User.current()
-    if (fullPath.includes("/?username=") && !currentUser) {
-      this.showEl("loginDialog")
-    }
-
-  },
-
-  methods:{ 
-    ...mapActions([
-      'showToast',
-      'showEl',
-      'fetchIconUserInfo',
-      'adClick',
-      'setCategory',
-      'setLiquidGlassFilter',
-      'setData',
-      'loadMoreIcons',
-      'algoliaSearch',
-      'scrollTo',
-      'setDataToArr',
-      'pushDataToArr',
-      'fetchUserAttributes',
-      'fetchSavedIcons',
-      'fetchHomeDialog',
-      'stateStateAction',
-    ]),
-
-    iconInSearch(num){
-      let search = this.search
-      let searchStringEmpty = this.searchString.length == 0      
-
-      if (search.length > 0) {
-        return search
-      } else if (!searchStringEmpty && search.length == 0) {
-        return 0
-      }{
-        return num
-      }
-    },
-
-    getCookie(key){
-      let cookie = $cookies.get(key);
-      return cookie
-    },
-
-    setCookie(key, val){
-      this.cookies[key] = val
-      $cookies.set(key, val);
-    },
-
-    setEventListenersOnStart(){
-      window.addEventListener('scroll', this.handleScroll);
-
-      window.addEventListener('resize', (data) => {
-        parent.windowWidth = window.innerWidth
-      })
-    },
-
-    searchForPathQuery(){
-      let routerName = this.$route.name
-      let serachValue = this.$router.currentRoute.value.params.search
-      if(routerName == "Search"){
-        this.searchString = serachValue
-      }
-    },
-
-    removeButton() {
-    },
-
-    getTodayDate(){
-      let today = new Date();
-      let dd = String(today.getDate()).padStart(2, '0');
-      let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-      let yyyy = today.getFullYear();
-      today = dd + '/' + mm + '/' + yyyy;
-      return today
-    },
-
-    cmdK(){
-      document.addEventListener('keydown', (event) => {
-        let isCmdkPressed = event.getModifierState('Meta') && event.key.toLowerCase() == 'k'
-
-        if(isCmdkPressed){
-          document.getElementById('searchBarInput').focus()
-          document.getElementById('searchBarInput').click();
-        }
-
-      });
-    },
-
-    scrollEl(id, top, left){
-      let scrollLeft = document.getElementById(id).scrollLeft
-      let scrollTop = document.getElementById(id).scrollTop
-
-      document.getElementById(id).scroll({
-        top: scrollTop+top,
-        left: scrollLeft+left,
-        behavior: 'smooth'
-      })
-    },
-
-    getAd(el){
-      try {
-        if (typeof _bsa !== 'undefined') {
-          _bsa.init('custom', 'CESDC2QN', 'placement:macosiconscom',
-          {
-            target: '#card-ad',
-            template: `
-                <a href="##statlink##" target="_blank" rel="noopener sponsored" id="customAd" class="bsa-link">
-                <div class="bsa-img-wrapper" style="background-color: ##backgroundColor##;">
-                  <div class="bsa-icon" style="background-image: url(##logo##);"></div>
-                </div>
-                <div class="text-ad-wrapper">
-                  <img style="background: ##backgroundColor##" src="##image##">
-                  <div class="bsa-desc">##description##</div>
-                </div>
-                </a>
-              `
-            }
-          );
-        }
-      } catch (error) {
-      }
-    },
-
-    isDialog(){
-      document.getElementByTagName("coral-dialog").open;
-      return true;
-    },
-
-    toggleOverflow(){
-      document.documentElement.style.overflow = '';
-    },
-
-    logDonation(location){
-      window.plausible("logDonation", {props: {
-          location: location, 
-      }})
-    },
-
-    async copySearch(){
-      let parent = this;
-      let toCopy = "https://macosicons.com/#/" + parent.searchString
-      
-      await navigator.clipboard.writeText(toCopy);
-      
-      parent.showToast({
-        id: "toastMessage",
-        message: "✅ Link copied to your clipboard",
-        variant: "success"
-      })
-
-      window.plausible("PageShared", {props: {
-        sharedTerm: parent.searchString,
-        date: parent.today,
-      }})
-    },
-
-    clearSearch(){
-      this.searchString = ""
-    },
-
-    handleScroll () {
-      let searchBar = document.getElementById("searchBar")
-      if(!searchBar) return 
-      this.distanceFromTop =  document.getElementById("searchBar").getBoundingClientRect().y > 65
-    },
-
-    changeOS(e){
-      if (e.target.value == "macOS") {
-        this.isMacOs = true
-      } else{
-        this.isMacOs = false
-      }
-    },
-
-    downladUrl(icon){
-      let parent = this
-      
-      if (parent.isMacOs) {
-        return icon.icnsUrl
-      } else {
-        return icon.iOSUrl
-      }
-    },
-
-    prettifyName(name){
-      // name = name.replaceAll("_", " ")
-      return name
-    },
-
-    changeSortOrder(){
-      let date = this.icons.date
-      let namingOrder = this.icons.namingOrder
-
-      if (this.sortByName) {
-        this.icons.iconsOrder = date
-      } else{
-        this.icons.iconsOrder = namingOrder
-      }
-
-      this.sortByName = !this.sortByName
-      
-    },
-    
-    getDate(timeStamp){
-      let newDate = new Date(timeStamp)
-      
-      let day = newDate.getUTCDate()
-        if (day < 10) {
-          day = "0"+day
-        }
-      let month = newDate.getUTCMonth() + 1
-        if (month < 10) {
-          month = "0"+month
-        }
-      let year = newDate.getFullYear()
-      let date = day + "/" + month + "/" + year
-
-      return date
-    },
-
-    async loadMore(){
-      let parent = this
-      
-      if (parent.$route.path != "/") {
-        return
-      }
-      
-      if (parent.$store.state.selectedCategory.name != "All") {
-        if (parent.$store.state.totalCategory == parent.selectedIcons.length) {
-          parent.scrolledToBottom = true
-          return
-        } else{
-          setTimeout(() => {
-            parent.loadMoreIcons()
-            parent.scrolledToBottom = true
-          }, 800)
-          return
-        }
-      } else{
-        if (parent.$store.state.totalCategory == parent.selectedIcons.length && !this.noMoreResults) {
-          parent.scrolledToBottom = true
-          return
-        } else{
-          setTimeout(() => {
-            let page = this.page
-            this.page = page + 1
-            parent.algoliaSearch({page: parent.page, concat: true})
-            parent.scrolledToBottom = true
-          }, 800)
-          return
-        }
-      }
-
-    },
-
-    scroll() {
-      let parent = this
-      window.onscroll = () => {
-        let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000
-
-        if (bottomOfWindow && parent.scrolledToBottom) {
-          parent.scrolledToBottom = false
-          parent.loadMore()
-        }
-      }
-    },
-
-    handleDrop(e) {
-      const file = e.dataTransfer.files[0]
-      if (file && file.type === 'image/png') {
-        this.$store.commit('setDroppedFile', file)
-        this.showDialog('submissionDialog')
-      }
-    },
-
-    handleParseError(err){
-      const parent = this
-
-      console.log("Error getting icons, report this error to @elrumo: ", err);
-      switch (err.code) {
-        case Parse.Error.INVALID_SESSION_TOKEN:
-          Parse.User.logOut();
-          window.location.reload()
-          break;
-        
-        case 100:
-          break;
-      
-        default:
-          parent.loadingError = "true"
-          break;
-      }
-    },
-
-    async getIconsArray(){
-      let parent = this
-      return
-      const query = new Parse.Query(Icons);
-
-      query.descending("timeStamp");
-      query.equalTo("isHidden", false);
-      query.equalTo("approved", true);
-      query.exists("icnsFile");
-      query.include(["user.isBanned"]);
-      query.limit(docLimit);
-      parent.howManyRecords = docLimit
-      // const results = await query.find()
-
-      query.count().then((count) =>{
-        console.log(count);
-        parent.iconListLen = count
-      })
-
-    },
-
-    showDialog(dialogId){
-      let parent = this
-      document.getElementById(dialogId).show()
-      // parent.activeIcon= icon
-    },
-
-    async editDoc(icon, e, field){
-      let newName = e.target.value
-      
-      let id
-      if (icon.algoliaID == undefined) {
-          id = icon.id
-      } else {
-          id = icon.algoliaID
-      }
-
-      const IconsBase = Parse.Object.extend("Icons2");
-      const query = new Parse.Query(IconsBase);
-      const docToEdit = await query.get(id)
-
-
-      docToEdit.set({ [field]: newName }) // Save icnsToStore obj with .icns file and its url to Parse server
-      docToEdit.save().then(() =>{
-      }).catch((e) =>{
-        document.getElementById("error").show()
-      })
-    },
-
-    changeDate(icon, e){
-        let date = e.target.value
-        
-        // Get new input date and convert it to Unix miliseconds
-        let day = date[0]+date[1]
-        let month = date[3]+date[4]
-        let year = date[6]+date[7]+date[8]+date[9]
-
-        let newDate = new Date(month + "/" + day + "/" + year)
-        let newTimeStamp = newDate.getTime()
-
-        db.collection("submissions").doc(icon.id).update({
-            timeStamp: newTimeStamp
-        }).then(function() {
-            console.log("Document successfully updated!");
-        }).catch(function(error) {
-            // The document probably doesn't exist.
-            console.error("Error updating document: ", error);
-        });
+      {
+        property: 'og:description',
+        content: 'Free 5000+ App icons for macOS in the style of macOS Big Sur & Monterey. Fully open source and community led. How to install custom icons on macOS Big Sur & Monterey.',
+      },
+      {
+        property: 'og:image',
+        content: 'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Thumbnail_2021.jpg'
       },
 
-  },
-
-  watch:{
-    searchString: {
-      handler(val, oldVal) {
-        this.page = 0;
-        
-        if (this.$route.name != "Home" && this.$route.name != "Search") return;
-
-        if (val == '') {
-          this.setData({state: "searchString", data: val});
-          this.algoliaSearch({page: 0, concat: false});
-          return;
-        }
-
-        this.setData({state: "searchString", data: val});
-        
-        if (this.debounceTimer) clearTimeout(this.debounceTimer);
-        
-        this.debounceTimer = setTimeout(() => {
-          this.algoliaSearch({page: 0, concat: false});
-        }, 200);
+      // Twitter
+      {
+        property: 'twitter:url',
+        content: 'https://macosicons.com'
       },
-      deep: true
-    },
-
-    content: {
-      handler(val, oldVal) {
-        this.$nextTick(()=>{
-          let parent = this
-          let ad = document.getElementById("carbonads")
-          if(!ad) {
-            parent.isAdOn = false
-          } else {
-            parent.isAdOn = false
-          }
-        })
+      {
+        property: 'twitter:description',
+        content: 'Free 5000+ App icons for macOS in the style of macOS Big Sur & Monterey. Fully open source and community led. How to install custom icons on macOS Big Sur & Monterey.',
       },
-      deep: true
-    }
-  },
-
-  computed:{
-    ...mapGetters([
-      'getUser', 
-      'getAppCategories', 
-      'getIconType', 
-      'selectedIcons', 
-      'getSelectedCategory', 
-      'getSavedIcons',
-      'getSupportMessage',
-      'getHomeDialog',
-      'getIconListLen',
-      'isLoading',
-      'getIsLiquidGlassActive',
-    ]),
-
-    isMobile(){
-      return this.windowWidth <= 820
-    },
-    
-    adIsOn(){
-      let ad = document.getElementById("carbonads")
-      if(!ad) {
-        return true
-      } else {
-       return false
-      }
-    },
-
-    isAdmin(){
-      let parent = this
-
-      if (parent.getUser.isAuth) {
-        if (parent.getUser.userData.Role.objectId == "OoxWjSJuQi") {
-          return true
-        } else { return false }
-
-      } else{
-         return false
-      }
-    },
-
-
-    getParseObj(){
-      return Icons
-    },
-
-    toastMsg(){
-      return this.$store.state.toastMsg
-    },
-
-    search(){
-      if(this.selectedIcons.length == 0){
-        this.noIcons = true
-      } else{
-        this.noIcons = false
-      }
-      
-      return this.selectedIcons;
-    },
-
-    iconListStore(){
-      return this.$store.state.list
-    },
-
-    isUserLoggedIn(){
-      if (Parse.User.current()) return true
-      else return false
-    },
-
-  },
-
-  unmounted () {
-    // window.removeEventListener('scroll', this.handleScroll);
-  },
-
-  props: {
+      {
+        property: 'twitter:title',
+        content: 'macOS app icon pack - 5000+ free and open source icons for Big Sur & iOS',
+      },
+      {
+        property: 'twitter:image',
+        content: 'https://raw.githubusercontent.com/elrumo/macOS_Big_Sur_icons_replacements/master/icons/Social/low-res/Thumbnail_2021.jpg'
+      },
+    ]
   }
-}
+});
+
+// Reactive state
+const page = ref(0);
+const searchString = ref("");
+const list = ref([]);
+
+const getTodayDate = () => {
+  let today = new Date();
+  let dd = String(today.getDate()).padStart(2, '0');
+  let mm = String(today.getMonth() + 1).padStart(2, '0');
+  let yyyy = today.getFullYear();
+  today = dd + '/' + mm + '/' + yyyy;
+  return today;
+};
+
+const cookies = ref({
+  updatesIsRead: $cookies?.get('updatesIsRead'),
+});
+
+const overflow = ref(true);
+const windowWidth = ref(window.innerWidth);
+const scrolledToBottom = ref(true);
+const sortByName = ref(true);
+const noIcons = ref(true);
+const isAuth = ref(false);
+const loadingError = ref(false);
+
+const howManyRecords = ref(0);
+
+const isMacOs = ref(true);
+
+const distanceFromTop = ref(true);
+
+const today = ref(getTodayDate());
+const selectedIcon = ref({});
+
+const activeIcon = ref({});
+
+const debounceTimer = ref(null);
+const filesToUpload = ref({});
+const filesToShow = ref({});
+const totalNumFiles = ref(0);
+const imageData = ref(false);
+
+const icons = ref({
+  success: deleteIcon,
+  namingOrder: namingOrderIcon,
+  date: dateIcon,
+  loading: placeholderIcon,
+  iconsOrder: namingOrderIcon,
+  Browser_Extensions: BrowserExtensionsIcon,
+  Developer_Tools: DeveloperToolsIcon,
+  Education: EducationIcon,
+  Entertainment: EntertainmentIcon,
+  Finance: FinanceIcon,
+  Games: GamesIcon,
+  Graphics_Design: Graphics_DesignIcon,
+  Health_Fitness: HealthFitnessIcon,
+  Lifestyle: LifestyleIcon,
+  Medical: MedicalIcon,
+  Music: MusicIcon,
+  News: NewsIcon,
+  Photo_Video: PhotoVideoIcon,
+  Productivity: ProductivityIcon,
+  Reference: ReferenceIcon,
+  Social_Networking: SocialNetworkingIcon,
+  Sports: SportsIcon,
+  Travel: TravelIcon,
+  Utilities: UtilitiesIcon,
+  Weather: WeatherIcon,
+  AllIcons: AllIconsIcon,
+  Star: StarIcon,
+  Heart: HeartIcon,
+  AppIcon: AppIcon,
+  HeartFilled: HeartIconFilled,
+  Flame: FlameIcon,
+});
+
+const coralIcons = ref({
+  delete: deleteIcon,
+  addIcon: addCoralIcon,
+  newItem: newItemCoralIcon,
+  edit: editCoralIcon,
+  loading: placeholderCoralIcon,
+  chevron: ChevronDownCoralIcon,
+});
+
+// Computed properties from store
+const getUser = computed(() => store.getters.getUser);
+const getAppCategories = computed(() => store.getters.getAppCategories);
+const selectedIcons = computed(() => store.getters.selectedIcons);
+const getSelectedCategory = computed(() => store.getters.getSelectedCategory);
+const getHomeDialog = computed(() => store.getters.getHomeDialog);
+const getIconListLen = computed(() => store.getters.getIconListLen);
+const isLoading = computed(() => store.getters.isLoading);
+const getIsLiquidGlassActive = computed(() => store.getters.getIsLiquidGlassActive);
+
+// Local computed properties
+const isMobile = computed(() => windowWidth.value <= 820);
+
+const isAdmin = computed(() => {
+  if (getUser.value.isAuth) {
+    if (getUser.value.userData.Role.objectId == "OoxWjSJuQi") {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+});
+
+const getParseObj = computed(() => Icons);
+
+const search = computed(() => {
+  if (selectedIcons.value.length == 0) {
+    noIcons.value = true;
+  } else {
+    noIcons.value = false;
+  }
+
+  return selectedIcons.value;
+});
+
+const isUserLoggedIn = computed(() => {
+  if (Parse.User.current()) return true;
+  else return false;
+});
+
+// Methods
+const iconInSearch = (num) => {
+  let searchResults = search.value;
+  let searchStringEmpty = searchString.value.length == 0;
+
+  if (searchResults.length > 0) {
+    return searchResults;
+  } else if (!searchStringEmpty && searchResults.length == 0) {
+    return 0;
+  } {
+    return num;
+  }
+};
+
+const setCookie = (key, val) => {
+  cookies.value[key] = val;
+  $cookies?.set(key, val);
+};
+
+const handleScroll = () => {
+  let searchBar = document.getElementById("searchBar");
+  if (!searchBar) return;
+  distanceFromTop.value = document.getElementById("searchBar").getBoundingClientRect().y > 65;
+};
+
+const setEventListenersOnStart = () => {
+  window.addEventListener('scroll', handleScroll);
+
+  window.addEventListener('resize', () => {
+    windowWidth.value = window.innerWidth;
+  });
+};
+
+const searchForPathQuery = () => {
+  let routerName = route.name;
+  let serachValue = router.currentRoute.value.params.search;
+  if (routerName == "Search") {
+    searchString.value = serachValue;
+  }
+};
+
+const cmdK = () => {
+  document.addEventListener('keydown', (event) => {
+    let isCmdkPressed = event.getModifierState('Meta') && event.key.toLowerCase() == 'k';
+
+    if (isCmdkPressed) {
+      document.getElementById('searchBarInput').focus();
+      document.getElementById('searchBarInput').click();
+    }
+  });
+};
+
+const scrollEl = (id, top, left) => {
+  let scrollLeft = document.getElementById(id).scrollLeft;
+  let scrollTop = document.getElementById(id).scrollTop;
+
+  document.getElementById(id).scroll({
+    top: scrollTop + top,
+    left: scrollLeft + left,
+    behavior: 'smooth'
+  });
+};
+
+const toggleOverflow = () => {
+  document.documentElement.style.overflow = '';
+};
+
+const copySearch = async () => {
+  let toCopy = "https://macosicons.com/#/" + searchString.value;
+
+  await navigator.clipboard.writeText(toCopy);
+
+  store.dispatch('showToast', {
+    id: "toastMessage",
+    message: "✅ Link copied to your clipboard",
+    variant: "success"
+  });
+
+  window.plausible("PageShared", {
+    props: {
+      sharedTerm: searchString.value,
+      date: today.value,
+    }
+  });
+};
+
+const clearSearch = () => {
+  searchString.value = "";
+};
+
+const changeOS = (e) => {
+  if (e.target.value == "macOS") {
+    isMacOs.value = true;
+  } else {
+    isMacOs.value = false;
+  }
+};
+
+const loadMore = async () => {
+  if (route.path != "/") {
+    return;
+  }
+
+  if (store.state.selectedCategory.name != "All") {
+    if (store.state.totalCategory == selectedIcons.value.length) {
+      scrolledToBottom.value = true;
+      return;
+    } else {
+      setTimeout(() => {
+        store.dispatch('loadMoreIcons');
+        scrolledToBottom.value = true;
+      }, 800);
+      return;
+    }
+  } else {
+    if (store.state.totalCategory == selectedIcons.value.length) {
+      scrolledToBottom.value = true;
+      return;
+    } else {
+      setTimeout(() => {
+        page.value = page.value + 1;
+        store.dispatch('algoliaSearch', { page: page.value, concat: true });
+        scrolledToBottom.value = true;
+      }, 800);
+      return;
+    }
+  }
+};
+
+const scroll = () => {
+  window.onscroll = () => {
+    let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000;
+
+    if (bottomOfWindow && scrolledToBottom.value) {
+      scrolledToBottom.value = false;
+      loadMore();
+    }
+  };
+};
+
+const handleDrop = (e) => {
+  const file = e.dataTransfer.files[0];
+  if (file && file.type === 'image/png') {
+    store.commit('setDroppedFile', file);
+    showDialog('submissionDialog');
+  }
+};
+
+const handleParseError = (err) => {
+  console.log("Error getting icons, report this error to @elrumo: ", err);
+  switch (err.code) {
+    case Parse.Error.INVALID_SESSION_TOKEN:
+      Parse.User.logOut();
+      window.location.reload();
+      break;
+
+    case 100:
+      break;
+
+    default:
+      loadingError.value = "true";
+      break;
+  }
+};
+
+const showDialog = (dialogId) => {
+  document.getElementById(dialogId).show();
+};
+
+// Watchers
+watch(searchString, (val) => {
+  page.value = 0;
+
+  if (route.name != "Home" && route.name != "Search") return;
+
+  if (val == '') {
+    store.dispatch('setData', { state: "searchString", data: val });
+    store.dispatch('algoliaSearch', { page: 0, concat: false });
+    return;
+  }
+
+  store.dispatch('setData', { state: "searchString", data: val });
+
+  if (debounceTimer.value) clearTimeout(debounceTimer.value);
+
+  debounceTimer.value = setTimeout(() => {
+    store.dispatch('algoliaSearch', { page: 0, concat: false });
+  }, 200);
+}, { deep: true });
+
+watch(() => store.state.content, () => {
+  nextTick(() => {
+    // Content watcher - keeping for potential future use
+  });
+}, { deep: true });
+
+// Lifecycle hooks
+onMounted(async () => {
+  if (store.state.droppedFile) {
+    const file = store.state.droppedFile;
+    const fileName = file.name.replace('.png', '');
+    filesToUpload.value[fileName] = file;
+    const objectURL = window.URL.createObjectURL(file);
+    const value = {
+      img: objectURL,
+      name: fileName
+    };
+    filesToShow.value[fileName] = value;
+    totalNumFiles.value = Object.keys(filesToShow.value).length;
+    imageData.value = true;
+    store.commit('setDroppedFile', null);
+  }
+
+  const urlParams = new URL(window.location.href.replace(/#/g, "%23")).searchParams;
+  const iconParam = urlParams.get('icon');
+
+  if (iconParam) {
+    showDialog('iconDetailsDialog');
+  }
+
+  try {
+    store.dispatch('algoliaSearch', { page: page.value, concat: false });
+    scroll();
+    store.dispatch('fetchSavedIcons');
+  } catch (error) {
+    handleParseError(error);
+  }
+
+  cmdK();
+  searchForPathQuery();
+  setEventListenersOnStart();
+  store.dispatch('fetchUserAttributes');
+
+  await store.dispatch('fetchHomeDialog');
+
+  if (getHomeDialog.value.showParticles) {
+    let particlesImageUrl = 'https://api.macosicons.com' + getHomeDialog.value.particlesImage.data.attributes.url;
+    try {
+      var confettiSettings = {
+        target: "confetti-canvas",
+        max: " 20",
+        size: " 1",
+        animate: true,
+        props: [{
+          type: "svg",
+          src: particlesImageUrl,
+          size: 25,
+        }],
+        respawn: false,
+        clock: "15",
+        rotate: true,
+        start_from_edge: true,
+      };
+      var confetti = new ConfettiGenerator(confettiSettings);
+      confetti.render();
+    } catch (error) {
+      console.log("No confetti: ", error);
+    }
+  }
+
+  cookies.value.updatesIsRead = $cookies.get('updatesIsRead');
+  isAuth.value = getUser.value.isAuth;
+  let fullPath = route.fullPath;
+  let currentUser = Parse.User.current();
+  if (fullPath.includes("/?username=") && !currentUser) {
+    store.dispatch('showEl', "loginDialog");
+  }
+});
+
+onUnmounted(() => {
+  // window.removeEventListener('scroll', handleScroll);
+});
 </script>
 
 <style lang="scss">

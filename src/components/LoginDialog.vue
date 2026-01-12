@@ -271,9 +271,13 @@
       <button is="coral-button" v-if="userInfo.step == 1" variant="quiet" @click="closeDialog('loginDialog')">Cancel</button>
       <button is="coral-button" v-if="userInfo.step == 2" @click="toStep(1)" variant="quiet">Back</button>
 
-      <button id="continue-btn" is="coral-button"
+      <button 
+        id="continue-btn" 
+        is="coral-button"
         v-if="isValid && userInfo.step == 1"
-        @click="checkOldAccount(2)" variant="">
+        @click="checkOldAccount(2)" 
+        variant=""
+      >
         Continue
       </button>
       
@@ -347,11 +351,10 @@
   </coral-dialog>
 </template>
 
-<script>
-import { mapActions, mapGetters } from 'vuex';
+<script setup>
+import { ref, reactive, computed, onMounted } from 'vue';
+import { useStore } from 'vuex';
 import Parse from 'parse/dist/parse.min.js';
-// import jwt_decode from 'jwt-decode';
-
 
 import addCoralIcon from "../assets/icons/add.svg"
 import newItemCoralIcon from "../assets/icons/newItem.svg"
@@ -359,479 +362,438 @@ import editCoralIcon from "../assets/icons/edit.svg"
 import placeholderCoralIcon from "../assets/placeholder-icon.png"
 import appleIcon from "../assets/icons/Apple.svg"
 import deleteIcon from "../assets/icons/delete.svg"
-
 import logoLowRes from "../assets/Resources/logo_lowres.png"
 
-export default {
-  name:"LoginDialog",
-  
-  props:{
+const store = useStore();
+
+// Data
+const coralIcons = {
+  apple: appleIcon,
+  delete: deleteIcon,
+  addIcon: addCoralIcon,
+  newItem: newItemCoralIcon,
+  edit: editCoralIcon,
+  loading: placeholderCoralIcon,
+};
+
+const imgs = {
+  macOSiconsLogo: logoLowRes
+};
+
+const email = ref("");
+const yourName = ref("");
+const isLoading = ref(false);
+const isReset = ref(false);
+const showResend = ref(false);
+const emailSentAt = ref('');
+const timeLeftForResend = ref(20);
+
+const userInfo = reactive({
+  isValid: false,
+  step: 1,
+  problems: {
+    usernameExists: false,
+    passNotSecure: false
   },
-  
-  data(){
-    return{
-      coralIcons:{
-        apple: appleIcon,
-        delete: deleteIcon,
-        addIcon: addCoralIcon,
-        newItem: newItemCoralIcon,
-        edit: editCoralIcon,
-        loading: placeholderCoralIcon,
-      },
-      imgs:{
-        macOSiconsLogo: logoLowRes
-      },
-      email: "",
-      yourName: "",
-      isLoading: false,
-      isReset: false,
-      
-      showResend: false,
-      emailSentAt: '',
-      timeLeftForResend: 20,
+  passwordResetSent: false,
+  email: "",
+  username: "",
+  nameToShow: "",
+  password: "",
+  repeatPassword: "",
+  hasLoggedIn: false,
+  newAccount: true,
+});
 
-      userInfo:{
-        isValid: false,
-        step: 1,
-        problems:{
-          usernameExists: false,
-          passNotSecure: false
-        },
+// Vuex Actions
+const showToast = (payload) => store.dispatch('showToast', payload);
+const setUser = (user) => store.dispatch('setUser', user);
+const handleParseError = (error) => store.dispatch('handleParseError', error);
 
-        passwordResetSent: false,
-        email: "",
-        username: "",
-        nameToShow: "",
-        password: "",
-        repeatPassword: "",
-        hasLoggedIn: false,
-        newAccount: true,
-      }
-    }
-  },
-  
-  methods:{
-    ...mapActions(['showToast', 'setUser', 'handleParseError']),
-    
-    toStep(step){
-      this.userInfo.step = step
-    },
+// Vuex Getters
+const getUser = computed(() => store.getters.getUser);
 
-    async appleLogin(){
-      AppleID.auth.init({
-        clientId: 'com.macOSicons.client',
-        scope: 'email name',
-        redirectURI: 'https://macosicons.com/redirect',
-        usePopup: true,
-      })
+// Methods
+const toStep = (step) => {
+  userInfo.step = step;
+};
 
-      try {
-        const data = await AppleID.auth.signIn()
-        this.logIn(null, data)
-      } catch (error) {
-        console.error(error);
-      }
-    },
+const appleLogin = async () => {
+  AppleID.auth.init({
+    clientId: 'com.macOSicons.client',
+    scope: 'email name',
+    redirectURI: 'https://macosicons.com/redirect',
+    usePopup: true,
+  });
 
-    nextStep(){
-      let next = document.getElementById("continue-btn")
-      next.click();
-    },
+  try {
+    const data = await AppleID.auth.signIn();
+    logIn(null, data);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
+const nextStep = () => {
+  const next = document.getElementById("continue-btn");
+  next.click();
+};
 
-    closeDialog(id){
-      document.getElementById(id).hide()
-    },
+const closeDialog = (id) => {
+  document.getElementById(id).hide();
+};
 
-    setUserFunc(user){
-      let parent = this
-      parent.setUser(user)
-    },
+const setUserFunc = (user) => {
+  setUser(user);
+};
 
-    setYourName(e){
-      this.yourName = e.target.value
-    },
+const setYourName = (e) => {
+  yourName.value = e.target.value;
+};
 
-    getTextFieldValue(e, field, isEmail){
-        let parent = this
-        let target = e.target
-        let fieldValue = e.target.value
-        var isValid = e.target.checkValidity()
+const getTextFieldValue = (e, field, isEmail) => {
+  let fieldValue = e.target.value;
+  let isValid = e.target.checkValidity();
 
-        if (field == 'username') {
-          fieldValue = fieldValue.replaceAll(" ", '_')
-          e.target.value = fieldValue.toLowerCase()
-        }
-        
-        if (field == 'email') {
-          isValid = this.validateEmail(fieldValue);
-        }
-
-        if(e.keyCode == 13){
-          parent.nextStep()
-        }
-        
-        parent.userInfo[field] = fieldValue
-        parent.userInfo.isValid = isValid
-        
-        if (field == "password") {
-          let passIsValid = !parent.validatePassword
-          if(passIsValid) parent.userInfo.problems.passNotSecure = false;
-        }
-      },
-
-    toArray(obj){
-      return Object.keys(obj)
-    },
-
-    async checkOldAccount(step){
-      let parent = this;
-      parent.isLoading = true
-      let email = parent.userInfo.email;
-      let queryUsers = new Parse.Query(Parse.User)
-      queryUsers.equalTo("email", email);
-
-      let findUsers = await queryUsers.find()
-
-      queryUsers.find().then((response)=>{
-
-        if (response.length != 0) {
-          if (response[0].get("hasLoggedIn")) {
-            parent.userInfo.hasLoggedIn = true
-          } else{
-            console.error(response[0].get("hasLoggedIn"));
-            parent.userInfo.hasLoggedIn = false
-          }
-
-          parent.userInfo.newAccount = false
-        } else {
-          parent.userInfo.newAccount = true
-        }
-        parent.userInfo.step = step
-        parent.isLoading = false
-
-      }).catch((error) => {
-        console.error("Error: ", error);
-        parent.isLoading = false
-      })
-
-    },
-
-    async userExists(){
-      let parent = this;
-      const queryUsername = new Parse.Query(Parse.User);
-      queryUsername.matches("username", parent.userInfo.username, 'i')
-      let resultsUserame = await queryUsername.find();
-      var userExists
-      
-      if (resultsUserame.length !=0) {
-        userExists = true
-      } else {
-        userExists = false
-      }
-      
-      return userExists
-    },
-
-    async signUp(step){
-      let parent = this;
-      parent.isLoading = true
-      const user = new Parse.User();
-      let roleQuery = new Parse.Query(Parse.Role);
-      let roleIsUser = await roleQuery.get("NedBDJozKh")
-      let userExists = await parent.userExists()
-
-      if (userExists) {
-        parent.userInfo.problems.usernameExists = true
-      }else{
-        parent.userInfo.problems.usernameExists = false
-      }
-
-      user.set({
-        username: this.userInfo.username,
-        nameToShow: this.userInfo.nameToShow.length == 0 ? this.userInfo.username : this.userInfo.nameToShow,
-        password: this.userInfo.password,
-        email: this.userInfo.email,
-        Role: roleIsUser
-      });
-      
-      user.signUp().then((newUser) =>{
-        this.setUser(newUser)
-        parent.userInfo.step = 3
-        parent.isLoading = false
-      }).catch((error)=>{
-        parent.isLoading = false
-        if (error.code == 202) {
-          parent.showToast({
-            id: "toastMessage",
-            message: "Username already in use",
-            variant: "error"
-          })
-        }
-
-        if (error.code == 142) {
-          parent.userInfo.problems.passNotSecure = true
-          parent.showToast({
-            id: "toastMessage",
-            message: "Password must be more secure, see above for details",
-            variant: "error"
-          })
-        }
-        console.error(error.code, ": ", error.message);
-      })
-    },
-
-    logIn(step, appleData){
-      let parent = this;
-      parent.isLoading = true
-
-      if (appleData) {
-        const { authorization, user } = appleData
-        
-        const parseJwt = (token) => {
-            try {
-              return JSON.parse(atob(token.split('.')[1]));
-            } catch (e) {
-              return null;
-            }
-        };
-
-        const decoded = parseJwt(authorization.id_token)
-        if (!decoded || !decoded.sub) {
-             console.error("Invalid Apple ID token")
-             parent.isLoading = false
-             return
-        }
-        const id = decoded.sub
-
-        Parse.User.logInWith('apple', {
-          authData: {
-            id: id,
-            token: authorization.id_token
-          }
-        }).then((loggedInUser) => {
-          
-          if (user) {
-            if (user.name) {
-              loggedInUser.set("nameToShow", user.name.firstName + " " + user.name.lastName)
-            }
-            if (user.email) {
-              loggedInUser.set("email", user.email)
-              loggedInUser.set("username", user.email)
-            }
-            loggedInUser.save()
-          }
-
-          parent.setUser(loggedInUser)
-          parent.isLoading = false
-        }).catch((e) => {
-           console.error(e);
-           parent.isLoading = false
-           parent.showToast({
-              id: "toastMessage",
-              message: "Error logging in with Apple",
-              variant: "error"
-            })
-        })
-        return
-      }
-
-      let email = parent.userInfo.email
-      let password = parent.userInfo.password
-      
-      if (!password) {
-        password = document.getElementById("loginPass-1").value
-        parent.userInfo.password = password
-      }
-
-      Parse.User.logIn(email, password).then((user) =>{
-        parent.setUser(user)
-        parent.isLoading = false
-      }).catch((e) => {
-        console.error("error logging in, report this to @elrumo: ", e.code);
-        parent.isLoading = false
-        
-        switch (e.code) {
-          case 101:
-            parent.showToast({
-              id: "toastMessage",
-              message: "Invalid password, try again",
-              variant: "error"
-            }) 
-            break;
-          
-          case 201:
-            parent.showToast({
-              id: "toastMessage",
-              message: "Password cannot be empty",
-              variant: "error"
-            }) 
-            break;
-
-          default:
-            break;
-        }
-
-      })
-
-    },
-
-    async resetPassword(){
-      let parent = this;
-      let email = parent.userInfo.email
-
-      if (parent.isReset) {
-        parent.isLoading = true;
-        parent.isReset = false; 
-
-        Parse.User.requestPasswordReset(email).then(()=>{
-          parent.showToast({
-            id: "toastMessage",
-              message: "Check your email",
-              variant: "success"
-            })
-        })  
-
-        Parse.Cloud.run("firstTimeUser", {email: email}).then((result)=>{
-          parent.userInfo.passwordResetSent = true
-          parent.emailSentAt = new Date().getTime()// Set time the email was sent at
-          parent.isLoading = false;
-
-        }).catch((error) => {
-          console.error("firstTimeUser error: ", error);
-        })
-      } else{
-        document.getElementById("resetPasswordDialog").show()
-        parent.isReset = true;
-      }
-
-    },
-
-    allAreTrue(arr) {
-      return arr.every(element => element === true);
-    },
-
-    validateEmail(email){
-      if (!email) {
-        email = this.userInfo.email;
-      }
-      const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      return emailRegex.test(String(email).toLowerCase())
-    },
-
-  },
-
-  computed:{
-    ...mapGetters(['getUser']),
-    
-    isSignUpValid(){
-      let isValid = [this.validatePassword, this.validateEmail(), this.validateUsername, this.validateRepeatPassword]
-      return this.allAreTrue(isValid)
-    },
-
-    waitSeconds(){
-      let parent = this
-      var interval = setInterval(function(){
-        let now = new Date().getTime();
-        let difference = now - parent.emailSentAt
-        let wait = 20
-        let isDifference = parent.showResend = difference >= wait*1000
-
-        parent.timeLeftForResend = parent.timeLeftForResend - 1
-
-        if (isDifference) {
-          parent.showResend = true;
-          parent.timeLeftForResend = wait;
-          parent.userInfo.passwordResetSent = false;
-          clearInterval(interval);
-        }
-      }, 1000);
-
-      interval
-      return parent.showResend 
-    },
-
-    validateUsername(){
-      const username = this.userInfo.username
-      return username.length > 2
-    },
-
-    validatePassword(){
-      let parent = this
-      let userInfo = parent.userInfo
-      var passwordRules = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})");
-      return passwordRules.test(userInfo.password) && userInfo.password.length >= 6
-    },
-
-    validateRepeatPassword(){
-      let parent = this
-      let userInfo = parent.userInfo
-      return userInfo.password === userInfo.repeatPassword && userInfo.repeatPassword.length > 0
-    },
-
-    async isNotEmpty(){
-      let parent = this
-      let toArray = parent.toArray
-      let userInfo = parent.userInfo
-
-      let isValid = []
-      
-      // Do password strengh checks only if the user does not exist
-      let userExists = await parent.userExists()
-      
-      if (!userExists) {
-        isValid.push(parent.validatePassword)
-      }
-      
-      toArray(userInfo).forEach((field)=>{
-          if (userInfo[field] == "" && field != "hasLoggedIn" && field != "newAccount") {
-            isValid.push(true)
-          }
-      })
-
-      if (isValid.length == 0) {
-        return true
-      } else {
-        return isValid.some((el) => { return el == false })
-      }
-
-    },
-
-    isValid(){
-      let parent = this
-      let toArray = parent.toArray
-      let userInfo = parent.userInfo
-
-      return userInfo.isValid
-    }
-
-  },
-
-  mounted: async function(){
-    let parent = this; 
-    const store = parent.$store;
-    
-    let curerntUser = Parse.User.current()
-    
-    if (!curerntUser) {
-    }else{
-      const query = new Parse.Query(Parse.User);
-
-      query.get(curerntUser.id).then((user)=>{
-        parent.setUserFunc(user)
-      }).catch((error) => {
-        this.handleParseError(error)
-        // Parse.User.logout().then((data) => {
-        //   console.log("Logged out: ", data);
-        // }).catch(err => { 
-        //   console.log("Error logging out after invalid user session: ", err)
-        // })
-      })
-
-    }
+  if (field === 'username') {
+    fieldValue = fieldValue.replaceAll(" ", '_');
+    e.target.value = fieldValue.toLowerCase();
   }
 
-}
+  if (field === 'email') {
+    isValid = validateEmail(fieldValue);
+  }
+
+  if (e.keyCode === 13) {
+    nextStep();
+  }
+
+  userInfo[field] = fieldValue;
+  userInfo.isValid = isValid;
+
+  if (field === "password") {
+    const passIsValid = !validatePassword.value;
+    if (passIsValid) userInfo.problems.passNotSecure = false;
+  }
+};
+
+const toArray = (obj) => {
+  return Object.keys(obj);
+};
+
+const checkOldAccount = async (step) => {
+  isLoading.value = true;
+  const userEmail = userInfo.email;
+
+  try {
+    let findUserResponse = await fetch(import.meta.env.VITE_BACKEND_URL + 'v1/auth/doesAccountExist', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: userEmail
+      })
+    });
+    findUserResponse = await findUserResponse.json();
+    let accountExists = findUserResponse.accountExists;
+    console.log("accountExists: ", accountExists);
+
+    if (accountExists) {
+      userInfo.hasLoggedIn = true;
+    } else {
+      console.error(accountExists);
+      userInfo.hasLoggedIn = false;
+    }
+    userInfo.newAccount = false;
+    userInfo.step = step;
+    isLoading.value = false;
+    
+  } catch (error) {
+    console.error("Error: ", error);
+    isLoading.value = false;
+  }
+};
+
+const userExists = async () => {
+  const queryUsername = new Parse.Query(Parse.User);
+  queryUsername.matches("username", userInfo.username, 'i');
+  const resultsUserame = await queryUsername.find();
+  return resultsUserame.length != 0;
+};
+
+const signUp = async (step) => {
+  isLoading.value = true;
+  const user = new Parse.User();
+  const roleQuery = new Parse.Query(Parse.Role);
+  const roleIsUser = await roleQuery.get("NedBDJozKh");
+  const userExistsResult = await userExists();
+
+  if (userExistsResult) {
+    userInfo.problems.usernameExists = true;
+  } else {
+    userInfo.problems.usernameExists = false;
+  }
+
+  user.set({
+    username: userInfo.username,
+    nameToShow: userInfo.nameToShow.length === 0 ? userInfo.username : userInfo.nameToShow,
+    password: userInfo.password,
+    email: userInfo.email,
+    Role: roleIsUser
+  });
+
+  user.signUp().then((newUser) => {
+    setUser(newUser);
+    userInfo.step = 3;
+    isLoading.value = false;
+  }).catch((error) => {
+    isLoading.value = false;
+    if (error.code === 202) {
+      showToast({
+        id: "toastMessage",
+        message: "Username already in use",
+        variant: "error"
+      });
+    }
+
+    if (error.code === 142) {
+      userInfo.problems.passNotSecure = true;
+      showToast({
+        id: "toastMessage",
+        message: "Password must be more secure, see above for details",
+        variant: "error"
+      });
+    }
+    console.error(error.code, ": ", error.message);
+  });
+};
+
+const logIn = async (step, appleData) => {
+  isLoading.value = true;
+
+  if (appleData) {
+    const { authorization, user } = appleData;
+
+    const parseJwt = (token) => {
+      try {
+        return JSON.parse(atob(token.split('.')[1]));
+      } catch (e) {
+        return null;
+      }
+    };
+
+    const decoded = parseJwt(authorization.id_token);
+    if (!decoded || !decoded.sub) {
+      console.error("Invalid Apple ID token");
+      isLoading.value = false;
+      return;
+    }
+    const id = decoded.sub;
+
+    try {
+      const loggedInUser = await Parse.User.logInWith('apple', {
+        authData: {
+          id: id,
+          token: authorization.id_token
+        }
+      });
+
+      if (user) {
+        if (user.name) {
+          loggedInUser.set("nameToShow", user.name.firstName + " " + user.name.lastName);
+        }
+        if (user.email) {
+          loggedInUser.set("email", user.email);
+          loggedInUser.set("username", user.email);
+        }
+        await loggedInUser.save();
+      }
+
+      setUser(loggedInUser);
+      isLoading.value = false;
+    } catch (e) {
+      console.error(e);
+      isLoading.value = false;
+      showToast({
+        id: "toastMessage",
+        message: "Error logging in with Apple",
+        variant: "error"
+      });
+    }
+    return;
+  }
+
+  const userEmail = userInfo.email;
+  let password = userInfo.password;
+
+  if (!password) {
+    password = document.getElementById("loginPass-1").value;
+    userInfo.password = password;
+  }
+
+  try {
+    const user = await Parse.User.logIn(userEmail, password);
+    setUser(user);
+    isLoading.value = false;
+
+    if (user.get("hasLoggedIn")) {
+      userInfo.hasLoggedIn = true;
+      userInfo.newAccount = false;
+    } else {
+      console.error(user.get("hasLoggedIn"));
+      userInfo.hasLoggedIn = false;
+      userInfo.newAccount = true;
+    }
+
+    userInfo.step = step;
+    isLoading.value = false;
+  } catch (e) {
+    console.error("error logging in, report this to @elrumo: ", e);
+    isLoading.value = false;
+
+    switch (e.code) {
+      case 101:
+        showToast({
+          id: "toastMessage",
+          message: "Invalid password, try again",
+          variant: "error"
+        });
+        break;
+
+      case 201:
+        showToast({
+          id: "toastMessage",
+          message: "Password cannot be empty",
+          variant: "error"
+        });
+        break;
+
+      default:
+        break;
+    }
+  }
+};
+
+const resetPassword = async () => {
+  const userEmail = userInfo.email;
+
+  if (isReset.value) {
+    isLoading.value = true;
+    isReset.value = false;
+
+    Parse.User.requestPasswordReset(userEmail).then(() => {
+      showToast({
+        id: "toastMessage",
+        message: "Check your email",
+        variant: "success"
+      });
+    });
+
+    Parse.Cloud.run("firstTimeUser", { email: userEmail }).then((result) => {
+      userInfo.passwordResetSent = true;
+      emailSentAt.value = new Date().getTime();
+      isLoading.value = false;
+    }).catch((error) => {
+      console.error("firstTimeUser error: ", error);
+    });
+  } else {
+    document.getElementById("resetPasswordDialog").show();
+    isReset.value = true;
+  }
+};
+
+const allAreTrue = (arr) => {
+  return arr.every(element => element === true);
+};
+
+const validateEmail = (emailVal) => {
+  if (!emailVal) {
+    emailVal = userInfo.email;
+  }
+  const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return emailRegex.test(String(emailVal).toLowerCase());
+};
+
+// Computed
+const isSignUpValid = computed(() => {
+  const isValid = [validatePassword.value, validateEmail(), validateUsername.value, validateRepeatPassword.value];
+  return allAreTrue(isValid);
+});
+
+const waitSeconds = computed(() => {
+  const interval = setInterval(() => {
+    const now = new Date().getTime();
+    const difference = now - emailSentAt.value;
+    const wait = 20;
+    const isDifference = showResend.value = difference >= wait * 1000;
+
+    timeLeftForResend.value = timeLeftForResend.value - 1;
+
+    if (isDifference) {
+      showResend.value = true;
+      timeLeftForResend.value = wait;
+      userInfo.passwordResetSent = false;
+      clearInterval(interval);
+    }
+  }, 1000);
+
+  return showResend.value;
+});
+
+const validateUsername = computed(() => {
+  return userInfo.username.length > 2;
+});
+
+const validatePassword = computed(() => {
+  const passwordRules = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})");
+  return passwordRules.test(userInfo.password) && userInfo.password.length >= 6;
+});
+
+const validateRepeatPassword = computed(() => {
+  return userInfo.password === userInfo.repeatPassword && userInfo.repeatPassword.length > 0;
+});
+
+const isNotEmpty = computed(async () => {
+  const isValid = [];
+
+  const userExistsResult = await userExists();
+
+  if (!userExistsResult) {
+    isValid.push(validatePassword.value);
+  }
+
+  toArray(userInfo).forEach((field) => {
+    if (userInfo[field] === "" && field !== "hasLoggedIn" && field !== "newAccount") {
+      isValid.push(true);
+    }
+  });
+
+  if (isValid.length === 0) {
+    return true;
+  } else {
+    return isValid.some((el) => el === false);
+  }
+});
+
+const isValid = computed(() => {
+  return userInfo.isValid;
+});
+
+// Lifecycle
+onMounted(async () => {
+  const currentUser = Parse.User.current();
+
+  if (currentUser) {  
+    const query = new Parse.Query(Parse.User);
+
+    query.get(currentUser.id).then((user) => {
+      setUserFunc(user);
+    }).catch((error) => {
+      handleParseError(error);
+    });
+  }
+});
 </script>
 
 <style>
