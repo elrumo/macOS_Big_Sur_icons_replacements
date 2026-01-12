@@ -310,9 +310,6 @@ export default createStore({
           body: requestBody
         };
 
-        console.log('requestBody: ', requestBody)
-        console.log('searchOptions: ', searchOptions)
-
         // Try primary URL with timeout
         const primaryPromise = Promise.race([
           fetch(primaryUrl, requestConfig),
@@ -571,8 +568,6 @@ export default createStore({
       }
 
       let savedIconsQuery = Parse.User.current().relation("favIcons").query()
-
-      console.log('savedIconsQuery: ', savedIconsQuery)
       
       try {
         let userSavedIconData = await savedIconsQuery.descending("createdAt").find()
@@ -684,83 +679,76 @@ export default createStore({
       }
     },
      //  async fetchUserIconsOld(store, userObj){
-    async fetchUserIcons(store, userObj){
-       const cacheKey = userObj.id;
+    async fetchUserIcons(store, userObj) {
+      const cacheKey = userObj.id;
+
+      console.log('userObj: ', userObj)
+      
+      // Check cache first
       if (store.state.cache.userIcons[cacheKey]) {
-        store.commit('setDataToArr', {arr: 'userIcons', data: store.state.cache.userIcons[cacheKey]})
-        return true
+        store.commit('setDataToArr', {
+          arr: 'userIcons',
+          data: store.state.cache.userIcons[cacheKey]
+        });
+        return true;
       }
 
-      let approvedQuery = new Parse.Query(IconsBase);
-      let notApprovedQuery = new Parse.Query(IconsBase);
-      let numToLoad = 999
-      
-      approvedQuery.limit(numToLoad)
-      approvedQuery.equalTo("isHidden", false);
-      approvedQuery.equalTo("user", userObj);
-      approvedQuery.equalTo("approved", true);
-      approvedQuery.exists("icnsFile");
-      approvedQuery.skip(store.state.userIcons.toSkip.approved)
-      approvedQuery.descending("createdAt");
-      approvedQuery.select("appName", "approved", "category", "createdAt", "credit", "downloads", "highResPngUrl", "iOSUrl", "icnsUrl", "id", "isHidden", "isReview", "lowResPngUrl", "status", "timeStamp", "type", "usersName" );
-      
-      notApprovedQuery.equalTo("isHidden", false);
-      notApprovedQuery.limit(numToLoad)
-      notApprovedQuery.equalTo("user", userObj);
-      notApprovedQuery.skip(store.state.userIcons.toSkip.notApproved)
-      notApprovedQuery.equalTo("approved", false);
-      notApprovedQuery.descending("createdAt");
-
       try {
-        const [iconResults, notApproved, approvedCount, notApprovedCount] = await Promise.all([
-          approvedQuery.find(),
-          notApprovedQuery.find(),
-          approvedQuery.count(),
-          notApprovedQuery.count()
-        ]);
+        // Call the new API endpoint
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}v1/users/fetchPublicUserIcons`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: userObj.id,
+            skipApproved: store.state.userIcons.toSkip.approved,
+            skipNotApproved: store.state.userIcons.toSkip.notApproved,
+            limit: 999
+          })
+        });
 
-        store.state.userIcons.toSkip.approved += numToLoad;
-        store.state.userIcons.toSkip.notApproved += numToLoad;
-        store.state.userIcons.count.approved = approvedCount;
-        store.state.userIcons.count.notApproved = notApprovedCount;
+        const result = await response.json();
+        console.log('result fetchUerIcons: ', result)
 
-        const processResults = (results, status) => {
-          return results.map(result => {
-            let icon = result.attributes;
-            let iconData = {
-              ...icon,
-              id: result.id,
-              category: icon.category || {id: ""}
-            };
-            return {status, ...iconData};
-          });
-        };
+        if (!result.success) {
+          console.error('Error fetching user icons:', result.error);
+          store.dispatch('handleParseError', new Error(result.error));
+          store.commit('setDataToArr', { arr: 'loading', data: false });
+          return false;
+        }
 
-        const approvedIcons = processResults(iconResults, "approved");
-        const notApprovedIcons = processResults(notApproved, "notApproved");
+        // Update state with counts and skip values
+        store.state.userIcons.count.approved = result.count.approved;
+        store.state.userIcons.count.notApproved = result.count.notApproved;
+        store.state.userIcons.toSkip.approved = result.toSkip.approved;
+        store.state.userIcons.toSkip.notApproved = result.toSkip.notApproved;
 
-        const allIcons = [...approvedIcons, ...notApprovedIcons];
-
-        store.commit('setDataToArr', {arr: 'userIcons', data: {
-          approved: approvedIcons,
-          notApproved: notApprovedIcons,
-          count: store.state.userIcons.count,
-          toSkip: store.state.userIcons.toSkip
-        }});
+        // Set the user icons data
+        store.commit('setDataToArr', {
+          arr: 'userIcons',
+          data: {
+            approved: result.approved,
+            notApproved: result.notApproved,
+            count: store.state.userIcons.count,
+            toSkip: store.state.userIcons.toSkip
+          }
+        });
 
         // Cache the results
         store.commit('setDataToArr', {
           arr: 'cache',
           key: 'userIcons',
-          data: {[cacheKey]: store.state.userIcons}
+          data: { [cacheKey]: store.state.userIcons }
         });
 
-        store.commit('setDataToArr', {arr: "loading", data: false});
+        store.commit('setDataToArr', { arr: 'loading', data: false });
         return true;
+
       } catch (error) {
-        console.error("Error fetching user icons:", error);
+        console.error('Error fetching user icons:', error);
         store.dispatch('handleParseError', error);
-        store.commit('setDataToArr', {arr: "loading", data: false});
+        store.commit('setDataToArr', { arr: 'loading', data: false });
         return false;
       }
     },

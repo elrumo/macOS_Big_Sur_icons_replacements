@@ -73,7 +73,7 @@
     <Hero
       v-bind:list="list"
       :submitIconDialog="'submissionDialog'"
-      :iconListLen="iconListLen"
+      :iconListLen="getIconListLen"
       :parseObj="getParseObj"
       :iconsEmpty="true"
       :getHomeDialog="getHomeDialog"
@@ -541,12 +541,9 @@ import ChevronDownCoralIcon from "../assets/icons/ChevronDown.svg"
 
 import AlgoliaIcon from "../assets/algolia_logo.svg"
 
-// Async components - automatically registered
-defineAsyncComponent(() => import('@/components/Header.vue'));
-defineAsyncComponent(() => import('@/components/Dialog.vue'));
-defineAsyncComponent(() => import('@/components/deleteDialog.vue'));
-defineAsyncComponent(() => import('@/components/SaveIconsDialogue.vue'));
-defineAsyncComponent(() => import('@/components/IconDialog.vue'));
+// Async components
+const deleteDialog = defineAsyncComponent(() => import('@/components/deleteDialog.vue'));
+const SaveIconsDialogue = defineAsyncComponent(() => import('@/components/SaveIconsDialogue.vue'));
 
 // Composables
 const instance = getCurrentInstance();

@@ -13,8 +13,9 @@
     <!-- Intro section -->
     <section class="profile-page-head-wrapper">
       <div class="profile-page-img-wrapper">
-        <!-- {{ user.profilePhoto }} -->
-        <img class="profile-img" :src="user.profilePhoto ? user.profilePhoto.url() : resources.profilePic" alt="">
+        <!-- {{ getUserProfilePic() }} -->
+        <img class="profile-img" :src="getUserProfilePic()" alt="">
+        <!-- <img class="profile-img" :src="user.profilePhoto ? user.profilePhoto.url() : resources.profilePic" alt=""> -->
 
         <div class="profile-edit-btn desktop-hidden opacity-80">
             <button
@@ -319,71 +320,76 @@ export default {
       }
     },
 
-    async queryUser(){
+    async queryUser() {
       try {
-        let parent = this;
-        // let user;
         let user = this.user;
-        let isBanned
+        user.username = user.username.toLowerCase();
 
-        const queryUser = new Parse.Query(Parse.User);
-        user.username = user.username.toLowerCase()
-        // user.username = user.username.replaceAll(' ', '_')
-
-        try {
-          queryUser.equalTo("username", this.user.username);
-        } catch (error) {
-          this.handleParseError(error)
-        }
-        let userInfo = await queryUser.find();
-
-        userInfo = userInfo[0];
-        this.userInfo = userInfo;
-
-        try {
-          isBanned = userInfo.attributes.isBanned;
-        } catch (error) {
-        }
-        
-        user.isBanned = isBanned;
-        
-        if (userInfo && !isBanned){
-
-          // Fetch user icons
-          this.fetchUserIcons(userInfo).then(()=>{
-            // Wait to fetch icons then set "selectedIcon" to the first icon fetched back
-            this.setDataToArr({
-              arr: "selectedIcon",
-              data: this.userIcons[0],
-            })
+        // Call the new API endpoint instead of Parse query
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}v1/users/getPublicUser`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: user.username
           })
-          user.isOwner = Parse.User.current() && userInfo.id == Parse.User.current().id;
+        });
 
-          Object.keys(userInfo.attributes).forEach(key => {
-            user[key] = userInfo.attributes[key]
-            if(key == 'twitterHandle') user[key] = !user[key].includes("twitter.com") ? "https://twitter.com/" + user[key] : user[key];
-          });
-
-          this.setData({state: 'user', data: user})
+        const result = await response.json();
+        console.log("result: ", result);
+        if (!result.success) {
+          // Handle errors
+          this.loading.user = false;
           
-          this.loading.user = false
-        } else{
+          if (result.isBanned) {
+            this.errorMessage = user.username + " has been banned until further notice.";
+          } else if (result.error === 'User not found') {
+            this.errorMessage = "This account doesn't exist";
+          } else {
+            this.errorMessage = result.error || "An error occurred";
+          }
           
           let isLoading = {
             arr: "loading",
             data: false
-          }
-          this.setDataToArr(isLoading)
-          this.loading.user = false
-          
-          if (isBanned) {
-            this.errorMessage =  this.user.username + " has been banned until further notice."
-          } else{
-            this.errorMessage = "This account doesn't exist"
-          }
+          };
+          this.setDataToArr(isLoading);
+          return;
         }
+
+        // Success - user found and not banned
+        const userInfo = result.user;
+        this.userInfo = userInfo;
+        user.isBanned = false;
+
+        // Fetch user icons
+        this.fetchUserIcons(userInfo).then(() => {
+          // Wait to fetch icons then set "selectedIcon" to the first icon fetched back
+          this.setDataToArr({
+            arr: "selectedIcon",
+            data: this.userIcons[0],
+          });
+        });
+
+        // Check if current user is the owner
+        // Note: You'll need to adapt this based on how you handle authentication in your frontend
+        // If you're still using Parse.User.current() for the current logged-in user, keep it
+        // Otherwise, replace with your authentication method
+        user.isOwner = Parse.User.current() && userInfo.id == Parse.User.current().id;
+
+        // Copy all user attributes to the user object
+        Object.keys(userInfo).forEach(key => {
+          user[key] = userInfo[key];
+        });
+
+        this.setData({ state: 'user', data: user });
+        this.loading.user = false;
+
       } catch (error) {
         console.log("error in queryUser: ", error);
+        this.loading.user = false;
+        this.errorMessage = "An error occurred while fetching user information";
       }
     },
 
@@ -401,6 +407,15 @@ export default {
       return this.$store.state.user
     },
     
+    getUserProfilePic() {
+      console.log("this.user: ", this.user);
+      try {
+        return this.user.profilePhoto ? this.user.profilePhoto.url() : this.resources.profilePic
+      } catch (error) {
+        return this.user.profilePhoto.url
+      }
+    },
+
     scrolled() {
 
       window.onscroll = () => {
@@ -445,11 +460,6 @@ export default {
       'getSelectedIcon',
       'getUserInfo',
     ]),
-
-    getUserProfilePic() {
-      return this.user.profilePhoto ? this.user.profilePhoto.url() : this.resources.profilePic
-      // return userPic ? userPic.url() : this.resources.profilePic
-    },
 
     iconsCount(){
       let parent = this;
