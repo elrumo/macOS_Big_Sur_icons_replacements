@@ -427,10 +427,9 @@ export default {
 
       try {
         const data = await AppleID.auth.signIn()
-        console.log(data);
         this.logIn(null, data)
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     },
 
@@ -450,7 +449,6 @@ export default {
     },
 
     setYourName(e){
-      console.log(e.target.value);
       this.yourName = e.target.value
     },
 
@@ -501,7 +499,7 @@ export default {
           if (response[0].get("hasLoggedIn")) {
             parent.userInfo.hasLoggedIn = true
           } else{
-            console.log(response[0].get("hasLoggedIn"));
+            console.error(response[0].get("hasLoggedIn"));
             parent.userInfo.hasLoggedIn = false
           }
 
@@ -513,7 +511,7 @@ export default {
         parent.isLoading = false
 
       }).catch((error) => {
-        console.log("Error: ", error);
+        console.error("Error: ", error);
         parent.isLoading = false
       })
 
@@ -579,7 +577,7 @@ export default {
             variant: "error"
           })
         }
-        console.log(error.code, ": ", error.message);
+        console.error(error.code, ": ", error.message);
       })
     },
 
@@ -624,11 +622,10 @@ export default {
             loggedInUser.save()
           }
 
-          console.log("user: ", loggedInUser);
           parent.setUser(loggedInUser)
           parent.isLoading = false
         }).catch((e) => {
-           console.log(e);
+           console.error(e);
            parent.isLoading = false
            parent.showToast({
               id: "toastMessage",
@@ -648,11 +645,10 @@ export default {
       }
 
       Parse.User.logIn(email, password).then((user) =>{
-        console.log("user: ", user);
         parent.setUser(user)
         parent.isLoading = false
       }).catch((e) => {
-        console.log("error logging in, report this to @elrumo: ", e.code);
+        console.error("error logging in, report this to @elrumo: ", e.code);
         parent.isLoading = false
         
         switch (e.code) {
@@ -702,7 +698,7 @@ export default {
           parent.isLoading = false;
 
         }).catch((error) => {
-          console.log("firstTimeUser error: ", error);
+          console.error("firstTimeUser error: ", error);
         })
       } else{
         document.getElementById("resetPasswordDialog").show()
