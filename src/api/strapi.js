@@ -73,26 +73,95 @@ export async function getArticleTemplate(slug) {
     }
 }
 
-export async function getStrapiData(collection) { 
+export async function getStrapiData(collection, options = {}) {
+    const { onUpdate } = options;
+    const cacheKey = `strapi_cache_${collection}`;
+    const cacheTimeKey = `strapi_cache_time_${collection}`;
+
+    // Check cache first
+    let cachedData = null;
     try {
-        console.log('getStrapiData', `${strapiUrl}get-resources?collection=${collection}`);
-        
+        const cached = localStorage.getItem(cacheKey);
+        if (cached) {
+            cachedData = JSON.parse(cached);
+
+            // Return cached data immediately
+            if (cachedData && !cachedData.error) {
+                // If onUpdate callback is provided, we'll fetch in background
+                if (onUpdate) {
+                    // Fetch fresh data in background
+                    fetchAndUpdateCache(collection, cacheKey, cacheTimeKey, onUpdate);
+                }
+                return cachedData;
+            }
+        }
+    } catch (cacheError) {
+        console.log('Error reading cache', cacheError);
+    }
+
+    // If no cache or cache has error, fetch normally
+    try {
         let strapiData = await fetch(`${strapiUrl}get-resources?collection=${collection}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
           },
-          credentials: 'include' // Add this if you need to send cookies
+          credentials: 'include'
         })
 
         strapiData = await strapiData.json()
 
-        console.log('strapiData', strapiData);
+        // Store in cache if successful
+        if (!strapiData.error) {
+            try {
+                localStorage.setItem(cacheKey, JSON.stringify(strapiData));
+                localStorage.setItem(cacheTimeKey, Date.now().toString());
+            } catch (storageError) {
+                console.log('Error storing in cache', storageError);
+            }
+        }
 
         return strapiData
     } catch (error) {
         console.log('Error getStrapiData', error);
+        // If we have cached data, return it even if it might be stale
+        if (cachedData) {
+            return cachedData;
+        }
         return {error: error}
+    }
+}
+
+// Helper function to fetch and update cache in background
+async function fetchAndUpdateCache(collection, cacheKey, cacheTimeKey, onUpdate) {
+    try {
+        let strapiData = await fetch(`${strapiUrl}get-resources?collection=${collection}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include'
+        })
+
+        strapiData = await strapiData.json()
+
+        // Only update if fetch was successful and no error
+        if (!strapiData.error) {
+            try {
+                localStorage.setItem(cacheKey, JSON.stringify(strapiData));
+                localStorage.setItem(cacheTimeKey, Date.now().toString());
+
+                // Call the update callback with fresh data
+                if (onUpdate) {
+                    onUpdate(strapiData);
+                }
+            } catch (storageError) {
+                console.log('Error storing in cache', storageError);
+            }
+        }
+    } catch (error) {
+        console.log('Background fetch error', error);
+        // Don't call onUpdate on error - keep showing cached data
     }
 }
 
