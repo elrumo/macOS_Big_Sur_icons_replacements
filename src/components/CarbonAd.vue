@@ -110,6 +110,7 @@ export default {
           );
         }
       } catch (error) {
+        console.log('BSA ad initialization error:', error);
       }
     }
 
