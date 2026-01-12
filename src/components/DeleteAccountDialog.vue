@@ -58,7 +58,6 @@
         :disabled="(confirmationText !== 'DELETE' || isDeleting) || userPassword.length < 3"
         @click="deleteAccount"
       >
-      {{ userPassword.length }}
         {{ isDeleting ? 'Deleting...' : 'Delete Account' }}
       </button>
     </coral-dialog-footer>

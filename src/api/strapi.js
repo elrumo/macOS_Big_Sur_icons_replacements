@@ -75,13 +75,19 @@ export async function getArticleTemplate(slug) {
 
 export async function getStrapiData(collection) { 
     try {
+        console.log('getStrapiData', `${strapiUrl}get-resources?collection=${collection}`);
+        
         let strapiData = await fetch(`${strapiUrl}get-resources?collection=${collection}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
           },
           credentials: 'include' // Add this if you need to send cookies
-        }).then(res => res.json())
+        })
+
+        strapiData = await strapiData.json()
+
+        console.log('strapiData', strapiData);
 
         return strapiData
     } catch (error) {

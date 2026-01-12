@@ -1025,29 +1025,33 @@ export default createStore({
         });
 
         console.log('result: ', result)
-        return
         
         // Close dialogs
         document.getElementById('deleteAccountDialog').hide();
         document.getElementById('accountDialog').hide();
         
         // Show success message
-        this.showToast({
+        store.dispatch('showToast', {
           id: "toastMessage",
           message: "Your account has been successfully deleted.",
           variant: "success"
         });
         
         // Log out the user
-        this.logOut();
+        store.dispatch('logOut');
         
       } catch (error) {
         console.error('Error deleting account:', error);
-        this.handleParseError(error);
+        store.dispatch('handleParseError', error);
         
-        this.showToast({
+        let errorMessage = error.message || "Failed to delete account. Please try again or contact support.";
+        if (errorMessage && errorMessage.toLowerCase().includes("invalid password")) {
+          errorMessage = "The password you entered is incorrect. Please try again.";
+        }
+
+        store.dispatch('showToast', {
           id: "toastMessage",
-          message: error.message || "Failed to delete account. Please try again or contact support.",
+          message: errorMessage,
           variant: "error"
         });
       }

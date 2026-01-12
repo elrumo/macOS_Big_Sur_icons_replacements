@@ -121,7 +121,8 @@ export default {
 
     getStrapiImg(strapi){
       // console.log(strapi);      
-      return 'https://api.macosicons.com/'+strapi.data.attributes.url
+      return import.meta.env.VITE_BACKEND_URL+strapi.data.attributes.url
+      // return 'https://api.macosicons.com/'+strapi.data.attributes.url
     }
   }
 };

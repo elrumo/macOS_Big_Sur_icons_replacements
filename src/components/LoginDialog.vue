@@ -183,6 +183,35 @@
               </coral-alert>
             </div>
 
+            <!-- Repeat Password -->
+            <div v-if="userInfo.step == 2 && userInfo.newAccount" class="coral-FormGroup-item">
+              <label id="loginRepeatPassLabel-1" class="coral-FieldLabel">
+                Repeat Password
+              </label>
+              <input
+                id="loginRepeatPass-1"
+                is="coral-textfield"
+                labelledby="loginRepeatPassLabel-1"
+                class="coral-Form-field"
+                type="password"
+                name="repeatPassword"
+                autocomplete="new-password"
+                v-on:keyup="getTextFieldValue($event, 'repeatPassword', false)"
+                v-on:change="getTextFieldValue($event, 'repeatPassword', false)"
+              >
+              
+              <coral-alert
+                v-if="!validateRepeatPassword && userInfo.repeatPassword.length > 0"
+                style="padding: 10px; margin-top: 15px"
+                variant="warning"
+              >
+                <coral-alert-header>Passwords do not match</coral-alert-header>
+                <coral-alert-content>
+                  Please make sure both passwords are the same.
+                </coral-alert-content>
+              </coral-alert>
+            </div>
+
               <!-- v-if="userInfo.problems.usernameExists" -->
            
           </form>        
@@ -201,10 +230,14 @@
               <hr class="coral-Divider--S m-t-16 m-b-16">
             </div> -->
             
-            <!-- <div @click="appleLogin" class="apple-signin-banner">
+            <div>
+              or
+            </div>
+
+            <div @click="appleLogin" class="apple-signin-banner">
               <img :src="coralIcons.apple" alt="">
               <p> Continue with Apple </p>
-            </div> -->
+            </div>
 
             <!-- Terms & Conditions -->
             <p class="coral-Body--XS p-l-4 p-t-4 p-r-4 m-0 opacity-60">
@@ -370,6 +403,7 @@ export default {
         username: "",
         nameToShow: "",
         password: "",
+        repeatPassword: "",
         hasLoggedIn: false,
         newAccount: true,
       }
@@ -381,6 +415,23 @@ export default {
     
     toStep(step){
       this.userInfo.step = step
+    },
+
+    async appleLogin(){
+      AppleID.auth.init({
+        clientId: 'com.macOSicons.client',
+        scope: 'email name',
+        redirectURI: 'https://macosicons.com/redirect',
+        usePopup: true,
+      })
+
+      try {
+        const data = await AppleID.auth.signIn()
+        console.log(data);
+        this.logIn(null, data)
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     nextStep(){
@@ -425,7 +476,7 @@ export default {
         parent.userInfo[field] = fieldValue
         parent.userInfo.isValid = isValid
         
-        if (target.type == "password") {
+        if (field == "password") {
           let passIsValid = !parent.validatePassword
           if(passIsValid) parent.userInfo.problems.passNotSecure = false;
         }
@@ -492,13 +543,9 @@ export default {
       let roleIsUser = await roleQuery.get("NedBDJozKh")
       let userExists = await parent.userExists()
 
-      console.log(this.userInfo.nameToShow.length == 0 ? this.userInfo.username : this.userInfo.nameToShow);
-
       if (userExists) {
-        console.log(userExists);
         parent.userInfo.problems.usernameExists = true
       }else{
-        console.log(userExists);
         parent.userInfo.problems.usernameExists = false
       }
 
@@ -536,9 +583,61 @@ export default {
       })
     },
 
-    logIn(step){
+    logIn(step, appleData){
       let parent = this;
       parent.isLoading = true
+
+      if (appleData) {
+        const { authorization, user } = appleData
+        
+        const parseJwt = (token) => {
+            try {
+              return JSON.parse(atob(token.split('.')[1]));
+            } catch (e) {
+              return null;
+            }
+        };
+
+        const decoded = parseJwt(authorization.id_token)
+        if (!decoded || !decoded.sub) {
+             console.error("Invalid Apple ID token")
+             parent.isLoading = false
+             return
+        }
+        const id = decoded.sub
+
+        Parse.User.logInWith('apple', {
+          authData: {
+            id: id,
+            token: authorization.id_token
+          }
+        }).then((loggedInUser) => {
+          
+          if (user) {
+            if (user.name) {
+              loggedInUser.set("nameToShow", user.name.firstName + " " + user.name.lastName)
+            }
+            if (user.email) {
+              loggedInUser.set("email", user.email)
+              loggedInUser.set("username", user.email)
+            }
+            loggedInUser.save()
+          }
+
+          console.log("user: ", loggedInUser);
+          parent.setUser(loggedInUser)
+          parent.isLoading = false
+        }).catch((e) => {
+           console.log(e);
+           parent.isLoading = false
+           parent.showToast({
+              id: "toastMessage",
+              message: "Error logging in with Apple",
+              variant: "error"
+            })
+        })
+        return
+      }
 
       let email = parent.userInfo.email
       let password = parent.userInfo.password
@@ -630,8 +729,7 @@ export default {
     ...mapGetters(['getUser']),
     
     isSignUpValid(){
-      let isValid = [this.validatePassword, this.validateEmail(), this.validateUsername]
-      console.log(this.validatePassword, this.validateEmail(), this.validateUsername);
+      let isValid = [this.validatePassword, this.validateEmail(), this.validateUsername, this.validateRepeatPassword]
       return this.allAreTrue(isValid)
     },
 
@@ -659,7 +757,6 @@ export default {
 
     validateUsername(){
       const username = this.userInfo.username
-      console.log(this.userInfo.username);
       return username.length > 2
     },
 
@@ -668,6 +765,12 @@ export default {
       let userInfo = parent.userInfo
       var passwordRules = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})");
       return passwordRules.test(userInfo.password) && userInfo.password.length >= 6
+    },
+
+    validateRepeatPassword(){
+      let parent = this
+      let userInfo = parent.userInfo
+      return userInfo.password === userInfo.repeatPassword && userInfo.repeatPassword.length > 0
     },
 
     async isNotEmpty(){

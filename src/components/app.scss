@@ -2486,28 +2486,42 @@ coral-tab{
 .apple-signin-banner{
     grid-template-columns: 16px auto;
     justify-content: center;
-    border-radius: 7px;
-    background: white;
-    padding: 7px 12px;
+    border-radius: 50px;
+    padding: 6px 16px;
     cursor: pointer;
-    color: black;
+    color: white;
+    background: black;
     margin: 10px auto 10px auto;
     display: grid;
-    height: 26px;
-    width: calc(100% - 24px);
+    height: fit-content;
+    width: fit-content;
+    // width: calc(100% - 24px);
     gap: 10px;
+}
+
+
+@media (prefers-color-scheme: dark){
+    .apple-signin-banner{
+        color: black;
+        background: white;
+    }
+
+    .apple-signin-banner img{
+        filter: invert(0) contrast(1);
+    }
 }
 
 .apple-signin-banner img{
     margin: auto;
-    width: 100%;
+    height: fit-content;
+    filter: invert(1) contrast(1.5);
 }
 
 .apple-signin-banner p{
     margin: 0px;
     margin-top: auto;
     margin-bottom: auto;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     font-weight: 700;
 }
 
