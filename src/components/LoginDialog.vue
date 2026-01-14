@@ -235,7 +235,7 @@
             </div>
 
             <div @click="appleLogin" class="apple-signin-banner">
-              <img :src="coralIcons.apple" alt="">
+              <img :src="coralIcons.apple">
               <p> Continue with Apple </p>
             </div>
 
@@ -457,6 +457,8 @@ const getTextFieldValue = (e, field, isEmail) => {
 
   if (field === 'username') {
     fieldValue = fieldValue.replaceAll(" ", '_');
+    fieldValue = fieldValue.replaceAll("/", '_');
+    fieldValue = fieldValue.replaceAll("#", '_');
     e.target.value = fieldValue.toLowerCase();
   }
 

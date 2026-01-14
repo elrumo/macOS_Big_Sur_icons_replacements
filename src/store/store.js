@@ -401,7 +401,7 @@ export default createStore({
           
           await Promise.race([timeoutPromise, searchPromise]);
           searchResults = await searchPromise;
-          console.log('searchResults: ', searchResults)
+          // console.log('searchResults: ', searchResults)
 
           // searchResults = algoliaSearch;
 
@@ -412,7 +412,7 @@ export default createStore({
             }; 
           });
 
-          console.log('searchResults.hits: ', searchResults.hits)
+          // console.log('searchResults.hits: ', searchResults.hits)
 
           store.commit('pushDataToArr', {arr: "searchData", data: searchResults.hits})
         } else{ ;
@@ -635,7 +635,7 @@ export default createStore({
       if (category.name == "downloads") searchParams.category = category.name
 
 
-      console.log('category.name: ', category.name)
+      // console.log('category.name: ', category.name)
 
       if(category.name != 'Saved') await store.dispatch('algoliaSearch', searchParams)
 

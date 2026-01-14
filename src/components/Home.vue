@@ -727,6 +727,18 @@ const isUserLoggedIn = computed(() => {
 });
 
 // Methods
+const showToast = (payload) => {
+  store.dispatch('showToast', payload);
+};
+
+const setCategory = (category) => {
+  store.dispatch('setCategory', category);
+};
+
+const setLiquidGlassFilter = () => {
+  store.dispatch('setLiquidGlassFilter');
+};
+
 const iconInSearch = (num) => {
   let searchResults = search.value;
   let searchStringEmpty = searchString.value.length == 0;

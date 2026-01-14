@@ -105,9 +105,10 @@ export async function getStrapiData(collection, options = {}) {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
-          },
-          credentials: 'include'
+          }
         })
+
+        console.log('strapiData: ', strapiData);
 
         strapiData = await strapiData.json()
 
@@ -139,8 +140,7 @@ async function fetchAndUpdateCache(collection, cacheKey, cacheTimeKey, onUpdate)
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
-          },
-          credentials: 'include'
+          }
         })
 
         strapiData = await strapiData.json()

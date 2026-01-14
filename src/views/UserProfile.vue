@@ -51,7 +51,7 @@
               >
                 <coral-icon
                   size="M"
-                  :icon="iconBrew('twitter24', true)"
+                  :icon="iconBrewMethod('twitter24', true)"
                   alt="Twitter Logo"
                   title="Twitter">
                 </coral-icon>
@@ -64,7 +64,7 @@
               >
                 <coral-icon
                   size="M"
-                  :icon="iconBrew('share24')"
+                  :icon="iconBrewMethod('share24')"
                   alt="Twitter Logo"
                   title="Twitter">
                 </coral-icon>
@@ -205,332 +205,266 @@
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import IconUI from '@/components/IconUI.vue';
-import UserIconGrid from '@/components/UserIconGrid.vue';
-import UserIconCardLoading from '@/components/UserIconCardLoading.vue';
+<script setup>
+import { ref, reactive, computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
+import Parse from 'parse/dist/parse.min.js'
+
+import IconUI from '@/components/IconUI.vue'
+import UserIconGrid from '@/components/UserIconGrid.vue'
+import UserIconCardLoading from '@/components/UserIconCardLoading.vue'
 import EditIconDialog from "@/components/EditIconDialog.vue"
 import deleteDialog from "@/components/deleteDialog.vue"
-import StickyBanner from "@/components/StickyBanner.vue"
 import IconDetailsModal from "@/components/IconDetailsModal.vue"
-
-import Parse from 'parse/dist/parse.min.js';
-import { mapGetters, mapActions } from 'vuex'
 
 import twitterIcon from "../assets/icons/twitter.svg"
 import shareIcon from "../assets/icons/share.svg"
 import LinkIcon from "../assets/icons/Link.svg"
 import profilePicIcon from "../assets/Resources/accounts/profilePic.png"
 
-import addCoralIcon from "../assets/icons/add.svg"
-import newItemCoralIcon from "../assets/icons/newItem.svg"
-import editCoralIcon from "../assets/icons/edit.svg"
-import placeholderCoralIcon from "../assets/placeholder-icon.png"
-import deleteIcon from "../assets/icons/delete.svg"
-
 import iconBrew from '../api/iconBrew.js'
 
-export default {
-  name: 'UserProfile',
-  
-  components: {
-      IconUI,
-      UserIconGrid,
-      UserIconCardLoading,
-      EditIconDialog,
-      deleteDialog,
-      StickyBanner,
-      IconDetailsModal,
-  },
+const store = useStore()
+const route = useRoute()
 
-  data(){
-    return {
-      resources:{
-        twitter: twitterIcon,
-        share: shareIcon,
-        link: LinkIcon,
-        profilePic: profilePicIcon,
-      },
+// Reactive data
+const resources = {
+  twitter: twitterIcon,
+  share: shareIcon,
+  link: LinkIcon,
+  profilePic: profilePicIcon,
+}
 
-      iconsToShow: "approved",
+const iconsToShow = ref("approved")
+const errorMessage = ref("")
 
-      errorMessage: "",
-      
-      loading: {
-       user: true,
-       icons: true 
-      },
+const loading = reactive({
+  user: true,
+  icons: true
+})
 
-      user:{
-        isOwner: false,
-        isBanned: false,
-      },
-      
-      totalIconsApproved: 0,
-      userInfo: {},
-      scrolledToBottom: true,
+const user = reactive({
+  isOwner: false,
+  isBanned: false,
+})
 
-      coralIcons:{
-        delete: deleteIcon,
-        addIcon: addCoralIcon,
-        newItem: newItemCoralIcon,
-        edit: editCoralIcon,
-        loading: placeholderCoralIcon,
-      }
-    }
-  },
+const userInfo = ref({})
+const scrolledToBottom = ref(true)
 
-  methods: {
-    ...mapActions([
-      'fetchUserIcons',
-      'showToast',
-      'fetchAppCategories',
-      'emptyArr', 
-      'showToast',
-      'setDataToArr',
-      'setData',
-      'pushDataToArr',
-      'adClick',
-      'handleParseError'
-    ]),
+// Store getters
+const allIcons = computed(() => store.getters.allIcons)
+const notApproved = computed(() => store.getters.notApproved)
+const approvedIcons = computed(() => store.getters.approvedIcons)
+const approvedIconsCount = computed(() => store.getters.approvedIconsCount)
+const isLoading = computed(() => store.getters.isLoading)
+const getSelectedIcon = computed(() => store.getters.getSelectedIcon)
 
-    iconBrew(iconName, filled){
-      return iconBrew(iconName, filled)
-    },
+// Store actions
+const fetchUserIcons = (userInfo) => store.dispatch('fetchUserIcons', userInfo)
+const showToast = (payload) => store.dispatch('showToast', payload)
+const emptyArr = () => store.dispatch('emptyArr')
+const setDataToArr = (payload) => store.dispatch('setDataToArr', payload)
+const setData = (payload) => store.dispatch('setData', payload)
 
-    async copyUserUrl(){
-      let parent = this;
-      let toCopy = "https://macosicons.com/#/u/" + parent.$route.params.user
-      
-      await navigator.clipboard.writeText(toCopy);
-      
-      parent.showToast({
-        id: "toastMessage",
-        message: "User profile URL copied to your clipboard",
-        variant: "success"
-      })
-    },
+// Methods - expose iconBrew to template
+const iconBrewMethod = iconBrew
 
-    objectLenght(object){
-      if (object) {
-        return Object.keys(object).length != 0
-      } else{
-        return false
-      }
-    },
+const copyUserUrl = async () => {
+  const toCopy = "https://macosicons.com/#/u/" + route.params.user
 
-    async queryUser() {
-      try {
-        let user = this.user;
-        user.username = user.username.toLowerCase();
+  await navigator.clipboard.writeText(toCopy)
 
-        // Call the new API endpoint instead of Parse query
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}v1/users/getPublicUser`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            username: user.username
-          })
-        });
+  showToast({
+    id: "toastMessage",
+    message: "User profile URL copied to your clipboard",
+    variant: "success"
+  })
+}
 
-        const result = await response.json();
-        console.log("result: ", result);
-        if (!result.success) {
-          // Handle errors
-          this.loading.user = false;
-          
-          if (result.isBanned) {
-            this.errorMessage = user.username + " has been banned until further notice.";
-          } else if (result.error === 'User not found') {
-            this.errorMessage = "This account doesn't exist";
-          } else {
-            this.errorMessage = result.error || "An error occurred";
-          }
-          
-          let isLoading = {
-            arr: "loading",
-            data: false
-          };
-          this.setDataToArr(isLoading);
-          return;
-        }
-
-        // Success - user found and not banned
-        const userInfo = result.user;
-        this.userInfo = userInfo;
-        user.isBanned = false;
-
-        // Fetch user icons
-        this.fetchUserIcons(userInfo).then(() => {
-          // Wait to fetch icons then set "selectedIcon" to the first icon fetched back
-          this.setDataToArr({
-            arr: "selectedIcon",
-            data: this.userIcons[0],
-          });
-        });
-
-        // Check if current user is the owner
-        // Note: You'll need to adapt this based on how you handle authentication in your frontend
-        // If you're still using Parse.User.current() for the current logged-in user, keep it
-        // Otherwise, replace with your authentication method
-        user.isOwner = Parse.User.current() && userInfo.id == Parse.User.current().id;
-
-        // Copy all user attributes to the user object
-        Object.keys(userInfo).forEach(key => {
-          user[key] = userInfo[key];
-        });
-
-        this.setData({ state: 'user', data: user });
-        this.loading.user = false;
-
-      } catch (error) {
-        console.log("error in queryUser: ", error);
-        this.loading.user = false;
-        this.errorMessage = "An error occurred while fetching user information";
-      }
-    },
-
-    showDialog(dialog) {
-      let dialogEl = document.getElementById(dialog);
-      dialogEl.show();
-    },
-
-    changeIconStatus(status) {
-      this.iconsToShow = status
-    },
-
-    userData(){
-      console.log("parent.user: ", this.$store.state.user);
-      return this.$store.state.user
-    },
-    
-    getUserProfilePic() {
-      console.log("this.user: ", this.user);
-      try {
-        return this.user.profilePhoto ? this.user.profilePhoto.url() : this.resources.profilePic
-      } catch (error) {
-        return this.user.profilePhoto.url
-      }
-    },
-
-    scrolled() {
-
-      window.onscroll = () => {
-        let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000
-        
-        if(this.user.isBanned) return
-
-        if (bottomOfWindow && this.scrolledToBottom && this.userInfo.id) {
-          this.scrolledToBottom = true
-          this.fetchUserIcons(this.userInfo)
-        }
-      }
-    },
-
-  },
-
-  mounted: function(){
-    let parent = this
-    parent.user.username = parent.$route.params.user
-
-    let isLoading = {
-      arr: "loading",
-      data: true
-    }
-
-    parent.setDataToArr(isLoading)
-
-    parent.emptyArr();
-    parent.queryUser();
-    parent.scrolled();
-  },
-
-  computed:{
-    ...mapGetters([
-      'getUser',
-      'allIcons',
-      'notApproved',
-      'approvedIcons',
-      'getAppCategories',
-      'approvedIconsCount',
-      'isLoading',
-      'getSelectedIcon',
-      'getUserInfo',
-    ]),
-
-    iconsCount(){
-      let parent = this;
-      let iconsCount = parent.approvedIconsCount;
-      let isLoading = parent.isLoading;
-      let allIcons = iconsCount.approved + iconsCount.hacked + iconsCount.notApproved
-      
-      if (allIcons == 0 && isLoading) return 15
-
-      switch (parent.iconsToShow) {
-        case "all":
-          return allIcons
-
-        case "approved":
-          return iconsCount.approved
-
-        case "notApproved":
-          return iconsCount.notApproved
-    
-        default:
-          break;
-      }
-    },
-
-    placeholderCount(){
-      if (this.iconsCount > 25) {
-        return 5
-      } else{
-        return this.iconsCount
-      }
-    },
-
-    userIcons(){
-      let parent = this
-      
-      if (!parent.userInfo) {
-        return 0
-      } else{
-        if (parent.allIcons.length == 0) {
-          parent.errorMessage = "No icons to show"
-        }
-
-        if (parent.user.isBanned) {
-            parent.errorMessage = parent.user.username + " has been banned until further notice."
-            return parent.notApproved
-        }
-
-        switch (parent.iconsToShow) {
-          case "all":
-            parent.errorMessage = parent.user.username + " hasn't submitted any icons yet."
-            console.log("parent.allIcons: ", parent.allIcons);
-            return parent.allIcons
-
-          case "approved":
-            parent.errorMessage = parent.user.username + " doesn't have any approved icons yet."
-            return parent.approvedIcons
-            // return parent.approvedIcons
-
-          case "notApproved":
-            parent.errorMessage = parent.user.username + " doesn't have any icons awaiting approval."
-            return parent.notApproved
-      
-          default:
-            break;
-        }
-      }
-    }
-
+const objectLenght = (object) => {
+  if (object) {
+    return Object.keys(object).length != 0
+  } else {
+    return false
   }
 }
 
+const queryUser = async () => {
+  try {
+    user.username = user.username.toLowerCase()
+
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}v1/users/getPublicUser`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: user.username
+      })
+    })
+
+    const result = await response.json()
+    console.log("result: ", result)
+
+    if (!result.success) {
+      loading.user = false
+
+      if (result.isBanned) {
+        errorMessage.value = user.username + " has been banned until further notice."
+      } else if (result.error === 'User not found') {
+        errorMessage.value = "This account doesn't exist"
+      } else {
+        errorMessage.value = result.error || "An error occurred"
+      }
+
+      setDataToArr({
+        arr: "loading",
+        data: false
+      })
+      return
+    }
+
+    const userInfoData = result.user
+    userInfo.value = userInfoData
+    user.isBanned = false
+
+    await fetchUserIcons(userInfoData).then(() => {
+      setDataToArr({
+        arr: "selectedIcon",
+        data: userIcons.value[0],
+      })
+    })
+
+    user.isOwner = Parse.User.current() && userInfoData.id == Parse.User.current().id
+
+    Object.keys(userInfoData).forEach(key => {
+      user[key] = userInfoData[key]
+    })
+
+    setData({ state: 'user', data: user })
+    loading.user = false
+
+  } catch (error) {
+    console.log("error in queryUser: ", error)
+    loading.user = false
+    errorMessage.value = "An error occurred while fetching user information"
+  }
+}
+
+const showDialog = (dialog) => {
+  const dialogEl = document.getElementById(dialog)
+  dialogEl.show()
+}
+
+const changeIconStatus = (status) => {
+  iconsToShow.value = status
+}
+
+const userData = () => {
+  console.log("parent.user: ", store.state.user)
+  return store.state.user
+}
+
+const getUserProfilePic = () => {
+  console.log("this.user: ", user)
+  try {
+    return user.profilePhoto ? user.profilePhoto.url() : resources.profilePic
+  } catch (error) {
+    return user.profilePhoto.url
+  }
+}
+
+const scrolled = () => {
+  window.onscroll = () => {
+    const bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000
+
+    if (user.isBanned) return
+
+    if (bottomOfWindow && scrolledToBottom.value && userInfo.value.id) {
+      scrolledToBottom.value = true
+      fetchUserIcons(userInfo.value)
+    }
+  }
+}
+
+// Computed properties
+const iconsCount = computed(() => {
+  const iconsCountData = approvedIconsCount.value
+  const isLoadingData = isLoading.value
+  const allIconsCount = iconsCountData.approved + iconsCountData.hacked + iconsCountData.notApproved
+
+  if (allIconsCount == 0 && isLoadingData) return 15
+
+  switch (iconsToShow.value) {
+    case "all":
+      return allIconsCount
+
+    case "approved":
+      return iconsCountData.approved
+
+    case "notApproved":
+      return iconsCountData.notApproved
+
+    default:
+      break
+  }
+})
+
+const placeholderCount = computed(() => {
+  if (iconsCount.value > 25) {
+    return 5
+  } else {
+    return iconsCount.value
+  }
+})
+
+const userIcons = computed(() => {
+  if (!userInfo.value) {
+    return 0
+  } else {
+    if (allIcons.value.length == 0) {
+      errorMessage.value = "No icons to show"
+    }
+
+    if (user.isBanned) {
+      errorMessage.value = user.username + " has been banned until further notice."
+      return notApproved.value
+    }
+
+    switch (iconsToShow.value) {
+      case "all":
+        errorMessage.value = user.username + " hasn't submitted any icons yet."
+        console.log("parent.allIcons: ", allIcons.value)
+        return allIcons.value
+
+      case "approved":
+        errorMessage.value = user.username + " doesn't have any approved icons yet."
+        return approvedIcons.value
+
+      case "notApproved":
+        errorMessage.value = user.username + " doesn't have any icons awaiting approval."
+        return notApproved.value
+
+      default:
+        break
+    }
+  }
+})
+
+// Lifecycle hook
+onMounted(() => {
+  user.username = route.params.user
+
+  setDataToArr({
+    arr: "loading",
+    data: true
+  })
+
+  emptyArr()
+  queryUser()
+  scrolled()
+})
 </script>
 
 
