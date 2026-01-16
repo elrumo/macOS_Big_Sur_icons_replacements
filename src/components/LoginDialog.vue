@@ -287,39 +287,6 @@
         </button>
       </div>
       
-      <!-- Verify Account -->
-       {{ userInfo.newAccount }}
-       <br>
-       {{ userInfo.step }}
-      <!-- <div v-if="userInfo.step == 2 && !userInfo.newAccount && !userInfo.hasLoggedIn">
-        
-        <div v-if="!userInfo.passwordResetSent">
-          <button id="continue-btn" is="coral-button"
-            v-if="isNotEmpty"
-            @click="resetPassword" variant=""
-          >
-            Verify account
-          </button>
-          
-          <button id="continue-btn" is="coral-button"
-            v-if="!isNotEmpty"
-            disabled=""
-          >
-            Verify account
-          </button>
-        </div>
-        <button
-          is="coral-button"
-          v-else
-          id="continue-btn"
-          disabled=""
-        >
-          Resend in <span style="width: 18px; padding: 0px 5px 0px 2px;"> {{ timeLeftForResend }} </span> seconds
-          {{waitSeconds}}
-        </button>
-
-      </div> -->
-      
       <!-- Sign up -->
       <div v-if="userInfo.step == 2 && userInfo.newAccount">
         <button id="continue-btn" is="coral-button" 
@@ -334,11 +301,6 @@
           Finish sign Up
         </button>
       </div>
-     
-      <!-- <button id="continue-btn" is="coral-button"
-        v-if="!isValid" disabled="">
-        Continue
-      </button> -->
 
     </coral-dialog-footer>
 
@@ -520,13 +482,8 @@ const checkOldAccount = async (step, skipStep = false) => {
   }
 };
 
-const userExists = async (funcName) => {
+const userExists = async () => {
   return await checkOldAccount(2, true);
-  // console.log(`[userExists] ${funcName}`);
-  // const queryUsername = new Parse.Query(Parse.User);
-  // queryUsername.matches("username", userInfo.username, 'i');
-  // const resultsUserame = await queryUsername.find();
-  // return resultsUserame.length != 0;
 };
 
 const crateUser = async () => {
@@ -553,9 +510,7 @@ const crateUser = async () => {
 const signUp = async (step) => {
   try {
     isLoading.value = true;
-    const roleQuery = new Parse.Query(Parse.Role);
-    const roleIsUser = await roleQuery.get("NedBDJozKh");
-    const userExistsResult = await userExists("signUp");
+    const userExistsResult = await userExists();
 
     if (userExistsResult) {
       userInfo.problems.usernameExists = true;
@@ -565,9 +520,7 @@ const signUp = async (step) => {
 
     let user = await crateUser();
   
-    console.log("user: ", user);
     user = await Parse.User.logIn(userInfo.username, userInfo.password);
-    console.log("user2: ", user);
 
     setUser(user);
     userInfo.step = 3;
@@ -782,7 +735,7 @@ const validateRepeatPassword = computed(() => {
 const isNotEmpty = computed(async () => {
   const isValid = [];
 
-  const userExistsResult = await userExists("isNotEmpty");
+  const userExistsResult = await userExists();
   console.log("userExistsResult 1: ", userExistsResult);
   
   if (!userExistsResult) {

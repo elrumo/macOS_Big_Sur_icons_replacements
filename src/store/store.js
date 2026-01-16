@@ -1001,8 +1001,6 @@ export default createStore({
       if (!password) {
         return;
       }
-
-      console.log('deleting account password: ', password)
       
       try {        
         // Call the secure Cloud Function
@@ -1010,8 +1008,6 @@ export default createStore({
           password: password,
           // confirmationCode: confirmationCode // if using confirmation codes
         });
-
-        console.log('result: ', result)
         
         // Close dialogs
         document.getElementById('deleteAccountDialog').hide();
