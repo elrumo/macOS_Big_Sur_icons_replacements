@@ -78,16 +78,6 @@
               
               <coral-alert
                 style="padding: 10px; margin-top: 15px"
-                v-if="userInfo.step != 1 && !userInfo.hasLoggedIn && !userInfo.passwordResetSent && !userInfo.newAccount"
-              >
-                <coral-alert-header>Verify account</coral-alert-header>
-                <coral-alert-content>
-                  You've previously submitted an icon with this email address, you'll need to verify it to set a password.
-                </coral-alert-content>
-              </coral-alert>
-
-              <coral-alert
-                style="padding: 10px; margin-top: 15px"
                 v-if="userInfo.step != 1 && !userInfo.hasLoggedIn && userInfo.passwordResetSent"
                 variant="success"
               >
@@ -274,8 +264,9 @@
       <button 
         id="continue-btn" 
         is="coral-button"
-        v-if="isValid && userInfo.step == 1"
-        @click="checkOldAccount(2)" 
+        v-if="userInfo.step == 1"
+        :disabled="!isValid"
+        @click="checkOldAccount(2)"
         variant=""
       >
         Continue
@@ -297,7 +288,10 @@
       </div>
       
       <!-- Verify Account -->
-      <div v-if="userInfo.step == 2 && !userInfo.newAccount && !userInfo.hasLoggedIn">
+       {{ userInfo.newAccount }}
+       <br>
+       {{ userInfo.step }}
+      <!-- <div v-if="userInfo.step == 2 && !userInfo.newAccount && !userInfo.hasLoggedIn">
         
         <div v-if="!userInfo.passwordResetSent">
           <button id="continue-btn" is="coral-button"
@@ -324,7 +318,7 @@
           {{waitSeconds}}
         </button>
 
-      </div>
+      </div> -->
       
       <!-- Sign up -->
       <div v-if="userInfo.step == 2 && userInfo.newAccount">
@@ -483,10 +477,12 @@ const toArray = (obj) => {
   return Object.keys(obj);
 };
 
-const checkOldAccount = async (step) => {
+const checkOldAccount = async (step, skipStep = false) => {
   isLoading.value = true;
   const userEmail = userInfo.email;
 
+  console.log("skipStep: ", skipStep);
+  
   try {
     let findUserResponse = await fetch(import.meta.env.VITE_BACKEND_URL + 'v1/auth/doesAccountExist', {
       method: 'POST',
@@ -500,14 +496,21 @@ const checkOldAccount = async (step) => {
     findUserResponse = await findUserResponse.json();
     let accountExists = findUserResponse.accountExists;
     console.log("accountExists: ", accountExists);
+    
+    if(skipStep) {
+      console.log("skipStep accountExists: ", accountExists);
+      return accountExists;
+    }
 
     if (accountExists) {
       userInfo.hasLoggedIn = true;
+      userInfo.newAccount = false;
     } else {
-      console.error(accountExists);
+      // console.error(accountExists);
       userInfo.hasLoggedIn = false;
+      userInfo.newAccount = true;
     }
-    userInfo.newAccount = false;
+
     userInfo.step = step;
     isLoading.value = false;
     
@@ -517,39 +520,59 @@ const checkOldAccount = async (step) => {
   }
 };
 
-const userExists = async () => {
-  const queryUsername = new Parse.Query(Parse.User);
-  queryUsername.matches("username", userInfo.username, 'i');
-  const resultsUserame = await queryUsername.find();
-  return resultsUserame.length != 0;
+const userExists = async (funcName) => {
+  return await checkOldAccount(2, true);
+  // console.log(`[userExists] ${funcName}`);
+  // const queryUsername = new Parse.Query(Parse.User);
+  // queryUsername.matches("username", userInfo.username, 'i');
+  // const resultsUserame = await queryUsername.find();
+  // return resultsUserame.length != 0;
 };
 
-const signUp = async (step) => {
-  isLoading.value = true;
-  const user = new Parse.User();
-  const roleQuery = new Parse.Query(Parse.Role);
-  const roleIsUser = await roleQuery.get("NedBDJozKh");
-  const userExistsResult = await userExists();
-
-  if (userExistsResult) {
-    userInfo.problems.usernameExists = true;
-  } else {
-    userInfo.problems.usernameExists = false;
+const crateUser = async () => {
+  try {
+    let userRes = await fetch(import.meta.env.VITE_BACKEND_URL + 'v1/auth/signUp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: userInfo.email,
+        username: userInfo.username,
+        nameToShow: userInfo.nameToShow,
+        password: userInfo.password
+      })
+    });
+    userRes = await userRes.json();
+    return userRes;
+  } catch (error) {
+    console.error("Error: ", error);
   }
+}
 
-  user.set({
-    username: userInfo.username,
-    nameToShow: userInfo.nameToShow.length === 0 ? userInfo.username : userInfo.nameToShow,
-    password: userInfo.password,
-    email: userInfo.email,
-    Role: roleIsUser
-  });
+const signUp = async (step) => {
+  try {
+    isLoading.value = true;
+    const roleQuery = new Parse.Query(Parse.Role);
+    const roleIsUser = await roleQuery.get("NedBDJozKh");
+    const userExistsResult = await userExists("signUp");
 
-  user.signUp().then((newUser) => {
-    setUser(newUser);
+    if (userExistsResult) {
+      userInfo.problems.usernameExists = true;
+    } else {
+      userInfo.problems.usernameExists = false;
+    }
+
+    let user = await crateUser();
+  
+    console.log("user: ", user);
+    user = await Parse.User.logIn(userInfo.username, userInfo.password);
+    console.log("user2: ", user);
+
+    setUser(user);
     userInfo.step = 3;
     isLoading.value = false;
-  }).catch((error) => {
+  } catch (error) {
     isLoading.value = false;
     if (error.code === 202) {
       showToast({
@@ -567,8 +590,8 @@ const signUp = async (step) => {
         variant: "error"
       });
     }
-    console.error(error.code, ": ", error.message);
-  });
+    console.error('Parse Error signing up:', error.code, ": ", error.message);
+  }
 };
 
 const logIn = async (step, appleData) => {
@@ -759,10 +782,13 @@ const validateRepeatPassword = computed(() => {
 const isNotEmpty = computed(async () => {
   const isValid = [];
 
-  const userExistsResult = await userExists();
-
+  const userExistsResult = await userExists("isNotEmpty");
+  console.log("userExistsResult 1: ", userExistsResult);
+  
   if (!userExistsResult) {
+    console.log("userExistsResult 2: ", userExistsResult);
     isValid.push(validatePassword.value);
+    userInfo.newAccount = true;
   }
 
   toArray(userInfo).forEach((field) => {
@@ -789,11 +815,12 @@ onMounted(async () => {
   if (currentUser) {  
     const query = new Parse.Query(Parse.User);
 
-    query.get(currentUser.id).then((user) => {
+    try {
+      let user = await query.get(currentUser.id);
       setUserFunc(user);
-    }).catch((error) => {
+    } catch (error) {
       handleParseError(error);
-    });
+    }
   }
 });
 </script>

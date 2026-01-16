@@ -171,4 +171,12 @@ export default {
   margin: 16px 0;
   color: #991b1b;
 }
+
+@media (prefers-color-scheme: dark) {
+  .delete-account-final-warning {
+    background-color: #4a1414;
+    border-color: #fecaca;
+    color: #fecaca;
+  }
+}
 </style>

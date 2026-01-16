@@ -298,7 +298,6 @@ export default createStore({
           apiKey: import.meta.env.VITE_PARSE_JAVASCRIPT_KEY,
         });
 
-
         const requestConfig = {
           method: 'POST',
           headers: {
@@ -1025,8 +1024,14 @@ export default createStore({
           variant: "success"
         });
         
-        // Log out the user
-        store.dispatch('logOut');
+        try {
+          // Log out the user
+          store.dispatch('logOut');
+        } catch (error) {
+          window.location.reload()
+          location.reload();
+          console.error('Error logging out:', error);
+        }
         
       } catch (error) {
         console.error('Error deleting account:', error);
@@ -1035,7 +1040,10 @@ export default createStore({
         let errorMessage = error.message || "Failed to delete account. Please try again or contact support.";
         if (errorMessage && errorMessage.toLowerCase().includes("invalid password")) {
           errorMessage = "The password you entered is incorrect. Please try again.";
+        } else{
+          window.location.reload()
         }
+
 
         store.dispatch('showToast', {
           id: "toastMessage",
