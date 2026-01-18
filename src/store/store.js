@@ -286,11 +286,13 @@ export default createStore({
 
         searchOptions.filters = searchOptions.filters.filter(Boolean) // Remove empty strings
         
-        const primaryUrl = import.meta.env.VITE_BACKEND_URL + 'search';
-        const backupUrl = import.meta.env.VITE_BACKEND_URL_ALT + 'search';
+        const primaryUrl = import.meta.env.VITE_BACKEND_URL + 'v1/search';
+        const backupUrl = import.meta.env.VITE_BACKEND_URL_ALT + 'v1/search';
 
         // console.log('primaryUrl: ', primaryUrl)
         // console.log('backupUrl: ', backupUrl)
+        
+        // console.log('searchOptions: ', searchOptions)
 
         const requestBody = JSON.stringify({
           query: searchQuery,
@@ -346,6 +348,9 @@ export default createStore({
     async algoliaSearch(store, payload){
       let search = payload.search || store.state.searchString;
       let category = payload.category != undefined ? payload.category : store.state.selectedCategory.id;
+      
+      // console.log('category type:', typeof category, category);
+
       let page = payload.page || 0;
       let concat = payload.concat || false;
       let similarSearch = payload.similarSearch || false;

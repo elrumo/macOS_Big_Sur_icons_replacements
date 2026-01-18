@@ -124,14 +124,17 @@
                             </div> -->
 
                             <!-- API -->
-                            <div class="resourcesLink" @click="toggleOverlay">
+                            <!-- <div 
+                                class="resourcesLink"
+                                @click="toggleOverlay"
+                            >
                                 <coral-status variant="info" class="_coral-StatusLight--info _coral-StatusLight" color=""></coral-status>
-                                <router-link to="/cicense" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
+                                <router-link to="/license" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
                                     <span>
                                         License
                                     </span>
                                 </router-link>
-                            </div>
+                            </div> -->
                             
                             <hr class="coral-Divider--S">
                             
@@ -281,13 +284,13 @@
                     </div> -->
 
                     <!-- Blog -->
-                    <div @click="toggleOverlay" v-if="this.$route.name != 'BlogHome'">
+                    <!-- <div @click="toggleOverlay" v-if="this.$route.name != 'BlogHome'">
                         <router-link to="/blog" class="_coral-Button _coral-Button--primary _coral-Button--quiet">
                             <span>
                                 Blog
                             </span>
                         </router-link>
-                    </div>
+                    </div> -->
                     
                     
                     <!-- Account Profile -->
