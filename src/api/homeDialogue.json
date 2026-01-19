@@ -3,6 +3,6 @@
         "ShowDialog": true,
         "header": "New macOSicons API",
         "content": "## You can now search and download all the icons directly from an API. \n\n Find out more in the [API documentation](https://docs.macosicons.com/). Can't wait to see what you build with it!",
-        "image": "https://files.macosicons.com/macosicons/assets/macOSicons_api_hero.jpg"
+        "image": "https://s3.macosicons.com/macosicons/assets/macOSicons_api_hero.jpg"
     }
 ]
