@@ -68,7 +68,7 @@ import { resolve } from 'path'
 import mkcert from'vite-plugin-mkcert'
 
 export default {
-  base: "./",
+  base: "/",
   server: {
     https: true
   },

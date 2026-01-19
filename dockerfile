@@ -1,23 +1,30 @@
-# Use the official Node.js image as a parent image
-FROM node:18
+# Build stage - use Bun for fast dependency installation and build
+FROM oven/bun:latest AS builder
 
-# Set the working directory in the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json (if available)
-COPY package*.json ./
+# Copy package.json and bun.lockb (if available)
+COPY package.json bun.lockb* ./
 
 # Install dependencies
-RUN npm install
+RUN bun install
 
-# Copy the rest of your app's source code from your host to your image filesystem.
+# Copy source code
 COPY . .
 
 # Build the app
-RUN npm run build
+RUN bun run build
 
-# Expose the port the app runs on
-EXPOSE 4173
+# Production stage - use nginx for serving static files
+FROM nginx:alpine
 
-# Run the app
-CMD [ "npm", "run", "serve" ]
+# Copy built assets from builder stage
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Copy custom nginx config for SPA routing (optional but recommended)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose port 80
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
