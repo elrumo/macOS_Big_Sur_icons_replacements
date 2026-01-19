@@ -64,7 +64,7 @@
 
 // vite.config.js
 import vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
+import { fileURLToPath, URL } from 'node:url'
 import mkcert from'vite-plugin-mkcert'
 
 export default {
@@ -75,7 +75,7 @@ export default {
   resolve: {
     alias: {
       vue: '@vue/compat',
-      "@": resolve(__dirname, "./src")
+      "@": fileURLToPath(new URL('./src', import.meta.url))
     }
   },
   
