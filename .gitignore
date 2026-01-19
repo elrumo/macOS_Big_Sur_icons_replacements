@@ -41,3 +41,5 @@ main_copy.js
 # macOSicons-parse-schema.json
 .trae/.ignore
 macOSicons-parse-schema.json
+
+.claude
