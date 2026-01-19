@@ -52,6 +52,7 @@
           is="coral-button"
           variant="quiet"
           coral-close=""
+          tabindex="-1"
         >
           Remind me again later
         </button>
@@ -473,7 +474,8 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted, onUnmounted, nextTick, defineAsyncComponent, getCurrentInstance } from 'vue';
+import { ref, computed, watch, onMounted, onUnmounted, nextTick, defineAsyncComponent } from 'vue';
+import { useCookies } from 'vue3-cookies';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 import { useHead } from '@unhead/vue'
@@ -546,8 +548,7 @@ const deleteDialog = defineAsyncComponent(() => import('@/components/deleteDialo
 const SaveIconsDialogue = defineAsyncComponent(() => import('@/components/SaveIconsDialogue.vue'));
 
 // Composables
-const instance = getCurrentInstance();
-const $cookies = instance?.appContext.config.globalProperties.$cookies;
+const { cookies: $cookies } = useCookies();
 const store = useStore();
 const route = useRoute();
 const router = useRouter();
@@ -870,7 +871,7 @@ const loadMore = async () => {
 const scroll = () => {
   window.onscroll = () => {
     let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 2000;
-
+    
     if (bottomOfWindow && scrolledToBottom.value) {
       scrolledToBottom.value = false;
       loadMore();
@@ -954,9 +955,7 @@ onMounted(async () => {
   const urlParams = new URL(window.location.href.replace(/#/g, "%23")).searchParams;
   const iconParam = urlParams.get('icon');
 
-  if (iconParam) {
-    showDialog('iconDetailsDialog');
-  }
+  if (iconParam) showDialog('iconDetailsDialog');
 
   try {
     store.dispatch('algoliaSearch', { page: page.value, concat: false });
@@ -968,11 +967,11 @@ onMounted(async () => {
 
   cmdK();
   searchForPathQuery();
-  setEventListenersOnStart();
+  // setEventListenersOnStart();
   store.dispatch('fetchUserAttributes');
 
   await store.dispatch('fetchHomeDialog');
-
+  
   if (getHomeDialog.value.showParticles) {
     let particlesImageUrl = 'https://api.macosicons.com' + getHomeDialog.value.particlesImage.data.attributes.url;
     try {

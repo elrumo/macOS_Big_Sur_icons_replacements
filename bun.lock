@@ -35,9 +35,9 @@
         "vite": "^4.0.1",
         "vite-plugin-mkcert": "^1.10.1",
         "vue": "^3.5.22",
-        "vue-cookies": "^1.8.2",
         "vue-markdown-render": "^2.0.1",
         "vue-mobile-detection": "^2.0.1",
+        "vue3-cookies": "^1.0.6",
         "vue3-lazyload": "^0.3.6",
         "vuex": "^4.1.0",
       },
@@ -884,8 +884,6 @@
 
     "vue": ["vue@3.5.26", "", { "dependencies": { "@vue/compiler-dom": "3.5.26", "@vue/compiler-sfc": "3.5.26", "@vue/runtime-dom": "3.5.26", "@vue/server-renderer": "3.5.26", "@vue/shared": "3.5.26" }, "peerDependencies": { "typescript": "*" }, "optionalPeers": ["typescript"] }, "sha512-SJ/NTccVyAoNUJmkM9KUqPcYlY+u8OVL1X5EW9RIs3ch5H2uERxyyIUI4MRxVCSOiEcupX9xNGde1tL9ZKpimA=="],
 
-    "vue-cookies": ["vue-cookies@1.8.6", "", {}, "sha512-e2kYaHj1Y/zVsBSM3KWlOoVJ5o3l4QZjytNU7xdCgmkw3521CMUerqHekBGZKXXC1oRxYljBeeOK2SCel6cKuw=="],
-
     "vue-demi": ["vue-demi@0.12.5", "", { "peerDependencies": { "@vue/composition-api": "^1.0.0-rc.1", "vue": "^3.0.0-0 || ^2.6.0" }, "optionalPeers": ["@vue/composition-api"], "bin": { "vue-demi-fix": "bin/vue-demi-fix.js", "vue-demi-switch": "bin/vue-demi-switch.js" } }, "sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q=="],
 
     "vue-markdown-render": ["vue-markdown-render@2.3.0", "", { "dependencies": { "markdown-it": "^14.1.0" }, "peerDependencies": { "vue": "^3.3.4" } }, "sha512-ZWVVKba8t0tKBlaUGaWmNynIk38gE7Bt3psC/iN2NsqpdGY15VGfBeBvF0A8cEmwHnjNVJo2IzUUqkhhfldhtg=="],
@@ -893,6 +891,8 @@
     "vue-mobile-detection": ["vue-mobile-detection@2.0.1", "", { "dependencies": { "vue": "^3.2.20" } }, "sha512-ziB0Rp8Snp08+p7E+WCRzeYYYp0ddPaqHlFxWN0kpLAddB5D/PRwgIv18P08hkhwNFRgBQ71T19jNIbttR7P0g=="],
 
     "vue-router": ["vue-router@4.5.1", "", { "dependencies": { "@vue/devtools-api": "^6.6.4" }, "peerDependencies": { "vue": "^3.2.0" } }, "sha512-ogAF3P97NPm8fJsE4by9dwSYtDwXIY1nFY9T6DyQnGHd1E2Da94w9JIolpe42LJGIl0DwOHBi8TcRPlPGwbTtw=="],
+
+    "vue3-cookies": ["vue3-cookies@1.0.6", "", { "dependencies": { "vue": "^3.0.0" } }, "sha512-a1UvVD0qIgxyOqjlSOwnLnqAnz8ASltugEv8yX+96i/WGZAN9fEDci7xO4HIWZE1uToUnRq9JnFhvfDCSo45OA=="],
 
     "vue3-lazyload": ["vue3-lazyload@0.3.8", "", { "dependencies": { "vue-demi": "^0.12.5" }, "peerDependencies": { "@vue/composition-api": "^1.0.0-rc.1", "vue": "^2.0.0 || >=3.0.0" }, "optionalPeers": ["@vue/composition-api"] }, "sha512-UiJHRT7mzry102WbhtrRgJh+f8Z8u4Z+H1RU4dvPmQeq7wFSDFxZB9iJOWGihH2FscXN/8rMGLDOQJAmjwqpCg=="],
 
