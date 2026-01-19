@@ -243,7 +243,7 @@ export default createStore({
       let dialogData = await getDialogHome();
       setTimeout(() => {
         store.commit('setDataToArr', {arr: 'homeDialog', data: dialogData[0]})
-      }, 500);
+      }, 1000);
     },
 
     async fetchResourcesHome(store){
