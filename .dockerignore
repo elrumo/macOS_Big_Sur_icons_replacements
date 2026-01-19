@@ -22,9 +22,5 @@ Thumbs.db
 *.log
 npm-debug.log*
 
-# Environment files
-.env
-.env.*
-
 # Other
 /Other
