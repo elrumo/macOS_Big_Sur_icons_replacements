@@ -474,7 +474,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted, onUnmounted, nextTick, defineAsyncComponent } from 'vue';
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue';
 import { useCookies } from 'vue3-cookies';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
@@ -543,9 +543,9 @@ import ChevronDownCoralIcon from "../assets/icons/ChevronDown.svg"
 
 import AlgoliaIcon from "../assets/algolia_logo.svg"
 
-// Async components
-const deleteDialog = defineAsyncComponent(() => import('@/components/deleteDialog.vue'));
-const SaveIconsDialogue = defineAsyncComponent(() => import('@/components/SaveIconsDialogue.vue'));
+// Components
+import deleteDialog from './deleteDialog.vue';
+import SaveIconsDialogue from './SaveIconsDialogue.vue';
 
 // Composables
 const { cookies: $cookies } = useCookies();
