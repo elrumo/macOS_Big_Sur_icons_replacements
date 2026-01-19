@@ -121,7 +121,7 @@
                                 :key="category.name+icon.randId+Math.floor(Math.random() * 10000000 + 1)"
                                 :id="icon.randId+category.id"
                                 :value="category.id"
-                                :selected="icon.category.includes(category.id)"
+                                :selected="icon.category.includes(category.id) || null"
                               >
                                 {{ category.name }}
                               </option>
@@ -239,7 +239,9 @@
                       <div class="h-full">
                         <div class="drop-zone-wrapper">
                           <coral-icon class="m-auto" :icon="coralIcons.addIcon" size="XL" alt="Larger" title="XL"></coral-icon>
-                          <span class="m-auto"> Add/drop files </span>
+                          <span class="m-auto"> 
+                            Add/drop files
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -261,7 +263,12 @@
         Cancel
       </button>
 
-      <button is="coral-button" variant="cta" :disabled="!validateForm" @click="onUpload">
+      <button 
+        is="coral-button" 
+        variant="cta" 
+        :disabled="!validateForm" 
+        @click="onUpload"
+      >
         Upload
       </button>
     </coral-dialog-footer>
@@ -350,7 +357,7 @@ function getValue(e, appNameParam, field) {
 }
 
 function selectedOption(option, value) {
-  return option == value
+  return option == value || null
 }
 
 function removeFile(e, randId) {
@@ -424,149 +431,128 @@ function selectIcon(event) {
   }
 }
 
+// Helper function to convert File to base64
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => {
+      // Remove the data URL prefix (e.g., "data:image/png;base64,")
+      const base64 = reader.result.split(',')[1]
+      resolve(base64)
+    }
+    reader.onerror = error => reject(error)
+  })
+}
+
 async function onUpload() {
-  let DownloadCount = Parse.Object.extend("DownloadCount")
-  let IconType = Parse.Object.extend("IconType")
-  let Categories = Parse.Object.extend("Categories")
-  let typQuery = new Parse.Query(IconType)
-  let categoryQuery = new Parse.Query(Categories)
+  // Get today's date for analytics
+  const today = new Date()
+  const dd = String(today.getDate()).padStart(2, '0')
+  const mm = String(today.getMonth() + 1).padStart(2, '0')
+  const yyyy = today.getFullYear()
+  const dateStr = dd + '/' + mm + '/' + yyyy
 
-  // Get today's date
-  var today = new Date()
-  var dd = String(today.getDate()).padStart(2, '0')
-  var mm = String(today.getMonth() + 1).padStart(2, '0') //January is 0!
-  var yyyy = today.getFullYear()
-
-  today = dd + '/' + mm + '/' + yyyy
-
-  window.plausible("IconSubmission", { props: { date: today } })
+  window.plausible("IconSubmission", { props: { date: dateStr } })
 
   isLoading.value = true
-  let dialog = document.getElementById('submissionDialog')
+  const dialog = document.getElementById('submissionDialog')
+  const sessionToken = Parse.User.current()?.getSessionToken()
 
-  for (let fileNum in filesToShow) {
-    let file = filesToShow[fileNum].file
-    let appNameVal = filesToShow[fileNum].name
-    let randId = filesToShow[fileNum].randId
-    let typeId = filesToShow[fileNum].type
-    let isDarkMode = filesToShow[fileNum].isDarkMode
-    let isLiquidGlass = filesToShow[fileNum].isLiquidGlass
-    let isAuthor = filesToShow[fileNum].isAuthor
-    let icnsFile = filesToShow[fileNum].icnsFile ? filesToShow[fileNum].icnsFile : ''
-    let icnsFileUrl = ''
-    let parseIcnsFile
+  if (!sessionToken) {
+    showToast({
+      id: "toastMessage",
+      message: "You must be logged in to upload icons",
+      variant: "error"
+    })
+    isLoading.value = false
+    return
+  }
 
-    // Retrieve Category Parse object
-    let category = filesToShow[fileNum].category
-    categoryQuery.get(category)
-    category = await categoryQuery.find()
-    category = category[0]
+  const fileKeys = Object.keys(filesToShow)
 
-    var type
-    // Retrieve IconType Parse object
-    for (let item in getIconType.value) {
-      if (getIconType.value[item].id == typeId) {
-        type = getIconType.value[item].parseObj
-      }
-    }
+  for (const fileNum of fileKeys) {
+    const iconData = filesToShow[fileNum]
+    const randId = iconData.randId
 
-    let fileName
+    try {
+      // Convert PNG file to base64
+      const pngFileBase64 = await fileToBase64(iconData.file)
 
-    if (/^[A-Za-z][A-Za-z0-9]*$/.test(appNameVal)) {
-      fileName = appNameVal
-    } else {
-      let d = new Date()
-      fileName = Math.round(Math.random() * 10000 + d.getTime())
-      fileName = fileName.toString()
-    }
-
-    const Icons = Parse.Object.extend("Icons2")
-    const icons = new Icons()
-
-    console.log("icnsFile: ", icnsFile)
-    if (icnsFile != '') {
-      parseIcnsFile = new Parse.File(fileName + '.icns', icnsFile)
-      let saveIcns = await parseIcnsFile.save()
-      icnsFileUrl = saveIcns._url
-    }
-
-    const parseFile = new Parse.File(fileName, file)
-    parseFile.save().then((uploaded) => {
-      console.log("Success: ", uploaded._url)
-      let iconUrl = uploaded._url.replace('http:', "https:")
-      let currentUser = Parse.User.current()
-
-      let dataToStore = {
-        appName: appNameVal,
-        fileName: fileName,
-        highResPngFile: parseFile,
-        highResPngUrl: iconUrl,
-        timeStamp: Date.now(),
-        approved: false,
-        user: currentUser,
-        email: Parse.User.current().getEmail(),
-        usersName: Parse.User.current().getUsername(),
-        credit: Parse.User.current().get("credit"),
-        category: category,
-        type: type,
-        DownloadCount: new DownloadCount(),
-        isDarkMode: isDarkMode,
-        isLiquidGlass: isLiquidGlass,
-        isAuthor: isAuthor
+      // Convert ICNS file to base64 if present
+      let icnsFileBase64 = null
+      let icnsFileName = null
+      if (iconData.icnsFile) {
+        icnsFileBase64 = await fileToBase64(iconData.icnsFile)
+        icnsFileName = iconData.icnsFile.name
       }
 
-      if (parseIcnsFile != '') {
-        dataToStore.icnsFile = parseIcnsFile
-        dataToStore.icnsUrl = icnsFileUrl
+      // Prepare request payload
+      const payload = {
+        appName: iconData.name,
+        categoryId: iconData.category,
+        typeId: iconData.type,
+        pngFileBase64,
+        pngFileName: iconData.file.name,
+        icnsFileBase64,
+        icnsFileName,
+        isDarkMode: iconData.isDarkMode,
+        isLiquidGlass: iconData.isLiquidGlass,
+        isAuthor: iconData.isAuthor
       }
 
-      icons.set(dataToStore)
-
-      const acl = new Parse.ACL()
-      acl.setPublicReadAccess(true)
-      acl.setWriteAccess(Parse.User.current().id, true)
-      acl.setRoleWriteAccess("Admin", true)
-
-      icons.setACL(acl)
-      icons.save().then((icon) => {
-        // Add icon relationship to user
-        let userRelation = currentUser.relation("icons")
-        userRelation.add(icons)
-        currentUser.save().then().catch((error) => {
-          console.log("error: ", error)
-        })
-
-        imageData.value = {}
-        uploadProgress.value++
-
-        delete filesToShow[randId]
-        delete filesToUpload[randId]
-
-        if (Object.keys(filesToUpload).length === 0) {
-          isLoading.value = false
-          imageData.value = false
-          uploadProgress.value = 0
-
-          showToast({
-            id: "toastMessage",
-            message: "All icons have been uploaded.",
-            variant: "success"
-          })
-          dialog.hide()
-        }
-      }, (error) => {
-        console.log("Data NOT saved: ", error)
+      console.log("payload: ", payload)
+      console.log("import.meta.env.VITE_BACKEND_URL + 'v1/icons/submit': ", import.meta.env.VITE_BACKEND_URL + 'v1/icons/submit')
+      
+      
+      // Call backend endpoint
+      const response = await fetch(import.meta.env.VITE_BACKEND_URL + 'v1/icons/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-parse-session-token': sessionToken
+        },
+        body: JSON.stringify(payload)
       })
-    }, function(error) {
+
+      const result = await response.json()
+      console.log("result: ", result)
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Failed to upload icon')
+      }
+
+      console.log("Success: ", result)
+
+      imageData.value = {}
+      uploadProgress.value++
+
+      delete filesToShow[randId]
+      delete filesToUpload[randId]
+
+    } catch (error) {
       console.log("error: ", error)
       isLoading.value = false
       showToast({
         id: "toastMessage",
-        message: "There was an error, get in touch with @elrumo on Twitter",
+        message: error.message || "There was an error uploading the icon",
         variant: "error"
       })
-    })
+      return
+    }
   }
+
+  // All uploads completed successfully
+  isLoading.value = false
+  imageData.value = false
+  uploadProgress.value = 0
+
+  showToast({
+    id: "toastMessage",
+    message: "All icons have been uploaded.",
+    variant: "success"
+  })
+  dialog.hide()
 }
 
 // Computed

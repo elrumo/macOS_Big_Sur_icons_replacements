@@ -72,8 +72,9 @@
 
         <!-- Similar Icons -->
         <div v-if="getSimilarIcons.length > 0 || getIsSimilarLoading" class="similar-icons">
-        <!-- <div class="similar-icons"> -->
-          <h3 class="coral-Heading--S">Similar Icons</h3>
+          <h3 class="coral-Heading--S">'
+            Similar Icons
+          </h3>
           <div class="similar-icons-scroll">
             <UserIconCard
               v-for="similarIcon in getSimilarIcons.length > 0 ? getSimilarIcons : 5"

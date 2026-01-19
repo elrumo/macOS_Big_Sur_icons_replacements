@@ -367,7 +367,6 @@ const userData = () => {
 }
 
 const getUserProfilePic = () => {
-  console.log("this.user: ", user)
   try {
     return user.profilePhoto ? user.profilePhoto.url() : resources.profilePic
   } catch (error) {

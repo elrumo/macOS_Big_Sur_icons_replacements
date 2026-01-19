@@ -121,7 +121,7 @@
             class="status-alert-info m-t-32"
           >
             <button 
-              class="close-button"
+              class="status-alert-close-button"
               @click="closeAlert"
             >
               <span>x</span>

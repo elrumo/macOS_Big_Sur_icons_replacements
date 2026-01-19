@@ -22,8 +22,9 @@
                 <!-- Icon image -->
                 <div class="card-img-wrapper" style="max-width: 120px;">
                     <div @click="iconClick(icon)">
-                        <!-- {{ icon. }} -->
+                        {{ icon.lowResPngFileS3Url }}
                         <img
+                            v-if="!isLoading"
                             :alt="icon.appName + ' icon'"
                             v-lazy="{
                                 src: lazyOptions.src,
@@ -160,14 +161,21 @@ export default {
 
         function iconUrl(){
             const icon = context.icon;
+            let s3Url = `https://s3.macosicons.com/macosicons/icons/${icon.objectID || icon.id}/`
+            if(typeof icon == Number) return
+            
             try {
-                
-                if (!icon.lowResPngUrl) {
-                    return icon.highResPngUrl
-                } else{
-                    return icon.lowResPngUrl
+                if (!icon.lowResPngUrl && icon.highResPngUrl) {
+                    let fileName = 'highResPngFile_'+icon.highResPngUrl.split("/").pop()
+                    return s3Url + fileName
+                    // return icon.highResPngUrl
+                } else if(icon.lowResPngUrl){
+                    let fileName = 'lowResPngFile_'+icon.lowResPngUrl.split("/").pop()
+                    return s3Url + fileName
+                    // return icon.lowResPngUrl
                 }
             } catch (error) {
+                console.log("error icon: ", icon);
                 console.log("error fetching icon url: ", error);
             }
         }
@@ -259,7 +267,7 @@ export default {
             const url = `${window.location.origin}${window.location.pathname}#/?icon=${icon.id}`;
             window.history.replaceState({}, '', url);
 
-            console.log('getSelectedIcon: ', this.getSelectedIcon)
+            // console.log('getSelectedIcon: ', this.getSelectedIcon)
             
             this.algoliaSearch({
                 search: icon.appName,
@@ -348,12 +356,17 @@ export default {
 
         iconDownloadUrl(){
             const icon = this.icon
+            let s3Url = `https://s3.macosicons.com/macosicons/icons/${icon.objectID}/`
             try {
                 if (this.isMacOs) {
                     // console.log(icon);
-                    return icon.icnsUrl
+                    let fileName = 'icnsFile_'+icon.icnsUrl.split("/").pop()
+                    return s3Url + fileName
+                    // return icon.icnsUrl
                 } else{
-                    return icon.iOSUrl
+                    let fileName = 'iOSFile_'+icon.iOSUrl.split("/").pop()
+                    return s3Url + fileName
+                    // return icon.iOSUrl
                 }
             } catch (error) {
                 // console.log("error fetching icon url: ", error);

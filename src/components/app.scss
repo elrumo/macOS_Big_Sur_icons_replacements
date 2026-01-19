@@ -3229,7 +3229,7 @@ coral-sidenav-item{
     }
 }
 
-.close-button{
+.status-alert-close-button{
     position: absolute;
     top: 8px;
     right: 8px;
@@ -3252,6 +3252,16 @@ coral-sidenav-item{
     @media (prefers-color-scheme: dark) {
         &:hover{
             background: #343434;
+        }
+    }
+}
+
+.close-button {
+    width: 20px !important;
+    min-width: 0px;
+    img{
+        @media (prefers-color-scheme: dark) {
+            filter: invert(100%) !important;
         }
     }
 }
