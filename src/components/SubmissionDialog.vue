@@ -3,7 +3,6 @@
 
     <coral-dialog-header>
       Submit an icon
-      
       <p class="coral-Body--M p-t-8 m-b-4">
         Visit the <router-link coral-close="" to="/resources" class="coral-Link">resources page </router-link> for icon templates.
       </p>
@@ -258,379 +257,346 @@
     </coral-dialog-content>
     
     <coral-dialog-footer>
-      <button is="coral-button" coral-close="">Cancel</button>
-      <button is="coral-button" variant="cta" v-if="validateForm" @click="onUpload">Upload</button>
-      <button is="coral-button" variant="cta" v-else disabled="" >Upload</button>
-      <!-- <button v-if="imageData && email != '' " is="coral-button" variant="cta" @click="onUpload">Upload</button> -->
-      <!-- <button v-if="!imageData || email == '' " is="coral-button" disabled>Upload</button> -->
+      <button is="coral-button" coral-close="">
+        Cancel
+      </button>
+
+      <button is="coral-button" variant="cta" :disabled="!validateForm" @click="onUpload">
+        Upload
+      </button>
     </coral-dialog-footer>
 
   </coral-dialog>
 </template>
 
-<script>
-import { defineAsyncComponent } from 'vue'
-import { mapActions, mapGetters } from 'vuex';
-import Parse from 'parse/dist/parse.min.js';
+<script setup>
+import { ref, reactive, computed, onMounted, defineAsyncComponent } from 'vue'
+import { useStore } from 'vuex'
+import Parse from 'parse/dist/parse.min.js'
 
 import deleteIcon from "../assets/icons/delete.svg"
 import addCoralIcon from "../assets/icons/add.svg"
 import iconTemplate from "../assets/icons/icon_template.png"
 import iconBrew from "../api/iconBrew.js"
 
-export default {
-    name:"SubmissionDialog",
+// Components
+const SubmissionIconPreview = defineAsyncComponent(() => import('@/components/SubmissionIconPreview.vue'))
 
-    props:{
-    },
+// Store
+const store = useStore()
 
-    components:{
-      "SubmissionIconPreview": defineAsyncComponent(() => import('@/components/SubmissionIconPreview.vue'))
-    },
+// Getters
+const getAppCategories = computed(() => store.getters.getAppCategories)
+const getIconType = computed(() => store.getters.getIconType)
 
-    data(){
-      return{
-        imageData: false,
-        validUpload: false,
-        filesToShow: {},
-        filesToUpload: {},
-        coralIcons:{
-          addIcon: addCoralIcon,
-          deleteIcon: deleteIcon,
-        },
-        isCheckingSize: false,
-        iconTemplate: iconTemplate,
-        uploadProgress: 0,
-        totalNumFiles: 0,
-        email: "",
-        credit: "",
-        appName: "",
-        yourName: "",
-        isLoading: false,
-        // categoriesList: [{CategoryName: "test"}, {CategoryName: "Test 2"}]
-        categoriesList: []
+// Actions
+const showToast = (payload) => store.dispatch('showToast', payload)
+const fetchAppCategories = () => store.dispatch('fetchAppCategories')
+const fetchIconType = () => store.dispatch('fetchIconType')
+
+// Reactive state
+const imageData = ref(false)
+const validUpload = ref(false)
+const filesToShow = reactive({})
+const filesToUpload = reactive({})
+const coralIcons = reactive({
+  addIcon: addCoralIcon,
+  deleteIcon: deleteIcon,
+})
+const isCheckingSize = ref(false)
+const uploadProgress = ref(0)
+const totalNumFiles = ref(0)
+const email = ref("")
+const credit = ref("")
+const appName = ref("")
+const yourName = ref("")
+const isLoading = ref(false)
+const categoriesList = ref([])
+
+// Methods
+function openFileUpload(uploadId, iconId) {
+  event.preventDefault()
+  const uploadInput = document.getElementById(uploadId)
+  let iconFile = filesToShow[iconId].icnsFile
+
+  if (iconFile) {
+    filesToShow[iconId].icnsFile = ''
+    uploadInput.value = ''
+  } else {
+    uploadInput.click()
+  }
+}
+
+function iconBrewFn(icon, size) {
+  console.log(iconBrew[icon + size])
+  return iconBrew[icon + size]
+}
+
+function checkSize(id) {
+  isCheckingSize.value = !isCheckingSize.value
+  document.getElementById(id).classList.toggle("check-size")
+}
+
+function getCheckedValue(e, appNameParam, field) {
+  let fieldValue = e.target.checked
+  filesToShow[appNameParam][field] = fieldValue
+}
+
+function getValue(e, appNameParam, field) {
+  console.log(e)
+  let target = e.target
+  let fieldValue = target.value
+  filesToShow[appNameParam][field] = fieldValue
+}
+
+function selectedOption(option, value) {
+  return option == value
+}
+
+function removeFile(e, randId) {
+  delete filesToUpload[randId]
+  delete filesToShow[randId]
+
+  // If imageURL is empty, show the upload files component
+  if (Object.keys(filesToShow).length === 0) {
+    imageData.value = false
+  }
+}
+
+function setIcns(event, iconId) {
+  let file = event.target.files[0]
+  filesToShow[iconId].icnsFile = file
+  console.log("event: ", filesToShow[iconId])
+}
+
+function selectIcon(event) {
+  // Get selected image
+  let files = event.target.uploadQueue
+
+  // Only run if what has triggered the change is the upload wrapper
+  if (!event.target.classList.contains("fileupload-wrapper")) {
+    return
+  } else {
+    // Go through all the files that have been selected
+    for (let fileNum in files) {
+      let file = files[fileNum].file
+      const objectURL = window.URL.createObjectURL(file)
+
+      // Set image to new Image to get width and height
+      var img = new Image()
+      img.onload = function() {
+        let width = this.width
+        let height = this.height
+        if (width, height != 1024) {
+          window.URL.revokeObjectURL(this.src)
+          showToast({
+            id: "toastMessage",
+            message: "Icon needs to be 1024px, yours is " + height + "px x " + width + "px",
+            variant: "error"
+          })
+        } else {
+          let fileName = file.name.replace('.png', '')
+          let randId = Math.floor(Math.random() * 10000000 + 1) + "-" + fileName + Object.keys(filesToShow).length
+          filesToUpload[randId] = file
+
+          let value = {
+            img: objectURL,
+            name: fileName,
+            file: file,
+            isDarkMode: false,
+            isLiquidGlass: false,
+            category: "",
+            appWebsite: "",
+            type: "Zz9QX1BBIZ",
+            randId: randId,
+          }
+
+          imageData.value = true
+          filesToShow[randId] = value
+        }
       }
-    },
+      // Create URL of file to display back the image
+      img.src = objectURL
+    }
 
-    methods:{
-      ...mapActions(['showToast', 'fetchAppCategories', 'fetchIconType']),
+    totalNumFiles.value = Object.keys(filesToShow).length
+    event.target.clear()
+  }
+}
 
-      openFileUpload(uploadId, iconId){
-        event.preventDefault()
-        const uploadInput = document.getElementById(uploadId)
-        let iconFile = this.filesToShow[iconId].icnsFile
+async function onUpload() {
+  let DownloadCount = Parse.Object.extend("DownloadCount")
+  let IconType = Parse.Object.extend("IconType")
+  let Categories = Parse.Object.extend("Categories")
+  let typQuery = new Parse.Query(IconType)
+  let categoryQuery = new Parse.Query(Categories)
 
-        if (iconFile) {
-          this.filesToShow[iconId].icnsFile = ''
-          uploadInput.value = '';
-        }else{
-          uploadInput.click();
-        }
-      },
+  // Get today's date
+  var today = new Date()
+  var dd = String(today.getDate()).padStart(2, '0')
+  var mm = String(today.getMonth() + 1).padStart(2, '0') //January is 0!
+  var yyyy = today.getFullYear()
 
-      iconBrew(icon, size){
-        console.log(iconBrew[icon + size]);
-        return iconBrew[icon + size];
-      },
+  today = dd + '/' + mm + '/' + yyyy
 
-      checkSize(id){
-        this.isCheckingSize = !this.isCheckingSize;
-        document.getElementById(id).classList.toggle("check-size");
-      },
+  window.plausible("IconSubmission", { props: { date: today } })
 
-      getCheckedValue(e, appName, field){
-        let parent = this
-        let fieldValue = e.target.checked
-        parent.filesToShow[appName][field] = fieldValue
-      },
+  isLoading.value = true
+  let dialog = document.getElementById('submissionDialog')
 
-      getValue(e, appName, field){
-        console.log(e);
-        let target = e.target
-        let fieldValue = target.value
-        this.filesToShow[appName][field] = fieldValue;
-      },
+  for (let fileNum in filesToShow) {
+    let file = filesToShow[fileNum].file
+    let appNameVal = filesToShow[fileNum].name
+    let randId = filesToShow[fileNum].randId
+    let typeId = filesToShow[fileNum].type
+    let isDarkMode = filesToShow[fileNum].isDarkMode
+    let isLiquidGlass = filesToShow[fileNum].isLiquidGlass
+    let isAuthor = filesToShow[fileNum].isAuthor
+    let icnsFile = filesToShow[fileNum].icnsFile ? filesToShow[fileNum].icnsFile : ''
+    let icnsFileUrl = ''
+    let parseIcnsFile
 
-      selectedOption(option, value){
-        if (option == value) {
-          return true
-        } else {
-          return false
-        }
-      },
+    // Retrieve Category Parse object
+    let category = filesToShow[fileNum].category
+    categoryQuery.get(category)
+    category = await categoryQuery.find()
+    category = category[0]
 
-      removeFile(e, randId){
-        delete this.filesToUpload[randId]
-        delete this.filesToShow[randId]
-
-        // If imageURL is empty, show the upload files component
-        if (Object.keys(this.filesToShow).length === 0) {
-          parent.imageData = false
-        }
-      },
-
-      setIcns(event, iconId){
-        let file = event.target.files[0]
-        this.filesToShow[iconId].icnsFile = file
-        console.log("event: ", this.filesToShow[iconId]);
-      },
-
-      selectIcon(event) {
-        // Get selected image
-        let parent = this
-        let files = event.target.uploadQueue
-        
-        // Only run if what has triggered the change is the upload wrapper
-        if (!event.target.classList.contains("fileupload-wrapper")) {
-          return
-        } else{
-        // // Go through all the files that have been selected
-          for(let fileNum in files){
-            let file = files[fileNum].file
-            const objectURL = window.URL.createObjectURL(file);
-
-            // Set image to new Image to get width and height
-            var img = new Image();
-            img.onload = function() {
-              let width = this.width
-              let height = this.height
-              if (width, height != 1024 ) {
-                window.URL.revokeObjectURL(this.src);
-                parent.showToast({
-                  id: "toastMessage",
-                  message: "Icon needs to be 1024px, yours is "+height+"px x "+width+"px",
-                  variant: "error"
-                })
-              } else{
-                  let fileName = file.name.replace('.png', '')
-                  let randId = Math.floor(Math.random() * 10000000 + 1)+"-"+fileName+Object.keys(parent.filesToShow).length
-                  parent.filesToUpload[randId] = file
-                  
-                  let value = {
-                    img: objectURL,
-                    name: fileName,
-                    file: file,
-                    isDarkMode: false,
-                    isLiquidGlass: false,
-                    category: "",
-                    appWebsite: "",
-                    type: "Zz9QX1BBIZ",
-                    randId: randId,
-                  }
-
-                  parent.imageData = true
-                  parent.filesToShow[randId] = value;
-                  // parent.$set(parent.filesToShow, randId, value)
-              }
-
-            }
-            // Create URL of file to dislay back the image
-            img.src = objectURL;
-          }
-
-          parent.totalNumFiles = Object.keys(parent.filesToShow).length
-          event.target.clear()
-        }
-
-      },
-
-      async onUpload(){
-        let parent = this
-        let DownloadCount = Parse.Object.extend("DownloadCount")
-        let IconType = Parse.Object.extend("IconType")
-        let Categories = Parse.Object.extend("Categories")
-        let typQuery = new Parse.Query(IconType)
-        let categoryQuery = new Parse.Query(Categories)
-
-        // Get today's date
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        var yyyy = today.getFullYear();
-
-        today = dd + '/' + mm + '/' + yyyy;
-
-        window.plausible("IconSubmission", {props: { date: today}})
-
-        parent.isLoading = true
-        let dialog = document.getElementById('submissionDialog')
-
-        for(let fileNum in parent.filesToShow){
-          let file =  parent.filesToShow[fileNum].file;
-          let appName = parent.filesToShow[fileNum].name;
-          let randId = parent.filesToShow[fileNum].randId;
-          let typeId = parent.filesToShow[fileNum].type;
-          let isDarkMode = parent.filesToShow[fileNum].isDarkMode;
-          let isLiquidGlass = parent.filesToShow[fileNum].isLiquidGlass;
-          let isAuthor = parent.filesToShow[fileNum].isAuthor;
-          let icnsFile = parent.filesToShow[fileNum].icnsFile ? parent.filesToShow[fileNum].icnsFile: '';
-          let icnsFileUrl = '';
-          let parseIcnsFile;
-          
-          // Retrieve Category Parse object
-          let category = parent.filesToShow[fileNum].category;
-          categoryQuery.get(category)
-          category = await categoryQuery.find();
-          category = category[0];
-          
-          var type 
-          // Retrieve IconType Parse object
-          for(let item in parent.getIconType){
-            if (parent.getIconType[item].id == typeId) {
-              type = parent.getIconType[item].parseObj
-            }
-          }
-
-          let fileName;
-
-          if (/^[A-Za-z][A-Za-z0-9]*$/.test(appName)) {
-            fileName = appName
-          } else {
-            let d = new Date()
-            fileName = Math.round(Math.random()*10000 + d.getTime() )
-            fileName = fileName.toString()
-          }
-          
-          const Icons = Parse.Object.extend("Icons2");
-          const icons = new Icons()
-
-          // const parseFile = new Parse.File(fileName, file); // Set file to new Parse object
-          console.log("icnsFile: ", icnsFile);
-          if (icnsFile != '') {
-            parseIcnsFile = new Parse.File(fileName+'.icns', icnsFile); // Set file to new Parse object
-            let saveIcns = await parseIcnsFile.save()
-            icnsFileUrl = saveIcns._url;
-          }
-
-          const parseFile = new Parse.File(fileName, file); // Set file to new Parse object
-          parseFile.save().then((uploaded) => {
-            console.log("Success: ", uploaded._url);
-            let iconUrl = uploaded._url.replace('http:', "https:")
-            let currentUser = Parse.User.current()
-          
-            let dataToStore = {
-              appName: appName,
-              fileName: fileName,
-              highResPngFile: parseFile,
-              highResPngUrl: iconUrl,
-              timeStamp: Date.now(),
-              approved: false,
-              user: currentUser,
-              email: Parse.User.current().getEmail(),
-              usersName: Parse.User.current().getUsername(),
-              credit: Parse.User.current().get("credit"),
-              category: category,
-              type: type,
-              DownloadCount: new DownloadCount(),
-              isDarkMode: isDarkMode,
-              isLiquidGlass: isLiquidGlass,
-              isAuthor: isAuthor
-            }
-
-            if (parseIcnsFile != '') {
-              dataToStore.icnsFile = parseIcnsFile;
-              dataToStore.icnsUrl = icnsFileUrl;
-            }
-
-            icons.set(dataToStore);
-            
-            const acl = new Parse.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setWriteAccess(Parse.User.current().id, true)
-            acl.setRoleWriteAccess("Admin", true);
-
-            icons.setACL(acl);
-            icons.save().then((icon) => { // Reset input boxes
-              
-              // Add icon relationship to user
-              let userRelation = currentUser.relation("icons")
-              userRelation.add(icons)
-              currentUser.save().then().catch((error) =>{
-                console.log("error: ", error)
-              });
-
-              parent.imageData = {}
-              parent.picture= null
-              parent.uploadProgress++
-              
-              delete parent.filesToShow[randId]
-              delete parent.filesToUpload[randId]
-
-              if (Object.keys(parent.filesToUpload).length === 0) {
-                  parent.isLoading = false
-                  parent.imageData = false
-                  parent.uploadProgress = 0
-
-                  parent.showToast({
-                    id: "toastMessage",
-                    message: "All icons have been uploaded.",
-                    variant: "success"
-                  })
-                  dialog.hide()
-                }
-            },(error)=>{
-              console.log("Data NOT saved: ", error);
-            })
-          }, function(error) {
-            console.log("error: ", error);
-            parent.isLoading = false
-            parent.showToast({
-              id: "toastMessage",
-              message: "There was an error, get in touch with @elrumo on Twitter",
-              variant: "error"
-            })
-          });
-
-        }
-      },
-
-    },
-
-    async mounted(){ 
-      this.fetchAppCategories()
-      this.fetchIconType()
-
-      // const IconsBase = Parse.Object.extend("Icons2");
-      // const query = new Parse.Query(IconsBase);
-      // const newQuery = await query.get('Bg7PB3BbSA')
-
-      // const icnsFile = await newQuery.get("icnsFile");
-      
-      // if(icnsFile){
-      //   console.log(icnsFile.url());
-      // }
-
-    },
-
-    computed:{
-      ...mapGetters(["getAppCategories", "getIconType"]),
-
-      validateForm(){
-        let parent = this;
-        let filesToShow = parent.filesToShow
-        var isValid = []
-        
-        if (parent.imageData) {
-          for (let item in filesToShow){
-            let isAuthor = filesToShow[item].isAuthor;
-            for (let field in filesToShow[item]){
-              let submission = filesToShow[item][field]
-              if (submission != "" && submission != undefined && field != "appWebsite" && isAuthor) {
-                isValid.push(true)
-              } else if (field != "appWebsite" && field != "isDarkMode" && field != "isLiquidGlass") {
-                isValid.push(false)
-              }
-            }
-          }
-        } else {
-          isValid.push(false)
-        }
-
-        return !isValid.some((el) => { return el == false })
+    var type
+    // Retrieve IconType Parse object
+    for (let item in getIconType.value) {
+      if (getIconType.value[item].id == typeId) {
+        type = getIconType.value[item].parseObj
       }
     }
 
+    let fileName
+
+    if (/^[A-Za-z][A-Za-z0-9]*$/.test(appNameVal)) {
+      fileName = appNameVal
+    } else {
+      let d = new Date()
+      fileName = Math.round(Math.random() * 10000 + d.getTime())
+      fileName = fileName.toString()
+    }
+
+    const Icons = Parse.Object.extend("Icons2")
+    const icons = new Icons()
+
+    console.log("icnsFile: ", icnsFile)
+    if (icnsFile != '') {
+      parseIcnsFile = new Parse.File(fileName + '.icns', icnsFile)
+      let saveIcns = await parseIcnsFile.save()
+      icnsFileUrl = saveIcns._url
+    }
+
+    const parseFile = new Parse.File(fileName, file)
+    parseFile.save().then((uploaded) => {
+      console.log("Success: ", uploaded._url)
+      let iconUrl = uploaded._url.replace('http:', "https:")
+      let currentUser = Parse.User.current()
+
+      let dataToStore = {
+        appName: appNameVal,
+        fileName: fileName,
+        highResPngFile: parseFile,
+        highResPngUrl: iconUrl,
+        timeStamp: Date.now(),
+        approved: false,
+        user: currentUser,
+        email: Parse.User.current().getEmail(),
+        usersName: Parse.User.current().getUsername(),
+        credit: Parse.User.current().get("credit"),
+        category: category,
+        type: type,
+        DownloadCount: new DownloadCount(),
+        isDarkMode: isDarkMode,
+        isLiquidGlass: isLiquidGlass,
+        isAuthor: isAuthor
+      }
+
+      if (parseIcnsFile != '') {
+        dataToStore.icnsFile = parseIcnsFile
+        dataToStore.icnsUrl = icnsFileUrl
+      }
+
+      icons.set(dataToStore)
+
+      const acl = new Parse.ACL()
+      acl.setPublicReadAccess(true)
+      acl.setWriteAccess(Parse.User.current().id, true)
+      acl.setRoleWriteAccess("Admin", true)
+
+      icons.setACL(acl)
+      icons.save().then((icon) => {
+        // Add icon relationship to user
+        let userRelation = currentUser.relation("icons")
+        userRelation.add(icons)
+        currentUser.save().then().catch((error) => {
+          console.log("error: ", error)
+        })
+
+        imageData.value = {}
+        uploadProgress.value++
+
+        delete filesToShow[randId]
+        delete filesToUpload[randId]
+
+        if (Object.keys(filesToUpload).length === 0) {
+          isLoading.value = false
+          imageData.value = false
+          uploadProgress.value = 0
+
+          showToast({
+            id: "toastMessage",
+            message: "All icons have been uploaded.",
+            variant: "success"
+          })
+          dialog.hide()
+        }
+      }, (error) => {
+        console.log("Data NOT saved: ", error)
+      })
+    }, function(error) {
+      console.log("error: ", error)
+      isLoading.value = false
+      showToast({
+        id: "toastMessage",
+        message: "There was an error, get in touch with @elrumo on Twitter",
+        variant: "error"
+      })
+    })
+  }
 }
+
+// Computed
+const validateForm = computed(() => {
+  var isValid = []
+
+  if (imageData.value) {
+    for (let item in filesToShow) {
+      let isAuthor = filesToShow[item].isAuthor
+      for (let field in filesToShow[item]) {
+        let submission = filesToShow[item][field]
+        if (submission != "" && submission != undefined && field != "appWebsite" && isAuthor) {
+          isValid.push(true)
+        } else if (field != "appWebsite" && field != "isDarkMode" && field != "isLiquidGlass") {
+          isValid.push(false)
+        }
+      }
+    }
+  } else {
+    isValid.push(false)
+  }
+
+  return !isValid.some((el) => el == false)
+})
+
+// Lifecycle
+onMounted(() => {
+  fetchAppCategories()
+  fetchIconType()
+})
 </script>
 
 <style>

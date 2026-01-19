@@ -241,7 +241,9 @@ export default createStore({
 
     async fetchHomeDialog(store){
       let dialogData = await getDialogHome();
-      store.commit('setDataToArr', {arr: 'homeDialog', data: dialogData[0]})
+      setTimeout(() => {
+        store.commit('setDataToArr', {arr: 'homeDialog', data: dialogData[0]})
+      }, 500);
     },
 
     async fetchResourcesHome(store){

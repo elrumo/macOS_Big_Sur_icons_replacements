@@ -479,6 +479,8 @@ const checkOldAccount = async (step, skipStep = false) => {
   } catch (error) {
     console.error("Error: ", error);
     isLoading.value = false;
+  } finally {
+    isLoading.value = false;
   }
 };
 

@@ -31,7 +31,7 @@
             <span class="underline"> resources page.</span>
             </router-link>
         </p>
-        
+      
 
         <div class="m-auto m-t-35">
           
@@ -109,6 +109,35 @@
 
         </div>
 
+        <Transition
+          name="fade-down"
+          @before-leave="beforeLeave"
+          @leave="leave"
+          @after-leave="afterLeave"
+        >
+          <coral-status
+            v-if="alertVisible"
+            variant="info"
+            class="status-alert-info m-t-32"
+          >
+            <button 
+              class="close-button"
+              @click="closeAlert"
+            >
+              <span>x</span>
+            </button>
+            <p class="coral-Body--L">
+              🇬🇧 Notice to UK users 🇬🇧
+            </p>
+            Some ISPs have blocked the domain where the files are hosted, so you may need a VPN to access the icons. 
+            <br>
+            <br>
+            <p>
+              I'm already working on a fix, stay up to date on <a href="https://www.threads.net/@elrumo" target="_blank">Threads</a> and <a href="https://x.com/elrumo" target="_blank">X</a>.
+            </p>
+          </coral-status>
+        </Transition>
+
 
     </div>
     
@@ -136,6 +165,7 @@ export default {
   data() {
     return {
       ad: true,
+      alertVisible: false,
       // imgs:{
       //   heroImg: require("../assets/icons_hero.jpg")
       // }
@@ -151,7 +181,12 @@ export default {
     getHomeDialog: {}
   },
 
+
   methods: {
+    closeAlert(){
+      this.alertVisible = false;
+      localStorage.setItem("alertVisible", 'false');
+    },
 
     logDonation(location){
       window.plausible("logDonation", {props: {
@@ -170,15 +205,41 @@ export default {
     goToSponsor() {
       window.open("https://github.com/sponsors/elrumo?o=esc", "_blank");
     },
+
+    // Transition hooks for smooth height animation
+    beforeLeave(el) {
+      el.style.height = el.scrollHeight + 'px';
+      el.style.overflow = 'hidden';
+      el.style.marginTop = getComputedStyle(el).marginTop;
+      el.style.marginBottom = getComputedStyle(el).marginBottom;
+    },
+    leave(el, done) {
+      // Force reflow
+      el.offsetHeight;
+      el.style.transition = 'all 0.3s ease';
+      el.style.height = '0';
+      el.style.marginTop = '0';
+      el.style.marginBottom = '0';
+      el.style.opacity = '0';
+      setTimeout(done, 300);
+    },
+    afterLeave(el) {
+      el.style.height = '';
+      el.style.overflow = '';
+      el.style.marginTop = '';
+      el.style.marginBottom = '';
+      el.style.transition = '';
+    },
   },
-  
-  mounted() {
-    
+
+
+  mounted(){
+    this.alertVisible = Boolean(localStorage.getItem("alertVisible") != 'false');
   },
 
   computed: {
     ...mapGetters(["getUser"])
-  } 
+  }
 
 };
 </script>

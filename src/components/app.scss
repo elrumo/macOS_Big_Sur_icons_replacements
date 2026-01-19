@@ -124,6 +124,23 @@ li{
     transform: translate3D(0px, -5px, 0px);
 }
 
+// ----
+.fade-down-enter-active, .fade-down-leave-active {
+    transition: .2s;
+}
+
+.fade-down-enter-from /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+    transform: translate3D(0px, -15px, 0px);
+}
+
+.fade-down-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+    transform: translate3D(0px, 15px, 0px);
+    filter: blur(10px);
+}
+// ----
+
 .overlay-enter-active, .overlay-leave-active {
     transition: 0.1s;
 }
@@ -1080,6 +1097,11 @@ coral-buttongroup button{
     height: -moz-fit-content;
     left: 50%;
     transform: translateX(-50%);
+    display: flex;
+    gap: 18px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
 }
 
 .header-icon{
@@ -1752,7 +1774,7 @@ coral-tab{
     max-width: 1300px;
     padding: 15px 0px 15px 0px;
     // padding: 30px 0px 15px 0px;
-    margin: 10px 0px 30px 0px;
+    margin: 10px 0px 20px 0px;
     left: 50%;
     transform: translateX(-50%);
     align-items: center;
@@ -2070,6 +2092,17 @@ coral-tab{
         background: var(--coral-dark-bg);
         border-color: var(--coral-dark-border);
     }
+}
+
+.status-alert-info{
+    @extend .status-alert;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: rgb(13, 102, 208) 1px solid !important;
+    background-color: rgba(13, 102, 208, 0.1) !important;
 }
 
 .upload-card-options{
@@ -2632,7 +2665,7 @@ coral-tab{
 }
 
 
-@media only screen and (max-width: 1350px){
+@media only screen and (max-width: 1050px){
     .header-icon-wrapper{
         position: relative;
         left: 0;
@@ -3164,5 +3197,61 @@ coral-sidenav-item{
 
     .loading-placeholder {
         height: 70%
+    }
+}
+
+.x-logo{
+    color: #000 !important;
+    font-size: 20px;
+    opacity: 0.8;
+    transition: 0.2s;
+
+    &:hover{
+        opacity: 1;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        color: white !important;
+    }
+}
+
+.icon-light{
+    filter: invert(100%);
+    opacity: 0.7;
+    transition: 0.2s;
+
+    &:hover{
+        opacity: 1;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        filter: none;
+    }
+}
+
+.close-button{
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 2px;
+
+    &:hover{
+        background: #f3f3f3;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        &:hover{
+            background: #343434;
+        }
     }
 }
