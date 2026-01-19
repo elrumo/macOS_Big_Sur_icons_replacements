@@ -15,6 +15,19 @@
 
         <div class="desktop-hidden m-t-24"></div>
 
+
+        <coral-status variant="info" class="status-alert-info m-b-24">
+          <p class="coral-Body--L">
+            🇬🇧 Notice to UK users 🇬🇧
+          </p>
+          Some UK ISPs have blocked the server where the files are hosted, so you may need a VPN to access the icons. 
+          <br>
+          <br>
+          <p>
+            I'm already working on a fix, stay up to date on <a href="https://www.threads.net/@elrumo" target="_blank">Threads</a> and <a href="https://x.com/elrumo" target="_blank">X</a>.
+          </p>
+        </coral-status>
+
         <h1
           class="main-heading m-t-0 coral-Heading--XL coral-Heading--regular"
         >

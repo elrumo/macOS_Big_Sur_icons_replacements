@@ -163,7 +163,7 @@
                             <!-- Twitter -->
                             <div class="header-icon-wrapper">
                                 <a href="https://twitter.com/elrumo" class="" target="_blank" rel="noopener">
-                                    <img :src="icons.twitter" class="header-item header-icon" alt="Twitter logo">
+                                    𝕏
                                 </a>
                                 <a href="https://discord.gg/f4mTRyyTkT" class="p-l-24" target="_blank" rel="noopener">
                                     <img :src="icons.discord" class="header-item header-icon" alt="Discord Logo">
@@ -184,13 +184,19 @@
                     
                     <!-- Twitter + Discord -->
                     <div class="header-icon-wrapper">
-                        <a href="https://twitter.com/elrumo" class="" target="_blank" rel="noopener">
-                            <img style="height: 17px;" :src="icons.twitter" class="header-item header-icon" alt="Twitter logo">
+                        <a href="https://twitter.com/elrumo" class="x-logo" target="_blank" rel="noopener">
+                            𝕏
                         </a>
-                        <a href="https://discord.gg/f4mTRyyTkT" class="p-l-24" target="_blank" rel="noopener">
+                        
+                        <a href="https://www.threads.com/@elrumo" class="" target="_blank" rel="noopener">
+                            <img style="height: 17px;" :src="icons.threads" class="header-item header-icon icon-light" alt="Threads Logo">
+                        </a>
+
+                        <a href="https://discord.gg/f4mTRyyTkT" class="" target="_blank" rel="noopener">
                             <img style="height: 17px;" :src="icons.discord" class="header-item header-icon" alt="Discord Logo">
                         </a>
-                        <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" class="p-l-24" target="_blank" rel="noopener">
+
+                        <a href="https://github.com/elrumo/macOS_Big_Sur_icons_replacements" class="" target="_blank" rel="noopener">
                             <img :src="icons.github" class="header-item header-icon" alt="GitHub Logo">
                         </a>
                     </div>
@@ -338,6 +344,7 @@ import Parse from 'parse/dist/parse.min.js';
 import twitter from "../assets/icons/twitter.svg"
 import discord from "../assets/icons/Discord.svg"
 import github from "../assets/icons/github.svg"
+import threads from "../assets/icons/threads.svg"
 import burgerMenu from "../assets/icons/burgerMenu.svg"
 import settings from "../assets/icons/Settings.svg"
 import profilePic from "../assets/Resources/accounts/profilePic.png"
@@ -368,6 +375,7 @@ export default {
                 github: github ,
                 burgerMenu: burgerMenu ,
                 settings: settings ,
+                threads: threads,
 
                 profilePic: profilePic ,
             },
@@ -401,7 +409,7 @@ export default {
                     onClick: {
                         method: this.logOut
                     }
-                },
+                }
                 // {
                 //     name: "What's new",
                 //     img: LogOut,
