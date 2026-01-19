@@ -22,7 +22,7 @@
                 <!-- Icon image -->
                 <div class="card-img-wrapper" style="max-width: 120px;">
                     <div @click="iconClick(icon)">
-                    <!-- <div @click="showIconDetails"> -->
+                        <!-- {{ icon. }} -->
                         <img
                             :alt="icon.appName + ' icon'"
                             v-lazy="{
