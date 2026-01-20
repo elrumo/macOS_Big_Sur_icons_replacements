@@ -73,10 +73,10 @@
                     </coral-status>
 
                     <div class="upload-card-content">
-                      <!-- <SubmissionIconPreview
+                      <SubmissionIconPreview
                         :icon="icon"
                         :removeFile="removeFile"
-                      /> -->
+                      />
 
                       <form class="coral-FormGroup m-0 p-l-4" style="width: calc(100% - 5px)">
                         
@@ -276,289 +276,286 @@
   </coral-dialog>
 </template>
 
-<script>
-import { mapGetters, mapActions } from 'vuex'
+<script setup>
+import { ref, reactive, computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
 import Parse from 'parse/dist/parse.min.js'
+
+import SubmissionIconPreview from "../components/SubmissionIconPreview.vue"
 
 import deleteIcon from "../assets/icons/delete.svg"
 import addCoralIcon from "../assets/icons/add.svg"
-import iconTemplate from "../assets/icons/icon_template.png"
 import iconBrew from "../api/iconBrew.js"
 
-export default {
-  name: 'SubmissionDialog',
-  
-  data() {
-    return {
-      imageData: false,
-      validUpload: false,
-      filesToShow: {},
-      filesToUpload: {},
-      coralIcons: {
-        addIcon: addCoralIcon,
-        deleteIcon: deleteIcon,
-      },
-      isCheckingSize: false,
-      uploadProgress: 0,
-      totalNumFiles: 0,
-      email: "",
-      credit: "",
-      appName: "",
-      yourName: "",
-      isLoading: false,
-      categoriesList: [],
+const store = useStore()
+
+// State
+const imageData = ref(false)
+const filesToShow = reactive({})
+const filesToUpload = reactive({})
+const coralIcons = {
+  addIcon: addCoralIcon,
+  deleteIcon: deleteIcon,
+}
+const isCheckingSize = ref(false)
+const uploadProgress = ref(0)
+const totalNumFiles = ref(0)
+const isLoading = ref(false)
+
+// Store getters
+const getAppCategories = computed(() => store.getters.getAppCategories)
+const getIconType = computed(() => store.getters.getIconType)
+
+// Store actions
+function showToast(payload) {
+  store.dispatch('showToast', payload)
+}
+
+function fetchAppCategories() {
+  store.dispatch('fetchAppCategories')
+}
+
+function fetchIconType() {
+  store.dispatch('fetchIconType')
+}
+
+// Computed
+const validateForm = computed(() => {
+  const isValid = []
+
+  if (imageData.value) {
+    for (let item in filesToShow) {
+      const isAuthor = filesToShow[item].isAuthor
+      for (let field in filesToShow[item]) {
+        const submission = filesToShow[item][field]
+        if (submission != "" && submission != undefined && field != "appWebsite" && isAuthor) {
+          isValid.push(true)
+        } else if (field != "appWebsite" && field != "isDarkMode" && field != "isLiquidGlass") {
+          isValid.push(false)
+        }
+      }
     }
-  },
+  } else {
+    isValid.push(false)
+  }
 
-  computed: {
-    ...mapGetters(['getAppCategories', 'getIconType']),
-    
-    validateForm() {
-      var isValid = []
+  return !isValid.some((el) => el == false)
+})
 
-      if (this.imageData) {
-        for (let item in this.filesToShow) {
-          let isAuthor = this.filesToShow[item].isAuthor
-          for (let field in this.filesToShow[item]) {
-            let submission = this.filesToShow[item][field]
-            if (submission != "" && submission != undefined && field != "appWebsite" && isAuthor) {
-              isValid.push(true)
-            } else if (field != "appWebsite" && field != "isDarkMode" && field != "isLiquidGlass") {
-              isValid.push(false)
-            }
-          }
-        }
-      } else {
-        isValid.push(false)
-      }
+// Methods
+function openFileUpload(uploadId, iconId) {
+  event.preventDefault()
+  const uploadInput = document.getElementById(uploadId)
+  const iconFile = filesToShow[iconId].icnsFile
 
-      return !isValid.some((el) => el == false)
-    }
-  },
-
-  methods: {
-    ...mapActions(['showToast', 'fetchAppCategories', 'fetchIconType']),
-
-    openFileUpload(uploadId, iconId) {
-      event.preventDefault()
-      const uploadInput = document.getElementById(uploadId)
-      let iconFile = this.filesToShow[iconId].icnsFile
-
-      if (iconFile) {
-        this.filesToShow[iconId].icnsFile = ''
-        uploadInput.value = ''
-      } else {
-        uploadInput.click()
-      }
-    },
-
-    iconBrewFn(icon, size) {
-      console.log(iconBrew[icon + size])
-      return iconBrew[icon + size]
-    },
-
-    checkSize(id) {
-      this.isCheckingSize = !this.isCheckingSize
-      document.getElementById(id).classList.toggle("check-size")
-    },
-
-    getCheckedValue(e, appNameParam, field) {
-      let fieldValue = e.target.checked
-      this.filesToShow[appNameParam][field] = fieldValue
-    },
-
-    getValue(e, appNameParam, field) {
-      console.log(e)
-      let target = e.target
-      let fieldValue = target.value
-      this.filesToShow[appNameParam][field] = fieldValue
-    },
-
-    selectedOption(option, value) {
-      return option == value || null
-    },
-
-    removeFile(e, randId) {
-      delete this.filesToUpload[randId]
-      delete this.filesToShow[randId]
-
-      // If imageURL is empty, show the upload files component
-      if (Object.keys(this.filesToShow).length === 0) {
-        this.imageData = false
-      }
-    },
-
-    setIcns(event, iconId) {
-      let file = event.target.files[0]
-      this.filesToShow[iconId].icnsFile = file
-      console.log("event: ", this.filesToShow[iconId])
-    },
-
-    selectIcon(event) {
-      // Get selected image
-      let files = event.target.uploadQueue
-
-      // Only run if what has triggered the change is the upload wrapper
-      if (!event.target.classList.contains("fileupload-wrapper")) {
-        return
-      } else {
-        // Go through all the files that have been selected
-        for (let fileNum in files) {
-          let file = files[fileNum].file
-          const objectURL = window.URL.createObjectURL(file)
-
-          // Set image to new Image to get width and height
-          var img = new Image()
-          img.onload = () => {
-            let width = img.width
-            let height = img.height
-            if (width != 1024 || height != 1024) {
-              window.URL.revokeObjectURL(img.src)
-              this.showToast({
-                id: "toastMessage",
-                message: "Icon needs to be 1024px, yours is " + height + "px x " + width + "px",
-                variant: "error"
-              })
-            } else {
-              let fileName = file.name.replace('.png', '')
-              let randId = Math.floor(Math.random() * 10000000 + 1) + "-" + fileName + Object.keys(this.filesToShow).length
-              this.filesToUpload[randId] = file
-
-              let value = {
-                img: objectURL,
-                name: fileName,
-                file: file,
-                isDarkMode: false,
-                isLiquidGlass: false,
-                category: "",
-                appWebsite: "",
-                type: "Zz9QX1BBIZ",
-                randId: randId,
-              }
-
-              this.imageData = true
-              this.filesToShow[randId] = value
-            }
-          }
-          // Create URL of file to display back the image
-          img.src = objectURL
-        }
-
-        this.totalNumFiles = Object.keys(this.filesToShow).length
-        event.target.clear()
-      }
-    },
-
-    fileToBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader()
-        reader.readAsDataURL(file)
-        reader.onload = () => {
-          const base64 = reader.result.split(',')[1]
-          resolve(base64)
-        }
-        reader.onerror = error => reject(error)
-      })
-    },
-
-    async onUpload() {
-      const today = new Date()
-      const dd = String(today.getDate()).padStart(2, '0')
-      const mm = String(today.getMonth() + 1).padStart(2, '0')
-      const yyyy = today.getFullYear()
-      const dateStr = dd + '/' + mm + '/' + yyyy
-
-      window.plausible("IconSubmission", { props: { date: dateStr } })
-
-      this.isLoading = true
-      const dialog = document.getElementById('submissionDialog')
-      const sessionToken = Parse.User.current()?.getSessionToken()
-
-      if (!sessionToken) {
-        this.showToast({
-          id: "toastMessage",
-          message: "You must be logged in to upload icons",
-          variant: "error"
-        })
-        this.isLoading = false
-        return
-      }
-
-      const fileKeys = Object.keys(this.filesToShow)
-
-      for (const fileNum of fileKeys) {
-        const iconData = this.filesToShow[fileNum]
-        const randId = iconData.randId
-
-        try {
-          const pngFileBase64 = await this.fileToBase64(iconData.file)
-          let icnsFileBase64 = null
-          let icnsFileName = null
-          if (iconData.icnsFile) {
-            icnsFileBase64 = await this.fileToBase64(iconData.icnsFile)
-            icnsFileName = iconData.icnsFile.name
-          }
-
-          const payload = {
-            appName: iconData.name,
-            categoryId: iconData.category,
-            typeId: iconData.type,
-            pngFileBase64,
-            pngFileName: iconData.file.name,
-            icnsFileBase64,
-            icnsFileName,
-            isDarkMode: iconData.isDarkMode,
-            isLiquidGlass: iconData.isLiquidGlass,
-            isAuthor: iconData.isAuthor
-          }
-
-          const response = await fetch(import.meta.env.VITE_BACKEND_URL + 'v1/icons/submit', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-parse-session-token': sessionToken
-            },
-            body: JSON.stringify(payload)
-          })
-
-          const result = await response.json()
-          if (!response.ok) {
-            throw new Error(result.message || 'Failed to upload icon')
-          }
-
-          this.uploadProgress++
-          delete this.filesToShow[randId]
-          delete this.filesToUpload[randId]
-
-        } catch (error) {
-          this.isLoading = false
-          this.showToast({
-            id: "toastMessage",
-            message: error.message || "There was an error uploading the icon",
-            variant: "error"
-          })
-          return
-        }
-      }
-
-      this.isLoading = false
-      this.imageData = false
-      this.uploadProgress = 0
-
-      this.showToast({
-        id: "toastMessage",
-        message: "All icons have been uploaded.",
-        variant: "success"
-      })
-      dialog.hide()
-    }
-  },
-
-  mounted() {
-    this.fetchAppCategories()
-    this.fetchIconType()
+  if (iconFile) {
+    filesToShow[iconId].icnsFile = ''
+    uploadInput.value = ''
+  } else {
+    uploadInput.click()
   }
 }
+
+function iconBrewFn(icon, size) {
+  console.log(iconBrew[icon + size])
+  return iconBrew[icon + size]
+}
+
+function checkSize(id) {
+  isCheckingSize.value = !isCheckingSize.value
+  document.getElementById(id).classList.toggle("check-size")
+}
+
+function getCheckedValue(e, appNameParam, field) {
+  const fieldValue = e.target.checked
+  filesToShow[appNameParam][field] = fieldValue
+}
+
+function getValue(e, appNameParam, field) {
+  console.log(e)
+  const target = e.target
+  const fieldValue = target.value
+  filesToShow[appNameParam][field] = fieldValue
+}
+
+function selectedOption(option, value) {
+  return option == value || null
+}
+
+function removeFile(e, randId) {
+  delete filesToUpload[randId]
+  delete filesToShow[randId]
+
+  if (Object.keys(filesToShow).length === 0) {
+    imageData.value = false
+  }
+}
+
+function setIcns(event, iconId) {
+  const file = event.target.files[0]
+  filesToShow[iconId].icnsFile = file
+  console.log("event: ", filesToShow[iconId])
+}
+
+function selectIcon(event) {
+  const files = event.target.uploadQueue
+
+  if (!event.target.classList.contains("fileupload-wrapper")) {
+    return
+  } else {
+    for (let fileNum in files) {
+      const file = files[fileNum].file
+      const objectURL = window.URL.createObjectURL(file)
+
+      const img = new Image()
+      img.onload = () => {
+        const width = img.width
+        const height = img.height
+        if (width != 1024 || height != 1024) {
+          window.URL.revokeObjectURL(img.src)
+          showToast({
+            id: "toastMessage",
+            message: "Icon needs to be 1024px, yours is " + height + "px x " + width + "px",
+            variant: "error"
+          })
+        } else {
+          const fileName = file.name.replace('.png', '')
+          const randId = Math.floor(Math.random() * 10000000 + 1) + "-" + fileName + Object.keys(filesToShow).length
+          filesToUpload[randId] = file
+
+          const value = {
+            img: objectURL,
+            name: fileName,
+            file: file,
+            isDarkMode: false,
+            isLiquidGlass: false,
+            category: "",
+            appWebsite: "",
+            type: "Zz9QX1BBIZ",
+            randId: randId,
+          }
+
+          imageData.value = true
+          filesToShow[randId] = value
+        }
+      }
+      img.src = objectURL
+    }
+
+    totalNumFiles.value = Object.keys(filesToShow).length
+    event.target.clear()
+  }
+}
+
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => {
+      const base64 = reader.result.split(',')[1]
+      resolve(base64)
+    }
+    reader.onerror = error => reject(error)
+  })
+}
+
+async function onUpload() {
+  const today = new Date()
+  const dd = String(today.getDate()).padStart(2, '0')
+  const mm = String(today.getMonth() + 1).padStart(2, '0')
+  const yyyy = today.getFullYear()
+  const dateStr = dd + '/' + mm + '/' + yyyy
+
+  window.plausible("IconSubmission", { props: { date: dateStr } })
+
+  isLoading.value = true
+  const dialog = document.getElementById('submissionDialog')
+  const sessionToken = Parse.User.current()?.getSessionToken()
+
+  if (!sessionToken) {
+    showToast({
+      id: "toastMessage",
+      message: "You must be logged in to upload icons",
+      variant: "error"
+    })
+    isLoading.value = false
+    return
+  }
+
+  const fileKeys = Object.keys(filesToShow)
+
+  for (const fileNum of fileKeys) {
+    const iconData = filesToShow[fileNum]
+    const randId = iconData.randId
+
+    try {
+      const pngFileBase64 = await fileToBase64(iconData.file)
+      let icnsFileBase64 = null
+      let icnsFileName = null
+      if (iconData.icnsFile) {
+        icnsFileBase64 = await fileToBase64(iconData.icnsFile)
+        icnsFileName = iconData.icnsFile.name
+      }
+
+      const payload = {
+        appName: iconData.name,
+        categoryId: iconData.category,
+        typeId: iconData.type,
+        pngFileBase64,
+        pngFileName: iconData.file.name,
+        icnsFileBase64,
+        icnsFileName,
+        isDarkMode: iconData.isDarkMode,
+        isLiquidGlass: iconData.isLiquidGlass,
+        isAuthor: iconData.isAuthor
+      }
+
+      const response = await fetch(import.meta.env.VITE_BACKEND_URL + 'v1/icons/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-parse-session-token': sessionToken
+        },
+        body: JSON.stringify(payload)
+      })
+
+      const result = await response.json()
+      if (!response.ok) {
+        throw new Error(result.message || 'Failed to upload icon')
+      }
+
+      uploadProgress.value++
+      delete filesToShow[randId]
+      delete filesToUpload[randId]
+
+    } catch (error) {
+      isLoading.value = false
+      showToast({
+        id: "toastMessage",
+        message: error.message || "There was an error uploading the icon",
+        variant: "error"
+      })
+      return
+    }
+  }
+
+  isLoading.value = false
+  imageData.value = false
+  uploadProgress.value = 0
+
+  showToast({
+    id: "toastMessage",
+    message: "All icons have been uploaded.",
+    variant: "success"
+  })
+  dialog.hide()
+}
+
+// Lifecycle
+onMounted(() => {
+  fetchAppCategories()
+  fetchIconType()
+})
 </script>
 
 <style>

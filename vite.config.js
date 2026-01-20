@@ -74,7 +74,6 @@ export default {
   },
   resolve: {
     alias: {
-      vue: '@vue/compat',
       "@": fileURLToPath(new URL('./src', import.meta.url))
     }
   },

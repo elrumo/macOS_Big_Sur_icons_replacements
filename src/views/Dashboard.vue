@@ -194,25 +194,22 @@
   </div>
 </template>
 
-<script>
-import Vue from 'vue'
-import { mapGetters, mapActions } from 'vuex'
+<script setup>
+import { ref, reactive, computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import Parse from 'parse/dist/parse.min.js'
 
-import Parse from 'parse/dist/parse.min.js';
+const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
+const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
+const VITE_PARSE_URL = import.meta.env.VITE_PARSE_URL
 
-const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID;
-const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY;
-const VITE_PARSE_URL = import.meta.env.VITE_PARSE_URL;
+Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
+Parse.serverURL = VITE_PARSE_URL
 
-Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY);
-Parse.serverURL = VITE_PARSE_URL;
+const Icons = Parse.Object.extend("Icons2")
 
-const Icons = Parse.Object.extend("Icons2");
-const User = Parse.Object.extend("User");
-
-Parse.User.enableUnsafeCurrentUser() // Enable cache for user auth, to avoid having to always login
-
-let lastVisible
+Parse.User.enableUnsafeCurrentUser()
 
 const docLimit = 800
 
@@ -223,678 +220,571 @@ import placeholderCoralIcon from "../assets/placeholder-icon.png"
 import deleteIcon from "../assets/icons/delete.svg"
 import emailIcon from "../assets/icons/email.svg"
 
-export default {
-  
-  components:{
-  },
+const store = useStore()
+const router = useRouter()
 
-  data: function(){
-    return{
-      icons:{
-        reUploaded: {}
-      },
+// State
+const icons = reactive({ reUploaded: {} })
+const errorSinginIn = ref(false)
+const errorMessage = ref("")
+const isSearch = ref(false)
+const searchString = ref("")
+const iconListLen = ref(0)
+const iconListLenReUpload = ref(0)
+const howManyRecords = ref(0)
+const sortBy = ref("usersName")
+const isAdmin = ref(false)
+const isAuth = ref(false)
+const selectedUser = ref({})
+const scrolledToBottom = ref(true)
+const iconsToShow = ref("newIcons")
+const currentUserRef = ref(null)
 
-      errorSinginIn: false,
-      
-      // Search
-      isSearch: false,
-      searchString: "",
-      iconListLen: 0,
-      iconListLenReUpload: 0,
+const coralIcons = {
+  delete: deleteIcon,
+  addIcon: addCoralIcon,
+  newItem: newItemCoralIcon,
+  edit: editCoralIcon,
+  loading: placeholderCoralIcon,
+  email: emailIcon,
+}
 
-      howManyRecords: 0,
-      sortBy: "usersName",
+// Store actions
+function showToast(payload) {
+  store.dispatch('showToast', payload)
+}
 
-      isAdmin: false,
+function setUser(user) {
+  store.dispatch('setUser', user)
+}
 
-      emailMsg: "Thanks you for your submission to macosicons.com! I'm just getting in touch with you to ask if you could ..., otherwise the icons won't work propperly. You can either email me back or re-submit the icons on macosicons.com. Thanks again, Elias webbites.io",
-      // approvedIcons: {},
-      isAuth: false,
-      selectedUser: {},
-      scrolledToBottom: true,
+// Store getters
+const getUser = computed(() => store.getters.getUser)
+const allIcons = computed(() => store.getters.allIcons)
+const approvedIcons = computed(() => store.getters.approvedIcons)
 
-      iconsToShow: "newIcons",
-      reUploadedIcons: {},
+// Methods
+function changeIconStatus(status) {
+  iconsToShow.value = status
+  if (status == 'reUploaded') {
+    console.log('reUploaded')
+    getReUploadIcons()
+  }
+}
 
-      coralIcons:{
-        delete: deleteIcon,
-        addIcon: addCoralIcon,
-        newItem: newItemCoralIcon,
-        edit: editCoralIcon,
-        loading: placeholderCoralIcon,
-        email: emailIcon,
-      },
-    }
-  },
+async function copyText(toCopy) {
+  await navigator.clipboard.writeText("https://macosicons.com/" + toCopy)
+  await navigator.clipboard.writeText(toCopy)
+}
 
-  methods:{
-    ...mapActions(['showToast', 'setAuth', 'setUser']),
-    
-    changeIconStatus(status) {
-      let parent = this
-      parent.iconsToShow = status
-      if (status == 'reUploaded') {
-        console.log('reUploaded');
-        parent.getReUploadIcons()
-      }
-    },
+function uploadFile() {
+  const fileUploadControl = document.getElementById("profilePhotoFileUpload")
 
-    async copyText(toCopy){
-      await navigator.clipboard.writeText("https://macosicons.com/"+toCopy);
-      await navigator.clipboard.writeText(toCopy);
-    },
-    
-    uploadFile(){
-      const fileUploadControl = document.getElementById("profilePhotoFileUpload");
+  if (fileUploadControl.files.length > 0) {
+    const file = fileUploadControl.files[0]
+    console.log(file)
+    const name = file.name
+    console.log(name)
 
-      if (fileUploadControl.files.length > 0) {
-        const file = fileUploadControl.files[0];
-        console.log(file);
-        const name = file.name;
-        console.log(name);
+    const parseFile = new Parse.File(name, file)
 
-        const parseFile = new Parse.File(name, file);
+    parseFile.save().then((uploaded) => {
+      console.log("Success: ", uploaded)
+    }, function (error) {
+      console.log(error)
+    })
+  }
+}
 
-        parseFile.save().then((uploaded) => {
-          console.log("Success: ", uploaded);
-          // The file has been saved to Parse.
-        }, function(error) {
-          console.log(error);
-          // The file either could not be read, or could not be saved to Parse.
-        });
-      }
-    },
+function showDialog(dialogId, user) {
+  const nameEditUserInput = document.getElementById("nameEditUserInput")
+  const creditEditUserInput = document.getElementById("creditEditUserInput")
+  const emailEditUserInput = document.getElementById("emailEditUserInput")
 
-    showDialog(dialogId, user){
-      let parent = this
-      
-      let nameEditUserInput = document.getElementById("nameEditUserInput")
-      let creditEditUserInput = document.getElementById("creditEditUserInput")
-      let emailEditUserInput = document.getElementById("emailEditUserInput")
+  nameEditUserInput.value = user.usersName
+  creditEditUserInput.value = user.creditUrl
+  emailEditUserInput.value = user.email
 
-      nameEditUserInput.value = user.usersName
-      creditEditUserInput.value = user.creditUrl
-      emailEditUserInput.value = user.email
+  document.getElementById(dialogId).show()
+  selectedUser.value = user
 
-      document.getElementById(dialogId).show()
-      parent.selectedUser = user
+  console.log(user)
+}
 
-      console.log(user);
-    },
-    
-    getDate(timeStamp){
-      let newDate = new Date(timeStamp)
-      
-      let day = newDate.getUTCDate()
-        if (day < 10) {
-          day = "0"+day
-        }
-      let month = newDate.getUTCMonth() + 1
-        if (month < 10) {
-          month = "0"+month
-        }
-      let year = newDate.getFullYear()
-      let date = day + "/" + month + "/" + year
+function getDate(timeStamp) {
+  const newDate = new Date(timeStamp)
 
-      return date
-    },
+  let day = newDate.getUTCDate()
+  if (day < 10) {
+    day = "0" + day
+  }
+  let month = newDate.getUTCMonth() + 1
+  if (month < 10) {
+    month = "0" + month
+  }
+  const year = newDate.getFullYear()
+  const date = day + "/" + month + "/" + year
 
-    async editDoc(icon, e, field, isMultipleIcons){
-      let parent = this
-      let newName = e.target.value
+  return date
+}
 
-      if(isMultipleIcons){
-        let listLen = Object.keys(icon.icons).length
-        let count = 0
+async function editDoc(icon, e, field, isMultipleIcons) {
+  const newName = e.target.value
 
-        for(let doc in icon.icons){
+  if (isMultipleIcons) {
+    for (let doc in icon.icons) {
+      const IconsBase = Parse.Object.extend("Icons2")
+      const query = new Parse.Query(IconsBase)
+      const docToEdit = await query.get(icon.icons[doc].id)
 
-          const IconsBase = Parse.Object.extend("Icons2");
-          const query = new Parse.Query(IconsBase);
-          const docToEdit = await query.get(icon.icons[doc].id)
-
-          docToEdit.set({ [field]: newName }) // Save icnsToStore obj with .icns file and its url to Parse server
-          docToEdit.save().then(() =>{
-            console.log(field, "updated.");
-          }).catch((e) =>{
-            console.log(e);
-            document.getElementById("error").show()
-          })
-
-        }
-      } else if(!isMultipleIcons){
-
-        const IconsBase = Parse.Object.extend("Icons2");
-        const query = new Parse.Query(IconsBase);
-        const docToEdit = await query.get(icon.id)
-
-        docToEdit.set({ [field]: newName }) // Save icnsToStore obj with .icns file and its url to Parse server
-        docToEdit.save().then(() =>{
-          console.log(field, "updated.");
-        }).catch((e) =>{
-          console.log(e);
-          document.getElementById("error").show()
-        })
-      }
-    },
-
-    async signIn(){
-      let email = document.getElementById("email").value
-      let password = document.getElementById("password").value
-      console.log(email);
-
-      const user = new Parse.User();
-      user.set({
-        username: email,
-        password: password,
-        email: email
-      });
-
-      console.log(user);
-      Parse.User.logIn(email, password).then((user) => { // Logging in user
-        this.isAuth = true;
-        this.setUser(user)
-        this.getParseData()
-        this.getReUploadIcons()
-        this.errorMessage = ""
-      }).catch((error) =>{
-        this.errorSinginIn = true;
-        this.errorMessage = error.message;
-        console.log(error);
+      docToEdit.set({ [field]: newName })
+      docToEdit.save().then(() => {
+        console.log(field, "updated.")
+      }).catch((e) => {
+        console.log(e)
+        document.getElementById("error").show()
       })
-    },
+    }
+  } else if (!isMultipleIcons) {
+    const IconsBase = Parse.Object.extend("Icons2")
+    const query = new Parse.Query(IconsBase)
+    const docToEdit = await query.get(icon.id)
 
-    isObjEmpty(obj){
-      return Object.keys(obj).length == 0
-    },
+    docToEdit.set({ [field]: newName })
+    docToEdit.save().then(() => {
+      console.log(field, "updated.")
+    }).catch((e) => {
+      console.log(e)
+      document.getElementById("error").show()
+    })
+  }
+}
 
-    async deleteSubmission(icon){
-      console.log(icon);
-      try {
-        let query = new Parse.Query(Icons)
-        let docToDelete = await query.get(icon.id);
-        await docToDelete.destroy();
+async function signIn() {
+  const email = document.getElementById("email").value
+  const password = document.getElementById("password").value
+  console.log(email)
 
-        delete this.icons[icon.usersName].icons[icon.appName] // Delete object locally
-        if (Object.keys(this.icons[icon.usersName].icons).length == 0 ) { // Delete user from UI if no icons are left
-          delete this.icons[icon.usersName]
-        }
-        } catch (error) {
-          
-        }
-    },
+  const user = new Parse.User()
+  user.set({
+    username: email,
+    password: password,
+    email: email
+  })
 
-    prettifyName(name){
-        // for(let i in name){
-      name = name.replaceAll("_", " ")
-      return name
-      //   }
-    },
+  console.log(user)
+  Parse.User.logIn(email, password).then((user) => {
+    isAuth.value = true
+    setUser(user)
+    getParseData()
+    getReUploadIcons()
+    errorMessage.value = ""
+  }).catch((error) => {
+    errorSinginIn.value = true
+    errorMessage.value = error.message
+    console.log(error)
+  })
+}
 
+function isObjEmpty(obj) {
+  return Object.keys(obj).length == 0
+}
 
-    async approveIcon(icon){  
-      // console.log(icon);
-      console.log("icon.id: ", icon.id);
+async function deleteSubmission(icon) {
+  console.log(icon)
+  try {
+    const query = new Parse.Query(Icons)
+    const docToDelete = await query.get(icon.id)
+    await docToDelete.destroy()
 
-      let newIcon = {...icon}
-      delete newIcon.DownloadCount
-      delete newIcon.user
-      delete newIcon.category
-      delete newIcon.type
+    delete icons[icon.usersName].icons[icon.appName]
+    if (Object.keys(icons[icon.usersName].icons).length == 0) {
+      delete icons[icon.usersName]
+    }
+  } catch (error) {
+    // Handle error silently
+  }
+}
 
-      try {
-        console.log("icon: ", icon);
-        
-        let result = await Parse.Cloud.run("approve", newIcon);
-        // let result = await Parse.Cloud.run("approve", {id: icon.id, appName: icon.appName, newIcon: newIcon});
-        console.log("result: ", result);
-        icon.isReview = true;
-        icon.isReUploadReview = true;
-        this.showToast({
-          id: "toastMessage",
-          message: "Icon has been approved",
-          variant: "success"
-        });
-      } catch (e) {
-        console.log("e: ", e);
-        this.showToast({
-          id: "toastMessage",
-          message: e.message,
-          variant: "error"
-        });
-      }
-    },
+function prettifyName(name) {
+  name = name.replaceAll("_", " ")
+  return name
+}
 
-    async unApproveIcon(icon){  
+async function approveIcon(icon) {
+  console.log("icon.id: ", icon.id)
 
-      icon.isReview = false
-      icon.isReUploadReview = false
+  const newIcon = { ...icon }
+  delete newIcon.DownloadCount
+  delete newIcon.user
+  delete newIcon.category
+  delete newIcon.type
 
-      // set icon.approved to false
-      const IconsBase = Parse.Object.extend("Icons2");
-      const query = new Parse.Query(IconsBase);
-      const docToEdit = await query.get(icon.id)
+  try {
+    console.log("icon: ", icon)
 
-      docToEdit.set({ "approved": false }) // Save icnsToStore obj with .icns file and its url to Parse server
-      
-      try {
-        await docToEdit.save()  
-        this.showToast({
-          id: "toastMessage",
-          message: 'Icon has been unapproved',
-          variant: "success"
-        })
-      } catch (error) {
-        this.showToast({
-          id: "toastMessage",
-          message: e,
-          variant: "error"
-        })
-      }
+    const result = await Parse.Cloud.run("approve", newIcon)
+    console.log("result: ", result)
+    icon.isReview = true
+    icon.isReUploadReview = true
+    showToast({
+      id: "toastMessage",
+      message: "Icon has been approved",
+      variant: "success"
+    })
+  } catch (e) {
+    console.log("e: ", e)
+    showToast({
+      id: "toastMessage",
+      message: e.message,
+      variant: "error"
+    })
+  }
+}
 
-    },
+async function unApproveIcon(icon) {
+  icon.isReview = false
+  icon.isReUploadReview = false
 
-    async toggleLiquidGlass(icon, event){
-      const isChecked = event.target.checked;
-      icon.isLiquidGlass = isChecked;
+  const IconsBase = Parse.Object.extend("Icons2")
+  const query = new Parse.Query(IconsBase)
+  const docToEdit = await query.get(icon.id)
 
-      const IconsBase = Parse.Object.extend("Icons2");
-      const query = new Parse.Query(IconsBase);
-      const docToEdit = await query.get(icon.id);
+  docToEdit.set({ "approved": false })
 
-      console.log('icon.id: ', icon.id)
-      console.log('docToEdit: ', docToEdit)
+  try {
+    await docToEdit.save()
+    showToast({
+      id: "toastMessage",
+      message: 'Icon has been unapproved',
+      variant: "success"
+    })
+  } catch (error) {
+    showToast({
+      id: "toastMessage",
+      message: error,
+      variant: "error"
+    })
+  }
+}
 
-      docToEdit.set("isLiquidGlass", isChecked);
-      
-      try {
-        await docToEdit.save();
-        this.showToast({
-          id: "toastMessage",
-          message: isChecked ? 'Icon marked as Liquid Glass' : 'Liquid Glass removed from icon',
-          variant: "success"
-        });
-      } catch (error) {
-        console.log('error: ', error)
-        this.showToast({
-          id: "toastMessage",
-          message: error.message,
-          variant: "error"
-        });
-      }
-    },
+async function toggleLiquidGlass(icon, event) {
+  const isChecked = event.target.checked
+  icon.isLiquidGlass = isChecked
 
-    async sendEmail(icon){  
-      let parent = this
-      console.log("icon: ", icon);
-      
-      parent.icons[icon.usersName].emailSent = "requested";
+  const IconsBase = Parse.Object.extend("Icons2")
+  const query = new Parse.Query(IconsBase)
+  const docToEdit = await query.get(icon.id)
 
-      let payLoad = {
-        email: icon.email,
-        usersName: icon.usersName,
-        id: icon.user.objectId
-      }
+  console.log('icon.id: ', icon.id)
+  console.log('docToEdit: ', docToEdit)
 
-      Parse.Cloud.run("sendEmail", payLoad).then((result)=>{
-        parent.icons[icon.usersName].emailSent = "sent";
-        console.log(parent.icons[icon.usersName].emailSent);
-        parent.showToast({
-          id: "toastMessage",
-          message: "Email has been sent",
-          variant: "success"
-        })
-      }).catch((e)=>{
-        console.log(e);
-        parent.showToast({
-          id: "toastMessage",
-          message: e,
-          variant: "error"
-        })
-      });
+  docToEdit.set("isLiquidGlass", isChecked)
 
-    },    
+  try {
+    await docToEdit.save()
+    showToast({
+      id: "toastMessage",
+      message: isChecked ? 'Icon marked as Liquid Glass' : 'Liquid Glass removed from icon',
+      variant: "success"
+    })
+  } catch (error) {
+    console.log('error: ', error)
+    showToast({
+      id: "toastMessage",
+      message: error.message,
+      variant: "error"
+    })
+  }
+}
 
-    getIconListLen(query){
-      let parent = this
-      query.count().then((count) =>{
-        console.log(count);
-        parent.iconListLen = count
-      })
-    },
+async function sendEmail(icon) {
+  console.log("icon: ", icon)
 
-    getIconListLenReUpload(query){
-      let parent = this
-      query.count().then((count) =>{
-        parent.iconListLenReUpload = count
-      })
-    },
+  icons[icon.usersName].emailSent = "requested"
 
-    async loadMore(){
+  const payLoad = {
+    email: icon.email,
+    usersName: icon.usersName,
+    id: icon.user.objectId
+  }
 
-      let parent = this
-      let howManyRecords = parent.howManyRecords
-      
-      parent.howManyRecords = howManyRecords + docLimit
+  Parse.Cloud.run("sendEmail", payLoad).then((result) => {
+    icons[icon.usersName].emailSent = "sent"
+    console.log(icons[icon.usersName].emailSent)
+    showToast({
+      id: "toastMessage",
+      message: "Email has been sent",
+      variant: "success"
+    })
+  }).catch((e) => {
+    console.log(e)
+    showToast({
+      id: "toastMessage",
+      message: e,
+      variant: "error"
+    })
+  })
+}
 
-      const query = new Parse.Query(Icons);
-      query.equalTo("approved", false)
-      query.ascending(parent.sortBy);
-      query.exists("highResPngFile");
-      query.skip(howManyRecords);
-      query.limit(docLimit);
-      const results = await query.find()
-      
-      setTimeout(() => {
-          parent.scrolledToBottom = true
-      }, 800);
+function getIconListLen(query) {
+  query.count().then((count) => {
+    console.log(count)
+    iconListLen.value = count
+  })
+}
 
-      for(let result in results){
-        let objData = results[result].attributes
-        let iconData = objData
+function getIconListLenReUpload(query) {
+  query.count().then((count) => {
+    iconListLenReUpload.value = count
+  })
+}
 
+async function loadMore() {
+  const currentRecords = howManyRecords.value
 
-            let docData = {}
-            for(let key in objData){
-              docData[key] = objData[key]
-            }
+  howManyRecords.value = currentRecords + docLimit
 
-            docData.imgUrl = ""
+  const query = new Parse.Query(Icons)
+  query.equalTo("approved", false)
+  query.ascending(sortBy.value)
+  query.exists("highResPngFile")
+  query.skip(currentRecords)
+  query.limit(docLimit)
+  const results = await query.find()
 
-            let usersName = docData.usersName
-            let appName = docData.appName
-            let email = docData.email
-            let creditUrl = docData.credit
-            let user = docData.user
+  setTimeout(() => {
+    scrolledToBottom.value = true
+  }, 800)
 
-            docData.id = results[result].id
+  for (let result in results) {
+    const objData = results[result].attributes
 
-            if (usersName == "" || usersName == undefined ) {
-              console.log("usersName undefined ");
-              console.log("docData: ", docData);
-            }else{
-              if(parent.icons[usersName] == undefined ){
-                parent.icons[usersName] = {
-                  "usersName": usersName,
-                  "email": email,
-                  "icons":{},
-                  "creditUrl": creditUrl, 
-                  "user": user
-                }
-                parent.icons[usersName].icons[docData.id] = docData
-                parent.icons[usersName].icons[docData.id].imgUrl = docData.highResPngUrl
-              } else {
-                parent.icons[usersName].icons[docData.id] = docData
-                parent.icons[usersName].icons[docData.id].imgUrl = docData.highResPngUrl
-              }
-            }
-      }
-
-    },
-
-    scroll() {
-      let parent = this
-      window.onscroll = () => {
-        let bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 1600
-
-        if (bottomOfWindow && parent.scrolledToBottom && !parent.isSearch) {
-          parent.scrolledToBottom = false // replace it with your code
-          parent.loadMore()
-        }
-      }
-    },
-
-    async getParseData(){
-      let parent = this
-      const query = new Parse.Query(Icons);
-      
-      // const userQuery = new Parse.Query(User);
-      // userQuery.descending("modifiedAt");
-      
-      // query.equalTo("isReUpload", false)
-      // query.ascending("usersName");
-
-      // query.doesNotExist("icnsUrl");
-      // query.doesNotExist("icnsFile");
-      // query.equalTo("approved", true);
-      query.equalTo("approved", false);
-      query.descending("createdAt");
-      query.exists("highResPngFile");
-      query.limit(docLimit);
-        
-      
-      try{
-        var results = await query.find()
-      } catch (error) {
-          console.log(error);
-          handleParseError(error)
-      }
-
-      parent.getIconListLen(query); // Get how many icons to approve.
-
-      parent.howManyRecords = docLimit
-      
-      for(let result in results){
-        let docObj = results[result].attributes;
-        let docData = JSON.parse(JSON.stringify(docObj));
-        docData.id = results[result].id
-
-        docData.imgUrl = docData.highResPngUrl
-        
-        let usersName = docData.usersName
-        let user
-        
-        if (docData.user) {
-          user = docData.user
-        }
-
-        let appName = docData.appName
-        let email = docData.email
-        let creditUrl = docData.credit
-
-        if (usersName == "" || usersName == undefined ) {      
-          
-          // Set user if the user is undefined has no icons on the dashboard
-          if(parent.icons["Undefined"] == undefined ){
-            parent.icons["Undefined"] = {
-              "usersName": "Undefined",
-              "email": email,
-              "icons":{},
-              "emailSent": false,
-              "creditUrl": creditUrl
-            }
-            parent.icons["Undefined"].icons[appName] = docData
-            parent.icons["Undefined"].icons[docData.id].usersName = "Undefined"
-            parent.icons["Undefined"].usersName = "Undefined"
-          } else {
-            parent.icons["Undefined"].icons[docData.id] = docData
-            parent.icons["Undefined"].icons[docData.id].usersName = "Undefined"
-            parent.icons["Undefined"].usersName = "Undefined"
-          }
-
-        }else{
-
-          // Set user if the user has no icons on the dashboard
-          if(parent.icons[usersName] == undefined ){
-            parent.icons[usersName] = {
-              "usersName": usersName,
-              "email": email,
-              "icons":{},
-              "emailSent": false,
-              "creditUrl": creditUrl,
-              "user": user
-            }
-            parent.icons[usersName].icons[docData.id] = docData
-          } else {
-            parent.icons[usersName].icons[docData.id] = docData
-          }
-
-        }
-      }
-      
-      this.scroll()
-    },
-
-    async getReUploadIcons(){
-      const query = new Parse.Query(Icons);
-      
-      query.equalTo("approved", false)
-      query.equalTo("isReUpload", true)
-      query.descending("updatedAt");
-      // query.ascending("usersName");
-      query.exists("highResPngFile");
-      query.limit(docLimit);
-      
-      try{
-        var results = await query.find()
-      } catch (error) {
-          console.log(error);
-          handleParseError(error)
-      }
-
-      this.getIconListLenReUpload(query); // Get how many icons to approve.
-
-      this.howManyRecords = docLimit
-      
-      for(let result in results){
-        
-        let docObj = results[result].attributes;
-        let docData = JSON.parse(JSON.stringify(docObj));
-        docData.id = results[result].id
-
-        docData.imgUrl = docData.highResPngUrl
-        
-        let usersName = docData.usersName
-        let user
-        
-        if (docData.user) {
-          user = docData.user
-        }
-
-        let appName = docData.appName
-        let email = docData.email
-        let creditUrl = docData.credit
-
-        // Set user if the user has no icons on the dashboard
-        if(this.icons.reUploaded[usersName] == undefined ){
-          Vue.set(this.icons.reUploaded, usersName, {
-            "usersName": usersName, 
-            "email": email, 
-            "icons":{}, 
-            "emailSent": false,
-            "creditUrl": creditUrl,
-            "user": user
-          })
-
-          Vue.set(this.icons.reUploaded[usersName].icons, docData.id, docData)
-          
-        } else{
-          Vue.set(this.icons.reUploaded[usersName].icons, docData.id, docData)
-        }
-
-      }
-
+    const docData = {}
+    for (let key in objData) {
+      docData[key] = objData[key]
     }
 
-  },
+    docData.imgUrl = ""
 
-  mounted: function(){  
-    function handleParseError(err){
-      switch (err.code) {
-        case Parse.Error.INVALID_SESSION_TOKEN:
-          Parse.User.logOut();
-          window.location.reload()
-          break;
-      
-        default:
-          break;
-      }
-    }
+    const usersName = docData.usersName
+    const email = docData.email
+    const creditUrl = docData.credit
+    const user = docData.user
 
-    this.currentUser = Parse.User.current();
-    console.log("this.currentUser: ", this.currentUser);
+    docData.id = results[result].id
 
-    if (this.currentUser) {
-    
-      this.isAdmin = Parse.User.current().attributes.isAdmin 
-      console.log('Parse.User.current().attributes.isAdmin:', Parse.User.current().attributes.isAdmin) 
- 
-       if (!this.isAdmin) {
-        this.$router.push({ path: '/#' })
-        Parse.User.logOut();
-        return
-      }
-
-      this.isAuth = true
-      this.getParseData()
-      this.getReUploadIcons()
-    } else{
-      this.isAuth = false
-      console.log("You are not logged in");
-    }
-    
-  },
-
-  computed:{
-    ...mapGetters([
-      'getUser',
-      'allIcons',
-      'notApproved',
-      'approvedIcons',
-      'getAppCategories',
-      'approvedIconsCount',
-      'isLoading',
-      'getSelectedIcon',
-      'getUserInfo',
-    ]),
-
-    userIcons(){
-      let parent = this
-      
-      if (!parent.userInfo) {
-        console.log("parent.userInfo");
-        return 0
-      } else{
-        if (parent.allIcons.length == 0) {
-          parent.errorMessage = "No icons to show"
+    if (usersName == "" || usersName == undefined) {
+      console.log("usersName undefined ")
+      console.log("docData: ", docData)
+    } else {
+      if (icons[usersName] == undefined) {
+        icons[usersName] = {
+          "usersName": usersName,
+          "email": email,
+          "icons": {},
+          "creditUrl": creditUrl,
+          "user": user
         }
-
-        switch (parent.iconsToShow) {
-          case "newIcons":
-            parent.errorMessage = parent.user.username + " hasn't submitted any icons yet."
-            console.log(parent.iconsToShow);
-            return parent.allIcons
-
-          case "reUploaded":
-            console.log(parent.iconsToShow);
-            return parent.approvedIcons
-      
-          default:
-            break;
-        }
-      }
-    },
-
-    iconType(){
-      let parent = this
-      let iconsToShow = parent.iconsToShow
-
-      if (iconsToShow == "newIcons") {
-        return parent.icons
+        icons[usersName].icons[docData.id] = docData
+        icons[usersName].icons[docData.id].imgUrl = docData.highResPngUrl
       } else {
-        return parent.icons.reUploaded
+        icons[usersName].icons[docData.id] = docData
+        icons[usersName].icons[docData.id].imgUrl = docData.highResPngUrl
       }
+    }
+  }
+}
 
-    },
+function scroll() {
+  window.onscroll = () => {
+    const bottomOfWindow = document.documentElement.offsetHeight - (Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) < 1600
 
-    currentUser(){
-      let currentUser = Parse.User.current(); // Check if user is currently logged in or not
-      return currentUser
+    if (bottomOfWindow && scrolledToBottom.value && !isSearch.value) {
+      scrolledToBottom.value = false
+      loadMore()
+    }
+  }
+}
+
+function handleParseError(err) {
+  switch (err.code) {
+    case Parse.Error.INVALID_SESSION_TOKEN:
+      Parse.User.logOut()
+      window.location.reload()
+      break
+
+    default:
+      break
+  }
+}
+
+async function getParseData() {
+  const query = new Parse.Query(Icons)
+
+  query.equalTo("approved", false)
+  query.descending("createdAt")
+  query.exists("highResPngFile")
+  query.limit(docLimit)
+
+  try {
+    var results = await query.find()
+  } catch (error) {
+    console.log(error)
+    handleParseError(error)
+  }
+
+  getIconListLen(query)
+
+  howManyRecords.value = docLimit
+
+  for (let result in results) {
+    const docObj = results[result].attributes
+    const docData = JSON.parse(JSON.stringify(docObj))
+    docData.id = results[result].id
+
+    docData.imgUrl = docData.highResPngUrl
+
+    const usersName = docData.usersName
+    let user
+
+    if (docData.user) {
+      user = docData.user
+    }
+
+    const email = docData.email
+    const creditUrl = docData.credit
+
+    if (usersName == "" || usersName == undefined) {
+      if (icons["Undefined"] == undefined) {
+        icons["Undefined"] = {
+          "usersName": "Undefined",
+          "email": email,
+          "icons": {},
+          "emailSent": false,
+          "creditUrl": creditUrl
+        }
+        icons["Undefined"].icons[docData.appName] = docData
+        icons["Undefined"].icons[docData.id].usersName = "Undefined"
+        icons["Undefined"].usersName = "Undefined"
+      } else {
+        icons["Undefined"].icons[docData.id] = docData
+        icons["Undefined"].icons[docData.id].usersName = "Undefined"
+        icons["Undefined"].usersName = "Undefined"
+      }
+    } else {
+      if (icons[usersName] == undefined) {
+        icons[usersName] = {
+          "usersName": usersName,
+          "email": email,
+          "icons": {},
+          "emailSent": false,
+          "creditUrl": creditUrl,
+          "user": user
+        }
+        icons[usersName].icons[docData.id] = docData
+      } else {
+        icons[usersName].icons[docData.id] = docData
+      }
     }
   }
 
+  scroll()
 }
 
+async function getReUploadIcons() {
+  const query = new Parse.Query(Icons)
+
+  query.equalTo("approved", false)
+  query.equalTo("isReUpload", true)
+  query.descending("updatedAt")
+  query.exists("highResPngFile")
+  query.limit(docLimit)
+
+  try {
+    var results = await query.find()
+  } catch (error) {
+    console.log(error)
+    handleParseError(error)
+  }
+
+  getIconListLenReUpload(query)
+
+  howManyRecords.value = docLimit
+
+  for (let result in results) {
+    const docObj = results[result].attributes
+    const docData = JSON.parse(JSON.stringify(docObj))
+    docData.id = results[result].id
+
+    docData.imgUrl = docData.highResPngUrl
+
+    const usersName = docData.usersName
+    let user
+
+    if (docData.user) {
+      user = docData.user
+    }
+
+    const email = docData.email
+    const creditUrl = docData.credit
+
+    if (icons.reUploaded[usersName] == undefined) {
+      icons.reUploaded[usersName] = {
+        "usersName": usersName,
+        "email": email,
+        "icons": {},
+        "emailSent": false,
+        "creditUrl": creditUrl,
+        "user": user
+      }
+      icons.reUploaded[usersName].icons[docData.id] = docData
+    } else {
+      icons.reUploaded[usersName].icons[docData.id] = docData
+    }
+  }
+}
+
+function changeDate(icon, event) {
+  // Placeholder for date change functionality
+}
+
+// Computed properties
+const iconType = computed(() => {
+  if (iconsToShow.value == "newIcons") {
+    return icons
+  } else {
+    return icons.reUploaded
+  }
+})
+
+const currentUser = computed(() => {
+  return Parse.User.current()
+})
+
+// Lifecycle
+onMounted(() => {
+  currentUserRef.value = Parse.User.current()
+  console.log("currentUser: ", currentUserRef.value)
+
+  if (currentUserRef.value) {
+    isAdmin.value = Parse.User.current().attributes.isAdmin
+    console.log('Parse.User.current().attributes.isAdmin:', Parse.User.current().attributes.isAdmin)
+
+    if (!isAdmin.value) {
+      router.push({ path: '/#' })
+      Parse.User.logOut()
+      return
+    }
+
+    isAuth.value = true
+    getParseData()
+    getReUploadIcons()
+  } else {
+    isAuth.value = false
+    console.log("You are not logged in")
+  }
+})
 </script>
 
 <style>
