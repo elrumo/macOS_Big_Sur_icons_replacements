@@ -2,6 +2,7 @@
   "name": "macos_icons",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite --port 7000 --host",
     "build": "vite build",
