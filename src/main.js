@@ -17,15 +17,20 @@ import * as Sentry from '@sentry/vue'
 const head = createHead()
 const app = createApp(App)
 
-// Sentry.init({
-//   app,
-//   dsn: import.meta.env.VITE_BUGSINK_DSN,
-//   release: "macOSicons-1",
-//   integrations: [
-//     Sentry.browserTracingIntegration({ router }),
-//   ],
-//   tracesSampleRate: 0,
-// })
+// if (import.meta.env.VITE_BUGSINK_DSN) {
+  Sentry.init({
+    app,
+    dsn: 'https://d520de73e2ac4fffa252f00e2677d5b9@bugs.macosicons.com/1',
+    release: "macOSicons-1",
+    integrations: [
+      Sentry.browserTracingIntegration({ router }),
+    ],
+    // Performance Monitoring
+    tracesSampleRate: 0.0, // Set to 1.0 to capture 100% of transactions for performance monitoring.
+    // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
+    tracePropagationTargets: ["localhost", /^https:\/\/macosicons\.com/],
+  })
+// }
 
 configureCompat({
   WATCH_ARRAY: false

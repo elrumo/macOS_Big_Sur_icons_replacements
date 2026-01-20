@@ -79,20 +79,6 @@ export default {
     }
   },
 
-  // build: {
-  //   rollupOptions: {
-  //     output: {
-  //       manualChunks: {
-  //         sentry: ['@sentry/vue']
-  //       }
-  //     }
-  //   }
-  // },
-
-  // optimizeDeps: {
-  //   exclude: ['@sentry/vue']
-  // },
-
   plugins: [
     mkcert(),
     vue({
