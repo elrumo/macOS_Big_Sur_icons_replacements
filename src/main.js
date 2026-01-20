@@ -22,9 +22,9 @@ Sentry.init({
   app,
   dsn: import.meta.env.VITE_BUGSINK_DSN,
   release: "macOSicons-1",
-  integrations: [
-    Sentry.browserTracingIntegration({ router }),
-  ],
+  // integrations: [
+  //   Sentry.browserTracingIntegration({ router }),
+  // ],
   tracesSampleRate: 0,
 })
 
