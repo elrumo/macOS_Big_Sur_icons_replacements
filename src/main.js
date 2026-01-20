@@ -18,16 +18,16 @@ const app = createApp(App)
 console.log("hii 3")
 // console.log("import.meta.env: ", import.meta.env.VITE_BUGSINK_DSN)
 
-Sentry.init({
-  app,
-  // dsn: import.meta.env.VITE_BUGSINK_DSN,
-  dsn: "https://d520de73e2ac4fffa252f00e2677d5b9@bugs.macosicons.com/1",
-  release: "macOSicons-1",
-  // integrations: [
-  //   Sentry.browserTracingIntegration({ router }),
-  // ],
-  tracesSampleRate: 0,
-})
+// Sentry.init({
+//   app,
+//   // dsn: import.meta.env.VITE_BUGSINK_DSN,
+//   dsn: "https://d520de73e2ac4fffa252f00e2677d5b9@bugs.macosicons.com/1",
+//   release: "macOSicons-1",
+//   // integrations: [
+//   //   Sentry.browserTracingIntegration({ router }),
+//   // ],
+//   tracesSampleRate: 0,
+// })
 
 // configureCompat({
 //   WATCH_ARRAY: false
