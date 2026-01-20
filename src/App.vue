@@ -1,33 +1,35 @@
 <template>
-  <div id="app">
+  <UApp>
+    <div id="app">
 
-    <Announcement type="topBanner"/>
+      <Announcement type="topBanner"/>
 
-    <!-- <Announcement
-      v-if="getHomeDialog.hasOwnProperty('announcementImg') || dummyData.hasOwnProperty('announcementImg')"
-      :getHomeDialog="getHomeDialog.hasOwnProperty('announcementImg') ? getHomeDialog : dummyData"
-      type="topBanner"
-    /> -->
-    
-    <Header
-      :distanceFromTop="distanceFromTop"
-      :submitIconDialog="'submitIcon'"
-    />
+      <!-- <Announcement
+        v-if="getHomeDialog.hasOwnProperty('announcementImg') || dummyData.hasOwnProperty('announcementImg')"
+        :getHomeDialog="getHomeDialog.hasOwnProperty('announcementImg') ? getHomeDialog : dummyData"
+        type="topBanner"
+      /> -->
 
-    <StickyBanner/>
+      <Header
+        :distanceFromTop="distanceFromTop"
+        :submitIconDialog="'submitIcon'"
+      />
 
-    <div class="min-height">
-      <router-view
-        v-slot="{ Component }"
-      >
-        <transition name="fade" mode="out-in">
-          <component :is="Component" :key="$route.path"/>
-        </transition>
-      </router-view>
+      <StickyBanner/>
+
+      <div class="min-height">
+        <router-view
+          v-slot="{ Component }"
+        >
+          <transition name="fade" mode="out-in">
+            <component :is="Component" :key="$route.path"/>
+          </transition>
+        </router-view>
+      </div>
+
+      <Footer/>
     </div>
-
-    <Footer/>
-  </div>
+  </UApp>
 </template>
 
 <script>

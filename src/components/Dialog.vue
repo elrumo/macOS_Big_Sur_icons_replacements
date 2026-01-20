@@ -1,116 +1,122 @@
 <template>
-  <coral-dialog id="submitIcon">
+  <UModal v-model:open="isOpen" :ui="{ width: 'max-w-xl' }">
+    <template #header>
+      <h3 class="text-lg font-semibold">Submit an icon</h3>
+    </template>
 
-    <coral-dialog-header>
-      Submit an icon
-    </coral-dialog-header>
-    
-    <coral-dialog-content>
-
-      <div class="dialog-text">
-        <b> We'll let you know by email when the icon has been approved. </b>
-        <br>
-        <ul class="coral-List p-t-8 p-b-8">
-          <li class="coral-List-item">Icon submitted must be a .png file</li>
-          <li class="coral-List-item">
-            Download template from the <router-link coral-close="" to="/resources"> <b> resources page. </b></router-link>
+    <div class="p-4">
+      <div class="mb-4">
+        <p class="font-semibold text-sm mb-2">We'll let you know by email when the icon has been approved.</p>
+        <ul class="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400 space-y-1">
+          <li>Icon submitted must be a .png file</li>
+          <li>
+            Download template from the
+            <router-link to="/resources" class="text-primary underline" @click="isOpen = false">
+              resources page.
+            </router-link>
           </li>
-          <li class="coral-List-item"> <b> The file name must be the same as the name of the app. </b></li>
+          <li><strong>The file name must be the same as the name of the app.</strong></li>
         </ul>
       </div>
 
-      <div v-if="isLoading" class="loading-overlay">
-        <div class="loading-popup">
-          <coral-progress indeterminate>{{ uploadProgress }}/{{ totalNumFiles }} icons uploaded</coral-progress>
+      <!-- Loading Overlay -->
+      <div v-if="isLoading" class="absolute inset-0 bg-white/80 dark:bg-gray-900/80 flex items-center justify-center z-10 rounded-lg">
+        <div class="text-center">
+          <UProgress animation="carousel" class="mb-2" />
+          <p class="text-sm">{{ uploadProgress }}/{{ totalNumFiles }} icons uploaded</p>
         </div>
       </div>
 
+      <!-- File Upload Area -->
       <div class="icon-upload-grid">
-        
-        <div v-if="imageData" class="icons-preview-wrapper">
-          
-          <div v-for="icon in filesToShow" class="icon-preview" :key="icon.name">
-            <img :src="icon.img">
-            <coral-quickactions placement="center" target="_prev">
-              <coral-quickactions-item type="button" @click="removeFile" :id="icon.name" :icon="coralIcons.delete">Remove file</coral-quickactions-item>
-            </coral-quickactions>
+        <!-- Preview with files -->
+        <div v-if="imageData" class="grid grid-cols-4 gap-3 mb-4">
+          <div v-for="icon in filesToShow" :key="icon.name" class="relative group">
+            <img :src="icon.img" class="w-full aspect-square object-contain rounded-lg border border-gray-200 dark:border-gray-700">
+            <UButton
+              icon="i-heroicons-x-mark"
+              size="xs"
+              color="red"
+              variant="solid"
+              class="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity"
+              @click="removeFile(icon.name)"
+            />
           </div>
 
-          <coral-fileupload name="file" @change="selectIcon" class="m-auto" accept="image/png" multiple>
-            <div coral-fileupload-dropzone=""  class="fileUpload-dropZone drop-zone"> 
-              <div class="h-full" coral-fileupload-select="">
-                <div class="drop-zone-wrapper">
-                  <coral-icon class="m-auto" :icon="coralIcons.addIcon" size="XL" alt="Larger" title="XL"></coral-icon>
-                  <span class="m-auto"> Add/drop files </span>
-                </div>
-              </div>
-            </div>
-          </coral-fileupload>
-
+          <!-- Add more files button -->
+          <label class="flex flex-col items-center justify-center w-full aspect-square border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <input
+              type="file"
+              accept="image/png"
+              multiple
+              class="hidden"
+              @change="selectIcon"
+            >
+            <UIcon name="i-heroicons-plus" class="w-8 h-8 text-gray-400" />
+            <span class="text-xs text-gray-500 mt-1">Add files</span>
+          </label>
         </div>
 
-        <coral-fileupload v-if="!imageData" name="file" @change="selectIcon" class="m-auto" accept="image/png" multiple>
-          <div coral-fileupload-dropzone=""  class="fileUpload-dropZone drop-zone"> 
-            <div class="h-full" coral-fileupload-select="">
-              <div class="drop-zone-wrapper">
-                <coral-icon class="m-auto" :icon="coralIcons.addIcon" size="XL" alt="Larger" title="XL"></coral-icon>
-                <span class="m-auto"> Add/drop files </span>
-              </div>
-            </div>
+        <!-- Empty state - drop zone -->
+        <label v-else class="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+          <input
+            type="file"
+            accept="image/png"
+            multiple
+            class="hidden"
+            @change="selectIcon"
+          >
+          <UIcon name="i-heroicons-plus" class="w-12 h-12 text-gray-400 mb-2" />
+          <span class="text-sm text-gray-500">Add/drop files</span>
+        </label>
+
+        <!-- Checkboxes -->
+        <div class="mt-4 space-y-2">
+          <UCheckbox v-model="isReupload" label="I'm re-uploading an icon that was previously on the site" />
+          <div class="flex items-center gap-2">
+            <UCheckbox v-model="isAuthor" label="I'm the original author of these icons." />
+            <span class="text-xs text-gray-500">(It's ok if you aren't)</span>
           </div>
-        </coral-fileupload>
-
-        <!-- <form class="coral-Form coral-Form--vertical" > -->
-        <!-- </form> -->
-
-        <section class="p-t-4">
-          <div>
-            <coral-checkbox id="isReupload">
-              I'm re-uploading an icon that was previously on the site
-            </coral-checkbox>
-          </div>
-
-          <div>
-            <coral-checkbox id="isAuthor">I'm the original author of these icons. 
-              <span class="opacity-80 p-l-4 f-w-200 coral-Body--XS">
-                (It's ok if you aren't)
-              </span>
-            </coral-checkbox>
-          </div>
-        </section>
-
+        </div>
       </div>
-  
-    </coral-dialog-content>
-    
-    <coral-dialog-footer>
-      <button is="coral-button" coral-close="">Cancel</button>
-      <button v-if="imageData && email != '' " is="coral-button" variant="cta" @click="onUpload">Upload</button>
-      <button v-if="!imageData || email == '' " is="coral-button" disabled>Upload</button>
-    </coral-dialog-footer>
+    </div>
 
-  </coral-dialog>
+    <template #footer>
+      <div class="flex justify-end gap-2">
+        <UButton variant="ghost" @click="isOpen = false">Cancel</UButton>
+        <UButton
+          v-if="imageData && email !== ''"
+          color="primary"
+          @click="onUpload"
+        >
+          Upload
+        </UButton>
+        <UButton v-else disabled>Upload</UButton>
+      </div>
+    </template>
+  </UModal>
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, watch } from 'vue'
 import { useStore } from 'vuex'
 import Parse from 'parse/dist/parse.min.js'
 
-import addIcon from "../assets/icons/add.svg"
-import deleteIcon from "../assets/icons/delete.svg"
-import newItemIcon from "../assets/icons/newItem.svg"
+const props = defineProps({
+  modelValue: {
+    type: Boolean,
+    default: false
+  }
+})
+
+const emit = defineEmits(['update:modelValue'])
 
 const store = useStore()
+const isOpen = ref(false)
 
 const imageData = ref(false)
 const filesToShow = reactive({})
 const filesToUpload = reactive({})
-const coralIcons = {
-  addIcon: addIcon,
-  delete: deleteIcon,
-  newItem: newItemIcon,
-}
 const uploadProgress = ref(0)
 const totalNumFiles = ref(0)
 const email = ref("")
@@ -118,31 +124,44 @@ const credit = ref("")
 const appName = ref("")
 const yourName = ref("")
 const isLoading = ref(false)
+const isReupload = ref(false)
+const isAuthor = ref(false)
+
+// Watch for external changes
+watch(() => props.modelValue, (val) => {
+  isOpen.value = val
+})
+
+watch(isOpen, (val) => {
+  emit('update:modelValue', val)
+})
+
+// Expose method to open dialog
+const open = () => {
+  isOpen.value = true
+}
+
+defineExpose({ open })
 
 function showToast(payload) {
   store.dispatch('showToast', payload)
 }
 
-function removeFile(e) {
-  const iconName = e.target.id
+function removeFile(iconName) {
   delete filesToShow[iconName]
   delete filesToUpload[iconName]
-  // If imageURL is empty, show the upload files component
   if (Object.keys(filesToShow).length === 0) {
     imageData.value = false
   }
 }
 
 function selectIcon(event) {
-  // Get selected image
-  const files = event.target.uploadQueue
+  const files = event.target.files
 
-  // Go through all the files that have been selected
-  for (let fileNum in files) {
-    const file = files[fileNum].file
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i]
     const fileName = file.name.replace('.png', '')
     filesToUpload[fileName] = file
-    // Create URL of file to display back the image
     const objectURL = window.URL.createObjectURL(file)
     filesToShow[fileName] = {
       img: objectURL,
@@ -154,20 +173,15 @@ function selectIcon(event) {
 }
 
 async function onUpload() {
-  // Get today's date
   let today = new Date()
   const dd = String(today.getDate()).padStart(2, '0')
-  const mm = String(today.getMonth() + 1).padStart(2, '0') //January is 0!
+  const mm = String(today.getMonth() + 1).padStart(2, '0')
   const yyyy = today.getFullYear()
-
   today = dd + '/' + mm + '/' + yyyy
 
-  window.plausible("IconSubmission", { props: { date: today } })
+  window.plausible?.("IconSubmission", { props: { date: today } })
 
   isLoading.value = true
-  const dialog = document.getElementById('submitIcon')
-  const isReupload = document.getElementById('isReupload').checked
-  const isAuthor = document.getElementById('isAuthor').checked
 
   for (let fileNum in filesToUpload) {
     const file = filesToUpload[fileNum]
@@ -185,7 +199,7 @@ async function onUpload() {
     const Icons = Parse.Object.extend("Icons2")
     const icons = new Icons()
 
-    const parseFile = new Parse.File(fileName, file) // Set file to new Parse object
+    const parseFile = new Parse.File(fileName, file)
     parseFile.save().then((uploaded) => {
       console.log("Success: ", uploaded._url)
       const iconUrl = uploaded._url.replace('http:', "https:")
@@ -200,17 +214,15 @@ async function onUpload() {
         fileName: fileName,
         highResPngFile: parseFile,
         highResPngUrl: iconUrl,
-        isReupload: isReupload,
-        isAuthor: isAuthor,
+        isReupload: isReupload.value,
+        isAuthor: isAuthor.value,
         timeStamp: Date.now(),
         approved: false,
         user: currentUser
       }
 
       icons.set(dataToStore)
-      icons.save().then((icon) => { // Reset input boxes
-
-        // Add icon relationship to user
+      icons.save().then((icon) => {
         const userRelation = currentUser.relation("icons")
         userRelation.add(icons)
         currentUser.save()
@@ -222,10 +234,6 @@ async function onUpload() {
         uploadProgress.value++
         console.log("Document successfully written!")
 
-        function clearInput(id) {
-          document.getElementById(id).value = ""
-        }
-
         delete filesToUpload[currentAppName]
         delete filesToShow[currentAppName]
         if (Object.keys(filesToUpload).length === 0) {
@@ -234,17 +242,12 @@ async function onUpload() {
           email.value = ""
           uploadProgress.value = 0
 
-          const inputs = ["credit", "email-contributor", "yourName-contributor"]
-          for (let i in inputs) {
-            clearInput(inputs[i])
-          }
-
           showToast({
             id: "toastMessage",
             message: "All icons have been uploaded.",
             variant: "success"
           })
-          dialog.hide()
+          isOpen.value = false
         }
       }, (error) => {
         console.log("Data NOT saved: ", error)
@@ -257,26 +260,13 @@ async function onUpload() {
         message: "There was an error, get in touch with @elrumo on Twitter",
         variant: "error"
       })
-      // The file either could not be read, or could not be saved to Parse.
     })
   }
 }
-
-function setEmail(e) {
-  console.log(e.target.value)
-  email.value = e.target.value
-}
-
-function saveCredit(e) {
-  console.log(e.target.value)
-  credit.value = e.target.value
-}
-
-function setYourName(e) {
-  console.log(e.target.value)
-  yourName.value = e.target.value
-}
 </script>
 
-<style>
+<style scoped>
+.icon-upload-grid {
+  position: relative;
+}
 </style>

@@ -1,302 +1,192 @@
 <template>
-  <coral-dialog id="submissionDialog">
-
-    <coral-dialog-header>
-      Submit an icon
-      <p class="coral-Body--M p-t-8 m-b-4">
-        Visit the <router-link coral-close="" to="/resources" class="coral-Link">resources page </router-link> for icon templates.
-      </p>
-
-      <p class="coral-Body--M p-t-4 p-b-4 m-b-0">
+  <UModal v-model:open="isOpen" :ui="{ width: 'max-w-2xl' }">
+    <template #header>
+      <div>
+        <h3 class="text-lg font-semibold">Submit an icon</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
+          Visit the <router-link to="/resources" class="text-primary underline" @click="isOpen = false">resources page</router-link> for icon templates.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
           All icons must be .png, or .icns images and have a resolution of 1024px x 1024px.
           <br>
-          <b>If you're uploading a .icns file, you must also upload a high resolution .png file.</b>
-      </p>
+          <strong>If you're uploading a .icns file, you must also upload a high resolution .png file.</strong>
+        </p>
+      </div>
+    </template>
 
-
-    </coral-dialog-header>
-    
-    <coral-dialog-content class="coral-dialog-content" style="height: 100%">
-
-      <div v-if="isLoading" class="loading-overlay">
-        <div class="loading-popup">
-          <coral-progress indeterminate>{{ uploadProgress }}/{{ totalNumFiles+1 }} icons uploaded</coral-progress>
+    <div class="p-4 relative min-h-[300px]">
+      <!-- Loading Overlay -->
+      <div v-if="isLoading" class="absolute inset-0 bg-white/90 dark:bg-gray-900/90 flex items-center justify-center z-20 rounded-lg">
+        <div class="text-center">
+          <UProgress animation="carousel" class="mb-2" />
+          <p class="text-sm">{{ uploadProgress }}/{{ totalNumFiles + 1 }} icons uploaded</p>
         </div>
       </div>
 
-      <div class="icon-upload-grid ">
-        
-        <!-- Initial Drag to upload -->
-        <coral-fileupload
-          v-if="!imageData"
-          name="file"
+      <!-- Empty state - drop zone -->
+      <label v-if="!imageData" class="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+        <input
+          type="file"
+          accept="image/png"
+          multiple
+          class="hidden"
           @change="selectIcon"
-          class="m-auto fileupload-wrapper"
-          accept="image/png" multiple
         >
-          <div
-            coral-fileupload-select=""
-            coral-fileupload-dropzone=""
+        <UIcon name="i-heroicons-plus" class="w-12 h-12 text-gray-400 mb-2" />
+        <span class="text-sm text-gray-500">Add/drop files</span>
+      </label>
+
+      <!-- Files selected -->
+      <div v-else class="space-y-4">
+        <div v-for="icon in filesToShow" :key="icon.randId" class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+          <UAlert
+            color="blue"
+            variant="soft"
+            class="mb-4"
           >
-            <div class="fileUpload-dropZone drop-zone"> 
-              <div class="h-full">
-                <div class="drop-zone-wrapper">
-                  <coral-icon class="m-auto" :icon="coralIcons.addIcon" size="XL" alt="Larger" title="XL"></coral-icon>
-                  <span class="m-auto"> Add/drop files </span>
-                </div>
+            <template #title>
+              <strong>Important:</strong> Please ensure your icon is the correct size (1024x1024px). App icons that are not the correct size will not be approved.
+            </template>
+          </UAlert>
+
+          <div class="flex gap-4">
+            <!-- Icon Preview -->
+            <div class="flex-shrink-0">
+              <SubmissionIconPreview
+                :icon="icon"
+                :removeFile="removeFile"
+              />
+            </div>
+
+            <!-- Form -->
+            <div class="flex-1 space-y-3">
+              <UFormField label="*App name">
+                <UInput
+                  :model-value="icon.name"
+                  @update:model-value="(val) => getValue({ target: { value: val } }, icon.randId, 'name')"
+                  class="w-full"
+                />
+              </UFormField>
+
+              <UFormField label="*App category">
+                <USelectMenu
+                  :model-value="icon.category"
+                  :items="categoryOptions"
+                  placeholder="Select category (required)"
+                  value-key="value"
+                  @update:model-value="(val) => getValue({ target: { value: val } }, icon.randId, 'category')"
+                  class="w-full"
+                />
+              </UFormField>
+
+              <UFormField label="*Type of icon">
+                <USelectMenu
+                  :model-value="icon.type"
+                  :items="typeOptions"
+                  value-key="value"
+                  @update:model-value="(val) => getValue({ target: { value: val } }, icon.randId, 'type')"
+                  class="w-full"
+                />
+              </UFormField>
+
+              <UFormField label="App website (optional)">
+                <UInput
+                  type="url"
+                  placeholder="The app's developer website"
+                  @update:model-value="(val) => getValue({ target: { value: val } }, icon.randId, 'appWebsite')"
+                  class="w-full"
+                />
+              </UFormField>
+
+              <UFormField label=".icns file (optional)">
+                <UButton
+                  variant="soft"
+                  @click="openFileUpload('icnsFileUpload-' + icon.randId, icon.randId)"
+                >
+                  {{ filesToShow[icon.randId]?.icnsFile ? 'Remove .icns file' : 'Upload .icns file' }}
+                </UButton>
+                <input
+                  type="file"
+                  :id="'icnsFileUpload-' + icon.randId"
+                  accept=".icns"
+                  class="hidden"
+                  @change="(e) => setIcns(e, icon.randId)"
+                >
+              </UFormField>
+
+              <div class="space-y-2">
+                <UCheckbox
+                  :model-value="icon.isDarkMode"
+                  label="Is dark mode"
+                  @update:model-value="(val) => getCheckedValue({ target: { checked: val } }, icon.randId, 'isDarkMode')"
+                />
+                <UCheckbox
+                  :model-value="icon.isLiquidGlass"
+                  label="Liquid Glass design style"
+                  @update:model-value="(val) => getCheckedValue({ target: { checked: val } }, icon.randId, 'isLiquidGlass')"
+                />
+                <UCheckbox
+                  :model-value="icon.isAuthor"
+                  label="* I'm the author of this icon"
+                  @update:model-value="(val) => getCheckedValue({ target: { checked: val } }, icon.randId, 'isAuthor')"
+                />
               </div>
             </div>
           </div>
-        </coral-fileupload>
-        
-        <coral-fileupload
-          v-if="imageData"
-          name="file"
-          @change="selectIcon"
-          class="m-auto fileupload-wrapper hidden-fileuploader"
-          accept="image/png" multiple
-        >
-          
-          <div
-            coral-fileupload-dropzone=""
+        </div>
+
+        <!-- Add more files -->
+        <label class="flex items-center justify-center w-full h-24 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+          <input
+            type="file"
+            accept="image/png"
+            multiple
+            class="hidden"
+            @change="selectIcon"
           >
-            <div class="fileUpload-dropZone drop-zone drop-zone-hidden"> 
-              <div class="h-full">
-                
-                <div v-if="imageData" class="upload-card-wrapper">
-                
-                  <div v-for="icon in filesToShow" :key="icon.randId" class="upload-card coral-Well">
-
-                    <coral-status variant="info" class="status-alert">
-                      <b>Important:</b>
-                      Please use the 'Check Size' button below to ensure your icon is the correct size. App icons that are not the correct size will not be approved.
-                    </coral-status>
-
-                    <div class="upload-card-content">
-                      <SubmissionIconPreview
-                        :icon="icon"
-                        :removeFile="removeFile"
-                      />
-
-                      <form class="coral-FormGroup m-0 p-l-4" style="width: calc(100% - 5px)">
-                        
-                        <!-- AppName -->
-                        <div class="coral-FormGroup-item">
-                          <label :id="'appNameLabel'+icon.randId" class="coral-FieldLabel">
-                            *App name
-                          </label>
-                          <input
-                            is="coral-textfield"
-                            class="coral-Form-field"
-                            type="text"
-                            required=""
-                            :id="'appNameUploadField'+icon.randId"
-                            :labelledby="'appNameLabel'+icon.randId"
-                            :value="icon.name"
-                            v-on:change="getValue($event, icon.randId, 'name')"
-                          >
-                        </div>
-                        
-                        <!-- App category -->
-                        <div class="coral-FormGroup-item">
-                          <label :id="'categoryUploadLabel'+icon.randId" class="coral-FieldLabel">
-                            *App category
-                          </label>
-                          <div class="dropdown-select-chevron relative">
-                            <select
-                              name="categoryUploadField"
-                              :id="'categoryUploadField'+icon.randId"
-                              placeholder="Select category"
-                              class="dropdown-select"
-                              v-on:change="getValue($event, icon.randId, 'category')"
-                            >
-                              <option
-                                value=""
-                                disabled selected
-                              >
-                                Select category (required)
-                              </option>
-                              <option
-                                v-for="category in getAppCategories"
-                                :key="category.name+icon.randId+Math.floor(Math.random() * 10000000 + 1)"
-                                :id="icon.randId+category.id"
-                                :value="category.id"
-                                :selected="icon.category.includes(category.id) || null"
-                              >
-                                {{ category.name }}
-                              </option>
-                            </select>
-                          </div>
-                        </div>
-                        
-                        <!-- Type of icon -->
-                        <div class="coral-FormGroup-item">
-                          <label :id="'TypeUploadLabel'+icon.randId" class="coral-FieldLabel">
-                            *Type of icon
-                          </label>
-                          <div class="dropdown-select-chevron relative">
-                            <select
-                              name="TypeUploadField"
-                              :id="'TypeUploadField'+icon.randId"
-                              placeholder="Select Type"
-                              class="dropdown-select"
-                              v-on:change="getValue($event, icon.randId, 'type')"
-                            >
-                              <option
-                                v-for="type in getIconType"
-                                :key="type.name+icon.randId+Math.floor(Math.random() * 10000000 + 1)"
-                                :value="type.id"
-                                :selected="selectedOption(type.id, icon.type)"
-                              >
-                                {{ type.name }}
-                              </option>
-                            </select>
-                          </div>
-                        </div>
-                        
-                        <!-- App website -->
-                        <div class="coral-FormGroup-item">
-                          <label :id="'appWebsiteUploadLabel'+icon.randId" class="coral-FieldLabel">
-                            App website (optional)
-                          </label>
-                          <input
-                            :id="'appWebsiteUploadField'+icon.randId"
-                            is="coral-textfield"
-                            :labelledby="'appWebsiteUploadLabel'+icon.randId"
-                            class="coral-Form-field"
-                            type="url"
-                            placeholder="The app's developer website"
-                            v-on:change="getValue($event, icon.randId, 'appWebsite')"
-                          >
-                        </div>
-                        
-                        <!-- .icns file -->
-                        <div class="coral-FormGroup-item">
-                          <div>
-                            <label
-                              class="coral-FieldLabel"
-                              for="icnsFileUpload"
-                            >
-                              .icns file (optional)
-                            </label>
-
-                            <button
-                              is="coral-button"
-                              for="icnsFileUpload"
-                              @click="openFileUpload('icnsFileUpload', icon.randId)"
-                            >
-                              <span v-if="!filesToShow[icon.randId].icnsFile">
-                                Upload .icns file
-                              </span>
-                              <span v-if="filesToShow[icon.randId].icnsFile">
-                                Remove .icns file
-                              </span>
-                            </button>
-                            <input
-                              type="file"
-                              id="icnsFileUpload"
-                              accept=".icns"
-                              class="hidden"
-                              @change="setIcns($event, icon.randId)"
-                            >
-                          </div>
-                        </div>
-                        
-                        <!-- Is dark mode -->
-                        <div class="coral-FormGroup-item">
-                          <coral-checkbox
-                            :id="'isDarkUpload'+icon.randId"
-                            v-on:change="getCheckedValue($event, icon.randId, 'isDarkMode')"
-                          >
-                            Is dark mode
-                          </coral-checkbox>
-
-                          <coral-checkbox
-                            :id="'isLiquidGlassUpload'+icon.randId"
-                            v-on:change="getCheckedValue($event, icon.randId, 'isLiquidGlass')"
-                          >
-                            Liquid Glass design style
-                          </coral-checkbox>
-
-                          <coral-checkbox
-                            :id="'isAuthorUpload'+icon.randId"
-                            v-on:change="getCheckedValue($event, icon.randId, 'isAuthor')"
-                          >
-                            * I'm the author of this icon
-                          </coral-checkbox>
-                        </div>
-
-                      </form>
-                    </div>
-                  </div>
-                  
-                  <!-- Drag to upload -->
-                  <div
-                  class="m-auto fileupload-wrapper"
-                    coral-fileupload-select=""
-                  >
-                    <div class="fileUpload-dropZone drop-zone">
-                      <div class="h-full">
-                        <div class="drop-zone-wrapper">
-                          <coral-icon class="m-auto" :icon="coralIcons.addIcon" size="XL" alt="Larger" title="XL"></coral-icon>
-                          <span class="m-auto"> 
-                            Add/drop files
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-        </coral-fileupload>
-        
+          <UIcon name="i-heroicons-plus" class="w-8 h-8 text-gray-400 mr-2" />
+          <span class="text-sm text-gray-500">Add more files</span>
+        </label>
       </div>
-    </coral-dialog-content>
-    
-    <coral-dialog-footer>
-      <button is="coral-button" coral-close="">
-        Cancel
-      </button>
+    </div>
 
-      <button 
-        is="coral-button" 
-        variant="cta" 
-        :disabled="!validateForm" 
-        @click="onUpload"
-      >
-        Upload
-      </button>
-    </coral-dialog-footer>
-
-  </coral-dialog>
+    <template #footer>
+      <div class="flex justify-end gap-2">
+        <UButton variant="ghost" @click="isOpen = false">Cancel</UButton>
+        <UButton
+          color="primary"
+          :disabled="!validateForm"
+          @click="onUpload"
+        >
+          Upload
+        </UButton>
+      </div>
+    </template>
+  </UModal>
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted, watch } from 'vue'
 import { useStore } from 'vuex'
 import Parse from 'parse/dist/parse.min.js'
 
 import SubmissionIconPreview from "../components/SubmissionIconPreview.vue"
 
-import deleteIcon from "../assets/icons/delete.svg"
-import addCoralIcon from "../assets/icons/add.svg"
-import iconBrew from "../api/iconBrew.js"
+const props = defineProps({
+  modelValue: {
+    type: Boolean,
+    default: false
+  }
+})
+
+const emit = defineEmits(['update:modelValue'])
 
 const store = useStore()
+const isOpen = ref(false)
 
-// State
 const imageData = ref(false)
 const filesToShow = reactive({})
 const filesToUpload = reactive({})
-const coralIcons = {
-  addIcon: addCoralIcon,
-  deleteIcon: deleteIcon,
-}
 const isCheckingSize = ref(false)
 const uploadProgress = ref(0)
 const totalNumFiles = ref(0)
@@ -305,6 +195,37 @@ const isLoading = ref(false)
 // Store getters
 const getAppCategories = computed(() => store.getters.getAppCategories)
 const getIconType = computed(() => store.getters.getIconType)
+
+// Computed options for select menus
+const categoryOptions = computed(() => {
+  return (getAppCategories.value || []).map(cat => ({
+    label: cat.name,
+    value: cat.id
+  }))
+})
+
+const typeOptions = computed(() => {
+  return (getIconType.value || []).map(type => ({
+    label: type.name,
+    value: type.id
+  }))
+})
+
+// Watch for external changes
+watch(() => props.modelValue, (val) => {
+  isOpen.value = val
+})
+
+watch(isOpen, (val) => {
+  emit('update:modelValue', val)
+})
+
+// Expose method to open dialog
+const open = () => {
+  isOpen.value = true
+}
+
+defineExpose({ open })
 
 // Store actions
 function showToast(payload) {
@@ -344,9 +265,8 @@ const validateForm = computed(() => {
 
 // Methods
 function openFileUpload(uploadId, iconId) {
-  event.preventDefault()
   const uploadInput = document.getElementById(uploadId)
-  const iconFile = filesToShow[iconId].icnsFile
+  const iconFile = filesToShow[iconId]?.icnsFile
 
   if (iconFile) {
     filesToShow[iconId].icnsFile = ''
@@ -356,30 +276,15 @@ function openFileUpload(uploadId, iconId) {
   }
 }
 
-function iconBrewFn(icon, size) {
-  console.log(iconBrew[icon + size])
-  return iconBrew[icon + size]
-}
-
-function checkSize(id) {
-  isCheckingSize.value = !isCheckingSize.value
-  document.getElementById(id).classList.toggle("check-size")
-}
-
 function getCheckedValue(e, appNameParam, field) {
   const fieldValue = e.target.checked
   filesToShow[appNameParam][field] = fieldValue
 }
 
 function getValue(e, appNameParam, field) {
-  console.log(e)
   const target = e.target
   const fieldValue = target.value
   filesToShow[appNameParam][field] = fieldValue
-}
-
-function selectedOption(option, value) {
-  return option == value || null
 }
 
 function removeFile(e, randId) {
@@ -394,57 +299,54 @@ function removeFile(e, randId) {
 function setIcns(event, iconId) {
   const file = event.target.files[0]
   filesToShow[iconId].icnsFile = file
-  console.log("event: ", filesToShow[iconId])
 }
 
 function selectIcon(event) {
-  const files = event.target.uploadQueue
+  const files = event.target.files
 
-  if (!event.target.classList.contains("fileupload-wrapper")) {
-    return
-  } else {
-    for (let fileNum in files) {
-      const file = files[fileNum].file
-      const objectURL = window.URL.createObjectURL(file)
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i]
+    const objectURL = window.URL.createObjectURL(file)
 
-      const img = new Image()
-      img.onload = () => {
-        const width = img.width
-        const height = img.height
-        if (width != 1024 || height != 1024) {
-          window.URL.revokeObjectURL(img.src)
-          showToast({
-            id: "toastMessage",
-            message: "Icon needs to be 1024px, yours is " + height + "px x " + width + "px",
-            variant: "error"
-          })
-        } else {
-          const fileName = file.name.replace('.png', '')
-          const randId = Math.floor(Math.random() * 10000000 + 1) + "-" + fileName + Object.keys(filesToShow).length
-          filesToUpload[randId] = file
+    const img = new Image()
+    img.onload = () => {
+      const width = img.width
+      const height = img.height
+      if (width != 1024 || height != 1024) {
+        window.URL.revokeObjectURL(img.src)
+        showToast({
+          id: "toastMessage",
+          message: "Icon needs to be 1024px, yours is " + height + "px x " + width + "px",
+          variant: "error"
+        })
+      } else {
+        const fileName = file.name.replace('.png', '')
+        const randId = Math.floor(Math.random() * 10000000 + 1) + "-" + fileName + Object.keys(filesToShow).length
 
-          const value = {
-            img: objectURL,
-            name: fileName,
-            file: file,
-            isDarkMode: false,
-            isLiquidGlass: false,
-            category: "",
-            appWebsite: "",
-            type: "Zz9QX1BBIZ",
-            randId: randId,
-          }
+        filesToUpload[randId] = file
 
-          imageData.value = true
-          filesToShow[randId] = value
+        const value = {
+          img: objectURL,
+          name: fileName,
+          file: file,
+          isDarkMode: false,
+          isLiquidGlass: false,
+          isAuthor: false,
+          category: "",
+          appWebsite: "",
+          type: "Zz9QX1BBIZ",
+          randId: randId,
         }
-      }
-      img.src = objectURL
-    }
 
-    totalNumFiles.value = Object.keys(filesToShow).length
-    event.target.clear()
+        imageData.value = true
+        filesToShow[randId] = value
+      }
+    }
+    img.src = objectURL
   }
+
+  totalNumFiles.value = Object.keys(filesToShow).length
+  event.target.value = ''
 }
 
 function fileToBase64(file) {
@@ -466,10 +368,9 @@ async function onUpload() {
   const yyyy = today.getFullYear()
   const dateStr = dd + '/' + mm + '/' + yyyy
 
-  window.plausible("IconSubmission", { props: { date: dateStr } })
+  window.plausible?.("IconSubmission", { props: { date: dateStr } })
 
   isLoading.value = true
-  const dialog = document.getElementById('submissionDialog')
   const sessionToken = Parse.User.current()?.getSessionToken()
 
   if (!sessionToken) {
@@ -548,7 +449,7 @@ async function onUpload() {
     message: "All icons have been uploaded.",
     variant: "success"
   })
-  dialog.hide()
+  isOpen.value = false
 }
 
 // Lifecycle
@@ -557,6 +458,3 @@ onMounted(() => {
   fetchIconType()
 })
 </script>
-
-<style>
-</style>

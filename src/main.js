@@ -7,6 +7,10 @@ import VueLazyLoad from 'vue3-lazyload'
 import VueCookies from 'vue3-cookies'
 import { createHead } from '@unhead/vue/client'
 import * as Sentry from '@sentry/vue'
+import ui from '@nuxt/ui/vue-plugin'
+
+// Import main CSS with Tailwind and NuxtUI
+import './assets/main.css'
 
 // import '@adobe/coral-spectrum/dist/css/coral.min.css';
 // import "@adobe/coral-spectrum/dist/js/coral.js"
@@ -28,6 +32,7 @@ const app = createApp(App)
 //   tracesSampleRate: 0,
 // })
 
+app.use(ui)
 app.use(VueCookies, {
   expireTimes: '30d'
 })

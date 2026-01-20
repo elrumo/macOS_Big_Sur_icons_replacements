@@ -43,3 +43,7 @@ main_copy.js
 macOSicons-parse-schema.json
 
 .claude
+
+# NuxtUI auto-generated files
+auto-imports.d.ts
+components.d.ts

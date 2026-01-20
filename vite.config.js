@@ -65,12 +65,13 @@
 // vite.config.js
 import vue from '@vitejs/plugin-vue'
 import { fileURLToPath, URL } from 'node:url'
-import mkcert from'vite-plugin-mkcert'
+// import mkcert from 'vite-plugin-mkcert'
+import ui from '@nuxt/ui/vite'
 
 export default {
   base: "/",
   server: {
-    https: true
+    // https: true // Temporarily disabled - mkcert has network issues
   },
   resolve: {
     alias: {
@@ -79,14 +80,19 @@ export default {
   },
 
   plugins: [
-    mkcert(),
+    // mkcert(), // Temporarily disabled - has network issues
+    ui({
+      ui: {
+        colors: {
+          primary: 'blue',
+          neutral: 'slate'
+        }
+      }
+    }),
     vue({
       template: {
         compilerOptions: {
-          isCustomElement: tag => tag.includes('coral'),
-          compatConfig: {
-            MODE: 2
-          }
+          isCustomElement: tag => tag.includes('coral')
         }
       }
     })
