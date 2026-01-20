@@ -1,61 +1,89 @@
 <template>
-    <!-- Delete confirmation -->
-    <coral-dialog id="deleteDialog">
-        <coral-dialog-header>Are you sure you want to delete {{icon.appName}}?</coral-dialog-header>
-        
-        <coral-dialog-content>  
-            This action cannot be undone.
-        </coral-dialog-content>
+  <UModal v-model:open="isOpen" title="Delete Confirmation">
+    <template #header>
+      <h3 class="text-lg font-semibold">Are you sure you want to delete {{ icon.appName }}?</h3>
+    </template>
 
-        <coral-dialog-footer>
-            <button is="coral-button" variant="quiet" coral-close="">Cancel</button>
-            <button is="coral-button" variant="warning" coral-close="" @click="deleteIcon(icon)">Delete</button>
-        </coral-dialog-footer>
-    </coral-dialog>
+    <div class="p-4">
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        This action cannot be undone.
+      </p>
+    </div>
+
+    <template #footer>
+      <div class="flex justify-end gap-2">
+        <UButton variant="ghost" @click="isOpen = false">Cancel</UButton>
+        <UButton color="red" @click="deleteIcon(icon)">Delete</UButton>
+      </div>
+    </template>
+  </UModal>
 </template>
 
-<script>
-import { mapGetters, mapActions } from 'vuex'
-import Parse from 'parse/dist/parse.min.js';
+<script setup>
+import { ref, watch } from 'vue'
+import { useStore } from 'vuex'
+import Parse from 'parse/dist/parse.min.js'
 
-export default {
-    name:"deleteDialog",
+const props = defineProps({
+  icon: {
+    type: Object,
+    default: () => ({})
+  },
+  modelValue: {
+    type: Boolean,
+    default: false
+  }
+})
 
-    props:{
-        icon: {},
-    },
+const emit = defineEmits(['update:modelValue'])
 
-    methods:{
-        ...mapActions(['showToast', 'deleteItem', 'handleParseError']),
+const store = useStore()
+const isOpen = ref(false)
 
-        async deleteIcon(icon){
-            let parent = this
-            var Icons = Parse.Object.extend("Icons2");
-            let dialogId = document.getElementById('editIconDialog')
+// Expose method to open dialog
+const open = () => {
+  isOpen.value = true
+}
 
-            console.log("iconId: ", icon.id)
-            console.log("appName: ", icon.appName);
-            let query = new Parse.Query(Icons)
-            let docToDelete = await query.get(icon.id);
+// Watch for external changes
+watch(() => props.modelValue, (val) => {
+  isOpen.value = val
+})
 
-            docToDelete.destroy().then(() =>{
-                parent.$store.dispatch('deleteItem', icon)
-                dialogId.hide()
-                parent.showToast({
-                    id: "toastMessage",
-                    message: icon.appName+" has been deleted.",
-                    variant: "success"
-                })
-            }).catch((error) =>{
-                this.handleParseError(error)
-            })
-            
-        },
-    }
-    
+watch(isOpen, (val) => {
+  emit('update:modelValue', val)
+})
+
+// Expose for parent component
+defineExpose({ open })
+
+function showToast(payload) {
+  store.dispatch('showToast', payload)
+}
+
+function handleParseError(error) {
+  store.dispatch('handleParseError', error)
+}
+
+async function deleteIcon(icon) {
+  const Icons = Parse.Object.extend("Icons2")
+
+  console.log("iconId: ", icon.id)
+  console.log("appName: ", icon.appName)
+
+  const query = new Parse.Query(Icons)
+  const docToDelete = await query.get(icon.id)
+
+  docToDelete.destroy().then(() => {
+    store.dispatch('deleteItem', icon)
+    isOpen.value = false
+    showToast({
+      id: "toastMessage",
+      message: icon.appName + " has been deleted.",
+      variant: "success"
+    })
+  }).catch((error) => {
+    handleParseError(error)
+  })
 }
 </script>
-
-<style>
-
-</style>

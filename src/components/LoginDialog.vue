@@ -1,348 +1,239 @@
 <template>
-  <coral-dialog v-on:submit.prevent="nextStep" v-if="!getUser.isAuth" id="loginDialog">
-
-    <coral-dialog-content class="dialog-content">
-
-      <coral-dialog id="resetPasswordDialog">
-          <coral-dialog-header>Reset your password</coral-dialog-header>
-          
-          <coral-dialog-content style="max-width:412px">  
-              You will receive an email to reset your password. 
-              <br>
-              <br>
-              Make sure to check your spam folder if you don't receive it within the next few minutes.
-          </coral-dialog-content>
-
-          <coral-dialog-footer>
-              <button is="coral-button" variant="quiet" coral-close="">Cancel</button>
-              <button is="coral-button" @click="resetPassword" variant="default" coral-close="">Reset password</button>
-          </coral-dialog-footer>
-      </coral-dialog>
-
-        <div class="signin-dialog-content">
-          
-          <div>
-            <img style="width: 48px" :src="imgs.macOSiconsLogo" alt="">
-
-            <div v-if="userInfo.step != 3">
-              <h3 class="coral-Heading--M m-t-8">
-                Sign up or sign in
-              </h3>
-              <p class="coral-Body--M" style="font-weight: lighter">
-                With an account you'll be able to submit new icons, view their approval status and more.
-              </p>
-            </div>
-
-            <div v-if="userInfo.step == 3">
-              <h3 class="coral-Heading--M m-t-8">
-                Almost there!
-              </h3>
-              <p class="coral-Body--M p-t-24" style="font-weight: lighter">
-                Please click on the link we've sent to your email to verify your account and then refresh this page.
-              </p>
-            </div>
-
-          </div>
-
-          <div v-if="isLoading" class="loading-overlay">
-            <div class="loading-popup">
-              <coral-progress indeterminate>Loading</coral-progress>
-            </div>
-          </div>
-
-          <form v-if="userInfo.step != 3" class="coral-FormGroup m-0 p-l-4 text-left" style="width: calc(100% - 5px)">
-            <!-- <coral-alert
-              style="padding: 10px; margin-top: 15px"
-              v-if="userInfo.step == 1"
-            >
-              <coral-alert-header>Important</coral-alert-header>
-              <coral-alert-content>If you've submitted an icon before, use the same email address you used then.</coral-alert-content>
-            </coral-alert> -->
-            
-            <!-- Email -->
-            <div class="coral-FormGroup-item">
-              <label id="loginEmailLabel-1" class="coral-FieldLabel">
-                Email
-              </label>
-              <input
-                id="loginEmail-1"
-                is="coral-textfield"
-                labelledby="loginEmailLabel-1"
-                class="coral-Form-field"
-                type="email"
-                name="email"
-                autocomplete="email"
-                v-on:keyup="getTextFieldValue($event, 'email', true)"
-                v-on:change="getTextFieldValue($event, 'email', true)"
-              >
-              
-              <coral-alert
-                style="padding: 10px; margin-top: 15px"
-                v-if="userInfo.step != 1 && !userInfo.hasLoggedIn && userInfo.passwordResetSent"
-                variant="success"
-              >
-                <coral-alert-header>Check your email</coral-alert-header>
-                <coral-alert-content>
-                  Click on the link we've just sent you to set a password and verify your email.
-                </coral-alert-content>
-              </coral-alert>
-
-            </div>
-
-            <!-- Username -->
-            <div v-if="userInfo.step == 2 && userInfo.newAccount" class="coral-FormGroup-item">
-              <label id="loginUsernameLabel-1" class="coral-FieldLabel">
-                Username
-              </label>
-              <input
-                id="loginUsername-1"
-                is="coral-textfield"
-                labelledby="loginUsernameLabel-1"
-                class="coral-Form-field"
-                type="text"
-                name="username"
-                autocomplete="username"
-                v-on:keyup="getTextFieldValue($event, 'username', false)"
-                v-on:change="getTextFieldValue($event, 'username', false)"
-              >
-              <coral-alert
-                v-if="userInfo.problems.usernameExists"
-                style="padding: 10px; margin-top: 15px"
-                variant="warning"
-              >
-                <coral-alert-header>Username already in use</coral-alert-header>
-                <coral-alert-content>Please use a different username and try again</coral-alert-content>
-              </coral-alert>
-            
-            </div>
-
-            <!-- Name to show -->
-            <div v-if="userInfo.step == 2 && userInfo.newAccount" class="coral-FormGroup-item">
-              <label id="nameToShowLabel-1" class="coral-FieldLabel">
-                Name To Show (optional)
-              </label>
-              <input
-                id="nameToShow-1"
-                is="coral-textfield"
-                labelledby="nameToShowLabel-1"
-                class="coral-Form-field"
-                type="text"
-                name="nameToShow"
-                v-on:keyup="getTextFieldValue($event, 'nameToShow', false)"
-                v-on:change="getTextFieldValue($event, 'nameToShow', false)"
-              >
-            </div>
-            
-            <!-- Password -->
-            <div v-if="userInfo.step == 2 && (userInfo.newAccount || userInfo.hasLoggedIn)" class="coral-FormGroup-item">
-              <label id="loginPassLabel-1" class="coral-FieldLabel">
-                Password
-              </label>
-              <input
-                id="loginPass-1"
-                is="coral-textfield"
-                labelledby="loginPassLabel-1"
-                class="coral-Form-field"
-                type="password"
-                name="password"
-                autofocus
-                autocomplete="current-password"
-                v-on:keyup="getTextFieldValue($event, 'password', false)"
-              >
-              <div v-if="!userInfo.problems.passNotSecure">
-                <p class="coral-Body--XS opacity-60 f-w-400 p-t-8">
-                  <span style="color: #E97273" v-if="!validatePassword && userInfo.password.length > 2">
-                    Important:
-                  </span>
-                  Password must contain a number, a capital letter and be 6 or more characters long.
-                </p>
-                <p v-if="userInfo.step == 2 && userInfo.hasLoggedIn" class="coral-Body--XS opacity-60 f-w-400 p-t-8">
-                  Problems signing in? <a @click="resetPassword" class="coral-link pointer">Reset password</a> 
-                </p>
-              </div>   
-
-              <coral-alert
-                v-if="userInfo.problems.passNotSecure"
-                style="padding: 10px; margin-top: 15px"
-                variant="warning"
-              >
-                <coral-alert-header>Password not secure enough</coral-alert-header>
-                <coral-alert-content>
-                  Password must contain a number, a capital letter and be more than 6 characters long.
-                </coral-alert-content>
-              </coral-alert>
-            </div>
-
-            <!-- Repeat Password -->
-            <div v-if="userInfo.step == 2 && userInfo.newAccount" class="coral-FormGroup-item">
-              <label id="loginRepeatPassLabel-1" class="coral-FieldLabel">
-                Repeat Password
-              </label>
-              <input
-                id="loginRepeatPass-1"
-                is="coral-textfield"
-                labelledby="loginRepeatPassLabel-1"
-                class="coral-Form-field"
-                type="password"
-                name="repeatPassword"
-                autocomplete="new-password"
-                v-on:keyup="getTextFieldValue($event, 'repeatPassword', false)"
-                v-on:change="getTextFieldValue($event, 'repeatPassword', false)"
-              >
-              
-              <coral-alert
-                v-if="!validateRepeatPassword && userInfo.repeatPassword.length > 0"
-                style="padding: 10px; margin-top: 15px"
-                variant="warning"
-              >
-                <coral-alert-header>Passwords do not match</coral-alert-header>
-                <coral-alert-content>
-                  Please make sure both passwords are the same.
-                </coral-alert-content>
-              </coral-alert>
-            </div>
-
-              <!-- v-if="userInfo.problems.usernameExists" -->
-           
-          </form>        
-          
-          <!-- Sign in with Apple & terms and conditions -->
-          <div v-if="userInfo.step == 1">
-            <!-- Or -->
-            <!-- <div style="
-                display: grid;
-                grid-template-columns: auto 22px auto;
-                gap: 10px;
-              "
-            >
-              <hr class="coral-Divider--S m-t-16 m-b-16">
-              <span style="margin: auto"> or </span>
-              <hr class="coral-Divider--S m-t-16 m-b-16">
-            </div> -->
-            
-            <div>
-              or
-            </div>
-
-            <div @click="appleLogin" class="apple-signin-banner">
-              <img :src="coralIcons.apple">
-              <p> Continue with Apple </p>
-            </div>
-
-            <!-- Terms & Conditions -->
-            <p class="coral-Body--XS p-l-4 p-t-4 p-r-4 m-0 opacity-60">
-              By continuing, you agree with macOSicons's
-              <!-- <a
-                rel="noopener"
-                class="coral-Link"
-                href="https://blog.macosicons.com/blog/p/e616d7d6-5462-44e4-a5a1-0b00e6ca41a1/"
-                target="_blank"
-              >
-                Terms of Use
-              </a>
-              and -->
-              <a
-                rel="noopener"
-                class="coral-Link"
-                href="https://blog.macosicons.com/blog/p/e616d7d6-5462-44e4-a5a1-0b00e6ca41a1/"
-                target="_blank"
-              >
-                Privacy Policy.
-              </a>
-            </p>
-            
-          </div>
-
+  <UModal v-model:open="isOpen" v-if="!getUser.isAuth" :ui="{ width: 'max-w-md' }">
+    <!-- Reset Password Nested Modal -->
+    <UModal v-model:open="showResetPassword" :ui="{ width: 'max-w-sm' }">
+      <template #header>
+        <h3 class="text-lg font-semibold">Reset your password</h3>
+      </template>
+      <div class="p-4">
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          You will receive an email to reset your password.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
+          Make sure to check your spam folder if you don't receive it within the next few minutes.
+        </p>
+      </div>
+      <template #footer>
+        <div class="flex justify-end gap-2">
+          <UButton variant="ghost" @click="showResetPassword = false">Cancel</UButton>
+          <UButton @click="resetPassword">Reset password</UButton>
         </div>
-  
-    </coral-dialog-content>
-    
-    <coral-dialog-footer>
-      <button is="coral-button" v-if="userInfo.step == 1" variant="quiet" @click="closeDialog('loginDialog')">Cancel</button>
-      <button is="coral-button" v-if="userInfo.step == 2" @click="toStep(1)" variant="quiet">Back</button>
+      </template>
+    </UModal>
 
-      <button 
-        id="continue-btn" 
-        is="coral-button"
-        v-if="userInfo.step == 1"
-        :disabled="!isValid"
-        @click="checkOldAccount(2)"
-        variant=""
-      >
-        Continue
-      </button>
-      
-      <!-- Sign in -->
-      <div v-if="userInfo.step == 2 && !userInfo.newAccount && userInfo.hasLoggedIn">
-        <button id="continue-btn" is="coral-button"
-          v-if="isNotEmpty"
-          @click="logIn(3)" variant="">
-          Log in
-        </button>
+    <div class="p-6">
+      <div class="text-center mb-6">
+        <img class="w-12 mx-auto" :src="imgs.macOSiconsLogo" alt="macOSicons">
 
-        <button is="coral-button"
-          v-if="!isNotEmpty"
-          disabled="">
-          Log in
-        </button>
-      </div>
-      
-      <!-- Sign up -->
-      <div v-if="userInfo.step == 2 && userInfo.newAccount">
-        <button id="continue-btn" is="coral-button" 
-          v-if="isSignUpValid"
-          @click="signUp(3)">
-          Finish sign Up
-        </button>
-        
-        <button id="continue-btn" is="coral-button"
-          v-if="!isSignUpValid"
-          disabled="">
-          Finish sign Up
-        </button>
+        <div v-if="userInfo.step !== 3">
+          <h3 class="text-xl font-semibold mt-4">Sign up or sign in</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
+            With an account you'll be able to submit new icons, view their approval status and more.
+          </p>
+        </div>
+
+        <div v-if="userInfo.step === 3">
+          <h3 class="text-xl font-semibold mt-4">Almost there!</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mt-6">
+            Please click on the link we've sent to your email to verify your account and then refresh this page.
+          </p>
+        </div>
       </div>
 
-    </coral-dialog-footer>
+      <!-- Loading Overlay -->
+      <div v-if="isLoading" class="absolute inset-0 bg-white/80 dark:bg-gray-900/80 flex items-center justify-center z-10 rounded-lg">
+        <div class="text-center">
+          <UProgress animation="carousel" class="mb-2" />
+          <p class="text-sm">Loading</p>
+        </div>
+      </div>
 
-  </coral-dialog>
+      <!-- Form -->
+      <form v-if="userInfo.step !== 3" class="space-y-4" @submit.prevent="nextStep">
+        <!-- Email -->
+        <UFormField label="Email">
+          <UInput
+            v-model="userInfo.email"
+            type="email"
+            name="email"
+            autocomplete="email"
+            @keyup.enter="nextStep"
+            class="w-full"
+          />
+        </UFormField>
+
+        <UAlert
+          v-if="userInfo.step !== 1 && !userInfo.hasLoggedIn && userInfo.passwordResetSent"
+          color="green"
+          variant="soft"
+          title="Check your email"
+          description="Click on the link we've just sent you to set a password and verify your email."
+          class="mt-3"
+        />
+
+        <!-- Username (for new accounts) -->
+        <UFormField v-if="userInfo.step === 2 && userInfo.newAccount" label="Username">
+          <UInput
+            v-model="userInfo.username"
+            type="text"
+            name="username"
+            autocomplete="username"
+            class="w-full"
+          />
+        </UFormField>
+
+        <UAlert
+          v-if="userInfo.problems.usernameExists"
+          color="yellow"
+          variant="soft"
+          title="Username already in use"
+          description="Please use a different username and try again"
+        />
+
+        <!-- Name to show (for new accounts) -->
+        <UFormField v-if="userInfo.step === 2 && userInfo.newAccount" label="Name To Show (optional)">
+          <UInput
+            v-model="userInfo.nameToShow"
+            type="text"
+            name="nameToShow"
+            class="w-full"
+          />
+        </UFormField>
+
+        <!-- Password -->
+        <UFormField v-if="userInfo.step === 2 && (userInfo.newAccount || userInfo.hasLoggedIn)" label="Password">
+          <UInput
+            v-model="userInfo.password"
+            type="password"
+            name="password"
+            autocomplete="current-password"
+            class="w-full"
+          />
+          <template #hint v-if="!userInfo.problems.passNotSecure">
+            <p class="text-xs text-gray-500 mt-1">
+              <span v-if="!validatePassword && userInfo.password.length > 2" class="text-red-500">
+                Important:
+              </span>
+              Password must contain a number, a capital letter and be 6 or more characters long.
+            </p>
+            <p v-if="userInfo.step === 2 && userInfo.hasLoggedIn" class="text-xs text-gray-500 mt-1">
+              Problems signing in?
+              <a @click="resetPassword" class="text-primary cursor-pointer">Reset password</a>
+            </p>
+          </template>
+        </UFormField>
+
+        <UAlert
+          v-if="userInfo.problems.passNotSecure"
+          color="yellow"
+          variant="soft"
+          title="Password not secure enough"
+          description="Password must contain a number, a capital letter and be more than 6 characters long."
+        />
+
+        <!-- Repeat Password (for new accounts) -->
+        <UFormField v-if="userInfo.step === 2 && userInfo.newAccount" label="Repeat Password">
+          <UInput
+            v-model="userInfo.repeatPassword"
+            type="password"
+            name="repeatPassword"
+            autocomplete="new-password"
+            class="w-full"
+          />
+        </UFormField>
+
+        <UAlert
+          v-if="!validateRepeatPassword && userInfo.repeatPassword.length > 0"
+          color="yellow"
+          variant="soft"
+          title="Passwords do not match"
+          description="Please make sure both passwords are the same."
+        />
+      </form>
+
+      <!-- Sign in with Apple & Terms -->
+      <div v-if="userInfo.step === 1" class="mt-6">
+        <div class="text-center text-sm text-gray-500 mb-4">or</div>
+
+        <div @click="appleLogin" class="flex items-center justify-center gap-2 p-3 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+          <img :src="coralIcons.apple" class="w-5 h-5">
+          <p class="text-sm font-medium">Continue with Apple</p>
+        </div>
+
+        <p class="text-xs text-gray-500 text-center mt-4">
+          By continuing, you agree with macOSicons's
+          <a
+            rel="noopener"
+            class="text-primary"
+            href="https://blog.macosicons.com/blog/p/e616d7d6-5462-44e4-a5a1-0b00e6ca41a1/"
+            target="_blank"
+          >
+            Privacy Policy.
+          </a>
+        </p>
+      </div>
+    </div>
+
+    <template #footer>
+      <div class="flex justify-end gap-2">
+        <UButton v-if="userInfo.step === 1" variant="ghost" @click="isOpen = false">Cancel</UButton>
+        <UButton v-if="userInfo.step === 2" variant="ghost" @click="toStep(1)">Back</UButton>
+
+        <UButton
+          v-if="userInfo.step === 1"
+          :disabled="!isValid"
+          @click="checkOldAccount(2)"
+        >
+          Continue
+        </UButton>
+
+        <!-- Sign in -->
+        <template v-if="userInfo.step === 2 && !userInfo.newAccount && userInfo.hasLoggedIn">
+          <UButton v-if="isNotEmpty" @click="logIn(3)">Log in</UButton>
+          <UButton v-else disabled>Log in</UButton>
+        </template>
+
+        <!-- Sign up -->
+        <template v-if="userInfo.step === 2 && userInfo.newAccount">
+          <UButton v-if="isSignUpValid" @click="signUp(3)">Finish sign Up</UButton>
+          <UButton v-else disabled>Finish sign Up</UButton>
+        </template>
+      </div>
+    </template>
+  </UModal>
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted } from 'vue';
-import { useStore } from 'vuex';
-import Parse from 'parse/dist/parse.min.js';
+import { ref, reactive, computed, onMounted, watch } from 'vue'
+import { useStore } from 'vuex'
+import Parse from 'parse/dist/parse.min.js'
 
-import addCoralIcon from "../assets/icons/add.svg"
-import newItemCoralIcon from "../assets/icons/newItem.svg"
-import editCoralIcon from "../assets/icons/edit.svg"
-import placeholderCoralIcon from "../assets/placeholder-icon.png"
 import appleIcon from "../assets/icons/Apple.svg"
-import deleteIcon from "../assets/icons/delete.svg"
 import logoLowRes from "../assets/Resources/logo_lowres.png"
 
-const store = useStore();
+const props = defineProps({
+  modelValue: {
+    type: Boolean,
+    default: false
+  }
+})
 
-// Data
+const emit = defineEmits(['update:modelValue'])
+
+const store = useStore()
+const isOpen = ref(false)
+const showResetPassword = ref(false)
+
 const coralIcons = {
   apple: appleIcon,
-  delete: deleteIcon,
-  addIcon: addCoralIcon,
-  newItem: newItemCoralIcon,
-  edit: editCoralIcon,
-  loading: placeholderCoralIcon,
-};
+}
 
 const imgs = {
   macOSiconsLogo: logoLowRes
-};
+}
 
-const email = ref("");
-const yourName = ref("");
-const isLoading = ref(false);
-const isReset = ref(false);
-const showResend = ref(false);
-const emailSentAt = ref('');
-const timeLeftForResend = ref(20);
+const isLoading = ref(false)
+const isReset = ref(false)
 
 const userInfo = reactive({
   isValid: false,
@@ -359,426 +250,273 @@ const userInfo = reactive({
   repeatPassword: "",
   hasLoggedIn: false,
   newAccount: true,
-});
+})
 
-// Vuex Actions
-const showToast = (payload) => store.dispatch('showToast', payload);
-const setUser = (user) => store.dispatch('setUser', user);
-const handleParseError = (error) => store.dispatch('handleParseError', error);
+// Computed
+const getUser = computed(() => store.getters.getUser)
 
-// Vuex Getters
-const getUser = computed(() => store.getters.getUser);
+const validatePassword = computed(() => {
+  const passwordRules = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})")
+  return passwordRules.test(userInfo.password) && userInfo.password.length >= 6
+})
+
+const validateRepeatPassword = computed(() => {
+  return userInfo.password === userInfo.repeatPassword && userInfo.repeatPassword.length > 0
+})
+
+const validateUsername = computed(() => {
+  return userInfo.username.length > 2
+})
+
+const isValid = computed(() => {
+  return validateEmail(userInfo.email)
+})
+
+const isSignUpValid = computed(() => {
+  return validatePassword.value && validateEmail() && validateUsername.value && validateRepeatPassword.value
+})
+
+const isNotEmpty = computed(() => {
+  return userInfo.password.length > 0
+})
+
+// Watch
+watch(() => props.modelValue, (val) => {
+  isOpen.value = val
+})
+
+watch(isOpen, (val) => {
+  emit('update:modelValue', val)
+})
 
 // Methods
-const toStep = (step) => {
-  userInfo.step = step;
-};
+const open = () => {
+  isOpen.value = true
+}
 
-const appleLogin = async () => {
+defineExpose({ open })
+
+function showToast(payload) {
+  store.dispatch('showToast', payload)
+}
+
+function setUser(user) {
+  store.dispatch('setUser', user)
+}
+
+function handleParseError(error) {
+  store.dispatch('handleParseError', error)
+}
+
+function toStep(step) {
+  userInfo.step = step
+}
+
+function validateEmail(emailVal) {
+  if (!emailVal) {
+    emailVal = userInfo.email
+  }
+  const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  return emailRegex.test(String(emailVal).toLowerCase())
+}
+
+function nextStep() {
+  if (userInfo.step === 1 && isValid.value) {
+    checkOldAccount(2)
+  } else if (userInfo.step === 2) {
+    if (userInfo.newAccount && isSignUpValid.value) {
+      signUp(3)
+    } else if (!userInfo.newAccount && userInfo.hasLoggedIn && isNotEmpty.value) {
+      logIn(3)
+    }
+  }
+}
+
+async function appleLogin() {
   AppleID.auth.init({
     clientId: 'com.macOSicons.client',
     scope: 'email name',
     redirectURI: 'https://macosicons.com/redirect',
     usePopup: true,
-  });
+  })
 
   try {
-    const data = await AppleID.auth.signIn();
-    logIn(null, data);
+    const data = await AppleID.auth.signIn()
+    logIn(null, data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
-};
+}
 
-const nextStep = () => {
-  const next = document.getElementById("continue-btn");
-  next.click();
-};
+async function checkOldAccount(step, skipStep = false) {
+  isLoading.value = true
+  const userEmail = userInfo.email
 
-const closeDialog = (id) => {
-  document.getElementById(id).hide();
-};
-
-const setUserFunc = (user) => {
-  setUser(user);
-};
-
-const setYourName = (e) => {
-  yourName.value = e.target.value;
-};
-
-const getTextFieldValue = (e, field, isEmail) => {
-  let fieldValue = e.target.value;
-  let isValid = e.target.checkValidity();
-
-  if (field === 'username') {
-    fieldValue = fieldValue.replaceAll(" ", '_');
-    fieldValue = fieldValue.replaceAll("/", '_');
-    fieldValue = fieldValue.replaceAll("#", '_');
-    e.target.value = fieldValue.toLowerCase();
-  }
-
-  if (field === 'email') {
-    isValid = validateEmail(fieldValue);
-  }
-
-  if (e.keyCode === 13) {
-    nextStep();
-  }
-
-  userInfo[field] = fieldValue;
-  userInfo.isValid = isValid;
-
-  if (field === "password") {
-    const passIsValid = !validatePassword.value;
-    if (passIsValid) userInfo.problems.passNotSecure = false;
-  }
-};
-
-const toArray = (obj) => {
-  return Object.keys(obj);
-};
-
-const checkOldAccount = async (step, skipStep = false) => {
-  isLoading.value = true;
-  const userEmail = userInfo.email;
-
-  console.log("skipStep: ", skipStep);
-  
   try {
     let findUserResponse = await fetch(import.meta.env.VITE_BACKEND_URL + 'v1/auth/doesAccountExist', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: userEmail
-      })
-    });
-    findUserResponse = await findUserResponse.json();
-    let accountExists = findUserResponse.accountExists;
-    console.log("accountExists: ", accountExists);
-    
-    if(skipStep) {
-      console.log("skipStep accountExists: ", accountExists);
-      return accountExists;
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: userEmail })
+    })
+    findUserResponse = await findUserResponse.json()
+    let accountExists = findUserResponse.accountExists
+
+    if (skipStep) {
+      return accountExists
     }
 
     if (accountExists) {
-      userInfo.hasLoggedIn = true;
-      userInfo.newAccount = false;
+      userInfo.hasLoggedIn = true
+      userInfo.newAccount = false
     } else {
-      // console.error(accountExists);
-      userInfo.hasLoggedIn = false;
-      userInfo.newAccount = true;
+      userInfo.hasLoggedIn = false
+      userInfo.newAccount = true
     }
 
-    userInfo.step = step;
-    isLoading.value = false;
-    
+    userInfo.step = step
+    isLoading.value = false
+
   } catch (error) {
-    console.error("Error: ", error);
-    isLoading.value = false;
-  } finally {
-    isLoading.value = false;
+    console.error("Error: ", error)
+    isLoading.value = false
   }
-};
+}
 
-const userExists = async () => {
-  return await checkOldAccount(2, true);
-};
-
-const crateUser = async () => {
+async function signUp(step) {
   try {
+    isLoading.value = true
+
+    const userExists = await checkOldAccount(2, true)
+    if (userExists) {
+      userInfo.problems.usernameExists = true
+    } else {
+      userInfo.problems.usernameExists = false
+    }
+
     let userRes = await fetch(import.meta.env.VITE_BACKEND_URL + 'v1/auth/signUp', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email: userInfo.email,
         username: userInfo.username,
         nameToShow: userInfo.nameToShow,
         password: userInfo.password
       })
-    });
-    userRes = await userRes.json();
-    return userRes;
+    })
+    await userRes.json()
+
+    const user = await Parse.User.logIn(userInfo.username, userInfo.password)
+    setUser(user)
+    userInfo.step = 3
+    isLoading.value = false
+
   } catch (error) {
-    console.error("Error: ", error);
+    isLoading.value = false
+    if (error.code === 202) {
+      showToast({ id: "toastMessage", message: "Username already in use", variant: "error" })
+    }
+    if (error.code === 142) {
+      userInfo.problems.passNotSecure = true
+      showToast({ id: "toastMessage", message: "Password must be more secure", variant: "error" })
+    }
+    console.error('Parse Error signing up:', error)
   }
 }
 
-const signUp = async (step) => {
-  try {
-    isLoading.value = true;
-    const userExistsResult = await userExists();
-
-    if (userExistsResult) {
-      userInfo.problems.usernameExists = true;
-    } else {
-      userInfo.problems.usernameExists = false;
-    }
-
-    let user = await crateUser();
-  
-    user = await Parse.User.logIn(userInfo.username, userInfo.password);
-
-    setUser(user);
-    userInfo.step = 3;
-    isLoading.value = false;
-  } catch (error) {
-    isLoading.value = false;
-    if (error.code === 202) {
-      showToast({
-        id: "toastMessage",
-        message: "Username already in use",
-        variant: "error"
-      });
-    }
-
-    if (error.code === 142) {
-      userInfo.problems.passNotSecure = true;
-      showToast({
-        id: "toastMessage",
-        message: "Password must be more secure, see above for details",
-        variant: "error"
-      });
-    }
-    console.error('Parse Error signing up:', error.code, ": ", error.message);
-  }
-};
-
-const logIn = async (step, appleData) => {
-  isLoading.value = true;
+async function logIn(step, appleData) {
+  isLoading.value = true
 
   if (appleData) {
-    const { authorization, user } = appleData;
-
+    const { authorization, user } = appleData
     const parseJwt = (token) => {
-      try {
-        return JSON.parse(atob(token.split('.')[1]));
-      } catch (e) {
-        return null;
-      }
-    };
-
-    const decoded = parseJwt(authorization.id_token);
-    if (!decoded || !decoded.sub) {
-      console.error("Invalid Apple ID token");
-      isLoading.value = false;
-      return;
+      try { return JSON.parse(atob(token.split('.')[1])) }
+      catch (e) { return null }
     }
-    const id = decoded.sub;
+
+    const decoded = parseJwt(authorization.id_token)
+    if (!decoded || !decoded.sub) {
+      console.error("Invalid Apple ID token")
+      isLoading.value = false
+      return
+    }
 
     try {
       const loggedInUser = await Parse.User.logInWith('apple', {
-        authData: {
-          id: id,
-          token: authorization.id_token
-        }
-      });
+        authData: { id: decoded.sub, token: authorization.id_token }
+      })
 
       if (user) {
-        if (user.name) {
-          loggedInUser.set("nameToShow", user.name.firstName + " " + user.name.lastName);
-        }
+        if (user.name) loggedInUser.set("nameToShow", user.name.firstName + " " + user.name.lastName)
         if (user.email) {
-          loggedInUser.set("email", user.email);
-          loggedInUser.set("username", user.email);
+          loggedInUser.set("email", user.email)
+          loggedInUser.set("username", user.email)
         }
-        await loggedInUser.save();
+        await loggedInUser.save()
       }
 
-      setUser(loggedInUser);
-      isLoading.value = false;
+      setUser(loggedInUser)
+      isLoading.value = false
+      isOpen.value = false
     } catch (e) {
-      console.error(e);
-      isLoading.value = false;
-      showToast({
-        id: "toastMessage",
-        message: "Error logging in with Apple",
-        variant: "error"
-      });
+      console.error(e)
+      isLoading.value = false
+      showToast({ id: "toastMessage", message: "Error logging in with Apple", variant: "error" })
     }
-    return;
-  }
-
-  const userEmail = userInfo.email;
-  let password = userInfo.password;
-
-  if (!password) {
-    password = document.getElementById("loginPass-1").value;
-    userInfo.password = password;
+    return
   }
 
   try {
-    const user = await Parse.User.logIn(userEmail, password);
-    setUser(user);
-    isLoading.value = false;
-
-    if (user.get("hasLoggedIn")) {
-      userInfo.hasLoggedIn = true;
-      userInfo.newAccount = false;
-    } else {
-      console.error(user.get("hasLoggedIn"));
-      userInfo.hasLoggedIn = false;
-      userInfo.newAccount = true;
-    }
-
-    userInfo.step = step;
-    isLoading.value = false;
+    const user = await Parse.User.logIn(userInfo.email, userInfo.password)
+    setUser(user)
+    isLoading.value = false
+    isOpen.value = false
+    userInfo.step = step
   } catch (e) {
-    console.error("error logging in, report this to @elrumo: ", e);
-    isLoading.value = false;
+    console.error("error logging in: ", e)
+    isLoading.value = false
 
-    switch (e.code) {
-      case 101:
-        showToast({
-          id: "toastMessage",
-          message: "Invalid password, try again",
-          variant: "error"
-        });
-        break;
-
-      case 201:
-        showToast({
-          id: "toastMessage",
-          message: "Password cannot be empty",
-          variant: "error"
-        });
-        break;
-
-      default:
-        break;
+    if (e.code === 101) {
+      showToast({ id: "toastMessage", message: "Invalid password, try again", variant: "error" })
+    } else if (e.code === 201) {
+      showToast({ id: "toastMessage", message: "Password cannot be empty", variant: "error" })
     }
   }
-};
+}
 
-const resetPassword = async () => {
-  const userEmail = userInfo.email;
+async function resetPassword() {
+  const userEmail = userInfo.email
 
   if (isReset.value) {
-    isLoading.value = true;
-    isReset.value = false;
+    isLoading.value = true
+    isReset.value = false
+    showResetPassword.value = false
 
     Parse.User.requestPasswordReset(userEmail).then(() => {
-      showToast({
-        id: "toastMessage",
-        message: "Check your email",
-        variant: "success"
-      });
-    });
+      showToast({ id: "toastMessage", message: "Check your email", variant: "success" })
+    })
 
-    Parse.Cloud.run("firstTimeUser", { email: userEmail }).then((result) => {
-      userInfo.passwordResetSent = true;
-      emailSentAt.value = new Date().getTime();
-      isLoading.value = false;
+    Parse.Cloud.run("firstTimeUser", { email: userEmail }).then(() => {
+      userInfo.passwordResetSent = true
+      isLoading.value = false
     }).catch((error) => {
-      console.error("firstTimeUser error: ", error);
-    });
+      console.error("firstTimeUser error: ", error)
+    })
   } else {
-    document.getElementById("resetPasswordDialog").show();
-    isReset.value = true;
+    showResetPassword.value = true
+    isReset.value = true
   }
-};
+}
 
-const allAreTrue = (arr) => {
-  return arr.every(element => element === true);
-};
-
-const validateEmail = (emailVal) => {
-  if (!emailVal) {
-    emailVal = userInfo.email;
-  }
-  const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return emailRegex.test(String(emailVal).toLowerCase());
-};
-
-// Computed
-const isSignUpValid = computed(() => {
-  const isValid = [validatePassword.value, validateEmail(), validateUsername.value, validateRepeatPassword.value];
-  return allAreTrue(isValid);
-});
-
-const waitSeconds = computed(() => {
-  const interval = setInterval(() => {
-    const now = new Date().getTime();
-    const difference = now - emailSentAt.value;
-    const wait = 20;
-    const isDifference = showResend.value = difference >= wait * 1000;
-
-    timeLeftForResend.value = timeLeftForResend.value - 1;
-
-    if (isDifference) {
-      showResend.value = true;
-      timeLeftForResend.value = wait;
-      userInfo.passwordResetSent = false;
-      clearInterval(interval);
-    }
-  }, 1000);
-
-  return showResend.value;
-});
-
-const validateUsername = computed(() => {
-  return userInfo.username.length > 2;
-});
-
-const validatePassword = computed(() => {
-  const passwordRules = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})");
-  return passwordRules.test(userInfo.password) && userInfo.password.length >= 6;
-});
-
-const validateRepeatPassword = computed(() => {
-  return userInfo.password === userInfo.repeatPassword && userInfo.repeatPassword.length > 0;
-});
-
-const isNotEmpty = computed(async () => {
-  const isValid = [];
-
-  const userExistsResult = await userExists();
-  console.log("userExistsResult 1: ", userExistsResult);
-  
-  if (!userExistsResult) {
-    console.log("userExistsResult 2: ", userExistsResult);
-    isValid.push(validatePassword.value);
-    userInfo.newAccount = true;
-  }
-
-  toArray(userInfo).forEach((field) => {
-    if (userInfo[field] === "" && field !== "hasLoggedIn" && field !== "newAccount") {
-      isValid.push(true);
-    }
-  });
-
-  if (isValid.length === 0) {
-    return true;
-  } else {
-    return isValid.some((el) => el === false);
-  }
-});
-
-const isValid = computed(() => {
-  return userInfo.isValid;
-});
-
-// Lifecycle
 onMounted(async () => {
-  const currentUser = Parse.User.current();
-
-  if (currentUser) {  
-    const query = new Parse.Query(Parse.User);
-
+  const currentUser = Parse.User.current()
+  if (currentUser) {
     try {
-      let user = await query.get(currentUser.id);
-      setUserFunc(user);
+      const query = new Parse.Query(Parse.User)
+      const user = await query.get(currentUser.id)
+      setUser(user)
     } catch (error) {
-      handleParseError(error);
+      handleParseError(error)
     }
   }
-});
+})
 </script>
-
-<style>
-</style>
