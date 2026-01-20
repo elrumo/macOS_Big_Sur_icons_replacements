@@ -17,7 +17,7 @@ import * as Sentry from '@sentry/vue'
 const head = createHead()
 const app = createApp(App)
 
-console.log("hii 2")
+console.log("hii 3")
 // console.log("import.meta.env: ", import.meta.env.VITE_BUGSINK_DSN)
 
 // Sentry.init({
@@ -30,9 +30,9 @@ console.log("hii 2")
 //   tracesSampleRate: 0,
 // })
 
-configureCompat({
-  WATCH_ARRAY: false
-})
+// configureCompat({
+//   WATCH_ARRAY: false
+// })
 
 app.use(VueCookies, {
   expireTimes: '30d'
