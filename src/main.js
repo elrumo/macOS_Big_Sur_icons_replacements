@@ -17,15 +17,15 @@ import * as Sentry from '@sentry/vue'
 const head = createHead()
 const app = createApp(App)
 
-Sentry.init({
-  app,
-  dsn: import.meta.env.VITE_BUGSINK_DSN,
-  release: "macOSicons-1",
-  integrations: [
-    Sentry.browserTracingIntegration({ router }),
-  ],
-  tracesSampleRate: 0,
-})
+// Sentry.init({
+//   app,
+//   dsn: import.meta.env.VITE_BUGSINK_DSN,
+//   release: "macOSicons-1",
+//   integrations: [
+//     Sentry.browserTracingIntegration({ router }),
+//   ],
+//   tracesSampleRate: 0,
+// })
 
 configureCompat({
   WATCH_ARRAY: false
