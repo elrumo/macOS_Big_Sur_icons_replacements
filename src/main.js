@@ -9,10 +9,8 @@ import { createHead } from '@unhead/vue/client'
 import * as Sentry from '@sentry/vue'
 
 // import '@adobe/coral-spectrum/dist/css/coral.min.css';
-
 // import "@adobe/coral-spectrum/dist/js/coral.js"
 // import "@adobe/coral-spectrum/dist/css/coral.css"
-// import './registerServiceWorker'
 
 const head = createHead()
 const app = createApp(App)
@@ -20,15 +18,15 @@ const app = createApp(App)
 console.log("hii 3")
 // console.log("import.meta.env: ", import.meta.env.VITE_BUGSINK_DSN)
 
-// Sentry.init({
-//   app,
-//   dsn: import.meta.env.VITE_BUGSINK_DSN,
-//   release: "macOSicons-1",
-//   integrations: [
-//     Sentry.browserTracingIntegration({ router }),
-//   ],
-//   tracesSampleRate: 0,
-// })
+Sentry.init({
+  app,
+  dsn: import.meta.env.VITE_BUGSINK_DSN,
+  release: "macOSicons-1",
+  integrations: [
+    Sentry.browserTracingIntegration({ router }),
+  ],
+  tracesSampleRate: 0,
+})
 
 // configureCompat({
 //   WATCH_ARRAY: false
