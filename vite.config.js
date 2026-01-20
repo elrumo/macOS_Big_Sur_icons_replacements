@@ -78,7 +78,21 @@ export default {
       "@": fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  
+
+  // build: {
+  //   rollupOptions: {
+  //     output: {
+  //       manualChunks: {
+  //         sentry: ['@sentry/vue']
+  //       }
+  //     }
+  //   }
+  // },
+
+  // optimizeDeps: {
+  //   exclude: ['@sentry/vue']
+  // },
+
   plugins: [
     mkcert(),
     vue({
