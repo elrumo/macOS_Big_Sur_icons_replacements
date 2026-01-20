@@ -577,11 +577,8 @@ const routes = [
   },
 ]
 
-  // const router = new createRouter({
-    // history: createWebHistory('./'),
-const router = new createRouter({
-  base: import.meta.env.BASE_URL,
-  history: createWebHashHistory('/'),
+const router = createRouter({
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
   scrollBehavior (to, from, savedPosition) {
     return { left: 0, top: 0 }
