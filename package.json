@@ -12,6 +12,7 @@
   "dependencies": {
     "@adobe/coral-spectrum": "^4.15.9",
     "@fullhuman/postcss-purgecss": "^5.0.0",
+    "@sentry/vue": "^10.35.0",
     "@spectrum-web-components/accordion": "^0.7.6",
     "@spectrum-web-components/bundle": "^0.28.5",
     "@spectrum-web-components/button": "^0.19.8",

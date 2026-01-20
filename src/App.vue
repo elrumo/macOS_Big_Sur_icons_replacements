@@ -92,12 +92,11 @@ export default {
 
 
   mounted(){
-    // setTimeout(() => {
-    //   window.addEventListener('scroll', this.handleScroll);
-    // }, 500);
+    setTimeout(() => {
+      window.addEventListener('scroll', this.handleScroll);
+    }, 500);
 
     this.createToast()
-
     // this.fetchSavedIcons()
   },
 
