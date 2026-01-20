@@ -264,7 +264,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import Parse from 'parse/dist/parse.min.js';
+import Parse from 'parse';
 
 import logoLowRes from "../assets/Resources/logo_lowres.png"
 import profilePic from "../assets/Resources/accounts/profilePic.png"

@@ -310,7 +310,7 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
-import Parse from 'parse/dist/parse.min.js';
+import Parse from 'parse';
 
 import addCoralIcon from "../assets/icons/add.svg"
 import newItemCoralIcon from "../assets/icons/newItem.svg"

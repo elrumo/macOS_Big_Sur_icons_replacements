@@ -16,7 +16,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import Parse from 'parse/dist/parse.min.js';
+import Parse from 'parse';
 
 export default {
     name:"deleteDialog",

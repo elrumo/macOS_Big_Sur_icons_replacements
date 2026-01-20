@@ -62,7 +62,7 @@ import { Tooltip } from '@adobe/coral-spectrum/coral-component-tooltip';
 
 const appBody = document.getElementById('app')
 
-import Parse from 'parse/dist/parse.min.js';
+import Parse from 'parse';
 
 // TODO: remove credentials
 const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID;

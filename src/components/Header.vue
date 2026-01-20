@@ -339,7 +339,7 @@ import AccountDialog from './AccountDialog.vue'
 import OptionsMenu from './OptionsMenu.vue'
 
 import { mapGetters, mapActions } from 'vuex'
-import Parse from 'parse/dist/parse.min.js';
+import Parse from 'parse';
 
 import twitter from "../assets/icons/twitter.svg"
 import discord from "../assets/icons/Discord.svg"
