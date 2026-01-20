@@ -4,12 +4,6 @@
 
       <Announcement type="topBanner"/>
 
-      <!-- <Announcement
-        v-if="getHomeDialog.hasOwnProperty('announcementImg') || dummyData.hasOwnProperty('announcementImg')"
-        :getHomeDialog="getHomeDialog.hasOwnProperty('announcementImg') ? getHomeDialog : dummyData"
-        type="topBanner"
-      /> -->
-
       <Header
         :distanceFromTop="distanceFromTop"
         :submitIconDialog="'submitIcon'"
@@ -41,36 +35,14 @@ import { mapActions, mapGetters } from 'vuex'
 
 import dummyData from '@/components/announcementDummy.json'
 
-import { Toast } from '@adobe/coral-spectrum/coral-component-toast'
-import { Textfield } from '@adobe/coral-spectrum/coral-component-textfield'
-import { SideNav } from '@adobe/coral-spectrum/coral-component-sidenav'
-import { Table } from '@adobe/coral-spectrum/coral-component-table'
-import { Textarea } from '@adobe/coral-spectrum/coral-component-textarea'
-import { Dialog } from '@adobe/coral-spectrum/coral-component-dialog';
-import { Button } from '@adobe/coral-spectrum/coral-component-button';
-import { ButtonGroup } from '@adobe/coral-spectrum/coral-component-buttongroup';
-import { SplitButton } from '@adobe/coral-spectrum/coral-component-splitbutton';
-import { FileUpload } from '@adobe/coral-spectrum/coral-component-fileupload';
-import { CharacterCount } from '@adobe/coral-spectrum/coral-component-charactercount';
-import { Switch } from '@adobe/coral-spectrum/coral-component-switch';
-import { Progress } from '@adobe/coral-spectrum/coral-component-progress';
-import { QuickActions } from '@adobe/coral-spectrum/coral-component-quickactions';
-import { Icon } from '@adobe/coral-spectrum/coral-component-icon';
-import { Overlay } from '@adobe/coral-spectrum/coral-component-overlay';
-import { Status } from '@adobe/coral-spectrum/coral-component-status';
-import { Alert } from '@adobe/coral-spectrum/coral-component-alert';
-import { Popover } from '@adobe/coral-spectrum/coral-component-popover';
-import { Tooltip } from '@adobe/coral-spectrum/coral-component-tooltip';
+// Use the minified version to avoid ESM issues with LiveQuery
+import Parse from 'parse/dist/parse.min.js';
 
-const appBody = document.getElementById('app')
-
-import Parse from 'parse';
-
-// TODO: remove credentials
 const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID;
 const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY;
 const VITE_PARSE_URL = import.meta.env.VITE_PARSE_URL;
 
+// Initialize Parse
 Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY);
 Parse.serverURL = VITE_PARSE_URL;
 
@@ -81,7 +53,6 @@ export default {
     Footer,
     StickyBanner,
     Announcement,
-    Toast
   },
 
   data(){
@@ -92,14 +63,8 @@ export default {
     }
   },
 
-
   mounted(){
-    // setTimeout(() => {
-    //   window.addEventListener('scroll', this.handleScroll);
-    // }, 500);
-
-    this.createToast()
-    // this.fetchSavedIcons()
+    // Toast is now handled by NuxtUI's useToast composable
   },
 
   methods:{
@@ -112,7 +77,7 @@ export default {
     async fetchSavedIcons(){
 
       if (!Parse.User.current()){
-        return 
+        return
       }
 
       let savedIconsQuery = Parse.User.current().relation("favIcons").query()
@@ -121,7 +86,7 @@ export default {
       let savedIconCount = await savedIconsQuery.count();
       this.setDataToArr({arr: 'savedIconCount', data: savedIconCount})
       let savedIcons = userSavedIconData.map(( icons ) => icons);
-      let iconsToShow = []        
+      let iconsToShow = []
 
       savedIcons.forEach(icon => {
         let newIcon = {}
@@ -132,7 +97,7 @@ export default {
         iconsToShow.push(newIcon);
         newIcon.id = icon.id;
       })
-      
+
       this.pushDataToArr({ data: iconsToShow, arr: "savedIcons" })
       return iconsToShow
     },
@@ -144,13 +109,6 @@ export default {
           this.distanceFromTop =  document.getElementById("searchBar").getBoundingClientRect().y > 65;
       }
     },
-
-    createToast(){
-      const toast = new Toast()
-      toast.id = 'toastMessage';
-      toast.variant = 'success';
-      appBody.appendChild(toast)
-    }
   },
 
   computed:{
@@ -171,11 +129,9 @@ export default {
     text-align: center;
     color: #2c3e50;
     min-height: 100vh;
-    /* position: table; */
-  } 
+  }
 
   .min-height{
-    /* min-height: calc(100vh - 125px); */
     min-height: calc(100vh - 115px);
     margin: auto;
   }
