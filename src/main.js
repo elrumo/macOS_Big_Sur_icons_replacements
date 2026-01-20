@@ -6,7 +6,7 @@ import VueMobileDetection from 'vue-mobile-detection'
 import VueLazyLoad from 'vue3-lazyload'
 import VueCookies from 'vue3-cookies'
 import { createHead } from '@unhead/vue/client'
-// import * as Sentry from '@sentry/vue'
+import * as Sentry from '@sentry/vue'
 
 // import '@adobe/coral-spectrum/dist/css/coral.min.css';
 
@@ -17,12 +17,14 @@ import { createHead } from '@unhead/vue/client'
 const head = createHead()
 const app = createApp(App)
 
-// Sentry.init({
-//   app,
-//   dsn: import.meta.env.VITE_BUGSINK_DSN,
-//   release: import.meta.env.npm_package_version,
-//   tracesSampleRate: 0,
-// })
+Sentry.init({
+  app,
+  dsn: import.meta.env.VITE_BUGSINK_DSN,
+  release: "macOSicons-1",
+  // release: import.meta.env.npm_package_version,
+  // integrations: [],
+  tracesSampleRate: 0,
+})
 
 configureCompat({
   WATCH_ARRAY: false
