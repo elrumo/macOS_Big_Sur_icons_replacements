@@ -1,3 +1,9 @@
+// Polyfill for Parse LiveQuery EventEmitter issue in ESM mode
+import { EventEmitter } from 'events'
+if (typeof window !== 'undefined') {
+  window.EventEmitter = EventEmitter
+}
+
 import { createApp } from 'vue'
 import App from './App.vue'
 import store from './store/store'
@@ -8,6 +14,16 @@ import VueCookies from 'vue3-cookies'
 import { createHead } from '@unhead/vue/client'
 import * as Sentry from '@sentry/vue'
 import ui from '@nuxt/ui/vue-plugin'
+
+// Initialize Parse before app loads
+import Parse from 'parse/dist/parse.min.js'
+
+const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
+const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
+const VITE_PARSE_URL = import.meta.env.VITE_PARSE_URL
+
+Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
+Parse.serverURL = VITE_PARSE_URL
 
 // Import main CSS with Tailwind and NuxtUI
 import './assets/main.css'

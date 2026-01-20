@@ -35,16 +35,8 @@ import { mapActions, mapGetters } from 'vuex'
 
 import dummyData from '@/components/announcementDummy.json'
 
-// Use the minified version to avoid ESM issues with LiveQuery
-import Parse from 'parse/dist/parse.min.js';
-
-const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID;
-const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY;
-const VITE_PARSE_URL = import.meta.env.VITE_PARSE_URL;
-
-// Initialize Parse
-Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY);
-Parse.serverURL = VITE_PARSE_URL;
+// Parse is initialized in main.js
+import Parse from 'parse/dist/parse.min.js'
 
 export default {
   name: 'App',
