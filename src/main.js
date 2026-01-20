@@ -21,7 +21,6 @@ Sentry.init({
   app,
   dsn: import.meta.env.VITE_BUGSINK_DSN,
   release: import.meta.env.npm_package_version,
-  integrations: [],
   tracesSampleRate: 0,
 })
 
