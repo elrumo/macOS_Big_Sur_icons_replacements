@@ -196,7 +196,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import Parse from 'parse';
+import Parse from 'parse/dist/parse.min.js';
 
 import Dialog from './Dialog.vue'
 import SubmissionDialog from './SubmissionDialog.vue'

@@ -95,7 +95,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { reactive } from 'vue'
-import Parse from 'parse';;
+import Parse from 'parse/dist/parse.min.js';;
 
 var Icons = Parse.Object.extend("Icons2");
 

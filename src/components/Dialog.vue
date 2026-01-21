@@ -100,7 +100,7 @@
 <script setup>
 import { ref, reactive, watch } from 'vue'
 import { useStore } from 'vuex'
-import Parse from 'parse';
+import Parse from 'parse/dist/parse.min.js';
 
 const props = defineProps({
   modelValue: {

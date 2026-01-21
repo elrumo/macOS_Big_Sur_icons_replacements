@@ -489,7 +489,7 @@ import ConfettiGenerator from "confetti-js";
 
 import VueMarkdown from 'vue-markdown-render'
 
-import Parse from 'parse';
+import Parse from 'parse/dist/parse.min.js';
 
 
 // TODO: remove credentials

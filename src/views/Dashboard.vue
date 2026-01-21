@@ -205,14 +205,8 @@
 import { ref, reactive, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import Parse from 'parse';
-
-const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
-const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
-const VITE_PARSE_URL = import.meta.env.VITE_PARSE_URL
-
-Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
-Parse.serverURL = VITE_PARSE_URL
+// Parse is initialized in main.js
+import Parse from 'parse/dist/parse.min.js'
 
 const Icons = Parse.Object.extend("Icons2")
 Parse.User.enableUnsafeCurrentUser()

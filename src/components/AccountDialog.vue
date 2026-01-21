@@ -201,7 +201,7 @@
 <script setup>
 import { ref, reactive, computed, watch, onMounted } from 'vue'
 import { useStore } from 'vuex'
-import Parse from 'parse';
+import Parse from 'parse/dist/parse.min.js';
 
 import DeleteAccountDialog from './DeleteAccountDialog.vue'
 import profilePic from "../assets/Resources/accounts/profilePic.png"

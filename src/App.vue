@@ -36,7 +36,7 @@ import { mapActions, mapGetters } from 'vuex'
 import dummyData from '@/components/announcementDummy.json'
 
 // Parse is initialized in main.js
-import Parse from 'parse';
+import Parse from 'parse/dist/parse.min.js';
 
 export default {
   name: 'App',

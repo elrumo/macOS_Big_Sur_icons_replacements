@@ -168,7 +168,7 @@
 <script setup>
 import { ref, reactive, computed, onMounted, watch } from 'vue'
 import { useStore } from 'vuex'
-import Parse from 'parse';
+import Parse from 'parse/dist/parse.min.js';
 
 import SubmissionIconPreview from "../components/SubmissionIconPreview.vue"
 
