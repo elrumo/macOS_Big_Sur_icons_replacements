@@ -1,9 +1,3 @@
-// Polyfill for Parse LiveQuery EventEmitter issue in ESM mode
-import { EventEmitter } from 'events'
-if (typeof window !== 'undefined') {
-  window.EventEmitter = EventEmitter
-}
-
 import { createApp } from 'vue'
 import App from './App.vue'
 import store from './store/store'

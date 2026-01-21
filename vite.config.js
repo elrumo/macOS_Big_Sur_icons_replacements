@@ -75,8 +75,14 @@ export default {
   },
   resolve: {
     alias: {
-      "@": fileURLToPath(new URL('./src', import.meta.url))
+      "@": fileURLToPath(new URL('./src', import.meta.url)),
+      // Use eventemitter3 for browser compatibility (Parse SDK needs this)
+      'events': 'eventemitter3'
     }
+  },
+
+  optimizeDeps: {
+    include: ['parse', 'eventemitter3']
   },
 
   plugins: [
