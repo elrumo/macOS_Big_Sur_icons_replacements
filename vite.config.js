@@ -77,12 +77,18 @@ export default {
     alias: {
       "@": fileURLToPath(new URL('./src', import.meta.url)),
       // Use eventemitter3 for browser compatibility (Parse SDK needs this)
-      'events': 'eventemitter3'
+      'events': fileURLToPath(new URL('./src/events-shim.js', import.meta.url))
     }
   },
 
   optimizeDeps: {
-    include: ['parse', 'eventemitter3']
+    include: ['parse', 'eventemitter3'],
+    esbuildOptions: {
+      // Ensure events is not externalized during dependency optimization
+      define: {
+        global: 'globalThis'
+      }
+    }
   },
 
   plugins: [
