@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
-import Parse from 'parse';
+// Parse is initialized in main.js - just import it here
+import Parse from 'parse/dist/parse.min.js'
 import router from '@/router/index.js'
 
 import { marked } from 'marked';
@@ -9,7 +10,6 @@ import localPages from '@/api/pages.json';
 import localPosts from '@/api/posts.json';
 import icons from '@/api/icons.json';
 import iconBrew from "@/api/iconBrew.js"
-// import { getPages, getSinglePage } from '@/api/posts';
 
 import {
     getTutorials,
@@ -21,12 +21,7 @@ import {
     getDialogHome
   } from '@/api/strapi';
 
-const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
-const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
-const VITE_PARSE_URL = import.meta.env.VITE_PARSE_URL
-
-Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY)
-Parse.serverURL = VITE_PARSE_URL
+// Parse is already initialized in main.js
 let IconsBase = Parse.Object.extend("Icons2");
 
 export default createStore({
