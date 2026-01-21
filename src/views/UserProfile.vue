@@ -209,7 +209,7 @@
 import { ref, reactive, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
-import Parse from 'parse/dist/parse.min.js';
+import Parse from 'parse';;
 
 import IconUI from '@/components/IconUI.vue'
 import UserIconGrid from '@/components/UserIconGrid.vue'

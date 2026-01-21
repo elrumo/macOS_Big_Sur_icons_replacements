@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Parse from 'parse/dist/parse.min.js';
+import Parse from 'parse';;
 // import jwt_decode from 'jwt-decode';
 
 export default {

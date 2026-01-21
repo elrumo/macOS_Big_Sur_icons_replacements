@@ -206,7 +206,7 @@ import { ref, reactive, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 // Parse is initialized in main.js
-import Parse from 'parse/dist/parse.min.js'
+import Parse from 'parse';
 
 const Icons = Parse.Object.extend("Icons2")
 Parse.User.enableUnsafeCurrentUser()

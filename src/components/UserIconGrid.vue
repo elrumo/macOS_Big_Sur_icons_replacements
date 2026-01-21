@@ -28,7 +28,7 @@ import NativeAd from "./NativeAd.vue";
 import CarbonAd from "./CarbonAd.vue";
 
 import { mapGetters, mapActions } from 'vuex'
-import Parse from 'parse/dist/parse.min.js';
+import Parse from 'parse';;
 
 import addCoralIcon from "../assets/icons/add.svg"
 import newItemCoralIcon from "../assets/icons/newItem.svg"

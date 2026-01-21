@@ -61,7 +61,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Parse from 'parse/dist/parse.min.js';
+import Parse from 'parse';;
 
 import deleteDialog from './deleteDialog.vue';
 import EditIconDialog from "./EditIconDialog.vue"

@@ -206,7 +206,7 @@
 <script setup>
 import { ref, reactive, computed, onMounted, watch } from 'vue'
 import { useStore } from 'vuex'
-import Parse from 'parse/dist/parse.min.js';
+import Parse from 'parse';;
 
 import appleIcon from "../assets/icons/Apple.svg"
 import logoLowRes from "../assets/Resources/logo_lowres.png"

@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 // Parse is initialized in main.js - just import it here
-import Parse from 'parse/dist/parse.min.js'
+import Parse from 'parse';
 import router from '@/router/index.js'
 
 import { marked } from 'marked';

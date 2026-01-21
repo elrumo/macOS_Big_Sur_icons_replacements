@@ -33,7 +33,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { useStore } from 'vuex'
-import Parse from 'parse/dist/parse.min.js';
+import Parse from 'parse';;
 
 const props = defineProps({
   icon: {

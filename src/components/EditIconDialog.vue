@@ -162,7 +162,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import Parse from 'parse/dist/parse.min.js';
+import Parse from 'parse';;
 
 import UploadDialog from './UploadDialog.vue'
 

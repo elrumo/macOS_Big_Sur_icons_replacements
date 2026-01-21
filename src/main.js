@@ -16,7 +16,7 @@ import * as Sentry from '@sentry/vue'
 import ui from '@nuxt/ui/vue-plugin'
 
 // Initialize Parse before app loads
-import Parse from 'parse/dist/parse.min.js'
+import Parse from 'parse';
 
 const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
 const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
