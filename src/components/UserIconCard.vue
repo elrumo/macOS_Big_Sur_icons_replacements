@@ -95,9 +95,16 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { reactive } from 'vue'
-import Parse from 'parse/dist/parse.min.js';;
+import Parse from 'parse/dist/parse.min.js'
 
-var Icons = Parse.Object.extend("Icons2");
+// Icons class will be initialized lazily
+let Icons = null;
+function getIconsClass() {
+  if (!Icons && Parse.Object) {
+    Icons = Parse.Object.extend("Icons2");
+  }
+  return Icons;
+}
 
 import downloadIcon from "../assets/icons/Download.svg"
 import addCoralIcon from "../assets/icons/add.svg"
