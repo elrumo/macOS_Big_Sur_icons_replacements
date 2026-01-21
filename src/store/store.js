@@ -22,7 +22,14 @@ import {
   } from '@/api/strapi';
 
 // Parse is already initialized in main.js
-let IconsBase = Parse.Object.extend("Icons2");
+// IconsBase will be initialized lazily
+let IconsBase = null;
+function getIconsBase() {
+  if (!IconsBase && Parse.Object) {
+    IconsBase = Parse.Object.extend("Icons2");
+  }
+  return IconsBase;
+}
 
 export default createStore({
 
@@ -502,7 +509,7 @@ export default createStore({
 
       if (totalCategory == toSkip) return
       
-      const query = new Parse.Query(IconsBase);
+      const query = new Parse.Query(getIconsBase());
       let selectedCategory = store.state.selectedCategory
       let numToLoad = 30
       

@@ -79,9 +79,19 @@ import { mapGetters, mapActions } from 'vuex'
 import placeholderCoralIcon from "../assets/placeholder-icon.png"
 import UserIconCard from './UserIconCard.vue';
 
-import Parse from 'parse/dist/parse.min.js';
-var Icons = Parse.Object.extend("Icons2");
-var Categories = Parse.Object.extend("Categories");
+import Parse from 'parse/dist/parse.min.js'
+
+// Parse classes will be initialized lazily
+let Icons = null;
+let Categories = null;
+function getIconsClass() {
+  if (!Icons && Parse.Object) Icons = Parse.Object.extend("Icons2");
+  return Icons;
+}
+function getCategoriesClass() {
+  if (!Categories && Parse.Object) Categories = Parse.Object.extend("Categories");
+  return Categories;
+}
 
 import algoliasearch from 'algoliasearch'
 const client = algoliasearch(import.meta.env.VITE_ALGOLIA_APPID, import.meta.env.VITE_ALGOLIA_KEY);

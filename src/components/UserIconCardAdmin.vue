@@ -61,12 +61,17 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Parse from 'parse/dist/parse.min.js';
+import Parse from 'parse/dist/parse.min.js'
 
 import deleteDialog from './deleteDialog.vue';
 import EditIconDialog from "./EditIconDialog.vue"
 
-var Icons = Parse.Object.extend("Icons2");
+// Icons class will be initialized lazily
+let Icons = null;
+function getIconsClass() {
+  if (!Icons && Parse.Object) Icons = Parse.Object.extend("Icons2");
+  return Icons;
+}
 
 import addCoralIcon from "../assets/icons/add.svg"
 import newItemCoralIcon from "../assets/icons/newItem.svg"

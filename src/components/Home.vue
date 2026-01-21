@@ -495,12 +495,15 @@ import Parse from 'parse/dist/parse.min.js';
 // TODO: remove credentials
 const VITE_PARSE_APP_ID = import.meta.env.VITE_PARSE_APP_ID
 const VITE_PARSE_JAVASCRIPT_KEY = import.meta.env.VITE_PARSE_JAVASCRIPT_KEY
-const VITE_PARSE_URL = import.meta.env.VITE_PARSE_URL
-
-Parse.initialize(VITE_PARSE_APP_ID, VITE_PARSE_JAVASCRIPT_KEY);
-Parse.serverURL = VITE_PARSE_URL;
-
-var Icons = Parse.Object.extend("Icons2");
+// Parse is initialized in main.js
+// Icons class will be initialized lazily when needed
+let Icons = null;
+function getIconsClass() {
+  if (!Icons && Parse.Object) {
+    Icons = Parse.Object.extend("Icons2");
+  }
+  return Icons;
+}
 
 const docLimit = 20
 
