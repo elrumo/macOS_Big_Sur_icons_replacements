@@ -161,18 +161,13 @@ export default {
 
         function iconUrl(){
             const icon = context.icon;
-            let s3Url = `https://s3.macosicons.com/macosicons/icons/${icon.objectID || icon.id}/`
             if(typeof icon == Number) return
             
             try {
                 if (!icon.lowResPngUrl && icon.highResPngUrl) {
-                    let fileName = 'highResPngFile_'+icon.highResPngUrl.split("/").pop()
-                    return s3Url + fileName
-                    // return icon.highResPngUrl
+                    return icon.highResPngUrl
                 } else if(icon.lowResPngUrl){
-                    let fileName = 'lowResPngFile_'+icon.lowResPngUrl.split("/").pop()
-                    return s3Url + fileName
-                    // return icon.lowResPngUrl
+                    return icon.lowResPngUrl
                 }
             } catch (error) {
                 console.log("error icon: ", icon);
@@ -356,17 +351,11 @@ export default {
 
         iconDownloadUrl(){
             const icon = this.icon
-            let s3Url = `https://s3.macosicons.com/macosicons/icons/${icon.objectID}/`
             try {
                 if (this.isMacOs) {
-                    // console.log(icon);
-                    let fileName = 'icnsFile_'+icon.icnsUrl.split("/").pop()
-                    return s3Url + fileName
-                    // return icon.icnsUrl
+                    return icon.icnsUrl
                 } else{
-                    let fileName = 'iOSFile_'+icon.iOSUrl.split("/").pop()
-                    return s3Url + fileName
-                    // return icon.iOSUrl
+                    return icon.iOSUrl
                 }
             } catch (error) {
                 // console.log("error fetching icon url: ", error);
