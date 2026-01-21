@@ -79,7 +79,7 @@ export default createStore({
       savedIcons: [],
       savedIconCount: "",
       
-      userData: Parse.User.current(),
+      userData: undefined,
 
       isAuth: false,
 

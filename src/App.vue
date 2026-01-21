@@ -26,90 +26,71 @@
   </UApp>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
 import StickyBanner from '@/components/StickyBanner.vue'
 import Announcement from '@/components/Announcement.vue'
-import { mapActions, mapGetters } from 'vuex'
-
 import dummyData from '@/components/announcementDummy.json'
+import Parse from 'parse'
 
-// Parse is initialized in main.js
-import Parse from 'parse';;
+const store = useStore()
+const router = useRouter()
 
-export default {
-  name: 'App',
-  components: {
-    Header,
-    Footer,
-    StickyBanner,
-    Announcement,
-  },
+// Data
+const distanceFromTop = ref(true)
+const isBanner = ref(true)
 
-  data(){
-    return{
-      distanceFromTop: true,
-      isBanner: true,
-      dummyData: dummyData
-    }
-  },
+// Computed
+const getHomeDialog = computed(() => store.getters.getHomeDialog)
 
-  mounted(){
-    // Toast is now handled by NuxtUI's useToast composable
-  },
+// Methods
+const setDataToArr = (payload) => store.dispatch('setDataToArr', payload)
+const pushDataToArr = (payload) => store.dispatch('pushDataToArr', payload)
 
-  methods:{
-
-    ...mapActions([
-      'setDataToArr',
-      'pushDataToArr',
-    ]),
-
-    async fetchSavedIcons(){
-
-      if (!Parse.User.current()){
-        return
-      }
-
-      let savedIconsQuery = Parse.User.current().relation("favIcons").query()
-      let userSavedIconData = await savedIconsQuery.descending("createdAt").find()
-
-      let savedIconCount = await savedIconsQuery.count();
-      this.setDataToArr({arr: 'savedIconCount', data: savedIconCount})
-      let savedIcons = userSavedIconData.map(( icons ) => icons);
-      let iconsToShow = []
-
-      savedIcons.forEach(icon => {
-        let newIcon = {}
-        for(let prop in icon.attributes){
-          newIcon[prop] = icon.attributes[prop]
-        }
-        newIcon.isSaved = true
-        iconsToShow.push(newIcon);
-        newIcon.id = icon.id;
-      })
-
-      this.pushDataToArr({ data: iconsToShow, arr: "savedIcons" })
-      return iconsToShow
-    },
-
-    handleScroll () {
-      let currentRoute = this.$router.currentRoute.value.name;
-      let searchBar = document.getElementById("searchBar");
-      if (currentRoute == "Home" && searchBar) {
-          this.distanceFromTop =  document.getElementById("searchBar").getBoundingClientRect().y > 65;
-      }
-    },
-  },
-
-  computed:{
-    ...mapGetters([
-      'getHomeDialog',
-    ])
+async function fetchSavedIcons() {
+  if (!Parse.User.current()) {
+    return
   }
 
+  let savedIconsQuery = Parse.User.current().relation("favIcons").query()
+  let userSavedIconData = await savedIconsQuery.descending("createdAt").find()
+
+  let savedIconCount = await savedIconsQuery.count()
+  setDataToArr({ arr: 'savedIconCount', data: savedIconCount })
+  let savedIcons = userSavedIconData.map((icons) => icons)
+  let iconsToShow = []
+
+  savedIcons.forEach(icon => {
+    let newIcon = {}
+    for (let prop in icon.attributes) {
+      newIcon[prop] = icon.attributes[prop]
+    }
+    newIcon.isSaved = true
+    iconsToShow.push(newIcon)
+    newIcon.id = icon.id
+  })
+
+  pushDataToArr({ data: iconsToShow, arr: "savedIcons" })
+  return iconsToShow
 }
+
+function handleScroll() {
+  let currentRoute = router.currentRoute.value.name
+  let searchBar = document.getElementById("searchBar")
+  if (currentRoute == "Home" && searchBar) {
+    distanceFromTop.value = document.getElementById("searchBar").getBoundingClientRect().y > 65
+  }
+}
+
+// Lifecycle
+onMounted(() => {
+  store.state.userData = Parse.User.current()
+  // Toast is now handled by NuxtUI's useToast composable
+})
 </script>
 
 <style>
